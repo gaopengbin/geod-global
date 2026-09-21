@@ -101,4 +101,16 @@ Global 桌面、CLI、MCP 可以在 Global 仓库内部共享代码；跨产品�
 
 Vite 从早期原型的8.0.10更新到8.0.16，避开审计报告中的已知开发服务器漏洞；修复版本依据 [Vite维护者公告](https://github.com/vitejs/vite/security/advisories/GHSA-fx2h-pf6j-xcff)。本轮只检查本地工程，没有重新核验产品初稿中的全部外部政策。
 
-干净检出的安装与构建结果将在执行后追加。原生桌面壳、实时Provider、真实下载/处理及安装包仍未实现；上述通过结果仅表示独立原型工程可运行。
+### 干净检出验证与修复
+
+初始提交为 `1126ede`。使用 `git clone --no-hardlinks` 在忽略目录 `.verification/clean-checkout` 创建独立 Git 检出，未复制 `node_modules` 或 `dist`。第一次 `npm ci` 检出 Vite 升级后的可选 WASM 依赖锁记录不完整（`@emnapi/wasi-threads` 版本冲突及缺失嵌套记录）。在该无依赖目录重新解析锁文件，再把修正后的锁文件同步回主仓；没有跳过依赖校验或使用 `--force`。
+
+修正后在干净检出执行：
+
+- `npm ci --no-fund`：退出0，安装21个包，审计0个已知漏洞。
+- `npm run verify`：退出0，依赖均解析到检出自身的 `node_modules`，样本、文档链接、契约正反例和生产构建通过。
+- 产物位于检出目录的 `prototype/dist/`；生成CSS `index-Dvb8MZ9A.css` 与JS `index-C1bxWqcp.js`，和主目录构建一致。
+
+最终对照国内版 `git status --short`，修改与未跟踪文件清单和本轮开始一致。本轮未编辑、提交、重置或清理国内版文件。
+
+原生桌面壳、实时Provider、真实下载/处理及安装包仍未实现；上述通过结果仅表示独立原型工程可运行。GitHub远程仓库与远程CI尚未创建或执行。
