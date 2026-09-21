@@ -1,0 +1,29 @@
+{
+  "name": "geod-global",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "description": "Independent GeoD Global product repository and desktop workspace design.",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10"
+  },
+  "dependencies": {
+    "lucide-react": "1.14.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5"
+  },
+  "devDependencies": {
+    "vite": "8.0.16"
+  },
+  "scripts": {
+    "dev": "vite prototype --config prototype/vite.config.mjs",
+    "build": "vite build prototype --config prototype/vite.config.mjs",
+    "preview": "vite preview prototype --config prototype/vite.config.mjs",
+    "check:isolation": "node scripts/verify-repository.mjs",
+    "check:contracts": "python GeoD-Global-Spec/contracts/verify_contracts.py",
+    "check": "npm run check:isolation && npm run check:contracts",
+    "verify": "npm run check && npm run build"
+  }
+}

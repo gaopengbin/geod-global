@@ -1,0 +1,2 @@
+# Design contract verification only; not the desktop data-processing runtime.
+jsonschema==4.26.0

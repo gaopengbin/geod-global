@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.vite/
+.cache/
+.verification/
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+GeoD-Global-Spec/contracts/verification-result.json

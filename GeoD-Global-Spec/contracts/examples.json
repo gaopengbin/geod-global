@@ -1,0 +1,41 @@
+{
+  "fixtureNotice": "DESIGN FIXTURES ONLY. These are invented providers, jobs, files, hashes and verification results. No real download or generated GeoTIFF is represented.",
+  "records": [
+    {
+      "schemaVersion": "0.1.0-proposed.1", "kind": "Area", "id": "area-demo",
+      "name": "Design fixture area", "originalCrs": "EPSG:4326",
+      "geometry": {"type": "Polygon", "coordinates": [[[13.0, 52.0], [13.1, 52.0], [13.1, 52.1], [13.0, 52.1], [13.0, 52.0]]]}
+    },
+    {
+      "schemaVersion": "0.1.0-proposed.1", "kind": "Recipe", "id": "recipe-demo",
+      "version": 1, "areaId": "area-demo",
+      "inputs": [
+        {"id": "input-imagery", "providerId": "fixture-only", "collectionId": "fixture-imagery", "itemId": "invented-item-001", "assetKey": "analytic", "revision": "fixture-revision-1"}
+      ],
+      "outputPolicy": "all_required",
+      "outputs": [
+        {"id": "output-imagery", "required": true, "format": "COG"},
+        {"id": "output-report", "required": false, "format": "JSON"}
+      ],
+      "resourceBudget": {"maxBytes": 104857600, "maxRequests": 100}
+    },
+    {
+      "schemaVersion": "0.1.0-proposed.1", "kind": "Job", "id": "job-demo",
+      "recipeId": "recipe-demo", "attempt": 1, "state": "Partial", "outputPolicy": "all_required",
+      "outputs": [
+        {"id": "output-imagery", "required": true, "status": "valid", "artifactId": "artifact-demo"},
+        {"id": "output-report", "required": false, "status": "failed", "error": {"code": "VALIDATION_FAILED", "message": "Invented optional report validation failure for a design fixture.", "retryable": false}}
+      ],
+      "artifactIds": ["artifact-demo"],
+      "createdAt": "2026-09-21T00:00:00Z", "updatedAt": "2026-09-21T00:01:00Z"
+    },
+    {
+      "schemaVersion": "0.1.0-proposed.1", "kind": "Artifact", "id": "artifact-demo",
+      "jobId": "job-demo", "outputId": "output-imagery",
+      "files": [{"relativePath": "fixture/imagery.tif", "bytes": 1024, "sha256": "0000000000000000000000000000000000000000000000000000000000000000"}],
+      "provenance": {"inputIds": ["input-imagery"], "engineVersion": "fixture-only", "policyRef": "policy-fixture-not-real"},
+      "validation": {"status": "valid", "validatorId": "fixture-validator", "version": "fixture-only", "checkedAt": "2026-09-21T00:00:50Z"},
+      "committedAt": "2026-09-21T00:00:55Z"
+    }
+  ]
+}
