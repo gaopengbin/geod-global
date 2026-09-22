@@ -48,6 +48,9 @@ import {
   Trash2,
 } from "lucide-react";
 import "./styles.css";
+import "./catalog.css";
+import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
+import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
 
 const nav = [
   ["Explore", Compass],
@@ -65,7 +68,6 @@ const domains = [
   ["3D", Box],
   ["Local Data", Folder],
 ];
-const bbox = [-122.55, 37.68, -122.32, 37.84];
 const outline =
   "361.566,269.521 546.275,268.408 545.100,106.733 360.789,107.848";
 const date = (value) =>
@@ -95,6 +97,11 @@ function downloadJSON(name, value) {
 }
 function Badge({ children, tone = "" }) {
   return <span className={"badge " + tone}>{children}</span>;
+}
+function SceneThumbnail({ src, alt }) {
+  const [failed, setFailed] = useState(false);
+  useEffect(() => setFailed(false), [src]);
+  return src && !failed ? <img src={src} alt={alt} onError={() => setFailed(true)} /> : <span className="catalog-thumbnail-missing" role="img" aria-label={alt + " unavailable"}>Preview unavailable</span>;
 }
 function Btn({
   children,
@@ -159,8 +166,20 @@ function Empty({ icon: Icon = Folder, title, children, action }) {
 }
 
 function App() {
-  const [catalog, setCatalog] = useState(null),
+  const [sampleCatalog, setSampleCatalog] = useState(null),
     [loadError, setLoadError] = useState(false);
+  const [catalogMode, setCatalogMode] = useState("sample");
+  const [liveCatalog, setLiveCatalog] = useState(null);
+  const [searchInput, setSearchInput] = useState(INITIAL_SEARCH);
+  const [liveState, setLiveState] = useState("idle");
+  const [liveError, setLiveError] = useState("");
+  const [appliedSearch, setAppliedSearch] = useState(null);
+  const searchRunner = useRef(null);
+  if (!searchRunner.current) searchRunner.current = createSearchRunner();
+  const live = catalogMode === "live";
+  const catalog = live ? liveCatalog : sampleCatalog;
+  const bbox = live ? (appliedSearch?.bbox || SAMPLE_BBOX) : SAMPLE_BBOX;
+  const areaName = live ? "Custom search area" : "San Francisco Bay";
   const [page, setPage] = useState(
     [...nav.map((n) => n[0]), "Settings", "Cloud"].includes(
       decodeURIComponent(location.hash.slice(1)),
@@ -173,6 +192,8 @@ function App() {
     [query, setQuery] = useState(""),
     [cloud, setCloud] = useState(60),
     [sort, setSort] = useState("date");
+  const [previewError, setPreviewError] = useState(false);
+  useEffect(() => setPreviewError(false), [selected?.thumbnail]);
   const [period, setPeriod] = useState("all"),
     [condition, setCondition] = useState("ready");
   const [compare, setCompare] = useState(false),
@@ -201,7 +222,8 @@ function App() {
         return r.json();
       })
       .then((d) => {
-        setCatalog(d);
+        d = normalizeSample(d);
+        setSampleCatalog(d);
         setSelected(
           d.scenes.find((s) => s.id === "S2C_10SEG_20250617_0_L2A") ||
             d.scenes[0],
@@ -211,6 +233,65 @@ function App() {
       .catch(() => setLoadError(true));
   };
   useEffect(load, []);
+  useEffect(() => () => searchRunner.current.cancel(), []);
+  const switchCatalog = (mode) => {
+    searchRunner.current.cancel();
+    setCatalogMode(mode);
+    setLiveState("idle");
+    setLiveError("");
+    setCompare(false);
+    setQuery("");
+    setPeriod("all");
+    setCondition("ready");
+    setZoom(1);
+    const first = mode === "sample" ? sampleCatalog?.scenes[0] : liveCatalog?.scenes[0];
+    setSelected(first || null);
+    setRecipeName(mode === "sample" ? "San Francisco · Sentinel-2" : "Custom area · Sentinel-2");
+  };
+  const runSearch = async (more = false, submittedInput = searchInput) => {
+    let submitted, url;
+    try {
+      submitted = more ? appliedSearch : validateSearch(submittedInput);
+      url = more ? liveCatalog?.next : searchURL(submitted);
+      if (!url) return;
+    } catch (error) { setLiveError(error.message); return; }
+    setLiveError("");
+    setLiveState(more ? "more" : "loading");
+    if (!more) {
+      setLiveCatalog(null);
+      setSelected(null);
+      setCompare(false);
+      setAppliedSearch(submitted);
+      setQuery("");
+      setZoom(1);
+    }
+    try {
+      const result = await searchRunner.current.run(url);
+      if (!result) return;
+      if (more) setLiveCatalog((old) => ({ ...result, query: old.query, scenes: [...new Map([...old.scenes, ...result.scenes].map((s) => [s.id, s])).values()] }));
+      else {
+        setLiveCatalog(result);
+        setSelected(result.scenes[0] || null);
+        setRecipeName("Custom area · " + (result.scenes[0]?.date.slice(0, 10) || "Sentinel-2"));
+      }
+      setLiveState("ready");
+    } catch (error) {
+      setLiveError(error.name === "AbortError" ? "Search cancelled." : error.name === "TimeoutError" ? "Earth Search did not respond within 30 seconds. Try again." : error.message);
+      setLiveState("error");
+    }
+  };
+  const cancelSearch = () => { searchRunner.current.cancel(); setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
+  const updateSearchField = (event) => {
+    const { name, value } = event.currentTarget;
+    setSearchInput((current) => ({ ...current, [name]: name === "cloud" || name === "limit" ? Number(value) : value }));
+  };
+  const submitSearch = (event) => {
+    event.preventDefault();
+    // Submit exactly the values visible in native form controls, including date pickers.
+    const submittedInput = Object.fromEntries(new FormData(event.currentTarget));
+    setSearchInput((current) => ({ ...current, ...submittedInput }));
+    runSearch(false, submittedInput);
+  };
   useEffect(() => {
     const change = () =>
       setPage(decodeURIComponent(location.hash.slice(1)) || "Explore");
@@ -295,32 +376,32 @@ function App() {
     ? scenes
         .filter(
           (s) =>
-            s.cloud <= cloud &&
+            (live || (s.cloud ?? 101) <= cloud) &&
             (s.id.toLowerCase().includes(query.toLowerCase()) ||
               s.date.includes(query)) &&
-            (period === "all" || Number(s.date.slice(8, 10)) <= 15),
+            (live || period === "all" || Number(s.date.slice(8, 10)) <= 15),
         )
         .sort((a, b) =>
-          sort === "cloud" ? a.cloud - b.cloud : b.date.localeCompare(a.date),
+          sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date),
         )
     : [];
-  const other =
-    scenes.find((s) => s.id === compareId) ||
-    scenes.find((s) => s.id !== selected?.id);
+  const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
+  const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
+  const comparing = compare && !!other;
   const recipe = () => ({
     schemaVersion: "design-prototype/v1",
     status: "proposed",
     name: recipeName,
-    area: { name: "San Francisco Bay", bbox, crs: "EPSG:4326" },
+    area: { name: areaName, bbox, crs: "EPSG:4326" },
     input: {
       provider: "earth-search",
       collection: "sentinel-2-l2a",
       itemId: selected.id,
       asset: "visual",
-      href: selected.assets.visual.href,
+      href: selected.assets.visual?.href,
     },
     processing: [{ operator: "clip_to_area", implemented: false }],
-    output: { format, crs: "EPSG:32610", resolution: 10 },
+    output: { format, crs: selected.crs, resolution: selected.gsd },
     execution: { mode: "design-only", requiresCoreIntegration: true },
     provenance: {
       catalogQuery: catalog.query,
@@ -358,8 +439,8 @@ function App() {
     [
       "Earth Search",
       "Sentinel-2 L2A",
-      "Public sample",
-      "7 scene records cached",
+      "Public catalog",
+      "Live search + 7 cached sample records",
     ],
     [
       "Copernicus Data Space",
@@ -386,7 +467,7 @@ function App() {
       "Native processing not connected",
     ],
   ];
-  if (loadError)
+  if (loadError && !live)
     return (
       <main className="boot">
         <Empty
@@ -402,7 +483,7 @@ function App() {
         </Empty>
       </main>
     );
-  if (!catalog || !selected)
+  if (!sampleCatalog && !live)
     return (
       <main className="boot">
         <span className="loader" />
@@ -463,12 +544,12 @@ function App() {
             <span className="project-icon">
               <Folder size={16} />
             </span>
-            <strong>Bay Area study</strong>
+            <strong>{live ? "Earth Search workspace" : "Bay Area study"}</strong>
             <ChevronRight size={14} />
             <span>{page}</span>
           </div>
           <div className="top-actions">
-            <Badge>Design preview</Badge>
+            <Badge>{live ? "Live catalog" : "Sample catalog"}</Badge>
             <button
               className="command-trigger"
               onClick={() => setModal("commands")}
@@ -491,7 +572,7 @@ function App() {
           </div>
         </header>
         {workspace ? (
-          <div className={"workspace " + (!inspector ? "no-inspector" : "")}>
+          <div className={"workspace " + (!inspector || !selected ? "no-inspector" : "")}>
             <aside className="discovery">
               <div className="panel-heading">
                 <div>
@@ -513,11 +594,15 @@ function App() {
               <button className="area-picker" onClick={() => setModal("area")}>
                 <MapPin size={17} />
                 <span>
-                  <strong>San Francisco Bay</strong>
-                  <small>Saved area · California, US</small>
+                  <strong>{areaName}</strong>
+                  <small>{live ? "WGS 84 · editable search bounds" : "Saved area · California, US"}</small>
                 </span>
                 <ChevronDown size={16} />
               </button>
+              <div className="catalog-switch" aria-label="Catalog mode">
+                <button aria-pressed={!live} onClick={() => switchCatalog("sample")}>Sample catalog</button>
+                <button aria-pressed={live} onClick={() => switchCatalog("live")}>Live catalog</button>
+              </div>
               <div
                 className="domain-tabs"
                 role="tablist"
@@ -539,6 +624,23 @@ function App() {
               {domain === "Satellite" ? (
                 <>
                   <div className="filters">
+                    {live && <form className="catalog-form" onSubmit={submitSearch}>
+                      <label>WGS 84 bounds · west, south, east, north
+                        <input name="bbox" aria-label="Search bounding box" value={searchInput.bbox} onChange={updateSearchField} />
+                      </label>
+                      <div className="catalog-dates">
+                        <label>From (UTC)<input name="start" aria-label="Search start date" type="date" value={searchInput.start} onInput={updateSearchField} onChange={updateSearchField} /></label>
+                        <label>Through (UTC)<input name="end" aria-label="Search end date" type="date" value={searchInput.end} onInput={updateSearchField} onChange={updateSearchField} /></label>
+                      </div>
+                      <label className="range-label"><span>Scene cloud cover ≤ {searchInput.cloud}%</span><input name="cloud" type="range" aria-label="Live maximum cloud cover" min="0" max="100" value={searchInput.cloud} onInput={updateSearchField} onChange={updateSearchField} /></label>
+                      <div className="catalog-search-actions">
+                        <label>Per page<select name="limit" aria-label="Scenes per page" value={searchInput.limit} onChange={updateSearchField}><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label>
+                        <Btn primary icon={Search} type="submit">Search catalog</Btn>
+                      </div>
+                      {(liveState === "loading" || liveState === "more") && <Btn type="button" onClick={cancelSearch}>Cancel search</Btn>}
+                    </form>}
+                    {liveError && <p className="catalog-error" role="alert">{liveError}</p>}
+                    {live && appliedSearch && <p className="catalog-query-note">{catalog ? "Showing" : "Requested"}: {appliedSearch.start} – {appliedSearch.end} · clouds ≤ {appliedSearch.cloud}% · [{appliedSearch.bbox.join(", ")}]</p>}
                     <label className="search-input">
                       <Search size={16} />
                       <input
@@ -548,7 +650,7 @@ function App() {
                         placeholder="Search scene ID or date"
                       />
                     </label>
-                    <div className="filter-row">
+                    {!live && <div className="filter-row">
                       <label className="select-wrap">
                         Date
                         <select
@@ -567,8 +669,8 @@ function App() {
                       >
                         <SlidersHorizontal size={16} />
                       </button>
-                    </div>
-                    <label className="range-label">
+                    </div>}
+                    {!live && <label className="range-label">
                       <span>Scene cloud cover</span>
                       <strong>≤ {cloud}%</strong>
                       <input
@@ -580,14 +682,14 @@ function App() {
                         value={cloud}
                         onChange={(e) => setCloud(Number(e.target.value))}
                       />
-                    </label>
+                    </label>}
                   </div>
                   <div className="results-heading">
                     <span>
                       <strong>
                         {condition === "empty" ? 0 : filtered.length}
                       </strong>{" "}
-                      scenes <span className="muted">· catalog snapshot</span>
+                      scenes <span className="muted">· {live ? "loaded results" : "catalog snapshot"}</span>
                     </span>
                     <select
                       aria-label="Sort scenes"
@@ -599,7 +701,7 @@ function App() {
                     </select>
                   </div>
                   <div className="scene-list">
-                    {condition === "error" ? (
+                    {live && liveState === "loading" ? <div className="loading-state" role="status"><span className="loader" />Searching Earth Search…</div> : live && !liveCatalog ? <Empty icon={Search} title={liveState === "error" ? "Catalog request failed" : "Search the live catalog"}>Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.</Empty> : condition === "error" ? (
                       <Empty
                         icon={AlertCircle}
                         title="Source unavailable"
@@ -635,6 +737,11 @@ function App() {
                               setPeriod("all");
                               setEnabled(true);
                               setCondition("ready");
+                              if (live) {
+                                const reset = { ...(appliedSearch || searchInput), cloud: 100 };
+                                setSearchInput({ ...reset, bbox: Array.isArray(reset.bbox) ? reset.bbox.join(", ") : reset.bbox });
+                                runSearch(false, reset);
+                              }
                             }}
                           >
                             Reset filters
@@ -648,15 +755,15 @@ function App() {
                         <button
                           key={s.id}
                           className={
-                            "scene " + (selected.id === s.id ? "selected" : "")
+                            "scene " + (selected?.id === s.id ? "selected" : "")
                           }
                           onClick={() => {
                             setSelected(s);
-                            setRecipeName("San Francisco · " + stamp(s.date));
+                            setRecipeName((live ? "Custom area · " : "San Francisco · ") + stamp(s.date));
                           }}
                         >
-                          <img
-                            src={"./" + s.thumbnail}
+                          <SceneThumbnail
+                            src={s.thumbnail}
                             alt={"True-color preview, " + date(s.date)}
                           />
                           <div className="scene-info">
@@ -671,10 +778,10 @@ function App() {
                             </span>
                             <small>
                               <Cloud size={12} />
-                              {s.cloud.toFixed(1)}%<span>10 m RGB</span>
+                              {s.cloud == null ? "Unknown" : s.cloud.toFixed(1) + "%"}<span>{s.gsd ? `${s.gsd} m RGB` : "RGB preview"}</span>
                             </small>
                           </div>
-                          {selected.id === s.id && (
+                          {selected?.id === s.id && (
                             <CheckCircle2
                               className="selection-check"
                               size={16}
@@ -684,9 +791,10 @@ function App() {
                       ))
                     )}
                   </div>
+                  {live && liveCatalog?.next && <div className="catalog-next"><Btn disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? "Loading more…" : "Load more scenes"}</Btn><span>Only loaded results are counted and sorted.</span></div>}
                   <div className="panel-foot">
                     <Database size={13} />
-                    <span>Earth Search · June 2025 snapshot</span>
+                    <span>Earth Search · {live ? "live HTTPS catalog" : "June 2025 snapshot"}</span>
                   </div>
                 </>
               ) : (
@@ -773,7 +881,7 @@ function App() {
                 </div>
               )}
             </aside>
-            <main className="map-workspace">
+            {selected ? <main className="map-workspace">
               <div className="map-toolbar">
                 <div className="segmented">
                   <button
@@ -785,12 +893,11 @@ function App() {
                   </button>
                   <button
                     className={compare ? "active" : ""}
+                    disabled={!comparisons.length}
+                    title={comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two previews with the same CRS, transform and dimensions"}
                     onClick={() => {
                       setCompare(true);
-                      if (compareId === selected.id)
-                        setCompareId(
-                          scenes.find((s) => s.id !== selected.id).id,
-                        );
+                      setCompareId(other?.id || "");
                     }}
                   >
                     <SlidersHorizontal size={15} />
@@ -812,11 +919,12 @@ function App() {
                   </button>
                 </div>
               </div>
+              {!comparisons.length && <p className="catalog-compare-note">Comparison needs another scene with the same CRS, transform and dimensions.</p>}
               <div className="imagery-canvas">
                 <svg
                   viewBox={`${500 - 500 / zoom} ${500 - 500 / zoom} ${1000 / zoom} ${1000 / zoom}`}
                   preserveAspectRatio="xMidYMid slice"
-                  aria-label="Real Sentinel-2 thumbnail preview with approximate saved area overlay"
+                  aria-label={live ? "Sentinel-2 provider thumbnail, no georeferenced area overlay" : "Real Sentinel-2 thumbnail preview with approximate saved area overlay"}
                 >
                   <defs>
                     <clipPath id="comparisonClip">
@@ -824,11 +932,12 @@ function App() {
                     </clipPath>
                   </defs>
                   <image
-                    href={"./" + selected.thumbnail}
+                    href={selected.thumbnail || undefined}
+                    onError={() => setPreviewError(true)}
                     width="1000"
                     height="1000"
                   />
-                  {showArea && (
+                  {showArea && !live && (
                     <g>
                       <polygon
                         points={outline}
@@ -873,7 +982,7 @@ function App() {
                     </g>
                   )}
                 </svg>
-                {compare && other && (
+                {comparing && (
                   <svg
                     className="compare-overlay"
                     style={{ clipPath: "inset(0 " + (100 - split) + "% 0 0)" }}
@@ -882,11 +991,12 @@ function App() {
                     aria-label="Reference scene thumbnail"
                   >
                     <image
-                      href={"./" + other.thumbnail}
+                      href={other.thumbnail}
+                      onError={() => { setCompare(false); setToast("The reference thumbnail could not load. Try another scene."); }}
                       width="1000"
                       height="1000"
                     />
-                    {showArea && (
+                    {showArea && !live && (
                       <polygon
                         points={outline}
                         fill="rgba(78,149,255,.16)"
@@ -898,7 +1008,7 @@ function App() {
                     )}
                   </svg>
                 )}
-                {compare && (
+                {comparing && (
                   <div className="compare-line" style={{ left: split + "%" }}>
                     <span>
                       <SlidersHorizontal size={19} />
@@ -906,17 +1016,17 @@ function App() {
                   </div>
                 )}
               </div>
-              {compare && (
+              {(previewError || !selected.thumbnail) && <div className="catalog-preview-unavailable" role="status"><ImageIcon size={25} /><strong>Preview unavailable</strong><span>The provider thumbnail could not load. Scene metadata and original assets are still available.</span><a href={selected.itemURL} target="_blank" rel="noreferrer">Open source metadata <ExternalLink size={13} /></a></div>}
+              {comparing && (
                 <div className="compare-controls">
                   <label>
                     Reference
                     <select
                       aria-label="Reference scene"
-                      value={compareId}
+                      value={other.id}
                       onChange={(e) => setCompareId(e.target.value)}
                     >
-                      {scenes
-                        .filter((s) => s.id !== selected.id)
+                      {comparisons
                         .map((s) => (
                           <option key={s.id} value={s.id}>
                             {date(s.date)}
@@ -960,8 +1070,10 @@ function App() {
                 <div className="control-separator" />
                 <button
                   className={"map-icon " + (showArea ? "control-active" : "")}
-                  aria-pressed={showArea}
+                  aria-pressed={showArea && !live}
                   aria-label="Toggle saved area"
+                  disabled={live}
+                  title={live ? "Live thumbnails are not georeferenced; the search box is not drawn over them" : "Show the sample area"}
                   onClick={() => setShowArea(!showArea)}
                 >
                   <SquareDashed size={18} />
@@ -969,15 +1081,15 @@ function App() {
               </div>
               <div className="scene-caption">
                 <Badge tone="on-map">SENTINEL-2 L2A</Badge>
-                <h2>San Francisco Bay</h2>
+                <h2>{live ? selected.properties["grid:code"] || "Selected observation" : areaName}</h2>
                 <p>
                   {date(selected.date)} <span>·</span>{" "}
-                  {selected.cloud.toFixed(1)}% scene cloud cover
+                  {selected.cloud == null ? "Unknown" : selected.cloud.toFixed(1) + "%"} scene cloud cover
                 </p>
               </div>
               <div className="map-attribution">
                 <span>
-                  Contains Copernicus Sentinel data (2025) · Earth Search
+                  Contains Copernicus Sentinel data ({selected.date.slice(0, 4)}) · Earth Search
                 </span>
                 <button onClick={() => setModal("provenance")}>
                   Thumbnail, not analytical data <Info size={12} />
@@ -986,7 +1098,7 @@ function App() {
               <div className="timeline">
                 <div className="timeline-label">
                   <span className="eyebrow">OBSERVATIONS</span>
-                  <strong>June 2025</strong>
+                  <strong>{live ? "Loaded scenes" : "June 2025"}</strong>
                 </div>
                 <div className="timeline-track">
                   {[...scenes].reverse().map((s) => (
@@ -998,7 +1110,7 @@ function App() {
                     >
                       <span className="date-line" />
                       <span className="observation-dot" />
-                      <small>{s.date.slice(8, 10)}</small>
+                      <small>{live ? s.date.slice(5, 10) : s.date.slice(8, 10)}</small>
                     </button>
                   ))}
                 </div>
@@ -1010,8 +1122,8 @@ function App() {
                   <Info size={16} />
                 </button>
               </div>
-            </main>
-            {inspector && (
+            </main> : <main className="catalog-blank"><Empty icon={Search} title={liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation"}>Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.</Empty></main>}
+            {inspector && selected && (
               <aside className="inspector">
                 <div className="inspector-heading">
                   <span className="eyebrow">DATASET DETAILS</span>
@@ -1026,8 +1138,8 @@ function App() {
                 <h2>Sentinel-2 L2A</h2>
                 <p className="muted">Surface reflectance collection</p>
                 <div className="preview-image">
-                  <img
-                    src={"./" + selected.thumbnail}
+                  <SceneThumbnail
+                    src={selected.thumbnail || undefined}
                     alt="Selected scene thumbnail"
                   />
                   <span>RGB PREVIEW</span>
@@ -1038,11 +1150,11 @@ function App() {
                     <dt>Acquired</dt>
                     <dd>{date(selected.date)}</dd>
                     <dt>Scene clouds</dt>
-                    <dd>{selected.cloud.toFixed(2)}%</dd>
+                    <dd>{selected.cloud == null ? "Unknown" : selected.cloud.toFixed(2) + "%"}</dd>
                     <dt>RGB resolution</dt>
-                    <dd>10 meters</dd>
+                    <dd>{selected.gsd ? `${selected.gsd} meters` : "Not specified"}</dd>
                     <dt>Source grid</dt>
-                    <dd className="mono">EPSG:32610</dd>
+                    <dd className="mono">{selected.crs || "Not specified"}</dd>
                   </dl>
                   <p className="scene-id mono">{selected.id}</p>
                 </div>
@@ -1050,7 +1162,7 @@ function App() {
                   <h3>Area & output</h3>
                   <dl>
                     <dt>Saved area</dt>
-                    <dd>San Francisco Bay</dd>
+                    <dd>{areaName}</dd>
                     <dt>Selection</dt>
                     <dd>Bounding box</dd>
                     <dt>Processing</dt>
@@ -1074,25 +1186,26 @@ function App() {
                       <small>Catalog by Earth Search</small>
                     </div>
                   </div>
-                  <button
+                    <button
                     className="text-link"
+                    disabled={!selected}
                     onClick={() => setModal("provenance")}
                   >
                     View metadata & source <ArrowUpRight size={14} />
                   </button>
                 </div>
                 <div className="inspector-bottom">
+                  <DownloadAssetButton scene={selected} />
                   <Btn
-                    primary
                     icon={Download}
                     onClick={() => setModal("export")}
                   >
-                    Prepare export
+                    Review processing plan
                   </Btn>
                   <Btn icon={Workflow} onClick={() => setModal("recipe")}>
                     Save as recipe
                   </Btn>
-                  <p>Export flow is a design simulation.</p>
+                  <p>Processing plans and recipes remain design simulations.</p>
                 </div>
               </aside>
             )}
@@ -1110,18 +1223,19 @@ function App() {
                       icon={Plus}
                       onClick={() => {
                         go("Explore");
-                        setModal("export");
                       }}
                     >
                       New task
                     </Btn>
                   }
                 />
+                <RuntimeTasks />
+                <details className="design-simulations">
+                  <summary>Design simulations below · {tasks.length} sample tasks</summary>
                 <div className="notice">
                   <Info size={17} />
                   <span>
-                    Design simulation. No raster downloads or processing run
-                    here.
+                    These sample tasks simulate processing. Real downloads appear above.
                   </span>
                 </div>
                 {!tasks.length ? (
@@ -1235,6 +1349,7 @@ function App() {
                     ))}
                   </div>
                 )}
+                </details>
               </>
             ) : page === "My Data" ? (
               <>
@@ -1243,6 +1358,9 @@ function App() {
                   title="My Data"
                   sub="Your outputs, with their story intact."
                 />
+                <RuntimeLibrary />
+                <details className="design-simulations">
+                  <summary>Design simulation reports · {outputs.length} reports</summary>
                 {!outputs.length ? (
                   <Empty
                     title="A place for finished work"
@@ -1261,9 +1379,7 @@ function App() {
                       <article className="output-card" key={o.id}>
                         <img
                           src={
-                            "./" +
-                            (scenes.find((s) => s.id === o.sceneId) || selected)
-                              .thumbnail
+                            (sampleCatalog?.scenes.find((s) => s.id === o.sceneId) || scenes.find((s) => s.id === o.sceneId))?.thumbnail
                           }
                           alt="Source scene thumbnail, not exported output"
                         />
@@ -1299,6 +1415,7 @@ function App() {
                     ))}
                   </div>
                 )}
+                </details>
               </>
             ) : page === "Recipes" ? (
               <>
@@ -1307,7 +1424,7 @@ function App() {
                   title="Recipes"
                   sub="Keep the choices. Run them again when the data changes."
                   action={
-                    <Btn icon={Plus} onClick={() => setModal("recipe")}>
+                    <Btn icon={Plus} disabled={!selected} onClick={() => setModal("recipe")}>
                       Create recipe
                     </Btn>
                   }
@@ -1322,7 +1439,7 @@ function App() {
                     icon={Workflow}
                     title="Make a good workflow repeatable"
                     action={
-                      <Btn primary onClick={() => setModal("recipe")}>
+                      <Btn primary disabled={!selected} onClick={() => setModal("recipe")}>
                         Save current selection
                       </Btn>
                     }
@@ -1348,7 +1465,7 @@ function App() {
                             <td>
                               <strong>{r.name}</strong>
                               <small className="block">
-                                San Francisco Bay · fixed scene
+                                {r.area?.name || "Saved area"} · fixed scene
                               </small>
                             </td>
                             <td>Sentinel-2 L2A</td>
@@ -1366,6 +1483,8 @@ function App() {
                                 </Btn>
                                 <Btn
                                   icon={Play}
+                                  disabled={!scenes.some((s) => s.id === r.input.itemId)}
+                                  title="Review is available when the saved scene is loaded in the current catalog"
                                   onClick={() => {
                                     setSelected(
                                       scenes.find(
@@ -1427,7 +1546,7 @@ function App() {
                           <td>
                             {i === 0 ? (
                               <Btn onClick={() => setEnabled(!enabled)}>
-                                {enabled ? "Disable sample" : "Enable sample"}
+                                {enabled ? "Hide source results" : "Show source results"}
                               </Btn>
                             ) : (
                               <Btn onClick={() => setModal("planned")}>
@@ -1450,9 +1569,10 @@ function App() {
                   </p>
                   <button
                     className="text-link"
+                    disabled={!selected}
                     onClick={() => setModal("provenance")}
                   >
-                    Inspect this sample’s evidence <ArrowUpRight size={14} />
+                    Inspect selected scene evidence <ArrowUpRight size={14} />
                   </button>
                 </div>
               </>
@@ -1574,13 +1694,13 @@ function App() {
         <footer className="statusbar">
           <span>
             <span className="status-dot" />
-            Local design preview <span className="status-divider">/</span> No
+            Local workspace <span className="status-divider">/</span> No
             account required
           </span>
           <span>
             {tasks.filter((t) => t.status === "Running").length
               ? `${tasks.filter((t) => t.status === "Running").length} simulation running`
-              : "Saved area persists across views"}
+              : live ? "Live catalog · original source assets" : "Sample catalog · cached scene metadata"}
             <span className="status-divider">/</span>
             <button onClick={() => setModal("about")}>Prototype 0.1</button>
           </span>
@@ -1614,7 +1734,7 @@ function App() {
           onClose={() => setModal(null)}
           wide={modal === "export"}
         >
-          {modal === "export" ? (
+          {modal === "export" && selected ? (
             <>
               <div className="dialog-body export-layout">
                 <div>
@@ -1636,14 +1756,14 @@ function App() {
                   <label className="field">
                     Coordinate reference
                     <input
-                      value="EPSG:32610 · WGS 84 / UTM zone 10N"
+                      value={selected.crs || "Source CRS not specified"}
                       readOnly
                     />
                   </label>
                   <div className="two-fields">
                     <label className="field">
                       Pixel size
-                      <input value="10 meters" readOnly />
+                      <input value={selected.gsd ? `${selected.gsd} meters` : "Not specified"} readOnly />
                     </label>
                     <label className="field">
                       Processing location
@@ -1689,7 +1809,7 @@ function App() {
                 </Btn>
               </div>
             </>
-          ) : modal === "recipe" ? (
+          ) : modal === "recipe" && selected ? (
             <>
               <div className="dialog-body">
                 <label className="field">
@@ -1702,11 +1822,11 @@ function App() {
                 </label>
                 <dl>
                   <dt>Area</dt>
-                  <dd>San Francisco Bay</dd>
+                  <dd>{areaName}</dd>
                   <dt>Fixed observation</dt>
                   <dd>{date(selected.date)}</dd>
                   <dt>Planned output</dt>
-                  <dd>{format} · 10 meters</dd>
+                  <dd>{format} · {selected.gsd ? `${selected.gsd} meters` : "source resolution"}</dd>
                 </dl>
                 <div className="notice">
                   Saved locally. No credentials are included. This design recipe
@@ -1727,10 +1847,10 @@ function App() {
             </>
           ) : modal === "area" ? (
             <div className="dialog-body">
-              <Badge tone="blue">SAVED BOUNDING BOX</Badge>
-              <h3>San Francisco Bay</h3>
+              <Badge tone="blue">{live ? "SEARCH BOUNDING BOX" : "SAVED BOUNDING BOX"}</Badge>
+              <h3>{areaName}</h3>
               <p>
-                The same area follows you through every data category and task.
+                {live ? "These are the last submitted search bounds. Edit the coordinates in Live catalog to search a new area." : "The sample workspace uses the following saved study area."}
               </p>
               <dl>
                 {["West", "South", "East", "North"].map((name, i) => (
@@ -1741,16 +1861,14 @@ function App() {
                 ))}
               </dl>
               <p className="muted">
-                WGS 84 coordinates. This prototype uses one fixed research area.
-                The thumbnail overlay is projected to the source UTM grid and is
-                for orientation only.
+                {live ? "WGS 84 coordinates. The query area is not drawn over the provider thumbnail because this preview does not perform georeferencing." : "WGS 84 coordinates. The sample thumbnail overlay is projected to the source UTM grid and is for orientation only."}
               </p>
               <Btn
                 icon={Download}
                 onClick={() =>
-                  showJSON("san-francisco-design-area.geojson", {
+                  showJSON("geod-search-area.geojson", {
                     type: "Feature",
-                    properties: { name: "San Francisco Bay", fixture: true },
+                    properties: { name: areaName, fixture: !live },
                     geometry: {
                       type: "Polygon",
                       coordinates: [
@@ -1769,15 +1887,15 @@ function App() {
                 Download area GeoJSON
               </Btn>
             </div>
-          ) : modal === "provenance" ? (
+          ) : modal === "provenance" && selected && catalog ? (
             <div className="dialog-body">
-              <Badge tone="green">REAL CATALOG SNAPSHOT</Badge>
+              <Badge tone="green">{live ? "LIVE CATALOG RESPONSE" : "REAL CATALOG SNAPSHOT"}</Badge>
               <h3>{selected.id}</h3>
               <p>{catalog.attribution}</p>
               <dl>
                 <dt>Acquisition</dt>
                 <dd>{date(selected.date)}</dd>
-                <dt>Snapshot fetched</dt>
+                <dt>Metadata fetched</dt>
                 <dd>{date(catalog.retrievedAt)}</dd>
                 <dt>Preview</dt>
                 <dd>Provider JPEG thumbnail</dd>
@@ -1785,13 +1903,11 @@ function App() {
                 <dd>Full scene, not AOI-specific</dd>
               </dl>
               <p>
-                The scene metadata and thumbnails are real. Filtering is local
-                to seven saved records. This preview does not perform live
-                searches, scientific band math or GeoTIFF export.
+                {live ? "Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. Provider thumbnails are visual previews; comparison requires matching source grids and does not perform scientific band math." : "Scene metadata and thumbnails come from seven saved catalog records. Sample filters run locally. Download original asset retrieves the remote source file; processing plans are design simulations."}
               </p>
-              <p className="mono hash">SHA-256: {selected.sha256}</p>
+              {selected.sha256 && <p className="mono hash">Cached preview SHA-256: {selected.sha256}</p>}
               <div className="link-stack">
-                <a href={selected.source} target="_blank" rel="noreferrer">
+                <a href={selected.source || selected.itemURL} target="_blank" rel="noreferrer">
                   Original preview asset <ExternalLink size={14} />
                 </a>
                 <a href={catalog.query} target="_blank" rel="noreferrer">
@@ -1817,8 +1933,7 @@ function App() {
               <div className="command-results">
                 {[
                   ...nav.map(([n]) => [n, () => go(n)]),
-                  ["Prepare export", () => setModal("export")],
-                  ["Save recipe", () => setModal("recipe")],
+                  ...(selected ? [["Review processing plan", () => setModal("export")], ["Save recipe", () => setModal("recipe")]] : []),
                   ["Cloud", () => go("Cloud")],
                   ["Settings", () => go("Settings")],
                 ]
@@ -1962,24 +2077,26 @@ function App() {
               <span className="brand-mark">
                 <Layers />
               </span>
-              <h3>GeoD Global · design preview</h3>
+              <h3>GeoD Global · local workspace</h3>
               <p>
-                A local-first geospatial data workspace. This prototype makes
-                the full information architecture reviewable before integrating
-                the shared desktop core.
+                A local-first geospatial data workspace with live catalog search
+                and original asset downloads. Planned processing tools remain
+                visible as explicit design simulations.
               </p>
               <ul>
-                <li>Real Sentinel-2 catalog records and thumbnails.</li>
+                <li>Live Earth Search queries and a separate cached sample catalog.</li>
                 <li>
                   Working filters, comparison, recipes and local persistence.
                 </li>
-                <li>Explicit simulations for export and task execution.</li>
+                <li>Original source asset downloads with local task history.</li>
+                <li>Explicit simulations for raster processing and recipe execution.</li>
                 <li>Six data domains, with unconnected adapters marked.</li>
                 <li>Cloud features and commercial terms remain proposals.</li>
               </ul>
               <p className="muted">
-                Inter is bundled locally. No telemetry or remote requests are
-                made during normal prototype use.
+                Inter and sample previews are bundled locally. Live searches,
+                remote previews and asset downloads contact their source providers.
+                This workspace sends no analytics.
               </p>
             </div>
           )}
@@ -2000,4 +2117,4 @@ function PageHeading({ eyebrow, title, sub, action }) {
     </div>
   );
 }
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(<RuntimeProvider><App /></RuntimeProvider>);

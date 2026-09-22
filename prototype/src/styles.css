@@ -759,6 +759,10 @@ kbd {
   bottom: 147px;
   left: 24px;
   color: white;
+  background: #14212be8;
+  border-radius: 8px;
+  padding: 12px 16px;
+  max-width: calc(100% - 48px);
   pointer-events: none;
   text-shadow: 0 2px 16px #0009;
 }

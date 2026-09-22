@@ -1,6 +1,15 @@
-# GeoD Global — 可交互设计原型
+# GeoD Global — 工作台前端
 
-2026-09-21。用于审阅完整产品的信息架构和代表性交互，不是已接入 Rust Core 的桌面发行版。
+2026-09-22。沿用已认可的设计方向，已接入实时目录与Rust文件下载任务。完整产品仍在实施；设计模拟继续单独标记。
+
+## 本轮真实能力
+
+- Live catalog直接查询Earth Search：可编辑WGS84范围、UTC日期、云量、分页，取消查询或恢复失败。
+- 真实缩略图预览，只对相同源网格启用比较；实时缩略图不叠加未经验证的区域轮廓。
+- Download source asset通过本机Rust服务或Tauri命令下载完整源资产，记录字节数、SHA-256、来源及本地路径，支持取消和从头重试。
+- Tasks与My Data展示真实记录；原设计模拟收在独立折叠区。真实文件记录由Rust持久化，不依赖浏览器localStorage。
+
+完整启动和验证命令见[根README](../README.md)。浏览器模式需另开终端运行 `npm run runtime`；桌面版直接调用同一核心。
 
 ## 打开
 
@@ -14,7 +23,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 跨机器重建：Node.js 22.12+，在仓库根目录执行 `npm ci`、`npm run build`、`npm run preview`。根 `package-lock.json` 固定依赖，Vite 只使用本仓库安装的依赖。已移除早期原型借用国内版依赖目录的临时设置；本仓库不需要国内版源码或本机路径。
 
-## 已实现的原型交互
+## 保留的设计原型交互
 
 - 八个入口：Explore、Workspace、My Data、Recipes、Tasks、Sources、Cloud、Settings。
 - 六个数据分类，跨分类保留同一个样例区域；未接入分类明确展示计划状态。
@@ -34,11 +43,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 来源：[Earth Search 查询](https://earth-search.aws.element84.com/v1/search?collections=sentinel-2-l2a&bbox=-122.55,37.68,-122.32,37.84&datetime=2025-06-01T00:00:00Z/2025-06-30T23:59:59Z&limit=8)、[AWS 数据集与条款索引](https://registry.opendata.aws/sentinel-2-l2a-cogs/)。署名：Contains Copernicus Sentinel data (2025). Earth Search / Element 84.
 
-字体 Inter 随包附带，许可在 `public/fonts/LICENSE-Inter.txt`。正常操作只访问本地样例，不发送分析事件；打开来源链接会访问相应网站。
+字体 Inter 随包附带，许可在 `public/fonts/LICENSE-Inter.txt`。样本模式浏览本地记录；Live catalog及源文件下载访问Earth Search与Sentinel COG存储。不发送分析事件；打开来源链接会访问相应网站。
 
 ## 能力边界
 
-不包含实时检索、GeoTIFF/COG 实际下载、重投影、科学指数、真实故障恢复、3D renderer、云账户或支付。任务完成只产生 **simulation report**，没有栅格成果。
+实时检索与完整源文件下载已实现。重投影、科学指数、区域裁剪、3D renderer、云账户、支付与字节级断点续传尚未实现。重启后运行中的下载标为interrupted，可手动从头重试。设计模拟任务仍只产生 **simulation report**，不能当作栅格成果。
 
 原型 JSON 使用 `design-prototype/v1`，不能交给当前 CLI 或把它当作 `contracts/` 的拟议 Core 契约。后续转换需完成对象 ID、固定资产版本、授权策略、资源预算、操作图和验证规则映射。
 

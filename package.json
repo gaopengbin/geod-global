@@ -15,15 +15,22 @@
     "react-dom": "19.2.5"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "2.11.5",
     "vite": "8.0.16"
   },
   "scripts": {
     "dev": "vite prototype --config prototype/vite.config.mjs",
     "build": "vite build prototype --config prototype/vite.config.mjs",
     "preview": "vite preview prototype --config prototype/vite.config.mjs",
+    "runtime": "cargo run --locked -p geod-runtime -- serve --data-dir .geod-global --port 4318",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build --debug --no-bundle",
+    "test": "node --test prototype/src/*.test.js",
+    "test:runtime": "cargo test --locked -p geod-runtime",
     "check:isolation": "node scripts/verify-repository.mjs",
     "check:contracts": "python GeoD-Global-Spec/contracts/verify_contracts.py",
     "check": "npm run check:isolation && npm run check:contracts",
-    "verify": "npm run check && npm run build"
+    "verify": "npm run check && npm test && npm run build",
+    "verify:all": "npm run verify && npm run test:runtime"
   }
 }

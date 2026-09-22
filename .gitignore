@@ -1,4 +1,7 @@
 node_modules/
+target/
+src-tauri/gen/
+.geod-global/
 dist/
 .vite/
 .cache/

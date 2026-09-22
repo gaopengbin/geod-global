@@ -1,0 +1,15 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main-window",
+  "description": "Only the bundled main window can inspect and control GeoD Global jobs.",
+  "windows": ["main"],
+  "permissions": [
+    "allow-health",
+    "allow-list-jobs",
+    "allow-create-job",
+    "allow-cancel-job",
+    "allow-retry-job",
+    "allow-reveal-job",
+    "allow-open-source"
+  ]
+}

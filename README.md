@@ -2,7 +2,9 @@
 
 独立海外桌面产品仓库。产品目标是围绕同一区域发现、预览、比较、获取、处理和导出空间数据，并保留来源及可重复工作流。
 
-**当前状态：已建立独立仓库和可交互设计原型。尚未接入真实桌面执行核心，模拟任务不能当作数据处理成果。**
+**当前状态：独立工程已接入 Earth Search 实时检索和 Rust 文件下载任务，Tauri 桌面壳与浏览器调试入口复用同一执行核心。完整产品规格仍在逐步实施。**
+
+已实现按WGS84范围、UTC日期与云量检索 Sentinel-2，预览和比较兼容网格的场景，下载原始SCL/真彩色GeoTIFF或JPEG缩略图，取消、从头重试、持久化任务及查看成果来源与SHA-256。样本目录、设计模拟和真实任务有明确区别。当前下载整景原始资产；裁剪、重投影、科学计算和断点续传尚未实现。
 
 ## 仓库边界
 
@@ -20,7 +22,24 @@ npm ci
 npm run dev
 ```
 
-打开 <http://127.0.0.1:4317/>。生产预览：
+打开 <http://127.0.0.1:4317/>。实时目录无需登录；浏览器中的真实文件下载另开一个终端运行（需要Rust 1.91.1+）：
+
+```sh
+npm run runtime
+```
+
+服务只监听 `127.0.0.1:4318`，浏览器来源固定为 `http://127.0.0.1:4317`，任务与文件保存于本仓忽略目录 `.geod-global/`。仅允许已支持的 Sentinel COG 公共资产，每文件最多512 MiB。关闭并重新启动服务后，未完成任务标为 interrupted，可手动从头重试。
+
+桌面开发与本机调试构建：
+
+```sh
+npm run desktop:dev
+npm run desktop:build
+```
+
+桌面版直接调用Rust核心，不需要单独启动4318服务，数据保存在独立应用ID `xyz.laogao.geod.global` 的本地应用数据目录。`desktop:build` 生成调试版可执行文件，尚不是签名发行版或安装包；平台依赖和命令见 [桌面说明](src-tauri/README.md)。
+
+生产资源预览：
 
 ```sh
 npm run build
@@ -38,7 +57,7 @@ python -m pip install -r requirements-dev.txt
 npm run verify
 ```
 
-`verify` 检查四个关键依赖的真实解析路径、七张真实样本的 SHA-256、规格相对链接、拟议契约正反例和 Vite 构建。契约不是当前生产 API。`verification-result.json` 是本地生成文件，运行校验后可查看。
+`verify` 检查四个关键依赖的真实解析路径、七张真实样本的 SHA-256、规格相对链接、拟议契约正反例、目录与下载客户端测试和 Vite 构建。`npm run test:runtime` 运行Rust下载与HTTP边界测试；`npm run verify:all` 同时运行两部分。契约草案不是当前生产API；本轮运行时接口见 [runtime说明](crates/geod-runtime/README.md)。
 
 GitHub Actions 已配置 Windows/Linux 检查，但在没有推送并完成运行前，不代表远程 CI 已通过。
 
@@ -51,6 +70,8 @@ prototype/             已认可视觉方向的交互原型
   public/              真实场景快照、缩略图及字体许可
   qa/                  原型视觉验收截图
 scripts/               独立依赖与样本检查
+crates/geod-runtime/    持久化下载任务与loopback调试服务
+src-tauri/             独立桌面壳，直接调用同一Rust核心
 .github/workflows/     独立构建检查
 ```
 
@@ -58,7 +79,7 @@ scripts/               独立依赖与样本检查
 
 ## 样本、许可和发布状态
 
-原型使用本地保存的七条 Sentinel-2 元数据和提供商 JPEG 缩略图。来源、原始链接及校验值见 `prototype/public/samples/manifest.json`；Inter 字体许可随包保存。开发及预览无需拉取真实大影像或登录云账号。
+样本模式使用本地保存的七条 Sentinel-2 元数据和提供商 JPEG 缩略图。来源、原始链接及校验值见 `prototype/public/samples/manifest.json`；Inter 字体许可随包保存。Live catalog会访问Earth Search，预览远程缩略图；点击下载会获取选定的真实源文件。缩略图不能用于科学分析，应用目前只做传输大小、文件签名和SHA-256记录，不宣称已全面验证栅格结构或数值。
 
 新产品代码的对外许可和商业包装尚待决定，根包以 `private: true` / `UNLICENSED` 防止被误当作已发布公共软件包。这不改变国内版或第三方资产已有权利。今后引入共享库必须保留其许可通知。
 

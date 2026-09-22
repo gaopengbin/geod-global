@@ -1,0 +1,35 @@
+{
+  "itemId": "S2C_10SEG_20250707_0_L2A",
+  "assetKey": "scl",
+  "bytes": 2362143,
+  "sha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+  "driver": "GTiff",
+  "width": 5490,
+  "height": 5490,
+  "bands": 1,
+  "crs": "EPSG:32610",
+  "resolution": [
+    20.0,
+    20.0
+  ],
+  "transform": [
+    20.0,
+    0.0,
+    499980.0,
+    0.0,
+    -20.0,
+    4200000.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "dtype": "uint8",
+  "nodata": 0.0,
+  "decodedBand1Pixels": 30140100,
+  "valueRange": [
+    2,
+    10
+  ],
+  "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2025/7/S2C_10SEG_20250707_0_L2A/SCL.tif",
+  "scope": "Independent QA read of this downloaded artifact; not a built-in scientific validator"
+}
