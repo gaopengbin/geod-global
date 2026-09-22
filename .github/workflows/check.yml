@@ -47,9 +47,9 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
+          cache-dependency-path: requirements-dev.txt
       - uses: dtolnay/rust-toolchain@3920daf79df8fb8df1dbef6e64563e2901a73745 # 1.91.1
         with:
-          toolchain: 1.91.1
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
