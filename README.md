@@ -49,7 +49,7 @@ npm run desktop:build
 
 桌面版直接调用Rust核心，不需要单独启动4318服务，数据保存在独立应用ID `xyz.laogao.geod.global` 的本地应用数据目录。`desktop:build` 生成调试版可执行文件，尚不是签名发行版或安装包；平台依赖和命令见 [桌面说明](src-tauri/README.md)。
 
-Windows便携包／安装包的构建脚本、第三方许可收集、源码与成果校验及发行门禁见[Windows打包说明](docs/releases/windows-packaging.md)。脚本或CI配置存在不代表已产出正式发行包；实际构建结论以[本轮记录](GeoD-Global-Spec/12-Workspace-Agent-and-Distribution.md)及生成的manifest为准。签名、干净机器安装／卸载验收和公开发布仍需分别完成。
+Windows便携ZIP与NSIS安装器已从干净提交生成，逐文件校验、实际包CLI裁剪流程和桌面进程启动检查通过；文件位置与SHA-256见[本地评估包验收](docs/releases/2026-09-22-windows-artifact-acceptance.md)。重建、第三方许可收集和校验流程见[Windows打包说明](docs/releases/windows-packaging.md)。这些是未签名的本地评估产物；原生桌面交互、干净机器安装／卸载、签名和公开发布仍需分别完成。
 
 生产资源预览：
 

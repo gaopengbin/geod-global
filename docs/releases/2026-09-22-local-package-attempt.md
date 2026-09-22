@@ -1,5 +1,7 @@
 # Local Windows package attempt — 2026-09-22
 
+Follow-up: the later clean-source build succeeded. See the [artifact acceptance record](2026-09-22-windows-artifact-acceptance.md) for actual outputs and the remaining release gates.
+
 Historical status at the initial attempt: **packaging implementation prepared; no
 final desktop distribution package produced at that point**. This note preserves
 the failed attempt; successful later packages are identified by their generated

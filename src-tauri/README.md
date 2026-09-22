@@ -49,6 +49,11 @@ the repository packaging script owns this retention policy and the shared payloa
 its NSIS intent is still declared in `tauri.conf.json`. See the complete
 [Windows packaging guide](../docs/releases/windows-packaging.md).
 
+The clean-source local evaluation ZIP and NSIS installer have now been built and
+verified. See the [2026-09-22 artifact acceptance record](../docs/releases/2026-09-22-windows-artifact-acceptance.md)
+for exact hashes, the packaged CLI workflow and desktop process-startup result.
+Native UI/IPC interaction and install/uninstall acceptance remain separate checks.
+
 ## Earlier development startup evidence (2026-09-22)
 
 - `cargo build --locked -p geod-global-desktop --features custom-protocol` passed
