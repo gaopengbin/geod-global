@@ -1,28 +1,70 @@
 name: Repository checks
+
 on:
   push:
+    branches: ['**']
   pull_request:
+  workflow_call:
+
 permissions:
   contents: read
+
 jobs:
-  verify:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+  workflows:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Validate GitHub Actions workflows
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/actionlint.tar.gz" https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  $RUNNER_TEMP/actionlint.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -color
+
+  verify:
+    name: Verify (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    env:
+      CARGO_BUILD_JOBS: 2
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: npm
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
-      - run: npm ci
+          cache: pip
+      - uses: dtolnay/rust-toolchain@3920daf79df8fb8df1dbef6e64563e2901a73745 # 1.91.1
+        with:
+          toolchain: 1.91.1
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+        with:
+          shared-key: checks
+      - run: npm ci --no-fund
       - run: python -m pip install -r requirements-dev.txt
+      - run: python scripts/release.py check
+      - run: python scripts/package-windows.test.py
+      - run: python scripts/release.test.py
+      - run: cargo fmt --all --check
       - run: npm run verify
-      - uses: dtolnay/rust-toolchain@1.91.1
       - run: cargo test --locked -p geod-runtime
+      - if: runner.os == 'Linux'
+        run: cargo clippy --locked -p geod-runtime --all-targets -- -D warnings
       - if: runner.os == 'Windows'
-        run: cargo check --locked -p geod-global-desktop
+        run: cargo test --locked -p geod-global-desktop --features custom-protocol
+      - if: runner.os == 'Windows'
+        run: cargo clippy --locked --workspace --all-targets --features geod-global-desktop/custom-protocol -- -D warnings

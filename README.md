@@ -71,7 +71,7 @@ npm run verify
 
 `verify` 检查四个关键依赖的真实解析路径、七张真实样本的 SHA-256、规格相对链接、拟议契约和当前可执行配方Schema正反例、多语言、目录与下载/栅格/处理客户端、地图几何测试和 Vite 构建。`npm run test:runtime` 运行Rust下载、栅格读取/裁剪、配方持久化、像元、交付包、诊断、MCP与HTTP边界测试；`npm run verify:all` 同时运行两部分。完整工作区与桌面测试可运行 `cargo test --locked --workspace`。契约草案不是当前生产API；本轮运行时接口见 [runtime说明](crates/geod-runtime/README.md)。
 
-GitHub Actions 已配置 Windows/Linux 检查，但在没有推送并完成运行前，不代表远程 CI 已通过。
+GitHub Actions 已配置分支／PR 的 Windows/Linux 检查、手动 Windows ZIP／NSIS 构建和 `v*` 标签预发布；发布会校验版本、干净提交、构建来源及服务器上的产物哈希。使用方式与失败恢复见[提交和发布自动化](docs/releases/automation.md)。配置存在不代表远程 CI 已通过，应以实际运行记录为准。
 
 ## 目录
 
@@ -98,4 +98,4 @@ src-tauri/             独立桌面壳，直接调用同一Rust核心
 
 新产品代码的对外许可和商业包装尚待决定，根包以 `private: true` / `UNLICENSED` 防止被误当作已发布公共软件包。这不改变国内版或第三方资产已有权利。今后引入共享库必须保留其许可通知。
 
-本地仓库初始化和提交不等于创建或发布了 GitHub 仓库。远程地址为空时，内容仍仅保存在本机。
+独立远程仓库为 [gaopengbin/geod-global](https://github.com/gaopengbin/geod-global)，创建时为私有仓库。GitHub 源码访问、Actions 产物与 Release 下载均受仓库权限控制；公开发布和更改源码许可是另外的决定。

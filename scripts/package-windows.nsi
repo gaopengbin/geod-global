@@ -11,7 +11,7 @@ InstallDir "$LOCALAPPDATA\Programs\GeoD Global"
 InstallDirRegKey HKCU "${UNINSTALL_KEY}" "InstallLocation"
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
-VIProductVersion "${APP_VERSION}.0"
+VIProductVersion "${APP_NUMERIC_VERSION}"
 VIAddVersionKey "ProductName" "GeoD Global"
 VIAddVersionKey "FileDescription" "GeoD Global unsigned local evaluation installer"
 VIAddVersionKey "FileVersion" "${APP_VERSION}"

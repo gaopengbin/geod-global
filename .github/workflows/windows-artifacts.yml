@@ -2,46 +2,72 @@ name: Windows evaluation artifacts
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
 
 jobs:
+  checks:
+    uses: ./.github/workflows/check.yml
+
   package:
-    runs-on: windows-latest
-    timeout-minutes: 45
+    needs: checks
+    runs-on: windows-2025
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: 2
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: npm
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
-      - uses: dtolnay/rust-toolchain@1.91.1
-      - run: npm ci
-      - run: python -m pip install -r requirements-dev.txt
-      - run: npm run verify
-      - run: cargo test --locked -p geod-runtime
-      - run: cargo test --locked -p geod-global-desktop --features custom-protocol
-      - run: python scripts/package-windows.test.py
-      - name: Build unsigned portable evaluation package
+      - uses: dtolnay/rust-toolchain@3920daf79df8fb8df1dbef6e64563e2901a73745 # 1.91.1
+        with:
+          toolchain: 1.91.1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+        with:
+          shared-key: windows-release
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .verification/license-cache
+          key: license-texts-v1-${{ hashFiles('Cargo.lock', 'package-lock.json', 'scripts/package-windows.py') }}
+      - run: npm ci --no-fund
+      - name: Require a clean versioned source checkout
         shell: pwsh
-        run: ./scripts/package-windows.ps1 -Profile release -Installer none
-      - name: Select completed output
+        run: python scripts/release.py check --commit "$env:GITHUB_SHA" --require-clean
+      - name: Prepare verified portable NSIS compiler
+        shell: pwsh
+        run: ./scripts/setup-nsis.ps1
+      - name: Build unsigned Windows ZIP and per-user installer
+        shell: pwsh
+        run: python scripts/package-windows.py --profile release --installer nsis --output "$env:RUNNER_TEMP/geod-packages"
+      - name: Verify provenance and stage only release assets
         id: artifacts
         shell: pwsh
-        run: |
-          $package = Get-ChildItem -LiteralPath '.verification/packages' -Directory | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-          if (-not $package -or -not (Test-Path -LiteralPath (Join-Path $package.FullName 'artifacts.json'))) { throw 'No completed package manifest' }
-          "directory=$($package.FullName)" >> $env:GITHUB_OUTPUT
-      - uses: actions/upload-artifact@v4
+        run: python scripts/release.py stage --package-root "$env:RUNNER_TEMP/geod-packages" --destination "$env:RUNNER_TEMP/geod-distribution" --commit "$env:GITHUB_SHA"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: geod-global-windows-x64-unsigned
-          path: |
-            ${{ steps.artifacts.outputs.directory }}/*.zip
-            ${{ steps.artifacts.outputs.directory }}/SHA256SUMS.txt
-            ${{ steps.artifacts.outputs.directory }}/artifacts.json
+          path: ${{ steps.artifacts.outputs.directory }}/*
           if-no-files-found: error
           retention-days: 14
+          compression-level: 0
+      - name: Build summary
+        shell: pwsh
+        env:
+          PACKAGE_VERSION: ${{ steps.artifacts.outputs.version }}
+        run: |
+          @"
+          ## GeoD Global $env:PACKAGE_VERSION
+          - Commit: $env:GITHUB_SHA
+          - Windows x64 portable ZIP and per-user NSIS installer (unsigned evaluation).
+          - Every ZIP payload file, binary build receipt, source commit and asset SHA-256 verified.
+          - Installer execution and native GUI acceptance are separate release checks.
+          "@ >> $env:GITHUB_STEP_SUMMARY

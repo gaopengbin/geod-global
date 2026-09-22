@@ -1,0 +1,76 @@
+name: Release Windows evaluation
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Match tag, manifests and checked-out commit
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python scripts/release.py check --tag "$RELEASE_TAG" --commit "$GITHUB_SHA" --require-clean
+
+  build:
+    needs: version
+    uses: ./.github/workflows/windows-artifacts.yml
+
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: geod-global-windows-x64-unsigned
+          path: ${{ runner.temp }}/release-assets
+      - name: Recheck downloaded assets against this tag
+        run: python scripts/release.py verify --directory "$RUNNER_TEMP/release-assets" --commit "$GITHUB_SHA" --tag "$RELEASE_TAG"
+      - name: Upload draft, verify server copy, then publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          # Never overwrite a prior draft or published release on a rerun.
+          cp docs/releases/RELEASE-NOTES.md "$RUNNER_TEMP/release-notes.md"
+          printf '\nSource commit: [%s](%s/%s/commit/%s)\nBuild run: [%s](%s/%s/actions/runs/%s)\n' \
+            "$GITHUB_SHA" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_SHA" \
+            "$GITHUB_RUN_ID" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> "$RUNNER_TEMP/release-notes.md"
+          gh release create "$RELEASE_TAG" "$RUNNER_TEMP/release-assets/"* \
+            --verify-tag --draft --prerelease --latest=false \
+            --title "GeoD Global $RELEASE_TAG — Windows evaluation" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
+          gh release download "$RELEASE_TAG" --dir "$RUNNER_TEMP/release-server-copy"
+          python scripts/release.py verify --directory "$RUNNER_TEMP/release-server-copy" --commit "$GITHUB_SHA" --tag "$RELEASE_TAG"
+          for asset in "$RUNNER_TEMP/release-assets/"*; do
+            cmp "$asset" "$RUNNER_TEMP/release-server-copy/$(basename "$asset")"
+          done
+          gh release edit "$RELEASE_TAG" --draft=false --prerelease --latest=false
+          gh release view "$RELEASE_TAG" --json url --jq .url >> "$GITHUB_STEP_SUMMARY"

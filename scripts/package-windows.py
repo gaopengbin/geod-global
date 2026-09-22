@@ -4,6 +4,7 @@ No installation, registry writes, signing, upload, or sibling checkout access.
 """
 import argparse
 import hashlib
+import http.client
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -20,6 +21,16 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'x86_64-pc-windows-msvc'
+# Verified against the official SPDX repository on 2026-09-22; never follow main at build time.
+SPDX_LICENSE_LIST_COMMIT = '31ba1a50e5397e00a304dbadc76531740e89ee48'
+LICENSE_DOWNLOAD_TIMEOUT = 20
+LICENSE_DOWNLOAD_ATTEMPTS = 3
+SEMVER = re.compile(
+    r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)'
+    r'(?:-(?:0|[1-9][0-9]*|[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*)'
+    r'(?:\.(?:0|[1-9][0-9]*|[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*))*)?'
+    r'(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?'
+)
 
 
 def command(*args, capture=False, env=None):
@@ -167,6 +178,36 @@ def license_files(directory):
                   and path.name.lower().startswith(('license', 'licence', 'copying', 'notice', 'copyright')))
 
 
+def download_license(url, max_bytes):
+    """Read a complete bounded license, retrying only transient network failures."""
+    request = urllib.request.Request(url, headers={'User-Agent': 'GeoD-Global-license-packaging/0.1'})
+    for attempt in range(LICENSE_DOWNLOAD_ATTEMPTS):
+        try:
+            with urllib.request.urlopen(request, timeout=LICENSE_DOWNLOAD_TIMEOUT) as response:
+                length = response.headers.get('Content-Length')
+                expected = int(length) if length is not None else None
+                if expected is not None and (expected < 0 or expected > max_bytes):
+                    raise ValueError(f'License response exceeds the size limit or has invalid length: {url}')
+                data = response.read(max_bytes + 1)
+                if len(data) > max_bytes:
+                    raise ValueError(f'License response exceeds the size limit: {url}')
+                if expected is not None and len(data) < expected:
+                    raise http.client.IncompleteRead(data, expected - len(data))
+                if not data or (expected is not None and len(data) != expected):
+                    raise ValueError(f'License response is empty or has inconsistent length: {url}')
+                return data
+        except urllib.error.HTTPError as error:
+            if error.code not in (408, 429) and not 500 <= error.code <= 599:
+                raise
+            if attempt + 1 == LICENSE_DOWNLOAD_ATTEMPTS:
+                raise
+        except (urllib.error.URLError, TimeoutError, http.client.IncompleteRead):
+            if attempt + 1 == LICENSE_DOWNLOAD_ATTEMPTS:
+                raise
+        time.sleep(attempt + 1)
+    raise AssertionError('License retry limit exhausted without a result')
+
+
 def fetch_upstream_licenses(package, source, destination):
     """Resolve missing registry license texts at the published crate's exact Git commit."""
     vcs_path = source / '.cargo_vcs_info.json'
@@ -191,10 +232,7 @@ def fetch_upstream_licenses(package, source, destination):
         url = f'https://raw.githubusercontent.com/{owner}/{repo}/{commit}/{name}'
         if not cached.is_file():
             try:
-                request = urllib.request.Request(url, headers={'User-Agent': 'GeoD-Global-license-packaging/0.1'})
-                with urllib.request.urlopen(request, timeout=20) as response:
-                    data = response.read(2 * 1024 * 1024)
-                cached.write_bytes(data)
+                cached.write_bytes(download_license(url, 2 * 1024 * 1024))
             except urllib.error.HTTPError as error:
                 if error.code == 404:
                     missing.touch()
@@ -208,12 +246,11 @@ def fetch_upstream_licenses(package, source, destination):
 
 
 def standard_license(license_id, destination):
-    cache = ROOT / '.verification/license-cache/spdx' / (license_id + '.txt')
-    url = f'https://raw.githubusercontent.com/spdx/license-list-data/main/text/{license_id}.txt'
+    cache = ROOT / '.verification/license-cache/spdx' / SPDX_LICENSE_LIST_COMMIT / (license_id + '.txt')
+    url = f'https://raw.githubusercontent.com/spdx/license-list-data/{SPDX_LICENSE_LIST_COMMIT}/text/{license_id}.txt'
     if not cache.is_file():
         cache.parent.mkdir(parents=True, exist_ok=True)
-        with urllib.request.urlopen(url, timeout=20) as response:
-            cache.write_bytes(response.read(1024 * 1024))
+        cache.write_bytes(download_license(url, 1024 * 1024))
     target = destination / (license_id + '.txt')
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(cache, target)
@@ -348,7 +385,19 @@ def nsis_escape(value):
     return str(value).replace('$', '$$').replace('"', '$\\"')
 
 
+def nsis_numeric_version(version):
+    """Validate display SemVer and derive the bounded four-part Windows resource version."""
+    match = SEMVER.fullmatch(version) if isinstance(version, str) else None
+    if not match:
+        raise ValueError('Package version must be strict SemVer')
+    core = match.group(1, 2, 3)
+    if any(len(part) > 5 or int(part) > 65535 for part in core):
+        raise ValueError('Windows package version core components must be in 0..65535')
+    return '.'.join(core) + '.0'
+
+
 def build_installer(payload, output, version):
+    numeric_version = nsis_numeric_version(version)
     compiler = shutil.which('makensis.exe') or shutil.which('makensis')
     if not compiler:
         candidates = [Path(os.environ.get('ProgramFiles(x86)', 'C:/Program Files (x86)')) / 'NSIS/makensis.exe']
@@ -362,7 +411,8 @@ def build_installer(payload, output, version):
     lines += [f'  RMDir "$INSTDIR\\{nsis_escape(relative(path, payload).replace(chr(47), chr(92)))}"' for path in directories]
     include.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     command(compiler, '/INPUTCHARSET', 'UTF8', '/DPAYLOAD=' + str(payload), '/DOUTPUT=' + str(output),
-            '/DAPP_VERSION=' + version, '/DUNINSTALL_FILES=' + str(include), str(ROOT / 'scripts/package-windows.nsi'))
+            '/DAPP_VERSION=' + version, '/DAPP_NUMERIC_VERSION=' + numeric_version,
+            '/DUNINSTALL_FILES=' + str(include), str(ROOT / 'scripts/package-windows.nsi'))
 
 
 def main():
@@ -380,13 +430,14 @@ def main():
         return
     if sys.platform != 'win32':
         raise RuntimeError('Windows packaging must run on Windows')
-    rust = command('rustc', '-vV', capture=True)
-    if f'host: {TARGET}' not in rust:
-        raise RuntimeError('This packager currently supports native Windows x64 MSVC builds only')
     config = json.loads((ROOT / 'src-tauri/tauri.conf.json').read_text(encoding='utf-8'))
     package = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))
     if config['identifier'] != 'xyz.laogao.geod.global' or config['version'] != package['version']:
         raise RuntimeError('Global application identity or package versions do not match')
+    nsis_numeric_version(config['version'])
+    rust = command('rustc', '-vV', capture=True)
+    if f'host: {TARGET}' not in rust:
+        raise RuntimeError('This packager currently supports native Windows x64 MSVC builds only')
     if not args.package_only: build_binaries(args.profile,rust)
     receipt = verified_build_receipt(args.profile)
     if args.build_only:

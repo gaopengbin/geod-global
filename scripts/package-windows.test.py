@@ -1,5 +1,6 @@
 """Packaging unit tests use synthetic files, never distributable app binaries."""
 import importlib.util
+import io
 import json
 from pathlib import Path
 import struct
@@ -14,6 +15,79 @@ spec.loader.exec_module(packaging)
 
 
 class PackagingTests(unittest.TestCase):
+    @staticmethod
+    def license_response(data=b'license text', length=None):
+        response = io.BytesIO(data)
+        response.headers = {} if length is None else {'Content-Length':str(length)}
+        return response
+
+    def test_license_retries_transient_http_and_network_errors_then_succeeds(self):
+        url = 'https://example.test/LICENSE'
+        errors = [packaging.urllib.error.HTTPError(url, code, 'temporary', {}, None) for code in [408,429,500,503,599]]
+        errors += [packaging.urllib.error.URLError('connection reset'), TimeoutError('timed out')]
+        for error in errors:
+            with self.subTest(error=error), mock.patch.object(packaging.urllib.request,'urlopen',side_effect=[error,error,self.license_response()]) as request, mock.patch.object(packaging.time,'sleep') as sleep:
+                self.assertEqual(packaging.download_license(url,100),b'license text')
+                self.assertEqual(request.call_count,3)
+                self.assertTrue(all(call.kwargs['timeout'] == 20 for call in request.call_args_list))
+                self.assertEqual(sleep.call_args_list,[mock.call(1),mock.call(2)])
+
+    def test_license_retry_exhaustion_does_not_cache_partial_result(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)), mock.patch.object(packaging.urllib.request,'urlopen',side_effect=packaging.urllib.error.URLError('offline')) as request, mock.patch.object(packaging.time,'sleep'):
+            with self.assertRaises(packaging.urllib.error.URLError):
+                packaging.standard_license('MPL-2.0',Path(folder) / 'notices')
+            self.assertEqual(request.call_count,3)
+            self.assertFalse(list(Path(folder).rglob('*.txt')))
+
+    def test_license_404_and_other_permanent_http_errors_are_not_retried(self):
+        url = 'https://example.test/LICENSE'
+        for code in [400,401,403,404,410]:
+            with self.subTest(code=code), mock.patch.object(packaging.urllib.request,'urlopen',side_effect=packaging.urllib.error.HTTPError(url,code,'permanent',{},None)) as request, mock.patch.object(packaging.time,'sleep') as sleep:
+                with self.assertRaises(packaging.urllib.error.HTTPError): packaging.download_license(url,100)
+                request.assert_called_once()
+                sleep.assert_not_called()
+
+    def test_license_size_limit_rejects_oversized_chunked_and_declared_responses(self):
+        for response in [self.license_response(b'123456'),self.license_response(b'',length=6)]:
+            with self.subTest(response=response), mock.patch.object(packaging.urllib.request,'urlopen',return_value=response) as request, mock.patch.object(packaging.time,'sleep') as sleep:
+                with self.assertRaisesRegex(ValueError,'size limit'): packaging.download_license('https://example.test/LICENSE',5)
+                request.assert_called_once()
+                sleep.assert_not_called()
+
+    def test_license_short_response_is_retried_and_only_complete_body_returned(self):
+        with mock.patch.object(packaging.urllib.request,'urlopen',side_effect=[self.license_response(b'par',length=12),self.license_response(b'license text',length=12)]) as request, mock.patch.object(packaging.time,'sleep'):
+            self.assertEqual(packaging.download_license('https://example.test/LICENSE',12),b'license text')
+            self.assertEqual(request.call_count,2)
+
+    def test_spdx_cache_is_pinned_to_verified_commit_and_does_not_reuse_old_cache(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)), mock.patch.object(packaging.urllib.request,'urlopen',return_value=self.license_response()) as request:
+            old = Path(folder) / '.verification/license-cache/spdx/MPL-2.0.txt'
+            old.parent.mkdir(parents=True)
+            old.write_bytes(b'old floating main cache')
+            destination = Path(folder) / 'notices'
+            record = packaging.standard_license('MPL-2.0',destination)
+            expected_url = 'https://raw.githubusercontent.com/spdx/license-list-data/31ba1a50e5397e00a304dbadc76531740e89ee48/text/MPL-2.0.txt'
+            self.assertEqual(request.call_args.args[0].full_url,expected_url)
+            self.assertEqual(record['source'],expected_url)
+            self.assertEqual((destination / 'MPL-2.0.txt').read_bytes(),b'license text')
+            self.assertEqual((old.parent / packaging.SPDX_LICENSE_LIST_COMMIT / 'MPL-2.0.txt').read_bytes(),b'license text')
+            packaging.standard_license('MPL-2.0',destination)
+            request.assert_called_once()
+
+    def test_upstream_missing_license_remains_missing_and_404_cache_is_reused(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)), mock.patch.object(packaging.urllib.request,'urlopen',side_effect=packaging.urllib.error.HTTPError('https://example.test/LICENSE',404,'missing',{},None)) as request, mock.patch.object(packaging.time,'sleep') as sleep:
+            source = Path(folder) / 'crate'
+            source.mkdir()
+            (source / '.cargo_vcs_info.json').write_text(json.dumps({'git':{'sha1':'1' * 40}}),encoding='utf-8')
+            package = {'repository':'https://github.com/example/crate'}
+            self.assertEqual(packaging.fetch_upstream_licenses(package,source,Path(folder) / 'notices'),[])
+            attempts = request.call_count
+            self.assertGreater(attempts,0)
+            self.assertEqual(len(list((Path(folder) / '.verification/license-cache').rglob('*.missing'))),attempts)
+            self.assertEqual(packaging.fetch_upstream_licenses(package,source,Path(folder) / 'notices'),[])
+            self.assertEqual(request.call_count,attempts)
+            sleep.assert_not_called()
+
     def test_build_freeze_includes_runtime_inputs_but_not_delivery_docs(self):
         for name in ['prototype/src/main.jsx','prototype/public/fonts/Inter.woff2','prototype/public/terms.md','src-tauri/tauri.conf.json','src-tauri/src/main.rs','crates/geod-runtime/src/lib.rs','schemas/raster-recipe-v1.schema.json','Cargo.lock','package-lock.json']:
             self.assertTrue(packaging.is_build_input(name),name)
@@ -100,6 +174,50 @@ class PackagingTests(unittest.TestCase):
 
     def test_nsis_paths_escape_macro_characters(self):
         self.assertEqual(packaging.nsis_escape('a$b"c'),'a$$b$\\"c')
+
+    def test_nsis_numeric_version_accepts_semver_prerelease_and_metadata(self):
+        for version, expected in [
+            ('0.1.0','0.1.0.0'), ('0.0.0','0.0.0.0'),
+            ('0.1.0-rc.1','0.1.0.0'), ('1.2.3+build.001','1.2.3.0'),
+            ('1.2.3-alpha.0.x-y+build.001.sha','1.2.3.0'),
+            ('65535.65535.65535-rc.1+build.0','65535.65535.65535.0'),
+        ]:
+            with self.subTest(version=version):
+                self.assertEqual(packaging.nsis_numeric_version(version),expected)
+
+    def test_nsis_numeric_version_rejects_invalid_injected_and_out_of_range_values(self):
+        versions = [None,123,'','v1.2.3','1.2','1.2.3.4','01.2.3','1.02.3','1.2.03',
+                    '-1.2.3','1.2.3-01','1.2.3-rc..1','1.2.3+','1.2.3-',
+                    '1.2.3+${INJECT}','1.2.3"','1.2.3\n!include evil.nsh',
+                    '1.2.3\n','１.2.3','65536.0.0','0.65536.0','0.0.65536',
+                    '1' * 5000 + '.0.0']
+        for version in versions:
+            with self.subTest(version=repr(version)[:80]):
+                with self.assertRaises(ValueError): packaging.nsis_numeric_version(version)
+
+    def test_invalid_version_stops_every_packaging_phase_before_build_or_subprocess(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)), mock.patch.object(packaging.sys,'platform','win32'), mock.patch.object(packaging,'command') as command, mock.patch.object(packaging,'build_binaries') as build, mock.patch.object(packaging,'verified_build_receipt') as receipt:
+            packaging.write_json(Path(folder) / 'src-tauri/tauri.conf.json',{'identifier':'xyz.laogao.geod.global','version':'0.1.0-rc.01'})
+            packaging.write_json(Path(folder) / 'package.json',{'version':'0.1.0-rc.01'})
+            for phase in [[],['--build-only'],['--package-only']]:
+                with self.subTest(phase=phase), mock.patch.object(packaging.sys,'argv',['package-windows.py',*phase]):
+                    with self.assertRaisesRegex(ValueError,'strict SemVer'): packaging.main()
+            command.assert_not_called()
+            build.assert_not_called()
+            receipt.assert_not_called()
+
+    def test_installer_passes_full_display_and_separate_numeric_version(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging.shutil,'which',return_value='fixture-makensis'), mock.patch.object(packaging,'command') as command:
+            payload = Path(folder) / 'payload'
+            payload.mkdir()
+            (payload / 'fixture.txt').write_text('fixture',encoding='utf-8')
+            packaging.build_installer(payload,Path(folder) / 'fixture-only.exe','0.1.0-rc.1+test.007')
+            args = command.call_args.args
+            self.assertIn('/DAPP_VERSION=0.1.0-rc.1+test.007',args)
+            self.assertIn('/DAPP_NUMERIC_VERSION=0.1.0.0',args)
+            script = Path(__file__).with_name('package-windows.nsi').read_text(encoding='utf-8')
+            self.assertIn('VIProductVersion "${APP_NUMERIC_VERSION}"',script)
+            self.assertIn('VIAddVersionKey "FileVersion" "${APP_VERSION}"',script)
 
 
 if __name__ == '__main__': unittest.main()
