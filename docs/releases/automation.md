@@ -51,7 +51,7 @@ git push origin v0.1.0
 
 ## 发布约束与失败恢复
 
-- 每条 Actions 依赖固定到完整提交 SHA，Dependabot 每月提出更新；Node 24、Python 3.12、Rust 1.91.1 和 NSIS 3.11 是显式构建依赖。
+- 每条 Actions 依赖固定到完整提交 SHA，Dependabot 每月提出更新；Node 24.20.0（附带 npm 11.19.0）、Python 3.12、Rust 1.91.1 和 NSIS 3.11 是显式构建依赖。
 - NSIS 从官方 SourceForge ZIP 下载，校验固定 SHA-256 后仅解压到 runner 临时目录，不在系统安装。SPDX 文本固定官方提交，瞬态网络错误最多尝试三次。
 - 打包前要求工作树干净。上传前检查外层清单、ZIP 内部 source、build receipt 均指向本次 SHA；交叉检查二进制哈希、逐文件清单和外层校验文件。
 - 只暂存四个明确文件，源仓库、任务数据和整个 `.verification` 目录不会进入 Actions artifact。发布 job 从同一次运行下载 artifact 再验证。
