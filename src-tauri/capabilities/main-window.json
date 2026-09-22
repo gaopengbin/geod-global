@@ -5,10 +5,19 @@
   "windows": ["main"],
   "permissions": [
     "allow-health",
+    "allow-diagnostics",
     "allow-list-jobs",
     "allow-create-job",
     "allow-cancel-job",
     "allow-retry-job",
+    "allow-inspect-raster",
+    "allow-sample-raster",
+    "allow-prepare-artifact",
+    "allow-reveal-artifact",
+    "allow-list-recipes",
+    "allow-plan-recipe",
+    "allow-save-recipe",
+    "allow-run-recipe",
     "allow-reveal-job",
     "allow-open-source"
   ]

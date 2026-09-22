@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "lucide-react": "1.14.0",
+    "ol": "10.10.0",
+    "proj4": "2.22.0",
     "react": "19.2.5",
     "react-dom": "19.2.5"
   },
@@ -25,6 +27,7 @@
     "runtime": "cargo run --locked -p geod-runtime -- serve --data-dir .geod-global --port 4318",
     "desktop:dev": "tauri dev",
     "desktop:build": "tauri build --debug --no-bundle",
+    "package:windows": "powershell -NoProfile -File scripts/package-windows.ps1",
     "test": "node --test prototype/src/*.test.js",
     "test:runtime": "cargo test --locked -p geod-runtime",
     "check:isolation": "node scripts/verify-repository.mjs",

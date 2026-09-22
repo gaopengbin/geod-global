@@ -151,11 +151,15 @@ async fn run() -> Result<(), String> {
     if matches!(group.as_str(), "--help" | "help" | "-h") {
         return print_json(&json!({"commands":[
             "serve --data-dir DIR [--port 4318]",
+            "serve-mcp (--data-dir DIR | --server http://127.0.0.1:4318) [--allow-write]",
             "jobs list|status|cancel|retry|inspect [--id UUID] (--data-dir DIR | --server http://127.0.0.1:4318)",
             "jobs download --request FILE (--data-dir DIR | --server http://127.0.0.1:4318)",
             "recipes list (--data-dir DIR | --server http://127.0.0.1:4318)",
             "recipes plan|save|run --recipe FILE (--data-dir DIR | --server http://127.0.0.1:4318)"
         ],"notes":["download, retry and run wait until terminal; success exits 0, failures exit 1", "Use --server while a service owns storage; direct mode requires exclusive access", "Recipe imports depend on the pinned local source job and do not download it"]}));
+    }
+    if group == "serve-mcp" {
+        return geod_runtime::mcp::serve(geod_runtime::mcp::Options::parse(args)?).await;
     }
     let command = if group == "serve" {
         "serve".into()

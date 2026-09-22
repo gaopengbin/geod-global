@@ -4,6 +4,7 @@ import { readFile, readdir, realpath } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { verifyDesktopAcl } from './verify-desktop-acl.mjs';
 
 const root = await realpath(fileURLToPath(new URL('../', import.meta.url)));
 const localRequire = createRequire(path.join(root, 'package.json'));
@@ -54,4 +55,5 @@ for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
   }
 }
 assert.deepEqual(brokenLinks, [], 'Broken specification links');
-console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,relativeDocumentationLinks:'passed'},null,2));
+const desktopAcl = await verifyDesktopAcl(root);
+console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,relativeDocumentationLinks:'passed',...desktopAcl},null,2));

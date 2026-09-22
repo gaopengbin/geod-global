@@ -5,8 +5,9 @@ The independent Tauri 2 application embeds the approved workspace build and uses
 server. The application identifier is `xyz.laogao.geod.global`; job state lives in
 the OS application-local data directory under this identifier, in `runtime/`.
 
-The main window can invoke only `health`, `list_jobs`, `create_job`, `cancel_job`,
-`retry_job`, `inspect_raster`, `reveal_job`, and `open_source`. Raster inspection accepts a
+The main window uses typed application commands for health, local jobs, raster
+inspection and executable recipes; it has no generic shell/filesystem command.
+Raster inspection accepts a
 completed SCL job identifier, validates its local file hash and decodes real pixels through
 the same bounded Rust implementation as the development API. Reveal accepts a job identifier and reveals
 only an existing successful output inside this application's storage directory.
@@ -28,10 +29,27 @@ On Windows, this produces `target/debug/geod-global-desktop.exe`. It embeds
 without Vite. `tauri dev` uses the loopback Vite
 development server configured at port 4317.
 
-This initial shell is a development build. Installer generation, signing,
-updating, and macOS/Linux packaging are not enabled or validated here.
+## Windows evaluation packages
 
-## Verification on Windows (2026-09-22)
+From a source-frozen checkout, run:
+
+```powershell
+./scripts/package-windows.ps1 -Profile release -Installer nsis
+```
+
+This builds a fresh embedded frontend, desktop executable and CLI, then creates
+an unsigned portable ZIP and optional current-user NSIS installer. It includes
+examples, English workflow documentation, dependency licenses and source/hash
+manifests. `-Installer none` needs no NSIS compiler. No system tool installation,
+installer execution, signing or publication happens during packaging.
+
+The installer removes only packaged files and empty directories. Application
+data and extra user files remain. Tauri's built-in bundler stays disabled because
+the repository packaging script owns this retention policy and the shared payload;
+its NSIS intent is still declared in `tauri.conf.json`. See the complete
+[Windows packaging guide](../docs/releases/windows-packaging.md).
+
+## Earlier development startup evidence (2026-09-22)
 
 - `cargo build --locked -p geod-global-desktop --features custom-protocol` passed
   after the multilingual frontend build, embedding `index-Bf6LlAmT.js`.
@@ -46,11 +64,13 @@ updating, and macOS/Linux packaging are not enabled or validated here.
 - This is process and storage startup evidence. Native-window visual acceptance
   and a complete UI-to-IPC download/reveal interaction still require validation.
 
-The refreshed build with language switching and raster inspection is 21,541,888 bytes,
+The historical language-switching/raster-inspection build was 21,541,888 bytes,
 SHA-256 `8f99fdc7d2c1a0c06eba9e252c5d51390809ca8e42f406906cfc9c7c5aee6b41`.
 Its hidden startup smoke check was responsive with empty stderr; the browser frontend plus
 the shared Rust runtime passed real SCL inspection and offline/retry acceptance.
 Detailed evidence is in [specification 10](../GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md).
+These historical hashes do not identify newer recipe or release builds. The
+generated release manifest records the exact bytes of each new package.
 
 Configuration and command permissions follow the official Tauri guides:
 [configuration](https://v2.tauri.app/reference/config/) and

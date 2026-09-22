@@ -45,14 +45,16 @@ test('locale resources preserve interpolation contracts and shared messages agre
   const { default: main } = await import('./locales/main.zh-CN.js');
   const { default: runtime } = await import('./locales/runtime.zh-CN.js');
   const { default: processing } = await import('./locales/processing.zh-CN.js');
+  const { default: artifact } = await import('./locales/artifact.zh-CN.js');
+  const { default: workspace } = await import('./locales/workspace.zh-CN.js');
   const parameters = text => [...new Set([...text.matchAll(/\{([A-Za-z][A-Za-z0-9_]*)\}/g)].map(match => match[1]))].sort();
-  for (const [source, translated] of [...Object.entries(main), ...Object.entries(runtime), ...Object.entries(processing)]) {
+  for (const [source, translated] of [...Object.entries(main), ...Object.entries(runtime), ...Object.entries(processing), ...Object.entries(artifact), ...Object.entries(workspace)]) {
     assert.equal(typeof translated, 'string', `Invalid translation: ${source}`);
     assert.ok(translated.trim(), `Empty translation: ${source}`);
     assert.deepEqual(parameters(translated), parameters(source), `Missing/renamed parameters: ${source}`);
   }
   const shared = {};
-  for (const resource of [main, runtime, processing]) {
+  for (const resource of [main, runtime, processing, artifact, workspace]) {
     for (const [source, translated] of Object.entries(resource)) {
       if (Object.hasOwn(shared, source)) assert.equal(shared[source], translated, `Conflicting shared translation: ${source}`);
       shared[source] = translated;

@@ -36,10 +36,10 @@ export function validateRasterInspection(data) {
 }
 
 export async function runtimeRequest(operation, payload, signal) {
-  const commands = { health: 'health', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe' };
+  const commands = { health: 'health', diagnostics: 'diagnostics', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster', pixel: 'sample_raster', package: 'prepare_artifact', revealPackage: 'reveal_artifact', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe' };
   if (!commands[operation]) throw new Error('Unknown task service operation.');
   const recipeOperation = ['planRecipe', 'saveRecipe', 'runRecipe'].includes(operation);
-  const timeout = AbortSignal.timeout(operation === 'raster' || recipeOperation ? 60000 : 10000);
+  const timeout = AbortSignal.timeout(['raster', 'pixel', 'package', 'revealPackage'].includes(operation) || recipeOperation ? 60000 : 10000);
   const requestSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
   requestSignal.throwIfAborted();
   if (desktopAvailable()) {
@@ -51,9 +51,9 @@ export async function runtimeRequest(operation, payload, signal) {
       throw new Error(typeof error === 'string' ? error : error?.message || 'The desktop task command failed.');
     }
   }
-  const routes = { health: '/health', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster`, recipes: '/recipes', planRecipe: '/recipes/plan', saveRecipe: '/recipes', runRecipe: '/recipes/run' };
+  const routes = { health: '/health', diagnostics: '/diagnostics', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster`, pixel: `/jobs/${encodeURIComponent(payload?.id)}/pixel?${new URLSearchParams({x: String(payload?.x), y: String(payload?.y)})}`, package: `/jobs/${encodeURIComponent(payload?.id)}/package`, recipes: '/recipes', planRecipe: '/recipes/plan', saveRecipe: '/recipes', runRecipe: '/recipes/run' };
   if (!routes[operation]) throw new Error('Open the desktop app to reveal local files.');
-  const mutation = ['create', 'cancel', 'retry'].includes(operation) || recipeOperation;
+  const mutation = ['create', 'cancel', 'retry', 'package'].includes(operation) || recipeOperation;
   const response = await fetch(SERVICE + routes[operation], {
     method: mutation ? 'POST' : 'GET',
     headers: mutation ? { 'Content-Type': 'application/json', 'X-GeoD-Client': 'geod-global' } : {},

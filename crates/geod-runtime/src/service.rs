@@ -1,7 +1,7 @@
 //! Loopback development adapter; desktop commands use JobManager directly.
 use crate::{CreateJobRequest, JobManager, RasterRecipe};
 use axum::{
-    extract::{DefaultBodyLimit, Path, Request, State},
+    extract::{DefaultBodyLimit, Path, Query, Request, State},
     http::{header, HeaderValue, Method, StatusCode},
     middleware::{self, Next},
     response::{IntoResponse, Response},
@@ -84,6 +84,10 @@ fn api_error(error: String) -> ApiError {
 }
 async fn health(State(manager): State<JobManager>) -> Json<crate::RuntimeHealth> {
     Json(manager.health())
+}
+
+async fn diagnostics(State(manager): State<JobManager>) -> Json<serde_json::Value> {
+    Json(manager.diagnostics().await)
 }
 async fn jobs(State(manager): State<JobManager>) -> Json<Vec<crate::Job>> {
     Json(manager.list().await)
@@ -172,14 +176,70 @@ async fn raster(
         .map_err(api_error)
 }
 
+#[derive(serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+struct PixelQuery {
+    x: f64,
+    y: f64,
+}
+
+async fn pixel(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+    Query(point): Query<PixelQuery>,
+) -> std::result::Result<Json<crate::RasterPixel>, ApiError> {
+    manager
+        .sample_raster(&id, point.x, point.y)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+
+async fn prepare_artifact(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Json<crate::artifact::ArtifactPackage>, ApiError> {
+    manager
+        .prepare_artifact(&id)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+
+async fn download_artifact(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Response, ApiError> {
+    let (package, bytes) = manager.artifact_bytes(&id).await.map_err(api_error)?;
+    Ok((
+        [
+            (header::CONTENT_TYPE, "application/zip".to_owned()),
+            (
+                header::CONTENT_DISPOSITION,
+                format!("attachment; filename=\"{}\"", package.filename),
+            ),
+            (header::CACHE_CONTROL, "no-store".to_owned()),
+            (header::ETAG, format!("\"{}\"", package.sha256)),
+        ],
+        bytes,
+    )
+        .into_response())
+}
+
 pub fn router(manager: JobManager) -> Router {
     Router::new()
         .route("/health", get(health))
+        .route("/diagnostics", get(diagnostics))
         .route("/jobs", get(jobs).post(create))
         .route("/jobs/{id}", get(job))
         .route("/jobs/{id}/cancel", post(cancel))
         .route("/jobs/{id}/retry", post(retry))
         .route("/jobs/{id}/raster", get(raster))
+        .route("/jobs/{id}/pixel", get(pixel))
+        .route(
+            "/jobs/{id}/package",
+            get(download_artifact).post(prepare_artifact),
+        )
         .route("/recipes", get(recipes).post(save_recipe))
         .route("/recipes/plan", post(plan_recipe))
         .route("/recipes/run", post(run_recipe))

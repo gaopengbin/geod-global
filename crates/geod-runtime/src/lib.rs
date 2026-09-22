@@ -1,12 +1,15 @@
 //! Local, persistent asset downloads. Validation checks signatures, size and SHA-256;
 //! it does not establish GeoTIFF scientific correctness or source authenticity.
 
+pub mod artifact;
 pub mod crop;
+pub mod diagnostics;
+pub mod mcp;
 pub mod processing;
 pub mod raster;
 pub mod service;
 pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
-pub use raster::{RasterClass, RasterInspection};
+pub use raster::{RasterClass, RasterInspection, RasterPixel};
 
 use chrono::Utc;
 use fs2::FileExt;

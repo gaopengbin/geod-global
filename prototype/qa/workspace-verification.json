@@ -1,0 +1,169 @@
+{
+  "sourceJobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+  "mapCropJobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+  "independentCropSamples": 525000,
+  "mapCropSha256": "918124d02f2f0c0e0cf55398b01542cdc086f460cd01e6a670ead6b121800621",
+  "deliveryBytes": 39887,
+  "deliverySha256": "1e611fcf927db2194bee6d3630ddba1669b52328cd0cce5f41012ef2886fa6b8",
+  "browserDownloadHashMatches": true,
+  "verifiedSourceSamples": [
+    {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "pixel": [
+        0,
+        0
+      ],
+      "center": [
+        499990.0,
+        4199990.0
+      ],
+      "value": 9
+    },
+    {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "pixel": [
+        5489,
+        0
+      ],
+      "center": [
+        609770.0,
+        4199990.0
+      ],
+      "value": 5
+    },
+    {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "pixel": [
+        1830,
+        1830
+      ],
+      "center": [
+        536590.0,
+        4163390.0
+      ],
+      "value": 9
+    },
+    {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "pixel": [
+        2745,
+        2745
+      ],
+      "center": [
+        554890.0,
+        4145090.0
+      ],
+      "value": 4
+    },
+    {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "pixel": [
+        0,
+        5489
+      ],
+      "center": [
+        499990.0,
+        4090210.0
+      ],
+      "value": 9
+    },
+    {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "pixel": [
+        5489,
+        5489
+      ],
+      "center": [
+        609770.0,
+        4090210.0
+      ],
+      "value": 4
+    },
+    {
+      "jobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+      "pixel": [
+        0,
+        0
+      ],
+      "center": [
+        540010.0,
+        4185990.0
+      ],
+      "value": 9
+    },
+    {
+      "jobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+      "pixel": [
+        749,
+        0
+      ],
+      "center": [
+        554990.0,
+        4185990.0
+      ],
+      "value": 6
+    },
+    {
+      "jobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+      "pixel": [
+        250,
+        233
+      ],
+      "center": [
+        545010.0,
+        4181330.0
+      ],
+      "value": 9
+    },
+    {
+      "jobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+      "pixel": [
+        375,
+        350
+      ],
+      "center": [
+        547510.0,
+        4178990.0
+      ],
+      "value": 8
+    },
+    {
+      "jobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+      "pixel": [
+        0,
+        699
+      ],
+      "center": [
+        540010.0,
+        4172010.0
+      ],
+      "value": 6
+    },
+    {
+      "jobId": "2aa0529b-88c4-46b6-93bc-9ba68413dcc8",
+      "pixel": [
+        749,
+        699
+      ],
+      "center": [
+        554990.0,
+        4172010.0
+      ],
+      "value": 6
+    }
+  ],
+  "uiChecks": [
+    "zh-CN and en",
+    "light and dark",
+    "2 layers georeferenced",
+    "50 percent opacity and visibility",
+    "two-corner selection",
+    "numeric selection to plan-save-run",
+    "Enter center pixel",
+    "library filters and empty results",
+    "support report",
+    "390x844 map and dialog without horizontal overflow"
+  ],
+  "browserConsoleWarningsOrErrors": 0,
+  "desktopNativeGUI": "not yet verified"
+}

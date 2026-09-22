@@ -1,0 +1,47 @@
+name: Windows evaluation artifacts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@1.91.1
+      - run: npm ci
+      - run: python -m pip install -r requirements-dev.txt
+      - run: npm run verify
+      - run: cargo test --locked -p geod-runtime
+      - run: cargo test --locked -p geod-global-desktop --features custom-protocol
+      - run: python scripts/package-windows.test.py
+      - name: Build unsigned portable evaluation package
+        shell: pwsh
+        run: ./scripts/package-windows.ps1 -Profile release -Installer none
+      - name: Select completed output
+        id: artifacts
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem -LiteralPath '.verification/packages' -Directory | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          if (-not $package -or -not (Test-Path -LiteralPath (Join-Path $package.FullName 'artifacts.json'))) { throw 'No completed package manifest' }
+          "directory=$($package.FullName)" >> $env:GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: geod-global-windows-x64-unsigned
+          path: |
+            ${{ steps.artifacts.outputs.directory }}/*.zip
+            ${{ steps.artifacts.outputs.directory }}/SHA256SUMS.txt
+            ${{ steps.artifacts.outputs.directory }}/artifacts.json
+          if-no-files-found: error
+          retention-days: 14

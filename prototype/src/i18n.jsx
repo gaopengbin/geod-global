@@ -3,8 +3,10 @@ import { formatDate, formatNumber, initialLocale, saveLocale, SUPPORTED_LOCALES,
 import mainChinese from './locales/main.zh-CN.js';
 import runtimeChinese from './locales/runtime.zh-CN.js';
 import processingChinese from './locales/processing.zh-CN.js';
+import artifactChinese from './locales/artifact.zh-CN.js';
+import workspaceChinese from './locales/workspace.zh-CN.js';
 
-const chinese = { ...mainChinese, ...runtimeChinese, ...processingChinese };
+const chinese = { ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese };
 const I18nContext = createContext(null);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 

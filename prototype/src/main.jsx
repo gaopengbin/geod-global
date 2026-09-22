@@ -52,7 +52,10 @@ import "./catalog.css";
 import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
 import { ExecutableRecipes } from "./processing-ui.jsx";
+import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { I18nProvider, useI18n } from "./i18n.jsx";
+
+const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
 
 const nav = [
   ["Explore", Compass],
@@ -566,7 +569,7 @@ function App() {
               <span />{t("Local workspace")}</span>
           </div>
         </header>
-        {workspace ? (
+        {page === "Workspace" ? <React.Suspense fallback={<main className="wm-map-loading" role="status">{t("Loading local map…")}</main>}><WorkspaceMap /></React.Suspense> : workspace ? (
           <div className={"workspace " + (!inspector || !selected ? "no-inspector" : "")}>
             <aside className="discovery">
               <div className="panel-heading">
@@ -1570,6 +1573,7 @@ function App() {
                     <Keyboard size={22} />
                   </div>
                 </div>
+                <DiagnosticsPanel />
               </>
             ) : (
               <Empty

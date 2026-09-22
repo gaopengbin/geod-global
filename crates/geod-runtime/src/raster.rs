@@ -52,6 +52,22 @@ pub struct RasterInspection {
     pub sha256: String,
 }
 
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RasterPixel {
+    pub job_id: String,
+    pub sha256: String,
+    pub crs: String,
+    /// Requested source-CRS coordinate, followed by its exact source pixel and centre.
+    pub coordinate: [f64; 2],
+    pub pixel: [u32; 2],
+    pub center: [f64; 2],
+    pub value: u8,
+    pub label: String,
+    pub color: String,
+    pub is_no_data: bool,
+}
+
 /// Shared verified pixel snapshot used by inspection and cropping. It is never
 /// constructed from catalog metadata or an unchecked filesystem path.
 pub(crate) struct DecodedRaster {
@@ -83,6 +99,27 @@ const PALETTE: [(&str, [u8; 3]); 12] = [
 ];
 
 impl JobManager {
+    pub async fn sample_raster(&self, id: &str, x: f64, y: f64) -> Result<RasterPixel> {
+        if !x.is_finite() || !y.is_finite() {
+            return Err("Pixel coordinates must be finite source-CRS values".into());
+        }
+        let job = self.get(id).await.ok_or("Unknown job")?;
+        let root = self.inner.root.clone();
+        let permit = self
+            .inner
+            .raster_permits
+            .clone()
+            .try_acquire_owned()
+            .map_err(|_| "The raster worker is busy; try the pixel query again shortly")?;
+        tokio::task::spawn_blocking(move || {
+            let _permit = permit;
+            let raster = load_verified_raster(&root, &job, None)?;
+            sample_pixel(raster, &job.id, x, y)
+        })
+        .await
+        .map_err(fail)?
+    }
+
     pub async fn inspect_raster(&self, id: &str) -> Result<RasterInspection> {
         let job = self.get(id).await.ok_or("Unknown job")?;
         let root = self.inner.root.clone();
@@ -103,6 +140,35 @@ impl JobManager {
         .await
         .map_err(|e| format!("Raster inspection could not finish: {e}"))?
     }
+}
+
+fn sample_pixel(raster: DecodedRaster, id: &str, x: f64, y: f64) -> Result<RasterPixel> {
+    let [left, bottom, right, top] = raster.bounds;
+    if !x.is_finite() || !y.is_finite() || x < left || x >= right || y <= bottom || y > top {
+        return Err("The coordinate is outside the source raster pixel grid".into());
+    }
+    let column = ((x - left) / raster.pixel_size[0]).floor() as u32;
+    let row = ((top - y) / raster.pixel_size[1]).floor() as u32;
+    if column >= raster.width || row >= raster.height {
+        return Err("The coordinate is outside the source raster pixel grid".into());
+    }
+    let value = raster.pixels[row as usize * raster.width as usize + column as usize];
+    let (label, rgb) = PALETTE[value as usize];
+    Ok(RasterPixel {
+        job_id: id.into(),
+        sha256: raster.sha256,
+        crs: raster.crs,
+        coordinate: [x, y],
+        pixel: [column, row],
+        center: [
+            left + (column as f64 + 0.5) * raster.pixel_size[0],
+            top - (row as f64 + 0.5) * raster.pixel_size[1],
+        ],
+        value,
+        label: label.into(),
+        color: format!("#{:02x}{:02x}{:02x}", rgb[0], rgb[1], rgb[2]),
+        is_no_data: raster.nodata == Some(value),
+    })
 }
 
 fn fail(error: impl std::fmt::Display) -> String {

@@ -1,8 +1,8 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use geod_runtime::{
-    CreateJobRequest, Job, JobManager, JobStatus, RasterInspection, RasterRecipe, RecipePlan,
-    RuntimeHealth, SavedRecipe,
+    CreateJobRequest, Job, JobManager, JobStatus, RasterInspection, RasterPixel, RasterRecipe,
+    RecipePlan, RuntimeHealth, SavedRecipe,
 };
 use std::path::{Path, PathBuf};
 use tauri::{Manager, State, WebviewWindowBuilder};
@@ -55,6 +55,11 @@ fn health(manager: State<'_, JobManager>) -> RuntimeHealth {
 }
 
 #[tauri::command]
+async fn diagnostics(manager: State<'_, JobManager>) -> Result<serde_json::Value, String> {
+    Ok(manager.diagnostics().await)
+}
+
+#[tauri::command]
 async fn list_jobs(manager: State<'_, JobManager>) -> Result<Vec<Job>, String> {
     Ok(manager.list().await)
 }
@@ -83,6 +88,36 @@ async fn inspect_raster(
     manager: State<'_, JobManager>,
 ) -> Result<RasterInspection, String> {
     manager.inspect_raster(&id).await
+}
+
+#[tauri::command]
+async fn sample_raster(
+    id: String,
+    x: f64,
+    y: f64,
+    manager: State<'_, JobManager>,
+) -> Result<RasterPixel, String> {
+    manager.sample_raster(&id, x, y).await
+}
+
+#[tauri::command]
+async fn prepare_artifact(
+    id: String,
+    manager: State<'_, JobManager>,
+) -> Result<geod_runtime::artifact::ArtifactPackage, String> {
+    manager.prepare_artifact(&id).await
+}
+
+#[tauri::command]
+async fn reveal_artifact(
+    id: String,
+    manager: State<'_, JobManager>,
+    app: tauri::AppHandle,
+) -> Result<(), String> {
+    let (package, _) = manager.artifact_bytes(&id).await?;
+    app.opener()
+        .reveal_item_in_dir(package.path)
+        .map_err(|error| error.to_string())
 }
 
 #[tauri::command]
@@ -184,11 +219,15 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             health,
+            diagnostics,
             list_jobs,
             create_job,
             cancel_job,
             retry_job,
             inspect_raster,
+            sample_raster,
+            prepare_artifact,
+            reveal_artifact,
             list_recipes,
             plan_recipe,
             save_recipe,

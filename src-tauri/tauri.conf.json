@@ -31,6 +31,19 @@
   },
   "bundle": {
     "active": false,
-    "icon": ["icons/icon.ico", "icons/icon.png"]
+    "targets": ["nsis"],
+    "icon": ["icons/icon.ico", "icons/icon.png"],
+    "publisher": "GeoD Global",
+    "shortDescription": "Local geospatial workspace",
+    "useLocalToolsDir": true,
+    "windows": {
+      "webviewInstallMode": {"type": "skip"},
+      "allowDowngrades": false,
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["English", "SimpChinese"],
+        "displayLanguageSelector": true
+      }
+    }
   }
 }

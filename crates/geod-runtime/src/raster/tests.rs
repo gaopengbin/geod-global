@@ -127,6 +127,96 @@ fn real_tiff_geotags_counts_checksum_and_png_pixels_match() {
 }
 
 #[test]
+fn pixel_queries_use_full_resolution_grid_not_preview_and_reject_outer_edges() {
+    let directory = tempfile::tempdir().unwrap();
+    let bytes = fixture(3, 2, &[0, 4, 4, 6, 9, 11], 32610, false);
+    let job = record(directory.path(), &bytes);
+    for (x, y, expected_pixel, expected_value) in [
+        (500000.0, 4200000.0, [0, 0], 0),
+        (500020.0, 4199980.0, [1, 1], 9),
+        (500059.9, 4199960.1, [2, 1], 11),
+    ] {
+        let decoded = load_verified_raster(directory.path(), &job, None).unwrap();
+        let sample = sample_pixel(decoded, &job.id, x, y).unwrap();
+        assert_eq!(sample.pixel, expected_pixel);
+        assert_eq!(sample.value, expected_value);
+        assert_eq!(sample.is_no_data, expected_value == 0);
+        assert_eq!(sample.sha256, job.sha256.clone().unwrap());
+        assert_eq!(
+            sample.center,
+            [
+                500010.0 + expected_pixel[0] as f64 * 20.0,
+                4199990.0 - expected_pixel[1] as f64 * 20.0
+            ]
+        );
+    }
+    for (x, y) in [
+        (500060.0, 4199980.0),
+        (500000.0, 4199960.0),
+        (499999.0, 4200000.0),
+        (500010.0, 4200001.0),
+        (f64::NAN, 4200000.0),
+    ] {
+        let decoded = load_verified_raster(directory.path(), &job, None).unwrap();
+        assert!(sample_pixel(decoded, &job.id, x, y).is_err());
+    }
+}
+
+#[tokio::test]
+async fn pixel_api_rechecks_source_hash_and_keeps_http_boundary() {
+    use axum::{
+        body::{to_bytes, Body},
+        http::Request,
+    };
+    use tower::ServiceExt;
+    let directory = tempfile::tempdir().unwrap();
+    let bytes = fixture(2, 2, &[0, 4, 6, 9], 32610, false);
+    let job = record(directory.path(), &bytes);
+    std::fs::write(
+        directory.path().join("jobs.json"),
+        serde_json::to_vec(&BTreeMap::from([(job.id.clone(), job.clone())])).unwrap(),
+    )
+    .unwrap();
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    let app = crate::service::router(manager.clone());
+    let route = format!("/jobs/{}/pixel?x=500030&y=4199970", job.id);
+    let response = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(&route)
+                .header("host", "127.0.0.1:4318")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(response.status(), 200);
+    let result: serde_json::Value =
+        serde_json::from_slice(&to_bytes(response.into_body(), 8192).await.unwrap()).unwrap();
+    assert_eq!(result["value"], 9);
+    assert_eq!(result["pixel"], serde_json::json!([1, 1]));
+    let denied = app
+        .oneshot(
+            Request::builder()
+                .uri(&route)
+                .header("host", "127.0.0.1:4318")
+                .header("origin", "https://untrusted.example")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(denied.status(), 403);
+    std::fs::write(job.output_path.unwrap(), vec![0u8; bytes.len()]).unwrap();
+    assert!(manager
+        .sample_raster(&job.id, 500030.0, 4199970.0)
+        .await
+        .unwrap_err()
+        .contains("SHA-256"));
+}
+
+#[test]
 fn preview_uses_exact_nearest_samples_and_does_not_exceed_768() {
     let directory = tempfile::tempdir().unwrap();
     let values: Vec<_> = (0..1000 * 4).map(|index| (index % 12) as u8).collect();

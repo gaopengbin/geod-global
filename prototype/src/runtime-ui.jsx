@@ -4,6 +4,7 @@ import { desktopAvailable, downloadableAssets, formatBytes, formatClassShare, ru
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { ClipRasterButton, DerivedArtifactDetails } from './processing-ui.jsx';
+import { ArtifactPackageButton } from './artifact-ui.jsx';
 import './runtime.css';
 
 const STATUS = { queued: 'Queued', running: 'Downloading', succeeded: 'Downloaded', failed: 'Failed', cancelled: 'Cancelled', interrupted: 'Interrupted' };
@@ -180,6 +181,7 @@ function JobCard({ job, library = false, areaBounds }) {
       {canInspect && !derived && <ClipRasterButton job={job} areaBounds={areaBounds}/>}
       {job.status === 'succeeded' && desktopAvailable() && <button className="button" disabled={busy} onClick={() => run('reveal')}><FolderOpen size={15}/>{t('Show in folder')}</button>}
     </div>{error && <RuntimeError message={error} summary="The task action failed. Check the service connection and try again."/>}
+    {derived && job.status === 'succeeded' && <ArtifactPackageButton job={job}/>}
     {inspect && <RasterDialog job={job} onClose={() => setInspect(false)}/>}
   </article>;
 }
@@ -193,6 +195,9 @@ export function RuntimeTasks({ areaBounds }) {
 export function RuntimeLibrary({ areaBounds }) {
   const { jobs } = useContext(RuntimeContext);
   const { t, number } = useI18n();
+  const [search, setSearch] = useState('');
+  const [kind, setKind] = useState('all');
   const completed = jobs.filter(job => job.status === 'succeeded');
-  return <section className="runtime-section" aria-label={t('Local source files and outputs')}><h2>{t('Local source files and outputs')} <span className="badge">{number(completed.length)}</span></h2><Connection/>{completed.length ? <div className="runtime-jobs">{completed.map(job => <JobCard key={job.id} job={job} areaBounds={areaBounds} library/>)}</div> : <p className="runtime-empty">{t('Completed downloads appear here with their local path, source and checksum.')}</p>}</section>;
+  const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind === 'raster_clip')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
+  return <section className="runtime-section" aria-label={t('Local source files and outputs')}><h2>{t('Local source files and outputs')} <span className="badge">{number(completed.length)}</span></h2><Connection/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></select></label></div><p>{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <div className="runtime-jobs">{filtered.map(job => <JobCard key={job.id} job={job} areaBounds={areaBounds} library/>)}</div> : <p className="runtime-empty">{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p>}</section>;
 }

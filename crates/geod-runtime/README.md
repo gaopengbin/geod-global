@@ -11,8 +11,9 @@ cargo run -p geod-runtime -- serve --data-dir .verification/runtime-data --port 
 Direct CLI commands require a storage directory; `--server` commands reuse an
 already running loopback adapter. Desktop code supplies its own application data
 directory. A process lock prevents two runtimes from writing the
-same storage directory. All output filenames are generated UUIDs under `assets/`;
-the request cannot supply a destination path.
+same storage directory. Raster output filenames use generated UUIDs under `assets/`;
+prepared delivery ZIPs use generated job filenames under `exports/`. Requests
+cannot supply a destination path.
 
 ## Transfer behavior
 
@@ -49,12 +50,16 @@ network-facing authentication boundary.
 | Method | Route | Result |
 | --- | --- | --- |
 | GET | `/health` | Runtime version, storage root, validation scope and size limit |
+| GET | `/diagnostics` | Allowlisted `geod-support-diagnostics/v1` aggregate report, without paths or user text |
 | GET | `/jobs` | Array of persisted jobs, newest first |
-| GET | `/jobs/{id}` | One persisted job, or 404 |
+| GET | `/jobs/{id}` | One persisted job plus `settled`, or 404 |
 | POST | `/jobs` | `202` and a queued job |
 | POST | `/jobs/{id}/cancel` | Updated job |
 | POST | `/jobs/{id}/retry` | Queued retry, or error if still settling |
 | GET | `/jobs/{id}/raster` | Verified local SCL metadata, class counts and PNG preview |
+| GET | `/jobs/{id}/pixel?x=...&y=...` | Full-resolution SCL pixel at finite source-CRS coordinates |
+| POST | `/jobs/{id}/package` | Verify and prepare a derived-output ZIP; return its metadata as JSON |
+| GET | `/jobs/{id}/package` | Read and revalidate an already prepared ZIP; return its bytes as an attachment |
 | GET | `/recipes` | Saved recipes, newest first |
 | POST | `/recipes/plan` | `{ recipe, plan }`; validates and computes an actual pixel window without writing files |
 | POST | `/recipes` | `201` and `{ id, recipe, createdAt, updatedAt }`; validates the source and plan before saving |
@@ -63,6 +68,11 @@ network-facing authentication boundary.
 Create requests use `{ "itemId", "assetKey", "href", "mediaType", "title" }`;
 `title` is optional. JSON responses use camelCase and status values
 `queued`, `running`, `succeeded`, `failed`, `cancelled`, `interrupted`.
+JSON request bodies are limited to 8192 bytes. Pixel query arguments contain only
+`x` and `y`; unknown fields are rejected. The package POST does not accept an
+output path or require an input document; it uses the job identified in the route
+and still requires the mutation header. Runtime validation/busy failures return
+HTTP 400 with an `error` string, distinct from a completed job or package.
 
 The deterministic tests use a local TCP fixture **only under `cfg(test)`**. The
 production API has no flag, environment variable or localhost URL override.
@@ -78,8 +88,8 @@ Each request resolves the job's UUID filename inside its canonical managed
 `assets` directory, checks its recorded byte count and recalculates SHA-256.
 The exact verified bytes are then decoded, so cached metadata never bypasses a
 fresh integrity check. A shared semaphore admits one blocking raster inspection,
-plan or clip at a time; interactive inspection/planning requests receive a busy
-error while another operation owns it, and clip jobs wait in the queue. The decoder has explicit allocation limits,
+pixel read, plan, clip or package operation at a time; interactive requests receive
+a busy error while another operation owns it, and clip jobs wait in the queue. The decoder has explicit allocation limits,
 and cooperative deadline checks run during reading and pixel processing.
 
 Supported files are single-band unsigned 8-bit, grayscale, top-left, north-up
@@ -112,6 +122,23 @@ metadata; it does not establish geolocation accuracy or scientific suitability.
 
 Library documentation: [TIFF decoder and allocation limits](https://docs.rs/tiff/0.11.3/tiff/decoder/index.html),
 [PNG encoder](https://docs.rs/png/0.18.1/png/struct.Encoder.html).
+
+### Source pixel queries
+
+`JobManager::sample_raster(id, x, y)`, desktop `sample_raster { id, x, y }` and
+GET `/jobs/{id}/pixel?x=...&y=...` read the supported file at full resolution.
+Coordinates are in the inspected raster's UTM metres, not longitude/latitude or
+preview-image pixels. Each call rereads and verifies the original file through
+the same bounded decoder; a previous inspection does not bypass checksum checks.
+
+The response contains `jobId`, `sha256`, `crs`, requested `coordinate: [x, y]`,
+zero-based `pixel: [column, row]`, `center: [x, y]` for that pixel's centre,
+`value`, `label`, `color` and `isNoData`. Column is
+`floor((x - minX) / pixelWidth)`; row is
+`floor((maxY - y) / pixelHeight)`. The left/top outer edges are included and the
+right/bottom outer edges are excluded. Outside and non-finite coordinates fail;
+they are not clamped to a nearby valid pixel. `isNoData` means the value matches
+the file's explicit nodata tag, not merely that the SCL class label is “No data”.
 
 ## Executable raster recipes
 
@@ -181,6 +208,47 @@ The equivalent desktop commands are `list_recipes`, `plan_recipe { recipe }`,
 `save_recipe { recipe }`, and `run_recipe { recipe }`. Clips use the existing
 `cancel_job`, `retry_job`, `inspect_raster` and `reveal_job` commands.
 
+## Verified delivery packages
+
+`JobManager::prepare_artifact(id)`, desktop `prepare_artifact { id }` and POST
+`/jobs/{id}/package` accept only successful managed `raster_clip` jobs. The runtime
+checks the recipe/source record relationship, exact managed TIFF and sidecar
+paths, TIFF byte count and SHA-256, and the sidecar's agreement with committed
+source, recipe and crop records. TIFF input is limited to 32 MiB and the sidecar
+to 64 KiB. This operation packages a completed result; it does not run a recipe or
+include/revalidate the source raster's original bytes.
+
+The ZIP contains `<job UUID>.tif`, `<job UUID>.metadata.json`, `recipe.json`,
+`README.txt` and `checksums.sha256`. It retains exact TIFF/sidecar bytes, uses
+relative entry names, and includes source attribution plus the user-defined
+recipe name and spatial bounds. It contains no absolute local paths. Review its
+contents before sharing; the pinned recipe is not automatically portable to
+another store and does not download its missing source.
+
+Preparation writes a synced temporary file and publishes it without overwriting
+an existing file. The result JSON has `jobId`, `filename`, `path`, `bytes`,
+`sha256` and `files`. Identical repeat preparations reuse the verified existing
+package; a changed existing ZIP is rejected, never silently overwritten.
+
+GET `/jobs/{id}/package` does not create a package. It requires a prior successful
+preparation, rechecks the current TIFF/sidecar against the records, reconstructs
+the expected package and compares the prepared ZIP bytes before returning them.
+Its headers are `Content-Type: application/zip`, an attachment filename,
+`Cache-Control: no-store`, and an ETag containing the package SHA-256. Desktop
+`reveal_artifact { id }` performs the same verification before showing its folder.
+These are runtime/API capabilities; actual browser, desktop and download
+acceptance is recorded separately in [the workspace and delivery record](../../GeoD-Global-Spec/12-Workspace-Agent-and-Distribution.md).
+
+## Local support diagnostics
+
+GET `/diagnostics` and desktop `diagnostics` return
+`geod-support-diagnostics/v1`: runtime/version, OS/architecture, supported
+capabilities, limits, counts for each job status, saved recipe count and explicit
+privacy flags. The report excludes file paths, coordinates, source URLs and user
+text, and generating it uploads nothing. It is not a raw dump of `/health`, jobs,
+recipes or errors; those operational responses may contain local paths and source
+metadata. The application shows the report for the user to review and copy.
+
 ## CLI
 
 Build with `cargo build -p geod-runtime`, then use `target/debug/geod-runtime`
@@ -224,3 +292,34 @@ geod-runtime jobs retry --id JOB_UUID --server http://127.0.0.1:4318
 The desktop does not expose a loopback service by default. Close it before using
 direct CLI access to its runtime storage; do not delete or bypass `runtime.lock`.
 Use a separate data directory for independent CLI processing.
+
+## MCP stdio adapter
+
+`serve-mcp` uses the official `rmcp` SDK, pinned to 3.4.0, with the same Rust
+manager and strict job/recipe inputs. Choose exactly one ownership mode:
+
+```sh
+geod-runtime serve-mcp --server http://127.0.0.1:4318
+geod-runtime serve-mcp --data-dir ./agent-runtime-data
+```
+
+Seven read/inspection/preflight tools are exposed by default. The explicit startup
+flag `--allow-write` enables five additional download, recipe and task mutation
+tools; arguments cannot enable them. This is local newline-delimited JSON-RPC on
+stdio, not a public or Streamable HTTP MCP endpoint. Stdout is protocol-only and
+diagnostics use stderr; launch the binary directly without a wrapper that writes
+status text to stdout.
+
+In `--server` mode the already-running loopback service owns jobs, so disconnecting
+MCP does not stop them. In `--data-dir` mode MCP owns the exclusive store and normal
+EOF/Ctrl-C drains started calls, cancels active jobs and waits for worker cleanup.
+Opening a direct store still performs normal storage initialization and recovery;
+default read-only tool access is not a zero-write filesystem mode. Do not open a
+store already owned by the desktop or another process.
+
+A queued tool response is not completed processing. Poll `geod_job_status` until
+the job is terminal and `settled: true`; only `succeeded` plus settlement supports
+an output-complete result. Protocol input frames are capped at 64 KiB, tool
+arguments at 8192 bytes and concurrent calls at eight; core processing limits and
+source checks remain in force. Full configuration, tool names, lifecycle details
+and verified protocol coverage are in [the MCP guide](../../docs/mcp.md).

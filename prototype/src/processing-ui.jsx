@@ -37,7 +37,7 @@ export function ClipRasterButton({ job, areaBounds }) {
   return <><button className="button" onClick={() => setOpen(true)}><Crop size={15}/>{t('Clip raster')}</button>{open && <RecipeEditorDialog sourceJob={job} areaBounds={areaBounds} onClose={() => setOpen(false)}/>}</>;
 }
 
-export function RecipeEditorDialog({ sourceJob, initialRecipe, areaBounds, onClose, onSaved }) {
+export function RecipeEditorDialog({ sourceJob, initialRecipe, initialMetadata, areaBounds, onClose, onSaved }) {
   const { t } = useI18n();
   const { refresh } = useRuntime();
   const dialog = useRef(null);
@@ -46,7 +46,10 @@ export function RecipeEditorDialog({ sourceJob, initialRecipe, areaBounds, onClo
   const version = useRef(0);
   const request = useRef(null);
   const [form, setForm] = useState(() => ({ name: initialRecipe?.name || `${sourceJob?.itemId || 'SCL'} · ${t('Raster clip')}`, crs: initialRecipe?.operation.crs || 'source', bounds: initialRecipe?.operation.bounds.map(String) || ['', '', '', ''] }));
-  const [metadata, setMetadata] = useState(null);
+  const [metadata, setMetadata] = useState(() => initialMetadata
+    && initialMetadata.sha256?.toLowerCase() === sourceJob?.sha256?.toLowerCase()
+    && initialMetadata.sha256?.toLowerCase() === initialRecipe?.source?.sha256?.toLowerCase()
+    ? initialMetadata : null);
   const [loading, setLoading] = useState(!initialRecipe);
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [review, setReview] = useState(null);
