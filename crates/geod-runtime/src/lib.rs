@@ -1,7 +1,9 @@
 //! Local, persistent asset downloads. Validation checks signatures, size and SHA-256;
 //! it does not establish GeoTIFF scientific correctness or source authenticity.
 
+pub mod raster;
 pub mod service;
+pub use raster::{RasterClass, RasterInspection};
 
 use chrono::Utc;
 use fs2::FileExt;
@@ -91,6 +93,7 @@ struct Inner {
     store: Mutex<Store>,
     client: reqwest::Client,
     permits: Semaphore,
+    raster_permits: Arc<Semaphore>,
     _directory_lock: std::fs::File,
     #[cfg(test)]
     fixture_origin: Option<String>,
@@ -259,6 +262,7 @@ impl JobManager {
                 }),
                 client,
                 permits: Semaphore::new(2),
+                raster_permits: Arc::new(Semaphore::new(1)),
                 _directory_lock: directory_lock,
                 #[cfg(test)]
                 fixture_origin,

@@ -1,30 +1,67 @@
 const SERVICE = 'http://127.0.0.1:4318';
 
 export function desktopAvailable() {
-  return Boolean(window.__TAURI__?.core?.invoke);
+  return Boolean(globalThis.window?.__TAURI__?.core?.invoke);
+}
+
+function waitForNative(promise, signal) {
+  return new Promise((resolve, reject) => {
+    const abort = () => reject(signal.reason || new DOMException('Request cancelled', 'AbortError'));
+    if (signal.aborted) { abort(); return; }
+    signal.addEventListener('abort', abort, { once: true });
+    promise.then(resolve, reject).finally(() => signal.removeEventListener('abort', abort));
+  });
+}
+
+export function validateRasterInspection(data) {
+  const positiveInteger = value => Number.isSafeInteger(value) && value > 0;
+  const finiteArray = (value, length) => Array.isArray(value) && value.length === length && value.every(Number.isFinite);
+  if (!data || !positiveInteger(data.width) || !positiveInteger(data.height)
+    || !positiveInteger(data.bandCount) || typeof data.dataType !== 'string' || typeof data.crs !== 'string'
+    || !finiteArray(data.bounds, 4) || !finiteArray(data.pixelSize, 2) || data.pixelSize.some(value => value <= 0)
+    || !positiveInteger(data.previewWidth) || !positiveInteger(data.previewHeight)
+    || data.previewWidth > 768 || data.previewHeight > 768
+    || typeof data.previewDataUrl !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(data.previewDataUrl)
+    || typeof data.sha256 !== 'string' || !/^[a-f0-9]{64}$/i.test(data.sha256)
+    || !Array.isArray(data.classes) || !data.classes.length
+    || data.classes.some(item => !Number.isSafeInteger(item.value) || item.value < 0 || item.value > 255
+      || typeof item.label !== 'string' || !/^#[a-f0-9]{6}$/i.test(item.color)
+      || !Number.isSafeInteger(item.count) || item.count < 0)
+    || new Set(data.classes.map(item => item.value)).size !== data.classes.length
+    || data.classes.reduce((sum, item) => sum + item.count, 0) !== data.width * data.height
+    || (data.nodata !== null && !Number.isFinite(data.nodata))) {
+    throw new Error('The raster service returned incomplete or invalid inspection data.');
+  }
+  return data;
 }
 
 export async function runtimeRequest(operation, payload, signal) {
+  const commands = { health: 'health', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster' };
+  if (!commands[operation]) throw new Error('Unknown task service operation.');
+  const timeout = AbortSignal.timeout(operation === 'raster' ? 60000 : 10000);
+  const requestSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
+  requestSignal.throwIfAborted();
   if (desktopAvailable()) {
-    const commands = { health: 'health', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job' };
     try {
-      return await window.__TAURI__.core.invoke(commands[operation], operation === 'create' ? { request: payload } : payload || {});
+      const result = await waitForNative(window.__TAURI__.core.invoke(commands[operation], operation === 'create' ? { request: payload } : payload || {}), requestSignal);
+      return operation === 'raster' ? validateRasterInspection(result) : result;
     } catch (error) {
+      if (error?.name === 'AbortError' || error?.name === 'TimeoutError') throw error;
       throw new Error(typeof error === 'string' ? error : error?.message || 'The desktop task command failed.');
     }
   }
-  const routes = { health: '/health', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry` };
+  const routes = { health: '/health', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster` };
   if (!routes[operation]) throw new Error('Open the desktop app to reveal local files.');
   const mutation = ['create', 'cancel', 'retry'].includes(operation);
   const response = await fetch(SERVICE + routes[operation], {
     method: mutation ? 'POST' : 'GET',
     headers: mutation ? { 'Content-Type': 'application/json', 'X-GeoD-Client': 'geod-global' } : {},
     body: operation === 'create' ? JSON.stringify(payload) : mutation ? '{}' : undefined,
-    signal: signal || AbortSignal.timeout(10000),
+    signal: requestSignal,
   });
   const body = await response.json();
   if (!response.ok) throw new Error(typeof body.error === 'string' ? body.error : body.message || `Task service returned ${response.status}`);
-  return body;
+  return operation === 'raster' ? validateRasterInspection(body) : body;
 }
 
 export function downloadableAssets(scene) {
@@ -39,10 +76,17 @@ export function downloadableAssets(scene) {
   });
 }
 
-export function formatBytes(value) {
+export function formatBytes(value, locale = 'en') {
   if (!Number.isFinite(value) || value < 0) return 'Unknown size';
-  if (value < 1024) return `${value} B`;
+  if (value < 1024) return `${new Intl.NumberFormat(locale).format(value)} B`;
   const unit = value < 1048576 ? 'KiB' : value < 1073741824 ? 'MiB' : 'GiB';
   const scale = unit === 'KiB' ? 1024 : unit === 'MiB' ? 1048576 : 1073741824;
-  return `${(value / scale).toFixed(1)} ${unit}`;
+  return `${new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value / scale)} ${unit}`;
+}
+
+export function formatClassShare(count, total, locale = 'en') {
+  if (!Number.isFinite(count) || !Number.isFinite(total) || total <= 0 || count < 0) return '—';
+  const formatter = new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 2 });
+  const share = count / total;
+  return share > 0 && share < 0.0001 ? `<${formatter.format(0.0001)}` : formatter.format(share);
 }

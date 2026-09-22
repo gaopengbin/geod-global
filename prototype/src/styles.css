@@ -6,7 +6,7 @@
   font-display: swap;
 }
 :root {
-  font-family: Inter, "Segoe UI", sans-serif;
+  font-family: Inter, "Segoe UI", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   font-size: 13px;
   line-height: 1.5;
   color: #17212b;

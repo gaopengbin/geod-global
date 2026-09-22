@@ -8,13 +8,16 @@ description = "Independent GeoD Global local asset download runtime"
 
 [dependencies]
 axum = "0.8.8"
+base64 = "=0.22.1"
 chrono = { version = "0.4", features = ["serde"] }
 fs2 = "0.4"
 futures-util = "0.3"
+png = "=0.18.1"
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
+tiff = { version = "=0.11.3", default-features = false, features = ["deflate", "lzw"] }
 tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
 tokio-util = { version = "0.7", features = ["rt"] }
 url = "2"

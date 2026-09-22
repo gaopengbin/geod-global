@@ -2,6 +2,8 @@
 
 日期：2026-09-22。完整产品范围继续沿用01–06，本文件只记录当前已实现的链路和本轮验收结果。
 
+后续进展：同日新增的中英文界面、原生SCL读取和真实像元预览见[附件10](10-Languages-and-Raster-Inspection.md)。下文保留本次下载链路交付时的验收记录。
+
 ## 实现范围
 
 独立仓库新增 `crates/geod-runtime` 和 `src-tauri`。桌面命令和浏览器的loopback调试服务复用同一个Rust JobManager；没有引用、迁移或修改国内版源码。桌面应用ID为 `xyz.laogao.geod.global`，配置与下载记录独立。

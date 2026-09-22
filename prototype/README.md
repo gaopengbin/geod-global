@@ -1,6 +1,6 @@
 # GeoD Global — 工作台前端
 
-2026-09-22。沿用已认可的设计方向，已接入实时目录与Rust文件下载任务。完整产品仍在实施；设计模拟继续单独标记。
+2026-09-22。沿用已认可的设计方向，已接入中英文界面、实时目录、Rust文件下载任务与SCL成果检查。完整产品仍在实施；设计模拟继续单独标记。
 
 ## 本轮真实能力
 
@@ -8,6 +8,8 @@
 - 真实缩略图预览，只对相同源网格启用比较；实时缩略图不叠加未经验证的区域轮廓。
 - Download source asset通过本机Rust服务或Tauri命令下载完整源资产，记录字节数、SHA-256、来源及本地路径，支持取消和从头重试。
 - Tasks与My Data展示真实记录；原设计模拟收在独立折叠区。真实文件记录由Rust持久化，不依赖浏览器localStorage。
+- Settings / 设置中的语言选项支持English和简体中文，即时切换并保存；日期按所选语言显示，UTC观测日期和内部标识符不变。
+- My Data / 我的数据的成功SCL下载可检查真实像元、元数据与分类统计，最长边768像素的最近邻预览来自本地GeoTIFF解码，未进行裁剪或重投影。
 
 完整启动和验证命令见[根README](../README.md)。浏览器模式需另开终端运行 `npm run runtime`；桌面版直接调用同一核心。
 
@@ -55,4 +57,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 ## 验收
 
-见 [07 原型与验收记录](../GeoD-Global-Spec/07-Prototype-and-Validation.md)。截图在 `qa/`，构建产物在 `dist/`。`src/` 是原型代码，不会自动修改现有桌面应用。
+见 [07 原型与验收记录](../GeoD-Global-Spec/07-Prototype-and-Validation.md)、[09 真实检索与下载](../GeoD-Global-Spec/09-Live-Catalog-and-Downloads.md)及[10 多语言与栅格检查](../GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md)。截图在 `qa/`，构建产物在 `dist/`。桌面重新构建后嵌入本前端；不会修改国内版应用。

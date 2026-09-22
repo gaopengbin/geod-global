@@ -52,6 +52,7 @@ network-facing authentication boundary.
 | POST | `/jobs` | `202` and a queued job |
 | POST | `/jobs/{id}/cancel` | Updated job |
 | POST | `/jobs/{id}/retry` | Queued retry, or error if still settling |
+| GET | `/jobs/{id}/raster` | Verified local SCL metadata, class counts and PNG preview |
 
 Create requests use `{ "itemId", "assetKey", "href", "mediaType", "title" }`;
 `title` is optional. JSON responses use camelCase and status values
@@ -59,3 +60,48 @@ Create requests use `{ "itemId", "assetKey", "href", "mediaType", "title" }`;
 
 The deterministic tests use a local TCP fixture **only under `cfg(test)`**. The
 production API has no flag, environment variable or localhost URL override.
+
+## Native SCL raster inspection
+
+`JobManager::inspect_raster(id)` and desktop `inspect_raster { id }` inspect a
+completed SCL GeoTIFF, with no external processing executable. The pinned pure
+Rust `tiff` 0.11.3 and `png` 0.18.1 libraries decode the image and encode its preview.
+The original asset remains unchanged.
+
+Each request resolves the job's UUID filename inside its canonical managed
+`assets` directory, checks its recorded byte count and recalculates SHA-256.
+The exact verified bytes are then decoded, so cached metadata never bypasses a
+fresh integrity check. A semaphore admits one blocking inspection at a time;
+other requests receive a busy error. The decoder has explicit allocation limits,
+and cooperative deadline checks run during reading and pixel processing.
+
+Supported files are single-band unsigned 8-bit, grayscale, top-left, north-up
+Sentinel-2 SCL rasters, with values 0–11. The local file limit is 128 MiB, the
+decoded raster limit is 64 × 1024 × 1024 pixels, and each edge is at most 16,384.
+JPEG, RGB, palette-encoded TIFF, other sample types, rotated coordinates and
+unsupported compression return explicit errors. Compressed TIFF support currently
+includes deflate and LZW.
+
+CRS, scale, tiepoint/transform and nodata come from GeoTIFF tags. Inspection
+requires projected PixelIsArea coordinates and a WGS84 UTM EPSG code in
+32601–32660 or 32701–32760. It supports either scale plus one tiepoint, or an
+unrotated transformation matrix. Conflicting or missing tags are errors. Bounds
+are outer pixel edges in `[minX, minY, maxX, maxY]` order, in the CRS's metres;
+`pixelSize` is positive `[x, y]` spacing. `nodata` is `null` when its tag is absent.
+The supported explicit SCL nodata value is zero.
+
+The PNG preserves aspect ratio with maximum edge 768 and never enlarges a small
+raster. Nearest sampling uses `floor(x * width / previewWidth)` and the equivalent
+y formula. Counts include every full-resolution pixel, including the no-data
+class. Explicit nodata pixels are transparent; other classes are opaque.
+
+Class meanings follow the ESA Sentinel-2 scene classification convention. Display
+colors reference the [Sentinel Hub SCL legend](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/scene-classification/)
+(CC BY-SA 4.0, Sentinel Hub; code here independently applies its factual class/color
+mapping), which links the ESA Level-2A algorithm documentation. This preview is
+scene classification, not a land-cover analysis or a true-color scene image.
+Successful inspection establishes readable samples and consistent supported
+metadata; it does not establish geolocation accuracy or scientific suitability.
+
+Library documentation: [TIFF decoder and allocation limits](https://docs.rs/tiff/0.11.3/tiff/decoder/index.html),
+[PNG encoder](https://docs.rs/png/0.18.1/png/struct.Encoder.html).

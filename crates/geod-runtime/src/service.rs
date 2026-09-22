@@ -111,12 +111,24 @@ async fn retry(
     manager.retry(&id).await.map(Json).map_err(api_error)
 }
 
+async fn raster(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Json<crate::RasterInspection>, ApiError> {
+    manager
+        .inspect_raster(&id)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+
 pub fn router(manager: JobManager) -> Router {
     Router::new()
         .route("/health", get(health))
         .route("/jobs", get(jobs).post(create))
         .route("/jobs/{id}/cancel", post(cancel))
         .route("/jobs/{id}/retry", post(retry))
+        .route("/jobs/{id}/raster", get(raster))
         .layer(DefaultBodyLimit::max(8192))
         .layer(middleware::from_fn(browser_boundary))
         .with_state(manager)

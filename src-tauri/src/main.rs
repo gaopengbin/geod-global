@@ -1,6 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use geod_runtime::{CreateJobRequest, Job, JobManager, JobStatus, RuntimeHealth};
+use geod_runtime::{CreateJobRequest, Job, JobManager, JobStatus, RasterInspection, RuntimeHealth};
 use std::path::{Path, PathBuf};
 use tauri::{Manager, State, WebviewWindowBuilder};
 use tauri_plugin_opener::OpenerExt;
@@ -72,6 +72,14 @@ async fn cancel_job(id: String, manager: State<'_, JobManager>) -> Result<Job, S
 #[tauri::command]
 async fn retry_job(id: String, manager: State<'_, JobManager>) -> Result<Job, String> {
     manager.retry(&id).await
+}
+
+#[tauri::command]
+async fn inspect_raster(
+    id: String,
+    manager: State<'_, JobManager>,
+) -> Result<RasterInspection, String> {
+    manager.inspect_raster(&id).await
 }
 
 fn verified_output(storage_root: &Path, job: &Job) -> Result<PathBuf, String> {
@@ -151,6 +159,7 @@ fn main() {
             create_job,
             cancel_job,
             retry_job,
+            inspect_raster,
             reveal_job,
             open_source
         ])
