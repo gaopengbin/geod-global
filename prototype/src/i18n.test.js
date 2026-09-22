@@ -44,13 +44,18 @@ test('locale-aware acquisition dates keep the UTC observation day and handle mis
 test('locale resources preserve interpolation contracts and shared messages agree', async () => {
   const { default: main } = await import('./locales/main.zh-CN.js');
   const { default: runtime } = await import('./locales/runtime.zh-CN.js');
+  const { default: processing } = await import('./locales/processing.zh-CN.js');
   const parameters = text => [...new Set([...text.matchAll(/\{([A-Za-z][A-Za-z0-9_]*)\}/g)].map(match => match[1]))].sort();
-  for (const [source, translated] of [...Object.entries(main), ...Object.entries(runtime)]) {
+  for (const [source, translated] of [...Object.entries(main), ...Object.entries(runtime), ...Object.entries(processing)]) {
     assert.equal(typeof translated, 'string', `Invalid translation: ${source}`);
     assert.ok(translated.trim(), `Empty translation: ${source}`);
     assert.deepEqual(parameters(translated), parameters(source), `Missing/renamed parameters: ${source}`);
   }
-  for (const source of Object.keys(main).filter(key => Object.hasOwn(runtime, key))) {
-    assert.equal(main[source], runtime[source], `Conflicting shared translation: ${source}`);
+  const shared = {};
+  for (const resource of [main, runtime, processing]) {
+    for (const [source, translated] of Object.entries(resource)) {
+      if (Object.hasOwn(shared, source)) assert.equal(shared[source], translated, `Conflicting shared translation: ${source}`);
+      shared[source] = translated;
+    }
   }
 });

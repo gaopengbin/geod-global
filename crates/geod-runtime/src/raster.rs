@@ -16,6 +16,7 @@ use tiff::{
     tags::Tag,
     ColorType,
 };
+use tokio_util::sync::CancellationToken;
 
 const MAX_FILE_BYTES: u64 = 128 * 1024 * 1024;
 const MAX_PIXELS: u64 = 64 * 1024 * 1024;
@@ -49,6 +50,20 @@ pub struct RasterInspection {
     pub preview_height: u32,
     pub classes: Vec<RasterClass>,
     pub sha256: String,
+}
+
+/// Shared verified pixel snapshot used by inspection and cropping. It is never
+/// constructed from catalog metadata or an unchecked filesystem path.
+pub(crate) struct DecodedRaster {
+    pub width: u32,
+    pub height: u32,
+    pub crs: String,
+    pub bounds: [f64; 4],
+    pub pixel_size: [f64; 2],
+    pub nodata: Option<u8>,
+    pub pixels: Vec<u8>,
+    pub sha256: String,
+    counts: [u64; 12],
 }
 
 // Standard SCL class values and display colors, independently applied to decoded pixels.
@@ -105,9 +120,14 @@ fn check_time(deadline: Instant) -> Result<()> {
 struct TimedReader<'a> {
     bytes: Cursor<&'a [u8]>,
     deadline: Instant,
+    cancel: Option<&'a CancellationToken>,
 }
 impl Read for TimedReader<'_> {
     fn read(&mut self, target: &mut [u8]) -> std::io::Result<usize> {
+        if self.cancel.is_some_and(CancellationToken::is_cancelled) {
+            // `read_exact` retries Interrupted, so cancellation must be terminal.
+            return Err(std::io::Error::other("Raster operation cancelled"));
+        }
         if Instant::now() > self.deadline {
             return Err(std::io::Error::new(
                 std::io::ErrorKind::TimedOut,
@@ -124,7 +144,17 @@ impl Seek for TimedReader<'_> {
 }
 
 fn inspect_download(root: &Path, job: &Job) -> Result<RasterInspection> {
+    let raster = load_verified_raster(root, job, None)?;
+    preview(raster, Instant::now() + Duration::from_secs(60))
+}
+
+pub(crate) fn load_verified_raster(
+    root: &Path,
+    job: &Job,
+    cancel: Option<&CancellationToken>,
+) -> Result<DecodedRaster> {
     let deadline = Instant::now() + Duration::from_secs(60);
+    check_cancel(cancel)?;
     if job.status != JobStatus::Succeeded {
         return Err("Raster inspection requires a completed download".into());
     }
@@ -168,6 +198,7 @@ fn inspect_download(root: &Path, job: &Job) -> Result<RasterInspection> {
     let mut hasher = Sha256::new();
     let mut buffer = [0u8; 65536];
     loop {
+        check_cancel(cancel)?;
         check_time(deadline)?;
         let count = file.read(&mut buffer).map_err(fail)?;
         if count == 0 {
@@ -189,10 +220,26 @@ fn inspect_download(root: &Path, job: &Job) -> Result<RasterInspection> {
         );
     }
     // Decode this exact hash-verified snapshot; never reopen the file for pixels.
-    decode(&bytes, sha256, deadline)
+    decode_raster(&bytes, sha256, deadline, cancel)
 }
 
-fn decode(bytes: &[u8], sha256: String, deadline: Instant) -> Result<RasterInspection> {
+pub(crate) fn check_cancel(cancel: Option<&CancellationToken>) -> Result<()> {
+    if cancel.is_some_and(CancellationToken::is_cancelled) {
+        Err("Raster operation cancelled".into())
+    } else {
+        Ok(())
+    }
+}
+
+/// Decode verified in-memory bytes, also used to read back a new partial output
+/// before it becomes a visible completed asset.
+pub(crate) fn decode_raster(
+    bytes: &[u8],
+    sha256: String,
+    deadline: Instant,
+    cancel: Option<&CancellationToken>,
+) -> Result<DecodedRaster> {
+    check_cancel(cancel)?;
     let mut limits = Limits::default();
     limits.decoding_buffer_size = MAX_PIXELS as usize;
     limits.intermediate_buffer_size = 16 * 1024 * 1024;
@@ -200,6 +247,7 @@ fn decode(bytes: &[u8], sha256: String, deadline: Instant) -> Result<RasterInspe
     let mut decoder = Decoder::new(TimedReader {
         bytes: Cursor::new(bytes),
         deadline,
+        cancel,
     })
     .map_err(fail)?
     .with_limits(limits);
@@ -298,6 +346,7 @@ fn decode(bytes: &[u8], sha256: String, deadline: Instant) -> Result<RasterInspe
     }
     let mut counts = [0u64; 12];
     for chunk in pixels.chunks(1024 * 1024) {
+        check_cancel(cancel)?;
         check_time(deadline)?;
         for value in chunk {
             let count = counts
@@ -306,6 +355,31 @@ fn decode(bytes: &[u8], sha256: String, deadline: Instant) -> Result<RasterInspe
             *count += 1;
         }
     }
+    Ok(DecodedRaster {
+        width,
+        height,
+        crs,
+        bounds,
+        pixel_size,
+        nodata,
+        pixels,
+        sha256,
+        counts,
+    })
+}
+
+fn preview(raster: DecodedRaster, deadline: Instant) -> Result<RasterInspection> {
+    let DecodedRaster {
+        width,
+        height,
+        crs,
+        bounds,
+        pixel_size,
+        nodata,
+        pixels,
+        sha256,
+        counts,
+    } = raster;
     let longest = width.max(height);
     let preview_width = if longest <= PREVIEW_EDGE {
         width
@@ -455,4 +529,4 @@ fn georeference(
 }
 
 #[cfg(test)]
-mod tests;
+pub(crate) mod tests;

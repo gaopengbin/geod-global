@@ -1,10 +1,11 @@
-import React, { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
 import { Download, FolderOpen, RefreshCw, X, CheckCircle2, AlertCircle, HardDrive, Scan, LoaderCircle } from 'lucide-react';
 import { desktopAvailable, downloadableAssets, formatBytes, formatClassShare, runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
+import { RuntimeContext } from './runtime-context.js';
+import { ClipRasterButton, DerivedArtifactDetails } from './processing-ui.jsx';
 import './runtime.css';
 
-const RuntimeContext = createContext(null);
 const STATUS = { queued: 'Queued', running: 'Downloading', succeeded: 'Downloaded', failed: 'Failed', cancelled: 'Cancelled', interrupted: 'Interrupted' };
 
 export function RuntimeProvider({ children }) {
@@ -128,25 +129,25 @@ function RasterDialog({ job, onClose }) {
   }, [job.id, job.sha256, attempt]);
   const coordinate = value => number(value, { maximumFractionDigits: 3 });
   return <dialog ref={dialog} className="runtime-dialog runtime-raster-dialog" aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event => { event.preventDefault(); onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
-    <header><div><h2 id={titleId}>{t('Inspect raster')}</h2><p id={descriptionId}>{t('Scene classification from downloaded pixels')}</p></div><button className="icon-btn" aria-label={t('Close raster inspection')} onClick={onClose}><X size={20}/></button></header>
+    <header><div><h2 id={titleId}>{t('Inspect raster')}</h2><p id={descriptionId}>{t('Scene classification from local raster pixels')}</p></div><button className="icon-btn" aria-label={t('Close raster inspection')} onClick={onClose}><X size={20}/></button></header>
     <div className="runtime-dialog-body">
       <p className="mono runtime-wrap runtime-raster-id">{job.itemId} · SCL</p>
-      {loading && <div className="runtime-raster-loading" role="status" aria-live="polite"><LoaderCircle size={24} className="runtime-spinner"/><strong>{t('Reading the downloaded GeoTIFF…')}</strong><p>{t('Verifying the file checksum, decoding pixels and reading spatial metadata.')}</p></div>}
+      {loading && <div className="runtime-raster-loading" role="status" aria-live="polite"><LoaderCircle size={24} className="runtime-spinner"/><strong>{t('Reading the local GeoTIFF…')}</strong><p>{t('Verifying the file checksum, decoding pixels and reading spatial metadata.')}</p></div>}
       {error && <><RuntimeError message={error} summary="The raster could not be inspected. Keep the local task service running and retry. If the file changed or is missing, download it again."/><button className="button" onClick={() => setAttempt(value => value + 1)}><RefreshCw size={15}/>{t('Retry inspection')}</button></>}
       {data && <>
         <div className="runtime-raster-grid">
-          <figure className="runtime-raster-figure"><div className="runtime-raster-image"><img src={data.previewDataUrl} width={data.previewWidth} height={data.previewHeight} alt={t('Sentinel-2 scene classification decoded from the downloaded SCL raster')} onError={() => { setData(null); setError('The decoded raster preview could not be displayed.'); }}/></div><figcaption>{t('Nearest-neighbor preview · {width} × {height} pixels. Colors show source classification values.', { width: number(data.previewWidth), height: number(data.previewHeight) })}</figcaption></figure>
+          <figure className="runtime-raster-figure"><div className="runtime-raster-image"><img src={data.previewDataUrl} width={data.previewWidth} height={data.previewHeight} alt={t('Sentinel-2 scene classification decoded from the local SCL raster')} onError={() => { setData(null); setError('The decoded raster preview could not be displayed.'); }}/></div><figcaption>{t('Nearest-neighbor preview · {width} × {height} pixels. Colors show source classification values.', { width: number(data.previewWidth), height: number(data.previewHeight) })}</figcaption></figure>
           <section className="runtime-raster-metadata" aria-label={t('Raster metadata')}><h3>{t('Raster metadata')}</h3><dl className="runtime-details"><dt>{t('Dimensions')}</dt><dd>{t('{width} × {height} pixels', { width: number(data.width), height: number(data.height) })}</dd><dt>{t('Bands')}</dt><dd>{number(data.bandCount)}</dd><dt>{t('Data type')}</dt><dd>{data.dataType}</dd><dt>{t('Coordinate system')}</dt><dd>{data.crs}</dd><dt>{t('Pixel size (metres)')}</dt><dd>{coordinate(data.pixelSize[0])} × {coordinate(data.pixelSize[1])}</dd><dt>{t('Bounds (metres)')}</dt><dd className="runtime-raster-bounds">{['Min X', 'Min Y', 'Max X', 'Max Y'].map((label, index) => <span key={label}>{t(label)}: {coordinate(data.bounds[index])}</span>)}</dd><dt>{t('No-data value')}</dt><dd>{data.nodata === null ? t('Not specified') : number(data.nodata)}</dd></dl></section>
         </div>
-        <section className="runtime-raster-legend" aria-labelledby={`${titleId}-legend`}><h3 id={`${titleId}-legend`}>{t('Scene classes')}</h3><p>{t('Counts cover the complete raster, including no-data pixels.')}</p><ul>{data.classes.map(item => <li key={item.value}><span className="runtime-raster-swatch" style={{ backgroundColor: item.color }} aria-hidden="true"/><span className="runtime-raster-class">{number(item.value)} · {t(item.label)}</span><span className="runtime-raster-count">{t('{count} pixels', { count: number(item.count) })}<small>{formatClassShare(item.count, data.width * data.height, locale)}</small></span></li>)}</ul></section>
-        <div className="notice"><CheckCircle2 size={17}/><span>{t('The preview and class counts were decoded from this local file after SHA-256 verification. Source classifications are not an independent accuracy assessment. No clipping or reprojection is applied.')}</span></div>
+        <section className="runtime-raster-legend" aria-labelledby={`${titleId}-legend`}><h3 id={`${titleId}-legend`}>{t('Scene classes')}</h3><p>{t('Counts cover the current raster, including no-data pixels.')}</p><ul>{data.classes.map(item => <li key={item.value}><span className="runtime-raster-swatch" style={{ backgroundColor: item.color }} aria-hidden="true"/><span className="runtime-raster-class">{number(item.value)} · {t(item.label)}</span><span className="runtime-raster-count">{t('{count} pixels', { count: number(item.count) })}<small>{formatClassShare(item.count, data.width * data.height, locale)}</small></span></li>)}</ul></section>
+        <div className="notice"><CheckCircle2 size={17}/><span>{t(job.kind === 'raster_clip' ? 'The preview and counts come from the derived GeoTIFF after SHA-256 verification. Source pixels were clipped without resampling or reprojection.' : 'The preview and class counts were decoded from this local file after SHA-256 verification. Source classifications are not an independent accuracy assessment. No clipping or reprojection is applied.')}</span></div>
         <details className="runtime-raster-provenance"><summary>{t('File and provenance')}</summary><dl className="runtime-details"><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{data.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd></dl></details>
       </>}
     </div><footer><button className="button" onClick={onClose}>{t('Close')}</button></footer>
   </dialog>;
 }
 
-function JobCard({ job, library = false }) {
+function JobCard({ job, library = false, areaBounds }) {
   const { act } = useContext(RuntimeContext);
   const { t, locale, number, date } = useI18n();
   const [busy, setBusy] = useState(false);
@@ -155,6 +156,7 @@ function JobCard({ job, library = false }) {
   const mounted = useRef(true);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const active = ['queued', 'running'].includes(job.status);
+  const derived = job.kind === 'raster_clip';
   const canInspect = job.status === 'succeeded' && job.assetKey === 'scl' && /^image\/(?:tiff|geotiff)(?:;|$)/i.test(job.mediaType || '');
   const run = async operation => {
     setBusy(true); setError('');
@@ -165,30 +167,32 @@ function JobCard({ job, library = false }) {
   const progress = job.totalBytes > 0 ? Math.min(100, job.bytesDownloaded / job.totalBytes * 100) : null;
   const bytes = value => Number.isFinite(value) && value >= 0 ? formatBytes(value, locale) : t('Unknown size');
   return <article className="runtime-job">
-    <div className="runtime-job-heading"><div><h3>{job.title || job.itemId}</h3><p>{job.assetKey.toUpperCase()} · {job.id}</p></div><span className={'badge ' + (job.status === 'succeeded' ? 'green' : ['failed', 'interrupted'].includes(job.status) ? 'red' : 'blue')}>{t(STATUS[job.status] || job.status)}</span></div>
-    {active && <progress aria-label={t('Download progress')} value={progress ?? undefined} max="100"/>}
-    <div className="runtime-job-status"><span>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</span><span>{job.status === 'succeeded' ? <><CheckCircle2 size={14}/>{t('File saved · SHA-256 recorded')}</> : t(active ? 'Downloading original asset' : 'No completed artifact from this attempt')}</span></div>
-    {job.error && <RuntimeError message={typeof job.error === 'string' ? job.error : job.error.message} summary="This download did not complete. Retry from the beginning when the source and local service are available."/>}
-    {job.status === 'succeeded' && <details open={library}><summary>{t('File and provenance')}</summary><dl className="runtime-details"><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t('Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl></details>}
+    <div className="runtime-job-heading"><div><h3>{job.title || job.itemId}</h3><p>{job.assetKey.toUpperCase()} · {job.id}</p></div><span className={'badge ' + (job.status === 'succeeded' ? 'green' : ['failed', 'interrupted'].includes(job.status) ? 'red' : 'blue')}>{t(derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status)}</span></div>
+    {active && <progress aria-label={t(derived ? 'Processing progress' : 'Download progress')} value={derived ? undefined : progress ?? undefined} max="100"/>}
+    <div className="runtime-job-status"><span>{derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>}</span><span>{job.status === 'succeeded' ? <><CheckCircle2 size={14}/>{t('File saved · SHA-256 recorded')}</> : t(active ? derived ? 'Copying source pixels into a derived GeoTIFF' : 'Downloading original asset' : 'No completed artifact from this attempt')}</span></div>
+    <DerivedArtifactDetails job={job}/>
+    {job.error && <RuntimeError message={typeof job.error === 'string' ? job.error : job.error.message} summary={derived ? 'Raster processing did not complete. Check the source file and retry the recipe.' : 'This download did not complete. Retry from the beginning when the source and local service are available.'}/>}
+    {job.status === 'succeeded' && <details open={library}><summary>{t('File and provenance')}</summary><dl className="runtime-details"><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t(derived ? 'Generated locally from the pinned source recipe. Inspect the result to read output pixels and spatial metadata.' : 'Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl></details>}
     <div className="row-actions">
-      {active && <button className="button" disabled={busy} onClick={() => run('cancel')}><X size={15}/>{t('Cancel download')}</button>}
+      {active && <button className="button" disabled={busy} onClick={() => run('cancel')}><X size={15}/>{t(derived ? 'Cancel processing' : 'Cancel download')}</button>}
       {['failed', 'cancelled', 'interrupted'].includes(job.status) && <button className="button" disabled={busy} onClick={() => run('retry')}><RefreshCw size={15}/>{t('Retry from start')}</button>}
       {canInspect && <button className="button primary" onClick={() => setInspect(true)}><Scan size={15}/>{t('Inspect raster')}</button>}
+      {canInspect && !derived && <ClipRasterButton job={job} areaBounds={areaBounds}/>}
       {job.status === 'succeeded' && desktopAvailable() && <button className="button" disabled={busy} onClick={() => run('reveal')}><FolderOpen size={15}/>{t('Show in folder')}</button>}
     </div>{error && <RuntimeError message={error} summary="The task action failed. Check the service connection and try again."/>}
     {inspect && <RasterDialog job={job} onClose={() => setInspect(false)}/>}
   </article>;
 }
 
-export function RuntimeTasks() {
+export function RuntimeTasks({ areaBounds }) {
   const { jobs } = useContext(RuntimeContext);
   const { t } = useI18n();
-  return <section className="runtime-section" aria-label={t('Real download tasks')}><h2>{t('Downloads')}</h2><Connection/>{jobs.length ? <div className="runtime-jobs">{jobs.map(job => <JobCard key={job.id} job={job}/>)}</div> : <p className="runtime-empty">{t('Select a scene, then choose “Download source asset”. Download tasks and file checks are saved by the local service.')}</p>}</section>;
+  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Downloads and processing')}</h2><Connection/>{jobs.length ? <div className="runtime-jobs">{jobs.map(job => <JobCard key={job.id} job={job} areaBounds={areaBounds}/>)}</div> : <p className="runtime-empty">{t('Select a scene, then choose “Download source asset”. Download tasks and file checks are saved by the local service.')}</p>}</section>;
 }
 
-export function RuntimeLibrary() {
+export function RuntimeLibrary({ areaBounds }) {
   const { jobs } = useContext(RuntimeContext);
   const { t, number } = useI18n();
   const completed = jobs.filter(job => job.status === 'succeeded');
-  return <section className="runtime-section" aria-label={t('Downloaded source files')}><h2>{t('Downloaded source files')} <span className="badge">{number(completed.length)}</span></h2><Connection/>{completed.length ? <div className="runtime-jobs">{completed.map(job => <JobCard key={job.id} job={job} library/>)}</div> : <p className="runtime-empty">{t('Completed downloads appear here with their local path, source and checksum.')}</p>}</section>;
+  return <section className="runtime-section" aria-label={t('Local source files and outputs')}><h2>{t('Local source files and outputs')} <span className="badge">{number(completed.length)}</span></h2><Connection/>{completed.length ? <div className="runtime-jobs">{completed.map(job => <JobCard key={job.id} job={job} areaBounds={areaBounds} library/>)}</div> : <p className="runtime-empty">{t('Completed downloads appear here with their local path, source and checksum.')}</p>}</section>;
 }

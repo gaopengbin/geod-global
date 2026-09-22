@@ -2,7 +2,7 @@ use super::*;
 use std::collections::BTreeMap;
 use tiff::encoder::{colortype, TiffEncoder};
 
-fn fixture(width: u32, height: u32, pixels: &[u8], epsg: u16, matrix: bool) -> Vec<u8> {
+pub(crate) fn fixture(width: u32, height: u32, pixels: &[u8], epsg: u16, matrix: bool) -> Vec<u8> {
     let mut buffer = Cursor::new(Vec::new());
     {
         let mut encoder = TiffEncoder::new(&mut buffer).unwrap();
@@ -44,7 +44,7 @@ fn fixture(width: u32, height: u32, pixels: &[u8], epsg: u16, matrix: bool) -> V
     buffer.into_inner()
 }
 
-fn record(root: &Path, bytes: &[u8]) -> Job {
+pub(crate) fn record(root: &Path, bytes: &[u8]) -> Job {
     let id = uuid::Uuid::new_v4().to_string();
     let assets = root.join("assets");
     std::fs::create_dir_all(&assets).unwrap();
@@ -70,6 +70,11 @@ fn record(root: &Path, bytes: &[u8]) -> Job {
         source: "test fixture".into(),
         validation: "test".into(),
         attempts: 1,
+        kind: "download".into(),
+        parent_id: None,
+        recipe: None,
+        crop: None,
+        manifest_path: None,
     }
 }
 

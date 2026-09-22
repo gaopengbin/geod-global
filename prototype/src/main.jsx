@@ -51,6 +51,7 @@ import "./styles.css";
 import "./catalog.css";
 import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
+import { ExecutableRecipes } from "./processing-ui.jsx";
 import { I18nProvider, useI18n } from "./i18n.jsx";
 
 const nav = [
@@ -417,7 +418,7 @@ function App() {
     };
     setRecipes((old) => [r, ...old]);
     setModal(null);
-    setToast("Recipe saved in this browser.");
+    setToast("Design recipe saved in this browser.");
   };
   const simulate = () => {
     const t = {
@@ -465,7 +466,7 @@ function App() {
       "Local files",
       "COG / GeoJSON / 3D Tiles",
       "Planned",
-      "Native processing not connected",
+      "Arbitrary local file import not connected",
     ],
   ];
   if (loadError && !live)
@@ -790,7 +791,7 @@ function App() {
                   </div>
                   {domain === "Local Data" ? (
                     <>
-                      <p>{t("Choose a file to inspect its name and size. Native previews and processing are planned.")}</p>
+                      <p>{t("This file picker reads names and sizes. Inspect and clip downloaded SCL rasters from My Data.")}</p>
                       <label className="button file-button">
                         <Plus size={16} />{t("Choose a local file")}<input
                           type="file"
@@ -1150,9 +1151,9 @@ function App() {
                   <Btn
                     icon={Download}
                     onClick={() => setModal("export")}
-                  >{t("Review processing plan")}</Btn>
-                  <Btn icon={Workflow} onClick={() => setModal("recipe")}>{t("Save as recipe")}</Btn>
-                  <p>{t("Processing plans and recipes remain design simulations.")}</p>
+                  >{t("Review design export")}</Btn>
+                  <Btn icon={Workflow} onClick={() => setModal("recipe")}>{t("Save design recipe")}</Btn>
+                  <p>{t("Download SCL and open My Data for verified clipping. These export options are design previews.")}</p>
                 </div>
               </aside>
             )}
@@ -1174,12 +1175,12 @@ function App() {
                     >{t("New task")}</Btn>
                   }
                 />
-                <RuntimeTasks />
+                <RuntimeTasks areaBounds={bbox} />
                 <details className="design-simulations">
                   <summary>{t("Design simulations below · {count} sample tasks", { count: number(tasks.length) })}</summary>
                 <div className="notice">
                   <Info size={17} />
-                  <span>{t("These sample tasks simulate processing. Real downloads appear above.")}</span>
+                  <span>{t("These sample tasks simulate processing. Real downloads and clipping jobs appear above.")}</span>
                 </div>
                 {!tasks.length ? (
                   <Empty
@@ -1285,7 +1286,7 @@ function App() {
                   title={t("My Data")}
                   sub={t("Your outputs, with their story intact.")}
                 />
-                <RuntimeLibrary />
+                <RuntimeLibrary areaBounds={bbox} />
                 <details className="design-simulations">
                   <summary>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</summary>
                 {!outputs.length ? (
@@ -1294,7 +1295,7 @@ function App() {
                     action={
                       <Btn primary onClick={() => go("Explore")}>{t("Prepare an export")}</Btn>
                     }
-                  >{t("The prototype adds a simulation report here after a sample task. It never claims to produce a GeoTIFF.")}</Empty>
+                  >{t("Sample tasks add simulation reports here. Real GeoTIFF outputs are listed above.")}</Empty>
                 ) : (
                   <div className="output-grid">
                     {outputs.map((o) => (
@@ -1342,13 +1343,13 @@ function App() {
                 <PageHeading
                   eyebrow={t("REPEATABLE WORK")}
                   title={t("Recipes")}
-                  sub={t("Keep the choices. Run them again when the data changes.")}
-                  action={
-                    <Btn icon={Plus} disabled={!selected} onClick={() => setModal("recipe")}>{t("Create recipe")}</Btn>
-                  }
+                  sub={t("Repeat a verified rectangular clip from a pinned source file.")}
                 />
+                <ExecutableRecipes areaBounds={bbox} onReviewJSON={showJSON} />
+                <details className="design-simulations">
+                  <summary>{t("Design recipe simulations · {count} recipes", { count: number(recipes.length) })}</summary>
                 <div className="notice">
-                  <Workflow size={17} />{t("Recipe files use design-prototype/v1. They are not executable Core recipes.")}</div>
+                  <Workflow size={17} />{t("These design recipes use design-prototype/v1 and do not execute. Saved executable recipes are listed above.")}</div>
                 {!recipes.length ? (
                   <Empty
                     icon={Workflow}
@@ -1411,6 +1412,7 @@ function App() {
                     </table>
                   </div>
                 )}
+                </details>
               </>
             ) : page === "Sources" ? (
               <>
@@ -1556,7 +1558,7 @@ function App() {
                   <div>
                     <span>
                       <strong>{t("Local design data")}</strong>
-                      <small>{t("Recipes, simulations and reports are stored in browser storage.")}</small>
+                      <small>{t("Design recipes, sample tasks and reports use browser storage. Executable recipes and real files use the local service.")}</small>
                     </span>
                     <Btn onClick={() => setModal("reset")}>{t("Clear design data")}</Btn>
                   </div>
@@ -1585,7 +1587,7 @@ function App() {
               ? t("{count} simulation running", { count: number(tasks.filter((task) => task.status === "Running").length) })
               : live ? t("Live catalog · original source assets") : t("Sample catalog · cached scene metadata")}
             <span className="status-divider">/</span>
-            <button onClick={() => setModal("about")}>{t("Prototype 0.1")}</button>
+            <button onClick={() => setModal("about")}>{t("Development 0.1")}</button>
           </span>
         </footer>
       </div>
@@ -1604,13 +1606,13 @@ function App() {
                 : "Remove report"
               : {
                   export: "Prepare export",
-                  recipe: "Save recipe",
+                  recipe: "Save design recipe",
                   area: "Saved area",
                   provenance: "Data provenance",
                   commands: "Search commands",
                   states: "Review interface states",
                   planned: "Planned capability",
-                  about: "About this design",
+                  about: "About this workspace",
                   reset: "Clear local design data",
                 }[modal])
           }
@@ -1623,7 +1625,7 @@ function App() {
                 <div>
                   <Badge tone="blue">{t("DESIGN SIMULATION")}</Badge>
                   <h3>{recipeName}</h3>
-                  <p className="muted">{t("Review what the desktop export flow will collect.")}</p>
+                  <p className="muted">{t("Preview planned export options. Real SCL clipping starts from a downloaded file in My Data.")}</p>
                   <label className="field">{t("Output format")}<select
                       value={format}
                       onChange={(e) => setFormat(e.target.value)}
@@ -1640,7 +1642,7 @@ function App() {
                   <div className="two-fields">
                     <label className="field">{t("Pixel size")}<input value={selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("Not specified")} readOnly />
                     </label>
-                    <label className="field">{t("Processing location")}<input value={t("Local · not connected")} readOnly />
+                    <label className="field">{t("Processing location")}<input value={t("Design simulation only")} readOnly />
                     </label>
                   </div>
                 </div>
@@ -1653,9 +1655,9 @@ function App() {
                   <div>
                     <Check size={16} />{t("Preserve source & recipe")}</div>
                   <div>
-                    <Info size={16} />{t("Native raster engine required")}</div>
+                    <Info size={16} />{t("This export configuration is a design simulation")}</div>
                   <hr />
-                  <p>{t("No size or cost estimate is available in this prototype. No data download starts from this dialog.")}</p>
+                  <p>{t("This design dialog does not create files. Download SCL, then use Clip raster in My Data to create a GeoTIFF.")}</p>
                 </div>
               </div>
               <div className="dialog-footer">
@@ -1752,7 +1754,7 @@ function App() {
                 <dd>{t("Full scene, not AOI-specific")}</dd>
               </dl>
               <p>
-                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. Provider thumbnails are visual previews; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and thumbnails come from seven saved catalog records. Sample filters run locally. Download original asset retrieves the remote source file; processing plans are design simulations.")}
+                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. Provider thumbnails are visual previews; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and thumbnails come from seven saved catalog records. Sample filters run locally. Original downloads, SCL inspection and rectangular clipping use the local task service.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">
@@ -1779,7 +1781,7 @@ function App() {
               <div className="command-results">
                 {[
                   ...nav.map(([n]) => [n, () => go(n)]),
-                  ...(selected ? [["Review processing plan", () => setModal("export")], ["Save recipe", () => setModal("recipe")]] : []),
+                  ...(selected ? [["Review design export", () => setModal("export")], ["Save design recipe", () => setModal("recipe")]] : []),
                   ["Cloud", () => go("Cloud")],
                   ["Settings", () => go("Settings")],
                 ]
@@ -1835,7 +1837,7 @@ function App() {
           ) : modal === "reset" ? (
             <>
               <div className="dialog-body">
-                <p>{t("Remove this prototype’s saved recipes, task simulations and reports from browser storage? No files on your computer will be removed.")}</p>
+                <p>{t("Remove browser design recipes, sample tasks and reports? Real downloads, executable recipes and output files are retained.")}</p>
               </div>
               <div className="dialog-footer">
                 <Btn onClick={() => setModal(null)}>{t("Keep data")}</Btn>
@@ -1895,12 +1897,12 @@ function App() {
                 <Layers />
               </span>
               <h3>{t("GeoD Global · local workspace")}</h3>
-              <p>{t("A local-first geospatial data workspace with live catalog search and original asset downloads. Planned processing tools remain visible as explicit design simulations.")}</p>
+              <p>{t("A local geospatial workspace with live catalog search, original downloads, SCL inspection, rectangular clipping and executable recipes. Other processing tools remain design previews.")}</p>
               <ul>
                 <li>{t("Live Earth Search queries and a separate cached sample catalog.")}</li>
-                <li>{t("Working filters, comparison, recipes and local persistence.")}</li>
+                <li>{t("Catalog filters and compatible scene comparison with local preferences.")}</li>
                 <li>{t("Original source asset downloads with local task history.")}</li>
-                <li>{t("Explicit simulations for raster processing and recipe execution.")}</li>
+                <li>{t("Verified SCL pixel inspection, rectangular GeoTIFF clips and reusable local recipes.")}</li>
                 <li>{t("Six data domains, with unconnected adapters marked.")}</li>
                 <li>{t("Cloud features and commercial terms remain proposals.")}</li>
               </ul>

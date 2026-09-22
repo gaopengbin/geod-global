@@ -1,0 +1,10 @@
+{
+  "adapter": "http://127.0.0.1:4318",
+  "savedRecipeSurvivedServiceRestart": true,
+  "existingResultSurvivedServiceRestart": true,
+  "newJobId": "f135ce76-bfa7-4a0f-8edb-a5e65ab185d6",
+  "outputSha256": "af78deb054871d1f6b5c02de84f40fddbeac060ecd5d79781c305a7aa4063ecd",
+  "matchesBrowserOutput": true,
+  "terminalAndSettled": true,
+  "wrongPinRejectedWithoutCreatingJob": true
+}

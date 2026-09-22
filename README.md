@@ -2,11 +2,13 @@
 
 独立海外桌面产品仓库。产品目标是围绕同一区域发现、预览、比较、获取、处理和导出空间数据，并保留来源及可重复工作流。
 
-**当前状态：独立工程已接入中英文界面、Earth Search 实时检索、Rust 文件下载与原生 SCL 栅格检查。Tauri 桌面壳与浏览器调试入口复用同一执行核心。完整产品规格仍在逐步实施。**
+**当前状态：独立工程已接入中英文界面、Earth Search 实时检索、Rust 文件下载、原生 SCL 栅格检查与矩形裁剪、可执行配方和 CLI。Tauri 桌面壳与浏览器调试入口复用同一执行核心。完整产品规格仍在逐步实施。**
 
-已实现按WGS84范围、UTC日期与云量检索 Sentinel-2，预览和比较兼容网格的场景，下载原始SCL/真彩色GeoTIFF或JPEG缩略图，取消、从头重试、持久化任务及查看成果来源与SHA-256。样本目录、设计模拟和真实任务有明确区别。当前下载整景原始资产；裁剪、重投影、科学计算和断点续传尚未实现。
+已实现按WGS84范围、UTC日期与云量检索 Sentinel-2，预览和比较兼容网格的场景，下载原始SCL/真彩色GeoTIFF或JPEG缩略图，取消、从头重试、持久化任务及查看成果来源与SHA-256。样本目录、设计模拟和真实任务有明确区别。源资产下载仍为整景；成功下载的SCL可以另行裁剪为派生GeoTIFF。重投影、通用多波段处理、科学计算和字节续传尚未实现。
 
 在 **Settings / 设置 → Language / 语言** 切换 English / 简体中文，选择会保留。**My Data / 我的数据 → 检查栅格** 可读取已完成的SCL下载，重新校验SHA-256，并显示原始栅格元数据、真实像元预览和整景分类统计。当前读取支持单波段UInt8 SCL、WGS84 UTM北/南网格；应用无需系统GDAL或Python。具体范围和实际验收见[多语言与栅格检查](GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md)。
+
+**我的数据 → 裁剪栅格** 可使用工作区经纬度范围或手工源坐标，在真实预检后保存配方或执行。输出保留源像元、坐标系和分辨率，并附带独立JSON来源清单。**Recipes / 配方** 支持保存、导入、审阅及重跑；同一流程也可通过CLI执行。见[处理与配方验收](GeoD-Global-Spec/11-Executable-Processing-and-Recipes.md)和[英文操作教程](docs/workflows/clip-sentinel-scl.md)。
 
 ## 仓库边界
 
@@ -59,7 +61,7 @@ python -m pip install -r requirements-dev.txt
 npm run verify
 ```
 
-`verify` 检查四个关键依赖的真实解析路径、七张真实样本的 SHA-256、规格相对链接、拟议契约正反例、多语言、目录与下载/栅格客户端测试和 Vite 构建。`npm run test:runtime` 运行Rust下载、栅格读取与HTTP边界测试；`npm run verify:all` 同时运行两部分。契约草案不是当前生产API；本轮运行时接口见 [runtime说明](crates/geod-runtime/README.md)。
+`verify` 检查四个关键依赖的真实解析路径、七张真实样本的 SHA-256、规格相对链接、拟议契约和当前可执行配方Schema正反例、多语言、目录与下载/栅格/处理客户端测试和 Vite 构建。`npm run test:runtime` 运行Rust下载、栅格读取/裁剪、配方持久化与HTTP边界测试；`npm run verify:all` 同时运行两部分。契约草案不是当前生产API；本轮运行时接口见 [runtime说明](crates/geod-runtime/README.md)。
 
 GitHub Actions 已配置 Windows/Linux 检查，但在没有推送并完成运行前，不代表远程 CI 已通过。
 
@@ -72,7 +74,10 @@ prototype/             已认可视觉方向的交互原型
   public/              真实场景快照、缩略图及字体许可
   qa/                  原型视觉验收截图
 scripts/               独立依赖与样本检查
-crates/geod-runtime/    持久化下载任务与loopback调试服务
+crates/geod-runtime/    持久化下载/处理/配方、CLI与loopback服务
+schemas/               当前可执行配方Schema（区别于规格草案）
+examples/              实际下载请求与固定本地输入的配方示例
+docs/workflows/        英文操作教程
 src-tauri/             独立桌面壳，直接调用同一Rust核心
 .github/workflows/     独立构建检查
 ```

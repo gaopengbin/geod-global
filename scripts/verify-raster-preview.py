@@ -67,7 +67,7 @@ report = {
         "fullResolutionClassCounts": "passed", "nearestPreviewEveryPixel": "passed",
         "decodedPixels": int(pixels.size), "previewPixels": preview.width * preview.height,
     },
-    "scope": "A real downloaded Sentinel-2 SCL sample; does not establish classification accuracy or general raster support",
+    "scope": "A real local Sentinel-2 SCL raster; does not establish classification accuracy or general raster support",
 }
 args.report.parent.mkdir(parents=True, exist_ok=True)
 args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

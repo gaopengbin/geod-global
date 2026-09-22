@@ -22,6 +22,7 @@
 | [08-Repository-Boundary.md](08-Repository-Boundary.md) | 独立仓库决定、依赖与发行隔离、共享库规则及下一步工程路径 | 建仓、维护与接入真实能力 |
 | [09-Live-Catalog-and-Downloads.md](09-Live-Catalog-and-Downloads.md) | 实时目录、Rust真实下载、桌面壳和文件验收记录 | 2026-09-22已实现链路及后续边界 |
 | [10-Languages-and-Raster-Inspection.md](10-Languages-and-Raster-Inspection.md) | 中英文界面、真实SCL像元预览、空间元数据与分类统计 | 多语言与下载成果读取验收 |
+| [11-Executable-Processing-and-Recipes.md](11-Executable-Processing-and-Recipes.md) | SCL矩形裁剪、来源清单、可执行配方、CLI及独立像元验收 | 当前真实工作流、全范围覆盖与后续边界 |
 | [交互原型说明](../prototype/README.md) | 原型启动方式、页面入口和样本来源 | 本地打开与操作设计原型 |
 
 ## 三个需要保留的修正
@@ -53,5 +54,7 @@
 2026-09-22执行补充：独立Global仓库已接入实时Earth Search、Rust下载任务及Tauri桌面壳，真实文件验收见附件09。未修改国内版产品核心代码；没有创建新的Issue/PR、部署、购买域名、注册经营主体、申请支付商户、向任何人发送邮件、接受客户付款或进行用户访谈。
 
 同日继续实施：增加可持久保存的中英文语言选择、原生SCL GeoTIFF读取、真实像元预览与整景分类统计；独立栅格对照、浏览器响应式验收及当前能力边界见附件10。
+
+同日处理链路补充：已将真实源文件接入SCL矩形裁剪、GeoTIFF成果及来源清单、持久化可执行配方与CLI。真实像元及全范围工作包的部分覆盖见附件11；不将单个SCL流程等同于通用GIS或整套产品完成。
 
 本文档包是规划和决策材料，不替代数据源的真实许可、支付合同或适用于实际经营主体的专业税务/法律意见。

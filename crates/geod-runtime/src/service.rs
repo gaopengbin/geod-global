@@ -1,5 +1,5 @@
 //! Loopback development adapter; desktop commands use JobManager directly.
-use crate::{CreateJobRequest, JobManager};
+use crate::{CreateJobRequest, JobManager, RasterRecipe};
 use axum::{
     extract::{DefaultBodyLimit, Path, Request, State},
     http::{header, HeaderValue, Method, StatusCode},
@@ -88,6 +88,56 @@ async fn health(State(manager): State<JobManager>) -> Json<crate::RuntimeHealth>
 async fn jobs(State(manager): State<JobManager>) -> Json<Vec<crate::Job>> {
     Json(manager.list().await)
 }
+async fn job(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Json<JobSnapshot>, ApiError> {
+    manager
+        .get_with_settled(&id)
+        .await
+        .map(|(job, settled)| Json(JobSnapshot { job, settled }))
+        .ok_or_else(|| (StatusCode::NOT_FOUND, Json(json!({"error":"Unknown job"}))))
+}
+
+#[derive(serde::Serialize)]
+struct JobSnapshot {
+    #[serde(flatten)]
+    job: crate::Job,
+    settled: bool,
+}
+async fn recipes(State(manager): State<JobManager>) -> Json<Vec<crate::SavedRecipe>> {
+    Json(manager.list_recipes().await)
+}
+async fn plan_recipe(
+    State(manager): State<JobManager>,
+    Json(recipe): Json<RasterRecipe>,
+) -> std::result::Result<Json<crate::RecipePlan>, ApiError> {
+    manager
+        .plan_recipe(recipe)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+async fn save_recipe(
+    State(manager): State<JobManager>,
+    Json(recipe): Json<RasterRecipe>,
+) -> std::result::Result<(StatusCode, Json<crate::SavedRecipe>), ApiError> {
+    manager
+        .save_recipe(recipe)
+        .await
+        .map(|recipe| (StatusCode::CREATED, Json(recipe)))
+        .map_err(api_error)
+}
+async fn run_recipe(
+    State(manager): State<JobManager>,
+    Json(recipe): Json<RasterRecipe>,
+) -> std::result::Result<(StatusCode, Json<crate::Job>), ApiError> {
+    manager
+        .run_recipe(recipe)
+        .await
+        .map(|job| (StatusCode::ACCEPTED, Json(job)))
+        .map_err(api_error)
+}
 async fn create(
     State(manager): State<JobManager>,
     Json(request): Json<CreateJobRequest>,
@@ -126,9 +176,13 @@ pub fn router(manager: JobManager) -> Router {
     Router::new()
         .route("/health", get(health))
         .route("/jobs", get(jobs).post(create))
+        .route("/jobs/{id}", get(job))
         .route("/jobs/{id}/cancel", post(cancel))
         .route("/jobs/{id}/retry", post(retry))
         .route("/jobs/{id}/raster", get(raster))
+        .route("/recipes", get(recipes).post(save_recipe))
+        .route("/recipes/plan", post(plan_recipe))
+        .route("/recipes/run", post(run_recipe))
         .layer(DefaultBodyLimit::max(8192))
         .layer(middleware::from_fn(browser_boundary))
         .with_state(manager)
@@ -138,7 +192,7 @@ pub async fn serve(manager: JobManager, port: u16) -> crate::Result<()> {
     let listener = tokio::net::TcpListener::bind((std::net::Ipv4Addr::LOCALHOST, port))
         .await
         .map_err(|e| e.to_string())?;
-    println!(
+    eprintln!(
         "GeoD runtime listening on http://127.0.0.1:{port}; storage {}",
         manager.storage_root().display()
     );

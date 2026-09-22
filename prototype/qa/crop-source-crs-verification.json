@@ -1,0 +1,76 @@
+{
+  "jobId": "451316c8-daf4-4b4a-b2d4-3965ea6256c4",
+  "sourceJobId": "f2567c01-f7c3-4b15-be9e-7f05119f0712",
+  "itemId": "S2C_10SEG_20250707_0_L2A",
+  "recipe": {
+    "schemaVersion": "geod-raster-recipe/v1",
+    "name": "Source UTM rectangle verification",
+    "source": {
+      "jobId": "f2567c01-f7c3-4b15-be9e-7f05119f0712",
+      "sha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8"
+    },
+    "operation": {
+      "type": "clip",
+      "crs": "source",
+      "bounds": [
+        520001.0,
+        4110001.0,
+        580009.0,
+        4180009.0
+      ]
+    },
+    "output": {
+      "format": "GeoTIFF"
+    }
+  },
+  "sourceSha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+  "outputSha256": "b3b79eaa8bbc7e2d62255c33656752c22bf4c9efc0443c085c94e2e99f6afc54",
+  "outputBytes": 564501,
+  "independentWindow": [
+    1001,
+    999,
+    3001,
+    3501
+  ],
+  "width": 3001,
+  "height": 3501,
+  "bands": 1,
+  "crs": "EPSG:32610",
+  "resolution": [
+    20.0,
+    20.0
+  ],
+  "nodata": 0.0,
+  "transform": [
+    20.0,
+    0.0,
+    520000.0,
+    0.0,
+    -20.0,
+    4180020.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "bounds": [
+    520000.0,
+    4110000.0,
+    580020.0,
+    4180020.0
+  ],
+  "dtype": "uint8",
+  "driver": "GTiff",
+  "compression": "Compression.deflate",
+  "comparedSamples": 10506501,
+  "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2025/7/S2C_10SEG_20250707_0_L2A/SCL.tif",
+  "independentChecks": {
+    "decoder": "Rasterio / GDAL",
+    "projection": "Not required; source CRS coordinates",
+    "everyOutputSample": "passed",
+    "georeferencing": "passed",
+    "sourceUnchanged": "passed",
+    "outputHashAndBytes": "passed",
+    "portableProvenanceSidecar": "passed"
+  },
+  "scope": "Pixel-aligned projected rectangle; no reprojection/resampling or geographic polygon mask"
+}

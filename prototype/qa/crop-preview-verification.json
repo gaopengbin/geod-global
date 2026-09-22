@@ -1,0 +1,108 @@
+{
+  "jobId": "22db8368-9ecf-4076-9b33-7af7814fa19d",
+  "itemId": "S2C_10SEG_20250707_0_L2A",
+  "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2025/7/S2C_10SEG_20250707_0_L2A/SCL.tif",
+  "width": 1020,
+  "height": 895,
+  "bandCount": 1,
+  "dataType": "UInt8",
+  "crs": "EPSG:32610",
+  "bounds": [
+    539580.0,
+    4170400.0,
+    559980.0,
+    4188300.0
+  ],
+  "pixelSize": [
+    20.0,
+    20.0
+  ],
+  "nodata": 0,
+  "previewWidth": 768,
+  "previewHeight": 673,
+  "classes": [
+    {
+      "value": 0,
+      "label": "No data",
+      "color": "#000000",
+      "count": 0
+    },
+    {
+      "value": 1,
+      "label": "Saturated or defective",
+      "color": "#ff0000",
+      "count": 0
+    },
+    {
+      "value": 2,
+      "label": "Terrain shadow",
+      "color": "#2f2f2f",
+      "count": 731
+    },
+    {
+      "value": 3,
+      "label": "Cloud shadow",
+      "color": "#643200",
+      "count": 3
+    },
+    {
+      "value": 4,
+      "label": "Vegetation",
+      "color": "#00a000",
+      "count": 49939
+    },
+    {
+      "value": 5,
+      "label": "Bare/non-vegetated",
+      "color": "#ffe65a",
+      "count": 253062
+    },
+    {
+      "value": 6,
+      "label": "Water",
+      "color": "#0000ff",
+      "count": 363768
+    },
+    {
+      "value": 7,
+      "label": "Unclassified",
+      "color": "#808080",
+      "count": 7868
+    },
+    {
+      "value": 8,
+      "label": "Medium-probability cloud",
+      "color": "#c0c0c0",
+      "count": 71951
+    },
+    {
+      "value": 9,
+      "label": "High-probability cloud",
+      "color": "#ffffff",
+      "count": 165578
+    },
+    {
+      "value": 10,
+      "label": "Thin cirrus",
+      "color": "#64c8ff",
+      "count": 0
+    },
+    {
+      "value": 11,
+      "label": "Snow or ice",
+      "color": "#ff96ff",
+      "count": 0
+    }
+  ],
+  "sha256": "af78deb054871d1f6b5c02de84f40fddbeac060ecd5d79781c305a7aa4063ecd",
+  "independentChecks": {
+    "decoder": "Rasterio / GDAL",
+    "checksum": "passed",
+    "metadata": "passed",
+    "fullResolutionClassCounts": "passed",
+    "nearestPreviewEveryPixel": "passed",
+    "decodedPixels": 912900,
+    "previewPixels": 516864
+  },
+  "scope": "A real local Sentinel-2 SCL raster; does not establish classification accuracy or general raster support"
+}

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "geod-raster-recipe/v1",
+  "name": "San Francisco Bay · SCL bounding-box clip",
+  "source": {
+    "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+    "sha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8"
+  },
+  "operation": {
+    "type": "clip",
+    "crs": "EPSG:4326",
+    "bounds": [-122.55, 37.68, -122.32, 37.84]
+  },
+  "output": { "format": "GeoTIFF" }
+}

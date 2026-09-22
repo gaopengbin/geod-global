@@ -1,0 +1,76 @@
+{
+  "jobId": "4c99bc6d-2032-4997-b948-5409a90ba7ef",
+  "sourceJobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+  "itemId": "S2C_10SEG_20250707_0_L2A",
+  "recipe": {
+    "schemaVersion": "geod-raster-recipe/v1",
+    "name": "\u6e7e\u533a SCL \u00b7 \u53ef\u590d\u73b0\u88c1\u526a",
+    "source": {
+      "jobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+      "sha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8"
+    },
+    "operation": {
+      "type": "clip",
+      "crs": "EPSG:4326",
+      "bounds": [
+        -122.55,
+        37.68,
+        -122.32,
+        37.84
+      ]
+    },
+    "output": {
+      "format": "GeoTIFF"
+    }
+  },
+  "sourceSha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+  "outputSha256": "af78deb054871d1f6b5c02de84f40fddbeac060ecd5d79781c305a7aa4063ecd",
+  "outputBytes": 46315,
+  "independentWindow": [
+    1980,
+    585,
+    1020,
+    895
+  ],
+  "width": 1020,
+  "height": 895,
+  "bands": 1,
+  "crs": "EPSG:32610",
+  "resolution": [
+    20.0,
+    20.0
+  ],
+  "nodata": 0.0,
+  "transform": [
+    20.0,
+    0.0,
+    539580.0,
+    0.0,
+    -20.0,
+    4188300.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "bounds": [
+    539580.0,
+    4170400.0,
+    559980.0,
+    4188300.0
+  ],
+  "dtype": "uint8",
+  "driver": "GTiff",
+  "compression": "Compression.deflate",
+  "comparedSamples": 912900,
+  "source": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2025/7/S2C_10SEG_20250707_0_L2A/SCL.tif",
+  "independentChecks": {
+    "decoder": "Rasterio / GDAL",
+    "projection": "GDAL transform_bounds",
+    "everyOutputSample": "passed",
+    "georeferencing": "passed",
+    "sourceUnchanged": "passed",
+    "outputHashAndBytes": "passed",
+    "portableProvenanceSidecar": "passed"
+  },
+  "scope": "Pixel-aligned projected rectangle; no reprojection/resampling or geographic polygon mask"
+}

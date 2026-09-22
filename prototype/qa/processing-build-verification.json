@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-22",
+  "build": "debug, desktop custom-protocol",
+  "artifacts": {
+    "target/debug/geod-global-desktop.exe": {
+      "bytes": 22968320,
+      "sha256": "73ed533fd6dfd3e225e93603be88ba5ee4def9a4327c832f104090a182a07d59"
+    },
+    "target/debug/geod-runtime.exe": {
+      "bytes": 13013504,
+      "sha256": "d35b04cc79e886d7d8a440ee7fa6837df76754beffe3d3e955cdec1e23746efd"
+    }
+  },
+  "desktopSmoke": {
+    "aliveAfterSeconds": 3,
+    "responding": true,
+    "stderrBytes": 0,
+    "scope": "Process startup only; native GUI and IPC interactions not exercised"
+  }
+}

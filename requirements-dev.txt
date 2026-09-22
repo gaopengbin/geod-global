@@ -1,2 +1,2 @@
-# Design contract verification only; not the desktop data-processing runtime.
+# Design and executable recipe schema verification; not an app runtime dependency.
 jsonschema==4.26.0

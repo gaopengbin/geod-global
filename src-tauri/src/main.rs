@@ -1,6 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use geod_runtime::{CreateJobRequest, Job, JobManager, JobStatus, RasterInspection, RuntimeHealth};
+use geod_runtime::{
+    CreateJobRequest, Job, JobManager, JobStatus, RasterInspection, RasterRecipe, RecipePlan,
+    RuntimeHealth, SavedRecipe,
+};
 use std::path::{Path, PathBuf};
 use tauri::{Manager, State, WebviewWindowBuilder};
 use tauri_plugin_opener::OpenerExt;
@@ -82,9 +85,35 @@ async fn inspect_raster(
     manager.inspect_raster(&id).await
 }
 
+#[tauri::command]
+async fn list_recipes(manager: State<'_, JobManager>) -> Result<Vec<SavedRecipe>, String> {
+    Ok(manager.list_recipes().await)
+}
+
+#[tauri::command]
+async fn plan_recipe(
+    recipe: RasterRecipe,
+    manager: State<'_, JobManager>,
+) -> Result<RecipePlan, String> {
+    manager.plan_recipe(recipe).await
+}
+
+#[tauri::command]
+async fn save_recipe(
+    recipe: RasterRecipe,
+    manager: State<'_, JobManager>,
+) -> Result<SavedRecipe, String> {
+    manager.save_recipe(recipe).await
+}
+
+#[tauri::command]
+async fn run_recipe(recipe: RasterRecipe, manager: State<'_, JobManager>) -> Result<Job, String> {
+    manager.run_recipe(recipe).await
+}
+
 fn verified_output(storage_root: &Path, job: &Job) -> Result<PathBuf, String> {
     if job.status != JobStatus::Succeeded {
-        return Err("Only completed downloads can be revealed.".to_owned());
+        return Err("Only completed outputs can be revealed.".to_owned());
     }
     let output = job
         .output_path
@@ -160,6 +189,10 @@ fn main() {
             cancel_job,
             retry_job,
             inspect_raster,
+            list_recipes,
+            plan_recipe,
+            save_recipe,
+            run_recipe,
             reveal_job,
             open_source
         ])
@@ -211,6 +244,11 @@ mod tests {
     fn completed(path: &Path) -> Job {
         Job {
             id: "test-job".into(),
+            kind: "download".into(),
+            parent_id: None,
+            recipe: None,
+            crop: None,
+            manifest_path: None,
             item_id: "S2_TEST".into(),
             asset_key: "thumbnail".into(),
             href: "https://sentinel-cogs.s3.us-west-2.amazonaws.com/example.jpg".into(),

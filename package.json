@@ -29,7 +29,8 @@
     "test:runtime": "cargo test --locked -p geod-runtime",
     "check:isolation": "node scripts/verify-repository.mjs",
     "check:contracts": "python GeoD-Global-Spec/contracts/verify_contracts.py",
-    "check": "npm run check:isolation && npm run check:contracts",
+    "check:recipes": "python scripts/check-recipe-schema.py",
+    "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes",
     "verify": "npm run check && npm test && npm run build",
     "verify:all": "npm run verify && npm run test:runtime"
   }

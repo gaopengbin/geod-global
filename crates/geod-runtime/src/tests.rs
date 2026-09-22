@@ -369,3 +369,420 @@ async fn loopback_api_enforces_origin_host_and_mutation_header() {
         .unwrap();
     assert_eq!(response.status(), StatusCode::NO_CONTENT);
 }
+
+#[tokio::test]
+async fn job_snapshot_exposes_terminal_but_unsettled_cancellation() {
+    let server = fixture().await;
+    let directory = tempfile::tempdir().unwrap();
+    let manager = JobManager::open_inner(directory.path(), Some(server.origin.clone()))
+        .await
+        .unwrap();
+    let job = manager
+        .create(request(&server.origin, "/ok"))
+        .await
+        .unwrap();
+    settled(&manager, &job.id).await;
+    // Represent the real cancellation interval: the terminal record has been
+    // persisted, while a worker still owns its cleanup registration.
+    {
+        let mut store = manager.inner.store.lock().await;
+        store.jobs.get_mut(&job.id).unwrap().status = JobStatus::Cancelled;
+        store
+            .active
+            .insert(job.id.clone(), CancellationToken::new());
+    }
+    let app = service::router(manager.clone());
+    let response = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(format!("/jobs/{}", job.id))
+                .header("Host", "127.0.0.1:4318")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let value: serde_json::Value = serde_json::from_slice(
+        &axum::body::to_bytes(response.into_body(), 16384)
+            .await
+            .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(value["status"], "cancelled");
+    assert_eq!(value["settled"], false);
+    manager.inner.store.lock().await.active.remove(&job.id);
+    let response = app
+        .oneshot(
+            Request::builder()
+                .uri(format!("/jobs/{}", job.id))
+                .header("Host", "127.0.0.1:4318")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let value: serde_json::Value = serde_json::from_slice(
+        &axum::body::to_bytes(response.into_body(), 16384)
+            .await
+            .unwrap(),
+    )
+    .unwrap();
+    assert_eq!(value["settled"], true);
+}
+
+async fn raster_manager() -> (tempfile::TempDir, JobManager, Job) {
+    let directory = tempfile::tempdir().unwrap();
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    let pixels: Vec<_> = (0..20).map(|value| (value % 12) as u8).collect();
+    let source = raster::tests::record(
+        manager.storage_root(),
+        &raster::tests::fixture(5, 4, &pixels, 32610, false),
+    );
+    {
+        let mut store = manager.inner.store.lock().await;
+        store.jobs.insert(source.id.clone(), source.clone());
+        manager.persist(&store.jobs).await.unwrap();
+    }
+    (directory, manager, source)
+}
+
+fn clip_recipe(source: &Job) -> RasterRecipe {
+    serde_json::from_value(serde_json::json!({
+        "schemaVersion":"geod-raster-recipe/v1", "name":"Exact local clip",
+        "source":{"jobId":source.id,"sha256":source.sha256},
+        "operation":{"type":"clip","crs":"source","bounds":[500020.0,4199940.0,500080.0,4199980.0]},
+        "output":{"format":"GeoTIFF"}
+    }))
+    .unwrap()
+}
+
+#[test]
+fn persisted_recipe_coordinates_roundtrip_without_one_ulp_drift() {
+    // Observed during real WGS84 CLI crop QA: default JSON float parsing shifted
+    // the final northing by one ULP on each open/save, separating job and sidecar metadata.
+    let bounds = [
+        539594.5842039796,
+        4170406.570469174,
+        559961.0330107023,
+        4188280.7439028444,
+    ];
+    let mut coordinates = bounds;
+    for _ in 0..10 {
+        coordinates = serde_json::from_slice(&serde_json::to_vec(&coordinates).unwrap()).unwrap();
+        assert_eq!(coordinates.map(f64::to_bits), bounds.map(f64::to_bits));
+    }
+}
+
+#[tokio::test]
+async fn old_job_records_default_to_download_without_migration_loss() {
+    let (directory, manager, source) = raster_manager().await;
+    let mut legacy = serde_json::to_value(&source).unwrap();
+    for key in ["kind", "parentId", "recipe", "crop", "manifestPath"] {
+        legacy.as_object_mut().unwrap().remove(key);
+    }
+    std::fs::write(
+        directory.path().join("jobs.json"),
+        serde_json::to_vec(&serde_json::json!({source.id.clone():legacy})).unwrap(),
+    )
+    .unwrap();
+    drop(manager);
+    let reopened = JobManager::open(directory.path()).await.unwrap();
+    let recovered = reopened.get(&source.id).await.unwrap();
+    assert_eq!(recovered.kind, "download");
+    assert_eq!(recovered.sha256, source.sha256);
+    assert_eq!(recovered.status, JobStatus::Succeeded);
+    assert!(
+        recovered.recipe.is_none()
+            && recovered.parent_id.is_none()
+            && recovered.crop.is_none()
+            && recovered.manifest_path.is_none()
+    );
+}
+
+#[tokio::test]
+async fn recipe_validation_rejects_unknown_fields_versions_operations_and_wrong_pins() {
+    let (_directory, manager, source) = raster_manager().await;
+    let recipe = clip_recipe(&source);
+    for (pointer, replacement) in [
+        ("/schemaVersion", serde_json::json!("geod-raster-recipe/v2")),
+        ("/operation/type", serde_json::json!("shell")),
+        ("/operation/crs", serde_json::json!("EPSG:3857")),
+        ("/output/format", serde_json::json!("COG")),
+        ("/source/sha256", serde_json::json!("A".repeat(64))),
+        ("/source/jobId", serde_json::json!("../file")),
+        ("/name", serde_json::json!(" ")),
+        ("/name", serde_json::json!("a".repeat(121))),
+    ] {
+        let mut value = serde_json::to_value(&recipe).unwrap();
+        *value.pointer_mut(pointer).unwrap() = replacement;
+        let invalid: RasterRecipe = serde_json::from_value(value).unwrap();
+        assert!(invalid.validate().is_err(), "accepted {pointer}");
+    }
+    for pointer in ["", "/source", "/operation", "/output"] {
+        let mut value = serde_json::to_value(&recipe).unwrap();
+        value
+            .pointer_mut(pointer)
+            .unwrap()
+            .as_object_mut()
+            .unwrap()
+            .insert("command".into(), serde_json::json!("untrusted"));
+        assert!(serde_json::from_value::<RasterRecipe>(value).is_err());
+    }
+    let mut bad_pin = recipe.clone();
+    bad_pin.source.sha256 = "0".repeat(64);
+    assert!(manager
+        .plan_recipe(bad_pin.clone())
+        .await
+        .unwrap_err()
+        .contains("SHA-256"));
+    assert!(manager.run_recipe(bad_pin.clone()).await.is_err());
+    assert!(manager.save_recipe(bad_pin).await.is_err());
+    let mut invalid_wgs84 = recipe;
+    invalid_wgs84.operation.crs = "EPSG:4326".into();
+    for bounds in [
+        [-1.0, -81.0, 1.0, 20.0],
+        [-1.0, 0.0, 1.0, 85.0],
+        [-179.0, 0.0, 179.0, 1.0],
+    ] {
+        invalid_wgs84.operation.bounds = bounds;
+        assert!(invalid_wgs84.validate().is_err());
+    }
+    assert_eq!(manager.list().await.len(), 1);
+}
+
+#[tokio::test]
+async fn recipe_plan_is_read_only_and_saved_recipe_survives_restart() {
+    let (directory, manager, source) = raster_manager().await;
+    let before = std::fs::read(directory.path().join("jobs.json")).unwrap();
+    let recipe = clip_recipe(&source);
+    let plan = manager.plan_recipe(recipe.clone()).await.unwrap();
+    assert_eq!(plan.plan.window, [1, 1, 3, 2]);
+    assert_eq!(plan.plan.source_sha256, source.sha256.unwrap());
+    assert_eq!(
+        std::fs::read_dir(directory.path().join("assets"))
+            .unwrap()
+            .count(),
+        1
+    );
+    assert_eq!(
+        std::fs::read(directory.path().join("jobs.json")).unwrap(),
+        before
+    );
+    assert!(!directory.path().join("recipes.json").exists());
+    let saved = manager.save_recipe(recipe.clone()).await.unwrap();
+    assert_eq!(manager.list_recipes().await.len(), 1);
+    drop(manager);
+    let reopened = JobManager::open(directory.path()).await.unwrap();
+    let records = reopened.list_recipes().await;
+    assert_eq!(records[0].id, saved.id);
+    assert_eq!(
+        serde_json::to_value(&records[0].recipe).unwrap(),
+        serde_json::to_value(recipe).unwrap()
+    );
+}
+
+#[tokio::test]
+async fn recipe_runs_commit_real_geotiff_sidecar_and_deterministic_inspectable_output() {
+    let (directory, manager, source) = raster_manager().await;
+    let original = std::fs::read(source.output_path.as_ref().unwrap()).unwrap();
+    let recipe = clip_recipe(&source);
+    let first = manager.run_recipe(recipe.clone()).await.unwrap();
+    let first = manager.wait(&first.id).await.unwrap();
+    assert_eq!(first.status, JobStatus::Succeeded, "{:?}", first.error);
+    assert_eq!(first.kind, "raster_clip");
+    assert_eq!(first.parent_id.as_deref(), Some(source.id.as_str()));
+    assert_eq!(first.href, source.href);
+    assert_eq!(first.crop.as_ref().unwrap().window, [1, 1, 3, 2]);
+    let inspection = manager.inspect_raster(&first.id).await.unwrap();
+    assert_eq!((inspection.width, inspection.height), (3, 2));
+    let metadata: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(first.manifest_path.as_ref().unwrap()).unwrap())
+            .unwrap();
+    assert_eq!(metadata["schemaVersion"], "geod-raster-artifact/v1");
+    assert_eq!(metadata["output"]["file"], format!("{}.tif", first.id));
+    assert_eq!(
+        metadata["output"]["sha256"],
+        first.sha256.as_deref().unwrap()
+    );
+    assert_eq!(
+        metadata["source"]["sha256"],
+        source.sha256.as_deref().unwrap()
+    );
+    assert_eq!(metadata["recipe"], serde_json::to_value(&recipe).unwrap());
+    let second = manager.run_recipe(recipe).await.unwrap();
+    let second = manager.wait(&second.id).await.unwrap();
+    assert_eq!(second.status, JobStatus::Succeeded);
+    assert_ne!(first.id, second.id);
+    assert_eq!(first.sha256, second.sha256);
+    assert_eq!(
+        std::fs::read(source.output_path.as_ref().unwrap()).unwrap(),
+        original
+    );
+    drop(manager);
+    let reopened = JobManager::open(directory.path()).await.unwrap();
+    assert_eq!(
+        reopened.get(&first.id).await.unwrap().status,
+        JobStatus::Succeeded
+    );
+    assert_eq!(
+        reopened.get(&first.id).await.unwrap().manifest_path,
+        first.manifest_path
+    );
+}
+
+#[tokio::test]
+async fn queued_clip_cancel_retry_uses_same_operation_without_downloading() {
+    let (_directory, manager, source) = raster_manager().await;
+    let permit = manager
+        .inner
+        .raster_permits
+        .clone()
+        .acquire_owned()
+        .await
+        .unwrap();
+    let job = manager.run_recipe(clip_recipe(&source)).await.unwrap();
+    assert!(manager
+        .plan_recipe(clip_recipe(&source))
+        .await
+        .unwrap_err()
+        .contains("busy"));
+    assert!(manager.inspect_raster(&source.id).await.is_err());
+    manager.cancel(&job.id).await.unwrap();
+    let cancelled = settled(&manager, &job.id).await;
+    assert_eq!(cancelled.status, JobStatus::Cancelled);
+    assert!(cancelled.output_path.is_none());
+    let retry = manager.retry(&job.id).await.unwrap();
+    assert_eq!(retry.kind, "raster_clip");
+    assert_eq!(retry.attempts, 2);
+    drop(permit);
+    let completed = settled(&manager, &job.id).await;
+    assert_eq!(
+        completed.status,
+        JobStatus::Succeeded,
+        "{:?}",
+        completed.error
+    );
+    assert!(completed.manifest_path.is_some());
+}
+
+#[tokio::test]
+async fn clip_restart_discards_uncommitted_output_and_retry_reexecutes() {
+    let (directory, manager, source) = raster_manager().await;
+    let job = manager.run_recipe(clip_recipe(&source)).await.unwrap();
+    let completed = settled(&manager, &job.id).await;
+    assert_eq!(completed.status, JobStatus::Succeeded);
+    {
+        let mut store = manager.inner.store.lock().await;
+        store.jobs.get_mut(&job.id).unwrap().status = JobStatus::Running;
+        manager.persist(&store.jobs).await.unwrap();
+    }
+    let partial = directory
+        .path()
+        .join("assets")
+        .join(format!("{}.crop-crash.part", job.id));
+    std::fs::write(&partial, "partial").unwrap();
+    drop(manager);
+    let reopened = JobManager::open(directory.path()).await.unwrap();
+    let recovered = reopened.get(&job.id).await.unwrap();
+    assert_eq!(recovered.status, JobStatus::Interrupted);
+    assert!(
+        recovered.output_path.is_none()
+            && recovered.manifest_path.is_none()
+            && recovered.crop.is_none()
+    );
+    assert!(!Path::new(completed.output_path.as_ref().unwrap()).exists());
+    assert!(!Path::new(completed.manifest_path.as_ref().unwrap()).exists());
+    assert!(!partial.exists());
+    reopened.retry(&job.id).await.unwrap();
+    let retried = settled(&reopened, &job.id).await;
+    assert_eq!(retried.status, JobStatus::Succeeded, "{:?}", retried.error);
+    assert_eq!(retried.sha256, completed.sha256);
+}
+
+#[tokio::test]
+async fn clip_sidecar_failure_never_exposes_success_and_can_retry() {
+    let (directory, manager, source) = raster_manager().await;
+    let permit = manager
+        .inner
+        .raster_permits
+        .clone()
+        .acquire_owned()
+        .await
+        .unwrap();
+    let job = manager.run_recipe(clip_recipe(&source)).await.unwrap();
+    // A directory at the exact generated temporary sidecar path forces metadata failure after TIFF encoding.
+    let obstruction = directory
+        .path()
+        .join("assets")
+        .join(format!("{}.metadata.json.tmp", job.id));
+    std::fs::create_dir(&obstruction).unwrap();
+    drop(permit);
+    let failed = settled(&manager, &job.id).await;
+    assert_eq!(failed.status, JobStatus::Failed);
+    assert!(
+        failed.sha256.is_none() && failed.output_path.is_none() && failed.manifest_path.is_none()
+    );
+    assert!(!directory
+        .path()
+        .join("assets")
+        .join(format!("{}.tif", job.id))
+        .exists());
+    std::fs::remove_dir(obstruction).unwrap();
+    manager.retry(&job.id).await.unwrap();
+    assert_eq!(
+        settled(&manager, &job.id).await.status,
+        JobStatus::Succeeded
+    );
+}
+
+#[tokio::test]
+async fn recipe_api_obeys_same_boundary_and_returns_real_plan() {
+    let (_directory, manager, source) = raster_manager().await;
+    let app = service::router(manager.clone());
+    let body = serde_json::to_vec(&clip_recipe(&source)).unwrap();
+    for route in ["/recipes", "/recipes/plan", "/recipes/run"] {
+        for (origin, client_header) in [
+            ("https://evil.example", true),
+            (service::ALLOWED_ORIGIN, false),
+        ] {
+            let mut request = Request::builder()
+                .method("POST")
+                .uri(route)
+                .header("Host", "127.0.0.1:4318")
+                .header("Origin", origin)
+                .header("Content-Type", "application/json");
+            if client_header {
+                request = request.header("X-GeoD-Client", "geod-global");
+            }
+            let response = app
+                .clone()
+                .oneshot(request.body(Body::from(body.clone())).unwrap())
+                .await
+                .unwrap();
+            assert_eq!(response.status(), StatusCode::FORBIDDEN);
+        }
+    }
+    let response = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .method("POST")
+                .uri("/recipes/plan")
+                .header("Host", "127.0.0.1:4318")
+                .header("X-GeoD-Client", "geod-global")
+                .header("Content-Type", "application/json")
+                .body(Body::from(body))
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(response.status(), StatusCode::OK);
+    let bytes = axum::body::to_bytes(response.into_body(), 8192)
+        .await
+        .unwrap();
+    let plan: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+    assert_eq!(plan["plan"]["window"], serde_json::json!([1, 1, 3, 2]));
+    assert_eq!(manager.list().await.len(), 1);
+    assert!(manager.list_recipes().await.is_empty());
+}

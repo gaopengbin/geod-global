@@ -1,6 +1,6 @@
 # GeoD Global — 工作台前端
 
-2026-09-22。沿用已认可的设计方向，已接入中英文界面、实时目录、Rust文件下载任务与SCL成果检查。完整产品仍在实施；设计模拟继续单独标记。
+2026-09-22。沿用已认可的设计方向，已接入中英文界面、实时目录、Rust文件下载任务、SCL成果检查与裁剪、可执行配方。完整产品仍在实施；设计模拟继续单独标记。
 
 ## 本轮真实能力
 
@@ -9,7 +9,9 @@
 - Download source asset通过本机Rust服务或Tauri命令下载完整源资产，记录字节数、SHA-256、来源及本地路径，支持取消和从头重试。
 - Tasks与My Data展示真实记录；原设计模拟收在独立折叠区。真实文件记录由Rust持久化，不依赖浏览器localStorage。
 - Settings / 设置中的语言选项支持English和简体中文，即时切换并保存；日期按所选语言显示，UTC观测日期和内部标识符不变。
-- My Data / 我的数据的成功SCL下载可检查真实像元、元数据与分类统计，最长边768像素的最近邻预览来自本地GeoTIFF解码，未进行裁剪或重投影。
+- My Data / 我的数据的成功SCL下载及派生成果可检查真实像元、元数据与分类统计，最长边768像素的最近邻预览来自本地GeoTIFF解码。
+- 成功SCL下载可按工作区经纬度或手工源坐标预检矩形裁剪，显示真实像元窗口，再执行生成GeoTIFF及来源清单。编辑参数会使预检失效；任务支持取消和从头重试。
+- Recipes的可执行配方由本地服务持久化，支持保存、JSON文本导入校验、导出审阅与重跑。导入不会自动执行；源任务与SHA-256必须匹配本机已完成的SCL。
 
 完整启动和验证命令见[根README](../README.md)。浏览器模式需另开终端运行 `npm run runtime`；桌面版直接调用同一核心。
 
@@ -49,7 +51,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 ## 能力边界
 
-实时检索与完整源文件下载已实现。重投影、科学指数、区域裁剪、3D renderer、云账户、支付与字节级断点续传尚未实现。重启后运行中的下载标为interrupted，可手动从头重试。设计模拟任务仍只产生 **simulation report**，不能当作栅格成果。
+实时检索、完整源文件下载及SCL矩形裁剪已实现。重投影、多边形掩膜、通用多波段、科学指数、3D renderer、云账户、支付与字节级断点续传尚未实现。重启后运行中的任务标为interrupted，可手动从头重试。设计模拟任务仍只产生 **simulation report**，不能当作栅格成果。
 
 原型 JSON 使用 `design-prototype/v1`，不能交给当前 CLI 或把它当作 `contracts/` 的拟议 Core 契约。后续转换需完成对象 ID、固定资产版本、授权策略、资源预算、操作图和验证规则映射。
 
@@ -57,4 +59,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 ## 验收
 
-见 [07 原型与验收记录](../GeoD-Global-Spec/07-Prototype-and-Validation.md)、[09 真实检索与下载](../GeoD-Global-Spec/09-Live-Catalog-and-Downloads.md)及[10 多语言与栅格检查](../GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md)。截图在 `qa/`，构建产物在 `dist/`。桌面重新构建后嵌入本前端；不会修改国内版应用。
+见 [07 原型与验收记录](../GeoD-Global-Spec/07-Prototype-and-Validation.md)、[09 真实检索与下载](../GeoD-Global-Spec/09-Live-Catalog-and-Downloads.md)、[10 多语言与栅格检查](../GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md)和[11 可执行处理与配方](../GeoD-Global-Spec/11-Executable-Processing-and-Recipes.md)。截图在 `qa/`，构建产物在 `dist/`。桌面重新构建后嵌入本前端；不会修改国内版应用。

@@ -2,8 +2,9 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import { formatDate, formatNumber, initialLocale, saveLocale, SUPPORTED_LOCALES, translate } from './i18n-core.js';
 import mainChinese from './locales/main.zh-CN.js';
 import runtimeChinese from './locales/runtime.zh-CN.js';
+import processingChinese from './locales/processing.zh-CN.js';
 
-const chinese = { ...mainChinese, ...runtimeChinese };
+const chinese = { ...mainChinese, ...runtimeChinese, ...processingChinese };
 const I18nContext = createContext(null);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 

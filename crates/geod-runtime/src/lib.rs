@@ -1,8 +1,11 @@
 //! Local, persistent asset downloads. Validation checks signatures, size and SHA-256;
 //! it does not establish GeoTIFF scientific correctness or source authenticity.
 
+pub mod crop;
+pub mod processing;
 pub mod raster;
 pub mod service;
+pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
 pub use raster::{RasterClass, RasterInspection};
 
 use chrono::Utc;
@@ -53,6 +56,16 @@ pub struct CreateJobRequest {
 #[serde(rename_all = "camelCase")]
 pub struct Job {
     pub id: String,
+    #[serde(default = "default_job_kind")]
+    pub kind: String,
+    #[serde(default)]
+    pub parent_id: Option<String>,
+    #[serde(default)]
+    pub recipe: Option<RasterRecipe>,
+    #[serde(default)]
+    pub crop: Option<crop::CropPlan>,
+    #[serde(default)]
+    pub manifest_path: Option<String>,
     pub item_id: String,
     pub asset_key: String,
     pub href: String,
@@ -91,6 +104,7 @@ struct Store {
 struct Inner {
     root: PathBuf,
     store: Mutex<Store>,
+    recipes: Mutex<BTreeMap<String, SavedRecipe>>,
     client: reqwest::Client,
     permits: Semaphore,
     raster_permits: Arc<Semaphore>,
@@ -112,6 +126,10 @@ fn io_error(error: impl std::fmt::Display) -> String {
 }
 fn active(status: &JobStatus) -> bool {
     matches!(status, JobStatus::Queued | JobStatus::Running)
+}
+
+fn default_job_kind() -> String {
+    "download".into()
 }
 
 fn extension(media_type: &str) -> Result<&'static str> {
@@ -215,6 +233,15 @@ impl JobManager {
         tokio::fs::create_dir_all(root.join("assets"))
             .await
             .map_err(io_error)?;
+        if tokio::fs::canonicalize(root.join("assets"))
+            .await
+            .map_err(io_error)?
+            != root.join("assets")
+        {
+            return Err(
+                "The managed assets directory cannot be a redirected filesystem path".into(),
+            );
+        }
         let records = root.join("jobs.json");
         let mut jobs: BTreeMap<String, Job> = match tokio::fs::read(&records).await {
             Ok(bytes) => serde_json::from_slice(&bytes)
@@ -226,26 +253,55 @@ impl JobManager {
             if Uuid::parse_str(id).is_err() || id != &job.id {
                 return Err("Stored job has an invalid identifier".into());
             }
+            match job.kind.as_str() {
+                "download" => {}
+                "raster_clip" => {
+                    let recipe = job.recipe.as_ref().ok_or("Stored clip job has no recipe")?;
+                    recipe.validate()?;
+                    if job.parent_id.as_deref() != Some(&recipe.source.job_id) {
+                        return Err("Stored clip job has inconsistent source provenance".into());
+                    }
+                }
+                _ => return Err("Stored job has an unsupported kind".into()),
+            }
             if active(&job.status) {
                 job.status = JobStatus::Interrupted;
                 job.updated_at = now();
-                job.error = Some("The runtime stopped before this download completed. Retry starts a fresh transfer.".into());
+                job.error = Some("The runtime stopped before this operation completed. Retry restarts the operation.".into());
                 job.output_path = None;
                 job.sha256 = None;
+                if job.kind == "raster_clip" {
+                    // A crash after the engine's file commit but before the job commit is not success.
+                    job.crop = None;
+                    job.manifest_path = None;
+                }
             }
             if job.status == JobStatus::Succeeded {
                 let expected =
                     root.join("assets")
                         .join(format!("{}.{}", job.id, extension(&job.media_type)?));
-                if !expected.is_file() {
+                let manifest = root.join("assets").join(format!("{id}.metadata.json"));
+                if !expected.is_file() || (job.kind == "raster_clip" && !manifest.is_file()) {
                     job.status = JobStatus::Failed;
-                    job.error = Some("The completed local asset is missing".into());
+                    job.error = Some(
+                        "The completed local asset or its required metadata is missing".into(),
+                    );
                     job.output_path = None;
+                    job.sha256 = None;
                 } else {
                     job.output_path = Some(expected.to_string_lossy().into_owned());
+                    if job.kind == "raster_clip" {
+                        job.manifest_path = Some(manifest.to_string_lossy().into_owned());
+                    }
                 }
             }
+            if job.kind == "raster_clip" && job.status != JobStatus::Succeeded {
+                processing::cleanup_clip(&root, id).await;
+                job.crop = None;
+                job.manifest_path = None;
+            }
         }
+        let recipes = processing::load_recipes(&root).await?;
         let client = reqwest::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
             .connect_timeout(Duration::from_secs(20))
@@ -260,6 +316,7 @@ impl JobManager {
                     jobs,
                     active: BTreeMap::new(),
                 }),
+                recipes: Mutex::new(recipes),
                 client,
                 permits: Semaphore::new(2),
                 raster_permits: Arc::new(Semaphore::new(1)),
@@ -307,6 +364,15 @@ impl JobManager {
         self.inner.store.lock().await.jobs.get(id).cloned()
     }
 
+    /// A terminal status can precede cancellation cleanup. Read the record and
+    /// worker state under one lock so clients can wait for actual settlement.
+    pub async fn get_with_settled(&self, id: &str) -> Option<(Job, bool)> {
+        let store = self.inner.store.lock().await;
+        let job = store.jobs.get(id)?;
+        let settled = !active(&job.status) && !store.active.contains_key(id);
+        Some((job.clone(), settled))
+    }
+
     fn validate(&self, request: &CreateJobRequest) -> Result<()> {
         #[cfg(test)]
         let origin = self.inner.fixture_origin.as_deref();
@@ -324,6 +390,11 @@ impl JobManager {
         let timestamp = now();
         let job = Job {
             id: Uuid::new_v4().to_string(),
+            kind: default_job_kind(),
+            parent_id: None,
+            recipe: None,
+            crop: None,
+            manifest_path: None,
             item_id: request.item_id,
             asset_key: request.asset_key,
             href: request.href,
@@ -361,7 +432,7 @@ impl JobManager {
         let mut job = old.clone();
         job.status = JobStatus::Cancelled;
         job.updated_at = now();
-        job.error = Some("Cancelled by user. Retry starts a fresh transfer.".into());
+        job.error = Some("Cancelled by user. Retry restarts the operation.".into());
         store.jobs.insert(id.into(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.insert(id.into(), old);
@@ -376,7 +447,7 @@ impl JobManager {
     pub async fn retry(&self, id: &str) -> Result<Job> {
         let mut store = self.inner.store.lock().await;
         if store.active.contains_key(id) {
-            return Err("This transfer is still finishing; retry shortly".into());
+            return Err("This operation is still finishing; retry shortly".into());
         }
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
@@ -388,13 +459,19 @@ impl JobManager {
         ) {
             return Err("Only failed, cancelled or interrupted jobs can be retried".into());
         }
-        self.validate(&CreateJobRequest {
-            item_id: old.item_id.clone(),
-            asset_key: old.asset_key.clone(),
-            href: old.href.clone(),
-            media_type: old.media_type.clone(),
-            title: Some(old.title.clone()),
-        })?;
+        if old.kind == "raster_clip" {
+            let recipe = old.recipe.as_ref().ok_or("The clip job has no recipe")?;
+            recipe.validate()?;
+            processing::validate_source(recipe, store.jobs.get(&recipe.source.job_id))?;
+        } else {
+            self.validate(&CreateJobRequest {
+                item_id: old.item_id.clone(),
+                asset_key: old.asset_key.clone(),
+                href: old.href.clone(),
+                media_type: old.media_type.clone(),
+                title: Some(old.title.clone()),
+            })?;
+        }
         let mut job = old.clone();
         job.status = JobStatus::Queued;
         job.bytes_downloaded = 0;
@@ -402,8 +479,14 @@ impl JobManager {
         job.sha256 = None;
         job.output_path = None;
         job.error = None;
+        job.crop = None;
+        job.manifest_path = None;
         job.updated_at = now();
-        job.validation = "Pending file signature, byte count and SHA-256 checks".into();
+        job.validation = if job.kind == "raster_clip" {
+            "Pending pinned source validation and exact pixel-window clip".into()
+        } else {
+            "Pending file signature, byte count and SHA-256 checks".into()
+        };
         job.attempts += 1;
         store.jobs.insert(id.into(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
@@ -433,7 +516,11 @@ impl JobManager {
     fn spawn(&self, id: String, token: CancellationToken) {
         let manager = self.clone();
         tokio::spawn(async move {
-            let result = manager.download(&id, &token).await;
+            let result = match manager.get(&id).await.as_ref().map(|job| job.kind.as_str()) {
+                Some("raster_clip") => manager.process_clip(&id, &token).await,
+                Some("download") => manager.download(&id, &token).await,
+                _ => Err("Unknown job kind".into()),
+            };
             let mut store = manager.inner.store.lock().await;
             if let Err(error) = result {
                 if let Some(job) = store.jobs.get_mut(&id) {
@@ -444,6 +531,11 @@ impl JobManager {
                     }
                     job.output_path = None;
                     job.sha256 = None;
+                    job.crop = None;
+                    job.manifest_path = None;
+                    if job.kind == "raster_clip" {
+                        processing::cleanup_clip(&manager.inner.root, &id).await;
+                    }
                 }
                 let _ = tokio::fs::remove_file(
                     manager.inner.root.join("assets").join(format!("{id}.part")),
@@ -455,6 +547,20 @@ impl JobManager {
             }
             store.active.remove(&id);
         });
+    }
+
+    /// Wait for a terminal record and worker cleanup, so CLI process exit cannot kill the operation.
+    pub async fn wait(&self, id: &str) -> Result<Job> {
+        loop {
+            {
+                let store = self.inner.store.lock().await;
+                let job = store.jobs.get(id).ok_or("Unknown job")?;
+                if !active(&job.status) && !store.active.contains_key(id) {
+                    return Ok(job.clone());
+                }
+            }
+            tokio::time::sleep(Duration::from_millis(40)).await;
+        }
     }
 
     async fn progress(&self, id: &str, bytes: u64, total: Option<u64>) -> Result<()> {
@@ -540,6 +646,7 @@ impl JobManager {
         if token.is_cancelled() || record.status == JobStatus::Cancelled {
             return Err("Transfer cancelled".into());
         }
+        let before_commit = record.clone();
         tokio::fs::rename(&partial, &final_path)
             .await
             .map_err(io_error)?;
@@ -553,7 +660,12 @@ impl JobManager {
         record.validation =
             "Passed file signature, byte count and SHA-256 checks; no scientific raster validation"
                 .into();
-        self.persist(&store.jobs).await
+        if let Err(error) = self.persist(&store.jobs).await {
+            store.jobs.insert(id.to_owned(), before_commit);
+            let _ = tokio::fs::remove_file(&final_path).await;
+            return Err(error);
+        }
+        Ok(())
     }
 }
 

@@ -1,0 +1,30 @@
+{
+  "sourceId": "f2567c01-f7c3-4b15-be9e-7f05119f0712",
+  "sourceSha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+  "clipId": "506eebb0-703d-49c6-bc25-7db3480ebce5",
+  "rerunId": "69044dd2-2a04-4ac6-aa85-be9df4618710",
+  "outputSha256": "af78deb054871d1f6b5c02de84f40fddbeac060ecd5d79781c305a7aa4063ecd",
+  "outputBytes": 46315,
+  "window": [
+    1980,
+    585,
+    1020,
+    895
+  ],
+  "width": 1020,
+  "height": 895,
+  "independentChecks": {
+    "decoder": "Rasterio / GDAL",
+    "projection": "GDAL transform_bounds",
+    "everyOutputSample": "passed",
+    "georeferencing": "passed",
+    "sourceUnchanged": "passed",
+    "outputHashAndBytes": "passed",
+    "portableProvenanceSidecar": "passed"
+  },
+  "allCommandsExitZero": true,
+  "allStdoutParsesAsJson": true,
+  "terminalWait": "succeeded",
+  "savedRecipeReloaded": true,
+  "deterministicRerun": true
+}
