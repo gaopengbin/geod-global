@@ -5,7 +5,7 @@
 ## 本轮真实能力
 
 - Explore的区域入口可在离线Natural Earth参考地图上查看全球国界及9个大国的省州界，以英文或本地名称定位行政区，再选用外接矩形、拖绘WGS84矩形或输入西、南、东、北四个坐标；提交后切换到Live catalog并查询Earth Search。实时目录也有“在地图上选区”入口，可编辑UTC日期、云量、分页，取消查询或恢复失败。行政区边界仅作定位参考，检索使用矩形；选区只过滤场景，源资产下载仍为整景。
-- 真实缩略图预览，只对相同源网格启用比较；实时缩略图不叠加未经验证的区域轮廓。
+- Explore 主地图流式渲染原始10米真彩色 COG，按影像坐标系显示与平移缩放；只对同源网格影像启用卷帘比较，搜索边界框投影后叠加在地图上。列表和详情仍使用提供方 JPEG 小缩略图。
 - Download source asset通过本机Rust服务或Tauri命令下载完整源资产，记录字节数、SHA-256、来源及本地路径，支持取消和从头重试。
 - Tasks与My Data展示真实记录；原设计模拟收在独立折叠区。真实文件记录由Rust持久化，不依赖浏览器localStorage。
 - Settings / 设置中的语言选项支持English和简体中文，即时切换并保存；日期按所选语言显示，UTC观测日期和内部标识符不变。
@@ -39,7 +39,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 - 八个入口：Explore、Workspace、My Data、Recipes、Tasks、Sources、Cloud、Settings。
 - 六个数据分类，跨分类保留同一个样例区域；未接入分类明确展示计划状态。
 - 七条真实 Sentinel-2 场景的本地日期、云量、ID 筛选与排序；空结果和来源失败的可恢复状态。
-- 真实缩略图预览、同网格两日期卷帘比较、时间轴选择、缩放与区域轮廓。
+- 真实 COG 地图、同网格两日期卷帘比较、时间轴选择、缩放与搜索区域轮廓。
 - 导出参数审阅、明确标记的任务模拟，支持暂停、恢复、失败、重试和成果报告。
 - 配方和模拟记录保存到浏览器 localStorage；配方 JSON、区域 GeoJSON 和报告可以打开文本预览并请求下载。
 - 明暗主题、键盘命令搜索、原生模态框、窄屏布局。
@@ -50,13 +50,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 `public/samples/earth-search-response.json` 是实际获取的 STAC 检索响应，`manifest.json` 保留查询、采集日期、获取时间、原资产链接、SHA-256 和栅格网格元数据。七张 JPEG 是原始提供商缩略图，没有生成或冒充卫星数据。
 
-固定样例：San Francisco Bay，WGS84 bbox `[-122.55,37.68,-122.32,37.84]`；查询时间 2025-06-01 至 2025-06-30。云量是整景统计，不是区域内云量。343×343 缩略图只能作概览，界面的 10 m 指原始 RGB 资产分辨率。区域叠加由原资产 UTM 10N 网格换算，用于定位示意，不作为科学空间验收。
+固定样例：San Francisco Bay，WGS84 bbox `[-122.55,37.68,-122.32,37.84]`；查询时间 2025-06-01 至 2025-06-30。云量是整景统计，不是区域内云量。343×343 缩略图只用于列表和详情；主地图读取原始10米 RGB COG。区域轮廓由 WGS84 搜索边界框投影到影像坐标系，用于定位，不代表已裁剪的成果。
 
 来源：[Earth Search 查询](https://earth-search.aws.element84.com/v1/search?collections=sentinel-2-l2a&bbox=-122.55,37.68,-122.32,37.84&datetime=2025-06-01T00:00:00Z/2025-06-30T23:59:59Z&limit=8)、[AWS 数据集与条款索引](https://registry.opendata.aws/sentinel-2-l2a-cogs/)。署名：Contains Copernicus Sentinel data (2025). Earth Search / Element 84.
 
 字体 Inter 随包附带，许可在 `public/fonts/LICENSE-Inter.txt`。样本模式浏览本地记录；Live catalog及源文件下载访问Earth Search与Sentinel COG存储。不发送分析事件；打开来源链接会访问相应网站。
 
-Workspace的地理配准来自本地GeoTIFF元数据，与上述样本缩略图定位示意分开。地图不请求在线底图，也不对显示图层或输出像元作跨坐标系重投影。OpenLayers和proj4版本由根锁文件固定，发行许可收集流程见[Windows打包说明](../docs/releases/windows-packaging.md)。
+Explore 的地理配准来自远程真彩色 COG；Workspace 的地理配准来自本地 GeoTIFF 元数据。两处地图均不请求在线底图，也不对显示图层或输出像元作跨坐标系重投影。OpenLayers 和 proj4 版本由根锁文件固定，发行许可收集流程见[Windows打包说明](../docs/releases/windows-packaging.md)。
 
 ## 能力边界
 

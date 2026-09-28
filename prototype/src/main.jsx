@@ -61,6 +61,7 @@ import { I18nProvider, useI18n } from "./i18n.jsx";
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
 const AreaPicker = React.lazy(() => import("./area-picker.jsx").then(module => ({ default: module.AreaPicker })));
+const ExploreMap = React.lazy(() => import("./explore-map.jsx").then(module => ({ default: module.ExploreMap })));
 
 const nav = [
   ["Explore", Compass],
@@ -78,8 +79,6 @@ const domains = [
   ["3D", Box],
   ["Local Data", Folder],
 ];
-const outline =
-  "361.566,269.521 546.275,268.408 545.100,106.733 360.789,107.848";
 const stamp = (value) => value.slice(0, 10);
 function stored(key, fallback) {
   try {
@@ -138,14 +137,12 @@ function App() {
     [query, setQuery] = useState(""),
     [cloud, setCloud] = useState(60),
     [sort, setSort] = useState("date");
-  const [previewError, setPreviewError] = useState(false);
-  useEffect(() => setPreviewError(false), [selected?.thumbnail]);
+  const exploreMap = useRef(null);
   const [period, setPeriod] = useState("all"),
     [condition, setCondition] = useState("ready");
   const [compare, setCompare] = useState(false),
     [compareId, setCompareId] = useState(""),
     [split, setSplit] = useState(50),
-    [zoom, setZoom] = useState(1),
     [showArea, setShowArea] = useState(true),
     [inspector, setInspector] = useState(window.innerWidth >= 1280);
   const [modal, setModal] = useState(null),
@@ -189,7 +186,6 @@ function App() {
     setQuery("");
     setPeriod("all");
     setCondition("ready");
-    setZoom(1);
     const first = mode === "sample" ? sampleCatalog?.scenes[0] : liveCatalog?.scenes[0];
     setSelected(first || null);
     setRecipeName(mode === "sample" ? "San Francisco · Sentinel-2" : "Custom area · Sentinel-2");
@@ -209,7 +205,6 @@ function App() {
       setCompare(false);
       setAppliedSearch(submitted);
       setQuery("");
-      setZoom(1);
     }
     try {
       const result = await searchRunner.current.run(url);
@@ -761,7 +756,7 @@ function App() {
                   items={[
                     { value: "preview", label: t("Preview"), icon: Layers },
                     { value: "compare", label: t("Compare"), icon: SlidersHorizontal, disabled: !comparisons.length,
-                      title: t(comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two previews with the same CRS, transform and dimensions") },
+                      title: t(comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two true-color COGs with the same CRS, transform and dimensions") },
                   ]} />
                 <div className="toolbar-end">
                   <Badge tone="on-map">{t("True color")}</Badge>
@@ -780,100 +775,21 @@ function App() {
               </div>
               {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
               <div className="imagery-canvas">
-                <svg
-                  viewBox={`${500 - 500 / zoom} ${500 - 500 / zoom} ${1000 / zoom} ${1000 / zoom}`}
-                  preserveAspectRatio="xMidYMid slice"
-                  aria-label={t(live ? "Sentinel-2 provider thumbnail, no georeferenced area overlay" : "Real Sentinel-2 thumbnail preview with approximate saved area overlay")}
-                >
-                  <defs>
-                    <clipPath id="comparisonClip">
-                      <rect x="0" y="0" width={split * 10} height="1000" />
-                    </clipPath>
-                  </defs>
-                  <image
-                    href={selected.thumbnail || undefined}
-                    onError={() => setPreviewError(true)}
-                    width="1000"
-                    height="1000"
-                  />
-                  {showArea && !live && (
-                    <g>
-                      <polygon
-                        points={outline}
-                        fill="rgba(78,149,255,.16)"
-                        stroke="#d4e6ff"
-                        strokeWidth="2.4"
-                        strokeDasharray="8 5"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                      {[
-                        [361.56, 269.52],
-                        [546.27, 268.4],
-                        [545.1, 106.73],
-                        [360.78, 107.84],
-                      ].map(([x, y], i) => (
-                        <rect
-                          key={i}
-                          x={x - 3}
-                          y={y - 3}
-                          width="6"
-                          height="6"
-                          fill="#fff"
-                        />
-                      ))}
-                      <rect
-                        x="360"
-                        y="77"
-                        width="173"
-                        height="24"
-                        rx="4"
-                        fill="#fff"
-                      />
-                      <text
-                        x="370"
-                        y="94"
-                        fill="#17212b"
-                        fontSize="13"
-                        fontFamily="Inter"
-                      >{t("San Francisco Bay · AOI")}</text>
-                    </g>
-                  )}
-                </svg>
+                <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
+                  <ExploreMap key={selected.crs || selected.id} ref={exploreMap} scene={selected} reference={comparing ? other : null} split={split} area={bbox} showArea={showArea} />
+                </React.Suspense>
                 {comparing && (
-                  <svg
-                    className="compare-overlay"
-                    style={{ clipPath: "inset(0 " + (100 - split) + "% 0 0)" }}
-                    viewBox={`${500 - 500 / zoom} ${500 - 500 / zoom} ${1000 / zoom} ${1000 / zoom}`}
-                    preserveAspectRatio="xMidYMid slice"
-                    aria-label={t("Reference scene thumbnail")}
-                  >
-                    <image
-                      href={other.thumbnail}
-                      onError={() => { setCompare(false); setToast("The reference thumbnail could not load. Try another scene."); }}
-                      width="1000"
-                      height="1000"
-                    />
-                    {showArea && !live && (
-                      <polygon
-                        points={outline}
-                        fill="rgba(78,149,255,.16)"
-                        stroke="#d4e6ff"
-                        strokeWidth="2.4"
-                        strokeDasharray="8 5"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                    )}
-                  </svg>
-                )}
-                {comparing && (
-                  <div className="compare-line" style={{ left: split + "%" }}>
+                  <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
+                    aria-label={t("Comparison split")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={split}
+                    onPointerDown={event => { event.preventDefault(); event.stopPropagation(); event.currentTarget.setPointerCapture(event.pointerId); }}
+                    onPointerMove={event => { if (!event.currentTarget.hasPointerCapture(event.pointerId)) return; const box = event.currentTarget.parentElement.getBoundingClientRect(); setSplit(Math.max(0, Math.min(100, Math.round((event.clientX - box.left) * 100 / box.width)))); }}
+                    onKeyDown={event => { if (["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp", "Home", "End"].includes(event.key)) { event.preventDefault(); setSplit(current => event.key === "Home" ? 0 : event.key === "End" ? 100 : Math.max(0, Math.min(100, current + (["ArrowLeft", "ArrowDown"].includes(event.key) ? -2 : 2)))); } }}>
                     <span>
                       <SlidersHorizontal size={19} />
                     </span>
                   </div>
                 )}
               </div>
-              {(previewError || !selected.thumbnail) && <div className="catalog-preview-unavailable" role="status"><ImageIcon size={25} /><strong>{t("Preview unavailable")}</strong><span>{t("The provider thumbnail could not load. Scene metadata and original assets are still available.")}</span><a href={selected.itemURL} target="_blank" rel="noreferrer">{t("Open source metadata")} <ExternalLink size={13} /></a></div>}
               {comparing && (
                 <div className="compare-controls">
                   <label>{t("Reference")}<Select
@@ -904,31 +820,30 @@ function App() {
                 <Button variant="secondary" size="icon"
                   className="map-icon"
                   aria-label={t("Zoom in")}
-                  onClick={() => setZoom(Math.min(zoom + 0.25, 2.5))}
+                  onClick={() => exploreMap.current?.zoomIn()}
                 >
                   <Plus size={18} />
                 </Button>
                 <Button variant="secondary" size="icon"
                   className="map-icon"
                   aria-label={t("Zoom out")}
-                  onClick={() => setZoom(Math.max(zoom - 0.25, 1))}
+                  onClick={() => exploreMap.current?.zoomOut()}
                 >
                   <Minus size={18} />
                 </Button>
                 <Button variant="secondary" size="icon"
                   className="map-icon"
                   aria-label={t("Fit scene")}
-                  onClick={() => setZoom(1)}
+                  onClick={() => exploreMap.current?.fit()}
                 >
                   <Maximize size={16} />
                 </Button>
                 <div className="control-separator" />
                 <Button variant="secondary" size="icon"
                   className={"map-icon " + (showArea ? "control-active" : "")}
-                  aria-pressed={showArea && !live}
+                  aria-pressed={showArea}
                   aria-label={t("Toggle saved area")}
-                  disabled={live}
-                  title={t(live ? "Live thumbnails are not georeferenced; the search box is not drawn over them" : "Show the sample area")}
+                  title={t("Show the searched area")}
                   onClick={() => setShowArea(!showArea)}
                 >
                   <SquareDashed size={18} />
@@ -943,7 +858,7 @@ function App() {
               </Surface>
               <div className="map-attribution">
                 <span>Contains Copernicus Sentinel data ({selected.date.slice(0, 4)}) · Earth Search</span>
-                <Button onClick={() => setModal("provenance")}>{t("Thumbnail, not analytical data")}<Info size={12} />
+                <Button onClick={() => setModal("provenance")}>{t("Georeferenced COG display · source details")}<Info size={12} />
                 </Button>
               </div>
               <div className="timeline">
@@ -1590,17 +1505,17 @@ function App() {
                 <dd>{date(selected.date)}</dd>
                 <dt>{t("Metadata fetched")}</dt>
                 <dd>{date(catalog.retrievedAt)}</dd>
-                <dt>{t("Preview")}</dt>
-                <dd>{t("Provider JPEG thumbnail")}</dd>
+                <dt>{t("Map source")}</dt>
+                <dd>{t("Georeferenced true-color COG; list thumbnails are provider JPEGs")}</dd>
                 <dt>{t("Cloud cover")}</dt>
                 <dd>{t("Full scene, not AOI-specific")}</dd>
               </dl>
               <p>
-                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. Provider thumbnails are visual previews; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and thumbnails come from seven saved catalog records. Sample filters run locally. Original downloads, SCL inspection and rectangular clipping use the local task service.")}
+                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. The map renders the source true-color COG; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and small thumbnails come from seven saved catalog records. The map streams original true-color COG data; sample filters run locally. Original downloads, SCL inspection and rectangular clipping use the local task service.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">
-                <a href={selected.source || selected.itemURL} target="_blank" rel="noreferrer">{t("Original preview asset")}<ExternalLink size={14} />
+                <a href={selected.assets.visual?.href || selected.itemURL} target="_blank" rel="noreferrer">{t("Original true-color COG asset")}<ExternalLink size={14} />
                 </a>
                 <a href={catalog.query} target="_blank" rel="noreferrer">{t("Original STAC query")}<ExternalLink size={14} />
                 </a>

@@ -30,12 +30,15 @@ test("STAC normalization preserves source assets and actual projection", () => {
   assert.equal(normalizeScene(item).thumbnail, null);
   assert.equal(normalizeScene(item).cloud, null);
 });
-test("comparison requires same CRS, transform and shape", () => {
+test("comparison requires two true-color COGs on the same CRS, transform and shape", () => {
   const a = normalizeScene(fixture.features[0]), b = { ...structuredClone(a), id: "other" };
   assert.equal(compatibleScenes(a, b), true);
+  assert.equal(compatibleScenes(a, { ...b, thumbnail: null }), true);
+  assert.equal(compatibleScenes(a, { ...b, assets: { ...b.assets, visual: undefined } }), false);
   b.grid.transform[2] += 10;
   assert.equal(compatibleScenes(a, b), false);
   assert.equal(compatibleScenes(a, { ...a, id: "third", crs: "EPSG:4326" }), false);
+  assert.equal(compatibleScenes({ ...a, crs: "EPSG:4326" }, { ...b, crs: "EPSG:4326", grid: a.grid }), false);
   assert.equal(compatibleScenes(a, { ...a, id: "fourth", grid: {} }), false);
 });
 test("sample thumbnail stays local while real download hrefs remain intact", () => {

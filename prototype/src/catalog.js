@@ -47,8 +47,14 @@ export function normalizeSample(catalog) {
 }
 
 export function compatibleScenes(a, b) {
-  if (!a || !b || a.id === b.id || !a.thumbnail || !b.thumbnail || !a.crs || a.crs !== b.crs) return false;
-  return ["shape", "transform"].every((key) => Array.isArray(a.grid?.[key]) && a.grid[key].length > 0 && Array.isArray(b.grid?.[key]) && a.grid[key].length === b.grid[key].length && a.grid[key].every((v, i) => Number.isFinite(v) && v === b.grid[key][i]));
+  if (!a || !b || a.id === b.id || !a.assets?.visual?.href || !b.assets?.visual?.href || !a.crs || a.crs !== b.crs || !/^EPSG:(326|327)(0[1-9]|[1-5][0-9]|60)$/.test(a.crs)) return false;
+  const supported = scene => Array.isArray(scene.grid?.shape) && scene.grid.shape.length === 2
+    && scene.grid.shape.every(value => Number.isFinite(value) && value > 0)
+    && Array.isArray(scene.grid?.transform) && scene.grid.transform.length === 6
+    && scene.grid.transform.every(Number.isFinite)
+    && scene.grid.transform[0] > 0 && scene.grid.transform[4] < 0
+    && scene.grid.transform[1] === 0 && scene.grid.transform[3] === 0;
+  return supported(a) && supported(b) && ["shape", "transform"].every(key => a.grid[key].every((value, index) => value === b.grid[key][index]));
 }
 
 export function nextPageURL(response) {

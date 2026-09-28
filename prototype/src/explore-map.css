@@ -1,0 +1,6 @@
+.explore-map-root, .explore-map-target { position: absolute; inset: 0; }
+.explore-map-root { background: #17252c; }
+.explore-map-target { touch-action: none; }
+.explore-map-message { position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%); z-index: 1; padding: 12px 16px; border-radius: 9px; color: #17212b; background: #fff; box-shadow: 0 8px 30px #0004; font-size: 13px; }
+.explore-map-error { display: grid; gap: 8px; width: min(340px, 80%); }
+.explore-map-error [data-slot="button"] { justify-self: start; }
