@@ -11,15 +11,16 @@ evaluation build**, not the final deliverable.
 ## Evidence from this build
 
 - Build: Windows x64 release binaries, a portable ZIP and NSIS installer from
-  the local source before the Beautiful UI migration and packaging fix were
-  committed. The package is marked dirty; a clean-source rebuild is still
-  required. Artifact record:
-  `.verification/packages/final-product-eval-20260928/GeoD-Global_0.1.0_windows-x64_release_6d193a88dc-dirty_20260928T092913Z/artifacts.json`.
-- ZIP: 11,197,766 bytes, SHA-256
-  `93480aca20936463606a4fe0a6f0bd30855326878d951125cf3c780d93fb7a96`.
+  clean source commit `199ed6fab3565aeed8b0b98b995bf49857904a92` after the
+  Beautiful UI migration and packaging fix. The source tree SHA-256 is
+  `b0702218368d50eb4c540a65c3bc05df0c2f039884f3951babd6cb2e003014c8`.
+  Artifact record:
+  `.verification/packages/final-product-eval-clean-20260928/GeoD-Global_0.1.0_windows-x64_release_199ed6fab3_20260928T093609Z/artifacts.json`.
+- ZIP: 11,187,851 bytes, SHA-256
+  `eeceb1807b6669a81ee85f43c0924cf7209c3ba72c12df1b520dbdcf38bb927d`.
   Every payload file passed manifest verification.
-- NSIS installer: 7,133,806 bytes, SHA-256
-  `26f209c1deec23b252dcf7a631d96e996057be0a7731742fffcb20ec40077ceb`.
+- NSIS installer: 7,134,752 bytes, SHA-256
+  `ae90e48e9e52a32ba13102383aede3d9481d648d7be5e5b3f55515a4c21136e1`.
   NSIS compilation passed; the installer was not executed.
 - The bundled `geod-runtime.exe` returned HTTP 200 from `/health` with an
   isolated temporary store. The same bundled CLI downloaded the public
@@ -30,6 +31,9 @@ evaluation build**, not the final deliverable.
   The separate Rasterio/GDAL check passed all 912,900 samples, georeferencing,
   unchanged source, output hash/size and provenance sidecar. Local report:
   `.verification/acceptance/packaged-runtime-20260928T093228Z/independent-verification.json`.
+  This end-to-end run used the earlier dirty-package CLI; its SHA-256
+  `97dd8001eef872b5ac61085a798b6cd114746fd31398e1e137b297e7f8aca778`
+  matches the CLI in the subsequent clean package exactly.
 - Verification: `npm run verify` passed (32 domain tests, 8 UI tests and build);
   `cargo test --locked -p geod-runtime -p geod-global-desktop --features
   geod-global-desktop/custom-protocol` passed 56 Rust tests; the packaging suite
@@ -50,5 +54,5 @@ evaluation build**, not the final deliverable.
 `GeoD-Global-Spec/06-Decisions-Contracts-and-Release-Gates.md` defines the
 authoritative desktop, cloud, paid and public-claim gates. The verified SCL
 workflow establishes one real path, but does not satisfy the full data or desktop
-GUI scope. A final release requires a clean source revision and a fresh package
-and acceptance record after the remaining implementation and checks.
+GUI scope. A final release requires a fresh package and acceptance record after
+the remaining implementation and checks.
