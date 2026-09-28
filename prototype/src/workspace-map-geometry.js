@@ -44,6 +44,10 @@ export function intersectBounds(bounds, coverage) {
   return validBounds(result) ? result : null;
 }
 
+export function focusRasterExtent(sceneExtent, areaExtent) {
+  return intersectBounds(sceneExtent, areaExtent) || sceneExtent;
+}
+
 // This is a UI preview only. A native, hash-verified plan is still required
 // before Save or Run; source values are never read from the display PNG.
 export function previewPixelWindow(bounds, metadata) {

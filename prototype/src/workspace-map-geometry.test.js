@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { coordinateToPixel, intersectBounds, mapClipRecipe, previewPixelWindow, utmDefinition, verifiedMapMetadata, verifyPixelResult } from './workspace-map-geometry.js';
+import { coordinateToPixel, focusRasterExtent, intersectBounds, mapClipRecipe, previewPixelWindow, utmDefinition, verifiedMapMetadata, verifyPixelResult } from './workspace-map-geometry.js';
 
 const job = { id: '933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b', status: 'succeeded', assetKey: 'scl', sha256: 'a'.repeat(64) };
 const metadata = { crs: 'EPSG:32610', width: 5, height: 4, bounds: [100, 200, 200, 280], pixelSize: [20, 20], sha256: job.sha256, bandCount: 1, dataType: 'UInt8' };
@@ -24,6 +24,14 @@ test('selection preview intersects and rounds outward to source pixels', () => {
   assert.deepEqual(previewPixelWindow([0, 0, 1000, 1000], metadata), [0, 0, 5, 4]);
   assert.equal(previewPixelWindow([0, 0, 100, 200], metadata), null);
   assert.equal(intersectBounds([2, 2, 1, 1], metadata.bounds), null);
+});
+
+test('map focus stays on the selected raster when a search area spans multiple UTM zones', () => {
+  const scene = [300000, 3290220, 409800, 3400020];
+  const projectedSearch = [352737.94, 2014892.87, 7895012.82, 7723248.6];
+  assert.deepEqual(focusRasterExtent(scene, projectedSearch), [352737.94, 3290220, 409800, 3400020]);
+  assert.deepEqual(focusRasterExtent(scene, [0, 0, 100, 100]), scene);
+  assert.deepEqual(focusRasterExtent(scene, [310000, 3300000, 320000, 3310000]), [310000, 3300000, 320000, 3310000]);
 });
 
 test('map loading rejects changed checksums, uncompleted jobs and inconsistent pixel geometry', () => {

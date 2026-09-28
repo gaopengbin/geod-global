@@ -12,8 +12,8 @@ import { transformExtent } from 'ol/proj.js';
 import { register } from 'ol/proj/proj4.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import proj4 from 'proj4';
-import { utmDefinition } from './workspace-map-geometry.js';
-import { Button } from './ui/index.jsx';
+import { focusRasterExtent, intersectBounds, utmDefinition } from './workspace-map-geometry.js';
+import { Button, Progress, Spinner } from './ui/index.jsx';
 import { useI18n } from './i18n.jsx';
 import 'ol/ol.css';
 import './explore-map.css';
@@ -41,28 +41,53 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
   const areaLayer = useRef(null);
   const sceneExtentRef = useRef(null);
   const areaExtentRef = useRef(null);
+  const focusExtentRef = useRef(null);
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState({ metadataReady: false, requested: 0, completed: 0, active: 0, elapsed: 0, stalled: false });
   const [retry, setRetry] = useState(0);
   const areaKey = area?.join(',');
 
   useImperativeHandle(ref, () => ({
     zoomIn() { const view = map.current?.getView(); if (view) view.animate({ resolution: view.getResolution() / 1.5, duration: 180 }); },
     zoomOut() { const view = map.current?.getView(); if (view) view.animate({ resolution: view.getResolution() * 1.5, duration: 180 }); },
-    fit() { if (map.current && (areaExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, areaExtentRef.current || sceneExtentRef.current); },
+    fit() { if (map.current && (focusExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, focusExtentRef.current || sceneExtentRef.current); },
   }), []);
 
   useEffect(() => {
     setError(''); setReady(false);
+    setLoading({ metadataReady: false, requested: 0, completed: 0, active: 0, elapsed: 0, stalled: false });
     if (!target.current) return;
     let cancelled = false;
     let instance;
     let source;
     let resize;
     let pendingTiles = 0;
-    let loadedTiles = 0;
-    let readyTimer;
+    let requestedTiles = 0;
+    let completedTiles = 0;
+    let metadataReady = false;
     let initialReady = false;
+    let failed = false;
+    let loadingClock;
+    const startedAt = Date.now();
+    let lastActivityAt = startedAt;
+    const publishLoading = () => {
+      if (cancelled || failed) return;
+      const now = Date.now();
+      setLoading({ metadataReady, requested: requestedTiles, completed: completedTiles, active: pendingTiles,
+        elapsed: Math.floor((now - startedAt) / 1000), stalled: now - lastActivityAt >= 12000 });
+    };
+    const fail = message => {
+      if (cancelled || failed) return;
+      failed = true;
+      clearInterval(loadingClock);
+      setError(message);
+    };
+    loadingClock = setInterval(() => {
+      if (failed || (initialReady && pendingTiles === 0)) return;
+      publishLoading();
+      if (Date.now() - lastActivityAt >= 45000) fail('The imagery source stopped responding. Try another scene or retry.');
+    }, 1000);
     try {
       if (!scene?.assets?.visual?.href) throw new Error('This scene has no true-color COG asset.');
       const extent = sceneExtent(scene);
@@ -77,31 +102,32 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
       map.current = instance; areaLayer.current = overlays; sceneExtentRef.current = extent;
       resize = new ResizeObserver(() => { instance.updateSize(); });
       resize.observe(target.current);
-      source.on('tileloadstart', () => { pendingTiles += 1; clearTimeout(readyTimer); });
+      source.on('tileloadstart', () => { pendingTiles += 1; requestedTiles += 1; lastActivityAt = Date.now(); publishLoading(); });
       source.on('tileloadend', () => {
         pendingTiles = Math.max(0, pendingTiles - 1);
-        loadedTiles += 1;
-        if (!initialReady && pendingTiles === 0) readyTimer = setTimeout(() => {
-          if (!cancelled && pendingTiles === 0 && loadedTiles > 0) { initialReady = true; setReady(true); }
-        }, 200);
+        completedTiles += 1;
+        lastActivityAt = Date.now();
+        publishLoading();
+        if (!cancelled && !failed && !initialReady) { initialReady = true; setReady(true); }
       });
-      source.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); if (!cancelled) setError('The true-color COG tiles could not load. Check your connection or retry.'); });
-      source.on('error', () => { if (!cancelled) setError('The true-color COG metadata could not load. Check your connection or retry.'); });
-      source.getView().catch(() => { if (!cancelled) setError('The true-color COG metadata could not load. Check your connection or retry.'); });
-      // The submitted WGS84 bounds are transformed into the raster CRS, so the map opens at the searched area.
+      source.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); fail('The true-color COG tiles could not load. Check your connection or retry.'); });
+      source.on('error', () => fail('The true-color COG metadata could not load. Check your connection or retry.'));
+      source.getView().then(() => { metadataReady = true; lastActivityAt = Date.now(); publishLoading(); })
+        .catch(() => fail('The true-color COG metadata could not load. Check your connection or retry.'));
+      // Focus on the part of the searched area covered by this scene, including when the search spans multiple UTM zones.
       const projected = transformExtent(area, 'EPSG:4326', scene.crs, 8);
-      const intersects = projected[0] < extent[2] && projected[2] > extent[0] && projected[1] < extent[3] && projected[3] > extent[1];
-      areaExtentRef.current = intersects ? projected : null;
-      requestAnimationFrame(() => { if (!cancelled) fitExtent(instance, areaExtentRef.current || extent); });
+      areaExtentRef.current = intersectBounds(projected, extent) ? projected : null;
+      focusExtentRef.current = focusRasterExtent(extent, projected);
+      requestAnimationFrame(() => { if (!cancelled) fitExtent(instance, focusExtentRef.current); });
     } catch (cause) {
-      if (!cancelled) setError(cause.message);
+      fail(cause.message);
     }
     return () => {
-      cancelled = true; clearTimeout(readyTimer); resize?.disconnect();
+      cancelled = true; clearInterval(loadingClock); resize?.disconnect();
       if (instance) { instance.setTarget(undefined); instance.dispose(); }
       source?.dispose();
       map.current = null; areaLayer.current = null; referenceLayer.current = null;
-      sceneExtentRef.current = null; areaExtentRef.current = null;
+      sceneExtentRef.current = null; areaExtentRef.current = null; focusExtentRef.current = null;
     };
   }, [scene?.id, areaKey, retry]);
 
@@ -133,7 +159,13 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
 
   return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
     <div className="explore-map-target" ref={target} aria-label={t('Georeferenced true-color Sentinel-2 map')} />
-    {!ready && !error && <div className="explore-map-message" role="status">{t('Loading georeferenced imagery…')}</div>}
+    {!error && (!ready || loading.active > 0) && <div className={`explore-map-message explore-map-progress${ready ? ' explore-map-progress-compact' : ''}`}>
+      <div className="explore-map-progress-heading"><Spinner size={17}/><strong>{t('Loading true-color COG')}</strong><span>{scene?.date?.slice(0, 10)}</span></div>
+      <p role="status">{t(loading.requested === 0 && !loading.metadataReady ? 'Reading imagery metadata…' : loading.requested === 0 ? 'Locating tiles for the current view…' : ready ? 'Map visible; loading remaining tiles…' : 'Loading visible imagery tiles…')}</p>
+      <Progress value={loading.requested > 0 ? loading.completed : null} max={loading.requested || 100} aria-label={t('Completed imagery tile requests')} />
+      <div className="explore-map-progress-detail"><span>{loading.requested > 0 ? <>{t('Tiles returned')} {loading.completed}/{loading.requested} · {t('Active requests')} {loading.active}</> : t('Waiting for the imagery source')}</span><span>{loading.elapsed}{t(' seconds')}</span></div>
+      {loading.stalled && <div className="explore-map-progress-stalled"><span>{t('Imagery source is responding slowly. You can keep waiting or retry.')}</span><Button size="xs" onClick={() => setRetry(value => value + 1)}><RefreshCw size={13}/>{t('Retry map')}</Button></div>}
+    </div>}
     {error && <div className="explore-map-message explore-map-error" role="alert"><strong>{t('Map unavailable')}</strong><span>{t(error)}</span><Button onClick={() => setRetry(value => value + 1)}><RefreshCw size={14}/>{t('Retry map')}</Button></div>}
   </div>;
 });
