@@ -2,12 +2,12 @@
 .aoi-intro { display: grid; gap: 9px; }
 .aoi-intro p, .aoi-form p { margin: 0; color: var(--ink-2); font-size: 13px; line-height: 1.55; }
 .aoi-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, .75fr); gap: 16px; align-items: stretch; }
-.aoi-map-section { min-width: 0; border: 1px solid var(--line-strong); border-radius: var(--radius-card); overflow: hidden; background: var(--surface); }
+.aoi-map-section { min-width: 0; border: 1px solid var(--line-strong); border-radius: var(--radius-card); background: var(--surface); }
 .aoi-map-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px; border-bottom: 1px solid var(--line); }
 .aoi-map-toolbar > div { display: flex; gap: 4px; }
 .aoi-map-wrap { position: relative; }
-.aoi-map { --aoi-water: oklch(0.89 0.029 240); --aoi-land: oklch(0.959 0.011 94); --aoi-shore: oklch(0.647 0.018 202); width: 100%; height: 340px; background: var(--aoi-water); cursor: grab; }
-.dark .aoi-map, :root[data-theme=dark] .aoi-map { --aoi-water: oklch(0.284 0.025 247); --aoi-land: oklch(0.402 0.018 130); --aoi-shore: oklch(0.6 0.03 156); }
+.aoi-map { --aoi-water: oklch(0.89 0.029 240); --aoi-land: oklch(0.959 0.011 94); --aoi-shore: oklch(0.647 0.018 202); --aoi-country: oklch(0.43 0.045 241); --aoi-province: oklch(0.65 0.025 235); width: 100%; height: 270px; background: var(--aoi-water); cursor: grab; }
+.dark .aoi-map, :root[data-theme=dark] .aoi-map { --aoi-water: oklch(0.284 0.025 247); --aoi-land: oklch(0.402 0.018 130); --aoi-shore: oklch(0.6 0.03 156); --aoi-country: oklch(0.8 0.045 232); --aoi-province: oklch(0.61 0.025 231); }
 .aoi-map.is-drawing { cursor: crosshair; }
 .aoi-map:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
 .aoi-drag-box { border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 15%, transparent); }
@@ -16,10 +16,22 @@
 .aoi-map-caption span { display: inline-flex; align-items: center; gap: 5px; }
 .aoi-form { min-width: 0; padding: 15px; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--inset); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .aoi-form h3 { margin: 0; font-size: 15px; }
+.aoi-place-find { position: relative; z-index: 12; width: 100%; display: grid; gap: 6px; padding: 10px; border-bottom: 1px solid var(--line); }
+.aoi-place-find label { display: grid; gap: 6px; color: var(--ink); font-size: 12px; font-weight: 600; }
+.aoi-place-find p { font-size: 11px; line-height: 1.35; }
+.aoi-place-results { position: absolute; top: 71px; left: 10px; right: 10px; z-index: 20; display: grid; gap: 4px; max-height: 190px; overflow-y: auto; scrollbar-width: none; padding: 5px; border: 1px solid var(--line-strong); border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-overlay); }
+.aoi-place-results::-webkit-scrollbar { display: none; }
+.aoi-place-results [data-slot="button"] { justify-content: flex-start; padding: 7px 9px; }
+.aoi-place-results [data-slot="button"] span { display: grid; gap: 2px; }
+.aoi-place-results strong { font-size: 12px; font-weight: 600; }
+.aoi-place-results small { color: var(--ink-2); font-size: 11px; }
+.aoi-place-focus { width: 100%; display: grid; justify-items: start; gap: 7px; padding: 10px; border: 1px solid var(--accent); border-radius: var(--radius-card); background: var(--surface); }
+.aoi-place-focus > strong { font-size: 14px; }
+.aoi-place-focus p { font-size: 11px; }
 .aoi-fields { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .aoi-fields label { min-width: 0; display: grid; gap: 5px; color: var(--ink-2); font-size: 12px; }
 .aoi-fields input { width: 100%; }
 .aoi-error { color: var(--red) !important; }
 .aoi-summary { display: block; width: 100%; overflow-wrap: anywhere; font-size: 12px; color: var(--ink); }
 .aoi-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 14px; }
-@media (max-width: 720px) { .aoi-layout { grid-template-columns: 1fr; } .aoi-map { height: 280px; } .aoi-actions { justify-content: stretch; } .aoi-actions > * { flex: 1 1 auto; } }
+@media (max-width: 720px) { .aoi-layout { grid-template-columns: 1fr; } .aoi-map { height: 240px; } .aoi-actions { justify-content: stretch; } .aoi-actions > * { flex: 1 1 auto; } }

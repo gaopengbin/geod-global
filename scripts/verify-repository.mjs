@@ -45,6 +45,19 @@ assert(inside(await realpath(basemap)), 'AOI reference map must remain inside th
 assert.equal(createHash('sha256').update(await readFile(basemap)).digest('hex'),
   'e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b',
   'Changed Natural Earth AOI reference map');
+for (const [name, hash, count] of [
+  ['natural-earth-50m-admin-0-countries.geojson', '3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb', 242],
+  ['natural-earth-50m-admin-1-states-provinces.geojson', '69a0e06e640b2d505858ae1cb63034e4677f3000b35a98e16312932b98c426b9', 294],
+]) {
+  const target = path.join(samples, 'basemaps', name);
+  assert(inside(await realpath(target)), `Administrative reference layer must remain inside this repository: ${name}`);
+  const bytes = await readFile(target);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), hash, `Changed administrative reference layer: ${name}`);
+  const features = JSON.parse(bytes.toString('utf8')).features;
+  assert.equal(features.length, count, `Unexpected administrative coverage: ${name}`);
+  if (name.includes('admin-1')) assert.equal(new Set(features.map(feature => feature.properties.adm0_a3)).size, 9,
+    'This 1:50m province file only covers nine countries; do not advertise worldwide province coverage');
+}
 
 const brokenLinks = [];
 for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
@@ -63,4 +76,4 @@ for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
 assert.deepEqual(brokenLinks, [], 'Broken specification links');
 const desktopAcl = await verifyDesktopAcl(root);
 const sharedUi = await verifyUiSystem(root);
-console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedAoiBasemap:'passed',relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));
+console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedAoiBasemap:'passed',verifiedAdministrativeLayers:2,relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));
