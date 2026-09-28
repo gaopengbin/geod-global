@@ -10,7 +10,6 @@ import Feature from 'ol/Feature.js';
 import { fromExtent } from 'ol/geom/Polygon.js';
 import { transformExtent } from 'ol/proj.js';
 import { register } from 'ol/proj/proj4.js';
-import { getRenderPixel } from 'ol/render.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import proj4 from 'proj4';
 import { utmDefinition } from './workspace-map-geometry.js';
@@ -42,12 +41,10 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
   const areaLayer = useRef(null);
   const sceneExtentRef = useRef(null);
   const areaExtentRef = useRef(null);
-  const splitRef = useRef(split);
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
   const [retry, setRetry] = useState(0);
   const areaKey = area?.join(',');
-  splitRef.current = split;
 
   useImperativeHandle(ref, () => ({
     zoomIn() { const view = map.current?.getView(); if (view) view.animate({ resolution: view.getResolution() / 1.5, duration: 180 }); },
@@ -116,16 +113,6 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
     let active = true;
     const referenceSource = new GeoTIFF({ sources: [{ url: reference.assets.visual.href }] });
     const layer = new WebGLTileLayer({ source: referenceSource, className: 'explore-reference-layer', extent: sceneExtent(reference), zIndex: 1 });
-    layer.on('prerender', event => {
-      const gl = event.context;
-      const size = instance.getSize();
-      if (!size) return;
-      const bottomLeft = getRenderPixel(event, [0, size[1]]);
-      const topRight = getRenderPixel(event, [size[0], 0]);
-      gl.enable(gl.SCISSOR_TEST);
-      gl.scissor(bottomLeft[0], bottomLeft[1], Math.round((topRight[0] - bottomLeft[0]) * splitRef.current / 100), topRight[1] - bottomLeft[1]);
-    });
-    layer.on('postrender', event => event.context.disable(event.context.SCISSOR_TEST));
     const referenceError = () => { if (active) setError('The reference COG tiles could not load. Try another scene.'); };
     referenceSource.on('tileloaderror', referenceError);
     referenceSource.on('error', referenceError);
@@ -133,8 +120,6 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
     instance.addLayer(layer); referenceLayer.current = layer;
     return () => { active = false; instance.removeLayer(layer); layer.setSource(null); referenceSource.dispose(); if (referenceLayer.current === layer) referenceLayer.current = null; };
   }, [scene?.id, areaKey, reference?.id, retry]);
-
-  useEffect(() => { map.current?.render(); }, [split]);
 
   useEffect(() => {
     const source = areaLayer.current?.getSource();
@@ -146,7 +131,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
     source.addFeature(feature);
   }, [scene?.id, areaKey, showArea, retry]);
 
-  return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'}>
+  return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
     <div className="explore-map-target" ref={target} aria-label={t('Georeferenced true-color Sentinel-2 map')} />
     {!ready && !error && <div className="explore-map-message" role="status">{t('Loading georeferenced imagery…')}</div>}
     {error && <div className="explore-map-message explore-map-error" role="alert"><strong>{t('Map unavailable')}</strong><span>{t(error)}</span><Button onClick={() => setRetry(value => value + 1)}><RefreshCw size={14}/>{t('Retry map')}</Button></div>}
