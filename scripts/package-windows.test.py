@@ -1,5 +1,6 @@
 """Packaging unit tests use synthetic files, never distributable app binaries."""
 import importlib.util
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -15,6 +16,72 @@ spec.loader.exec_module(packaging)
 
 
 class PackagingTests(unittest.TestCase):
+    @staticmethod
+    def vendored_sources(root):
+        for name, expected in packaging.VENDORED_UI.items():
+            source = root / 'third-party' / name
+            source.mkdir(parents=True)
+            (source / expected['licenseFile']).write_text('MIT license test fixture\n', encoding='utf-8')
+            (source / 'component.jsx').write_text('// Original source test fixture\n', encoding='utf-8')
+            (source / 'SOURCE.md').write_text(f"Source: {expected['repository']} at {'a' * 40}\n", encoding='utf-8')
+            raw_base = expected['repository'].replace('https://github.com/', 'https://raw.githubusercontent.com/')
+            provenance = {'repository': expected['repository'], 'commit': 'a' * 40, 'license': 'MIT', 'files': [
+                {'path': filename, 'url': f"{raw_base}/{'a' * 40}/{filename}", 'sha256': packaging.digest(source / filename)}
+                for filename in [expected['licenseFile'], 'component.jsx']
+            ]}
+            packaging.write_json(source / 'provenance.json', provenance)
+
+    def test_vendored_license_and_source_records_are_in_delivery(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+            root = Path(folder)
+            self.vendored_sources(root)
+            payload = root / 'payload'
+            records = packaging.collect_vendored_notices(payload)
+            self.assertEqual({record['name'] for record in records}, set(packaging.VENDORED_UI))
+            for record in records:
+                source = root / 'third-party' / record['name']
+                directory = payload / record['directory']
+                self.assertEqual({path.name for path in directory.iterdir()}, {packaging.VENDORED_UI[record['name']]['licenseFile'], 'SOURCE.md', 'provenance.json'})
+                for copied in record['texts'] + record['sourceRecords']:
+                    self.assertEqual((directory / copied['file']).read_bytes(), (source / copied['file']).read_bytes())
+                    self.assertEqual(packaging.digest(directory / copied['file']), copied['sha256'])
+
+    def test_vendored_missing_or_empty_required_notices_stop_packaging(self):
+        for filename in ['LICENSE', 'SOURCE.md', 'provenance.json']:
+            for empty in [False, True]:
+                with self.subTest(filename=filename, empty=empty), tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+                    root = Path(folder)
+                    self.vendored_sources(root)
+                    path = root / 'third-party/beautiful-ui' / filename
+                    if empty:
+                        path.write_text('', encoding='utf-8')
+                    else:
+                        path.unlink()
+                    with self.assertRaisesRegex(RuntimeError, 'notice is missing or empty'):
+                        packaging.collect_vendored_notices(root / 'payload')
+
+    def test_vendored_unreviewed_or_changed_sources_stop_packaging(self):
+        for change, expected in [('unknown-source', 'Unreviewed or missing'), ('unknown-license', 'license is unreviewed'), ('unrecorded-file', 'Unrecorded'), ('changed-license', 'checksum mismatch'), ('missing-license-record', 'license is missing from provenance')]:
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+                root = Path(folder)
+                self.vendored_sources(root)
+                source = root / 'third-party/beautiful-ui'
+                path = source / 'provenance.json'
+                provenance = json.loads(path.read_text(encoding='utf-8'))
+                if change == 'unknown-source':
+                    (root / 'third-party/unreviewed-library').mkdir()
+                elif change == 'unknown-license':
+                    provenance['license'] = 'UNLICENSED'
+                elif change == 'unrecorded-file':
+                    (source / 'another-license.txt').write_text('Unreviewed notice', encoding='utf-8')
+                elif change == 'changed-license':
+                    (source / 'LICENSE').write_text('Changed permission terms', encoding='utf-8')
+                else:
+                    provenance['files'] = [entry for entry in provenance['files'] if entry['path'] != 'LICENSE']
+                packaging.write_json(path, provenance)
+                with self.assertRaisesRegex(RuntimeError, expected):
+                    packaging.collect_vendored_notices(root / 'payload')
+
     @staticmethod
     def license_response(data=b'license text', length=None):
         response = io.BytesIO(data)
@@ -73,6 +140,36 @@ class PackagingTests(unittest.TestCase):
             self.assertEqual((old.parent / packaging.SPDX_LICENSE_LIST_COMMIT / 'MPL-2.0.txt').read_bytes(),b'license text')
             packaging.standard_license('MPL-2.0',destination)
             request.assert_called_once()
+
+    def test_pinned_npm_license_checks_download_and_cached_bytes(self):
+        body = b'Official license fixture\n'
+        expected = {'version': '1.2.4', 'license': 'MIT', 'url': 'https://example.test/commit/LICENSE',
+                    'sha256': hashlib.sha256(body).hexdigest()}
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)), \
+                mock.patch.dict(packaging.NPM_UPSTREAM_LICENSES, {'@napi-rs/wasm-runtime': expected}), \
+                mock.patch.object(packaging, 'download_license', return_value=body) as download:
+            package = {'name': '@napi-rs/wasm-runtime', 'version': '1.2.4', 'license': 'MIT'}
+            destination = Path(folder) / 'notices'
+            record = packaging.pinned_npm_license(package, destination)[0]
+            self.assertEqual(record['source'], expected['url'])
+            self.assertEqual((destination / 'LICENSE').read_bytes(), body)
+            packaging.pinned_npm_license(package, destination)
+            download.assert_called_once_with(expected['url'], 1024 * 1024)
+            cache = Path(folder) / '.verification/license-cache/npm/@napi-rs_wasm-runtime/1.2.4/LICENSE'
+            cache.write_bytes(b'altered cache')
+            with self.assertRaisesRegex(RuntimeError, 'Cached npm license checksum mismatch'):
+                packaging.pinned_npm_license(package, destination)
+
+    def test_pinned_npm_license_rejects_unreviewed_metadata_and_response(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)), \
+                mock.patch.object(packaging, 'download_license', return_value=b'wrong license'):
+            package = {'name': 'saxes', 'version': '6.0.0', 'license': 'ISC'}
+            for key, changed in [('version', '6.0.1'), ('license', 'MIT')]:
+                with self.subTest(key=key), self.assertRaisesRegex(RuntimeError, 'Unreviewed npm license/version'):
+                    packaging.pinned_npm_license({**package, key: changed}, Path(folder) / 'notices')
+            with self.assertRaisesRegex(RuntimeError, 'Upstream npm license checksum mismatch'):
+                packaging.pinned_npm_license(package, Path(folder) / 'notices')
+            self.assertFalse(list((Path(folder) / '.verification').rglob('LICENSE')))
 
     def test_upstream_missing_license_remains_missing_and_404_cache_is_reused(self):
         with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)), mock.patch.object(packaging.urllib.request,'urlopen',side_effect=packaging.urllib.error.HTTPError('https://example.test/LICENSE',404,'missing',{},None)) as request, mock.patch.object(packaging.time,'sleep') as sleep:

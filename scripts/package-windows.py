@@ -25,6 +25,31 @@ TARGET = 'x86_64-pc-windows-msvc'
 SPDX_LICENSE_LIST_COMMIT = '31ba1a50e5397e00a304dbadc76531740e89ee48'
 LICENSE_DOWNLOAD_TIMEOUT = 20
 LICENSE_DOWNLOAD_ATTEMPTS = 3
+VENDORED_UI = {
+    'beautiful-ui': {'repository': 'https://github.com/slev12397/beautiful-ui', 'licenseFile': 'LICENSE'},
+    'shadcn-ui': {'repository': 'https://github.com/shadcn-ui/ui', 'licenseFile': 'LICENSE.md'},
+}
+# The published npm tarballs omit license files. Use reviewed, immutable upstream
+# texts only for these exact package versions; reject a changed response or cache.
+NPM_UPSTREAM_LICENSES = {
+    '@napi-rs/wasm-runtime': {
+        'version': '1.2.4', 'license': 'MIT',
+        'url': 'https://raw.githubusercontent.com/napi-rs/napi-rs/7e3f293e2d6a3032eabfe51ff38bcaa82d342a2f/LICENSE',
+        'sha256': '3f1ce66533302df3a32edbfdfc0b78f0dd34659e4c1f5817162e5ea3c2297215',
+    },
+    'react-remove-scroll-bar': {
+        'version': '2.3.8', 'license': 'MIT',
+        # This published tarball has no license file, and its recorded gitHead
+        # does not contain one. Pin the project's reviewed official license.
+        'url': 'https://raw.githubusercontent.com/theKashey/react-remove-scroll-bar/8ca9ba5ea52de03308fe8ced94f7b159a44d28ff/LICENSE',
+        'sha256': 'a79aae0c0f21990d9d963bb3c5a79cdcea9a46f8523ba55c58d7fe776b6ebc84',
+    },
+    'saxes': {
+        'version': '6.0.0', 'license': 'ISC',
+        'url': 'https://raw.githubusercontent.com/lddubeau/saxes/211fa0ebec9b628affc09219199639887174bfc3/LICENSE',
+        'sha256': '0fac2374380621b22e6b50451057721a9c52935b02d16d106a9f04897f061d0e',
+    },
+}
 SEMVER = re.compile(
     r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)'
     r'(?:-(?:0|[1-9][0-9]*|[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*)'
@@ -257,9 +282,89 @@ def standard_license(license_id, destination):
     return {'file':target.name, 'source':url, 'sha256':digest(target)}
 
 
+def pinned_npm_license(package, destination):
+    expected = NPM_UPSTREAM_LICENSES.get(package['name'])
+    if not expected:
+        return []
+    if package['version'] != expected['version'] or package.get('license') != expected['license']:
+        raise RuntimeError(f"Unreviewed npm license/version: {package['name']}@{package['version']}")
+    cache = ROOT / '.verification/license-cache/npm' / package['name'].replace('/', '_') / expected['version'] / 'LICENSE'
+    if not cache.is_file():
+        data = download_license(expected['url'], 1024 * 1024)
+        if hashlib.sha256(data).hexdigest() != expected['sha256']:
+            raise RuntimeError(f"Upstream npm license checksum mismatch: {package['name']}")
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_bytes(data)
+    if digest(cache) != expected['sha256']:
+        raise RuntimeError(f"Cached npm license checksum mismatch: {package['name']}")
+    target = destination / 'LICENSE'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(cache, target)
+    return [{'file': target.name, 'source': expected['url'], 'sha256': digest(target)}]
+
+
+def collect_vendored_notices(payload):
+    """Keep copied UI source notices distinct from installed npm dependencies."""
+    root = ROOT / 'third-party'
+    if not root.is_dir() or root.is_symlink() or not root.resolve().is_relative_to(ROOT.resolve()):
+        raise RuntimeError('Vendored UI source notices are missing: third-party')
+    actual = {path.name for path in root.iterdir()}
+    if actual != set(VENDORED_UI):
+        raise RuntimeError(f'Unreviewed or missing vendored UI sources: {sorted(actual ^ set(VENDORED_UI))}')
+    records = []
+    for name, expected in VENDORED_UI.items():
+        source = root / name
+        if not source.is_dir() or source.is_symlink() or not source.resolve().is_relative_to(root.resolve()):
+            raise RuntimeError(f'Vendored UI source must be a repository directory: {name}')
+        required = [expected['licenseFile'], 'SOURCE.md', 'provenance.json']
+        for filename in required:
+            path = source / filename
+            if not path.is_file() or path.is_symlink() or not path.read_text(encoding='utf-8').strip():
+                raise RuntimeError(f'Vendored UI notice is missing or empty: {name}/{filename}')
+        provenance = json.loads((source / 'provenance.json').read_text(encoding='utf-8'))
+        commit = provenance.get('commit', '')
+        if provenance.get('repository') != expected['repository'] or not re.fullmatch(r'[0-9a-f]{40}', commit):
+            raise RuntimeError(f'Vendored UI repository or commit is unreviewed: {name}')
+        if provenance.get('license') != 'MIT':
+            raise RuntimeError(f'Vendored UI license is unreviewed: {name}')
+        upstream = provenance.get('files')
+        if not isinstance(upstream, list) or not upstream:
+            raise RuntimeError(f'Vendored UI source inventory is missing: {name}')
+        seen = set()
+        raw_base = expected['repository'].replace('https://github.com/', 'https://raw.githubusercontent.com/')
+        for record in upstream:
+            filename = record.get('path', '')
+            parts = PurePosixPath(filename)
+            if not filename or '\\' in filename or ':' in filename or parts.is_absolute() or any(part in ('', '.', '..') for part in filename.split('/')) or filename in seen:
+                raise RuntimeError(f'Vendored UI source path is invalid or duplicated: {name}')
+            seen.add(filename)
+            path = source / filename
+            if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(source.resolve()):
+                raise RuntimeError(f'Vendored UI source file is missing or outside its directory: {name}/{filename}')
+            if record.get('url') != f'{raw_base}/{commit}/{filename}' or record.get('sha256') != digest(path):
+                raise RuntimeError(f'Vendored UI provenance or checksum mismatch: {name}/{filename}')
+        if expected['licenseFile'] not in seen:
+            raise RuntimeError(f'Vendored UI license is missing from provenance: {name}')
+        known = seen | {'SOURCE.md', 'provenance.json'}
+        unrecorded = {relative(path, source) for path in source.rglob('*') if path.is_file()} - known
+        if unrecorded:
+            raise RuntimeError(f'Unrecorded vendored UI source files: {name}: {sorted(unrecorded)}')
+        destination = payload / 'THIRD-PARTY' / 'vendored' / name
+        destination.mkdir(parents=True, exist_ok=True)
+        copied = []
+        for filename in required:
+            target = destination / filename
+            shutil.copyfile(source / filename, target)
+            copied.append({'file': filename, 'source': f'third-party/{name}/{filename}', 'sha256': digest(target)})
+        records.append({'ecosystem': 'vendored', 'name': name, 'version': commit, 'license': 'MIT',
+                        'repository': expected['repository'], 'directory': relative(destination, payload),
+                        'texts': copied[:1], 'sourceRecords': copied[1:]})
+    return records
+
+
 def collect_notices(payload):
     notices = payload / 'THIRD-PARTY'
-    records, gaps = [], []
+    records, gaps = collect_vendored_notices(payload), []
     metadata = json.loads(command('cargo', 'metadata', '--locked', '--format-version', '1', '--filter-platform', TARGET, capture=True))
     for package in metadata['packages']:
         if not package.get('source'):
@@ -311,6 +416,8 @@ def collect_notices(payload):
         label = re.sub(r'[^a-zA-Z0-9._-]', '_', package['name']) + '-' + package['version']
         destination = notices / 'npm' / label
         copied = []
+        source_records = []
+        standard_terms = None
         for original in license_files(source):
             target = destination / original.relative_to(source)
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -327,14 +434,31 @@ def collect_notices(payload):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(original,target)
                 copied.append({'file':target.name, 'source':f"{parent_package}@{package['version']} parent package", 'sha256':digest(target)})
+        if not copied:
+            copied = pinned_npm_license(package, destination)
         if not copied and package['name'] == 'lerc' and package['license'] == 'Apache-2.0':
             copied = [standard_license('Apache-2.0',destination)]
-            shutil.copyfile(source / 'LercDecode.js',destination / 'LercDecode-original-source.js')
-            shutil.copyfile(source / 'package.json',destination / 'published-package.json')
+            standard_terms = 'Apache-2.0'
+            for original, filename in [('LercDecode.js', 'LercDecode-original-source.js'), ('package.json', 'published-package.json')]:
+                target = destination / filename
+                shutil.copyfile(source / original, target)
+                source_records.append({'file': filename, 'source': f'installed package/{original}', 'sha256': digest(target)})
+        if not copied and package['name'] == 'stackback':
+            if package['version'] != '0.0.2' or package.get('license') != 'MIT':
+                raise RuntimeError('Unreviewed stackback license/version')
+            # The tarball declares MIT but has no standalone license file.
+            # Preserve its original V8/BSD notice in formatstack.js as well.
+            copied = [standard_license('MIT', destination)]
+            standard_terms = 'MIT'
+            for original in ['package.json', 'index.js', 'formatstack.js']:
+                target = destination / ('published-' + original)
+                shutil.copyfile(source / original, target)
+                source_records.append({'file': target.name, 'source': f'installed package/{original}', 'sha256': digest(target)})
         if not copied:
             gaps.append(f'NPM {label}: no license text found')
         records.append({'ecosystem':'npm', 'name':package['name'], 'version':package['version'],
                         'license':package.get('license', locked.get('license')), 'texts':copied,
+                        'standardTermsWithOriginalSource':standard_terms, 'sourceRecords':source_records,
                         'directory':relative(destination, payload)})
     fonts = notices / 'fonts'
     fonts.mkdir(parents=True, exist_ok=True)
@@ -342,7 +466,7 @@ def collect_notices(payload):
     shutil.copyfile(ROOT / 'docs/releases/THIRD-PARTY-ASSETS.md', notices / 'ASSETS.md')
     shutil.copyfile(ROOT / 'prototype/public/samples/manifest.json', notices / 'sample-data-provenance.json')
     standard_license('CC-BY-SA-4.0',notices)
-    write_json(notices / 'inventory.json', {'scope':'Resolved Rust graph and installed npm graph, including build-time and optional dependencies; not a claim every listed package is linked', 'packages':records, 'missingLicenseTexts':gaps})
+    write_json(notices / 'inventory.json', {'scope':'Reviewed vendored UI sources, resolved Rust graph and installed npm graph, including build-time and optional dependencies; not a claim every listed package is linked', 'packages':records, 'missingLicenseTexts':gaps})
     if gaps:
         raise RuntimeError('License text coverage is incomplete; packaging stopped:\n' + '\n'.join(gaps))
     return len(records)

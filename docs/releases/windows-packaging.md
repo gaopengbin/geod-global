@@ -107,6 +107,13 @@ When a crate omits the license file, it uses the crate's recorded Git commit to
 retrieve the official upstream text. For the explicitly documented upstreams that
 also omit standalone texts, it pairs unmodified standard terms with their published
 declarations and original source/copyright headers; these are marked in the inventory.
+Three npm tarballs without license files use reviewed upstream texts pinned by
+commit and SHA-256 (`@napi-rs/wasm-runtime@1.2.4`,
+`react-remove-scroll-bar@2.3.8`, and `saxes@6.0.0`). The published
+`stackback@0.0.2` package declares MIT but has no standalone license file;
+the payload pairs the pinned SPDX MIT terms with its original package metadata
+and source, including the V8/BSD notice in `formatstack.js`. Changed versions,
+license declarations, downloaded bytes or cached texts stop packaging.
 Packaging fails for any other uncovered dependency. Exact published MPL crate source is included, along with Inter's font license,
 SCL legend attribution/license and sample-data provenance. This inventory also
 includes build-time and optional dependencies; it is not a binary linkage claim.
