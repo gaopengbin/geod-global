@@ -53,13 +53,14 @@ import { Button, Badge, Input, Textarea, Select, Switch, Progress, Modal, EmptyS
   SegmentedControl, Toast, Spinner } from "./ui/index.jsx";
 import "./styles.css";
 import "./catalog.css";
-import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
+import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
 import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { I18nProvider, useI18n } from "./i18n.jsx";
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
+const AreaPicker = React.lazy(() => import("./area-picker.jsx").then(module => ({ default: module.AreaPicker })));
 
 const nav = [
   ["Explore", Compass],
@@ -118,7 +119,12 @@ function App() {
   if (!searchRunner.current) searchRunner.current = createSearchRunner();
   const live = catalogMode === "live";
   const catalog = live ? liveCatalog : sampleCatalog;
-  const bbox = live ? (appliedSearch?.bbox || SAMPLE_BBOX) : SAMPLE_BBOX;
+  let pendingBounds = SAMPLE_BBOX;
+  if (live) {
+    try { pendingBounds = validateBounds(searchInput.bbox); }
+    catch { pendingBounds = appliedSearch?.bbox || SAMPLE_BBOX; }
+  }
+  const bbox = live ? (appliedSearch?.bbox || pendingBounds) : SAMPLE_BBOX;
   const areaName = live ? "Custom search area" : "San Francisco Bay";
   const [page, setPage] = useState(
     [...nav.map((n) => n[0]), "Settings", "Cloud"].includes(
@@ -236,6 +242,21 @@ function App() {
     setSearchInput((current) => ({ ...current, ...submittedInput }));
     runSearch(false, submittedInput);
   };
+  const applyMapArea = (bounds) => {
+    const next = { ...searchInput, bbox: bounds.join(", ") };
+    setSearchInput(next);
+    setModal(null);
+    if (!live) switchCatalog("live");
+    runSearch(false, next);
+  };
+  const exportMapArea = (bounds) => showJSON("geod-search-area.geojson", {
+    type: "Feature",
+    properties: { name: "Custom search area", fixture: false },
+    geometry: { type: "Polygon", coordinates: [[
+      [bounds[0], bounds[1]], [bounds[2], bounds[1]], [bounds[2], bounds[3]],
+      [bounds[0], bounds[3]], [bounds[0], bounds[1]],
+    ]] },
+  });
   useEffect(() => {
     const change = () =>
       setPage(decodeURIComponent(location.hash.slice(1)) || "Explore");
@@ -507,6 +528,7 @@ function App() {
                     {live && <form className="catalog-form" onSubmit={submitSearch}>
                       <label>{t("WGS 84 bounds · west, south, east, north")}<Input name="bbox" aria-label={t("Search bounding box")} value={searchInput.bbox} onChange={updateSearchField} />
                       </label>
+                      <Button type="button" icon={SquareDashed} onClick={() => setModal("area")}>{t("Draw area on map")}</Button>
                       <div className="catalog-dates">
                         <label>{t("From (UTC)")}<Input name="start" aria-label={t("Search start date")} type="date" value={searchInput.start} onInput={updateSearchField} onChange={updateSearchField} /></label>
                         <label>{t("Through (UTC)")}<Input name="end" aria-label={t("Search end date")} type="date" value={searchInput.end} onInput={updateSearchField} onChange={updateSearchField} /></label>
@@ -1465,7 +1487,7 @@ function App() {
               : {
                   export: "Prepare export",
                   recipe: "Save design recipe",
-                  area: "Saved area",
+                  area: "Select search area",
                   provenance: "Data provenance",
                   commands: "Search commands",
                   states: "Review interface states",
@@ -1475,7 +1497,7 @@ function App() {
                 }[modal])
           }
           onClose={() => setModal(null)}
-          wide={modal === "export"}
+          wide={modal === "export" || modal === "area"}
         >
           {modal === "export" && selected ? (
             <>
@@ -1557,45 +1579,7 @@ function App() {
               </div>
             </>
           ) : modal === "area" ? (
-            <div className="dialog-body">
-              <Badge tone="blue">{live ? t("SEARCH BOUNDING BOX") : t("SAVED BOUNDING BOX")}</Badge>
-              <h3>{t(areaName)}</h3>
-              <p>
-                {live ? t("These are the last submitted search bounds. Edit the coordinates in Live catalog to search a new area.") : t("The sample workspace uses the following saved study area.")}
-              </p>
-              <dl>
-                {["West", "South", "East", "North"].map((name, i) => (
-                  <React.Fragment key={name}>
-                    <dt>{t(name)}</dt>
-                    <dd className="mono">{bbox[i]}°</dd>
-                  </React.Fragment>
-                ))}
-              </dl>
-              <p className="muted">
-                {live ? t("WGS 84 coordinates. The query area is not drawn over the provider thumbnail because this preview does not perform georeferencing.") : t("WGS 84 coordinates. The sample thumbnail overlay is projected to the source UTM grid and is for orientation only.")}
-              </p>
-              <Button
-                icon={Download}
-                onClick={() =>
-                  showJSON("geod-search-area.geojson", {
-                    type: "Feature",
-                    properties: { name: areaName, fixture: !live },
-                    geometry: {
-                      type: "Polygon",
-                      coordinates: [
-                        [
-                          [bbox[0], bbox[1]],
-                          [bbox[2], bbox[1]],
-                          [bbox[2], bbox[3]],
-                          [bbox[0], bbox[3]],
-                          [bbox[0], bbox[1]],
-                        ],
-                      ],
-                    },
-                  })
-                }
-              >{t("Download area GeoJSON")}</Button>
-            </div>
+            <React.Suspense fallback={<p role="status"><Spinner/>{t("Loading reference map…")}</p>}><AreaPicker initialBbox={pendingBounds} sample={!live} onApply={applyMapArea} onExport={exportMapArea} onClose={() => setModal(null)}/></React.Suspense>
           ) : modal === "provenance" && selected && catalog ? (
             <div className="dialog-body">
               <Badge tone="green">{live ? t("LIVE CATALOG RESPONSE") : t("REAL CATALOG SNAPSHOT")}</Badge>

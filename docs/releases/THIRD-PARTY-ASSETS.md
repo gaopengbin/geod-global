@@ -12,6 +12,10 @@
   exposed by Earth Search / Element 84. Per-file URLs, hashes and attribution
   are retained in the embedded sample manifest. Data use follows the
   [Copernicus Sentinel legal notice](https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice).
+- **Offline area-selection reference map:** Natural Earth 1:50m land polygons,
+  public domain. The bundled GeoJSON is pinned to the upstream commit and SHA-256
+  recorded in `prototype/public/basemaps/SOURCE.md`. This is a geographic
+  orientation layer, not analytical data or an online tile service.
 - **Live downloaded raster data:** not shipped inside this package. Provider
   attribution, original asset URL and source checksum accompany each local job
   and generated crop sidecar.

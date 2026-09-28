@@ -4,7 +4,7 @@
 
 ## 本轮真实能力
 
-- Live catalog直接查询Earth Search：可编辑WGS84范围、UTC日期、云量、分页，取消查询或恢复失败。
+- Explore的区域入口可在离线Natural Earth参考地图上拖绘WGS84矩形，或输入西、南、东、北四个坐标；提交后切换到Live catalog并查询Earth Search。实时目录也有“在地图上选区”入口，可编辑UTC日期、云量、分页，取消查询或恢复失败。选区只过滤场景，源资产下载仍为整景。
 - 真实缩略图预览，只对相同源网格启用比较；实时缩略图不叠加未经验证的区域轮廓。
 - Download source asset通过本机Rust服务或Tauri命令下载完整源资产，记录字节数、SHA-256、来源及本地路径，支持取消和从头重试。
 - Tasks与My Data展示真实记录；原设计模拟收在独立折叠区。真实文件记录由Rust持久化，不依赖浏览器localStorage。

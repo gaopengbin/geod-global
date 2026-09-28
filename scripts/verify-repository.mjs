@@ -40,6 +40,11 @@ for (const scene of manifest.scenes) {
   const bytes = await readFile(target);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), scene.sha256, 'Changed sample: ' + scene.id);
 }
+const basemap = path.join(samples, 'basemaps/natural-earth-50m-land.geojson');
+assert(inside(await realpath(basemap)), 'AOI reference map must remain inside this repository');
+assert.equal(createHash('sha256').update(await readFile(basemap)).digest('hex'),
+  'e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b',
+  'Changed Natural Earth AOI reference map');
 
 const brokenLinks = [];
 for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
@@ -58,4 +63,4 @@ for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
 assert.deepEqual(brokenLinks, [], 'Broken specification links');
 const desktopAcl = await verifyDesktopAcl(root);
 const sharedUi = await verifyUiSystem(root);
-console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));
+console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedAoiBasemap:'passed',relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));

@@ -2,11 +2,16 @@ export const EARTH_SEARCH = "https://earth-search.aws.element84.com/v1/search";
 export const SAMPLE_BBOX = [-122.55, 37.68, -122.32, 37.84];
 export const INITIAL_SEARCH = { bbox: SAMPLE_BBOX.join(", "), start: "2025-06-01", end: "2025-06-30", cloud: 60, limit: 20 };
 
-export function validateSearch(input) {
-  const parts = Array.isArray(input.bbox) ? input.bbox : String(input.bbox).split(",").map((v) => v.trim());
+export function validateBounds(input) {
+  const parts = Array.isArray(input) ? input : String(input).split(",").map((v) => v.trim());
   if (parts.length !== 4 || parts.some((v) => v === "" || !Number.isFinite(Number(v)))) throw new Error("Enter four coordinates: west, south, east, north.");
   const bbox = parts.map(Number), [west, south, east, north] = bbox;
   if (west < -180 || east > 180 || south < -90 || north > 90 || west >= east || south >= north) throw new Error("Use WGS 84 bounds with west < east and south < north. Split areas crossing the antimeridian into two searches.");
+  return bbox;
+}
+
+export function validateSearch(input) {
+  const bbox = validateBounds(input.bbox);
   for (const key of ["start", "end"]) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(input[key]) || !Number.isFinite(Date.parse(input[key])) || new Date(input[key]).toISOString().slice(0, 10) !== input[key]) throw new Error("Choose valid start and end dates.");
   }

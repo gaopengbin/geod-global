@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { INITIAL_SEARCH, validateSearch, searchURL, normalizeScene, normalizeSample, compatibleScenes, nextPageURL, createSearchRunner } from "./catalog.js";
+import { INITIAL_SEARCH, validateBounds, validateSearch, searchURL, normalizeScene, normalizeSample, compatibleScenes, nextPageURL, createSearchRunner } from "./catalog.js";
 const fixture = JSON.parse(readFileSync(new URL("../public/samples/earth-search-response.json", import.meta.url)));
 test("query validates geographic/date inputs and sends server-side cloud and UTC end date", () => {
   const url = new URL(searchURL(INITIAL_SEARCH));
@@ -9,6 +9,13 @@ test("query validates geographic/date inputs and sends server-side cloud and UTC
   assert.equal(url.searchParams.get("datetime"), "2025-06-01T00:00:00Z/2025-06-30T23:59:59.999Z");
   assert.equal(url.searchParams.get("sortby"), "-properties.datetime");
   for (const values of [{ bbox: "1,,2,3" }, { bbox: "180,2,-180,3" }, { bbox: "1,91,2,93" }, { bbox: "1,2,3" }, { start: "2025-02-30" }, { end: "2025-05-01" }, { limit: 101 }, { cloud: -1 }]) assert.throws(() => validateSearch({ ...INITIAL_SEARCH, ...values }));
+});
+test("map-drawn WGS 84 bounds use the same validation as catalog searches", () => {
+  const bounds = validateBounds([12.34567, -3.5, 12.7, -3]);
+  assert.deepEqual(validateSearch({ ...INITIAL_SEARCH, bbox: bounds }).bbox, bounds);
+  for (const value of [[12, 0, 12, 2], [179, -1, -179, 1], [-181, 0, -170, 1], [10, -91, 11, 0]]) {
+    assert.throws(() => validateBounds(value));
+  }
 });
 test("STAC normalization preserves source assets and actual projection", () => {
   const item = structuredClone(fixture.features[0]);
