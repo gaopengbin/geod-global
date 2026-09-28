@@ -6,7 +6,7 @@
 - Do not change the domestic checkout as a side effect of work here. Its code audit in `GeoD-Global-Spec/05-*` is reference material, not a runtime dependency.
 - Do not resolve source code, binaries, or node_modules through a sibling checkout, absolute workstation path, junction, or fallback environment variable.
 - Shared functionality may later use a reviewed, versioned package or library. Preserve origin, license notices, version and compatibility tests. Shared implementations do not mean shared app settings, updater channels or releases.
-- Preserve the approved workspace visual direction. Full product scope is in the specification; a design prototype is not an implemented desktop capability.
+- Beautiful UI is the user-approved global design system. All pages use the shared `prototype/src/ui/` layer; do not introduce page-local generic widgets or a second theme. Beautiful UI source primitives and Radix/shadcn behavior adapters share one foundation. Keep GIS rendering and application logic as domain components. Full product scope is in the specification; a design prototype is not an implemented desktop capability.
 - Never represent fixture data, task simulations or JSON reports as real raster processing or downloads.
 
 ## Commands

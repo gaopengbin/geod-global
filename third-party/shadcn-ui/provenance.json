@@ -1,0 +1,42 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "98a1fe67b439324ddc857f47fbdce056600a4329",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/LICENSE.md",
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/input.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/apps/v4/registry/new-york-v4/ui/input.tsx",
+      "sha256": "0c9457181f6ddc80969bcf854e92c362903a55b6e889fbef3fd85343ecc4af5b"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/textarea.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/apps/v4/registry/new-york-v4/ui/textarea.tsx",
+      "sha256": "5cafcfeeee29534f449387a16b585f5923d2faab1a0cdc50a874416b175f59ce"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/apps/v4/registry/new-york-v4/ui/native-select.tsx",
+      "sha256": "4bdbce5575dce610fed747df4547a3d494713f4df8d28e09b3ccee62e4d72f93"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/table.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/apps/v4/registry/new-york-v4/ui/table.tsx",
+      "sha256": "bd1a9fc83a5a2149e504038e274bb7e5a0351af59f6896df52ac4d5b439695ac"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/badge.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/apps/v4/registry/new-york-v4/ui/badge.tsx",
+      "sha256": "13a9380dfff853ee730c14a52df49f22aecd31f40f2998d7c1e7ec458b6e1650"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/select.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/98a1fe67b439324ddc857f47fbdce056600a4329/apps/v4/registry/new-york-v4/ui/select.tsx",
+      "sha256": "962830436bd0b7ee50e556f0747e277d6a86869ed27d167516346b15f26309d8"
+    }
+  ]
+}

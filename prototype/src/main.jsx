@@ -47,6 +47,10 @@ import {
   Save,
   Trash2,
 } from "lucide-react";
+import "./ui/foundation.css";
+import { Button, Badge, Input, Textarea, Select, Switch, Progress, Modal, EmptyState,
+  Table, THead, TBody, TR, TH, TD, Disclosure, Surface, SidebarNav,
+  SegmentedControl, Toast, Spinner } from "./ui/index.jsx";
 import "./styles.css";
 import "./catalog.css";
 import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
@@ -93,76 +97,11 @@ function downloadJSON(name, value) {
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-function Badge({ children, tone = "" }) {
-  return <span className={"badge " + tone}>{children}</span>;
-}
 function SceneThumbnail({ src, alt }) {
   const { t } = useI18n();
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [src]);
   return src && !failed ? <img src={src} alt={alt} onError={() => setFailed(true)} /> : <span className="catalog-thumbnail-missing" role="img" aria-label={t("Preview unavailable: {description}", { description: alt })}>{t("Preview unavailable")}</span>;
-}
-function Btn({
-  children,
-  icon: Icon,
-  onClick,
-  primary = false,
-  className = "",
-  ...props
-}) {
-  return (
-    <button
-      className={(primary ? "button primary" : "button") + " " + className}
-      onClick={onClick}
-      {...props}
-    >
-      {Icon && <Icon size={15} />} {children}
-    </button>
-  );
-}
-function Modal({ title, children, onClose, wide = false }) {
-  const { t } = useI18n();
-  const ref = useRef();
-  useEffect(() => {
-    const el = ref.current;
-    el.showModal();
-    return () => el.close();
-  }, []);
-  return (
-    <dialog
-      ref={ref}
-      aria-labelledby="modal-title"
-      className={wide ? "wide" : ""}
-      onCancel={onClose}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <header>
-        <h2 id="modal-title">{title}</h2>
-        <button
-          className="icon-btn"
-          onClick={onClose}
-          aria-label={t("Close dialog")}
-        >
-          <X size={20} />
-        </button>
-      </header>
-      {children}
-    </dialog>
-  );
-}
-function Empty({ icon: Icon = Folder, title, children, action }) {
-  return (
-    <div className="empty">
-      <div className="empty-icon">
-        <Icon size={28} />
-      </div>
-      <h2>{title}</h2>
-      <p>{children}</p>
-      {action}
-    </div>
-  );
 }
 
 function App() {
@@ -305,6 +244,7 @@ function App() {
   }, []);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("geod-design-theme", JSON.stringify(theme));
   }, [theme]);
   useEffect(() => {
@@ -317,17 +257,12 @@ function App() {
     localStorage.setItem("geod-design-outputs", JSON.stringify(outputs));
   }, [outputs]);
   useEffect(() => {
-    if (!toast) return;
-    const id = setTimeout(() => setToast(""), 3500);
-    return () => clearTimeout(id);
-  }, [toast]);
-  useEffect(() => {
     const f = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "k") {
         e.preventDefault();
         setModal("commands");
       }
-      if (e.key === "Escape" && !document.querySelector("dialog[open]"))
+      if (e.key === "Escape" && !document.querySelector('[role="dialog"][data-state="open"]'))
         setCompare(false);
     };
     window.addEventListener("keydown", f);
@@ -475,68 +410,33 @@ function App() {
   if (loadError && !live)
     return (
       <main className="boot">
-        <Empty
+        <EmptyState
           icon={AlertCircle}
           title={t("The sample catalog could not load")}
           action={
-            <Btn onClick={load} icon={RotateCcw}>{t("Retry")}</Btn>
+            <Button onClick={load} icon={RotateCcw}>{t("Retry")}</Button>
           }
-        >{t("Start the included local preview server and try again.")}</Empty>
+        >{t("Start the included local preview server and try again.")}</EmptyState>
       </main>
     );
   if (!sampleCatalog && !live)
     return (
       <main className="boot">
-        <span className="loader" />{t("Loading the sample workspace…")}</main>
+        <Spinner />{t("Loading the sample workspace…")}</main>
     );
   return (
     <div className="app">
-      <aside className="rail">
-        <a className="brand" href="#Explore" aria-label={t("GeoD home")}>
-          <span className="brand-mark">
-            <Layers size={23} />
-          </span>
-          <strong>{t("GeoD")}</strong>
-        </a>
-        <nav>
-          {nav.map(([name, Icon]) => (
-            <a
-              key={name}
-              href={"#" + encodeURIComponent(name)}
-              className={page === name ? "nav-item active" : "nav-item"}
-              title={t(name)}
-            >
-              <Icon size={21} />
-              <span>{t(name)}</span>
-              {name === "Tasks" &&
-                tasks.some((t) => t.status === "Running") && (
-                  <i className="nav-dot" />
-                )}
-            </a>
-          ))}
-        </nav>
-        <div className="rail-bottom">
-          <a
-            className={page === "Cloud" ? "nav-item active" : "nav-item"}
-            href="#Cloud"
-          >
-            <Cloud size={21} />
-            <span>{t("Cloud")}</span>
-          </a>
-          <a
-            className={page === "Settings" ? "nav-item active" : "nav-item"}
-            href="#Settings"
-          >
-            <Settings size={21} />
-            <span>{t("Settings")}</span>
-          </a>
-          <button className="nav-item" onClick={() => setModal("about")}>
-            <HelpCircle size={21} />
-            <span>{t("Help")}</span>
-          </button>
-          <span className="local-avatar">{t("GP")}</span>
-        </div>
-      </aside>
+      <SidebarNav
+        ariaLabel={t("GeoD home")}
+        brand={<a className="brand" href="#Explore" aria-label={t("GeoD home")}><span className="brand-mark"><Layers size={20} /></span><strong>{t("GeoD")}</strong></a>}
+        items={nav.map(([name, icon]) => ({ id: name, label: t(name), icon, href: "#" + encodeURIComponent(name), active: page === name }))}
+        footerItems={[
+          { id: "Cloud", label: t("Cloud"), icon: Cloud, href: "#Cloud", active: page === "Cloud" },
+          { id: "Settings", label: t("Settings"), icon: Settings, href: "#Settings", active: page === "Settings" },
+          { id: "Help", label: t("Help"), icon: HelpCircle, onClick: () => setModal("about") },
+        ]}
+        footer={<span className="sidebar-local-label"><ShieldCheck size={14} />{t("Local workspace")}</span>}
+      />
       <div className="app-main">
         <header className="topbar">
           <div className="breadcrumb">
@@ -549,7 +449,7 @@ function App() {
           </div>
           <div className="top-actions">
             <Badge>{live ? t("Live catalog") : t("Sample catalog")}</Badge>
-            <button
+            <Button
               className="command-trigger"
               aria-label={t("Search commands")}
               onClick={() => setModal("commands")}
@@ -557,14 +457,14 @@ function App() {
               <Search size={15} />
               <span>{t("Search commands")}</span>
               <kbd>{t("Ctrl K")}</kbd>
-            </button>
-            <button
+            </Button>
+            <Button
               className="icon-btn"
               aria-label={t("Toggle color theme")}
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             >
               {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-            </button>
+            </Button>
             <span className="local-status">
               <span />{t("Local workspace")}</span>
           </div>
@@ -581,66 +481,48 @@ function App() {
                       : t("Find your next dataset")}
                   </h1>
                 </div>
-                <button
+                <Button
                   className="icon-btn"
                   aria-label={t("Source information")}
                   onClick={() => go("Sources")}
                 >
                   <MoreHorizontal size={20} />
-                </button>
+                </Button>
               </div>
-              <button className="area-picker" onClick={() => setModal("area")}>
+              <Button className="area-picker" onClick={() => setModal("area")}>
                 <MapPin size={17} />
                 <span>
                   <strong>{t(areaName)}</strong>
                   <small>{live ? t("WGS 84 · editable search bounds") : t("Saved area · California, US")}</small>
                 </span>
                 <ChevronDown size={16} />
-              </button>
-              <div className="catalog-switch" aria-label={t("Catalog mode")}>
-                <button aria-pressed={!live} onClick={() => switchCatalog("sample")}>{t("Sample catalog")}</button>
-                <button aria-pressed={live} onClick={() => switchCatalog("live")}>{t("Live catalog")}</button>
-              </div>
-              <div
-                className="domain-tabs"
-                role="tablist"
-                aria-label={t("Data categories")}
-              >
-                {domains.map(([d, Icon]) => (
-                  <button
-                    key={d}
-                    role="tab"
-                    aria-selected={domain === d}
-                    onClick={() => setDomain(d)}
-                    className={domain === d ? "active" : ""}
-                  >
-                    <Icon size={16} />
-                    {t(d)}
-                  </button>
-                ))}
-              </div>
+              </Button>
+              <SegmentedControl className="catalog-switch" aria-label={t("Catalog mode")} value={catalogMode} onValueChange={switchCatalog}
+                items={[{ value: "sample", label: t("Sample catalog") }, { value: "live", label: t("Live catalog") }]} />
+              <SegmentedControl className="domain-tabs" aria-label={t("Data categories")} value={domain} onValueChange={setDomain}
+                items={domains.map(([value, icon]) => ({ value, label: t(value), icon }))} />
               {domain === "Satellite" ? (
                 <>
                   <div className="filters">
                     {live && <form className="catalog-form" onSubmit={submitSearch}>
-                      <label>{t("WGS 84 bounds · west, south, east, north")}<input name="bbox" aria-label={t("Search bounding box")} value={searchInput.bbox} onChange={updateSearchField} />
+                      <label>{t("WGS 84 bounds · west, south, east, north")}<Input name="bbox" aria-label={t("Search bounding box")} value={searchInput.bbox} onChange={updateSearchField} />
                       </label>
                       <div className="catalog-dates">
-                        <label>{t("From (UTC)")}<input name="start" aria-label={t("Search start date")} type="date" value={searchInput.start} onInput={updateSearchField} onChange={updateSearchField} /></label>
-                        <label>{t("Through (UTC)")}<input name="end" aria-label={t("Search end date")} type="date" value={searchInput.end} onInput={updateSearchField} onChange={updateSearchField} /></label>
+                        <label>{t("From (UTC)")}<Input name="start" aria-label={t("Search start date")} type="date" value={searchInput.start} onInput={updateSearchField} onChange={updateSearchField} /></label>
+                        <label>{t("Through (UTC)")}<Input name="end" aria-label={t("Search end date")} type="date" value={searchInput.end} onInput={updateSearchField} onChange={updateSearchField} /></label>
                       </div>
-                      <label className="range-label"><span>{t("Scene cloud cover ≤ {percent}", { percent: number(Number(searchInput.cloud) / 100, { style: "percent" }) })}</span><input name="cloud" type="range" aria-label={t("Live maximum cloud cover")} min="0" max="100" value={searchInput.cloud} onInput={updateSearchField} onChange={updateSearchField} /></label>
+                      <label className="range-label"><span>{t("Scene cloud cover ≤ {percent}", { percent: number(Number(searchInput.cloud) / 100, { style: "percent" }) })}</span><Input name="cloud" type="range" aria-label={t("Live maximum cloud cover")} min="0" max="100" value={searchInput.cloud} onInput={updateSearchField} onChange={updateSearchField} /></label>
                       <div className="catalog-search-actions">
-                        <label>{t("Per page")}<select name="limit" aria-label={t("Scenes per page")} value={searchInput.limit} onChange={updateSearchField}><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label>
-                        <Btn primary icon={Search} type="submit">{t("Search catalog")}</Btn>
+                        <label>{t("Per page")}<Select name="limit" aria-label={t("Scenes per page")} value={searchInput.limit} onChange={updateSearchField}><option value="10">10</option><option value="20">20</option><option value="50">50</option></Select></label>
+                        <Button primary icon={Search} type="submit">{t("Search catalog")}</Button>
                       </div>
-                      {(liveState === "loading" || liveState === "more") && <Btn type="button" onClick={cancelSearch}>{t("Cancel search")}</Btn>}
+                      {(liveState === "loading" || liveState === "more") && <Button type="button" onClick={cancelSearch}>{t("Cancel search")}</Button>}
                     </form>}
                     {liveError && <p className="catalog-error" role="alert">{catalogError(liveError)}</p>}
                     {live && appliedSearch && <p className="catalog-query-note">{t("{status}: {start} – {end} · clouds ≤ {cloud} · [{bbox}]", { status: catalog ? t("Showing") : t("Requested"), start: date(appliedSearch.start), end: date(appliedSearch.end), cloud: number(appliedSearch.cloud / 100, { style: "percent" }), bbox: appliedSearch.bbox.join(", ") })}</p>}
                     <label className="search-input">
                       <Search size={16} />
-                      <input
+                      <Input
                         aria-label={t("Search scenes")}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
@@ -648,27 +530,27 @@ function App() {
                       />
                     </label>
                     {!live && <div className="filter-row">
-                      <label className="select-wrap">{t("Date")}<select
+                      <label className="select-wrap">{t("Date")}<Select
                           aria-label={t("Date range")}
                           value={period}
                           onChange={(e) => setPeriod(e.target.value)}
                         >
                           <option value="all">{t("Jun 1–30, 2025")}</option>
                           <option value="first">{t("Jun 1–15, 2025")}</option>
-                        </select>
+                        </Select>
                       </label>
-                      <button
+                      <Button
                         className="filter-btn"
                         aria-label={t("Sample states")}
                         onClick={() => setModal("states")}
                       >
                         <SlidersHorizontal size={16} />
-                      </button>
+                      </Button>
                     </div>}
                     {!live && <label className="range-label">
                       <span>{t("Scene cloud cover")}</span>
                       <strong>≤ {number(cloud / 100, { style: "percent" })}</strong>
-                      <input
+                      <Input
                         type="range"
                         aria-label={t("Maximum cloud cover")}
                         min="0"
@@ -685,37 +567,37 @@ function App() {
                         {condition === "empty" ? 0 : filtered.length}
                       </strong>{" "}{t("scenes")}<span className="muted">· {live ? t("loaded results") : t("catalog snapshot")}</span>
                     </span>
-                    <select
+                    <Select
                       aria-label={t("Sort scenes")}
                       value={sort}
                       onChange={(e) => setSort(e.target.value)}
                     >
                       <option value="date">{t("Newest")}</option>
                       <option value="cloud">{t("Clearest")}</option>
-                    </select>
+                    </Select>
                   </div>
                   <div className="scene-list">
-                    {live && liveState === "loading" ? <div className="loading-state" role="status"><span className="loader" />{t("Searching Earth Search…")}</div> : live && !liveCatalog ? <Empty icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.")}</Empty> : condition === "error" ? (
-                      <Empty
+                    {live && liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : live && !liveCatalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.")}</EmptyState> : condition === "error" ? (
+                      <EmptyState
                         icon={AlertCircle}
                         title={t("Source unavailable")}
                         action={
-                          <Btn
+                          <Button
                             onClick={() => setCondition("ready")}
                             icon={RotateCcw}
-                          >{t("Retry sample")}</Btn>
+                          >{t("Retry sample")}</Button>
                         }
-                      >{t("The design scenario represents a failed catalog request. Your workspace is kept.")}</Empty>
+                      >{t("The design scenario represents a failed catalog request. Your workspace is kept.")}</EmptyState>
                     ) : condition === "loading" ? (
                       <div className="loading-state">
-                        <span className="loader" />{t("Loading sample results…")}<Btn onClick={() => setCondition("ready")}>{t("Show loaded state")}</Btn>
+                        <Spinner />{t("Loading sample results…")}<Button onClick={() => setCondition("ready")}>{t("Show loaded state")}</Button>
                       </div>
                     ) : condition === "empty" || !filtered.length ? (
-                      <Empty
+                      <EmptyState
                         icon={Search}
                         title={t("No matching scenes")}
                         action={
-                          <Btn
+                          <Button
                             onClick={() => {
                               setQuery("");
                               setCloud(100);
@@ -728,12 +610,12 @@ function App() {
                                 runSearch(false, reset);
                               }
                             }}
-                          >{t("Reset filters")}</Btn>
+                          >{t("Reset filters")}</Button>
                         }
-                      >{t("Try a wider date range or allow more cloud cover.")}</Empty>
+                      >{t("Try a wider date range or allow more cloud cover.")}</EmptyState>
                     ) : (
                       filtered.map((s) => (
-                        <button
+                        <Button variant="quiet" size="row" aria-pressed={selected?.id === s.id}
                           key={s.id}
                           className={
                             "scene " + (selected?.id === s.id ? "selected" : "")
@@ -768,11 +650,11 @@ function App() {
                               size={16}
                             />
                           )}
-                        </button>
+                        </Button>
                       ))
                     )}
                   </div>
-                  {live && liveCatalog?.next && <div className="catalog-next"><Btn disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? t("Loading more…") : t("Load more scenes")}</Btn><span>{t("Only loaded results are counted and sorted.")}</span></div>}
+                  {live && liveCatalog?.next && <div className="catalog-next"><Button disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? t("Loading more…") : t("Load more scenes")}</Button><span>{t("Only loaded results are counted and sorted.")}</span></div>}
                   <div className="panel-foot">
                     <Database size={13} />
                     <span>{t("Earth Search ·")} {live ? t("live HTTPS catalog") : t("June 2025 snapshot")}</span>
@@ -795,8 +677,8 @@ function App() {
                   {domain === "Local Data" ? (
                     <>
                       <p>{t("This file picker reads names and sizes. Inspect and clip downloaded SCL rasters from My Data.")}</p>
-                      <label className="button file-button">
-                        <Plus size={16} />{t("Choose a local file")}<input
+                      <label className="field file-picker">
+                        <Plus size={16} />{t("Choose a local file")}<Input
                           type="file"
                           onChange={(e) =>
                             setLocalFile(e.target.files[0] || null)
@@ -804,11 +686,11 @@ function App() {
                         />
                       </label>
                       {localFile && (
-                        <div className="info-box">
+                        <Surface className="info-box">
                           <strong>{localFile.name}</strong>
                           <p>
                             {number(localFile.size / 1024, { maximumFractionDigits: 1 })} {t("KB · stays on this device")}</p>
-                        </div>
+                        </Surface>
                       )}
                     </>
                   ) : (
@@ -835,14 +717,14 @@ function App() {
                           "Terrain & models",
                         ],
                       }[domain].map((label) => (
-                        <button
+                        <Button
                           className="domain-option"
                           key={label}
                           onClick={() => setModal("planned")}
                         >
                           <span>{t(label)}</span>
                           <ChevronRight size={16} />
-                        </button>
+                        </Button>
                       ))}
                       <p className="muted">{t("This category is part of the full design. Its source adapter is not connected in this prototype.")}</p>
                     </>
@@ -852,26 +734,16 @@ function App() {
             </aside>
             {selected ? <main className="map-workspace">
               <div className="map-toolbar">
-                <div className="segmented">
-                  <button
-                    className={!compare ? "active" : ""}
-                    onClick={() => setCompare(false)}
-                  >
-                    <Layers size={15} />{t("Preview")}</button>
-                  <button
-                    className={compare ? "active" : ""}
-                    disabled={!comparisons.length}
-                    title={t(comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two previews with the same CRS, transform and dimensions")}
-                    onClick={() => {
-                      setCompare(true);
-                      setCompareId(other?.id || "");
-                    }}
-                  >
-                    <SlidersHorizontal size={15} />{t("Compare")}</button>
-                </div>
+                <SegmentedControl className="preview-mode" aria-label={t("Preview")} value={compare ? "compare" : "preview"}
+                  onValueChange={value => { setCompare(value === "compare"); if (value === "compare") setCompareId(other?.id || ""); }}
+                  items={[
+                    { value: "preview", label: t("Preview"), icon: Layers },
+                    { value: "compare", label: t("Compare"), icon: SlidersHorizontal, disabled: !comparisons.length,
+                      title: t(comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two previews with the same CRS, transform and dimensions") },
+                  ]} />
                 <div className="toolbar-end">
                   <Badge tone="on-map">{t("True color")}</Badge>
-                  <button
+                  <Button variant="secondary" size="icon"
                     className="map-icon"
                     aria-label={t(inspector ? "Hide inspector" : "Show inspector")}
                     onClick={() => setInspector(!inspector)}
@@ -881,7 +753,7 @@ function App() {
                     ) : (
                       <PanelRightOpen size={18} />
                     )}
-                  </button>
+                  </Button>
                 </div>
               </div>
               {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
@@ -982,7 +854,7 @@ function App() {
               {(previewError || !selected.thumbnail) && <div className="catalog-preview-unavailable" role="status"><ImageIcon size={25} /><strong>{t("Preview unavailable")}</strong><span>{t("The provider thumbnail could not load. Scene metadata and original assets are still available.")}</span><a href={selected.itemURL} target="_blank" rel="noreferrer">{t("Open source metadata")} <ExternalLink size={13} /></a></div>}
               {comparing && (
                 <div className="compare-controls">
-                  <label>{t("Reference")}<select
+                  <label>{t("Reference")}<Select
                       aria-label={t("Reference scene")}
                       value={other.id}
                       onChange={(e) => setCompareId(e.target.value)}
@@ -993,9 +865,9 @@ function App() {
                             {date(s.date)}
                           </option>
                         ))}
-                    </select>
+                    </Select>
                   </label>
-                  <input
+                  <Input
                     type="range"
                     aria-label={t("Comparison split")}
                     min="0"
@@ -1007,29 +879,29 @@ function App() {
                 </div>
               )}
               <div className="map-controls">
-                <button
+                <Button variant="secondary" size="icon"
                   className="map-icon"
                   aria-label={t("Zoom in")}
                   onClick={() => setZoom(Math.min(zoom + 0.25, 2.5))}
                 >
                   <Plus size={18} />
-                </button>
-                <button
+                </Button>
+                <Button variant="secondary" size="icon"
                   className="map-icon"
                   aria-label={t("Zoom out")}
                   onClick={() => setZoom(Math.max(zoom - 0.25, 1))}
                 >
                   <Minus size={18} />
-                </button>
-                <button
+                </Button>
+                <Button variant="secondary" size="icon"
                   className="map-icon"
                   aria-label={t("Fit scene")}
                   onClick={() => setZoom(1)}
                 >
                   <Maximize size={16} />
-                </button>
+                </Button>
                 <div className="control-separator" />
-                <button
+                <Button variant="secondary" size="icon"
                   className={"map-icon " + (showArea ? "control-active" : "")}
                   aria-pressed={showArea && !live}
                   aria-label={t("Toggle saved area")}
@@ -1038,19 +910,19 @@ function App() {
                   onClick={() => setShowArea(!showArea)}
                 >
                   <SquareDashed size={18} />
-                </button>
+                </Button>
               </div>
-              <div className="scene-caption">
+              <Surface as="div" className="scene-caption">
                 <Badge tone="on-map">{t("SENTINEL-2 L2A")}</Badge>
                 <h2>{live ? selected.properties["grid:code"] || t("Selected observation") : t(areaName)}</h2>
                 <p>
                   {date(selected.date)} <span>·</span>{" "}
                   {selected.cloud == null ? t("Unknown") : number(selected.cloud / 100, { style: "percent", maximumFractionDigits: 1 })} {t("scene cloud cover")}</p>
-              </div>
+              </Surface>
               <div className="map-attribution">
                 <span>Contains Copernicus Sentinel data ({selected.date.slice(0, 4)}) · Earth Search</span>
-                <button onClick={() => setModal("provenance")}>{t("Thumbnail, not analytical data")}<Info size={12} />
-                </button>
+                <Button onClick={() => setModal("provenance")}>{t("Thumbnail, not analytical data")}<Info size={12} />
+                </Button>
               </div>
               <div className="timeline">
                 <div className="timeline-label">
@@ -1059,7 +931,7 @@ function App() {
                 </div>
                 <div className="timeline-track">
                   {[...scenes].reverse().map((s) => (
-                    <button
+                    <Button variant="quiet" aria-pressed={selected?.id === s.id}
                       key={s.id}
                       className={s.id === selected.id ? "selected" : ""}
                       onClick={() => setSelected(s)}
@@ -1068,29 +940,29 @@ function App() {
                       <span className="date-line" />
                       <span className="observation-dot" />
                       <small>{live ? date(s.date, { year: undefined, month: "2-digit", day: "2-digit" }) : number(Number(s.date.slice(8, 10)))}</small>
-                    </button>
+                    </Button>
                   ))}
                 </div>
-                <button
+                <Button
                   className="icon-btn"
                   aria-label={t("Timeline help")}
                   onClick={() => setModal("provenance")}
                 >
                   <Info size={16} />
-                </button>
+                </Button>
               </div>
-            </main> : <main className="catalog-blank"><Empty icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t("Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.")}</Empty></main>}
+            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t("Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.")}</EmptyState></main>}
             {inspector && selected && (
               <aside className="inspector">
                 <div className="inspector-heading">
                   <span className="eyebrow">{t("DATASET DETAILS")}</span>
-                  <button
+                  <Button
                     className="icon-btn"
                     aria-label={t("Close details panel")}
                     onClick={() => setInspector(false)}
                   >
                     <X size={16} />
-                  </button>
+                  </Button>
                 </div>
                 <h2>{t("Sentinel-2 L2A")}</h2>
                 <p className="muted">{t("Surface reflectance collection")}</p>
@@ -1125,11 +997,11 @@ function App() {
                     <dt>{t("Processing")}</dt>
                     <dd>{t("Local · planned")}</dd>
                   </dl>
-                  <button
+                  <Button
                     className="text-link"
                     onClick={() => setModal("area")}
                   >{t("Inspect area")}<ArrowUpRight size={14} />
-                  </button>
+                  </Button>
                 </div>
                 <div className="detail-section">
                   <h3>{t("Source & provenance")}</h3>
@@ -1142,20 +1014,20 @@ function App() {
                       <small>{t("Catalog by Earth Search")}</small>
                     </div>
                   </div>
-                    <button
+                    <Button
                     className="text-link"
                     disabled={!selected}
                     onClick={() => setModal("provenance")}
                   >{t("View metadata & source")}<ArrowUpRight size={14} />
-                  </button>
+                  </Button>
                 </div>
                 <div className="inspector-bottom">
                   <DownloadAssetButton scene={selected} />
-                  <Btn
+                  <Button
                     icon={Download}
                     onClick={() => setModal("export")}
-                  >{t("Review design export")}</Btn>
-                  <Btn icon={Workflow} onClick={() => setModal("recipe")}>{t("Save design recipe")}</Btn>
+                  >{t("Review design export")}</Button>
+                  <Button icon={Workflow} onClick={() => setModal("recipe")}>{t("Save design recipe")}</Button>
                   <p>{t("Download SCL and open My Data for verified clipping. These export options are design previews.")}</p>
                 </div>
               </aside>
@@ -1170,33 +1042,32 @@ function App() {
                   title={t("Tasks")}
                   sub={t("Follow every step, from source to output.")}
                   action={
-                    <Btn
+                    <Button
                       icon={Plus}
                       onClick={() => {
                         go("Explore");
                       }}
-                    >{t("New task")}</Btn>
+                    >{t("New task")}</Button>
                   }
                 />
                 <RuntimeTasks areaBounds={bbox} />
-                <details className="design-simulations">
-                  <summary>{t("Design simulations below · {count} sample tasks", { count: number(tasks.length) })}</summary>
-                <div className="notice">
+                <Disclosure className="design-simulations" summary={<>{t("Design simulations below · {count} sample tasks", { count: number(tasks.length) })}</>}>
+                <Surface className="notice">
                   <Info size={17} />
                   <span>{t("These sample tasks simulate processing. Real downloads and clipping jobs appear above.")}</span>
-                </div>
+                </Surface>
                 {!tasks.length ? (
-                  <Empty
+                  <EmptyState
                     icon={ListTodo}
                     title={t("Your next task starts with an area")}
                     action={
-                      <Btn primary onClick={() => go("Explore")}>{t("Explore data")}</Btn>
+                      <Button primary onClick={() => go("Explore")}>{t("Explore data")}</Button>
                     }
-                  >{t("Choose a scene and prepare an export to review the task lifecycle.")}</Empty>
+                  >{t("Choose a scene and prepare an export to review the task lifecycle.")}</EmptyState>
                 ) : (
                   <div className="task-list">
                     {tasks.map((task) => (
-                      <article className="task-card" key={task.id}>
+                      <Surface as="article" className="task-card" key={task.id}>
                         <div className="task-icon">
                           <Download size={22} />
                         </div>
@@ -1219,9 +1090,7 @@ function App() {
                           </div>
                           <p>
                             {task.sceneId} · {task.format} {t("design")}</p>
-                          <div className="progress">
-                            <span style={{ width: task.progress + "%" }} />
-                          </div>
+                          <Progress value={task.progress} max={100} aria-label={t("Design simulation only")} />
                           <div className="task-stage">
                             <span>
                               {task.status === "Succeeded"
@@ -1238,19 +1107,19 @@ function App() {
                         <div className="task-actions">
                           {task.status === "Running" ? (
                             <>
-                              <Btn
+                              <Button
                                 icon={Pause}
                                 onClick={() => changeTask(task.id, "Paused")}
-                              >{t("Pause")}</Btn>
-                              <Btn onClick={() => changeTask(task.id, "Failed")}>{t("Simulate failure")}</Btn>
+                              >{t("Pause")}</Button>
+                              <Button onClick={() => changeTask(task.id, "Failed")}>{t("Simulate failure")}</Button>
                             </>
                           ) : task.status === "Paused" ? (
-                            <Btn
+                            <Button
                               icon={Play}
                               onClick={() => changeTask(task.id, "Running")}
-                            >{t("Resume")}</Btn>
+                            >{t("Resume")}</Button>
                           ) : task.status === "Failed" ? (
-                            <Btn
+                            <Button
                               icon={RotateCcw}
                               onClick={() =>
                                 setTasks((old) => [
@@ -1264,23 +1133,23 @@ function App() {
                                   ...old,
                                 ])
                               }
-                            >{t("Retry")}</Btn>
+                            >{t("Retry")}</Button>
                           ) : null}
                           {["Running", "Paused"].includes(task.status) && (
-                            <button
+                            <Button
                               className="text-link danger"
                               onClick={() => changeTask(task.id, "Cancelled")}
-                            >{t("Cancel")}</button>
+                            >{t("Cancel")}</Button>
                           )}
                           {task.status === "Succeeded" && (
-                            <Btn onClick={() => go("My Data")}>{t("View report")}</Btn>
+                            <Button onClick={() => go("My Data")}>{t("View report")}</Button>
                           )}
                         </div>
-                      </article>
+                      </Surface>
                     ))}
                   </div>
                 )}
-                </details>
+                </Disclosure>
               </>
             ) : page === "My Data" ? (
               <>
@@ -1290,19 +1159,18 @@ function App() {
                   sub={t("Your outputs, with their story intact.")}
                 />
                 <RuntimeLibrary areaBounds={bbox} />
-                <details className="design-simulations">
-                  <summary>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</summary>
+                <Disclosure className="design-simulations" summary={<>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</>}>
                 {!outputs.length ? (
-                  <Empty
+                  <EmptyState
                     title={t("A place for finished work")}
                     action={
-                      <Btn primary onClick={() => go("Explore")}>{t("Prepare an export")}</Btn>
+                      <Button primary onClick={() => go("Explore")}>{t("Prepare an export")}</Button>
                     }
-                  >{t("Sample tasks add simulation reports here. Real GeoTIFF outputs are listed above.")}</Empty>
+                  >{t("Sample tasks add simulation reports here. Real GeoTIFF outputs are listed above.")}</EmptyState>
                 ) : (
                   <div className="output-grid">
                     {outputs.map((o) => (
-                      <article className="output-card" key={o.id}>
+                      <Surface as="article" className="output-card" key={o.id}>
                         <img
                           src={
                             (sampleCatalog?.scenes.find((s) => s.id === o.sceneId) || scenes.find((s) => s.id === o.sceneId))?.thumbnail
@@ -1314,7 +1182,7 @@ function App() {
                           <h3>{o.name}</h3>
                           <p>{t("Source preview · No raster output")}</p>
                           <div className="row-actions">
-                            <Btn
+                            <Button
                               icon={Download}
                               onClick={() =>
                                 showJSON("geod-design-report.json", {
@@ -1323,8 +1191,8 @@ function App() {
                                     "Design simulation only. No raster output or scientific validation.",
                                 })
                               }
-                            >{t("Report JSON")}</Btn>
-                            <button
+                            >{t("Report JSON")}</Button>
+                            <Button
                               className="icon-btn"
                               aria-label={t("Remove report {name}", { name: o.name })}
                               onClick={() =>
@@ -1332,14 +1200,14 @@ function App() {
                               }
                             >
                               <Trash2 size={16} />
-                            </button>
+                            </Button>
                           </div>
                         </div>
-                      </article>
+                      </Surface>
                     ))}
                   </div>
                 )}
-                </details>
+                </Disclosure>
               </>
             ) : page === "Recipes" ? (
               <>
@@ -1349,50 +1217,49 @@ function App() {
                   sub={t("Repeat a verified rectangular clip from a pinned source file.")}
                 />
                 <ExecutableRecipes areaBounds={bbox} onReviewJSON={showJSON} />
-                <details className="design-simulations">
-                  <summary>{t("Design recipe simulations · {count} recipes", { count: number(recipes.length) })}</summary>
-                <div className="notice">
-                  <Workflow size={17} />{t("These design recipes use design-prototype/v1 and do not execute. Saved executable recipes are listed above.")}</div>
+                <Disclosure className="design-simulations" summary={<>{t("Design recipe simulations · {count} recipes", { count: number(recipes.length) })}</>}>
+                <Surface className="notice">
+                  <Workflow size={17} />{t("These design recipes use design-prototype/v1 and do not execute. Saved executable recipes are listed above.")}</Surface>
                 {!recipes.length ? (
-                  <Empty
+                  <EmptyState
                     icon={Workflow}
                     title={t("Make a good workflow repeatable")}
                     action={
-                      <Btn primary disabled={!selected} onClick={() => setModal("recipe")}>{t("Save current selection")}</Btn>
+                      <Button primary disabled={!selected} onClick={() => setModal("recipe")}>{t("Save current selection")}</Button>
                     }
-                  >{t("Save an area, a fixed scene and output preferences. Your recipe stays in this browser.")}</Empty>
+                  >{t("Save an area, a fixed scene and output preferences. Your recipe stays in this browser.")}</EmptyState>
                 ) : (
                   <div className="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>{t("Recipe")}</th>
-                          <th>{t("Input")}</th>
-                          <th>{t("Output")}</th>
-                          <th>{t("Saved")}</th>
-                          <th>{t("Actions")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                    <Table>
+                      <THead>
+                        <TR>
+                          <TH>{t("Recipe")}</TH>
+                          <TH>{t("Input")}</TH>
+                          <TH>{t("Output")}</TH>
+                          <TH>{t("Saved")}</TH>
+                          <TH>{t("Actions")}</TH>
+                        </TR>
+                      </THead>
+                      <TBody>
                         {recipes.map((r) => (
-                          <tr key={r.id}>
-                            <td>
+                          <TR key={r.id}>
+                            <TD>
                               <strong>{r.name}</strong>
                               <small className="block">
                                 {t(r.area?.name || "Saved area")} {t("· fixed scene")}</small>
-                            </td>
-                            <td>{t("Sentinel-2 L2A")}</td>
-                            <td>{r.output.format}</td>
-                            <td>{date(r.savedAt)}</td>
-                            <td>
+                            </TD>
+                            <TD>{t("Sentinel-2 L2A")}</TD>
+                            <TD>{r.output.format}</TD>
+                            <TD>{date(r.savedAt)}</TD>
+                            <TD>
                               <div className="row-actions">
-                                <Btn
+                                <Button
                                   icon={Download}
                                   onClick={() =>
                                     showJSON("geod-design-recipe.json", r)
                                   }
-                                >{t("JSON")}</Btn>
-                                <Btn
+                                >{t("JSON")}</Button>
+                                <Button
                                   icon={Play}
                                   disabled={!scenes.some((s) => s.id === r.input.itemId)}
                                   title={t("Review is available when the saved scene is loaded in the current catalog")}
@@ -1406,16 +1273,16 @@ function App() {
                                     setFormat(r.output.format);
                                     setModal("export");
                                   }}
-                                >{t("Review")}</Btn>
+                                >{t("Review")}</Button>
                               </div>
-                            </td>
-                          </tr>
+                            </TD>
+                          </TR>
                         ))}
-                      </tbody>
-                    </table>
+                      </TBody>
+                    </Table>
                   </div>
                 )}
-                </details>
+                </Disclosure>
               </>
             ) : page === "Sources" ? (
               <>
@@ -1424,58 +1291,58 @@ function App() {
                   title={t("Sources")}
                   sub={t("Know where your data comes from, before you use it.")}
                   action={
-                    <Btn icon={Plus} onClick={() => setModal("planned")}>{t("Add source")}</Btn>
+                    <Button icon={Plus} onClick={() => setModal("planned")}>{t("Add source")}</Button>
                   }
                 />
                 <div className="table-wrap">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>{t("Source")}</th>
-                        <th>{t("Data")}</th>
-                        <th>{t("Connection")}</th>
-                        <th>{t("Availability")}</th>
-                        <th>{t("Action")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <Table>
+                    <THead>
+                      <TR>
+                        <TH>{t("Source")}</TH>
+                        <TH>{t("Data")}</TH>
+                        <TH>{t("Connection")}</TH>
+                        <TH>{t("Availability")}</TH>
+                        <TH>{t("Action")}</TH>
+                      </TR>
+                    </THead>
+                    <TBody>
                       {sourceRows.map(([name, data, status, desc], i) => (
-                        <tr key={name}>
-                          <td>
+                        <TR key={name}>
+                          <TD>
                             <strong>{t(name)}</strong>
-                          </td>
-                          <td>{t(data)}</td>
-                          <td>
+                          </TD>
+                          <TD>{t(data)}</TD>
+                          <TD>
                             <Badge tone={i === 0 ? "green" : ""}>
                               {i === 0 && !enabled ? t("Disabled") : t(status)}
                             </Badge>
-                          </td>
-                          <td>{t(desc)}</td>
-                          <td>
+                          </TD>
+                          <TD>{t(desc)}</TD>
+                          <TD>
                             {i === 0 ? (
-                              <Btn onClick={() => setEnabled(!enabled)}>
+                              <Button onClick={() => setEnabled(!enabled)}>
                                 {enabled ? t("Hide source results") : t("Show source results")}
-                              </Btn>
+                              </Button>
                             ) : (
-                              <Btn onClick={() => setModal("planned")}>{t("View plan")}</Btn>
+                              <Button onClick={() => setModal("planned")}>{t("View plan")}</Button>
                             )}
-                          </td>
-                        </tr>
+                          </TD>
+                        </TR>
                       ))}
-                    </tbody>
-                  </table>
+                    </TBody>
+                  </Table>
                 </div>
-                <div className="info-box">
+                <Surface className="info-box">
                   <ShieldCheck size={23} />
                   <h3>{t("Access and permission travel together")}</h3>
                   <p>{t("The full product will track preview, download, offline use and redistribution separately. A connected source alone will not enable every operation.")}</p>
-                  <button
+                  <Button
                     className="text-link"
                     disabled={!selected}
                     onClick={() => setModal("provenance")}
                   >{t("Inspect selected scene evidence")}<ArrowUpRight size={14} />
-                  </button>
-                </div>
+                  </Button>
+                </Surface>
               </>
             ) : page === "Cloud" ? (
               <>
@@ -1485,19 +1352,19 @@ function App() {
                   sub={t("Local work remains yours. Collaboration is a separate product decision.")}
                 />
                 <div className="cloud-layout">
-                  <div className="cloud-diagram">
-                    <div className="diagram-node">
+                  <Surface className="cloud-diagram">
+                    <Surface className="diagram-node">
                       <Folder />
                       <strong>{t("Local workspace")}</strong>
                       <span>{t("Files & processing")}</span>
-                    </div>
+                    </Surface>
                     <div className="diagram-connector" />
-                    <div className="diagram-node outline">
+                    <Surface className="diagram-node outline">
                       <Cloud />
                       <strong>{t("Optional sync")}</strong>
                       <span>{t("Selected metadata only")}</span>
-                    </div>
-                  </div>
+                    </Surface>
+                  </Surface>
                   <div className="cloud-copy">
                     <Badge>{t("Proposal · not connected")}</Badge>
                     <h2>{t("Share the workflow.")}<br />{t("Keep control of the data.")}</h2>
@@ -1507,7 +1374,7 @@ function App() {
                       <li>{t("Use your own storage and execution environment.")}</li>
                       <li>{t("Export your recipes when you leave.")}</li>
                     </ul>
-                    <div className="notice">{t("Pricing and the commercial model are undecided. No checkout or account creation is active.")}</div>
+                    <Surface className="notice">{t("Pricing and the commercial model are undecided. No checkout or account creation is active.")}</Surface>
                   </div>
                 </div>
               </>
@@ -1518,52 +1385,44 @@ function App() {
                   title={t("Settings")}
                   sub={t("A local-first workspace, on your terms.")}
                 />
-                <div className="settings-list">
+                <Surface className="settings-list">
                   <div>
                     <span>
                       <strong>{t("Language")}</strong>
                       <small>{t("Applies immediately and stays on this device.")}</small>
                     </span>
-                    <select aria-label={t("Interface language")} value={locale} onChange={(event) => setLocale(event.target.value)}>
+                    <Select aria-label={t("Interface language")} value={locale} onChange={(event) => setLocale(event.target.value)}>
                       <option value="en" lang="en">English</option>
                       <option value="zh-CN" lang="zh-CN">简体中文</option>
-                    </select>
+                    </Select>
                   </div>
                   <div>
                     <span>
                       <strong>{t("Appearance")}</strong>
                       <small>{t("Saved on this browser.")}</small>
                     </span>
-                    <select
+                    <Select
                       aria-label={t("Appearance")}
                       value={theme}
                       onChange={(e) => setTheme(e.target.value)}
                     >
                       <option value="light">{t("Light")}</option>
                       <option value="dark">{t("Dark")}</option>
-                    </select>
+                    </Select>
                   </div>
                   <div>
                     <span>
                       <strong>{t("Usage analytics")}</strong>
                       <small>{t("No analytics is sent by this prototype.")}</small>
                     </span>
-                    <button
-                      role="switch"
-                      aria-checked={telemetry}
-                      aria-label={t("Usage analytics design toggle")}
-                      className={"switch " + (telemetry ? "on" : "")}
-                      onClick={() => setTelemetry(!telemetry)}
-                    >
-                      <span />
-                    </button>
+                    <Switch checked={telemetry} onCheckedChange={setTelemetry} aria-label={t("Usage analytics design toggle")} />
                   </div>
                   <div>
                     <span>
                       <strong>{t("Local design data")}</strong>
                       <small>{t("Design recipes, sample tasks and reports use browser storage. Executable recipes and real files use the local service.")}</small>
                     </span>
-                    <Btn onClick={() => setModal("reset")}>{t("Clear design data")}</Btn>
+                    <Button onClick={() => setModal("reset")}>{t("Clear design data")}</Button>
                   </div>
                   <div>
                     <span>
@@ -1572,14 +1431,14 @@ function App() {
                     </span>
                     <Keyboard size={22} />
                   </div>
-                </div>
+                </Surface>
                 <DiagnosticsPanel />
               </>
             ) : (
-              <Empty
+              <EmptyState
                 title={t("Choose a workspace page")}
-                action={<Btn onClick={() => go("Explore")}>{t("Explore")}</Btn>}
-              >{t("Use the navigation to return to your data.")}</Empty>
+                action={<Button onClick={() => go("Explore")}>{t("Explore")}</Button>}
+              >{t("Use the navigation to return to your data.")}</EmptyState>
             )}
           </main>
         )}
@@ -1591,18 +1450,13 @@ function App() {
               ? t("{count} simulation running", { count: number(tasks.filter((task) => task.status === "Running").length) })
               : live ? t("Live catalog · original source assets") : t("Sample catalog · cached scene metadata")}
             <span className="status-divider">/</span>
-            <button onClick={() => setModal("about")}>{t("Development 0.1")}</button>
+            <Button onClick={() => setModal("about")}>{t("Development 0.1")}</Button>
           </span>
         </footer>
       </div>
-      {toast && (
-        <div className="toast" role="status">
-          <CheckCircle2 size={17} />
-          {t(toast)}
-        </div>
-      )}
+      <Toast message={toast ? t(toast) : ""} onDismiss={() => setToast("")} closeLabel={t("Close dialog")} />
       {modal && (
-        <Modal
+        <Modal closeLabel={t("Close dialog")}
           title={
             t(typeof modal === "object"
               ? modal.type === "json"
@@ -1630,27 +1484,27 @@ function App() {
                   <Badge tone="blue">{t("DESIGN SIMULATION")}</Badge>
                   <h3>{recipeName}</h3>
                   <p className="muted">{t("Preview planned export options. Real SCL clipping starts from a downloaded file in My Data.")}</p>
-                  <label className="field">{t("Output format")}<select
+                  <label className="field">{t("Output format")}<Select
                       value={format}
                       onChange={(e) => setFormat(e.target.value)}
                     >
                       <option>{t("COG")}</option>
                       <option>{t("GeoTIFF")}</option>
-                    </select>
+                    </Select>
                   </label>
-                  <label className="field">{t("Coordinate reference")}<input
+                  <label className="field">{t("Coordinate reference")}<Input
                       value={selected.crs || t("Source CRS not specified")}
                       readOnly
                     />
                   </label>
                   <div className="two-fields">
-                    <label className="field">{t("Pixel size")}<input value={selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("Not specified")} readOnly />
+                    <label className="field">{t("Pixel size")}<Input value={selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("Not specified")} readOnly />
                     </label>
-                    <label className="field">{t("Processing location")}<input value={t("Design simulation only")} readOnly />
+                    <label className="field">{t("Processing location")}<Input value={t("Design simulation only")} readOnly />
                     </label>
                   </div>
                 </div>
-                <div className="export-summary">
+                <Surface className="export-summary">
                   <h3>{t("Export plan")}</h3>
                   <div>
                     <Check size={16} />{t("Use the fixed source scene")}</div>
@@ -1662,21 +1516,21 @@ function App() {
                     <Info size={16} />{t("This export configuration is a design simulation")}</div>
                   <hr />
                   <p>{t("This design dialog does not create files. Download SCL, then use Clip raster in My Data to create a GeoTIFF.")}</p>
-                </div>
+                </Surface>
               </div>
               <div className="dialog-footer">
-                <Btn onClick={() => setModal(null)}>{t("Cancel")}</Btn>
-                <Btn
+                <Button onClick={() => setModal(null)}>{t("Cancel")}</Button>
+                <Button
                   icon={Download}
                   onClick={() => showJSON("geod-design-recipe.json", recipe())}
-                >{t("Download plan JSON")}</Btn>
-                <Btn primary icon={Play} onClick={simulate}>{t("Simulate task")}</Btn>
+                >{t("Download plan JSON")}</Button>
+                <Button primary icon={Play} onClick={simulate}>{t("Simulate task")}</Button>
               </div>
             </>
           ) : modal === "recipe" && selected ? (
             <>
               <div className="dialog-body">
-                <label className="field">{t("Recipe name")}<input
+                <label className="field">{t("Recipe name")}<Input
                     autoFocus
                     value={recipeName}
                     onChange={(e) => setRecipeName(e.target.value)}
@@ -1690,16 +1544,16 @@ function App() {
                   <dt>{t("Planned output")}</dt>
                   <dd>{format} · {selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("source resolution")}</dd>
                 </dl>
-                <div className="notice">{t("Saved locally. No credentials are included. This design recipe is not yet executable.")}</div>
+                <Surface className="notice">{t("Saved locally. No credentials are included. This design recipe is not yet executable.")}</Surface>
               </div>
               <div className="dialog-footer">
-                <Btn onClick={() => setModal(null)}>{t("Cancel")}</Btn>
-                <Btn
+                <Button onClick={() => setModal(null)}>{t("Cancel")}</Button>
+                <Button
                   primary
                   icon={Save}
                   disabled={!recipeName.trim()}
                   onClick={saveRecipe}
-                >{t("Save recipe")}</Btn>
+                >{t("Save recipe")}</Button>
               </div>
             </>
           ) : modal === "area" ? (
@@ -1720,7 +1574,7 @@ function App() {
               <p className="muted">
                 {live ? t("WGS 84 coordinates. The query area is not drawn over the provider thumbnail because this preview does not perform georeferencing.") : t("WGS 84 coordinates. The sample thumbnail overlay is projected to the source UTM grid and is for orientation only.")}
               </p>
-              <Btn
+              <Button
                 icon={Download}
                 onClick={() =>
                   showJSON("geod-search-area.geojson", {
@@ -1740,7 +1594,7 @@ function App() {
                     },
                   })
                 }
-              >{t("Download area GeoJSON")}</Btn>
+              >{t("Download area GeoJSON")}</Button>
             </div>
           ) : modal === "provenance" && selected && catalog ? (
             <div className="dialog-body">
@@ -1774,7 +1628,7 @@ function App() {
             <div className="dialog-body">
               <label className="search-input">
                 <Search size={17} />
-                <input
+                <Input
                   autoFocus
                   placeholder={t("Go to a page or action…")}
                   value={cmd}
@@ -1791,7 +1645,7 @@ function App() {
                 ]
                   .filter(([n]) => n.toLowerCase().includes(cmd.toLowerCase()) || t(n).toLocaleLowerCase(locale).includes(cmd.toLocaleLowerCase(locale)))
                   .map(([n, fn]) => (
-                    <button
+                    <Button
                       key={n}
                       onClick={() => {
                         setModal(null);
@@ -1801,7 +1655,7 @@ function App() {
                     >
                       <span>{t(n)}</span>
                       <ChevronRight size={16} />
-                    </button>
+                    </Button>
                   ))}
               </div>
             </div>
@@ -1814,7 +1668,7 @@ function App() {
                 ["loading", "Loading"],
                 ["error", "Source error"],
               ].map(([v, label]) => (
-                <button
+                <Button
                   key={v}
                   className="state-option"
                   onClick={() => {
@@ -1824,19 +1678,19 @@ function App() {
                 >
                   <span>{t(label)}</span>
                   {condition === v && <Check size={17} />}
-                </button>
+                </Button>
               ))}
             </div>
           ) : modal === "planned" ? (
             <div className="dialog-body">
               <p>{t("This belongs to the full product scope. The current design prototype does not connect this adapter or execute this operation.")}</p>
               <p className="muted">{t("The implementation map and release gates in the specification track the remaining work.")}</p>
-              <Btn
+              <Button
                 onClick={() => {
                   setModal(null);
                   go("Sources");
                 }}
-              >{t("View source catalog")}</Btn>
+              >{t("View source catalog")}</Button>
             </div>
           ) : modal === "reset" ? (
             <>
@@ -1844,8 +1698,8 @@ function App() {
                 <p>{t("Remove browser design recipes, sample tasks and reports? Real downloads, executable recipes and output files are retained.")}</p>
               </div>
               <div className="dialog-footer">
-                <Btn onClick={() => setModal(null)}>{t("Keep data")}</Btn>
-                <Btn
+                <Button onClick={() => setModal(null)}>{t("Keep data")}</Button>
+                <Button
                   primary
                   onClick={() => {
                     setRecipes([]);
@@ -1854,7 +1708,7 @@ function App() {
                     setModal(null);
                     setToast("Local design data cleared.");
                   }}
-                >{t("Clear design data")}</Btn>
+                >{t("Clear design data")}</Button>
               </div>
             </>
           ) : typeof modal === "object" && modal.type === "json" ? (
@@ -1862,7 +1716,7 @@ function App() {
               <div className="dialog-body">
                 <p>{modal.filename}</p>
                 <p className="muted">{t("Review or copy the full file below. If your embedded browser blocks downloads, open this local preview in your regular browser.")}</p>
-                <textarea
+                <Textarea
                   className="json-preview mono"
                   aria-label={t("Exported JSON")}
                   readOnly
@@ -1870,12 +1724,12 @@ function App() {
                 />
               </div>
               <div className="dialog-footer">
-                <Btn onClick={() => setModal(null)}>{t("Close")}</Btn>
-                <Btn
+                <Button onClick={() => setModal(null)}>{t("Close")}</Button>
+                <Button
                   primary
                   icon={Download}
                   onClick={() => downloadJSON(modal.filename, modal.value)}
-                >{t("Save JSON file")}</Btn>
+                >{t("Save JSON file")}</Button>
               </div>
             </>
           ) : typeof modal === "object" ? (
@@ -1884,15 +1738,15 @@ function App() {
                 <p>{t("Remove this simulation report from the library? Files on your computer are unaffected.")}</p>
               </div>
               <div className="dialog-footer">
-                <Btn onClick={() => setModal(null)}>{t("Keep report")}</Btn>
-                <Btn
+                <Button onClick={() => setModal(null)}>{t("Keep report")}</Button>
+                <Button
                   primary
                   onClick={() => {
                     setOutputs((old) => old.filter((o) => o.id !== modal.id));
                     setTasks((old) => old.filter((t) => t.id !== modal.id));
                     setModal(null);
                   }}
-                >{t("Remove report")}</Btn>
+                >{t("Remove report")}</Button>
               </div>
             </>
           ) : (

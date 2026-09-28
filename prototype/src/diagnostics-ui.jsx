@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FileJson, RefreshCw } from 'lucide-react';
 import { useI18n } from './i18n.jsx';
 import { runtimeRequest } from './runtime-client.js';
+import { Button, Surface, Textarea } from './ui/index.jsx';
 
 export function DiagnosticsPanel() {
   const { t } = useI18n();
@@ -22,5 +23,5 @@ export function DiagnosticsPanel() {
     catch (e) { if (!controller.signal.aborted) setError(e.message); }
     finally { if (!controller.signal.aborted) setBusy(false); }
   };
-  return <section className="runtime-section"><h2>{t('Local diagnostics')}</h2><p>{t('Preview a support report with versions, capabilities and task counts. No paths, coordinates, source URLs or personal names are included. Nothing is uploaded.')}</p><button className="button" disabled={busy} onClick={read}>{report ? <RefreshCw size={15}/> : <FileJson size={15}/>} {t(busy ? 'Reading diagnostics…' : 'Generate support report')}</button>{error && <p className="runtime-error" role="alert">{t('Local task service is offline')}</p>}{report && <label className="runtime-field">{t('Support report JSON')}<textarea className="processing-json-input mono" rows={16} readOnly value={JSON.stringify(report,null,2)} spellCheck={false}/></label>}</section>;
+  return <Surface as="section" className="runtime-section diagnostics-panel"><h2>{t('Local diagnostics')}</h2><p>{t('Preview a support report with versions, capabilities and task counts. No paths, coordinates, source URLs or personal names are included. Nothing is uploaded.')}</p><Button disabled={busy} onClick={read}>{report ? <RefreshCw size={15}/> : <FileJson size={15}/>} {t(busy ? 'Reading diagnostics…' : 'Generate support report')}</Button>{error && <p className="runtime-error" role="alert">{t('Local task service is offline')}</p>}{report && <label className="runtime-field">{t('Support report JSON')}<Textarea className="processing-json-input mono" rows={16} readOnly value={JSON.stringify(report,null,2)} spellCheck={false}/></label>}</Surface>;
 }

@@ -1,0 +1,52 @@
+{
+  "repository": "https://github.com/slev12397/beautiful-ui",
+  "commit": "c99a3586cf4fc093091feb47d3c066da1fb2e342",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/LICENSE",
+      "sha256": "dcd98784bcd83e727fad4612bfdd20d1363860149e2ca6829f546273b2f8d063"
+    },
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/README.md",
+      "sha256": "f01febd374c50eb3d41c4ffc09132c63b0f78127186d59f4f57d589c3c3b2a2b"
+    },
+    {
+      "path": "package.json",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/package.json",
+      "sha256": "bff25957fce0611dddf204c591a3a3e94b9c2dbbe03fd9c1912efc2f4f0e735d"
+    },
+    {
+      "path": "app/globals.css",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/app/globals.css",
+      "sha256": "c16c15f45ad5661f1fdaf54e8645e239b189ee2f86b98501edde6f33082c4ef6"
+    },
+    {
+      "path": "components/atoms/Button.tsx",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/components/atoms/Button.tsx",
+      "sha256": "1d939f68820366648a7b3292b88001da41253154bc49494be60cb8188100f0b0"
+    },
+    {
+      "path": "components/primitives/SidebarNav.tsx",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/components/primitives/SidebarNav.tsx",
+      "sha256": "06a0685ab35c16789231ee1947b4efd7f49adc50ae1f0ce4e0f7a2f2e35a6a59"
+    },
+    {
+      "path": "components/primitives/TaskRows.tsx",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/components/primitives/TaskRows.tsx",
+      "sha256": "7a81c2a264528405826b8ac9db9e92d4c14ef6fa3fcdb39010022df3cf4c0920"
+    },
+    {
+      "path": "public/r/foundation.json",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/public/r/foundation.json",
+      "sha256": "3b7c86c5cb11cb43ddc1d7d6baf11634b001190382622497318730b374836790"
+    },
+    {
+      "path": "public/r/button.json",
+      "url": "https://raw.githubusercontent.com/slev12397/beautiful-ui/c99a3586cf4fc093091feb47d3c066da1fb2e342/public/r/button.json",
+      "sha256": "3da0fa4a699a3237a4872575e2e0ef73184b92f2cc5dec112f4b85121579a619"
+    }
+  ]
+}
