@@ -5,6 +5,7 @@ fn parameters(bounds: [f64; 4]) -> ClipParameters {
     ClipParameters {
         crs: "source".into(),
         bounds,
+        geometry: None,
     }
 }
 
@@ -19,6 +20,93 @@ fn output_job(source: &Job, output: &CropOutput, id: &str) -> Job {
     job.parent_id = Some(source.id.clone());
     job.crop = Some(output.plan.clone());
     job
+}
+
+fn wgs84_ring(points: &[[f64; 2]]) -> Vec<[f64; 2]> {
+    let (wgs84, utm) = projections("EPSG:32610").unwrap();
+    points
+        .iter()
+        .map(|[x, y]| {
+            let mut point = (*x, *y, 0.0);
+            proj4rs::transform::transform(&utm, &wgs84, &mut point).unwrap();
+            [point.0.to_degrees(), point.1.to_degrees()]
+        })
+        .collect()
+}
+
+#[test]
+fn polygon_clip_masks_holes_and_preserves_original_source() {
+    let directory = tempfile::tempdir().unwrap();
+    let original = fixture(5, 4, &[4; 20], 32610, false);
+    let source = record(directory.path(), &original);
+    let outer = wgs84_ring(&[
+        [500000.0, 4200000.0],
+        [500100.0, 4200000.0],
+        [500100.0, 4199920.0],
+        [500000.0, 4199920.0],
+        [500000.0, 4200000.0],
+    ]);
+    let hole = wgs84_ring(&[
+        [500020.0, 4199980.0],
+        [500080.0, 4199980.0],
+        [500080.0, 4199940.0],
+        [500020.0, 4199940.0],
+        [500020.0, 4199980.0],
+    ]);
+    let geometry = PolygonGeometry::Polygon(vec![outer, hole]);
+    let parameters = ClipParameters {
+        crs: "EPSG:4326".into(),
+        bounds: geometry.bounds().unwrap(),
+        geometry: Some(geometry),
+    };
+    let output_id = uuid::Uuid::new_v4().to_string();
+    let output = write_crop(
+        directory.path(),
+        &source,
+        &parameters,
+        &output_id,
+        &CancellationToken::new(),
+    )
+    .unwrap();
+    assert!(output.plan.masked_pixels.unwrap() > 0);
+    let raster = load_verified_raster(
+        directory.path(),
+        &output_job(&source, &output, &output_id),
+        None,
+    )
+    .unwrap();
+    assert!(raster.pixels.contains(&0));
+    assert!(raster.pixels.contains(&4));
+    assert_eq!(raster.nodata, Some(0));
+    assert_eq!(
+        std::fs::read(source.output_path.as_ref().unwrap()).unwrap(),
+        original
+    );
+}
+
+#[test]
+fn polygon_validation_rejects_unclosed_rings_and_nonoverlapping_windows() {
+    let geometry = PolygonGeometry::Polygon(vec![vec![
+        [-123.0, 37.0],
+        [-122.0, 37.0],
+        [-122.0, 38.0],
+        [-123.0, 38.0],
+    ]]);
+    assert!(geometry.bounds().unwrap_err().contains("closed"));
+    let geometry = PolygonGeometry::Polygon(vec![vec![
+        [-123.0, 37.0],
+        [-122.0, 37.0],
+        [-122.0, 38.0],
+        [-123.0, 37.0],
+    ]]);
+    let parameters = ClipParameters {
+        crs: "EPSG:4326".into(),
+        bounds: [-125.0, 35.0, -124.0, 36.0],
+        geometry: Some(geometry),
+    };
+    assert!(validate_parameters(&parameters)
+        .unwrap_err()
+        .contains("overlap"));
 }
 
 #[test]
@@ -169,6 +257,7 @@ fn wgs84_request_produces_a_real_intersecting_source_grid_window() {
     let params = ClipParameters {
         crs: "EPSG:4326".into(),
         bounds: [-123.0, 37.94, -122.99, 37.947],
+        geometry: None,
     };
     let plan = plan_crop(directory.path(), &source, &params).unwrap();
     assert!(plan.width > 0 && plan.width <= 100 && plan.height > 0 && plan.height <= 100);
@@ -205,14 +294,17 @@ fn rejects_empty_outside_invalid_crs_and_antimeridian_requests() {
         ClipParameters {
             crs: "EPSG:3857".into(),
             bounds: [0.0, 0.0, 1.0, 1.0],
+            geometry: None,
         },
         ClipParameters {
             crs: "EPSG:4326".into(),
             bounds: [179.0, -1.0, -179.0, 1.0],
+            geometry: None,
         },
         ClipParameters {
             crs: "EPSG:4326".into(),
             bounds: [-123.0, 85.0, -122.0, 86.0],
+            geometry: None,
         },
     ] {
         assert!(plan_crop(directory.path(), &source, &params).is_err());

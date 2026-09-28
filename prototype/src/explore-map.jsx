@@ -7,6 +7,7 @@ import VectorLayer from 'ol/layer/Vector.js';
 import GeoTIFF from 'ol/source/GeoTIFF.js';
 import VectorSource from 'ol/source/Vector.js';
 import Feature from 'ol/Feature.js';
+import GeoJSON from 'ol/format/GeoJSON.js';
 import { fromExtent } from 'ol/geom/Polygon.js';
 import { transformExtent } from 'ol/proj.js';
 import { register } from 'ol/proj/proj4.js';
@@ -33,7 +34,7 @@ function fitExtent(map, extent) {
   if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: 16, duration: 250 });
 }
 
-export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, split, area, showArea }, ref) {
+export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, split, area, areaGeometry, showArea }, ref) {
   const { t } = useI18n();
   const target = useRef(null);
   const map = useRef(null);
@@ -152,10 +153,15 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
     if (!source) return;
     source.clear();
     if (!showArea || !areaExtentRef.current) return;
-    const feature = new Feature(fromExtent(areaExtentRef.current));
+    let feature;
+    try {
+      feature = areaGeometry
+        ? new GeoJSON().readFeature({ type: 'Feature', properties: {}, geometry: areaGeometry }, { dataProjection: 'EPSG:4326', featureProjection: scene.crs })
+        : new Feature(fromExtent(areaExtentRef.current));
+    } catch { feature = new Feature(fromExtent(areaExtentRef.current)); }
     feature.setStyle(new Style({ stroke: new Stroke({ color: '#f8fbff', width: 3, lineDash: [8, 5] }), fill: new Fill({ color: 'rgba(45, 135, 255, 0.10)' }) }));
     source.addFeature(feature);
-  }, [scene?.id, areaKey, showArea, retry]);
+  }, [scene?.id, areaKey, areaGeometry, showArea, retry]);
 
   return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
     <div className="explore-map-target" ref={target} aria-label={t('Georeferenced true-color Sentinel-2 map')} />

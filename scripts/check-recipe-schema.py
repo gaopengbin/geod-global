@@ -1,4 +1,4 @@
-"""Keep published executable recipe examples inside the actual v1 contract.
+"""Keep published executable recipe examples inside their versioned contracts.
 
 This validates file structure, not local-source availability or spatial results.
 Runtime tests and independent raster QA cover those separate requirements.
@@ -31,4 +31,19 @@ fixture["output"]["format"] = "COG"
 invalid.append(fixture)
 for fixture in invalid:
     assert not validator.is_valid(fixture), "Unsupported recipe accepted by the published schema"
-print(json.dumps({"executableRecipeSchema": "passed", "validExample": 1, "rejectedExamples": len(invalid), "scope": "structure only; runtime preflight remains required"}))
+polygon_schema = json.loads((root / "schemas/raster-recipe-v2.schema.json").read_text(encoding="utf-8"))
+Draft202012Validator.check_schema(polygon_schema)
+polygon_validator = Draft202012Validator(polygon_schema, format_checker=FormatChecker())
+polygon_example = json.loads((root / "examples/sentinel-scl-polygon-clip.recipe.json").read_text(encoding="utf-8"))
+polygon_validator.validate(polygon_example)
+assert not validator.is_valid(polygon_example), "v1 accepted polygon recipe"
+assert not polygon_validator.is_valid(example), "v2 accepted rectangular recipe"
+for change in [
+    {"geometry": {"type": "LineString", "coordinates": []}},
+    {"crs": "source"},
+    {"path": "arbitrary.tif"},
+]:
+    fixture = copy.deepcopy(polygon_example)
+    fixture["operation"].update(change)
+    assert not polygon_validator.is_valid(fixture), "Invalid polygon recipe accepted"
+print(json.dumps({"executableRecipeSchema": "passed", "validExamples": 2, "rejectedExamples": len(invalid) + 5, "scope": "structure only; runtime preflight remains required"}))

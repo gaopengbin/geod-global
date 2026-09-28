@@ -243,7 +243,7 @@ pub fn router(manager: JobManager) -> Router {
         .route("/recipes", get(recipes).post(save_recipe))
         .route("/recipes/plan", post(plan_recipe))
         .route("/recipes/run", post(run_recipe))
-        .layer(DefaultBodyLimit::max(8192))
+        .layer(DefaultBodyLimit::max(512 * 1024))
         .layer(middleware::from_fn(browser_boundary))
         .with_state(manager)
 }

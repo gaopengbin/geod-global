@@ -1,9 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseRecipeJSON, planMatches, processingRequest, RECIPE_SCHEMA, validatePlanResponse, validateRecipe } from './processing-client.js';
+import { parseRecipeJSON, planMatches, processingRequest, RECIPE_SCHEMA, POLYGON_RECIPE_SCHEMA, validatePlanResponse, validateRecipe } from './processing-client.js';
 
 const recipe = () => ({ schemaVersion: RECIPE_SCHEMA, name: 'Bay classification clip', source: { jobId: '48bb6e18-3657-48ed-b62c-72472fb39d88', sha256: 'a'.repeat(64) }, operation: { type: 'clip', crs: 'source', bounds: [500000, 4100000, 500080, 4100080] }, output: { format: 'GeoTIFF' } });
-const response = value => ({ recipe: structuredClone(value), plan: { width: 4, height: 4, crs: 'EPSG:32610', bounds: value.operation.bounds, pixelSize: [20, 20], window: [0, 0, 4, 4], requestedBounds: value.operation.bounds, requestedCrs: 'source', warnings: [], sourceSha256: value.source.sha256 } });
+const response = value => ({ recipe: structuredClone(value), plan: { width: 4, height: 4, crs: 'EPSG:32610', bounds: value.operation.bounds, pixelSize: [20, 20], window: [0, 0, 4, 4], requestedBounds: value.operation.bounds, requestedCrs: 'source', warnings: [], sourceSha256: value.source.sha256, ...(value.operation.geometry ? { maskedPixels: 5, nodata: 0 } : {}) } });
+const polygonRecipe = () => ({ ...recipe(), schemaVersion: POLYGON_RECIPE_SCHEMA, operation: { type: 'clip', crs: 'EPSG:4326', bounds: [-123, 37, -122, 38], geometry: { type: 'Polygon', coordinates: [[[-123, 37], [-122, 37], [-122, 38], [-123, 37]]] } } });
+
+test('v2 polygon recipes retain the exact GeoJSON boundary and invalidate a changed plan', () => {
+  const input = polygonRecipe();
+  assert.deepEqual(parseRecipeJSON(JSON.stringify(input)), input);
+  const review = validatePlanResponse(response(input), input);
+  assert.equal(planMatches(input, review), true);
+  const changed = structuredClone(input);
+  changed.operation.geometry.coordinates[0][1][0] = -122.1;
+  assert.equal(planMatches(changed, review), false);
+  assert.throws(() => validateRecipe({ ...input, schemaVersion: RECIPE_SCHEMA }));
+  for (const geometry of [
+    { type: 'Polygon', coordinates: [[[-123, 37], [-122, 37], [-122, 38], [-123, 38]]] },
+    { type: 'Polygon', coordinates: [[[-123, 37], [179, 37], [-122, 38], [-123, 37]]] },
+    { type: 'LineString', coordinates: [] },
+  ]) assert.throws(() => validateRecipe({ ...input, operation: { ...input.operation, geometry } }));
+  assert.deepEqual(validateRecipe({ ...input, operation: { ...input.operation, bounds: [-123, 37, -122.2, 37.9] } }).operation.bounds, [-123, 37, -122.2, 37.9]);
+  assert.throws(() => validateRecipe({ ...input, operation: { ...input.operation, bounds: [-125, 35, -124, 36] } }));
+});
 
 test('recipe import preserves a pinned local source and rejects paths or unsupported processing', () => {
   const input = recipe();

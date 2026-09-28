@@ -133,7 +133,7 @@ function RasterDialog({ job, onClose }) {
   </Modal>;
 }
 
-function RuntimeJobRows({ jobs, library = false, areaBounds }) {
+function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
   const { act } = useContext(RuntimeContext);
   const { t, locale, number, date } = useI18n();
   const [busy, setBusy] = useState({});
@@ -177,7 +177,7 @@ function RuntimeJobRows({ jobs, library = false, areaBounds }) {
         {active && <Button disabled={busy[job.id]} onClick={() => run(job, 'cancel')}><X size={15}/>{t(derived ? 'Cancel processing' : 'Cancel download')}</Button>}
         {['failed', 'cancelled', 'interrupted'].includes(job.status) && <Button disabled={busy[job.id]} onClick={() => run(job, 'retry')}><RefreshCw size={15}/>{t('Retry from start')}</Button>}
         {canInspect && <Button variant="primary" onClick={() => setInspect(job)}><Scan size={15}/>{t('Inspect raster')}</Button>}
-        {canInspect && !derived && <ClipRasterButton job={job} areaBounds={areaBounds}/>}
+        {canInspect && !derived && <ClipRasterButton job={job} areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
         {job.status === 'succeeded' && desktopAvailable() && <Button disabled={busy[job.id]} onClick={() => run(job, 'reveal')}><FolderOpen size={15}/>{t('Show in folder')}</Button>}
       </>,
     };
@@ -185,18 +185,18 @@ function RuntimeJobRows({ jobs, library = false, areaBounds }) {
   return <><TaskRows className="runtime-jobs" items={items} ariaLabel={t(library ? 'Local source files and outputs' : 'Local file tasks')}/>{inspect && <RasterDialog job={inspect} onClose={() => setInspect(null)}/>}</>;
 }
 
-export function RuntimeTasks({ areaBounds }) {
+export function RuntimeTasks({ areaBounds, areaPolygon }) {
   const { jobs } = useContext(RuntimeContext);
   const { t } = useI18n();
-  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Downloads and processing')}</h2><Connection/>{jobs.length ? <RuntimeJobRows jobs={jobs} areaBounds={areaBounds}/> : <Surface variant="inset" className="runtime-empty"><p>{t('Select a scene, then choose “Download source asset”. Download tasks and file checks are saved by the local service.')}</p></Surface>}</section>;
+  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Downloads and processing')}</h2><Connection/>{jobs.length ? <RuntimeJobRows jobs={jobs} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <Surface variant="inset" className="runtime-empty"><p>{t('Select a scene, then choose “Download source asset”. Download tasks and file checks are saved by the local service.')}</p></Surface>}</section>;
 }
 
-export function RuntimeLibrary({ areaBounds }) {
+export function RuntimeLibrary({ areaBounds, areaPolygon }) {
   const { jobs } = useContext(RuntimeContext);
   const { t, number } = useI18n();
   const [search, setSearch] = useState('');
   const [kind, setKind] = useState('all');
   const completed = jobs.filter(job => job.status === 'succeeded');
   const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind === 'raster_clip')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
-  return <section className="runtime-section" aria-label={t('Local source files and outputs')}><h2>{t('Local source files and outputs')} <Badge>{number(completed.length)}</Badge></h2><Connection/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p>{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
+  return <section className="runtime-section" aria-label={t('Local source files and outputs')}><h2>{t('Local source files and outputs')} <Badge>{number(completed.length)}</Badge></h2><Connection/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p>{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
 }

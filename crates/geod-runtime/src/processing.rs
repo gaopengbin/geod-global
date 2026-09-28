@@ -7,6 +7,7 @@ use tokio_util::sync::CancellationToken;
 use uuid::Uuid;
 
 pub const RECIPE_SCHEMA_VERSION: &str = "geod-raster-recipe/v1";
+pub const POLYGON_RECIPE_SCHEMA_VERSION: &str = "geod-raster-recipe/v2";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -32,6 +33,8 @@ pub struct ClipOperation {
     pub operation_type: String,
     pub crs: String,
     pub bounds: [f64; 4],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geometry: Option<crop::PolygonGeometry>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -58,10 +61,18 @@ pub struct RecipePlan {
 
 impl RasterRecipe {
     pub fn validate(&self) -> Result<()> {
-        if self.schema_version != RECIPE_SCHEMA_VERSION {
+        if self.schema_version != RECIPE_SCHEMA_VERSION
+            && self.schema_version != POLYGON_RECIPE_SCHEMA_VERSION
+        {
             return Err(format!(
-                "Unsupported recipe schemaVersion; expected {RECIPE_SCHEMA_VERSION}"
+                "Unsupported recipe schemaVersion; expected {RECIPE_SCHEMA_VERSION} or {POLYGON_RECIPE_SCHEMA_VERSION}"
             ));
+        }
+        if (self.schema_version == RECIPE_SCHEMA_VERSION) != self.operation.geometry.is_none() {
+            return Err(
+                "Recipe v1 requires rectangular bounds; v2 requires a WGS84 polygon geometry"
+                    .into(),
+            );
         }
         if self.name.trim().is_empty()
             || self.name.chars().count() > 120
@@ -107,6 +118,15 @@ impl RasterRecipe {
             "EPSG:4326" => return Err("WGS84 clip bounds must use longitude -180..180 and UTM latitude -80..84, without crossing the antimeridian".into()),
             _ => return Err("Clip CRS must be source or EPSG:4326".into()),
         }
+        if let Some(geometry) = &self.operation.geometry {
+            if self.operation.crs != "EPSG:4326" {
+                return Err("Polygon clips require EPSG:4326 coordinates".into());
+            }
+            let extent = geometry.bounds()?;
+            if extent[0] >= east || extent[2] <= west || extent[1] >= north || extent[3] <= south {
+                return Err("Polygon mask and output window must overlap".into());
+            }
+        }
         Ok(())
     }
 
@@ -114,6 +134,7 @@ impl RasterRecipe {
         crop::ClipParameters {
             crs: self.operation.crs.clone(),
             bounds: self.operation.bounds,
+            geometry: self.operation.geometry.clone(),
         }
     }
 }
@@ -314,11 +335,12 @@ impl JobManager {
         record.total_bytes = Some(output.bytes);
         record.sha256 = Some(output.sha256);
         record.output_path = Some(output.output_path);
+        let polygon_clip = output.plan.masked_pixels.is_some();
         record.crop = Some(output.plan);
         record.manifest_path = Some(manifest_path.to_string_lossy().into_owned());
         record.updated_at = now();
         record.error = None;
-        record.validation = "Pinned source SHA-256 verified; exact UInt8 SCL pixel window and GeoTIFF georeferencing validated; no resampling".into();
+        record.validation = if polygon_clip { "Pinned source SHA-256 verified; WGS84 polygon pixel-centre mask, UInt8 SCL output, and GeoTIFF georeferencing validated; no resampling" } else { "Pinned source SHA-256 verified; exact UInt8 SCL pixel window and GeoTIFF georeferencing validated; no resampling" }.into();
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.insert(id.to_owned(), before_commit);
             return Err(error);

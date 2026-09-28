@@ -1,0 +1,25 @@
+{
+  "verifiedAtUtc": "2026-09-28T16:39:08Z",
+  "operation": "geod-raster-recipe/v2 Polygon mask",
+  "sourceJobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+  "sourceSha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+  "recipe": "examples/sentinel-scl-polygon-clip.recipe.json",
+  "outputJobId": "1b5cd926-b906-445f-a4f5-436b8867abb3",
+  "outputSha256": "d689e3e28ae6ef88826d061f04cabc8bbc842d2a89e42e93af00367e928239b8",
+  "outputShape": [895, 1020],
+  "maskedPixels": 463164,
+  "retainedPixels": 449736,
+  "independentCheck": "Rasterio read the original source window and output GeoTIFF. PyProj transformed all output pixel centres to WGS84; Shapely 2.1.2 contains_xy classified the GeoJSON polygon. Every interior output pixel equalled the source pixel, every exterior output pixel equalled NoData 0, and the exterior count matched the runtime plan and artifact manifest.",
+  "administrativeRegionCheck": {
+    "region": "California",
+    "boundarySource": "Bundled Natural Earth 1:50m admin-1 MultiPolygon",
+    "outputWindowWgs84": [-122.55, 37.68, -122.32, 37.84],
+    "outputJobId": "ed69c3db-16ed-4040-9601-0c62ffd94170",
+    "outputSha256": "502e83ab85dc7fcf86b3a0ef60a997077a775255968650cc3e5c6585a6316338",
+    "outputShape": [895, 1020],
+    "maskedPixels": 563477,
+    "retainedPixels": 349423,
+    "independentResult": "Rasterio/PyProj/Shapely full pixel-centre comparison passed: every interior pixel equals the original SCL value, every exterior pixel equals NoData 0, and the independent exterior count matches the runtime plan and manifest."
+  },
+  "scope": "One real downloaded Sentinel-2 SCL file, one example Polygon and one Natural Earth California MultiPolygon with a narrower output window. The runtime tests also cover closed-ring validation and a polygon hole; this record is not proof of RGB or arbitrary raster support."
+}

@@ -458,6 +458,26 @@ fn clip_recipe(source: &Job) -> RasterRecipe {
 }
 
 #[test]
+fn polygon_recipe_deserializes_with_exact_geojson_and_rejects_v1_geometry() {
+    let value = serde_json::json!({
+        "schemaVersion":"geod-raster-recipe/v2", "name":"Region polygon clip",
+        "source":{"jobId":"48bb6e18-3657-48ed-b62c-72472fb39d88","sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+        "operation":{"type":"clip","crs":"EPSG:4326","bounds":[-123.0,37.0,-122.0,38.0],
+            "geometry":{"type":"Polygon","coordinates":[[[-123.0,37.0],[-122.0,37.0],[-122.0,38.0],[-123.0,37.0]]]}},
+        "output":{"format":"GeoTIFF"}
+    });
+    let recipe: RasterRecipe = serde_json::from_value(value.clone()).unwrap();
+    recipe.validate().unwrap();
+    assert_eq!(serde_json::to_value(recipe).unwrap(), value);
+    let mut invalid = value;
+    invalid["schemaVersion"] = serde_json::json!("geod-raster-recipe/v1");
+    assert!(serde_json::from_value::<RasterRecipe>(invalid)
+        .unwrap()
+        .validate()
+        .is_err());
+}
+
+#[test]
 fn persisted_recipe_coordinates_roundtrip_without_one_ulp_drift() {
     // Observed during real WGS84 CLI crop QA: default JSON float parsing shifted
     // the final northing by one ULP on each open/save, separating job and sidecar metadata.

@@ -1,6 +1,5 @@
-//! Lossless rectangular SCL cropping in the source UTM grid. Output is ordinary
-//! GeoTIFF, not COG. WGS84 inputs select a densified projected envelope; they do
-//! not reproject pixels or apply a curved geographic polygon mask.
+//! Pixel-aligned SCL cropping in the source UTM grid. Polygon requests mask
+//! pixels outside the WGS84 boundary to nodata; output is ordinary GeoTIFF.
 //!
 //! Projection implementation and radians contract:
 //! https://docs.rs/proj4rs/0.2.0/proj4rs/
@@ -31,6 +30,140 @@ pub struct ClipParameters {
     /// "source" (metres in the existing UTM CRS) or "EPSG:4326" (lon/lat degrees).
     pub crs: String,
     pub bounds: [f64; 4],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geometry: Option<PolygonGeometry>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type", content = "coordinates", deny_unknown_fields)]
+pub enum PolygonGeometry {
+    Polygon(Vec<Vec<[f64; 2]>>),
+    MultiPolygon(Vec<Vec<Vec<[f64; 2]>>>),
+}
+
+impl PolygonGeometry {
+    fn polygons(&self) -> Vec<&Vec<Vec<[f64; 2]>>> {
+        match self {
+            Self::Polygon(rings) => vec![rings],
+            Self::MultiPolygon(polygons) => polygons.iter().collect(),
+        }
+    }
+    pub fn bounds(&self) -> Result<[f64; 4]> {
+        let polygons = self.polygons();
+        if polygons.is_empty() || polygons.len() > 500 {
+            return Err("Polygon must have 1 to 500 parts".into());
+        }
+        let mut extent = [
+            f64::INFINITY,
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+            f64::NEG_INFINITY,
+        ];
+        let mut count = 0usize;
+        for polygon in polygons {
+            if polygon.is_empty() || polygon.len() > 1000 {
+                return Err("Polygon part must have 1 to 1000 rings".into());
+            }
+            for ring in polygon {
+                if ring.len() < 4 {
+                    return Err("Polygon rings must have at least four positions".into());
+                }
+                count += ring.len();
+                if count > 30000 {
+                    return Err("Polygon has too many positions (maximum 30000)".into());
+                }
+                if ring.first() != ring.last() {
+                    return Err("Polygon rings must be closed".into());
+                }
+                let mut signed_area = 0.0;
+                for edge in ring.windows(2) {
+                    let [x, y] = edge[0];
+                    let [next_x, next_y] = edge[1];
+                    if ![x, y, next_x, next_y].iter().all(|v| v.is_finite())
+                        || !(-180.0..=180.0).contains(&x)
+                        || !(-80.0..=84.0).contains(&y)
+                        || (next_x - x).abs() > 180.0
+                    {
+                        return Err("Polygon coordinates must be WGS84 within UTM coverage and must not cross the date line".into());
+                    }
+                    extent[0] = extent[0].min(x);
+                    extent[1] = extent[1].min(y);
+                    extent[2] = extent[2].max(x);
+                    extent[3] = extent[3].max(y);
+                    signed_area += x * next_y - next_x * y;
+                }
+                if signed_area.abs() < 1e-12 {
+                    return Err("Polygon rings must have a nonzero area".into());
+                }
+            }
+        }
+        if extent[2] - extent[0] > 180.0 {
+            return Err("Polygon longitude span must not exceed 180 degrees".into());
+        }
+        Ok(extent)
+    }
+}
+
+struct PreparedRing<'a> {
+    positions: &'a [[f64; 2]],
+    bounds: [f64; 4],
+}
+impl PreparedRing<'_> {
+    fn contains(&self, [x, y]: [f64; 2]) -> bool {
+        x >= self.bounds[0]
+            && x <= self.bounds[2]
+            && y >= self.bounds[1]
+            && y <= self.bounds[3]
+            && point_in_ring([x, y], self.positions)
+    }
+}
+
+fn prepared_polygons(geometry: &PolygonGeometry) -> Vec<Vec<PreparedRing<'_>>> {
+    geometry
+        .polygons()
+        .into_iter()
+        .map(|polygon| {
+            polygon
+                .iter()
+                .map(|ring| {
+                    let mut bounds = [
+                        f64::INFINITY,
+                        f64::INFINITY,
+                        f64::NEG_INFINITY,
+                        f64::NEG_INFINITY,
+                    ];
+                    for [x, y] in ring {
+                        bounds[0] = bounds[0].min(*x);
+                        bounds[1] = bounds[1].min(*y);
+                        bounds[2] = bounds[2].max(*x);
+                        bounds[3] = bounds[3].max(*y);
+                    }
+                    PreparedRing {
+                        positions: ring,
+                        bounds,
+                    }
+                })
+                .collect()
+        })
+        .collect()
+}
+
+fn prepared_contains(polygons: &[Vec<PreparedRing<'_>>], point: [f64; 2]) -> bool {
+    polygons.iter().any(|rings| {
+        rings[0].contains(point) && !rings[1..].iter().any(|hole| hole.contains(point))
+    })
+}
+
+fn point_in_ring([x, y]: [f64; 2], ring: &[[f64; 2]]) -> bool {
+    let mut inside = false;
+    for edge in ring.windows(2) {
+        let [ax, ay] = edge[0];
+        let [bx, by] = edge[1];
+        if (ay > y) != (by > y) && x < (bx - ax) * (y - ay) / (by - ay) + ax {
+            inside = !inside;
+        }
+    }
+    inside
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -54,6 +187,8 @@ pub struct CropPlan {
     pub source_id: String,
     pub source_sha256: String,
     pub warnings: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub masked_pixels: Option<u64>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -90,6 +225,19 @@ fn validate_parameters(parameters: &ClipParameters) -> Result<()> {
     {
         return Err("WGS84 crop bounds must use longitude -180..180 and UTM latitude -80..84, without crossing the antimeridian".into());
     }
+    if let Some(geometry) = &parameters.geometry {
+        if parameters.crs != "EPSG:4326" {
+            return Err("Polygon clips require EPSG:4326 bounds".into());
+        }
+        let extent = geometry.bounds()?;
+        if extent[0] >= parameters.bounds[2]
+            || extent[2] <= parameters.bounds[0]
+            || extent[1] >= parameters.bounds[3]
+            || extent[3] <= parameters.bounds[1]
+        {
+            return Err("Polygon mask and output window must overlap".into());
+        }
+    }
     Ok(())
 }
 
@@ -103,7 +251,7 @@ fn plan_from_raster(
     let projected = if parameters.crs == "source" || parameters.crs == raster.crs {
         parameters.bounds
     } else if parameters.crs == "EPSG:4326" {
-        warnings.push("WGS84 edges were densified and enclosed in a source-CRS rectangle; pixels are not reprojected or polygon-masked.".into());
+        warnings.push(if parameters.geometry.is_some() { "WGS84 polygon envelope was aligned to the source grid; pixels outside its boundary will be set to nodata. Pixels are not reprojected." } else { "WGS84 edges were densified and enclosed in a source-CRS rectangle; pixels are not reprojected or polygon-masked." }.into());
         projected_envelope(parameters.bounds, &raster.crs)?
     } else {
         return Err("Crop CRS must be source, the source UTM EPSG code, or EPSG:4326".into());
@@ -150,7 +298,7 @@ fn plan_from_raster(
     if bounds != clipped {
         warnings.push("Crop bounds were expanded to complete source pixel boundaries.".into());
     }
-    Ok(CropPlan {
+    let mut plan = CropPlan {
         width: x1 - x0,
         height: y1 - y0,
         band_count: 1,
@@ -168,7 +316,58 @@ fn plan_from_raster(
         source_id: source_id.into(),
         source_sha256: raster.sha256.clone(),
         warnings,
-    })
+        masked_pixels: None,
+    };
+    if let Some(geometry) = &parameters.geometry {
+        plan.masked_pixels = Some(mask_polygon(&plan, geometry, raster.nodata, None, None)?);
+    }
+    Ok(plan)
+}
+
+fn mask_polygon(
+    plan: &CropPlan,
+    geometry: &PolygonGeometry,
+    nodata: Option<u8>,
+    mut pixels: Option<&mut [u8]>,
+    cancel: Option<&CancellationToken>,
+) -> Result<u64> {
+    if plan.width as u64 * plan.height as u64 > 8_000_000 {
+        return Err("Polygon clip exceeds the 8 million pixel mask limit; choose a smaller region or source window".into());
+    }
+    let nodata = nodata.ok_or("Polygon clipping requires a source nodata value")?;
+    let (wgs84, utm) = projections(&plan.crs)?;
+    let polygons = prepared_polygons(geometry);
+    let deadline = Instant::now() + Duration::from_secs(60);
+    let mut masked = 0u64;
+    let mut retained = 0u64;
+    for row in 0..plan.height {
+        check_cancel(cancel)?;
+        if Instant::now() > deadline {
+            return Err("Polygon masking exceeded the 60 second processing limit".into());
+        }
+        let northing = plan.bounds[3] - (row as f64 + 0.5) * plan.pixel_size[1];
+        for col in 0..plan.width {
+            if col % 8192 == 0 && Instant::now() > deadline {
+                return Err("Polygon masking exceeded the 60 second processing limit".into());
+            }
+            let easting = plan.bounds[0] + (col as f64 + 0.5) * plan.pixel_size[0];
+            let mut point = (easting, northing, 0.0);
+            proj4rs::transform::transform(&utm, &wgs84, &mut point)
+                .map_err(|e| format!("Cannot transform output pixel to WGS84: {e}"))?;
+            if prepared_contains(&polygons, [point.0.to_degrees(), point.1.to_degrees()]) {
+                retained += 1;
+            } else {
+                if let Some(buffer) = pixels.as_mut() {
+                    buffer[row as usize * plan.width as usize + col as usize] = nodata;
+                }
+                masked += 1;
+            }
+        }
+    }
+    if retained == 0 {
+        return Err("The polygon contains no source pixel centres".into());
+    }
+    Ok(masked)
 }
 
 fn projections(crs: &str) -> Result<(Proj, Proj)> {
@@ -307,6 +506,18 @@ pub fn write_crop(
         check_cancel(Some(cancel))?;
         let offset = row as usize * raster.width as usize + x as usize;
         pixels.extend_from_slice(&raster.pixels[offset..offset + width as usize]);
+    }
+    if let Some(geometry) = &parameters.geometry {
+        let masked = mask_polygon(
+            &plan,
+            geometry,
+            raster.nodata,
+            Some(&mut pixels),
+            Some(cancel),
+        )?;
+        if plan.masked_pixels != Some(masked) {
+            return Err("Polygon mask changed between planning and writing".into());
+        }
     }
     drop(raster);
     let mut partial = tempfile::Builder::new()

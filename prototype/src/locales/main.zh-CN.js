@@ -471,5 +471,10 @@ export default {
   "Explicit simulations for raster processing and recipe execution.": "栅格处理和配方执行均明确标记为模拟。",
   "Six data domains, with unconnected adapters marked.": "提供六类数据入口，尚未接入的适配器均有标记。",
   "Cloud features and commercial terms remain proposals.": "云功能和商业条款仍处于规划阶段。",
-  "Inter and sample previews are bundled locally. Live searches, remote previews and asset downloads contact their source providers. This workspace sends no analytics.": "Inter 字体和样例预览随应用保存在本地。实时检索、远程预览和资产下载会连接对应提供方。本工作空间不发送使用统计数据。"
+  "Inter and sample previews are bundled locally. Live searches, remote previews and asset downloads contact their source providers. This workspace sends no analytics.": "Inter 字体和样例预览随应用保存在本地。实时检索、远程预览和资产下载会连接对应提供方。本工作空间不发送使用统计数据。",
+  "Find a country or province and select its boundary, or draw a WGS 84 rectangle. Earth Search uses the bounding box; a selected polygon can mask a downloaded local SCL raster.": "查找国家或省州并选用其边界，也可绘制 WGS 84 矩形。Earth Search 用外接矩形检索；选中的多边形可用于本地 SCL 栅格遮罩裁剪。",
+  "The administrative polygon is selected. Search uses its bounding box; local SCL clipping uses the polygon.": "已选中行政区多边形。目录检索使用外接矩形，本地 SCL 裁剪使用多边形边界。",
+  "The region is highlighted. Choose its polygon or bounding rectangle for the workspace.": "行政区已高亮。请选择多边形或外接矩形作为工作区范围。",
+  "Use region polygon": "使用行政区多边形",
+  "Use bounding rectangle": "使用外接矩形",
 };

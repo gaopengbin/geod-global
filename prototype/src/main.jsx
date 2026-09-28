@@ -114,6 +114,7 @@ function App() {
   const [liveState, setLiveState] = useState("idle");
   const [liveError, setLiveError] = useState("");
   const [appliedSearch, setAppliedSearch] = useState(null);
+  const [areaPolygon, setAreaPolygon] = useState(null);
   const searchRunner = useRef(null);
   if (!searchRunner.current) searchRunner.current = createSearchRunner();
   const live = catalogMode === "live";
@@ -124,7 +125,7 @@ function App() {
     catch { pendingBounds = appliedSearch?.bbox || SAMPLE_BBOX; }
   }
   const bbox = live ? (appliedSearch?.bbox || pendingBounds) : SAMPLE_BBOX;
-  const areaName = live ? "Custom search area" : "San Francisco Bay";
+  const areaName = live ? (areaPolygon?.place?.name || "Custom search area") : "San Francisco Bay";
   const [page, setPage] = useState(
     [...nav.map((n) => n[0]), "Settings", "Cloud"].includes(
       decodeURIComponent(location.hash.slice(1)),
@@ -179,6 +180,7 @@ function App() {
   useEffect(() => () => searchRunner.current.cancel(), []);
   const switchCatalog = (mode) => {
     searchRunner.current.cancel();
+    setAreaPolygon(null);
     setCatalogMode(mode);
     setLiveState("idle");
     setLiveError("");
@@ -228,6 +230,7 @@ function App() {
   };
   const updateSearchField = (event) => {
     const { name, value } = event.currentTarget;
+    if (name === 'bbox') setAreaPolygon(null);
     setSearchInput((current) => ({ ...current, [name]: name === "cloud" || name === "limit" ? Number(value) : value }));
   };
   const submitSearch = (event) => {
@@ -237,17 +240,18 @@ function App() {
     setSearchInput((current) => ({ ...current, ...submittedInput }));
     runSearch(false, submittedInput);
   };
-  const applyMapArea = (bounds) => {
+  const applyMapArea = ({ bounds, geometry, place }) => {
     const next = { ...searchInput, bbox: bounds.join(", ") };
     setSearchInput(next);
     setModal(null);
     if (!live) switchCatalog("live");
+    setAreaPolygon(geometry ? { geometry, place, bounds } : null);
     runSearch(false, next);
   };
-  const exportMapArea = (bounds) => showJSON("geod-search-area.geojson", {
+  const exportMapArea = ({ bounds, geometry, place }) => showJSON("geod-search-area.geojson", {
     type: "Feature",
-    properties: { name: "Custom search area", fixture: false },
-    geometry: { type: "Polygon", coordinates: [[
+    properties: { name: place?.name || "Custom search area", administrativeCode: place?.code || null, boundarySource: place?.source || null, fixture: false },
+    geometry: geometry || { type: "Polygon", coordinates: [[
       [bounds[0], bounds[1]], [bounds[2], bounds[1]], [bounds[2], bounds[3]],
       [bounds[0], bounds[3]], [bounds[0], bounds[1]],
     ]] },
@@ -776,7 +780,7 @@ function App() {
               {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap key={selected.crs || selected.id} ref={exploreMap} scene={selected} reference={comparing ? other : null} split={split} area={bbox} showArea={showArea} />
+                  <ExploreMap key={selected.crs || selected.id} ref={exploreMap} scene={selected} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={live ? areaPolygon?.geometry : null} showArea={showArea} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
@@ -984,7 +988,7 @@ function App() {
                     >{t("New task")}</Button>
                   }
                 />
-                <RuntimeTasks areaBounds={bbox} />
+                <RuntimeTasks areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
                 <Disclosure className="design-simulations" summary={<>{t("Design simulations below · {count} sample tasks", { count: number(tasks.length) })}</>}>
                 <Surface className="notice">
                   <Info size={17} />
@@ -1092,7 +1096,7 @@ function App() {
                   title={t("My Data")}
                   sub={t("Your outputs, with their story intact.")}
                 />
-                <RuntimeLibrary areaBounds={bbox} />
+                <RuntimeLibrary areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
                 <Disclosure className="design-simulations" summary={<>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</>}>
                 {!outputs.length ? (
                   <EmptyState
@@ -1148,9 +1152,9 @@ function App() {
                 <PageHeading
                   eyebrow={t("REPEATABLE WORK")}
                   title={t("Recipes")}
-                  sub={t("Repeat a verified rectangular clip from a pinned source file.")}
+                  sub={t("Repeat a verified rectangle or polygon clip from a pinned SCL source file.")}
                 />
-                <ExecutableRecipes areaBounds={bbox} onReviewJSON={showJSON} />
+                <ExecutableRecipes areaBounds={bbox} areaPolygon={live ? areaPolygon : null} onReviewJSON={showJSON} />
                 <Disclosure className="design-simulations" summary={<>{t("Design recipe simulations · {count} recipes", { count: number(recipes.length) })}</>}>
                 <Surface className="notice">
                   <Workflow size={17} />{t("These design recipes use design-prototype/v1 and do not execute. Saved executable recipes are listed above.")}</Surface>
@@ -1508,7 +1512,7 @@ function App() {
                 <dd>{t("Full scene, not AOI-specific")}</dd>
               </dl>
               <p>
-                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. The map renders the source true-color COG; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and small thumbnails come from seven saved catalog records. The map streams original true-color COG data; sample filters run locally. Original downloads, SCL inspection and rectangular clipping use the local task service.")}
+                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. The map renders the source true-color COG; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and small thumbnails come from seven saved catalog records. The map streams original true-color COG data; sample filters run locally. Original downloads, SCL inspection and local clipping use the task service.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">
@@ -1651,12 +1655,12 @@ function App() {
                 <Layers />
               </span>
               <h3>{t("GeoD Global · local workspace")}</h3>
-              <p>{t("A local geospatial workspace with live catalog search, original downloads, SCL inspection, rectangular clipping and executable recipes. Other processing tools remain design previews.")}</p>
+              <p>{t("A local geospatial workspace with live catalog search, original downloads, SCL inspection, rectangle and polygon clipping, and executable recipes. Other processing tools remain design previews.")}</p>
               <ul>
                 <li>{t("Live Earth Search queries and a separate cached sample catalog.")}</li>
                 <li>{t("Catalog filters and compatible scene comparison with local preferences.")}</li>
                 <li>{t("Original source asset downloads with local task history.")}</li>
-                <li>{t("Verified SCL pixel inspection, rectangular GeoTIFF clips and reusable local recipes.")}</li>
+                <li>{t("Verified SCL pixel inspection, rectangle and polygon GeoTIFF clips, and reusable local recipes.")}</li>
                 <li>{t("Six data domains, with unconnected adapters marked.")}</li>
                 <li>{t("Cloud features and commercial terms remain proposals.")}</li>
               </ul>
