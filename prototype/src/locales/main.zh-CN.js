@@ -211,6 +211,7 @@ export default {
   "Reference": "参考影像",
   "Reference scene": "参考影像",
   "Comparison split": "对比分界线",
+  "Drag the vertical divider to compare scenes": "拖动竖向分界线对比影像",
   "Georeferenced true-color Sentinel-2 map": "地理配准的 Sentinel-2 真彩色地图",
   "Loading georeferenced imagery…": "正在加载地理配准影像…",
   "Map unavailable": "地图暂不可用",

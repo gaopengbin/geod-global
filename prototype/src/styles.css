@@ -617,6 +617,7 @@ kbd {
 }
 
 .compare-line::before { content: ""; position: absolute; top: 0; bottom: 0; left: 21px; width: 2px; background: white; box-shadow: 0 0 8px #0004; }
+.compare-line:focus-visible { outline: none; }
 .compare-line:focus-visible span { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 .compare-line span {
@@ -634,36 +635,40 @@ kbd {
   top: 72px;
   left: 18px;
   right: 70px;
-  background: var(--surface);
-  padding: 9px 12px;
-  border-radius: 6px;
-  box-shadow: var(--shadow-raised);
   display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  pointer-events: none;
   z-index: 3;
 }
 
-.compare-controls label {
+.compare-scene {
   display: flex;
   flex-direction: column;
+  gap: 2px;
+  min-height: 44px;
+  min-width: 112px;
+  padding: 7px 10px;
+  background: var(--surface);
+  border-radius: 6px;
+  box-shadow: var(--shadow-raised);
+  font-size: 10px;
+  pointer-events: auto;
+}
+
+.compare-scene > span {
   color: var(--ink-2);
 }
+
+.compare-reference { min-width: 136px; }
+.compare-current { align-items: flex-end; }
+.compare-current strong { color: var(--ink); font-weight: 600; white-space: nowrap; }
 
 .compare-controls [data-slot="select-trigger"] {
   padding: 3px 0;
   border: 0;
   font-size: 10px;
-}
-
-.compare-controls [data-slot="slider"] {
-  flex: 1;
-  width: 30px;
-}
-
-.compare-controls > span {
-  white-space: nowrap;
 }
 
 .inspector {

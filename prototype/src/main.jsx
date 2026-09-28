@@ -781,6 +781,7 @@ function App() {
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
                     aria-label={t("Comparison split")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={split}
+                    title={t("Drag the vertical divider to compare scenes")}
                     onPointerDown={event => { event.preventDefault(); event.stopPropagation(); event.currentTarget.setPointerCapture(event.pointerId); }}
                     onPointerMove={event => { if (!event.currentTarget.hasPointerCapture(event.pointerId)) return; const box = event.currentTarget.parentElement.getBoundingClientRect(); setSplit(Math.max(0, Math.min(100, Math.round((event.clientX - box.left) * 100 / box.width)))); }}
                     onKeyDown={event => { if (["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp", "Home", "End"].includes(event.key)) { event.preventDefault(); setSplit(current => event.key === "Home" ? 0 : event.key === "End" ? 100 : Math.max(0, Math.min(100, current + (["ArrowLeft", "ArrowDown"].includes(event.key) ? -2 : 2)))); } }}>
@@ -792,7 +793,8 @@ function App() {
               </div>
               {comparing && (
                 <div className="compare-controls">
-                  <label>{t("Reference")}<Select
+                  <Surface as="div" className="compare-scene compare-reference">
+                    <span>{t("Reference")}</span><Select
                       aria-label={t("Reference scene")}
                       value={other.id}
                       onChange={(e) => setCompareId(e.target.value)}
@@ -804,16 +806,11 @@ function App() {
                           </option>
                         ))}
                     </Select>
-                  </label>
-                  <Input
-                    type="range"
-                    aria-label={t("Comparison split")}
-                    min="0"
-                    max="100"
-                    value={split}
-                    onChange={(e) => setSplit(+e.target.value)}
-                  />
-                  <span>{date(selected.date)}</span>
+                  </Surface>
+                  <Surface as="div" className="compare-scene compare-current">
+                    <span>{t("Selected observation")}</span>
+                    <strong>{date(selected.date)}</strong>
+                  </Surface>
                 </div>
               )}
               <div className="map-controls">
