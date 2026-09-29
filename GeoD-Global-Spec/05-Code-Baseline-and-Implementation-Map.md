@@ -81,7 +81,7 @@ Global 目标：独立 Desktop / CLI / MCP
 | 瓦片包 | [tile_pack.rs](G:/code/tif-downloader/src-tauri/src/tile_pack.rs:275) 的 `append_zoom_to_mbtiles`、`append_zoom_to_gpkg`（522 行） | MBTiles XYZ→TMS 行转换、GeoPackage、原始瓦片目录 | PMTiles 写出、任意投影/512px matrix、自包含样式字体、设备/第三方客户端验收 |
 | OSM 离线样例 | [osm_offline_pack.rs](G:/code/tif-downloader/crates/geod-core/examples/osm_offline_pack.rs:1) | 读取离线 renderer 样例 PNG 并调用生产打包 writer；明确 P1 harness | 不是已整合的桌面用户流程；UI、renderer sidecar 分发、干净安装、OruxMaps 真机仍须验收 |
 | 3D | [filter.rs](G:/code/tif-downloader/src-tauri/src/tiles3d/filter.rs:363) 的 `filter_tileset_with_parent_transform`；[fetcher.rs](G:/code/tif-downloader/src-tauri/src/tiles3d/fetcher.rs:231) 的 `download` | 带 transform 的范围筛选、嵌套 tileset 获取与 URI 重写；存在失败计数和失败返回 | 全部外部纹理/glTF 依赖闭包、implicit tiling/subtree、扩展兼容、独立完整性校验尚无本次验收 |
-| 前端结构 | [App.tsx](G:/code/tif-downloader/frontend/src/App.tsx:49) 的 `MODES`；[map-canvas.tsx](G:/code/tif-downloader/frontend/src/features/map/map-canvas.tsx:474) 的 `MapCanvas` | Imagery、DEM、Wayback、3D、MVT、OSM 六种模式；Leaflet、MapLibre 图层与 Cesium | Explore/Workspace/My Data/Recipes 的任务导向 IA；六个旧模式并非 Satellite/Imagery/Elevation/Vector/3D/Local Data 六域 |
+| 前端结构 | [App.tsx](G:/code/tif-downloader/frontend/src/App.tsx:49) 的 `MODES`；[map-canvas.tsx](G:/code/tif-downloader/frontend/src/features/map/map-canvas.tsx:474) 的 `MapCanvas` | Imagery、DEM、Wayback、3D、MVT、OSM 六种模式；Leaflet、MapLibre 图层与 Cesium | Explore/Workspace/My Data/Tasks/Sources 的任务导向 IA；保存裁剪方案为 My Data 高级功能；六个旧模式并非 Satellite/Imagery/Elevation/Vector/3D/Local Data 六域 |
 | AOI/Viewer | [selection-store.ts](G:/code/tif-downloader/frontend/src/store/selection-store.ts:22) 的 `SelectionState`；[cesium-canvas.tsx](G:/code/tif-downloader/frontend/src/features/map/cesium-canvas.tsx:40) 的 `CesiumCanvas` | 共享选区状态、导入区域、Cesium 懒加载与选区同步 | Area 持久化对象、多 Viewer 契约、多栅格预览与比较；OpenLayers 是候选引擎，尚非当前桌面实现 |
 | 历史库 | [history.rs](G:/code/tif-downloader/src-tauri/src/history.rs:148) 的 `HistoryStore` | SQLite 下载记录、分页、旧 JSON 迁移、日志关联 | 面向 Artifact 的检索/地图查看、重定位、recipe/source 追溯、文件记录与实物生命周期分离 |
 | CLI | [main.rs](G:/code/tif-downloader/crates/geod-cli/src/main.rs:59) 的 `run` | plan/fetch/inspect/geostyle-import；JSON stdout、进度 stderr、取消退出码；fetch 同步 | 通用 recipe 命令、持久化 job status/cancel/resume、查询 Provider、所有处理器覆盖 |
@@ -185,7 +185,7 @@ F02-a/F02-b 是同一 WP-F02 的内部交付切分，不新增相互冲突的公
 **任务 C：Global 产品壳与完整导航（A02 + D01–04）**
 
 - 输入：本仓完整页面原型与设计状态表；国内 shell 留在其原仓库。
-- 交付：独立依赖、构建与配置、Explore/Workspace/My Data/Recipes/Tasks/Sources/Settings、稳定 AOI 状态与真实 backend adapter 接口。
+- 交付：独立依赖、构建与配置、Explore/Workspace/My Data/Tasks/Sources/Settings、My Data 内折叠的裁剪方案高级入口、稳定 AOI 状态与真实 backend adapter 接口。
 - 必须证明：样例内容显式标记；未接后端的按钮不能假装成功；CN/Global 不共用同一数据库、缓存键或更新源；在规定窗口尺寸完成可见验收。
 
 任务 A 完成前可以做 B/C 的界面和样例设计；接入实际任务执行后必须消费 A 的同一契约，不再新增第二套前端 request/job 格式。

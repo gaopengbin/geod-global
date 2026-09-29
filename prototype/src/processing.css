@@ -16,6 +16,8 @@
 .processing-coordinate-fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; font-variant-numeric: tabular-nums; }
 .processing-coordinate-fields .runtime-field { margin: 8px 0 14px; font-size: 12px; }
 .processing-hint { font-size: 12px; line-height: 1.55; color: var(--ink-2); margin: 2px 0 12px; }
+.processing-reuse { margin-top: 16px; border-top: 1px solid var(--line-soft); }
+.processing-reuse p { margin: 0 0 10px; color: var(--ink-2); font-size: 12px; line-height: 1.6; }
 .processing-preview-button { margin-top: 18px; }
 .processing-plan { margin: 18px 0 0; padding: 18px; }
 .processing-plan h3 { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--green); }

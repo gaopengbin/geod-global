@@ -210,7 +210,7 @@ Optional hosted services：GeoD Cloud Workspace / Teams
 
 ### 6.1 稳定导航
 
-主导航建议：**Explore / Workspace / My Data / Recipes / Tasks / Sources**。Settings、Help、账户与可选云服务放底部。Satellite、Imagery、Elevation、Vector、3D 是 Explore 的数据分类，不再各自拥有相互隔离的 AOI 和任务系统。
+主导航：**Explore / Workspace / My Data / Tasks / Sources**。裁剪从地图或文件直接发起；已保存的裁剪方案仅在 My Data 的折叠高级区管理，不占一级入口。Settings、Help、账户与可选云服务放底部。Satellite、Imagery、Elevation、Vector、3D 是 Explore 的数据分类，不再各自拥有相互隔离的 AOI 和任务系统。
 
 Workspace 是工作上下文，不是必须注册的云项目。用户可以使用自动保存的 `Untitled workspace`，不用先创建项目才能下载。
 

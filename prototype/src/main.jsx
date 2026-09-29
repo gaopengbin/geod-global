@@ -67,7 +67,6 @@ const nav = [
   ["Explore", Compass],
   ["Workspace", Layers],
   ["My Data", Folder],
-  ["Recipes", Workflow],
   ["Tasks", ListTodo],
   ["Sources", Database],
 ];
@@ -127,7 +126,7 @@ function App() {
   const bbox = live ? (appliedSearch?.bbox || pendingBounds) : SAMPLE_BBOX;
   const areaName = live ? (areaPolygon?.place?.name || "Custom search area") : "San Francisco Bay";
   const [page, setPage] = useState(
-    [...nav.map((n) => n[0]), "Settings", "Cloud"].includes(
+    [...nav.map((n) => n[0]), "Settings", "Cloud", "Recipes"].includes(
       decodeURIComponent(location.hash.slice(1)),
     )
       ? decodeURIComponent(location.hash.slice(1))
@@ -1092,6 +1091,9 @@ function App() {
                   sub={t("Find downloaded files and clipping results ready to inspect or use.")}
                 />
                 <RuntimeLibrary areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
+                <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
+                  <ExecutableRecipes areaBounds={bbox} areaPolygon={live ? areaPolygon : null} onReviewJSON={showJSON} />
+                </Disclosure>
                 <Disclosure className="design-simulations" summary={<>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</>}>
                 {!outputs.length ? (
                   <EmptyState
@@ -1649,12 +1651,12 @@ function App() {
                 <Layers />
               </span>
               <h3>{t("GeoD Global · local workspace")}</h3>
-              <p>{t("A local geospatial workspace with live catalog search, original downloads, SCL inspection, rectangle and polygon clipping, and executable recipes. Other processing tools remain design previews.")}</p>
+              <p>{t("A local geospatial workspace with live catalog search, original downloads, SCL inspection, and rectangle or polygon clipping. Other processing tools remain design previews.")}</p>
               <ul>
                 <li>{t("Live Earth Search queries and a separate cached sample catalog.")}</li>
                 <li>{t("Catalog filters and compatible scene comparison with local preferences.")}</li>
                 <li>{t("Original source asset downloads with local task history.")}</li>
-                <li>{t("Verified SCL pixel inspection, rectangle and polygon GeoTIFF clips, and reusable local recipes.")}</li>
+                <li>{t("Verified SCL pixel inspection and rectangle or polygon GeoTIFF clips.")}</li>
                 <li>{t("Six data domains, with unconnected adapters marked.")}</li>
                 <li>{t("Cloud features and commercial terms remain proposals.")}</li>
               </ul>

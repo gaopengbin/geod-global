@@ -307,6 +307,7 @@ export default {
   "Report JSON": "报告 JSON",
   "REPEATABLE WORK": "可复用流程",
   "Recipes": "配方",
+  "Saved clip plans · advanced": "已保存的裁剪方案 · 高级",
   "Keep the choices. Run them again when the data changes.": "保存操作选择，便于数据更新后复用。",
   "Create recipe": "创建配方",
   "Recipe files use design-prototype/v1. They are not executable Core recipes.": "配方文件使用 design-prototype/v1 格式，尚不能由 Core 执行。",

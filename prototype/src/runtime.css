@@ -11,6 +11,9 @@
 .runtime-jobs { margin-top: 16px; }
 .runtime-task-history { margin-top: 18px; }
 .runtime-task-history > .bui-disclosure-trigger { font-size: 13px; color: var(--ink); }
+.saved-clip-plans { margin: 20px 0 16px; border-top: 1px solid var(--line-soft); }
+.saved-clip-plans > .bui-disclosure-trigger { font-size: 13px; color: var(--ink); }
+.saved-clip-plans .processing-recipes { margin: 8px 0 16px; }
 .runtime-library { margin-top: 16px; }
 .runtime-library .library-filters { margin-top: 12px; }
 .runtime-library .bui-task-rows { gap: 0; overflow: hidden; border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-card); }

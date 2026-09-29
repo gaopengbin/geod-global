@@ -45,6 +45,7 @@ export default {
   'SCL class legend': 'SCL 分类图例',
   'Map clip selection': '地图裁剪区域',
   'Draw a rectangle or enter bounds in source metres. Reviewing opens the existing verified recipe workflow.': '绘制矩形或输入源坐标边界（米），然后进入配方预检和执行流程。',
+  'Draw a rectangle or enter bounds in source metres, then check the selected clip before running it.': '绘制矩形或输入源坐标边界（米），检查所选区域后再执行裁剪。',
   'Preview window: {width} × {height} pixels at {x}, {y}. The native plan verifies these bounds and the source checksum.': '预览窗口：{width} × {height} 像元，偏移 {x}，{y}。原生预检将校验边界和源文件校验值。',
   'Enter an ordered rectangle that overlaps the active raster.': '请输入顺序正确且与当前栅格相交的矩形边界。',
   'Use full raster extent': '使用完整栅格范围',
