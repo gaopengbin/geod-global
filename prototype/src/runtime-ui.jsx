@@ -81,13 +81,14 @@ export function DownloadAssetButton({ scene }) {
     finally { if (mounted.current) setBusy(false); }
   };
   return <>
-    <Button variant="primary" disabled={!options.length} onClick={() => { setAssetKey(options[0]?.key); setOpen(true); }}><Download size={15}/>{t('Download source asset')}</Button>
+    <Button variant="primary" disabled={!options.length} onClick={() => { setAssetKey(options[0]?.key); setOpen(true); }}><Download size={15}/>{t('Choose a file to download')}</Button>
     {open && <Modal title={t('Download source asset')} onClose={close} closeDisabled={busy} closeLabel={t('Close download')}>
       <div className="runtime-dialog-body">
         <p className="mono runtime-wrap">{scene.id}</p>
-        <label className="runtime-field">{t('Asset')}<Select aria-label={t('Download asset')} disabled={busy} value={asset?.key || ''} onChange={event => setAssetKey(event.target.value)}>{options.map(option => <option value={option.key} key={option.key}>{t(option.key === 'scl' ? 'Scene classification · GeoTIFF · 20 m' : option.key === 'visual' ? 'True color · GeoTIFF · 10 m' : 'Thumbnail · JPEG · overview only')}</option>)}</Select></label>
-        <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t('The complete source file is saved locally. Area clipping and reprojection are not applied. Large files may take time; the current limit is 512 MiB per file.')}</span></Surface>
-        <dl className="runtime-details"><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Asset')}</dt><dd><a href={asset?.href} target="_blank" rel="noreferrer">{asset?.title || asset?.key}</a></dd><dt>{t('Save under')}</dt><dd className="runtime-wrap">{health?.storageRoot || t('Local task service required')}</dd><dt>{t('Checks')}</dt><dd>{t('Byte count, file signature and SHA-256. Inspect a downloaded SCL raster separately to read its pixels and spatial metadata.')}</dd></dl>
+        <label className="runtime-field">{t('Asset')}<Select aria-label={t('Download asset')} disabled={busy} value={asset?.key || ''} onChange={event => setAssetKey(event.target.value)}>{options.map(option => <option value={option.key} key={option.key}>{t(option.key === 'scl' ? 'SCL classification · can clip · GeoTIFF · 20 m' : option.key === 'visual' ? 'True-color image · download only · GeoTIFF · 10 m' : 'JPEG thumbnail · preview only')}</option>)}</Select></label>
+        <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t(asset?.key === 'scl' ? 'Downloads the full SCL classification raster. After it finishes, open My Data to inspect or clip it; this download does not crop the file.' : asset?.key === 'visual' ? 'Downloads the full true-color GeoTIFF. Local clipping of true-color imagery is not available yet.' : 'Downloads only the JPEG preview, not the full-resolution raster. It cannot be clipped.')}</span></Surface>
+        <p className="runtime-help">{t('Files are saved to the local workspace, not your browser Downloads folder. The current limit is 512 MiB per file.')}</p>
+        <dl className="runtime-details"><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Asset')}</dt><dd><a href={asset?.href} target="_blank" rel="noreferrer">{asset?.title || asset?.key}</a></dd><dt>{t('Save under')}</dt><dd className="runtime-wrap">{health?.storageRoot || t('Local task service required')}</dd><dt>{t('Checks')}</dt><dd>{t('Transfer size, file signature and SHA-256. Pixel inspection is available for SCL files only.')}</dd></dl>
         <Connection compact/>
         {error && <RuntimeError message={error} summary="The download could not start. Check the service connection and try again."/>}
       </div><footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Cancel')}</Button><Button variant="primary" disabled={busy || !health || !asset} onClick={start}><Download size={15}/>{t(busy ? 'Starting…' : 'Start download')}</Button></footer>
@@ -188,7 +189,7 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
 export function RuntimeTasks({ areaBounds, areaPolygon }) {
   const { jobs } = useContext(RuntimeContext);
   const { t } = useI18n();
-  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Downloads and processing')}</h2><Connection/>{jobs.length ? <RuntimeJobRows jobs={jobs} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <Surface variant="inset" className="runtime-empty"><p>{t('Select a scene, then choose “Download source asset”. Download tasks and file checks are saved by the local service.')}</p></Surface>}</section>;
+  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Downloads and processing')}</h2><Connection/>{jobs.length ? <RuntimeJobRows jobs={jobs} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <Surface variant="inset" className="runtime-empty"><p>{t('Select a scene and open the file download dialog. Download tasks and file checks are saved by the local service.')}</p></Surface>}</section>;
 }
 
 export function RuntimeLibrary({ areaBounds, areaPolygon }) {

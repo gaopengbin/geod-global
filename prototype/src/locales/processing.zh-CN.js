@@ -5,6 +5,8 @@ export default {
   'This file picker reads names and sizes. Inspect and clip downloaded SCL rasters from My Data.': '此文件选择器仅读取名称与大小。可在“我的数据”中检查和裁剪已下载的 SCL 栅格。',
   'Review design export': '查看导出设计',
   'Save design recipe': '保存设计配方',
+  'Open downloaded files and clipping': '查看已下载文件与裁剪',
+  'Choose SCL, true-color imagery, or a JPEG preview in Download. Files are saved to this workspace without cropping. To make a cropped GeoTIFF, download SCL first, then use Clip raster in My Data.': '下载时可选择 SCL 分类栅格、真彩色影像或 JPEG 缩略图；文件会保存在本地工作空间，不会自动裁剪。如需生成裁剪后的 GeoTIFF，请先下载 SCL，再到“我的数据”使用“裁剪栅格”。',
   'Download SCL and open My Data for verified clipping. These export options are design previews.': '下载 SCL 后，可在“我的数据”中执行经过预检的裁剪。这里的导出选项用于设计预览。',
   'These sample tasks simulate processing. Real downloads and clipping jobs appear above.': '这些样例任务模拟处理流程，真实下载与裁剪任务显示在上方。',
   'Sample tasks add simulation reports here. Real GeoTIFF outputs are listed above.': '样例任务会在这里生成模拟报告。真实 GeoTIFF 成果显示在上方。',

@@ -961,12 +961,8 @@ function App() {
                 </div>
                 <div className="inspector-bottom">
                   <DownloadAssetButton scene={selected} />
-                  <Button
-                    icon={Download}
-                    onClick={() => setModal("export")}
-                  >{t("Review design export")}</Button>
-                  <Button icon={Workflow} onClick={() => setModal("recipe")}>{t("Save design recipe")}</Button>
-                  <p>{t("Download SCL and open My Data for verified clipping. These export options are design previews.")}</p>
+                  <Button icon={Folder} onClick={() => go("My Data")}>{t("Open downloaded files and clipping")}</Button>
+                  <p>{t("Choose SCL, true-color imagery, or a JPEG preview in Download. Files are saved to this workspace without cropping. To make a cropped GeoTIFF, download SCL first, then use Clip raster in My Data.")}</p>
                 </div>
               </aside>
             )}
@@ -1539,7 +1535,6 @@ function App() {
               <div className="command-results">
                 {[
                   ...nav.map(([n]) => [n, () => go(n)]),
-                  ...(selected ? [["Review design export", () => setModal("export")], ["Save design recipe", () => setModal("recipe")]] : []),
                   ["Cloud", () => go("Cloud")],
                   ["Settings", () => go("Settings")],
                 ]

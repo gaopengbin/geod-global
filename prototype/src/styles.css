@@ -809,10 +809,11 @@ dd {
 }
 
 .inspector-bottom p {
-  font-size: 9px;
+  font-size: 12px;
+  line-height: 1.5;
   color: var(--ink-2);
-  text-align: center;
-  margin: 1px 0 6px;
+  text-align: left;
+  margin: 4px 0 6px;
 }
 
 .statusbar {
