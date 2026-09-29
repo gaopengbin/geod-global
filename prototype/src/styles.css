@@ -407,6 +407,7 @@ kbd {
 }
 
 .map-workspace {
+  --timeline-height: 96px;
   position: relative;
   min-width: 0;
   min-height: 0;
@@ -436,7 +437,7 @@ kbd {
 
 .imagery-canvas {
   position: absolute;
-  inset: 0 0 83px;
+  inset: 0 0 var(--timeline-height);
   overflow: hidden;
 }
 
@@ -470,7 +471,7 @@ kbd {
 
 .scene-caption {
   position: absolute;
-  bottom: 147px;
+  bottom: calc(var(--timeline-height) + 64px);
   left: 24px;
   color: var(--ink);
   padding: 12px 16px;
@@ -495,7 +496,7 @@ kbd {
 
 .map-attribution {
   position: absolute;
-  bottom: 83px;
+  bottom: var(--timeline-height);
   left: 0;
   right: 0;
   background: #172326cc;
@@ -525,8 +526,8 @@ kbd {
   display: flex;
   align-items: center;
   gap: 14px;
-  height: 83px;
-  padding: 0 18px;
+  height: var(--timeline-height);
+  padding: 8px 18px;
   background: var(--surface);
   border-top: 1px solid var(--line);
 }
@@ -534,8 +535,9 @@ kbd {
 .timeline-label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
   flex-shrink: 0;
+  width: 116px;
 }
 
 .timeline-label .eyebrow {
@@ -543,27 +545,43 @@ kbd {
 }
 
 .timeline-label strong {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 650;
 }
+
+.timeline-label small { color: var(--ink-2); font-size: 10px; }
 
 .timeline-track {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: space-around;
-  position: relative;
-  margin-top: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
 }
 
-.timeline-track:before {
+.timeline-track::-webkit-scrollbar { display: none; }
+
+.timeline-items {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  width: max-content;
+  min-width: 100%;
+  height: 100%;
+}
+
+.timeline-items:before {
   content: "";
   position: absolute;
   height: 1px;
-  background: var(--line);
-  top: 13px;
-  left: 6px;
-  right: 6px;
+  background: var(--line-strong);
+  top: 17px;
+  left: 26px;
+  right: 26px;
 }
 
 .timeline-track button {
@@ -571,37 +589,51 @@ kbd {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 8px;
-  padding: 6px;
-  min-width: 27px;
+  justify-content: flex-start;
+  flex: 1 0 52px;
+  gap: 4px;
+  width: auto;
+  min-width: 52px;
+  max-width: 92px;
+  height: 70px;
+  padding: 7px 2px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-card);
+  background: transparent;
+  box-shadow: none;
   color: var(--ink-2);
-  font-size: 10px;
+  z-index: 1;
 }
 
+.timeline-track button:hover { background: var(--inset); }
+.timeline-track button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
 .observation-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--ink-2);
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  background: var(--surface);
+  border: 2px solid var(--ink-2);
   border-radius: 50%;
-  outline: 4px solid var(--surface);
-  margin-top: 4px;
-  z-index: 1;
+  box-shadow: 0 0 0 3px var(--surface);
 }
 
 .timeline-track .selected .observation-dot {
   background: var(--accent);
-  outline-color: var(--accent-tint);
-  box-shadow: 0 0 0 6px var(--accent-tint);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-tint);
 }
 
 .timeline-track .selected {
+  background: var(--accent-tint);
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--line));
   color: var(--accent);
-  font-weight: 700;
 }
 
-.timeline-track small {
-  font-size: 10px;
-}
+.timeline-track .selected:hover { background: var(--accent-tint); }
+.timeline-date { font-size: 13px; font-weight: 650; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.timeline-cloud { display: flex; align-items: center; gap: 3px; font-size: 11px; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.timeline-track .selected .timeline-cloud { color: var(--accent); }
 
 .compare-line {
   position: absolute;
@@ -1350,18 +1382,11 @@ dd {
   }
 
 .timeline {
-    gap: 9px;
-    padding: 0 12px;
+    gap: 10px;
+    padding: 8px 12px;
   }
 
-.timeline-label .eyebrow {
-    display: none;
-  }
-
-.timeline-track button {
-    min-width: 20px;
-    padding: 6px 2px;
-  }
+.timeline-label { width: 108px; }
 
 .content-page {
     padding: 30px;
@@ -1623,6 +1648,10 @@ dd {
 .timeline-label {
     display: none;
   }
+
+.map-workspace { --timeline-height: 88px; }
+.timeline { padding: 6px 10px; }
+.timeline-track button { min-width: 64px; height: 68px; }
 
 .scene-caption {
     left: 18px;

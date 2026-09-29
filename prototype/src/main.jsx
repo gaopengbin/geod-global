@@ -114,6 +114,7 @@ function App() {
     [cloud, setCloud] = useState(60),
     [sort, setSort] = useState("date");
   const exploreMap = useRef(null);
+  const timelineTrack = useRef(null);
   const [period, setPeriod] = useState("all");
   const [compare, setCompare] = useState(false),
     [compareId, setCompareId] = useState(""),
@@ -246,6 +247,18 @@ function App() {
     setPage(p);
   };
   const scenes = catalog?.scenes || [];
+  useEffect(() => {
+    const track = timelineTrack.current;
+    if (!track) return;
+    const revealSelected = () => {
+      const active = track.querySelector('[aria-pressed="true"]');
+      if (active) track.scrollTo({ left: active.offsetLeft + active.offsetWidth / 2 - track.clientWidth / 2, behavior: "auto" });
+    };
+    revealSelected();
+    const observer = new ResizeObserver(revealSelected);
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, [selected?.id, scenes.length, page]);
   const filtered = scenes
     .filter((s) =>
       (live || (s.cloud ?? 101) <= cloud) &&
@@ -574,30 +587,27 @@ function App() {
               </div>
               <div className="timeline">
                 <div className="timeline-label">
-                  <span className="eyebrow">{t("OBSERVATIONS")}</span>
+                  <span className="eyebrow">{t("Observation timeline")}</span>
                   <strong>{live ? t("Loaded scenes") : t("June 2025")}</strong>
+                  <small>{number(scenes.length)} {t("scenes")}</small>
                 </div>
-                <div className="timeline-track">
-                  {[...scenes].reverse().map((s) => (
-                    <Button variant="quiet" aria-pressed={selected?.id === s.id}
-                      key={s.id}
-                      className={s.id === selected.id ? "selected" : ""}
-                      onClick={() => setSelected(s)}
-                      aria-label={t("Select observation {date}", { date: date(s.date) })}
-                    >
-                      <span className="date-line" />
-                      <span className="observation-dot" />
-                      <small>{live ? date(s.date, { year: undefined, month: "2-digit", day: "2-digit" }) : number(Number(s.date.slice(8, 10)))}</small>
-                    </Button>
-                  ))}
+                <div className="timeline-track" ref={timelineTrack} aria-label={t("Observation timeline")}>
+                  <div className="timeline-items">
+                    {[...scenes].reverse().map((s) => {
+                      const cloudLabel = s.cloud == null ? t("Unknown") : number(s.cloud / 100, { style: "percent", maximumFractionDigits: 1 });
+                      return <Button variant="quiet" aria-pressed={selected?.id === s.id}
+                        key={s.id}
+                        className={s.id === selected.id ? "selected" : ""}
+                        onClick={() => setSelected(s)}
+                        aria-label={t("Select observation {date}, {cloud} scene cloud cover", { date: date(s.date), cloud: cloudLabel })}
+                      >
+                        <span className="observation-dot" aria-hidden="true" />
+                        <span className="timeline-date">{live ? date(s.date, { year: undefined, month: "2-digit", day: "2-digit" }) : number(Number(s.date.slice(8, 10)))}</span>
+                        <span className="timeline-cloud"><Cloud size={11} aria-hidden="true" />{cloudLabel}</span>
+                      </Button>;
+                    })}
+                  </div>
                 </div>
-                <Button
-                  className="icon-btn"
-                  aria-label={t("Timeline help")}
-                  onClick={() => setModal("provenance")}
-                >
-                  <Info size={16} />
-                </Button>
               </div>
             </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t("Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.")}</EmptyState></main>}
             {inspector && selected && (
