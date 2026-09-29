@@ -456,24 +456,17 @@ function App() {
                   </Surface>
                 </div>
               )}
-              <Surface as="div" className="scene-caption">
-                <Badge tone="on-map">{t("SENTINEL-2 L2A")}</Badge>
-                <h2>{selected.properties["grid:code"] || t("Selected observation")}</h2>
-                <p>
-                  {date(selected.date)} <span>·</span>{" "}
-                  {selected.cloud == null ? t("Unknown") : number(selected.cloud / 100, { style: "percent", maximumFractionDigits: 1 })} {t("scene cloud cover")}</p>
-              </Surface>
               <div className="map-attribution">
                 <span>Contains Copernicus Sentinel data ({selected.date.slice(0, 4)}) · Earth Search</span>
                 <Button onClick={() => setModal("provenance")}>{t("Georeferenced COG display · source details")}<Info size={12} />
                 </Button>
               </div>
               <div className="timeline">
-                <div className="timeline-label">
-                  <span className="eyebrow">{t("Observation timeline")}</span>
-                  <strong>{t("Loaded scenes")}</strong>
-                  <small>{number(scenes.length)} {t("scenes")}</small>
-                </div>
+                <Surface as="div" variant="inset" className="scene-caption" aria-label={t("Selected observation")}>
+                  <Badge>{t("SENTINEL-2 L2A")}</Badge>
+                  <h2>{selected.properties["grid:code"] || t("Selected observation")}</h2>
+                  <p>{date(selected.date)} · {selected.cloud == null ? t("Unknown") : number(selected.cloud / 100, { style: "percent", maximumFractionDigits: 1 })} {t("scene cloud cover")}</p>
+                </Surface>
                 <div className="timeline-track" ref={timelineTrack} aria-label={t("Observation timeline")}>
                   <div className="timeline-items">
                     {[...scenes].reverse().map((s) => {
