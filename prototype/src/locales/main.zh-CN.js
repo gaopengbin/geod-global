@@ -250,6 +250,7 @@ export default {
   "Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.": "在左侧目录中选择区域和日期，所选影像的预览将显示在这里。",
   "DATASET DETAILS": "数据集详情",
   "Close details panel": "关闭详情面板",
+  "Map controls": "地图控件",
   "Surface reflectance collection": "地表反射率数据集",
   "Selected scene thumbnail": "所选影像缩略图",
   "RGB PREVIEW": "RGB 预览",

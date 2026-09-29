@@ -26,7 +26,6 @@ import {
   HelpCircle,
   MapPin,
   Info,
-  Satellite,
   PanelRightClose,
   PanelRightOpen,
   ShieldCheck,
@@ -486,18 +485,17 @@ function App() {
                       title: t(comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two true-color COGs with the same CRS, transform and dimensions") },
                   ]} />
                 <div className="toolbar-end">
-                  <Badge tone="on-map">{t("True color")}</Badge>
-                  <Button variant="secondary" size="icon"
-                    className="map-icon"
-                    aria-label={t(inspector ? "Hide inspector" : "Show inspector")}
-                    onClick={() => setInspector(!inspector)}
-                  >
-                    {inspector ? (
-                      <PanelRightClose size={18} />
-                    ) : (
-                      <PanelRightOpen size={18} />
-                    )}
-                  </Button>
+                  <div className="map-controls" role="group" aria-label={t("Map controls")}>
+                    <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Zoom in")} title={t("Zoom in")} onClick={() => exploreMap.current?.zoomIn()}><Plus size={18} /></Button>
+                    <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Zoom out")} title={t("Zoom out")} onClick={() => exploreMap.current?.zoomOut()}><Minus size={18} /></Button>
+                    <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Fit scene")} title={t("Fit scene")} onClick={() => exploreMap.current?.fit()}><Maximize size={16} /></Button>
+                    <span className="control-separator" aria-hidden="true" />
+                    <Button variant="secondary" size="icon" className={"map-icon " + (showArea ? "control-active" : "")} aria-pressed={showArea} aria-label={t("Toggle saved area")} title={t("Show the searched area")} onClick={() => setShowArea(!showArea)}><SquareDashed size={18} /></Button>
+                    <span className="control-separator" aria-hidden="true" />
+                    <Button variant="secondary" size="icon" className="map-icon" aria-label={t(inspector ? "Hide inspector" : "Show inspector")} title={t(inspector ? "Hide inspector" : "Show inspector")} onClick={() => setInspector(!inspector)}>
+                      {inspector ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}
+                    </Button>
+                  </div>
                 </div>
               </div>
               {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
@@ -540,39 +538,6 @@ function App() {
                   </Surface>
                 </div>
               )}
-              <div className="map-controls">
-                <Button variant="secondary" size="icon"
-                  className="map-icon"
-                  aria-label={t("Zoom in")}
-                  onClick={() => exploreMap.current?.zoomIn()}
-                >
-                  <Plus size={18} />
-                </Button>
-                <Button variant="secondary" size="icon"
-                  className="map-icon"
-                  aria-label={t("Zoom out")}
-                  onClick={() => exploreMap.current?.zoomOut()}
-                >
-                  <Minus size={18} />
-                </Button>
-                <Button variant="secondary" size="icon"
-                  className="map-icon"
-                  aria-label={t("Fit scene")}
-                  onClick={() => exploreMap.current?.fit()}
-                >
-                  <Maximize size={16} />
-                </Button>
-                <div className="control-separator" />
-                <Button variant="secondary" size="icon"
-                  className={"map-icon " + (showArea ? "control-active" : "")}
-                  aria-pressed={showArea}
-                  aria-label={t("Toggle saved area")}
-                  title={t("Show the searched area")}
-                  onClick={() => setShowArea(!showArea)}
-                >
-                  <SquareDashed size={18} />
-                </Button>
-              </div>
               <Surface as="div" className="scene-caption">
                 <Badge tone="on-map">{t("SENTINEL-2 L2A")}</Badge>
                 <h2>{live ? selected.properties["grid:code"] || t("Selected observation") : t(areaName)}</h2>
@@ -624,13 +589,6 @@ function App() {
                 </div>
                 <h2>{t("Sentinel-2 L2A")}</h2>
                 <p className="muted">{t("Surface reflectance collection")}</p>
-                <div className="preview-image">
-                  <SceneThumbnail
-                    src={selected.thumbnail || undefined}
-                    alt={t("Selected scene thumbnail")}
-                  />
-                  <span>{t("RGB PREVIEW")}</span>
-                </div>
                 <div className="detail-section">
                   <h3>{t("Observation")}</h3>
                   <dl>
@@ -644,6 +602,7 @@ function App() {
                     <dd className="mono">{selected.crs || t("Not specified")}</dd>
                   </dl>
                   <p className="scene-id mono">{selected.id}</p>
+                  <Button className="text-link" onClick={() => setModal("provenance")}>{t("View metadata & source")}<ArrowUpRight size={14} /></Button>
                 </div>
                 <div className="detail-section">
                   <h3>{t("Area & output")}</h3>
@@ -659,28 +618,9 @@ function App() {
                   >{t("Inspect area")}<ArrowUpRight size={14} />
                   </Button>
                 </div>
-                <div className="detail-section">
-                  <h3>{t("Source & provenance")}</h3>
-                  <div className="source-line">
-                    <span className="source-symbol">
-                      <Satellite size={17} />
-                    </span>
-                    <div>
-                      <strong>{t("Copernicus Sentinel")}</strong>
-                      <small>{t("Catalog by Earth Search")}</small>
-                    </div>
-                  </div>
-                    <Button
-                    className="text-link"
-                    disabled={!selected}
-                    onClick={() => setModal("provenance")}
-                  >{t("View metadata & source")}<ArrowUpRight size={14} />
-                  </Button>
-                </div>
                 <div className="inspector-bottom">
                   <DownloadAssetButton scene={selected} />
-                  <Button icon={Folder} onClick={() => go("My Data")}>{t("Open downloaded files and clipping")}</Button>
-                  <p>{t("Choose SCL, true-color imagery, or a JPEG preview in Download. Files are saved to this workspace without cropping. To make a cropped GeoTIFF, download SCL first, then use Clip raster in My Data.")}</p>
+                  <Button icon={Folder} onClick={() => go("My Data")}>{t("View downloads & clipping")}</Button>
                 </div>
               </aside>
             )}
