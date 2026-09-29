@@ -239,6 +239,7 @@ export default {
   "scene cloud cover": "整景云量",
   "Thumbnail, not analytical data": "缩略图预览，非分析数据",
   "Georeferenced COG display · source details": "地理配准 COG 显示 · 数据来源",
+  "Copernicus Sentinel data ({year}) · Earth Search · Natural Earth overview": "Copernicus Sentinel 数据（{year}）· Earth Search · Natural Earth 概览",
   "Observation timeline": "观测时间轴",
   "Loaded scenes": "已加载影像",
   "June 2025": "2025 年 6 月",

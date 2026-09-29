@@ -457,8 +457,8 @@ function App() {
                 </div>
               )}
               <div className="map-attribution">
-                <span>Contains Copernicus Sentinel data ({selected.date.slice(0, 4)}) · Earth Search</span>
-                <Button onClick={() => setModal("provenance")}>{t("Georeferenced COG display · source details")}<Info size={12} />
+                <span>{t("Copernicus Sentinel data ({year}) · Earth Search · Natural Earth overview", { year: selected.date.slice(0, 4) })}</span>
+                <Button variant="quiet" onClick={() => setModal("provenance")}>{t("Georeferenced COG display · source details")}<Info size={12} />
                 </Button>
               </div>
               <div className="timeline">

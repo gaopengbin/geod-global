@@ -1661,7 +1661,7 @@ dd {
 .results-heading > [data-slot="select-trigger"] { width: auto; max-width: 130px; }
 .results-heading > [data-slot="select-wrapper"] { width: auto; max-width: 130px; }
 .map-controls [data-slot="button"] { width: 30px; height: 30px; padding: 0; flex: none; }
-.map-attribution [data-slot="button"] { color: inherit; background: transparent; padding: 0; min-height: 0; height: auto; font-size: 12px; }
+.map-attribution [data-slot="button"] { color: inherit; background: transparent; box-shadow: none; padding: 3px 0; min-height: 24px; height: auto; font-size: 12px; }
 .statusbar [data-slot="button"] { min-height: 0; height: auto; padding: 0; font-size: inherit; }
 .settings-list [data-slot="select-trigger"] { width: min(180px, 100%); flex-shrink: 0; }
 .settings-list [data-slot="select-wrapper"] { width: 180px; max-width: 100%; flex-shrink: 0; }
