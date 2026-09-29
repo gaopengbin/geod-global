@@ -82,7 +82,7 @@ $clipRecipePath = Join-Path $clipStore 'clip.recipe.json'
 )
 ```
 
-Recipe files are UTF-8 JSON without a BOM and at most 8192 bytes. They have the
+Recipe files are UTF-8 JSON without a BOM and at most 512000 bytes (download request files remain limited to 8192 bytes). This rectangular example has the
 exact version `geod-raster-recipe/v1` and operation `clip`; unknown fields, versions,
 operations, output formats and mismatched source checksums are rejected. A recipe
 contains no absolute path, login token, executable command or user destination.

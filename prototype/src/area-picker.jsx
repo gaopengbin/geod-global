@@ -10,7 +10,7 @@ import Feature from 'ol/Feature.js';
 import { fromExtent } from 'ol/geom/Polygon.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import { asArray } from 'ol/color.js';
-import { administrativePlace, searchAdministrativePlaces } from './admin-areas.js';
+import { administrativePlace, indexedAdministrativePlace, searchAdministrativePlaces } from './admin-areas.js';
 import { SAMPLE_BBOX, validateBounds } from './catalog.js';
 import { useI18n } from './i18n.jsx';
 import { Badge, Button, Input, Spinner } from './ui/index.jsx';
@@ -44,6 +44,9 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
   const [provinces, setProvinces] = useState([]);
   const [countryState, setCountryState] = useState('loading');
   const [provinceState, setProvinceState] = useState('loading');
+  const [activeCountry, setActiveCountry] = useState('');
+  const [countryGeometryState, setCountryGeometryState] = useState('idle');
+  const [countryGeometryError, setCountryGeometryError] = useState('');
   const [placeQuery, setPlaceQuery] = useState('');
   const [focusedPlace, setFocusedPlace] = useState(null);
   const [selectedPolygon, setSelectedPolygon] = useState(null);
@@ -53,6 +56,9 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
   const drawingMode = useRef(false);
   const selection = useRef(null);
   const focused = useRef(null);
+  const provinceSourceRef = useRef(null);
+  const pendingProvinceRef = useRef(null);
+  const provinceCodesRef = useRef(new Set());
   const focusPlaceRef = useRef(null);
   const mapStyles = useRef(null);
   const parsed = useMemo(() => {
@@ -64,22 +70,58 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
   const countryNames = useMemo(() => new Map(countries.map(place => [place.code, locale === 'zh-CN' && place.nameZh ? place.nameZh : place.nameEn])), [countries, locale]);
   const focusedBoundsApplied = focusedPlace && parsed.bounds?.every((value, index) => value === roundCoordinate(focusedPlace.bounds[index]));
   const nameOf = place => locale === 'zh-CN' && place.nameZh ? place.nameZh : place.nameEn;
+  const limitationMessages = {
+    polar: 'This region extends beyond local UTM clipping coverage. Its bounding rectangle remains available for catalogue search.',
+    'date-line': 'This region crosses the date line. Draw separate rectangles on either side for catalogue search; local polygon clipping is unavailable.',
+    complex: 'This boundary exceeds the local polygon vertex limit. Use its bounding rectangle for catalogue search; local polygon clipping is unavailable.',
+  };
 
   const focusPlace = place => {
     if (!place) return;
+    if (place.kind === 'province' && !place.feature) {
+      const loaded = provinceSourceRef.current?.getFeatures().find(feature => feature.get('adm1_code') === place.code);
+      if (loaded) { focusPlace(administrativePlace(loaded, 'province', 'Natural Earth 1:10m')); return; }
+    }
     focused.current?.clear();
-    focused.current?.addFeature(new Feature(place.feature.getGeometry().clone()));
+    if (place.feature) focused.current?.addFeature(new Feature(place.feature.getGeometry().clone()));
     setFocusedPlace(place);
     setPlaceQuery('');
     map.current?.getView().fit(place.bounds, { padding: [45, 45, 45, 45], maxZoom: place.kind === 'country' ? 6 : 8, duration: 0 });
+    if (place.kind === 'country') {
+      pendingProvinceRef.current = null;
+      if (provinceCodesRef.current.has(place.code)) setActiveCountry(place.code);
+    }
+    if (place.kind === 'province' && !place.feature) {
+      pendingProvinceRef.current = place.code;
+      setActiveCountry(place.parentCode);
+    }
+    if (place.kind === 'province' && place.feature) pendingProvinceRef.current = null;
   };
   focusPlaceRef.current = focusPlace;
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('./basemaps/admin1-10m/index.json', { signal: controller.signal }).then(response => {
+      if (!response.ok) throw new Error(`Administrative index HTTP ${response.status}`);
+      return response.json();
+    }).then(data => {
+      if (!Array.isArray(data.areas) || data.areas.length !== 4596) throw new Error('Administrative index is incomplete');
+      const entries = data.areas.map(indexedAdministrativePlace);
+      provinceCodesRef.current = new Set(entries.map(place => place.parentCode));
+      setProvinces(entries); setProvinceState('ready');
+    }).catch(error => { if (error.name !== 'AbortError') setProvinceState('error'); });
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (focusedPlace?.kind === 'country' && provinceCodesRef.current.has(focusedPlace.code)) setActiveCountry(focusedPlace.code);
+  }, [focusedPlace, provinces]);
 
   useEffect(() => {
     if (!target.current) return;
     const land = new VectorSource({ url: './basemaps/natural-earth-50m-land.geojson', format: new GeoJSON(), wrapX: false });
     const countrySource = new VectorSource({ url: './basemaps/natural-earth-50m-admin-0-countries.geojson', format: new GeoJSON(), wrapX: false });
-    const provinceSource = new VectorSource({ url: './basemaps/natural-earth-50m-admin-1-states-provinces.geojson', format: new GeoJSON(), wrapX: false });
+    const provinceSource = new VectorSource({ wrapX: false });
     const chosen = new VectorSource({ wrapX: false });
     const highlighted = new VectorSource({ wrapX: false });
     mapStyles.current = styles(target.current);
@@ -102,12 +144,10 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
     land.on('featuresloaderror', () => setMapState('error'));
     countrySource.on('featuresloadend', () => { setCountries(countrySource.getFeatures().map(feature => administrativePlace(feature, 'country'))); setCountryState('ready'); });
     countrySource.on('featuresloaderror', () => setCountryState('error'));
-    provinceSource.on('featuresloadend', () => { setProvinces(provinceSource.getFeatures().map(feature => administrativePlace(feature, 'province'))); setProvinceState('ready'); });
-    provinceSource.on('featuresloaderror', () => setProvinceState('error'));
     instance.on('singleclick', event => {
       if (drawingMode.current) return;
       const picked = instance.forEachFeatureAtPixel(event.pixel, (feature, layer) => {
-        if (layer === provinceLayer) return administrativePlace(feature, 'province');
+        if (layer === provinceLayer) return administrativePlace(feature, 'province', 'Natural Earth 1:10m');
         if (layer === countryLayer) return administrativePlace(feature, 'country');
         return undefined;
       }, { hitTolerance: 3 });
@@ -127,13 +167,39 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
       land.changed(); countrySource.changed(); provinceSource.changed(); highlighted.changed(); chosen.changed();
     });
     theme.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class', 'style'] });
-    map.current = instance; box.current = dragBox; selection.current = chosen; focused.current = highlighted;
+    map.current = instance; box.current = dragBox; selection.current = chosen; focused.current = highlighted; provinceSourceRef.current = provinceSource;
     return () => {
       resize.disconnect(); theme.disconnect();
       instance.setTarget(undefined); instance.dispose();
-      map.current = null; box.current = null; selection.current = null; focused.current = null; mapStyles.current = null;
+      map.current = null; box.current = null; selection.current = null; focused.current = null; provinceSourceRef.current = null; mapStyles.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    if (!activeCountry || !provinceSourceRef.current) return;
+    const controller = new AbortController();
+    setCountryGeometryState('loading'); setCountryGeometryError('');
+    provinceSourceRef.current.clear();
+    fetch(`./basemaps/admin1-10m/${activeCountry}.geojson`, { signal: controller.signal }).then(response => {
+      if (!response.ok) throw new Error(`Administrative boundary HTTP ${response.status}`);
+      return response.json();
+    }).then(data => {
+      if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) throw new Error('Invalid country boundary data');
+      const features = new GeoJSON().readFeatures(data, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
+      const source = provinceSourceRef.current;
+      if (!source) return;
+      source.clear(); source.addFeatures(features);
+      setCountryGeometryState('ready');
+      const pending = pendingProvinceRef.current;
+      if (pending) {
+        const feature = features.find(item => item.get('adm1_code') === pending);
+        if (feature) focusPlaceRef.current?.(administrativePlace(feature, 'province', 'Natural Earth 1:10m'));
+      }
+    }).catch(error => {
+      if (error.name !== 'AbortError') { setCountryGeometryState('error'); setCountryGeometryError(error.message); }
+    });
+    return () => controller.abort();
+  }, [activeCountry]);
 
   useEffect(() => { drawingMode.current = drawing; box.current?.setActive(drawing); }, [drawing]);
   useEffect(() => {
@@ -162,7 +228,7 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
       const geometry = new GeoJSON().writeGeometryObject(focusedPlace.feature.getGeometry(), { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
       const bounds = validateBounds(focusedPlace.bounds);
       setFields(bounds.map(String));
-      setSelectedPolygon({ geometry, place: { kind: focusedPlace.kind, code: focusedPlace.code, name: nameOf(focusedPlace), source: 'Natural Earth 1:50m' } });
+      setSelectedPolygon({ geometry, place: { kind: focusedPlace.kind, code: focusedPlace.code, name: nameOf(focusedPlace), source: focusedPlace.source } });
       setDrawError(false);
     } catch { setDrawError(true); }
   };
@@ -174,14 +240,14 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
         <div className="aoi-place-find">
           <label>{t('Find country or province')}<Input value={placeQuery} onChange={event => setPlaceQuery(event.target.value)} placeholder={t('Search by English or local name')} /></label>
           {placeQuery && <div className="aoi-place-results">{placeResults.map(place => <Button key={`${place.kind}-${place.code}`} size="row" onClick={() => focusPlace(place)}><span><strong>{nameOf(place)}</strong><small>{place.kind === 'province' ? countryNames.get(place.parentCode) || place.parentCode : t('Country')}</small></span></Button>)}{!placeResults.length && <p role="status">{countryState === 'loading' || provinceState === 'loading' ? t('Loading administrative areas…') : t('No matching administrative area.')}</p>}</div>}
-          <p>{t('Countries are worldwide. Province borders cover nine large countries in this 1:50m dataset. Boundaries are cartographic references, not legal definitions.')}</p>
+          <p>{t('Search 4,596 first-level regions in 251 countries. Country outlines are 1:50m; subdivision geometry loads per country at 1:10m. Some tiny countries have no subdivisions in this dataset. Boundaries are cartographic references, not legal definitions.')}</p>
         </div>
         <div className="aoi-map-toolbar"><Button selected={drawing} onClick={() => setDrawing(value => !value)}><SquareDashed size={16}/>{t(drawing ? 'Cancel drawing' : 'Draw rectangle')}</Button><div><Button size="icon" aria-label={t('Zoom in')} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() + 1)}><Plus size={16}/></Button><Button size="icon" aria-label={t('Zoom out')} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() - 1)}><Minus size={16}/></Button><Button size="icon" aria-label={t('Fit selected area')} disabled={!parsed.bounds} onClick={() => fit(parsed.bounds)}><Maximize size={16}/></Button><Button size="icon" aria-label={t('World view')} onClick={() => fit([-180, -90, 180, 90])}><Globe2 size={16}/></Button></div></div>
-        <div className="aoi-map-wrap"><div ref={target} className={'aoi-map' + (drawing ? ' is-drawing' : '')} tabIndex={0} role="application" aria-label={t('WGS 84 reference map. Pan and zoom, then draw a rectangle or enter exact bounds.')} />{drawing && <p className="aoi-draw-hint" role="status">{t('Drag from one corner to the opposite corner to select an area.')}</p>}</div>
-        <div className="aoi-map-caption"><span>{t('Natural Earth · 1:50m administrative reference')}</span>{mapState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading reference map…')}</span>}{mapState === 'error' && <span role="alert">{t('Reference map unavailable; enter coordinates instead.')}</span>}{countryState === 'error' && <span role="alert">{t('Country boundaries unavailable; draw or enter coordinates instead.')}</span>}{provinceState === 'error' && <span role="alert">{t('Province boundaries unavailable; country search still works.')}</span>}{drawError && <span role="alert">{t('Draw a larger rectangle within WGS 84 limits.')}</span>}</div>
+        <div className="aoi-map-wrap"><div ref={target} className={'aoi-map' + (drawing ? ' is-drawing' : '')} tabIndex={0} role="application" aria-label={t('WGS 84 reference map. Pan and zoom, click a country to load its subdivisions, or draw a rectangle.')} />{drawing && <p className="aoi-draw-hint" role="status">{t('Drag from one corner to the opposite corner to select an area.')}</p>}</div>
+        <div className="aoi-map-caption"><span>{t('Natural Earth · countries 1:50m · subdivisions 1:10m')}</span>{mapState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading reference map…')}</span>}{mapState === 'error' && <span role="alert">{t('Reference map unavailable; enter coordinates instead.')}</span>}{countryState === 'error' && <span role="alert">{t('Country boundaries unavailable; draw or enter coordinates instead.')}</span>}{provinceState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading global subdivision index…')}</span>}{provinceState === 'error' && <span role="alert">{t('Global subdivision index unavailable; country selection still works.')}</span>}{countryGeometryState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading subdivisions for {country}…', { country: countryNames.get(activeCountry) || activeCountry })}</span>}{countryGeometryState === 'error' && <span role="alert">{t('Subdivision geometry unavailable: {error}', { error: countryGeometryError })}</span>}{drawError && <span role="alert">{t('Draw a larger rectangle within WGS 84 limits.')}</span>}</div>
       </div>
       <div className="aoi-form">
-        {focusedPlace && <div className="aoi-place-focus"><Badge tone="blue">{t(focusedPlace.kind === 'country' ? 'Country' : 'Province / state')}</Badge><strong>{nameOf(focusedPlace)}</strong><p>{t(selectedPolygon?.place.code === focusedPlace.code ? 'The administrative polygon is selected. Search uses its bounding box; local SCL clipping uses the polygon.' : focusedBoundsApplied ? 'The region bounding rectangle is selected for search.' : 'The region is highlighted. Choose its polygon or bounding rectangle for the workspace.')}</p><div className="row-actions"><Button size="sm" onClick={useFocusedPolygon}>{t('Use region polygon')}</Button><Button size="sm" onClick={useFocusedBounds}>{t('Use bounding rectangle')}</Button></div></div>}
+        {focusedPlace && <div className="aoi-place-focus"><Badge tone="blue">{t(focusedPlace.kind === 'country' ? 'Country' : 'Province / state')}</Badge><strong>{nameOf(focusedPlace)}</strong><p>{t(!focusedPlace.feature ? 'Loading this region boundary; its bounding rectangle is available now.' : selectedPolygon?.place.code === focusedPlace.code ? 'The administrative polygon is selected. Search uses its bounding box; local SCL clipping uses the polygon.' : focusedBoundsApplied ? 'The region bounding rectangle is selected for search.' : 'The region is highlighted. Choose its polygon or bounding rectangle for the workspace.')}</p>{focusedPlace.clipLimitation && <p role="alert">{t(limitationMessages[focusedPlace.clipLimitation])}</p>}<div className="row-actions"><Button size="sm" disabled={!focusedPlace.feature || Boolean(focusedPlace.clipLimitation)} onClick={useFocusedPolygon}>{t('Use region polygon')}</Button><Button size="sm" disabled={focusedPlace.clipLimitation === 'date-line'} onClick={useFocusedBounds}>{t('Use bounding rectangle')}</Button></div></div>}
         <h3>{t('Selected bounds')}</h3>
         <p>{t('Longitude and latitude in degrees. West must be less than east; south must be less than north.')}</p>
         <div className="aoi-fields">{directions.map((direction, index) => <label key={direction}>{t(direction)}<Input type="number" step="any" min={index % 2 === 0 ? -180 : -90} max={index % 2 === 0 ? 180 : 90} value={fields[index]} onChange={event => changeField(index, event.target.value)}/></label>)}</div>

@@ -68,7 +68,7 @@ network-facing authentication boundary.
 Create requests use `{ "itemId", "assetKey", "href", "mediaType", "title" }`;
 `title` is optional. JSON responses use camelCase and status values
 `queued`, `running`, `succeeded`, `failed`, `cancelled`, `interrupted`.
-JSON request bodies are limited to 8192 bytes. Pixel query arguments contain only
+JSON request bodies are limited to 512 KiB so high-resolution polygon recipes fit. CLI recipe files are limited to 512000 bytes; CLI download request files remain limited to 8192 bytes. Pixel query arguments contain only
 `x` and `y`; unknown fields are rejected. The package POST does not accept an
 output path or require an input document; it uses the job identified in the route
 and still requires the mutation header. Runtime validation/busy failures return

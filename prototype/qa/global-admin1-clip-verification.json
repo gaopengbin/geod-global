@@ -1,0 +1,16 @@
+{
+  "verifiedAtUtc": "2026-09-29",
+  "boundarySource": "Natural Earth 1:10m Admin-1 v5.1.1, USA-3521 California",
+  "boundaryFile": "prototype/public/basemaps/admin1-10m/USA.geojson",
+  "sourceJobId": "933dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b",
+  "sourceSha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+  "operation": "geod-raster-recipe/v2 polygon mask",
+  "outputWindowWgs84": [-122.55, 37.68, -122.32, 37.84],
+  "outputJobId": "b8d4ea9b-3eb5-4f6e-a1ea-d57c1f1f7f15",
+  "outputSha256": "d7f9afa37dfa67719eb25f0f6f0bd3f7f1e4a7cac66cf401a2b9a15042b47165",
+  "outputShape": [895, 1020],
+  "maskedPixels": 481952,
+  "retainedPixels": 430948,
+  "independentCheck": "Rasterio compared every output pixel with the pinned original SCL window. PyProj transformed every output pixel centre from EPSG:32610 to WGS84; Shapely 2.1.2 contains_xy classified the original Natural Earth 1:10m MultiPolygon. All retained pixels equal the source, all masked pixels equal NoData 0, and the independently counted masked pixels equal the runtime plan and artifact manifest. Output GeoTIFF SHA-256, grid shape, CRS and affine transform were checked independently.",
+  "scope": "One previously downloaded real Sentinel-2 SCL source and one California Bay output window. The output and temporary QA script remain in ignored .geod-global; this record does not prove whole-state, arbitrary-raster, RGB, polar or date-line clipping."
+}

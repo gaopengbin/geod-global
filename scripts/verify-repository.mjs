@@ -59,6 +59,39 @@ for (const [name, hash, count] of [
     'This 1:50m province file only covers nine countries; do not advertise worldwide province coverage');
 }
 
+const admin1Directory = path.join(samples, 'basemaps/admin1-10m');
+const admin1Manifest = JSON.parse(await readFile(path.join(admin1Directory, 'manifest.json'), 'utf8'));
+assert.equal(admin1Manifest.version, '5.1.1');
+assert.equal(admin1Manifest.sourceSha256, 'efc59726337323058f9446210adc96673179cd344e053666ee3d28cb58ba2b05');
+assert.equal(admin1Manifest.featureCount, 4596);
+assert.equal(admin1Manifest.countryCount, 251);
+const admin1IndexBytes = await readFile(path.join(admin1Directory, 'index.json'));
+assert.equal(createHash('sha256').update(admin1IndexBytes).digest('hex'), admin1Manifest.indexSha256);
+const admin1Index = JSON.parse(admin1IndexBytes.toString('utf8'));
+assert.equal(admin1Index.areas.length, 4596);
+assert.equal(new Set(admin1Index.areas.map(area => area.code)).size, 4596);
+assert.deepEqual(admin1Manifest.clipLimitations, { polar: 2, 'date-line': 5, complex: 1 });
+for (const [reason, count] of Object.entries(admin1Manifest.clipLimitations))
+  assert.equal(admin1Index.areas.filter(area => area.clipLimitation === reason).length, count);
+let admin1FeatureCount = 0;
+const admin1GeometryCodes = new Set();
+for (const [country, record] of Object.entries(admin1Manifest.countries)) {
+  assert.match(country, /^[A-Z]{3}$/);
+  assert.equal(record.file, `${country}.geojson`);
+  const target = path.join(admin1Directory, record.file);
+  assert(inside(await realpath(target)), `Admin-1 geometry must remain inside this repository: ${country}`);
+  const bytes = await readFile(target);
+  assert.equal(bytes.length, record.bytes, `Admin-1 geometry size changed: ${country}`);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), record.sha256, `Admin-1 geometry changed: ${country}`);
+  const features = JSON.parse(bytes.toString('utf8')).features;
+  assert.equal(features.length, record.features, `Admin-1 coverage changed: ${country}`);
+  assert(features.every(feature => feature.properties.adm0_a3 === country && ['Polygon', 'MultiPolygon'].includes(feature.geometry.type)));
+  for (const feature of features) admin1GeometryCodes.add(feature.properties.adm1_code);
+  admin1FeatureCount += features.length;
+}
+assert.equal(admin1FeatureCount, 4596);
+assert.deepEqual(admin1GeometryCodes, new Set(admin1Index.areas.map(area => area.code)));
+
 const brokenLinks = [];
 for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
   if (!name.endsWith('.md')) continue;
@@ -76,4 +109,4 @@ for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
 assert.deepEqual(brokenLinks, [], 'Broken specification links');
 const desktopAcl = await verifyDesktopAcl(root);
 const sharedUi = await verifyUiSystem(root);
-console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedAoiBasemap:'passed',verifiedAdministrativeLayers:2,relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));
+console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedAoiBasemap:'passed',verifiedAdministrativeLayers:2,verifiedGlobalAdmin1:{features:admin1FeatureCount,countries:admin1Manifest.countryCount},relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));

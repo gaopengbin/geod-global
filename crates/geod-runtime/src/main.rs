@@ -59,12 +59,17 @@ fn loopback_server(value: &str) -> Result<String, String> {
     Ok(url.origin().ascii_serialization())
 }
 
-async fn read_json<T: serde::de::DeserializeOwned>(path: &str) -> Result<T, String> {
+async fn read_json<T: serde::de::DeserializeOwned>(
+    path: &str,
+    max_bytes: u64,
+) -> Result<T, String> {
     let metadata = tokio::fs::metadata(path)
         .await
         .map_err(|e| format!("Cannot open JSON input: {e}"))?;
-    if !metadata.is_file() || metadata.len() > 8192 {
-        return Err("JSON input must be a file no larger than 8192 bytes".into());
+    if !metadata.is_file() || metadata.len() > max_bytes {
+        return Err(format!(
+            "JSON input must be a file no larger than {max_bytes} bytes"
+        ));
     }
     let bytes = tokio::fs::read(path).await.map_err(|e| e.to_string())?;
     serde_json::from_slice(&bytes).map_err(|e| format!("Invalid JSON input: {e}"))
@@ -219,14 +224,14 @@ async fn run() -> Result<(), String> {
         return Err("--id must be a job UUID".into());
     }
     let recipe: Option<RasterRecipe> = if group == "recipes" && command != "list" {
-        let recipe: RasterRecipe = read_json(required(&options, "--recipe")?).await?;
+        let recipe: RasterRecipe = read_json(required(&options, "--recipe")?, 512_000).await?;
         recipe.validate()?;
         Some(recipe)
     } else {
         None
     };
     let request: Option<CreateJobRequest> = if group == "jobs" && command == "download" {
-        Some(read_json(required(&options, "--request")?).await?)
+        Some(read_json(required(&options, "--request")?, 8192).await?)
     } else {
         None
     };

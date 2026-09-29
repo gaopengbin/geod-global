@@ -24,6 +24,7 @@
 | [10-Languages-and-Raster-Inspection.md](10-Languages-and-Raster-Inspection.md) | 中英文界面、真实SCL像元预览、空间元数据与分类统计 | 多语言与下载成果读取验收 |
 | [11-Executable-Processing-and-Recipes.md](11-Executable-Processing-and-Recipes.md) | SCL矩形裁剪、来源清单、可执行配方、CLI及独立像元验收 | 当前真实工作流、全范围覆盖与后续边界 |
 | [12-Workspace-Agent-and-Distribution.md](12-Workspace-Agent-and-Distribution.md) | 真实二维地图、源像元查询、成果交付包、数据搜索、本地诊断、MCP与Windows发行准备 | 本轮实现、独立验收证据与尚未通过的发布门禁 |
+| [13-Global-Administrative-Boundaries.md](13-Global-Administrative-Boundaries.md) | 全球一级行政区边界索引、惰性加载、真实 SCL 多边形裁剪与例外 | 选区来源、许可、复现与执行范围 |
 | [交互原型说明](../prototype/README.md) | 原型启动方式、页面入口和样本来源 | 本地打开与操作设计原型 |
 
 ## 三个需要保留的修正
