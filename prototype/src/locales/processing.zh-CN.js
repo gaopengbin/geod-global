@@ -1,5 +1,4 @@
 export default {
-  'Scene metadata and thumbnails come from seven saved catalog records. Sample filters run locally. Original downloads, SCL inspection and rectangular clipping use the local task service.': '场景元数据与缩略图来自七条保存的目录记录，样例筛选在本地运行。原始下载、SCL 检查与矩形裁剪通过本地任务服务执行。',
   'Design recipe saved in this browser.': '设计配方已保存在此浏览器。',
   'Arbitrary local file import not connected': '尚未接入任意本地文件导入',
   'This file picker reads names and sizes. Inspect and clip downloaded SCL rasters from My Data.': '此文件选择器仅读取名称与大小。可在“我的数据”中检查和裁剪已下载的 SCL 栅格。',
@@ -161,7 +160,6 @@ export default {
   'Polygon clips require WGS84 coordinates.': '多边形裁剪须使用 WGS84 坐标。',
   'Polygon mask and output window must overlap.': '多边形与输出窗口必须有交集。',
   'Repeat a verified rectangle or polygon clip from a pinned SCL source file.': '基于绑定的 SCL 源文件，重复执行已核实的矩形或多边形裁剪。',
-  'Scene metadata and small thumbnails come from seven saved catalog records. The map streams original true-color COG data; sample filters run locally. Original downloads, SCL inspection and local clipping use the task service.': '场景元数据和缩略图来自七条已保存的目录记录。地图流式读取原始真彩色 COG；样例筛选在本地运行。原始下载、SCL 检查和本地裁剪由任务服务执行。',
   'A local geospatial workspace with live catalog search, original downloads, SCL inspection, rectangle and polygon clipping, and executable recipes. Other processing tools remain design previews.': '本地地理空间工作区支持实时目录检索、原始文件下载、SCL 检查、矩形及多边形裁剪和可执行配方。其他处理工具仍为设计预览。',
   'Verified SCL pixel inspection, rectangle and polygon GeoTIFF clips, and reusable local recipes.': '支持真实 SCL 像元检查、矩形及多边形 GeoTIFF 裁剪，以及可复用的本地配方。',
   'A local geospatial workspace with live catalog search, original downloads, SCL inspection, and rectangle or polygon clipping. Other processing tools remain design previews.': '本地地理空间工作区支持实时目录检索、源文件下载、SCL 检查，以及矩形或多边形裁剪。其他处理工具仍为设计预览。',

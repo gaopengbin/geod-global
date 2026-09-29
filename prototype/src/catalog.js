@@ -2,6 +2,13 @@ export const EARTH_SEARCH = "https://earth-search.aws.element84.com/v1/search";
 export const SAMPLE_BBOX = [-122.55, 37.68, -122.32, 37.84];
 export const INITIAL_SEARCH = { bbox: SAMPLE_BBOX.join(", "), start: "2025-06-01", end: "2025-06-30", cloud: 60, limit: 20 };
 
+export function defaultLiveSearch(now = new Date()) {
+  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - 29);
+  return { ...INITIAL_SEARCH, start: start.toISOString().slice(0, 10), end: end.toISOString().slice(0, 10) };
+}
+
 export function validateBounds(input) {
   const parts = Array.isArray(input) ? input : String(input).split(",").map((v) => v.trim());
   if (parts.length !== 4 || parts.some((v) => v === "" || !Number.isFinite(Number(v)))) throw new Error("Enter four coordinates: west, south, east, north.");

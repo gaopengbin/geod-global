@@ -4,7 +4,7 @@
 
 ## 本轮真实能力
 
-- Explore的区域入口可在离线Natural Earth参考地图上查看全球国界及9个大国的省州界，以英文或本地名称定位行政区，再选用外接矩形、拖绘WGS84矩形或输入西、南、东、北四个坐标；提交后切换到Live catalog并查询Earth Search。实时目录也有“在地图上选区”入口，可编辑UTC日期、云量、分页，取消查询或恢复失败。行政区边界仅作定位参考，检索使用矩形；选区只过滤场景，源资产下载仍为整景。
+- Explore的区域入口可在离线Natural Earth参考地图上查看全球国界及9个大国的省州界，以英文或本地名称定位行政区，再选用外接矩形、拖绘WGS84矩形或输入西、南、东、北四个坐标；提交后直接查询Earth Search。探索页只保留在线目录，默认查询最近30天；“筛选”可编辑UTC日期、云量、分页，取消查询或恢复失败。行政区边界仅作定位参考，检索使用矩形；选区只过滤场景，源资产下载仍为整景。
 - Explore 主地图流式渲染原始10米真彩色 COG，按影像坐标系显示与平移缩放；只对同源网格影像启用卷帘比较，搜索边界框投影后叠加在地图上。列表和详情仍使用提供方 JPEG 小缩略图。
 - Download source asset通过本机Rust服务或Tauri命令下载完整源资产，记录字节数、SHA-256、来源及本地路径，支持取消和从头重试。
 - Tasks与My Data只展示真实任务和文件记录；记录由Rust持久化，不依赖浏览器localStorage。
@@ -53,7 +53,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Start-Preview.ps1
 
 来源：[Earth Search 查询](https://earth-search.aws.element84.com/v1/search?collections=sentinel-2-l2a&bbox=-122.55,37.68,-122.32,37.84&datetime=2025-06-01T00:00:00Z/2025-06-30T23:59:59Z&limit=8)、[AWS 数据集与条款索引](https://registry.opendata.aws/sentinel-2-l2a-cogs/)。署名：Contains Copernicus Sentinel data (2025). Earth Search / Element 84.
 
-字体 Inter 随包附带，许可在 `public/fonts/LICENSE-Inter.txt`。样本模式浏览本地记录；Live catalog及源文件下载访问Earth Search与Sentinel COG存储。不发送分析事件；打开来源链接会访问相应网站。
+字体 Inter 随包附带，许可在 `public/fonts/LICENSE-Inter.txt`。在线目录访问 Earth Search，地图与源文件下载访问 Sentinel COG 存储；本地样本记录仅供测试校验，不显示在产品目录中。不发送分析事件；打开来源链接会访问相应网站。
 
 Explore 的地理配准来自远程真彩色 COG；Workspace 的地理配准来自本地 GeoTIFF 元数据。两处地图均不请求在线底图，也不对显示图层或输出像元作跨坐标系重投影。OpenLayers 和 proj4 版本由根锁文件固定，发行许可收集流程见[Windows打包说明](../docs/releases/windows-packaging.md)。
 

@@ -20,7 +20,6 @@ import {
   Download,
   ExternalLink,
   ArrowUpRight,
-  RotateCcw,
   Sun,
   Moon,
   HelpCircle,
@@ -32,7 +31,6 @@ import {
   PanelLeftOpen,
   ShieldCheck,
   CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
 import "./ui/foundation.css";
 import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
@@ -40,7 +38,7 @@ import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
   SegmentedControl, Spinner } from "./ui/index.jsx";
 import "./styles.css";
 import "./catalog.css";
-import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
+import { SAMPLE_BBOX, defaultLiveSearch, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
 import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
@@ -89,34 +87,26 @@ function SceneThumbnail({ src, alt }) {
 
 function App() {
   const { t, locale, setLocale, date, number } = useI18n();
-  const [sampleCatalog, setSampleCatalog] = useState(null),
-    [loadError, setLoadError] = useState(false);
-  const [catalogMode, setCatalogMode] = useState("sample");
   const [liveCatalog, setLiveCatalog] = useState(null);
-  const [searchInput, setSearchInput] = useState(INITIAL_SEARCH);
+  const [searchInput, setSearchInput] = useState(defaultLiveSearch);
   const [liveState, setLiveState] = useState("idle");
   const [liveError, setLiveError] = useState("");
   const [appliedSearch, setAppliedSearch] = useState(null);
   const [areaPolygon, setAreaPolygon] = useState(null);
   const searchRunner = useRef(null);
   if (!searchRunner.current) searchRunner.current = createSearchRunner();
-  const live = catalogMode === "live";
-  const catalog = live ? liveCatalog : sampleCatalog;
+  const catalog = liveCatalog;
   let pendingBounds = SAMPLE_BBOX;
-  if (live) {
-    try { pendingBounds = validateBounds(searchInput.bbox); }
-    catch { pendingBounds = appliedSearch?.bbox || SAMPLE_BBOX; }
-  }
-  const bbox = live ? (appliedSearch?.bbox || pendingBounds) : SAMPLE_BBOX;
-  const areaName = live ? (areaPolygon?.place?.name || "Custom search area") : "San Francisco Bay";
+  try { pendingBounds = validateBounds(searchInput.bbox); }
+  catch { pendingBounds = appliedSearch?.bbox || SAMPLE_BBOX; }
+  const bbox = appliedSearch?.bbox || pendingBounds;
+  const areaName = areaPolygon?.place?.name || "Custom search area";
   const [page, setPage] = useState(pageFromHash);
   const [selected, setSelected] = useState(null),
     [query, setQuery] = useState(""),
-    [cloud, setCloud] = useState(60),
     [sort, setSort] = useState("date");
   const exploreMap = useRef(null);
   const timelineTrack = useRef(null);
-  const [period, setPeriod] = useState("all");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [discoveryCollapsed, setDiscoveryCollapsed] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(stored("nav-collapsed", false));
@@ -127,39 +117,6 @@ function App() {
     [inspector, setInspector] = useState(window.innerWidth >= 1280);
   const [modal, setModal] = useState(null),
     [theme, setTheme] = useState(stored("theme", "light"));
-  const load = () => {
-    setLoadError(false);
-    fetch("./samples/manifest.json")
-      .then((r) => {
-        if (!r.ok) throw new Error();
-        return r.json();
-      })
-      .then((d) => {
-        d = normalizeSample(d);
-        setSampleCatalog(d);
-        setSelected(
-          d.scenes.find((s) => s.id === "S2C_10SEG_20250617_0_L2A") ||
-            d.scenes[0],
-        );
-        setCompareId(d.scenes[1]?.id);
-      })
-      .catch(() => setLoadError(true));
-  };
-  useEffect(load, []);
-  useEffect(() => () => searchRunner.current.cancel(), []);
-  const switchCatalog = (mode) => {
-    searchRunner.current.cancel();
-    setAreaPolygon(null);
-    setCatalogMode(mode);
-    setLiveState("idle");
-    setLiveError("");
-    setCompare(false);
-    setQuery("");
-    setPeriod("all");
-    setFiltersOpen(mode === "live");
-    const first = mode === "sample" ? sampleCatalog?.scenes[0] : liveCatalog?.scenes[0];
-    setSelected(first || null);
-  };
   const runSearch = async (more = false, submittedInput = searchInput) => {
     let submitted, url;
     try {
@@ -189,8 +146,13 @@ function App() {
     } catch (error) {
       setLiveError(error.name === "AbortError" ? "Search cancelled." : error.name === "TimeoutError" ? "Earth Search did not respond within 30 seconds. Try again." : error.message);
       setLiveState("error");
+      setFiltersOpen(true);
     }
   };
+  useEffect(() => {
+    runSearch(false, searchInput);
+    return () => searchRunner.current.cancel();
+  }, []);
   const cancelSearch = () => { searchRunner.current.cancel(); setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
   const catalogError = (message) => {
     const httpError = /^Earth Search returned HTTP (\d+)\. Try again later\.$/.exec(message);
@@ -212,7 +174,6 @@ function App() {
     const next = { ...searchInput, bbox: bounds.join(", ") };
     setSearchInput(next);
     setModal(null);
-    if (!live) switchCatalog("live");
     setAreaPolygon(geometry ? { geometry, place, bounds } : null);
     runSearch(false, next);
   };
@@ -270,33 +231,13 @@ function App() {
   }, [selected?.id, scenes.length, page]);
   const filtered = scenes
     .filter((s) =>
-      (live || (s.cloud ?? 101) <= cloud) &&
-      (s.id.toLowerCase().includes(query.toLowerCase()) || s.date.includes(query)) &&
-      (live || period === "all" || Number(s.date.slice(8, 10)) <= 15),
+      s.id.toLowerCase().includes(query.toLowerCase()) || s.date.includes(query),
     )
     .sort((a, b) => sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date));
-  const activeFilters = live ? 0 : Number(period !== "all") + Number(cloud !== 60);
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
   const workspace = page === "Explore" || page === "Workspace";
-  if (loadError && !live)
-    return (
-      <main className="boot">
-        <EmptyState
-          icon={AlertCircle}
-          title={t("The sample catalog could not load")}
-          action={
-            <Button onClick={load} icon={RotateCcw}>{t("Retry")}</Button>
-          }
-        >{t("Start the included local preview server and try again.")}</EmptyState>
-      </main>
-    );
-  if (!sampleCatalog && !live)
-    return (
-      <main className="boot">
-        <Spinner />{t("Loading the sample workspace…")}</main>
-    );
   return (
     <div className="app">
       <SidebarNav
@@ -319,13 +260,12 @@ function App() {
             <span className="project-icon">
               <Folder size={16} />
             </span>
-            <strong>{live ? t("Earth Search workspace") : t("Bay Area study")}</strong>
+            <strong>{t("Earth Search workspace")}</strong>
             <ChevronRight size={14} />
             <span>{t(page)}</span>
             </div>
           </div>
           <div className="top-actions">
-            <Badge>{live ? t("Live catalog") : t("Sample catalog")}</Badge>
             <Button
               className="icon-btn"
               aria-label={t("Toggle color theme")}
@@ -350,12 +290,10 @@ function App() {
                 <MapPin size={17} />
                 <span>
                   <strong>{t(areaName)}</strong>
-                  <small>{live ? t("WGS 84 · editable search bounds") : t("Saved area · California, US")}</small>
+                  <small>{t("WGS 84 · editable search bounds")}</small>
                 </span>
                 <ChevronDown size={16} />
               </Button>
-              <SegmentedControl className="catalog-switch" aria-label={t("Catalog mode")} value={catalogMode} onValueChange={switchCatalog}
-                items={[{ value: "sample", label: t("Sample catalog") }, { value: "live", label: t("Live catalog") }]} />
               <>
                   <label className="search-input scene-search">
                     <Search size={16} />
@@ -363,7 +301,7 @@ function App() {
                   </label>
                   {liveError && <p className="catalog-error" role="alert">{catalogError(liveError)}</p>}
                   <div className="filters" id="scene-filters" hidden={!filtersOpen}>
-                    {live && <form className="catalog-form" onSubmit={submitSearch}>
+                    <form className="catalog-form" onSubmit={submitSearch}>
                       <label>{t("WGS 84 bounds · west, south, east, north")}<Input name="bbox" aria-label={t("Search bounding box")} value={searchInput.bbox} onChange={updateSearchField} />
                       </label>
                       <Button type="button" icon={SquareDashed} onClick={() => setModal("area")}>{t("Draw area on map")}</Button>
@@ -377,39 +315,15 @@ function App() {
                         <Button primary icon={Search} type="submit">{t("Search catalog")}</Button>
                       </div>
                       {(liveState === "loading" || liveState === "more") && <Button type="button" onClick={cancelSearch}>{t("Cancel search")}</Button>}
-                    </form>}
-                    {live && appliedSearch && <p className="catalog-query-note">{t("{status}: {start} – {end} · clouds ≤ {cloud} · [{bbox}]", { status: catalog ? t("Showing") : t("Requested"), start: date(appliedSearch.start), end: date(appliedSearch.end), cloud: number(appliedSearch.cloud / 100, { style: "percent" }), bbox: appliedSearch.bbox.join(", ") })}</p>}
-                    {!live && <div className="filter-row">
-                      <label className="select-wrap">{t("Date")}<Select
-                          aria-label={t("Date range")}
-                          value={period}
-                          onChange={(e) => setPeriod(e.target.value)}
-                        >
-                          <option value="all">{t("Jun 1–30, 2025")}</option>
-                          <option value="first">{t("Jun 1–15, 2025")}</option>
-                        </Select>
-                      </label>
-                    </div>}
-                    {!live && <label className="range-label">
-                      <span>{t("Scene cloud cover")}</span>
-                      <strong>≤ {number(cloud / 100, { style: "percent" })}</strong>
-                      <Input
-                        type="range"
-                        aria-label={t("Maximum cloud cover")}
-                        min="0"
-                        max="100"
-                        step="1"
-                        value={cloud}
-                        onChange={(e) => setCloud(Number(e.target.value))}
-                      />
-                    </label>}
+                    </form>
+                    {appliedSearch && <p className="catalog-query-note">{t("{status}: {start} – {end} · clouds ≤ {cloud} · [{bbox}]", { status: catalog ? t("Showing") : t("Requested"), start: date(appliedSearch.start), end: date(appliedSearch.end), cloud: number(appliedSearch.cloud / 100, { style: "percent" }), bbox: appliedSearch.bbox.join(", ") })}</p>}
                   </div>
                   <div className="results-heading">
                     <span className="results-count">
                       <strong>{filtered.length}</strong><span className="results-count-label"> {t("scenes")}</span>
                     </span>
                     <div className="results-actions">
-                      <Button size="sm" icon={SlidersHorizontal} className="filter-toggle" aria-label={activeFilters ? t("Filters · {count} active", { count: number(activeFilters) }) : t("Filters")} aria-expanded={filtersOpen} aria-controls="scene-filters" onClick={() => setFiltersOpen(value => !value)}>{t("Filters")}{activeFilters > 0 && <span className="filter-count" aria-hidden="true">{number(activeFilters)}</span>}</Button>
+                      <Button size="sm" icon={SlidersHorizontal} className="filter-toggle" aria-label={t("Filters")} aria-expanded={filtersOpen} aria-controls="scene-filters" onClick={() => setFiltersOpen(value => !value)}>{t("Filters")}</Button>
                       <Select aria-label={t("Sort scenes")} value={sort} onChange={(e) => setSort(e.target.value)}>
                         <option value="date">{t("Newest")}</option>
                         <option value="cloud">{t("Clearest")}</option>
@@ -417,7 +331,7 @@ function App() {
                     </div>
                   </div>
                   <div className="scene-list">
-                    {live && liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : live && !liveCatalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.")}</EmptyState> : !filtered.length ? (
+                    {liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : !catalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above, then search Earth Search for imagery.")}</EmptyState> : !filtered.length ? (
                       <EmptyState
                         icon={Search}
                         title={t("No matching scenes")}
@@ -425,13 +339,9 @@ function App() {
                           <Button
                             onClick={() => {
                               setQuery("");
-                              setCloud(100);
-                              setPeriod("all");
-                              if (live) {
-                                const reset = { ...(appliedSearch || searchInput), cloud: 100 };
-                                setSearchInput({ ...reset, bbox: Array.isArray(reset.bbox) ? reset.bbox.join(", ") : reset.bbox });
-                                runSearch(false, reset);
-                              }
+                              const reset = { ...(appliedSearch || searchInput), cloud: 100 };
+                              setSearchInput({ ...reset, bbox: Array.isArray(reset.bbox) ? reset.bbox.join(", ") : reset.bbox });
+                              runSearch(false, reset);
                             }}
                           >{t("Reset filters")}</Button>
                         }
@@ -476,10 +386,10 @@ function App() {
                       ))
                     )}
                   </div>
-                  {live && liveCatalog?.next && <div className="catalog-next"><Button disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? t("Loading more…") : t("Load more scenes")}</Button><span>{t("Only loaded results are counted and sorted.")}</span></div>}
+                  {liveCatalog?.next && <div className="catalog-next"><Button disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? t("Loading more…") : t("Load more scenes")}</Button><span>{t("Only loaded results are counted and sorted.")}</span></div>}
                   <div className="panel-foot">
                     <Database size={13} />
-                    <span>{t("Earth Search ·")} {live ? t("live HTTPS catalog") : t("June 2025 snapshot")}</span>
+                    <span>{t("Earth Search ·")} {t("live HTTPS catalog")}</span>
                   </div>
               </>
             </aside>}
@@ -509,7 +419,7 @@ function App() {
               {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap key={selected.crs || selected.id} ref={exploreMap} scene={selected} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={live ? areaPolygon?.geometry : null} showArea={showArea} />
+                  <ExploreMap key={selected.crs || selected.id} ref={exploreMap} scene={selected} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
@@ -548,7 +458,7 @@ function App() {
               )}
               <Surface as="div" className="scene-caption">
                 <Badge tone="on-map">{t("SENTINEL-2 L2A")}</Badge>
-                <h2>{live ? selected.properties["grid:code"] || t("Selected observation") : t(areaName)}</h2>
+                <h2>{selected.properties["grid:code"] || t("Selected observation")}</h2>
                 <p>
                   {date(selected.date)} <span>·</span>{" "}
                   {selected.cloud == null ? t("Unknown") : number(selected.cloud / 100, { style: "percent", maximumFractionDigits: 1 })} {t("scene cloud cover")}</p>
@@ -561,7 +471,7 @@ function App() {
               <div className="timeline">
                 <div className="timeline-label">
                   <span className="eyebrow">{t("Observation timeline")}</span>
-                  <strong>{live ? t("Loaded scenes") : t("June 2025")}</strong>
+                  <strong>{t("Loaded scenes")}</strong>
                   <small>{number(scenes.length)} {t("scenes")}</small>
                 </div>
                 <div className="timeline-track" ref={timelineTrack} aria-label={t("Observation timeline")}>
@@ -575,14 +485,14 @@ function App() {
                         aria-label={t("Select observation {date}, {cloud} scene cloud cover", { date: date(s.date), cloud: cloudLabel })}
                       >
                         <span className="observation-dot" aria-hidden="true" />
-                        <span className="timeline-date">{live ? date(s.date, { year: undefined, month: "2-digit", day: "2-digit" }) : number(Number(s.date.slice(8, 10)))}</span>
+                        <span className="timeline-date">{date(s.date, { year: undefined, month: "2-digit", day: "2-digit" })}</span>
                         <span className="timeline-cloud"><Cloud size={11} aria-hidden="true" />{cloudLabel}</span>
                       </Button>;
                     })}
                   </div>
                 </div>
               </div>
-            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t("Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.")}</EmptyState></main>}
+            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t(liveState === "loading" ? "Recent imagery will appear here when Earth Search responds." : "Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.")}</EmptyState></main>}
             {inspector && selected && (
               <aside className="inspector">
                 <div className="inspector-heading">
@@ -649,7 +559,7 @@ function App() {
                     >{t("Explore data")}</Button>
                   }
                 />
-                <RuntimeTasks areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
+                <RuntimeTasks areaBounds={bbox} areaPolygon={areaPolygon} />
               </>
             ) : page === "My Data" ? (
               <>
@@ -658,9 +568,9 @@ function App() {
                   title={t("My Data")}
                   sub={t("Find downloaded files and clipping results ready to inspect or use.")}
                 />
-                <RuntimeLibrary areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
+                <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />
                 <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
-                  <ExecutableRecipes areaBounds={bbox} areaPolygon={live ? areaPolygon : null} onReviewJSON={showJSON} />
+                  <ExecutableRecipes areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON} />
                 </Disclosure>
               </>
             ) : page === "Settings" ? (
@@ -709,7 +619,7 @@ function App() {
         <footer className="statusbar">
           <span>
             <span className="status-dot" />{t("Local workspace")}<span className="status-divider">/</span>{t("No account required")}</span>
-          <span>{live ? t("Live catalog · original source assets") : t("Sample catalog · cached scene metadata")}</span>
+          <span>{t("Live catalog · original source assets")}</span>
         </footer>
       </div>
       {modal && (
@@ -727,10 +637,10 @@ function App() {
           wide={modal === "area"}
         >
           {modal === "area" ? (
-            <React.Suspense fallback={<p role="status"><Spinner/>{t("Loading reference map…")}</p>}><AreaPicker initialBbox={pendingBounds} sample={!live} onApply={applyMapArea} onExport={exportMapArea} onClose={() => setModal(null)}/></React.Suspense>
+            <React.Suspense fallback={<p role="status"><Spinner/>{t("Loading reference map…")}</p>}><AreaPicker initialBbox={pendingBounds} onApply={applyMapArea} onExport={exportMapArea} onClose={() => setModal(null)}/></React.Suspense>
           ) : modal === "provenance" && selected && catalog ? (
             <div className="dialog-body">
-              <Badge tone="green">{live ? t("LIVE CATALOG RESPONSE") : t("REAL CATALOG SNAPSHOT")}</Badge>
+              <Badge tone="green">{t("LIVE CATALOG RESPONSE")}</Badge>
               <h3>{selected.id}</h3>
               <p>{catalog.attribution}</p>
               <dl>
@@ -744,7 +654,7 @@ function App() {
                 <dd>{t("Full scene, not AOI-specific")}</dd>
               </dl>
               <p>
-                {live ? t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. The map renders the source true-color COG; comparison requires matching source grids and does not perform scientific band math.") : t("Scene metadata and small thumbnails come from seven saved catalog records. The map streams original true-color COG data; sample filters run locally. Original downloads, SCL inspection and local clipping use the task service.")}
+                {t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. The map renders the source true-color COG; comparison requires matching source grids and does not perform scientific band math.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">
@@ -785,12 +695,12 @@ function App() {
               <h3>{t("GeoD Global · local workspace")}</h3>
               <p>{t("Search Earth Search, download source files, inspect SCL pixels, and clip a raster locally by rectangle or administrative polygon.")}</p>
               <ul>
-                <li>{t("Live Earth Search queries and a separate cached sample catalog.")}</li>
+                <li>{t("Search current Sentinel-2 scenes by area, date and cloud cover through Earth Search.")}</li>
                 <li>{t("Catalog filters and compatible scene comparison with local preferences.")}</li>
                 <li>{t("Original source asset downloads with local task history.")}</li>
                 <li>{t("Verified SCL pixel inspection and rectangle or polygon GeoTIFF clips.")}</li>
               </ul>
-              <p className="muted">{t("Inter and sample previews are bundled locally. Live searches, remote previews and asset downloads contact their source providers. This workspace sends no analytics.")}</p>
+              <p className="muted">{t("Inter is bundled locally. Catalog searches, imagery previews and asset downloads contact their source providers. This workspace sends no analytics.")}</p>
             </div>
           )}
         </Modal>

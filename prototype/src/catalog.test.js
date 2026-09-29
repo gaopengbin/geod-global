@@ -1,8 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { INITIAL_SEARCH, validateBounds, validateSearch, searchURL, normalizeScene, normalizeSample, compatibleScenes, nextPageURL, createSearchRunner } from "./catalog.js";
+import { INITIAL_SEARCH, defaultLiveSearch, validateBounds, validateSearch, searchURL, normalizeScene, normalizeSample, compatibleScenes, nextPageURL, createSearchRunner } from "./catalog.js";
 const fixture = JSON.parse(readFileSync(new URL("../public/samples/earth-search-response.json", import.meta.url)));
+test("the live catalog defaults to a rolling UTC month", () => {
+  assert.deepEqual(defaultLiveSearch(new Date("2026-03-01T01:00:00Z")), { ...INITIAL_SEARCH, start: "2026-01-31", end: "2026-03-01" });
+  assert.deepEqual(defaultLiveSearch(new Date("2026-09-29T23:59:00Z")), { ...INITIAL_SEARCH, start: "2026-08-31", end: "2026-09-29" });
+});
 test("query validates geographic/date inputs and sends server-side cloud and UTC end date", () => {
   const url = new URL(searchURL(INITIAL_SEARCH));
   assert.deepEqual(JSON.parse(url.searchParams.get("query")), { "eo:cloud_cover": { lte: 60 } });

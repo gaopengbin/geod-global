@@ -284,13 +284,6 @@ kbd {
   color: var(--ink-2);
 }
 
-.filter-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-  align-items: end;
-}
-
 .select-wrap {
   display: flex;
   flex-direction: column;
@@ -1674,7 +1667,6 @@ dd {
 .scene { height: auto; justify-content: flex-start; white-space: normal; }
 .scene[aria-pressed="true"] { background: var(--accent-tint); }
 .domain-option, .state-option { height: auto; white-space: normal; }
-.catalog-switch { margin: 0 18px 8px; }
 .domain-tabs { margin: 0 16px; padding: 0 0 16px; border-radius: 0; background: transparent; box-shadow: none; }
 .domain-tabs [data-slot="segmented-item"] { min-width: 0; white-space: normal; font-size: 12px; padding: 7px 4px; height: auto; }
 .search-input { position: relative; padding: 0; }

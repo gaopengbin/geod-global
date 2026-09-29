@@ -11,7 +11,7 @@ import { fromExtent } from 'ol/geom/Polygon.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import { asArray } from 'ol/color.js';
 import { administrativePlace, indexedAdministrativePlace, searchAdministrativePlaces } from './admin-areas.js';
-import { SAMPLE_BBOX, validateBounds } from './catalog.js';
+import { validateBounds } from './catalog.js';
 import { useI18n } from './i18n.jsx';
 import { Badge, Button, Input, Spinner } from './ui/index.jsx';
 import 'ol/ol.css';
@@ -34,7 +34,7 @@ function styles(target) {
   };
 }
 
-export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) {
+export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
   const { t, number, locale } = useI18n();
   const [fields, setFields] = useState(() => initialBbox.map(String));
   const [drawing, setDrawing] = useState(false);
@@ -234,7 +234,7 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
   };
 
   return <div className="aoi-picker">
-    <div className="aoi-intro"><Badge tone="blue">{t(sample ? 'SAMPLE AREA' : 'LIVE SEARCH AREA')}</Badge><p>{t('Find a country or province and select its boundary, or draw a WGS 84 rectangle. Earth Search uses the bounding box; a selected polygon can mask a downloaded local SCL raster.')}</p></div>
+    <div className="aoi-intro"><Badge tone="blue">{t('LIVE SEARCH AREA')}</Badge><p>{t('Find a country or province and select its boundary, or draw a WGS 84 rectangle. Earth Search uses the bounding box; a selected polygon can mask a downloaded local SCL raster.')}</p></div>
     <div className="aoi-layout">
       <div className="aoi-map-section">
         <div className="aoi-place-find">
@@ -253,7 +253,6 @@ export function AreaPicker({ initialBbox, sample, onApply, onExport, onClose }) 
         <div className="aoi-fields">{directions.map((direction, index) => <label key={direction}>{t(direction)}<Input type="number" step="any" min={index % 2 === 0 ? -180 : -90} max={index % 2 === 0 ? 180 : 90} value={fields[index]} onChange={event => changeField(index, event.target.value)}/></label>)}</div>
         {parsed.error && <p className="aoi-error" role="alert">{t(parsed.error)}</p>}
         {parsed.bounds && <output className="aoi-summary mono">[{parsed.bounds.map(value => number(value, { maximumFractionDigits: 5 })).join(', ')}]</output>}
-        <Button size="sm" onClick={() => { setSelectedPolygon(null); setFields(SAMPLE_BBOX.map(String)); fit(SAMPLE_BBOX); }}>{t('Use San Francisco sample bounds')}</Button>
       </div>
     </div>
     <div className="aoi-actions"><Button onClick={onClose}>{t('Cancel')}</Button><Button icon={Download} disabled={!parsed.bounds} onClick={exportArea}>{t('Download area GeoJSON')}</Button><Button primary icon={Search} disabled={!parsed.bounds} onClick={() => onApply(selectedArea())}>{t('Search this area')}</Button></div>

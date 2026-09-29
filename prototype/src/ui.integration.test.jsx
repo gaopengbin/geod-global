@@ -117,10 +117,10 @@ describe('Shared UI behavior used by catalog, recipes and workspace', () => {
     const user = userEvent.setup();
     function Controls() {
       const [on, setOn] = useState(false);
-      const [mode, setMode] = useState('sample');
+      const [mode, setMode] = useState('preview');
       return <><Switch checked={on} onCheckedChange={setOn} aria-label="Analytics"/>
         <Disclosure summary="Source evidence"><p>SHA-256 verified</p></Disclosure>
-        <SegmentedControl aria-label="Catalog mode" value={mode} onValueChange={setMode} items={[{ value: 'sample', label: 'Sample' }, { value: 'live', label: 'Live' }]}/>
+        <SegmentedControl aria-label="Preview mode" value={mode} onValueChange={setMode} items={[{ value: 'preview', label: 'Preview' }, { value: 'compare', label: 'Compare' }]}/>
       </>;
     }
     render(<Controls />);
@@ -129,9 +129,9 @@ describe('Shared UI behavior used by catalog, recipes and workspace', () => {
     expect(control.getAttribute('aria-checked')).toBe('true');
     await user.click(screen.getByRole('button', { name: 'Source evidence' }));
     expect(screen.getByText('SHA-256 verified')).toBeTruthy();
-    await user.click(screen.getByRole('radio', { name: 'Live' }));
-    expect(screen.getByRole('radio', { name: 'Live' }).getAttribute('aria-checked')).toBe('true');
-    expect(screen.getByRole('radio', { name: 'Sample' }).getAttribute('aria-checked')).toBe('false');
+    await user.click(screen.getByRole('radio', { name: 'Compare' }));
+    expect(screen.getByRole('radio', { name: 'Compare' }).getAttribute('aria-checked')).toBe('true');
+    expect(screen.getByRole('radio', { name: 'Preview' }).getAttribute('aria-checked')).toBe('false');
   });
 
   it('does not invent numeric progress when a processing total is unknown', () => {
