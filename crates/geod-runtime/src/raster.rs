@@ -503,7 +503,7 @@ fn preview(raster: DecodedRaster, deadline: Instant) -> Result<RasterInspection>
     })
 }
 
-fn validate_geokeys(keys: &[u16]) -> Result<String> {
+pub(crate) fn validate_geokeys(keys: &[u16]) -> Result<String> {
     if keys.len() < 4
         || keys[0] != 1
         || keys[1] != 1
@@ -543,7 +543,7 @@ fn validate_geokeys(keys: &[u16]) -> Result<String> {
     Ok(format!("EPSG:{epsg}"))
 }
 
-fn georeference(
+pub(crate) fn georeference(
     width: u32,
     height: u32,
     transform: Option<&[f64]>,

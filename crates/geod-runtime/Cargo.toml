@@ -19,7 +19,7 @@ rmcp = { version = "=3.4.0", default-features = false, features = ["server", "tr
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 sha2 = "0.10"
-tiff = { version = "=0.11.3", default-features = false, features = ["deflate", "lzw"] }
+tiff = { version = "=0.11.3", default-features = false, features = ["deflate", "lzw", "jpeg"] }
 tempfile = "=3.27.0"
 tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
 tokio-util = { version = "0.7", features = ["rt"] }

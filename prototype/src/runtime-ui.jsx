@@ -85,8 +85,8 @@ export function DownloadAssetButton({ scene }) {
     {open && <Modal title={t('Download source asset')} onClose={close} closeDisabled={busy} closeLabel={t('Close download')}>
       <div className="runtime-dialog-body">
         <p className="mono runtime-wrap">{scene.id}</p>
-        <label className="runtime-field">{t('Asset')}<Select aria-label={t('Download asset')} disabled={busy} value={asset?.key || ''} onChange={event => setAssetKey(event.target.value)}>{options.map(option => <option value={option.key} key={option.key}>{t(option.key === 'scl' ? 'SCL classification · can clip · GeoTIFF · 20 m' : option.key === 'visual' ? 'True-color image · download only · GeoTIFF · 10 m' : 'JPEG thumbnail · preview only')}</option>)}</Select></label>
-        <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t(asset?.key === 'scl' ? 'Downloads the full SCL classification raster. After it finishes, open My Data to inspect or clip it; this download does not crop the file.' : asset?.key === 'visual' ? 'Downloads the full true-color GeoTIFF. Local clipping of true-color imagery is not available yet.' : 'Downloads only the JPEG preview, not the full-resolution raster. It cannot be clipped.')}</span></Surface>
+        <label className="runtime-field">{t('Asset')}<Select aria-label={t('Download asset')} disabled={busy} value={asset?.key || ''} onChange={event => setAssetKey(event.target.value)}>{options.map(option => <option value={option.key} key={option.key}>{t(option.key === 'scl' ? 'SCL classification · can clip · GeoTIFF · 20 m' : option.key === 'visual' ? 'True-color image · project processing · GeoTIFF · 10 m' : 'JPEG thumbnail · preview only')}</option>)}</Select></label>
+        <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t(asset?.key === 'scl' ? 'Downloads the full SCL classification raster. After it finishes, open My Data to inspect or clip it; this download does not crop the file.' : asset?.key === 'visual' ? 'Downloads the full true-color GeoTIFF. Save selected scenes as a project to mosaic and clip true-color imagery.' : 'Downloads only the JPEG preview, not the full-resolution raster. It cannot be clipped.')}</span></Surface>
         <p className="runtime-help">{t('Files are saved to the local workspace, not your browser Downloads folder. The current limit is 512 MiB per file.')}</p>
         <dl className="runtime-details"><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Asset')}</dt><dd><a href={asset?.href} target="_blank" rel="noreferrer">{asset?.title || asset?.key}</a></dd><dt>{t('Save under')}</dt><dd className="runtime-wrap">{health?.storageRoot || t('Local task service required')}</dd><dt>{t('Checks')}</dt><dd>{t('Transfer size, file signature and SHA-256. Pixel inspection is available for SCL files only.')}</dd></dl>
         <Connection compact/>
@@ -152,26 +152,30 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
   const bytes = value => Number.isFinite(value) && value >= 0 ? formatBytes(value, locale) : t('Unknown size');
   const items = jobs.map(job => {
     const active = ['queued', 'running'].includes(job.status);
-    const derived = job.kind === 'raster_clip';
+    const derived = job.kind !== 'download';
+    const mosaic = job.kind === 'raster_mosaic';
     const canInspect = job.status === 'succeeded' && job.assetKey === 'scl' && /^image\/(?:tiff|geotiff)(?:;|$)/i.test(job.mediaType || '');
     const progress = Number.isFinite(job.totalBytes) && job.totalBytes > 0 && Number.isFinite(job.bytesDownloaded)
       ? Math.max(0, Math.min(100, job.bytesDownloaded / job.totalBytes * 100)) : null;
-    const type = derived ? t('Clipped raster · GeoTIFF') : t(job.assetKey === 'scl' ? 'SCL raster · GeoTIFF' : job.assetKey === 'visual' ? 'True-color image · GeoTIFF' : 'Preview image · JPEG');
+    const type = mosaic ? t('Project mosaic · GeoTIFF') : derived ? t('Clipped raster · GeoTIFF') : t(job.assetKey === 'scl' ? 'SCL raster · GeoTIFF' : job.assetKey === 'visual' ? 'True-color image · GeoTIFF' : 'Preview image · JPEG');
     return {
       id: job.id,
       title: job.title || job.itemId,
-      description: library ? type : `${t(derived ? 'Raster clip task' : 'Source download task')} · ${job.itemId}`,
+      description: library ? type : `${t(mosaic ? 'Project mosaic task' : derived ? 'Raster clip task' : 'Source download task')} · ${job.itemId}`,
       icon: derived ? Crop : Download,
       status: job.status,
-      statusLabel: t(library ? derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
+      statusLabel: t(library ? mosaic ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
       progress: derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
       meta: library ? date(job.updatedAt) : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
       details: library ? <Disclosure className="runtime-file-details" summary={t('File details and provenance')}>
         <DerivedArtifactDetails job={job}/>
+        {mosaic && <p>{t('{count} verified sources · {width} × {height} pixels · {crs}', { count: job.mosaicOutput?.sourceCount || 0, width: job.mosaicOutput?.width || 0, height: job.mosaicOutput?.height || 0, crs: job.mosaicOutput?.crs || '' })}</p>}
         <dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{job.itemId}</dd><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t(derived ? 'Generated locally from the checked source clip. Inspect the result to read output pixels and spatial metadata.' : 'Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl>
-        {derived && <ArtifactPackageButton job={job}/>}
+        {job.kind === 'raster_clip' && <ArtifactPackageButton job={job}/>}
         {desktopAvailable() && <Button disabled={busy[job.id]} onClick={() => run(job, 'reveal')}><FolderOpen size={15}/>{t('Show in folder')}</Button>}
+        {derived && !desktopAvailable() && <Button onClick={() => { const link = document.createElement('a'); link.href = `http://127.0.0.1:4318/jobs/${encodeURIComponent(job.id)}/file`; link.download = `${job.id}.tif`; link.click(); }}><Download size={15}/>{t('Download result GeoTIFF')}</Button>}
+        {mosaic && !desktopAvailable() && <Button onClick={() => { const link = document.createElement('a'); link.href = `http://127.0.0.1:4318/jobs/${encodeURIComponent(job.id)}/metadata`; link.download = `${job.id}.metadata.json`; link.click(); }}><Download size={15}/>{t('Download provenance JSON')}</Button>}
         {errors[job.id] && <RuntimeError message={errors[job.id]} summary="The task action failed. Check the service connection and try again."/>}
       </Disclosure> : job.error || errors[job.id] ? <div className="runtime-job-details">
         {job.error && <RuntimeError message={typeof job.error === 'string' ? job.error : job.error.message} summary={derived ? 'Raster processing did not complete. Check the source file and retry the clip.' : 'This download did not complete. Retry from the beginning when the source and local service are available.'}/>}
@@ -206,6 +210,6 @@ export function RuntimeLibrary({ areaBounds, areaPolygon }) {
   const [search, setSearch] = useState('');
   const [kind, setKind] = useState('all');
   const completed = jobs.filter(job => job.status === 'succeeded');
-  const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind === 'raster_clip')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
+  const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind !== 'download')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
   return <section className="runtime-section runtime-library" aria-label={t('Local source files and outputs')}><h2>{t('Available files')} <Badge>{number(completed.length)}</Badge></h2><Connection compact/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p className="runtime-results-count">{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
 }

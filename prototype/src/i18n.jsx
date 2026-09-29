@@ -5,8 +5,9 @@ import runtimeChinese from './locales/runtime.zh-CN.js';
 import processingChinese from './locales/processing.zh-CN.js';
 import artifactChinese from './locales/artifact.zh-CN.js';
 import workspaceChinese from './locales/workspace.zh-CN.js';
+import projectsChinese from './locales/projects.zh-CN.js';
 
-const chinese = { ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese };
+const chinese = { ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese, ...projectsChinese };
 const I18nContext = createContext(null);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 

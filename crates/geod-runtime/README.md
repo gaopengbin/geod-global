@@ -58,6 +58,12 @@ network-facing authentication boundary.
 | POST | `/jobs/{id}/retry` | Queued retry, or error if still settling |
 | GET | `/jobs/{id}/raster` | Verified local SCL metadata, class counts and PNG preview |
 | GET | `/jobs/{id}/pixel?x=...&y=...` | Full-resolution SCL pixel at finite source-CRS coordinates |
+| GET | `/jobs/{id}/file` | Revalidated derived GeoTIFF as an attachment |
+| GET | `/jobs/{id}/metadata` | Revalidated project-mosaic provenance JSON as an attachment |
+| GET | `/projects` | Persisted multi-scene projects |
+| POST | `/projects` | Save selected scenes, area and optional polygon |
+| POST | `/projects/{id}/downloads` | Queue or reuse every `scl` or `visual` source download in the project |
+| POST | `/projects/{id}/mosaics` | Queue a pinned, pixel-aligned mosaic and area clip for `scl` or `visual` |
 | POST | `/jobs/{id}/package` | Verify and prepare a derived-output ZIP; return its metadata as JSON |
 | GET | `/jobs/{id}/package` | Read and revalidate an already prepared ZIP; return its bytes as an attachment |
 | GET | `/recipes` | Saved recipes, newest first |
@@ -68,7 +74,7 @@ network-facing authentication boundary.
 Create requests use `{ "itemId", "assetKey", "href", "mediaType", "title" }`;
 `title` is optional. JSON responses use camelCase and status values
 `queued`, `running`, `succeeded`, `failed`, `cancelled`, `interrupted`.
-JSON request bodies are limited to 512 KiB so high-resolution polygon recipes fit. CLI recipe files are limited to 512000 bytes; CLI download request files remain limited to 8192 bytes. Pixel query arguments contain only
+JSON request bodies are limited to 2 MiB so saved administrative polygons fit. CLI recipe files are limited to 512000 bytes; CLI download request files remain limited to 8192 bytes. Pixel query arguments contain only
 `x` and `y`; unknown fields are rejected. The package POST does not accept an
 output path or require an input document; it uses the job identified in the route
 and still requires the mutation header. Runtime validation/busy failures return
@@ -76,6 +82,22 @@ HTTP 400 with an `error` string, distinct from a completed job or package.
 
 The deterministic tests use a local TCP fixture **only under `cfg(test)`**. The
 production API has no flag, environment variable or localhost URL override.
+
+## Multi-scene projects and mosaics
+
+Projects persist separately in `projects.json` and contain 1–32 catalog scenes,
+their approved SCL/true-color asset URLs, WGS84 search bounds and an optional
+WGS84 polygon. Each asset type is downloaded into ordinary jobs, with completed
+or active matching source jobs reused. A `raster_mosaic` job pins every source
+job ID and SHA-256 and produces its own GeoTIFF plus `.metadata.json` manifest.
+Its output is limited to 8 million pixels and 128 MiB. Source files remain
+unchanged. The newest non-NoData pixels win, and polygon masking uses output
+pixel centres. The output preserves its UTM grid, source band type and pixel
+spacing; different UTM zones or unaligned grids fail explicitly. SCL is
+single-band UInt8; true-color TCI is three-band UInt8. No reprojection or
+resampling is performed. The raw result can be downloaded by the browser or
+revealed in the desktop file explorer. The existing ZIP bundle contract still
+covers single-source `raster_clip` outputs only.
 
 ## Native SCL raster inspection
 

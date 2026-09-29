@@ -247,6 +247,8 @@ impl JobManager {
             title: recipe.name.clone(),
             recipe: Some(recipe),
             crop: None,
+            mosaic: None,
+            mosaic_output: None,
             manifest_path: None,
             item_id: source.item_id,
             asset_key: "scl".into(),

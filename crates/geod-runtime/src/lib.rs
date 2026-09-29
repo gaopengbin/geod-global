@@ -5,10 +5,13 @@ pub mod artifact;
 pub mod crop;
 pub mod diagnostics;
 pub mod mcp;
+pub mod mosaic;
 pub mod processing;
+pub mod projects;
 pub mod raster;
 pub mod service;
 pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
+pub use projects::{CreateProjectRequest, Project, ProjectDownloads};
 pub use raster::{RasterClass, RasterInspection, RasterPixel};
 
 use chrono::Utc;
@@ -18,6 +21,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{
     collections::BTreeMap,
+    io::Read,
     path::{Path, PathBuf},
     sync::Arc,
     time::Duration,
@@ -68,6 +72,10 @@ pub struct Job {
     #[serde(default)]
     pub crop: Option<crop::CropPlan>,
     #[serde(default)]
+    pub mosaic: Option<mosaic::MosaicSpec>,
+    #[serde(default)]
+    pub mosaic_output: Option<mosaic::MosaicPlan>,
+    #[serde(default)]
     pub manifest_path: Option<String>,
     pub item_id: String,
     pub asset_key: String,
@@ -108,6 +116,7 @@ struct Inner {
     root: PathBuf,
     store: Mutex<Store>,
     recipes: Mutex<BTreeMap<String, SavedRecipe>>,
+    projects: Mutex<BTreeMap<String, Project>>,
     client: reqwest::Client,
     permits: Semaphore,
     raster_permits: Arc<Semaphore>,
@@ -133,6 +142,36 @@ fn active(status: &JobStatus) -> bool {
 
 fn default_job_kind() -> String {
     "download".into()
+}
+
+fn new_download_job(request: CreateJobRequest) -> Job {
+    let timestamp = now();
+    Job {
+        id: Uuid::new_v4().to_string(),
+        kind: default_job_kind(),
+        parent_id: None,
+        recipe: None,
+        crop: None,
+        mosaic: None,
+        mosaic_output: None,
+        manifest_path: None,
+        item_id: request.item_id,
+        asset_key: request.asset_key,
+        href: request.href,
+        media_type: request.media_type,
+        title: request.title.unwrap_or_else(|| "Sentinel-2 asset".into()),
+        status: JobStatus::Queued,
+        bytes_downloaded: 0,
+        total_bytes: None,
+        sha256: None,
+        output_path: None,
+        error: None,
+        created_at: timestamp.clone(),
+        updated_at: timestamp,
+        source: "Earth Search / Element 84; Copernicus Sentinel-2 L2A".into(),
+        validation: "Pending file signature, byte count and SHA-256 checks".into(),
+        attempts: 1,
+    }
 }
 
 fn extension(media_type: &str) -> Result<&'static str> {
@@ -265,6 +304,9 @@ impl JobManager {
                         return Err("Stored clip job has inconsistent source provenance".into());
                     }
                 }
+                "raster_mosaic" => {
+                    mosaic::validate_stored_mosaic(job)?;
+                }
                 _ => return Err("Stored job has an unsupported kind".into()),
             }
             if active(&job.status) {
@@ -273,10 +315,11 @@ impl JobManager {
                 job.error = Some("The runtime stopped before this operation completed. Retry restarts the operation.".into());
                 job.output_path = None;
                 job.sha256 = None;
-                if job.kind == "raster_clip" {
+                if job.kind == "raster_clip" || job.kind == "raster_mosaic" {
                     // A crash after the engine's file commit but before the job commit is not success.
                     job.crop = None;
                     job.manifest_path = None;
+                    job.mosaic_output = None;
                 }
             }
             if job.status == JobStatus::Succeeded {
@@ -284,7 +327,10 @@ impl JobManager {
                     root.join("assets")
                         .join(format!("{}.{}", job.id, extension(&job.media_type)?));
                 let manifest = root.join("assets").join(format!("{id}.metadata.json"));
-                if !expected.is_file() || (job.kind == "raster_clip" && !manifest.is_file()) {
+                if !expected.is_file()
+                    || ((job.kind == "raster_clip" || job.kind == "raster_mosaic")
+                        && !manifest.is_file())
+                {
                     job.status = JobStatus::Failed;
                     job.error = Some(
                         "The completed local asset or its required metadata is missing".into(),
@@ -293,18 +339,22 @@ impl JobManager {
                     job.sha256 = None;
                 } else {
                     job.output_path = Some(expected.to_string_lossy().into_owned());
-                    if job.kind == "raster_clip" {
+                    if job.kind == "raster_clip" || job.kind == "raster_mosaic" {
                         job.manifest_path = Some(manifest.to_string_lossy().into_owned());
                     }
                 }
             }
-            if job.kind == "raster_clip" && job.status != JobStatus::Succeeded {
+            if (job.kind == "raster_clip" || job.kind == "raster_mosaic")
+                && job.status != JobStatus::Succeeded
+            {
                 processing::cleanup_clip(&root, id).await;
                 job.crop = None;
                 job.manifest_path = None;
+                job.mosaic_output = None;
             }
         }
         let recipes = processing::load_recipes(&root).await?;
+        let projects = projects::load_projects(&root, fixture_origin.as_deref()).await?;
         let client = reqwest::Client::builder()
             .redirect(reqwest::redirect::Policy::none())
             .connect_timeout(Duration::from_secs(20))
@@ -320,6 +370,7 @@ impl JobManager {
                     active: BTreeMap::new(),
                 }),
                 recipes: Mutex::new(recipes),
+                projects: Mutex::new(projects),
                 client,
                 permits: Semaphore::new(2),
                 raster_permits: Arc::new(Semaphore::new(1)),
@@ -367,6 +418,141 @@ impl JobManager {
         self.inner.store.lock().await.jobs.get(id).cloned()
     }
 
+    /// Export a completed derived GeoTIFF only after rechecking the managed
+    /// path, byte count and recorded digest. Browser downloads use this path.
+    pub async fn derived_bytes(&self, id: &str) -> Result<(String, Vec<u8>)> {
+        let job = self.get(id).await.ok_or("Unknown job")?;
+        let root = self.inner.root.clone();
+        tokio::task::spawn_blocking(move || {
+            if job.status != JobStatus::Succeeded
+                || !matches!(job.kind.as_str(), "raster_clip" | "raster_mosaic")
+            {
+                return Err("Only completed derived GeoTIFF files can be exported".into());
+            }
+            let assets = root.join("assets").canonicalize().map_err(io_error)?;
+            if assets != root.join("assets") {
+                return Err("Managed asset directory was redirected".into());
+            }
+            let expected = assets.join(format!("{}.tif", job.id));
+            let output = Path::new(
+                job.output_path
+                    .as_deref()
+                    .ok_or("The completed job has no file")?,
+            )
+            .canonicalize()
+            .map_err(io_error)?;
+            if output != expected {
+                return Err("Output is not this job's managed GeoTIFF".into());
+            }
+            let file = std::fs::File::open(output).map_err(io_error)?;
+            let size = file.metadata().map_err(io_error)?.len();
+            if size == 0 || size > 128 * 1024 * 1024 || size != job.bytes_downloaded {
+                return Err("Derived file byte count is invalid".into());
+            }
+            let mut bytes = Vec::with_capacity(size as usize);
+            std::io::Read::take(file, size + 1)
+                .read_to_end(&mut bytes)
+                .map_err(io_error)?;
+            let digest = format!("{:x}", Sha256::digest(&bytes));
+            if bytes.len() as u64 != size || job.sha256.as_deref() != Some(digest.as_str()) {
+                return Err("Derived file checksum changed after processing".into());
+            }
+            Ok((format!("{}.tif", job.id), bytes))
+        })
+        .await
+        .map_err(io_error)?
+    }
+
+    pub async fn mosaic_metadata_bytes(&self, id: &str) -> Result<(String, Vec<u8>)> {
+        let job = self.get(id).await.ok_or("Unknown job")?;
+        let root = self.inner.root.clone();
+        tokio::task::spawn_blocking(move || {
+            if job.status != JobStatus::Succeeded || job.kind != "raster_mosaic" {
+                return Err("Only completed project mosaics have this metadata export".into());
+            }
+            let spec = job
+                .mosaic
+                .as_ref()
+                .ok_or("Mosaic source pins are missing")?;
+            let plan = job
+                .mosaic_output
+                .as_ref()
+                .ok_or("Mosaic output plan is missing")?;
+            let assets = root.join("assets").canonicalize().map_err(io_error)?;
+            if assets != root.join("assets") {
+                return Err("Managed asset directory was redirected".into());
+            }
+            let filename = format!("{}.metadata.json", job.id);
+            let expected = assets.join(&filename);
+            let recorded = Path::new(
+                job.manifest_path
+                    .as_deref()
+                    .ok_or("Mosaic metadata path is missing")?,
+            )
+            .canonicalize()
+            .map_err(io_error)?;
+            if recorded != expected {
+                return Err("Mosaic metadata is not its managed sidecar".into());
+            }
+            let file = std::fs::File::open(&expected).map_err(io_error)?;
+            let size = file.metadata().map_err(io_error)?.len();
+            if size == 0 || size > 2 * 1024 * 1024 {
+                return Err("Mosaic metadata exceeds 2 MiB".into());
+            }
+            let mut bytes = Vec::with_capacity(size as usize);
+            file.take(size + 1)
+                .read_to_end(&mut bytes)
+                .map_err(io_error)?;
+            if bytes.len() as u64 != size {
+                return Err("Mosaic metadata changed while reading".into());
+            }
+            let manifest: serde_json::Value = serde_json::from_slice(&bytes).map_err(io_error)?;
+            if manifest
+                .get("schemaVersion")
+                .and_then(|value| value.as_str())
+                != Some("geod-project-mosaic/v1")
+                || manifest
+                    .pointer("/project/id")
+                    .and_then(|value| value.as_str())
+                    != Some(spec.project_id.as_str())
+                || manifest.get("assetKey").and_then(|value| value.as_str())
+                    != Some(spec.asset_key.as_str())
+                || manifest
+                    .pointer("/output/file")
+                    .and_then(|value| value.as_str())
+                    != Some(format!("{}.tif", job.id).as_str())
+                || manifest
+                    .pointer("/output/bytes")
+                    .and_then(|value| value.as_u64())
+                    != Some(job.bytes_downloaded)
+                || manifest
+                    .pointer("/output/sha256")
+                    .and_then(|value| value.as_str())
+                    != job.sha256.as_deref()
+                || manifest.get("plan") != Some(&serde_json::to_value(plan).map_err(io_error)?)
+            {
+                return Err("Mosaic metadata no longer matches its completed result".into());
+            }
+            let sources = manifest
+                .get("sources")
+                .and_then(|value| value.as_array())
+                .ok_or("Mosaic metadata source list is missing")?;
+            if sources.len() != spec.sources.len()
+                || !sources.iter().zip(&spec.sources).all(|(source, pin)| {
+                    source.get("jobId").and_then(|value| value.as_str())
+                        == Some(pin.job_id.as_str())
+                        && source.get("sha256").and_then(|value| value.as_str())
+                            == Some(pin.sha256.as_str())
+                })
+            {
+                return Err("Mosaic metadata source pins no longer match the job".into());
+            }
+            Ok((filename, bytes))
+        })
+        .await
+        .map_err(io_error)?
+    }
+
     /// A terminal status can precede cancellation cleanup. Read the record and
     /// worker state under one lock so clients can wait for actual settlement.
     pub async fn get_with_settled(&self, id: &str) -> Option<(Job, bool)> {
@@ -390,31 +576,7 @@ impl JobManager {
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
         }
-        let timestamp = now();
-        let job = Job {
-            id: Uuid::new_v4().to_string(),
-            kind: default_job_kind(),
-            parent_id: None,
-            recipe: None,
-            crop: None,
-            manifest_path: None,
-            item_id: request.item_id,
-            asset_key: request.asset_key,
-            href: request.href,
-            media_type: request.media_type,
-            title: request.title.unwrap_or_else(|| "Sentinel-2 asset".into()),
-            status: JobStatus::Queued,
-            bytes_downloaded: 0,
-            total_bytes: None,
-            sha256: None,
-            output_path: None,
-            error: None,
-            created_at: timestamp.clone(),
-            updated_at: timestamp,
-            source: "Earth Search / Element 84; Copernicus Sentinel-2 L2A".into(),
-            validation: "Pending file signature, byte count and SHA-256 checks".into(),
-            attempts: 1,
-        };
+        let job = new_download_job(request);
         store.jobs.insert(job.id.clone(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.remove(&job.id);
@@ -466,6 +628,8 @@ impl JobManager {
             let recipe = old.recipe.as_ref().ok_or("The clip job has no recipe")?;
             recipe.validate()?;
             processing::validate_source(recipe, store.jobs.get(&recipe.source.job_id))?;
+        } else if old.kind == "raster_mosaic" {
+            mosaic::validate_mosaic_sources(&old, &store.jobs)?;
         } else {
             self.validate(&CreateJobRequest {
                 item_id: old.item_id.clone(),
@@ -483,10 +647,13 @@ impl JobManager {
         job.output_path = None;
         job.error = None;
         job.crop = None;
+        job.mosaic_output = None;
         job.manifest_path = None;
         job.updated_at = now();
         job.validation = if job.kind == "raster_clip" {
             "Pending pinned source validation and exact pixel-window clip".into()
+        } else if job.kind == "raster_mosaic" {
+            "Pending source checksum validation and pixel-aligned mosaic/clip".into()
         } else {
             "Pending file signature, byte count and SHA-256 checks".into()
         };
@@ -521,6 +688,7 @@ impl JobManager {
         tokio::spawn(async move {
             let result = match manager.get(&id).await.as_ref().map(|job| job.kind.as_str()) {
                 Some("raster_clip") => manager.process_clip(&id, &token).await,
+                Some("raster_mosaic") => manager.process_mosaic(&id, &token).await,
                 Some("download") => manager.download(&id, &token).await,
                 _ => Err("Unknown job kind".into()),
             };
@@ -535,8 +703,9 @@ impl JobManager {
                     job.output_path = None;
                     job.sha256 = None;
                     job.crop = None;
+                    job.mosaic_output = None;
                     job.manifest_path = None;
-                    if job.kind == "raster_clip" {
+                    if job.kind == "raster_clip" || job.kind == "raster_mosaic" {
                         processing::cleanup_clip(&manager.inner.root, &id).await;
                     }
                 }

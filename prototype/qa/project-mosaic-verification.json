@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-29",
+  "scope": "multi-scene project and bounded SCL/RGB mosaic",
+  "realScl": {
+    "itemId": "S2C_10SEG_20250627_0_L2A",
+    "sourceBytes": 2249570,
+    "sourceSha256": "b85454c5fbaec6f86bcc60be45fa16312c21cb0e38da8a248d980ad5b81f4707",
+    "projectBoundsWgs84": [-122.44, 37.75, -122.43, 37.76],
+    "resultBytes": 627,
+    "resultSha256": "aad9eab22f8a464d29ff152c3fd3e618f10a6476b3dd2efcd279a6a45f1eb7a0",
+    "resultShape": [56, 45],
+    "bands": 1,
+    "crs": "EPSG:32610",
+    "pixelSizeMetres": [20, 20],
+    "independentCheck": "Rasterio output array exactly equals the corresponding source pixel window; CRS and band count equal",
+    "browserResultDownload": "GET /jobs/{id}/file returned 627 bytes with the recorded SHA-256 after runtime restart"
+  },
+  "realTciHeader": {
+    "contentLength": 242742218,
+    "dimensions": [10980, 10980],
+    "bands": 3,
+    "dataType": "uint8",
+    "crs": "EPSG:32610",
+    "pixelSizeMetres": [10, 10],
+    "tileSize": [1024, 1024],
+    "compression": "deflate",
+    "nodata": 0,
+    "fullFileDownloadedAndProcessed": false
+  },
+  "automatedChecks": [
+    "SCL overlap uses newer non-NoData class values while preserving older pixels under zero",
+    "RGB overlap keeps the three channels together and skips NoData triplets",
+    "tiled Deflate RGB fixture decodes, mosaics, and reads back exactly",
+    "saved WGS84 polygon masks RGB pixels outside its boundary",
+    "saved project reuses completed downloads and persists both result jobs across restart"
+  ],
+  "limits": "Same aligned WGS84 UTM grid; no reprojection. Up to 32 scenes, 8 million result pixels, and 128 MiB result file."
+}

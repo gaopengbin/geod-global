@@ -1,5 +1,5 @@
 //! Loopback development adapter; desktop commands use JobManager directly.
-use crate::{CreateJobRequest, JobManager, RasterRecipe};
+use crate::{CreateJobRequest, CreateProjectRequest, JobManager, RasterRecipe};
 use axum::{
     extract::{DefaultBodyLimit, Path, Query, Request, State},
     http::{header, HeaderValue, Method, StatusCode},
@@ -91,6 +91,46 @@ async fn diagnostics(State(manager): State<JobManager>) -> Json<serde_json::Valu
 }
 async fn jobs(State(manager): State<JobManager>) -> Json<Vec<crate::Job>> {
     Json(manager.list().await)
+}
+async fn projects(State(manager): State<JobManager>) -> Json<Vec<crate::Project>> {
+    Json(manager.list_projects().await)
+}
+async fn create_project(
+    State(manager): State<JobManager>,
+    Json(request): Json<CreateProjectRequest>,
+) -> std::result::Result<(StatusCode, Json<crate::Project>), ApiError> {
+    manager
+        .create_project(request)
+        .await
+        .map(|project| (StatusCode::CREATED, Json(project)))
+        .map_err(api_error)
+}
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct ProjectDownloadRequest {
+    asset_key: String,
+}
+async fn download_project(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+    Json(request): Json<ProjectDownloadRequest>,
+) -> std::result::Result<(StatusCode, Json<crate::ProjectDownloads>), ApiError> {
+    manager
+        .enqueue_project(&id, &request.asset_key)
+        .await
+        .map(|downloads| (StatusCode::ACCEPTED, Json(downloads)))
+        .map_err(api_error)
+}
+async fn mosaic_project(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+    Json(request): Json<ProjectDownloadRequest>,
+) -> std::result::Result<(StatusCode, Json<crate::Job>), ApiError> {
+    manager
+        .run_project_mosaic(&id, &request.asset_key)
+        .await
+        .map(|job| (StatusCode::ACCEPTED, Json(job)))
+        .map_err(api_error)
 }
 async fn job(
     State(manager): State<JobManager>,
@@ -225,17 +265,64 @@ async fn download_artifact(
     )
         .into_response())
 }
+async fn download_derived(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Response, ApiError> {
+    let (filename, bytes) = manager.derived_bytes(&id).await.map_err(api_error)?;
+    Ok((
+        [
+            (header::CONTENT_TYPE, "image/tiff".to_owned()),
+            (
+                header::CONTENT_DISPOSITION,
+                format!("attachment; filename=\"{filename}\""),
+            ),
+            (header::CACHE_CONTROL, "no-store".to_owned()),
+        ],
+        bytes,
+    )
+        .into_response())
+}
+async fn download_mosaic_metadata(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Response, ApiError> {
+    let (filename, bytes) = manager
+        .mosaic_metadata_bytes(&id)
+        .await
+        .map_err(api_error)?;
+    Ok((
+        [
+            (
+                header::CONTENT_TYPE,
+                "application/json; charset=utf-8".to_owned(),
+            ),
+            (
+                header::CONTENT_DISPOSITION,
+                format!("attachment; filename=\"{filename}\""),
+            ),
+            (header::CACHE_CONTROL, "no-store".to_owned()),
+        ],
+        bytes,
+    )
+        .into_response())
+}
 
 pub fn router(manager: JobManager) -> Router {
     Router::new()
         .route("/health", get(health))
         .route("/diagnostics", get(diagnostics))
         .route("/jobs", get(jobs).post(create))
+        .route("/projects", get(projects).post(create_project))
+        .route("/projects/{id}/downloads", post(download_project))
+        .route("/projects/{id}/mosaics", post(mosaic_project))
         .route("/jobs/{id}", get(job))
         .route("/jobs/{id}/cancel", post(cancel))
         .route("/jobs/{id}/retry", post(retry))
         .route("/jobs/{id}/raster", get(raster))
         .route("/jobs/{id}/pixel", get(pixel))
+        .route("/jobs/{id}/file", get(download_derived))
+        .route("/jobs/{id}/metadata", get(download_mosaic_metadata))
         .route(
             "/jobs/{id}/package",
             get(download_artifact).post(prepare_artifact),
@@ -243,7 +330,7 @@ pub fn router(manager: JobManager) -> Router {
         .route("/recipes", get(recipes).post(save_recipe))
         .route("/recipes/plan", post(plan_recipe))
         .route("/recipes/run", post(run_recipe))
-        .layer(DefaultBodyLimit::max(512 * 1024))
+        .layer(DefaultBodyLimit::max(2 * 1024 * 1024))
         .layer(middleware::from_fn(browser_boundary))
         .with_state(manager)
 }

@@ -1,8 +1,8 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use geod_runtime::{
-    CreateJobRequest, Job, JobManager, JobStatus, RasterInspection, RasterPixel, RasterRecipe,
-    RecipePlan, RuntimeHealth, SavedRecipe,
+    CreateJobRequest, CreateProjectRequest, Job, JobManager, JobStatus, Project, ProjectDownloads,
+    RasterInspection, RasterPixel, RasterRecipe, RecipePlan, RuntimeHealth, SavedRecipe,
 };
 use std::path::{Path, PathBuf};
 use tauri::{Manager, State, WebviewWindowBuilder};
@@ -62,6 +62,37 @@ async fn diagnostics(manager: State<'_, JobManager>) -> Result<serde_json::Value
 #[tauri::command]
 async fn list_jobs(manager: State<'_, JobManager>) -> Result<Vec<Job>, String> {
     Ok(manager.list().await)
+}
+
+#[tauri::command]
+async fn list_projects(manager: State<'_, JobManager>) -> Result<Vec<Project>, String> {
+    Ok(manager.list_projects().await)
+}
+
+#[tauri::command]
+async fn create_project(
+    request: CreateProjectRequest,
+    manager: State<'_, JobManager>,
+) -> Result<Project, String> {
+    manager.create_project(request).await
+}
+
+#[tauri::command]
+async fn download_project(
+    id: String,
+    asset_key: String,
+    manager: State<'_, JobManager>,
+) -> Result<ProjectDownloads, String> {
+    manager.enqueue_project(&id, &asset_key).await
+}
+
+#[tauri::command]
+async fn mosaic_project(
+    id: String,
+    asset_key: String,
+    manager: State<'_, JobManager>,
+) -> Result<Job, String> {
+    manager.run_project_mosaic(&id, &asset_key).await
 }
 
 #[tauri::command]
@@ -221,6 +252,10 @@ fn main() {
             health,
             diagnostics,
             list_jobs,
+            list_projects,
+            create_project,
+            download_project,
+            mosaic_project,
             create_job,
             cancel_job,
             retry_job,

@@ -41,6 +41,7 @@ import "./styles.css";
 import "./catalog.css";
 import { SAMPLE_BBOX, defaultLiveSearch, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
+import { ProjectsLibrary, SaveProjectButton } from "./projects-ui.jsx";
 import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { I18nProvider, useI18n } from "./i18n.jsx";
@@ -439,6 +440,7 @@ function App() {
                       <Button size="sm" onClick={() => setSelectedIds([])} disabled={!selectedIds.length}>{t("Clear")}</Button>
                     </div>
                     <Button primary onClick={loadSelected} disabled={!selectedIds.length || selectedIds.length > 16}>{t("Load selected imagery · {count}", { count: selectedIds.length })}</Button>
+                    <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={() => go('My Data')}/>
                     {selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 COGs for this browser map. Narrow the filters or clear some scenes.")}</span>}
                   </div>}
                   <div className="panel-foot">
@@ -636,6 +638,7 @@ function App() {
                   title={t("My Data")}
                   sub={t("Find downloaded files and clipping results ready to inspect or use.")}
                 />
+                <ProjectsLibrary />
                 <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />
                 <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
                   <ExecutableRecipes areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON} />

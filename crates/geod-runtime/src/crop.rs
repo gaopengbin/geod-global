@@ -370,6 +370,48 @@ fn mask_polygon(
     Ok(masked)
 }
 
+/// Pixel-centre inclusion mask shared by one-source clips and project mosaics.
+/// The caller keeps sample values separate from this coverage mask.
+pub(crate) fn polygon_coverage(
+    geometry: &PolygonGeometry,
+    crs: &str,
+    bounds: [f64; 4],
+    pixel_size: [f64; 2],
+    width: u32,
+    height: u32,
+    cancel: &CancellationToken,
+) -> Result<Vec<bool>> {
+    geometry.bounds()?;
+    if width as u64 * height as u64 > 8_000_000 {
+        return Err("Polygon mask exceeds 8 million output pixels".into());
+    }
+    let (wgs84, utm) = projections(crs)?;
+    let polygons = prepared_polygons(geometry);
+    let deadline = Instant::now() + Duration::from_secs(90);
+    let mut coverage = Vec::with_capacity(width as usize * height as usize);
+    for row in 0..height {
+        check_cancel(Some(cancel))?;
+        if Instant::now() > deadline {
+            return Err("Polygon masking exceeded its processing time limit".into());
+        }
+        let northing = bounds[3] - (row as f64 + 0.5) * pixel_size[1];
+        for col in 0..width {
+            let easting = bounds[0] + (col as f64 + 0.5) * pixel_size[0];
+            let mut point = (easting, northing, 0.0);
+            proj4rs::transform::transform(&utm, &wgs84, &mut point)
+                .map_err(|error| format!("Cannot transform mosaic pixel to WGS84: {error}"))?;
+            coverage.push(prepared_contains(
+                &polygons,
+                [point.0.to_degrees(), point.1.to_degrees()],
+            ));
+        }
+    }
+    if !coverage.iter().any(|value| *value) {
+        return Err("The project polygon contains no output pixel centres".into());
+    }
+    Ok(coverage)
+}
+
 fn projections(crs: &str) -> Result<(Proj, Proj)> {
     let epsg = crs
         .strip_prefix("EPSG:")
@@ -401,7 +443,7 @@ fn project_point(from: &Proj, to: &Proj, longitude: f64, latitude: f64) -> Resul
     Ok([point.0, point.1])
 }
 
-fn projected_envelope(bounds: [f64; 4], crs: &str) -> Result<[f64; 4]> {
+pub(crate) fn projected_envelope(bounds: [f64; 4], crs: &str) -> Result<[f64; 4]> {
     let (from, to) = projections(crs)?;
     let mut envelope = [
         f64::INFINITY,

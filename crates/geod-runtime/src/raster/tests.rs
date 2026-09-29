@@ -74,6 +74,8 @@ pub(crate) fn record(root: &Path, bytes: &[u8]) -> Job {
         parent_id: None,
         recipe: None,
         crop: None,
+        mosaic: None,
+        mosaic_output: None,
         manifest_path: None,
     }
 }
