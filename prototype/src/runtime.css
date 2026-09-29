@@ -9,6 +9,19 @@
 .runtime-empty { padding: 24px; color: var(--ink-2); }
 .runtime-empty p { margin: 0; }
 .runtime-jobs { margin-top: 16px; }
+.runtime-task-history { margin-top: 18px; }
+.runtime-task-history > .bui-disclosure-trigger { font-size: 13px; color: var(--ink); }
+.runtime-library { margin-top: 16px; }
+.runtime-library .library-filters { margin-top: 12px; }
+.runtime-library .bui-task-rows { gap: 0; overflow: hidden; border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.runtime-library .bui-task-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; align-items: center; padding: 9px 14px; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--line-soft); }
+.runtime-library .bui-task-row:last-child { border-bottom: 0; }
+.runtime-library .bui-task-main { grid-column: 1; }
+.runtime-library .bui-task-copy strong { font-weight: 600; }
+.runtime-library .bui-task-details { grid-column: 1; margin-top: 0; }
+.runtime-library .bui-task-actions { grid-column: 2; grid-row: 1 / span 2; padding-top: 0; }
+.runtime-file-details .bui-disclosure-trigger { padding: 6px 0; }
+.runtime-results-count { color: var(--ink-2); font-size: 12px; margin: 0; }
 .runtime-job-details { min-width: 0; }
 .runtime-job-status { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--ink-2); font-size: 12px; margin: 0 0 12px; }
 .runtime-details { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 8px 12px; margin: 16px 0; font-size: 12px; }
@@ -52,6 +65,8 @@
 .library-filters label:first-child { flex: 1; }
 
 @media (max-width: 760px) {
+  .runtime-library .bui-task-row { grid-template-columns: 1fr; }
+  .runtime-library .bui-task-actions { grid-column: 1; grid-row: auto; padding-left: 37px; padding-top: 3px; }
   .runtime-raster-grid { grid-template-columns: 1fr; }
   .runtime-raster-image img { max-height: 440px; }
   .runtime-raster-legend ul { grid-template-columns: 1fr; }
@@ -60,6 +75,7 @@
   .runtime-raster-loading { padding: 40px 10px; }
 }
 @media (max-width: 620px) {
+  .runtime-library .bui-task-actions { padding-left: 0; }
   .library-filters { align-items: stretch; flex-direction: column; gap: 0; }
   .runtime-details { grid-template-columns: 1fr; gap: 4px; }
   .runtime-details dd { margin-bottom: 8px; }

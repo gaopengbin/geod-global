@@ -974,14 +974,13 @@ function App() {
                 <PageHeading
                   eyebrow={t("EXECUTION")}
                   title={t("Tasks")}
-                  sub={t("Follow every step, from source to output.")}
+                  sub={t("See downloads and clipping in progress, and retry failed tasks.")}
                   action={
                     <Button
-                      icon={Plus}
                       onClick={() => {
                         go("Explore");
                       }}
-                    >{t("New task")}</Button>
+                    >{t("Explore data")}</Button>
                   }
                 />
                 <RuntimeTasks areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
@@ -1090,7 +1089,7 @@ function App() {
                 <PageHeading
                   eyebrow={t("LOCAL LIBRARY")}
                   title={t("My Data")}
-                  sub={t("Your outputs, with their story intact.")}
+                  sub={t("Find downloaded files and clipping results ready to inspect or use.")}
                 />
                 <RuntimeLibrary areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
                 <Disclosure className="design-simulations" summary={<>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</>}>

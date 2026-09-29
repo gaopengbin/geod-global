@@ -156,31 +156,34 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
     const canInspect = job.status === 'succeeded' && job.assetKey === 'scl' && /^image\/(?:tiff|geotiff)(?:;|$)/i.test(job.mediaType || '');
     const progress = Number.isFinite(job.totalBytes) && job.totalBytes > 0 && Number.isFinite(job.bytesDownloaded)
       ? Math.max(0, Math.min(100, job.bytesDownloaded / job.totalBytes * 100)) : null;
+    const type = derived ? t('Clipped raster · GeoTIFF') : t(job.assetKey === 'scl' ? 'SCL raster · GeoTIFF' : job.assetKey === 'visual' ? 'True-color image · GeoTIFF' : 'Preview image · JPEG');
     return {
       id: job.id,
       title: job.title || job.itemId,
-      description: `${job.assetKey.toUpperCase()} · ${job.id}`,
+      description: library ? type : `${t(derived ? 'Raster clip task' : 'Source download task')} · ${job.itemId}`,
       icon: derived ? Crop : Download,
       status: job.status,
-      statusLabel: t(derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
+      statusLabel: t(library ? derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
       progress: derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
-      meta: derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
-      details: <div className="runtime-job-details">
-        <p className="runtime-job-status">{job.status === 'succeeded' ? <><CheckCircle2 size={14}/>{t('File saved · SHA-256 recorded')}</> : t(active ? derived ? 'Copying source pixels into a derived GeoTIFF' : 'Downloading original asset' : 'No completed artifact from this attempt')}</p>
+      meta: library ? date(job.updatedAt) : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
+      details: library ? <Disclosure className="runtime-file-details" summary={t('File details and provenance')}>
         <DerivedArtifactDetails job={job}/>
-        {job.error && <RuntimeError message={typeof job.error === 'string' ? job.error : job.error.message} summary={derived ? 'Raster processing did not complete. Check the source file and retry the recipe.' : 'This download did not complete. Retry from the beginning when the source and local service are available.'}/>}
-        {job.status === 'succeeded' && <Disclosure defaultOpen={library} summary={t('File and provenance')}><dl className="runtime-details"><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t(derived ? 'Generated locally from the pinned source recipe. Inspect the result to read output pixels and spatial metadata.' : 'Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl></Disclosure>}
+        <dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{job.itemId}</dd><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t(derived ? 'Generated locally from the pinned source recipe. Inspect the result to read output pixels and spatial metadata.' : 'Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl>
+        {derived && <ArtifactPackageButton job={job}/>}
+        {desktopAvailable() && <Button disabled={busy[job.id]} onClick={() => run(job, 'reveal')}><FolderOpen size={15}/>{t('Show in folder')}</Button>}
         {errors[job.id] && <RuntimeError message={errors[job.id]} summary="The task action failed. Check the service connection and try again."/>}
-        {derived && job.status === 'succeeded' && <ArtifactPackageButton job={job}/>}
-      </div>,
-      actions: <>
+      </Disclosure> : job.error || errors[job.id] ? <div className="runtime-job-details">
+        {job.error && <RuntimeError message={typeof job.error === 'string' ? job.error : job.error.message} summary={derived ? 'Raster processing did not complete. Check the source file and retry the recipe.' : 'This download did not complete. Retry from the beginning when the source and local service are available.'}/>}
+        {errors[job.id] && <RuntimeError message={errors[job.id]} summary="The task action failed. Check the service connection and try again."/>}
+      </div> : null,
+      actions: library ? canInspect && <>
+        <Button variant="primary" onClick={() => setInspect(job)}><Scan size={15}/>{t('Inspect raster')}</Button>
+        {!derived && <ClipRasterButton job={job} areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
+      </> : active || ['failed', 'cancelled', 'interrupted'].includes(job.status) ? <>
         {active && <Button disabled={busy[job.id]} onClick={() => run(job, 'cancel')}><X size={15}/>{t(derived ? 'Cancel processing' : 'Cancel download')}</Button>}
         {['failed', 'cancelled', 'interrupted'].includes(job.status) && <Button disabled={busy[job.id]} onClick={() => run(job, 'retry')}><RefreshCw size={15}/>{t('Retry from start')}</Button>}
-        {canInspect && <Button variant="primary" onClick={() => setInspect(job)}><Scan size={15}/>{t('Inspect raster')}</Button>}
-        {canInspect && !derived && <ClipRasterButton job={job} areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
-        {job.status === 'succeeded' && desktopAvailable() && <Button disabled={busy[job.id]} onClick={() => run(job, 'reveal')}><FolderOpen size={15}/>{t('Show in folder')}</Button>}
-      </>,
+      </> : null,
     };
   });
   return <><TaskRows className="runtime-jobs" items={items} ariaLabel={t(library ? 'Local source files and outputs' : 'Local file tasks')}/>{inspect && <RasterDialog job={inspect} onClose={() => setInspect(null)}/>}</>;
@@ -188,8 +191,13 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
 
 export function RuntimeTasks({ areaBounds, areaPolygon }) {
   const { jobs } = useContext(RuntimeContext);
-  const { t } = useI18n();
-  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Downloads and processing')}</h2><Connection/>{jobs.length ? <RuntimeJobRows jobs={jobs} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <Surface variant="inset" className="runtime-empty"><p>{t('Select a scene and open the file download dialog. Download tasks and file checks are saved by the local service.')}</p></Surface>}</section>;
+  const { t, number } = useI18n();
+  const pending = jobs.filter(job => job.status !== 'succeeded');
+  const completed = jobs.filter(job => job.status === 'succeeded');
+  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Tasks needing attention')}</h2><Connection compact/>
+    {pending.length ? <RuntimeJobRows jobs={pending} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <Surface variant="inset" className="runtime-empty"><p>{t('No tasks need attention. Start a download in Explore; finished files are in My Data.')}</p></Surface>}
+    {completed.length > 0 && <Disclosure className="runtime-task-history" summary={t('Completed task history · {count}', { count: number(completed.length) })}><RuntimeJobRows jobs={completed} areaBounds={areaBounds} areaPolygon={areaPolygon}/></Disclosure>}
+  </section>;
 }
 
 export function RuntimeLibrary({ areaBounds, areaPolygon }) {
@@ -199,5 +207,5 @@ export function RuntimeLibrary({ areaBounds, areaPolygon }) {
   const [kind, setKind] = useState('all');
   const completed = jobs.filter(job => job.status === 'succeeded');
   const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind === 'raster_clip')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
-  return <section className="runtime-section" aria-label={t('Local source files and outputs')}><h2>{t('Local source files and outputs')} <Badge>{number(completed.length)}</Badge></h2><Connection/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p>{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
+  return <section className="runtime-section runtime-library" aria-label={t('Local source files and outputs')}><h2>{t('Available files')} <Badge>{number(completed.length)}</Badge></h2><Connection compact/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p className="runtime-results-count">{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
 }
