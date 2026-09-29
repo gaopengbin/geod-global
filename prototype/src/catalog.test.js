@@ -9,10 +9,10 @@ test("the live catalog defaults to a rolling UTC month", () => {
 });
 test("query validates geographic/date inputs and sends server-side cloud and UTC end date", () => {
   const url = new URL(searchURL(INITIAL_SEARCH));
-  assert.deepEqual(JSON.parse(url.searchParams.get("query")), { "eo:cloud_cover": { lte: 60 } });
+  assert.deepEqual(JSON.parse(url.searchParams.get("query")), { "eo:cloud_cover": { gte: 0, lte: 60 } });
   assert.equal(url.searchParams.get("datetime"), "2025-06-01T00:00:00Z/2025-06-30T23:59:59.999Z");
   assert.equal(url.searchParams.get("sortby"), "-properties.datetime");
-  for (const values of [{ bbox: "1,,2,3" }, { bbox: "180,2,-180,3" }, { bbox: "1,91,2,93" }, { bbox: "1,2,3" }, { start: "2025-02-30" }, { end: "2025-05-01" }, { limit: 101 }, { cloud: -1 }]) assert.throws(() => validateSearch({ ...INITIAL_SEARCH, ...values }));
+  for (const values of [{ bbox: "1,,2,3" }, { bbox: "180,2,-180,3" }, { bbox: "1,91,2,93" }, { bbox: "1,2,3" }, { start: "2025-02-30" }, { end: "2025-05-01" }, { limit: 101 }, { cloud: -1 }, { cloudMin: 61 }, { cloudMin: -1 }]) assert.throws(() => validateSearch({ ...INITIAL_SEARCH, ...values }));
 });
 test("map-drawn WGS 84 bounds use the same validation as catalog searches", () => {
   const bounds = validateBounds([12.34567, -3.5, 12.7, -3]);
@@ -82,4 +82,40 @@ test("an old request rejection is ignored while current transport errors remain 
   assert.equal(await first, null);
   pending[1].reject(new Error("current network error"));
   await assert.rejects(second, /current network error/);
+});
+
+test("automatic pagination reports all unique scenes and stops after cancellation", async () => {
+  const first = structuredClone(fixture);
+  const next = `${searchURL(INITIAL_SEARCH)}&page=2`;
+  first.links = [{ rel: "next", href: next }];
+  const second = structuredClone(fixture);
+  second.features = [structuredClone(fixture.features[0]), { ...structuredClone(fixture.features[0]), id: "second-scene" }];
+  second.links = [];
+  const pages = [];
+  const runner = createSearchRunner();
+  const result = await runner.runAll(searchURL(INITIAL_SEARCH), { fetcher: async url => ({ ok: true, json: async () => url === next ? second : first }), onPage: page => pages.push(page) });
+  assert.equal(result.scenes.length, new Set(fixture.features.map(item => item.id)).size + 1);
+  assert.equal(pages.length, 2);
+  assert.equal(pages[0].complete, false);
+  assert.equal(pages[1].complete, true);
+
+  const pending = [];
+  const interrupted = runner.runAll(searchURL(INITIAL_SEARCH), { fetcher: () => new Promise(resolve => pending.push(resolve)) });
+  runner.cancel();
+  pending[0]({ ok: true, json: async () => first });
+  assert.equal(await interrupted, null);
+});
+
+test("automatic pagination keeps the first page visible when a later page fails", async () => {
+  const first = structuredClone(fixture);
+  first.links = [{ rel: "next", href: `${searchURL(INITIAL_SEARCH)}&page=2` }];
+  const seen = [];
+  const runner = createSearchRunner();
+  await assert.rejects(runner.runAll(searchURL(INITIAL_SEARCH), {
+    fetcher: async url => url.includes('page=2') ? { ok: false, status: 503 } : { ok: true, json: async () => first },
+    onPage: page => seen.push(page),
+  }), /HTTP 503/);
+  assert.equal(seen.length, 1);
+  assert.equal(seen[0].complete, false);
+  assert.ok(seen[0].scenes.length);
 });

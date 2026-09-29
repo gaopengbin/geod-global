@@ -1,6 +1,6 @@
 export const EARTH_SEARCH = "https://earth-search.aws.element84.com/v1/search";
 export const SAMPLE_BBOX = [-122.55, 37.68, -122.32, 37.84];
-export const INITIAL_SEARCH = { bbox: SAMPLE_BBOX.join(", "), start: "2025-06-01", end: "2025-06-30", cloud: 60, limit: 20 };
+export const INITIAL_SEARCH = { bbox: SAMPLE_BBOX.join(", "), start: "2025-06-01", end: "2025-06-30", cloudMin: 0, cloud: 60, limit: 20 };
 
 export function defaultLiveSearch(now = new Date()) {
   const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
@@ -23,15 +23,15 @@ export function validateSearch(input) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(input[key]) || !Number.isFinite(Date.parse(input[key])) || new Date(input[key]).toISOString().slice(0, 10) !== input[key]) throw new Error("Choose valid start and end dates.");
   }
   if (input.start > input.end) throw new Error("The start date must be on or before the end date.");
-  const cloud = Number(input.cloud), limit = Number(input.limit);
-  if (!Number.isFinite(cloud) || cloud < 0 || cloud > 100) throw new Error("Cloud cover must be between 0 and 100 percent.");
+  const cloudMin = Number(input.cloudMin ?? 0), cloud = Number(input.cloud), limit = Number(input.limit);
+  if (!Number.isFinite(cloudMin) || !Number.isFinite(cloud) || cloudMin < 0 || cloud > 100 || cloudMin > cloud) throw new Error("Choose a cloud cover range from 0 to 100 percent, with minimum no greater than maximum.");
   if (!Number.isInteger(limit) || limit < 1 || limit > 100) throw new Error("Page size must be between 1 and 100 scenes.");
-  return { bbox, start: input.start, end: input.end, cloud, limit };
+  return { bbox, start: input.start, end: input.end, cloudMin, cloud, limit };
 }
 
 export function searchURL(input) {
   const q = validateSearch(input), url = new URL(EARTH_SEARCH);
-  url.search = new URLSearchParams({ collections: "sentinel-2-l2a", bbox: q.bbox.join(","), datetime: `${q.start}T00:00:00Z/${q.end}T23:59:59.999Z`, query: JSON.stringify({ "eo:cloud_cover": { lte: q.cloud } }), sortby: "-properties.datetime", limit: String(q.limit) });
+  url.search = new URLSearchParams({ collections: "sentinel-2-l2a", bbox: q.bbox.join(","), datetime: `${q.start}T00:00:00Z/${q.end}T23:59:59.999Z`, query: JSON.stringify({ "eo:cloud_cover": { gte: q.cloudMin, lte: q.cloud } }), sortby: "-properties.datetime", limit: String(q.limit) });
   return url.href;
 }
 
@@ -96,6 +96,31 @@ export function createSearchRunner() {
       try {
         const result = await fetchCatalogPage(url, { ...options, signal: controller.signal });
         return current === generation ? result : null;
+      } catch (error) {
+        if (current !== generation) return null;
+        throw error;
+      }
+    },
+    async runAll(url, { onPage, ...options } = {}) {
+      controller?.abort();
+      controller = new AbortController();
+      const current = ++generation;
+      const visited = new Set();
+      const scenes = new Map();
+      let next = url;
+      let pages = 0;
+      try {
+        while (next) {
+          if (visited.has(next)) throw new Error("The catalog repeated a pagination link.");
+          visited.add(next);
+          const page = await fetchCatalogPage(next, { ...options, signal: controller.signal });
+          if (current !== generation) return null;
+          for (const scene of page.scenes) scenes.set(scene.id, scene);
+          pages += 1;
+          next = page.next;
+          onPage?.({ ...page, scenes: [...scenes.values()], next, pages, complete: !next });
+        }
+        return { scenes: [...scenes.values()], pages, complete: true };
       } catch (error) {
         if (current !== generation) return null;
         throw error;

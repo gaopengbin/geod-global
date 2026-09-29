@@ -6,11 +6,13 @@ import WebGLTileLayer from 'ol/layer/WebGLTile.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import GeoTIFF from 'ol/source/GeoTIFF.js';
 import VectorSource from 'ol/source/Vector.js';
+import DragBox from 'ol/interaction/DragBox.js';
+import { always } from 'ol/events/condition.js';
 import Feature from 'ol/Feature.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { fromExtent } from 'ol/geom/Polygon.js';
 import { intersects as extentsIntersect } from 'ol/extent.js';
-import { transform, transformExtent } from 'ol/proj.js';
+import { transformExtent } from 'ol/proj.js';
 import { register } from 'ol/proj/proj4.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import proj4 from 'proj4';
@@ -27,6 +29,8 @@ const landStyle = new Style({ fill: new Fill({ color: '#30443c' }), stroke: new 
 const countryStyle = new Style({ stroke: new Stroke({ color: '#a6bab0', width: 1.2 }) });
 const footprintStyle = new Style({ stroke: new Stroke({ color: '#9ed4eb', width: 1.25, lineDash: [5, 4] }), fill: new Fill({ color: 'rgba(102, 183, 225, 0.045)' }) });
 const selectedFootprintStyle = new Style({ stroke: new Stroke({ color: '#55b8ff', width: 2 }), fill: new Fill({ color: 'rgba(45, 135, 255, 0.07)' }) });
+const queuedFootprintStyle = new Style({ stroke: new Stroke({ color: '#f4b544', width: 2.5 }), fill: new Fill({ color: 'rgba(244, 181, 68, 0.13)' }) });
+const loadedFootprintStyle = new Style({ stroke: new Stroke({ color: '#6ed7a3', width: 2 }), fill: new Fill({ color: 'rgba(68, 193, 135, 0.08)' }) });
 
 function sceneFootprint(scene) {
   let feature;
@@ -72,7 +76,7 @@ function fitExtent(map, extent) {
   if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: 16, duration: 250 });
 }
 
-export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, reference, split, area, areaGeometry, showArea, onFootprintsChange }, ref) {
+export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loadedScenes = [], selectedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, onFootprintsPick, onFootprintsChange }, ref) {
   const { t } = useI18n();
   const target = useRef(null);
   const map = useRef(null);
@@ -80,6 +84,8 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
   const areaLayer = useRef(null);
   const footprintSource = useRef(null);
   const footprintUnionRef = useRef(null);
+  const onFootprintsPickRef = useRef(onFootprintsPick);
+  const boxSelectRef = useRef(boxSelect);
   const savedViewRef = useRef(null);
   const sceneExtentRef = useRef(null);
   const areaExtentRef = useRef(null);
@@ -87,8 +93,12 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState({ metadataReady: false, requested: 0, completed: 0, active: 0, elapsed: 0, stalled: false });
+  const [otherLoading, setOtherLoading] = useState({ metadata: 0, total: 0, requested: 0, completed: 0, active: 0 });
   const [retry, setRetry] = useState(0);
   const areaKey = area?.join(',');
+  onFootprintsPickRef.current = onFootprintsPick;
+  boxSelectRef.current = boxSelect;
+  const shouldLoad = loadedScenes.some(item => item.id === scene?.id) && (!activeDay || scene?.date?.slice(0, 10) === activeDay);
 
   useImperativeHandle(ref, () => ({
     zoomIn() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.setResolution(view.getResolution() / 2); } },
@@ -126,53 +136,61 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
       clearInterval(loadingClock);
       setError(message);
     };
-    loadingClock = setInterval(() => {
+    if (shouldLoad) loadingClock = setInterval(() => {
       if (failed || (initialReady && pendingTiles === 0)) return;
       publishLoading();
       if (Date.now() - lastActivityAt >= 45000) fail('The imagery source stopped responding. Try another scene or retry.');
     }, 1000);
     try {
-      if (!scene?.assets?.visual?.href) throw new Error('This scene has no true-color COG asset.');
-      const extent = sceneExtent(scene);
-      utmDefinition(scene.crs);
-      proj4.defs(scene.crs, utmDefinition(scene.crs));
-      register(proj4);
-      source = new GeoTIFF({ sources: [{ url: scene.assets.visual.href }] });
-      const mapExtent = transformExtent(extent, scene.crs, OVERVIEW_PROJECTION, 16);
-      const base = new WebGLTileLayer({ source, className: 'explore-base-layer', extent: mapExtent, zIndex: 1 });
+      const projected = transformExtent(area, 'EPSG:4326', OVERVIEW_PROJECTION, 8);
+      if (shouldLoad && !scene?.assets?.visual?.href) throw new Error('This scene has no true-color COG asset.');
+      let mapExtent = projected;
+      if (shouldLoad) {
+        const extent = sceneExtent(scene);
+        proj4.defs(scene.crs, utmDefinition(scene.crs));
+        register(proj4);
+        mapExtent = transformExtent(extent, scene.crs, OVERVIEW_PROJECTION, 16);
+      }
+      if (shouldLoad) source = new GeoTIFF({ sources: [{ url: scene.assets.visual.href }] });
+      const base = source ? new WebGLTileLayer({ source, className: 'explore-base-layer', extent: mapExtent, zIndex: 9 }) : null;
       const land = new VectorLayer({ source: overviewLand, style: landStyle, zIndex: 0 });
       const countries = new VectorLayer({ source: overviewCountries, style: countryStyle, minResolution: 750, zIndex: 2 });
       const footprints = new VectorSource({ wrapX: false });
-      const footprintLayer = new VectorLayer({ source: footprints, style: feature => feature.get('selected') ? selectedFootprintStyle : footprintStyle, zIndex: 11 });
+      const footprintLayer = new VectorLayer({ source: footprints, style: feature => feature.get('queued') ? queuedFootprintStyle : feature.get('loaded') ? loadedFootprintStyle : feature.get('active') ? selectedFootprintStyle : footprintStyle, zIndex: 11 });
       const overlays = new VectorLayer({ source: new VectorSource(), className: 'explore-area-layer', zIndex: 12 });
       const previous = savedViewRef.current?.areaKey === areaKey ? savedViewRef.current : null;
       const view = new View({ projection: OVERVIEW_PROJECTION,
-        center: previous?.center || transform([(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2], scene.crs, OVERVIEW_PROJECTION),
+        center: previous?.center || [(mapExtent[0] + mapExtent[2]) / 2, (mapExtent[1] + mapExtent[3]) / 2],
         resolution: previous?.resolution || 100, minResolution: 2.5, maxResolution: 156543.03392804097, enableRotation: false });
-      instance = new OLMap({ target: target.current, controls: [], layers: [land, base, countries, footprintLayer, overlays], view });
+      instance = new OLMap({ target: target.current, controls: [], layers: [land, ...(base ? [base] : []), countries, footprintLayer, overlays], view });
       map.current = instance; areaLayer.current = overlays; footprintSource.current = footprints; sceneExtentRef.current = mapExtent;
       resize = new ResizeObserver(() => { instance.updateSize(); });
       resize.observe(target.current);
-      source.on('tileloadstart', () => { pendingTiles += 1; requestedTiles += 1; lastActivityAt = Date.now(); publishLoading(); });
-      source.on('tileloadend', () => {
+      instance.on('singleclick', event => {
+        if (boxSelectRef.current) return;
+        const matches = footprintSource.current?.getFeaturesAtCoordinate(event.coordinate).map(feature => feature.getId()) || [];
+        if (matches.length) onFootprintsPickRef.current?.([...new Set(matches)]);
+      });
+      source?.on('tileloadstart', () => { pendingTiles += 1; requestedTiles += 1; lastActivityAt = Date.now(); publishLoading(); });
+      source?.on('tileloadend', () => {
         pendingTiles = Math.max(0, pendingTiles - 1);
         completedTiles += 1;
         lastActivityAt = Date.now();
         publishLoading();
         if (!cancelled && !failed && !initialReady) { initialReady = true; setReady(true); }
       });
-      source.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); fail('The true-color COG tiles could not load. Check your connection or retry.'); });
-      source.on('error', () => fail('The true-color COG metadata could not load. Check your connection or retry.'));
-      source.getView().then(() => { metadataReady = true; lastActivityAt = Date.now(); publishLoading(); })
+      source?.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); fail('The true-color COG tiles could not load. Check your connection or retry.'); });
+      source?.on('error', () => fail('The true-color COG metadata could not load. Check your connection or retry.'));
+      source?.getView().then(() => { metadataReady = true; lastActivityAt = Date.now(); publishLoading(); })
         .catch(() => fail('The true-color COG metadata could not load. Check your connection or retry.'));
+      if (!source) { metadataReady = true; initialReady = true; setReady(true); }
       // Focus on the part of the searched area covered by this scene, including when the search spans multiple UTM zones.
-      const projected = transformExtent(area, 'EPSG:4326', OVERVIEW_PROJECTION, 8);
       areaExtentRef.current = intersectBounds(projected, mapExtent) ? projected : null;
       focusExtentRef.current = focusRasterExtent(mapExtent, projected);
       requestAnimationFrame(() => {
         if (cancelled) return;
         const size = instance.getSize();
-        if (!previous) fitExtent(instance, fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
+        if (!previous) fitExtent(instance, !shouldLoad ? footprintUnionRef.current || projected : fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
         else if (size?.[0] && size?.[1] && !extentsIntersect(instance.getView().calculateExtent(size), mapExtent)) fitExtent(instance, focusExtentRef.current);
         fitted = true;
       });
@@ -189,7 +207,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
       map.current = null; areaLayer.current = null; footprintSource.current = null; referenceLayer.current = null;
       sceneExtentRef.current = null; areaExtentRef.current = null; focusExtentRef.current = null;
     };
-  }, [scene?.id, areaKey, retry]);
+  }, [scene?.id, areaKey, retry, shouldLoad]);
 
   useEffect(() => {
     const source = footprintSource.current;
@@ -197,11 +215,12 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
     source.clear();
     let union = null;
     let count = 0;
-    const ordered = [...scenes.filter(item => item.id !== scene.id), scene];
-    for (const item of ordered) {
+    const selectedSet = new Set(selectedIds);
+    const loadedSet = new Set(loadedScenes.map(item => item.id));
+    for (const item of scenes) {
       const feature = sceneFootprint(item);
       if (!feature) continue;
-      feature.set('selected', item.id === scene.id);
+      feature.setProperties({ queued: selectedSet.has(item.id) && !loadedSet.has(item.id), loaded: loadedSet.has(item.id), active: item.id === activeSceneId });
       source.addFeature(feature);
       const extent = feature.getGeometry().getExtent();
       union = union ? [Math.min(union[0], extent[0]), Math.min(union[1], extent[1]), Math.max(union[2], extent[2]), Math.max(union[3], extent[3])] : extent.slice();
@@ -209,7 +228,58 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
     }
     footprintUnionRef.current = union;
     onFootprintsChange?.(count);
-  }, [scenes, scene?.id, areaKey, retry, onFootprintsChange]);
+  }, [scenes, selectedIds, loadedScenes, activeSceneId, areaKey, retry, onFootprintsChange]);
+
+  useEffect(() => {
+    const instance = map.current;
+    if (!instance || !boxSelect) return;
+    const dragBox = new DragBox({ condition: always, className: 'explore-scene-dragbox' });
+    dragBox.on('boxend', () => {
+      const extent = dragBox.getGeometry().getExtent();
+      const matches = footprintSource.current?.getFeaturesInExtent(extent)
+        .filter(feature => feature.getGeometry()?.intersectsExtent(extent)).map(feature => feature.getId()) || [];
+      onFootprintsPickRef.current?.([...new Set(matches)]);
+    });
+    instance.addInteraction(dragBox);
+    return () => instance.removeInteraction(dragBox);
+  }, [boxSelect, scene?.id, areaKey, retry, shouldLoad]);
+
+  useEffect(() => {
+    const instance = map.current;
+    if (!instance) return;
+    const entries = [];
+    let active = true;
+    const otherScenes = loadedScenes.filter(item => item.id !== scene.id && (!activeDay || item.date.slice(0, 10) === activeDay));
+    let metadata = 0, requested = 0, completed = 0, pending = 0, lastActivity = Date.now();
+    const publish = () => { lastActivity = Date.now(); if (active) setOtherLoading({ metadata, total: otherScenes.length, requested, completed, active: pending }); };
+    const watch = otherScenes.length ? setInterval(() => {
+      if (active && (metadata < otherScenes.length || pending > 0) && Date.now() - lastActivity >= 45000)
+        setError('A selected COG could not load. Remove it from the selection and retry.');
+    }, 1000) : null;
+    publish();
+    otherScenes.forEach((item, index) => {
+      try {
+        const extent = sceneExtent(item);
+        proj4.defs(item.crs, utmDefinition(item.crs));
+        register(proj4);
+        const source = new GeoTIFF({ sources: [{ url: item.assets.visual.href }] });
+        const layer = new WebGLTileLayer({ source, className: 'explore-mosaic-layer',
+          extent: transformExtent(extent, item.crs, OVERVIEW_PROJECTION, 16), zIndex: 3 + index * 0.25 });
+        source.on('tileloadstart', () => { requested += 1; pending += 1; publish(); });
+        source.on('tileloadend', () => { completed += 1; pending = Math.max(0, pending - 1); publish(); });
+        source.on('error', () => { if (active) setError('A selected COG could not load. Remove it from the selection and retry.'); });
+        source.on('tileloaderror', () => { pending = Math.max(0, pending - 1); publish(); if (active) setError('A selected COG could not load. Remove it from the selection and retry.'); });
+        source.getView().then(() => { metadata += 1; publish(); }).catch(() => { if (active) setError('A selected COG could not load. Remove it from the selection and retry.'); });
+        instance.addLayer(layer);
+        entries.push({ layer, source });
+      } catch { if (active) setError('A selected COG has no supported georeferenced grid.'); }
+    });
+    return () => {
+      active = false;
+      clearInterval(watch);
+      entries.forEach(({ layer, source }) => { instance.removeLayer(layer); layer.setSource(null); source.dispose(); });
+    };
+  }, [scene?.id, areaKey, loadedScenes, activeDay, retry, shouldLoad]);
 
   useEffect(() => {
     const instance = map.current;
@@ -219,7 +289,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
     let active = true;
     const referenceSource = new GeoTIFF({ sources: [{ url: reference.assets.visual.href }] });
     const layer = new WebGLTileLayer({ source: referenceSource, className: 'explore-reference-layer',
-      extent: transformExtent(sceneExtent(reference), reference.crs, OVERVIEW_PROJECTION, 16), zIndex: 3 });
+      extent: transformExtent(sceneExtent(reference), reference.crs, OVERVIEW_PROJECTION, 16), zIndex: 10 });
     const referenceError = () => { if (active) setError('The reference COG tiles could not load. Try another scene.'); };
     referenceSource.on('tileloaderror', referenceError);
     referenceSource.on('error', referenceError);
@@ -243,13 +313,13 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, refere
     source.addFeature(feature);
   }, [scene?.id, areaKey, areaGeometry, showArea, retry]);
 
-  return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
-    <div className="explore-map-target" ref={target} aria-label={t('Georeferenced true-color Sentinel-2 map')} />
-    {!error && (!ready || loading.active > 0) && <div className={`explore-map-message explore-map-progress${ready ? ' explore-map-progress-compact' : ''}`}>
-      <div className="explore-map-progress-heading"><Spinner size={17}/><strong>{t('Loading true-color COG')}</strong><span>{scene?.date?.slice(0, 10)}</span></div>
-      <p role="status">{t(loading.requested === 0 && !loading.metadataReady ? 'Reading imagery metadata…' : loading.requested === 0 ? 'Locating tiles for the current view…' : ready ? 'Map visible; loading remaining tiles…' : 'Loading visible imagery tiles…')}</p>
-      <Progress value={loading.requested > 0 ? loading.completed : null} max={loading.requested || 100} aria-label={t('Completed imagery tile requests')} />
-      <div className="explore-map-progress-detail"><span>{loading.requested > 0 ? <>{t('Tiles returned')} {loading.completed}/{loading.requested} · {t('Active requests')} {loading.active}</> : t('Waiting for the imagery source')}</span><span>{loading.elapsed}{t(' seconds')}</span></div>
+  return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} data-box-select={boxSelect ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
+    <div className="explore-map-target" ref={target} aria-label={t(loadedScenes.length ? 'Georeferenced true-color Sentinel-2 map' : 'Sentinel-2 scene footprint map')} />
+    {!error && ((shouldLoad && (!ready || loading.active > 0)) || otherLoading.metadata < otherLoading.total || otherLoading.active > 0) && <div className={`explore-map-message explore-map-progress${ready ? ' explore-map-progress-compact' : ''}`}>
+      <div className="explore-map-progress-heading"><Spinner size={17}/><strong>{t(loadedScenes.length > 1 ? 'Loading selected COG layers · {count}' : 'Loading true-color COG', { count: loadedScenes.length })}</strong><span>{t('Metadata {ready}/{total}', { ready: otherLoading.metadata + (shouldLoad && loading.metadataReady ? 1 : 0), total: otherLoading.total + (shouldLoad ? 1 : 0) })}</span></div>
+      <p role="status">{t(loading.requested + otherLoading.requested === 0 && (!loading.metadataReady || otherLoading.metadata < otherLoading.total) ? 'Reading imagery metadata…' : loading.requested + otherLoading.requested === 0 ? 'Locating tiles for the current view…' : ready ? 'Map visible; loading remaining tiles…' : 'Loading visible imagery tiles…')}</p>
+      <Progress value={loading.requested + otherLoading.requested > 0 ? loading.completed + otherLoading.completed : null} max={loading.requested + otherLoading.requested || 100} aria-label={t('Completed imagery tile requests')} />
+      <div className="explore-map-progress-detail"><span>{loading.requested + otherLoading.requested > 0 ? <>{t('Tiles returned')} {loading.completed + otherLoading.completed}/{loading.requested + otherLoading.requested} · {t('Active requests')} {loading.active + otherLoading.active}</> : t('Waiting for the imagery source')}</span><span>{loading.elapsed}{t(' seconds')}</span></div>
       {loading.stalled && <div className="explore-map-progress-stalled"><span>{t('Imagery source is responding slowly. You can keep waiting or retry.')}</span><Button size="xs" onClick={() => setRetry(value => value + 1)}><RefreshCw size={13}/>{t('Retry map')}</Button></div>}
     </div>}
     {error && <div className="explore-map-message explore-map-error" role="alert"><strong>{t('Map unavailable')}</strong><span>{t(error)}</span><Button onClick={() => setRetry(value => value + 1)}><RefreshCw size={14}/>{t('Retry map')}</Button></div>}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   Compass,
@@ -31,6 +31,7 @@ import {
   PanelLeftOpen,
   ShieldCheck,
   CheckCircle2,
+  MousePointer2,
 } from "lucide-react";
 import "./ui/foundation.css";
 import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
@@ -82,7 +83,7 @@ function SceneThumbnail({ src, alt }) {
   const { t } = useI18n();
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [src]);
-  return src && !failed ? <img src={src} alt={alt} onError={() => setFailed(true)} /> : <span className="catalog-thumbnail-missing" role="img" aria-label={t("Preview unavailable: {description}", { description: alt })}>{t("Preview unavailable")}</span>;
+  return src && !failed ? <img src={src} alt={alt} loading="lazy" onError={() => setFailed(true)} /> : <span className="catalog-thumbnail-missing" role="img" aria-label={t("Preview unavailable: {description}", { description: alt })}>{t("Preview unavailable")}</span>;
 }
 
 function App() {
@@ -105,8 +106,18 @@ function App() {
   const [selected, setSelected] = useState(null),
     [query, setQuery] = useState(""),
     [sort, setSort] = useState("date");
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [loadedIds, setLoadedIds] = useState([]);
+  const [visibleLoadedIds, setVisibleLoadedIds] = useState([]);
+  const [activeDay, setActiveDay] = useState(null);
+  const [mapMatches, setMapMatches] = useState([]);
+  const [boxSelect, setBoxSelect] = useState(false);
+  useEffect(() => { setMapMatches([]); }, [query]);
   const exploreMap = useRef(null);
   const timelineTrack = useRef(null);
+  const sceneListRef = useRef(null);
+  const listEndRef = useRef(null);
+  const [visibleListCount, setVisibleListCount] = useState(100);
   const [footprintCount, setFootprintCount] = useState(0);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [discoveryCollapsed, setDiscoveryCollapsed] = useState(false);
@@ -118,32 +129,29 @@ function App() {
     [inspector, setInspector] = useState(window.innerWidth >= 1280);
   const [modal, setModal] = useState(null),
     [theme, setTheme] = useState(stored("theme", "light"));
-  const runSearch = async (more = false, submittedInput = searchInput) => {
+  const runSearch = async (submittedInput = searchInput) => {
     let submitted, url;
     try {
-      submitted = more ? appliedSearch : validateSearch(submittedInput);
-      url = more ? liveCatalog?.next : searchURL(submitted);
-      if (!url) return;
+      submitted = validateSearch({ ...submittedInput, limit: 100 });
+      url = searchURL(submitted);
     } catch (error) { setLiveError(error.message); return; }
     setLiveError("");
-    setLiveState(more ? "more" : "loading");
-    if (!more) {
-      setLiveCatalog(null);
-      setSelected(null);
-      setCompare(false);
-      setAppliedSearch(submitted);
-      setQuery("");
-    }
+    setLiveState("loading");
+    setLiveCatalog(null);
+    setSelected(null);
+    setSelectedIds([]);
+    setLoadedIds([]);
+    setVisibleLoadedIds([]);
+    setActiveDay(null);
+    setMapMatches([]);
+    setCompare(false);
+    setAppliedSearch(submitted);
+    setQuery("");
     try {
-      const result = await searchRunner.current.run(url);
+      const result = await searchRunner.current.runAll(url, { onPage: page => setLiveCatalog(page) });
       if (!result) return;
-      if (more) setLiveCatalog((old) => ({ ...result, query: old.query, scenes: [...new Map([...old.scenes, ...result.scenes].map((s) => [s.id, s])).values()] }));
-      else {
-        setLiveCatalog(result);
-        setSelected(result.scenes[0] || null);
-      }
       setLiveState("ready");
-      if (!more) setFiltersOpen(false);
+      setFiltersOpen(false);
     } catch (error) {
       setLiveError(error.name === "AbortError" ? "Search cancelled." : error.name === "TimeoutError" ? "Earth Search did not respond within 30 seconds. Try again." : error.message);
       setLiveState("error");
@@ -151,7 +159,7 @@ function App() {
     }
   };
   useEffect(() => {
-    runSearch(false, searchInput);
+    runSearch(searchInput);
     return () => searchRunner.current.cancel();
   }, []);
   const cancelSearch = () => { searchRunner.current.cancel(); setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
@@ -162,21 +170,21 @@ function App() {
   const updateSearchField = (event) => {
     const { name, value } = event.currentTarget;
     if (name === 'bbox') setAreaPolygon(null);
-    setSearchInput((current) => ({ ...current, [name]: name === "cloud" || name === "limit" ? Number(value) : value }));
+    setSearchInput((current) => ({ ...current, [name]: name === "cloud" || name === "cloudMin" || name === "limit" ? Number(value) : value }));
   };
   const submitSearch = (event) => {
     event.preventDefault();
     // Submit exactly the values visible in native form controls, including date pickers.
     const submittedInput = Object.fromEntries(new FormData(event.currentTarget));
     setSearchInput((current) => ({ ...current, ...submittedInput }));
-    runSearch(false, submittedInput);
+    runSearch(submittedInput);
   };
   const applyMapArea = ({ bounds, geometry, place }) => {
     const next = { ...searchInput, bbox: bounds.join(", ") };
     setSearchInput(next);
     setModal(null);
     setAreaPolygon(geometry ? { geometry, place, bounds } : null);
-    runSearch(false, next);
+    runSearch(next);
   };
   const exportMapArea = ({ bounds, geometry, place }) => showJSON("geod-search-area.geojson", {
     type: "Feature",
@@ -217,7 +225,7 @@ function App() {
     location.hash = encodeURIComponent(p);
     setPage(p);
   };
-  const scenes = catalog?.scenes || [];
+  const scenes = useMemo(() => catalog?.scenes || [], [catalog]);
   useEffect(() => {
     const track = timelineTrack.current;
     if (!track) return;
@@ -230,11 +238,44 @@ function App() {
     observer.observe(track);
     return () => observer.disconnect();
   }, [selected?.id, scenes.length, page]);
-  const filtered = scenes
+  const filtered = useMemo(() => scenes
     .filter((s) =>
-      s.id.toLowerCase().includes(query.toLowerCase()) || s.date.includes(query),
+      (!activeDay || s.date.slice(0, 10) === activeDay)
+      && (s.id.toLowerCase().includes(query.toLowerCase()) || s.date.includes(query)),
     )
-    .sort((a, b) => sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date));
+    .sort((a, b) => sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date)), [scenes, activeDay, query, sort]);
+  useEffect(() => { setVisibleListCount(100); sceneListRef.current?.scrollTo({ top: 0 }); }, [query, sort, activeDay, appliedSearch]);
+  useEffect(() => {
+    if (!listEndRef.current || !sceneListRef.current || visibleListCount >= filtered.length) return;
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0]?.isIntersecting) setVisibleListCount(count => Math.min(filtered.length, count + 100));
+    }, { root: sceneListRef.current, rootMargin: '200px' });
+    observer.observe(listEndRef.current);
+    return () => observer.disconnect();
+  }, [filtered.length, visibleListCount]);
+  const sceneById = useMemo(() => new Map(scenes.map(scene => [scene.id, scene])), [scenes]);
+  const loadedScenes = useMemo(() => loadedIds.map(id => sceneById.get(id)).filter(Boolean), [loadedIds, sceneById]);
+  const visibleLoadedScenes = useMemo(() => loadedScenes.filter(scene => visibleLoadedIds.includes(scene.id)), [loadedScenes, visibleLoadedIds]);
+  const days = useMemo(() => [...new Set(scenes.map(scene => scene.date.slice(0, 10)))].sort(), [scenes]);
+  const dayCounts = useMemo(() => scenes.reduce((counts, scene) => {
+    const day = scene.date.slice(0, 10);
+    counts.set(day, (counts.get(day) || 0) + 1);
+    return counts;
+  }, new Map()), [scenes]);
+  const toggleScene = id => setSelectedIds(current => current.includes(id) ? current.filter(value => value !== id) : [...current, id]);
+  const loadSelected = () => {
+    const chosen = selectedIds.map(id => sceneById.get(id)).filter(scene => scene?.assets?.visual?.href);
+    if (!chosen.length || chosen.length > 16) return;
+    setLoadedIds(chosen.sort((a, b) => a.date.localeCompare(b.date)).map(scene => scene.id));
+    setVisibleLoadedIds(chosen.map(scene => scene.id));
+    setSelected(chosen.filter(scene => !activeDay || scene.date.slice(0, 10) === activeDay).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
+    setMapMatches([]);
+  };
+  const showDay = day => {
+    setActiveDay(day);
+    setMapMatches([]);
+    setSelected(visibleLoadedScenes.filter(scene => !day || scene.date.slice(0, 10) === day).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
+  };
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
@@ -279,7 +320,7 @@ function App() {
           </div>
         </header>
         {page === "Workspace" ? <React.Suspense fallback={<main className="wm-map-loading" role="status">{t("Loading local map…")}</main>}><WorkspaceMap /></React.Suspense> : workspace ? (
-          <div className={"workspace " + (!inspector || !selected ? "no-inspector " : "") + (discoveryCollapsed ? "no-discovery" : "")}>
+          <div className={"workspace " + (!inspector || (!selected && !mapMatches.length) ? "no-inspector " : "") + (discoveryCollapsed ? "no-discovery" : "")}>
             {!discoveryCollapsed && <aside className="discovery" id="explore-discovery">
               <div className="panel-heading">
                 <div>
@@ -295,6 +336,7 @@ function App() {
                 </span>
                 <ChevronDown size={16} />
               </Button>
+              {appliedSearch && <div className="catalog-active-filters">{date(appliedSearch.start)} – {date(appliedSearch.end)} · {t("clouds {minimum}–{maximum}", { minimum: number(appliedSearch.cloudMin / 100, { style: "percent" }), maximum: number(appliedSearch.cloud / 100, { style: "percent" }) })}</div>}
               <>
                   <label className="search-input scene-search">
                     <Search size={16} />
@@ -310,14 +352,16 @@ function App() {
                         <label>{t("From (UTC)")}<Input name="start" aria-label={t("Search start date")} type="date" value={searchInput.start} onInput={updateSearchField} onChange={updateSearchField} /></label>
                         <label>{t("Through (UTC)")}<Input name="end" aria-label={t("Search end date")} type="date" value={searchInput.end} onInput={updateSearchField} onChange={updateSearchField} /></label>
                       </div>
+                      <label className="range-label"><span>{t("Scene cloud cover ≥ {percent}", { percent: number(Number(searchInput.cloudMin) / 100, { style: "percent" }) })}</span><Input name="cloudMin" type="range" aria-label={t("Minimum cloud cover")} min="0" max="100" value={searchInput.cloudMin} onInput={updateSearchField} onChange={updateSearchField} /></label>
                       <label className="range-label"><span>{t("Scene cloud cover ≤ {percent}", { percent: number(Number(searchInput.cloud) / 100, { style: "percent" }) })}</span><Input name="cloud" type="range" aria-label={t("Live maximum cloud cover")} min="0" max="100" value={searchInput.cloud} onInput={updateSearchField} onChange={updateSearchField} /></label>
-                      <div className="catalog-search-actions">
-                        <label>{t("Per page")}<Select name="limit" aria-label={t("Scenes per page")} value={searchInput.limit} onChange={updateSearchField}><option value="10">10</option><option value="20">20</option><option value="50">50</option></Select></label>
-                        <Button primary icon={Search} type="submit">{t("Search catalog")}</Button>
-                      </div>
-                      {(liveState === "loading" || liveState === "more") && <Button type="button" onClick={cancelSearch}>{t("Cancel search")}</Button>}
+                      <div className="catalog-search-actions"><Button primary icon={Search} type="submit">{t("Search catalog")}</Button></div>
                     </form>
-                    {appliedSearch && <p className="catalog-query-note">{t("{status}: {start} – {end} · clouds ≤ {cloud} · [{bbox}]", { status: catalog ? t("Showing") : t("Requested"), start: date(appliedSearch.start), end: date(appliedSearch.end), cloud: number(appliedSearch.cloud / 100, { style: "percent" }), bbox: appliedSearch.bbox.join(", ") })}</p>}
+                    {appliedSearch && <p className="catalog-query-note">{t("{status}: {start} – {end} · clouds {minimum}–{maximum} · [{bbox}]", { status: catalog ? t("Showing") : t("Requested"), start: date(appliedSearch.start), end: date(appliedSearch.end), minimum: number(appliedSearch.cloudMin / 100, { style: "percent" }), maximum: number(appliedSearch.cloud / 100, { style: "percent" }), bbox: appliedSearch.bbox.join(", ") })}</p>}
+                  </div>
+                  <div className="catalog-fetch-status" role="status">
+                    {liveState === "loading" ? <><Spinner />{t("Fetching all catalog pages… {count} scenes from {pages} pages", { count: scenes.length, pages: catalog?.pages || 0 })}<Button variant="quiet" size="xs" onClick={cancelSearch}>{t("Stop catalog search")}</Button></>
+                      : catalog?.complete ? t("Catalog complete · {count} scenes", { count: scenes.length })
+                        : catalog ? t("Catalog partial · {count} scenes", { count: scenes.length }) : null}
                   </div>
                   <div className="results-heading">
                     <span className="results-count">
@@ -331,32 +375,32 @@ function App() {
                       </Select>
                     </div>
                   </div>
-                  <div className="scene-list">
-                    {liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : !catalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above, then search Earth Search for imagery.")}</EmptyState> : !filtered.length ? (
+                  <div className="scene-list" ref={sceneListRef}>
+                    {liveState === "loading" && !catalog ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : !catalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above, then search Earth Search for imagery.")}</EmptyState> : !filtered.length ? (
                       <EmptyState
                         icon={Search}
                         title={t("No matching scenes")}
                         action={
                           <Button
                             onClick={() => {
+                              if (query) { setQuery(""); return; }
                               setQuery("");
-                              const reset = { ...(appliedSearch || searchInput), cloud: 100 };
+                              const reset = { ...(appliedSearch || searchInput), cloudMin: 0, cloud: 100 };
                               setSearchInput({ ...reset, bbox: Array.isArray(reset.bbox) ? reset.bbox.join(", ") : reset.bbox });
-                              runSearch(false, reset);
+                              runSearch(reset);
                             }}
                           >{t("Reset filters")}</Button>
                         }
-                      >{t("Try a wider date range or allow more cloud cover.")}</EmptyState>
+                      >{t(query ? "No scene ID or date matches this text." : "Try a wider date range or allow more cloud cover.")}</EmptyState>
                     ) : (
-                      filtered.map((s) => (
-                        <Button variant="quiet" size="row" aria-pressed={selected?.id === s.id}
+                      filtered.slice(0, visibleListCount).map((s) => (
+                        <Button variant="quiet" size="row" aria-pressed={selectedIds.includes(s.id)}
                           key={s.id}
                           className={
-                            "scene " + (selected?.id === s.id ? "selected" : "")
+                            "scene " + (selectedIds.includes(s.id) ? "selected" : "")
                           }
-                          onClick={() => {
-                            setSelected(s);
-                          }}
+                          onClick={() => toggleScene(s.id)}
+                          aria-label={t("Select scene {date} {id}", { date: date(s.date), id: s.id })}
                         >
                           <SceneThumbnail
                             src={s.thumbnail}
@@ -377,7 +421,7 @@ function App() {
                               {s.cloud == null ? t("Unknown") : number(s.cloud / 100, { style: "percent", maximumFractionDigits: 1 })}<span>{s.gsd ? t("{resolution} m RGB", { resolution: number(s.gsd) }) : t("RGB preview")}</span>
                             </small>
                           </div>
-                          {selected?.id === s.id && (
+                          {selectedIds.includes(s.id) && (
                             <CheckCircle2
                               className="selection-check"
                               size={16}
@@ -386,15 +430,24 @@ function App() {
                         </Button>
                       ))
                     )}
+                    {filtered.length > visibleListCount && <div ref={listEndRef} className="catalog-list-progress" role="status">{t("Showing {shown} of {total} scenes · scroll for more", { shown: visibleListCount, total: filtered.length })}</div>}
                   </div>
-                  {liveCatalog?.next && <div className="catalog-next"><Button disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? t("Loading more…") : t("Load more scenes")}</Button><span>{t("Only loaded results are counted and sorted.")}</span></div>}
+                  {catalog && <div className="catalog-selection-actions">
+                    <div><strong>{t("{count} scenes selected", { count: selectedIds.length })}</strong><span>{t("Click footprints or drag a box on the map to choose scenes.")}</span></div>
+                    <div className="catalog-selection-buttons">
+                      <Button size="sm" onClick={() => setSelectedIds(current => [...new Set([...current, ...filtered.map(scene => scene.id)])])} disabled={!filtered.length}>{t("Select filtered · {count}", { count: filtered.length })}</Button>
+                      <Button size="sm" onClick={() => setSelectedIds([])} disabled={!selectedIds.length}>{t("Clear")}</Button>
+                    </div>
+                    <Button primary onClick={loadSelected} disabled={!selectedIds.length || selectedIds.length > 16}>{t("Load selected imagery · {count}", { count: selectedIds.length })}</Button>
+                    {selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 COGs for this browser map. Narrow the filters or clear some scenes.")}</span>}
+                  </div>}
                   <div className="panel-foot">
                     <Database size={13} />
-                    <span>{t("Earth Search ·")} {t("live HTTPS catalog")}{selected && <> · {t("{count} footprints on map", { count: footprintCount })}</>}</span>
+                    <span>{t("Earth Search ·")} {t("live HTTPS catalog")}{catalog && <> · {t("{count} footprints on map", { count: footprintCount })}</>}</span>
                   </div>
               </>
             </aside>}
-            {selected ? <main className="map-workspace">
+            {scenes.length ? <main className="map-workspace">
               <div className="map-toolbar">
                 <SegmentedControl className="preview-mode" aria-label={t("Preview")} value={compare ? "compare" : "preview"}
                   onValueChange={value => { setCompare(value === "compare"); if (value === "compare") setCompareId(other?.id || ""); }}
@@ -405,6 +458,9 @@ function App() {
                   ]} />
                 <div className="toolbar-end">
                   <div className="map-controls" role="group" aria-label={t("Map controls")}>
+                    <Button variant="secondary" size="icon" className={"map-icon " + (!boxSelect ? "control-active" : "")} aria-pressed={!boxSelect} aria-label={t("Click scene footprints")} title={t("Click scene footprints")} onClick={() => setBoxSelect(false)}><MousePointer2 size={17} /></Button>
+                    <Button variant="secondary" size="icon" className={"map-icon " + (boxSelect ? "control-active" : "")} aria-pressed={boxSelect} aria-label={t("Drag a box to select scene footprints")} title={t("Drag a box to select scene footprints")} onClick={() => setBoxSelect(true)}><SquareDashed size={17} /></Button>
+                    <span className="control-separator" aria-hidden="true" />
                     <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Zoom in")} title={t("Zoom in")} onClick={() => exploreMap.current?.zoomIn()}><Plus size={18} /></Button>
                     <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Zoom out")} title={t("Zoom out")} onClick={() => exploreMap.current?.zoomOut()}><Minus size={18} /></Button>
                     <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Fit all scene footprints")} title={t("Fit all scene footprints")} onClick={() => exploreMap.current?.fit()}><Maximize size={16} /></Button>
@@ -417,10 +473,10 @@ function App() {
                   </div>
                 </div>
               </div>
-              {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
+              {selected && !comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap ref={exploreMap} scene={selected} scenes={scenes} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} onFootprintsChange={setFootprintCount} />
+                  <ExploreMap ref={exploreMap} scene={selected || filtered[0] || scenes[0]} scenes={filtered} loadedScenes={visibleLoadedScenes} selectedIds={selectedIds} activeSceneId={selected?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} onFootprintsPick={ids => { setMapMatches(ids); setInspector(true); }} onFootprintsChange={setFootprintCount} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
@@ -458,36 +514,43 @@ function App() {
                 </div>
               )}
               <div className="map-attribution">
-                <span>{t("Copernicus Sentinel data ({year}) · Earth Search · Natural Earth overview", { year: selected.date.slice(0, 4) })}</span>
-                <Button variant="quiet" onClick={() => setModal("provenance")}>{t("Georeferenced COG display · source details")}<Info size={12} />
+                <span>{t("Copernicus Sentinel data ({year}) · Earth Search · Natural Earth overview", { year: (selected || scenes[0]).date.slice(0, 4) })}</span>
+                <Button variant="quiet" disabled={!selected} onClick={() => setModal("provenance")}>{t("Georeferenced COG display · source details")}<Info size={12} />
                 </Button>
               </div>
               <div className="timeline">
-                <Surface as="div" variant="inset" className="scene-caption" aria-label={t("Selected observation")}>
+                <Surface as="div" variant="inset" className="scene-caption" aria-label={t("Imagery selection status")}>
                   <Badge>{t("SENTINEL-2 L2A")}</Badge>
-                  <h2>{selected.properties["grid:code"] || t("Selected observation")}</h2>
-                  <p>{date(selected.date)} · {selected.cloud == null ? t("Unknown") : number(selected.cloud / 100, { style: "percent", maximumFractionDigits: 1 })} {t("scene cloud cover")}</p>
+                  <h2>{activeDay
+                    ? t("{count} candidates · {visible}/{total} loaded visible", { count: filtered.length, visible: visibleLoadedScenes.filter(scene => scene.date.slice(0, 10) === activeDay).length, total: loadedScenes.length })
+                    : t("{count} candidates · {loaded} loaded", { count: filtered.length, loaded: visibleLoadedScenes.length })}</h2>
+                  {selected && visibleLoadedScenes.length > 1 ? <Select aria-label={t("Front imagery layer")} value={selected.id} onChange={event => setSelected(sceneById.get(event.target.value))}>
+                    {visibleLoadedScenes.filter(scene => !activeDay || scene.date.slice(0, 10) === activeDay).map(scene => <option key={scene.id} value={scene.id}>{date(scene.date)} · {scene.properties["grid:code"] || scene.id}</option>)}
+                  </Select> : <p>{selected ? `${date(selected.date)} · ${selected.properties["grid:code"] || selected.id}` : t("Choose footprints, then load imagery")}</p>}
                 </Surface>
                 <div className="timeline-track" ref={timelineTrack} aria-label={t("Observation timeline")}>
                   <div className="timeline-items">
-                    {[...scenes].reverse().map((s) => {
-                      const cloudLabel = s.cloud == null ? t("Unknown") : number(s.cloud / 100, { style: "percent", maximumFractionDigits: 1 });
-                      return <Button variant="quiet" aria-pressed={selected?.id === s.id}
-                        key={s.id}
-                        className={s.id === selected.id ? "selected" : ""}
-                        onClick={() => setSelected(s)}
-                        aria-label={t("Select observation {date}, {cloud} scene cloud cover", { date: date(s.date), cloud: cloudLabel })}
-                      >
-                        <span className="observation-dot" aria-hidden="true" />
-                        <span className="timeline-date">{date(s.date, { year: undefined, month: "2-digit", day: "2-digit" })}</span>
-                        <span className="timeline-cloud"><Cloud size={11} aria-hidden="true" />{cloudLabel}</span>
-                      </Button>;
-                    })}
+                    <Button variant="quiet" aria-pressed={!activeDay} className={!activeDay ? "selected" : ""} onClick={() => showDay(null)} aria-label={t("Show all dates and {count} scenes", { count: scenes.length })}>
+                      <span className="observation-dot" aria-hidden="true" /><span className="timeline-date">{t("All dates")}</span><span className="timeline-cloud">{t("{count} scenes", { count: scenes.length })}</span>
+                    </Button>
+                    {days.map(day => <Button variant="quiet" key={day} aria-pressed={activeDay === day} className={activeDay === day ? "selected" : ""} onClick={() => showDay(day)} aria-label={t("Show {date} and {count} scenes", { date: date(day), count: dayCounts.get(day) })}>
+                      <span className="observation-dot" aria-hidden="true" /><span className="timeline-date">{date(day, { year: undefined, month: "2-digit", day: "2-digit" })}</span><span className="timeline-cloud">{t("{count} scenes", { count: dayCounts.get(day) })}</span>
+                    </Button>)}
                   </div>
                 </div>
               </div>
-            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t(liveState === "loading" ? "Recent imagery will appear here when Earth Search responds." : "Use the catalog on the left to choose an area and dates. The selected scene preview will appear here.")}</EmptyState></main>}
-            {inspector && selected && (
+            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t(liveState === "loading" ? "Catalog footprints will appear here as pages arrive." : "Choose an area, dates and cloud limit to find imagery footprints.")}</EmptyState></main>}
+            {inspector && mapMatches.length > 0 ? <aside className="inspector footprint-inspector" aria-label={t("Scenes in the selected map area")}>
+              <div className="inspector-heading"><span className="eyebrow">{t("MAP SELECTION")}</span><Button variant="quiet" size="icon" aria-label={t("Close map selection")} onClick={() => setMapMatches([])}><X size={16} /></Button></div>
+              <h2>{t("{count} scenes in this footprint", { count: mapMatches.length })}</h2>
+              <p>{t("Overlapping dates share a footprint. Check the scenes you want to load.")}</p>
+              <div className="footprint-select-actions"><Button size="sm" onClick={() => setSelectedIds(current => [...new Set([...current, ...mapMatches])])}>{t("Select these scenes")}</Button><Button size="sm" onClick={() => setSelectedIds(current => current.filter(id => !mapMatches.includes(id)))}>{t("Remove these scenes")}</Button></div>
+              <div className="footprint-match-list">{mapMatches.map(id => sceneById.get(id)).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date)).map(scene => <label key={scene.id} className="footprint-match">
+                <Input type="checkbox" checked={selectedIds.includes(scene.id)} onChange={() => toggleScene(scene.id)} aria-label={t("Select scene {date} {id}", { date: date(scene.date), id: scene.id })} />
+                <span><strong>{date(scene.date)}</strong><small>{scene.properties["grid:code"] || scene.id} · {scene.cloud == null ? t("Unknown") : number(scene.cloud / 100, { style: "percent", maximumFractionDigits: 1 })}</small></span>
+              </label>)}</div>
+              <div className="inspector-bottom"><Button primary onClick={loadSelected} disabled={!selectedIds.length || selectedIds.length > 16}>{t("Load selected imagery · {count}", { count: selectedIds.length })}</Button></div>
+            </aside> : inspector && selected && (
               <aside className="inspector">
                 <div className="inspector-heading">
                   <span className="eyebrow">{t("DATASET DETAILS")}</span>
@@ -501,6 +564,17 @@ function App() {
                 </div>
                 <h2>{t("Sentinel-2 L2A")}</h2>
                 <p className="muted">{t("Surface reflectance collection")}</p>
+                {loadedScenes.length > 1 && <Disclosure className="loaded-layer-disclosure" summary={t("Loaded layers · {count}", { count: loadedScenes.length })}>
+                  <p>{t("Overlapping COGs cover one another. Hide the front layer or choose another front layer below the map.")}</p>
+                  {loadedScenes.slice().reverse().map(scene => <label key={scene.id} className="loaded-layer-row">
+                    <Input type="checkbox" checked={visibleLoadedIds.includes(scene.id)} disabled={visibleLoadedIds.length === 1 && visibleLoadedIds.includes(scene.id)} onChange={event => {
+                      const next = event.currentTarget.checked ? [...visibleLoadedIds, scene.id] : visibleLoadedIds.filter(id => id !== scene.id);
+                      setVisibleLoadedIds(next);
+                      if (!next.includes(selected.id)) setSelected(loadedScenes.find(item => next.includes(item.id) && (!activeDay || item.date.slice(0, 10) === activeDay)) || null);
+                    }} aria-label={t("Show imagery layer {date} {id}", { date: date(scene.date), id: scene.id })} />
+                    <span>{date(scene.date)} · {scene.properties["grid:code"] || scene.id}</span>
+                  </label>)}
+                </Disclosure>}
                 <div className="detail-section">
                   <h3>{t("Observation")}</h3>
                   <dl>
@@ -648,7 +722,7 @@ function App() {
                 <dd>{t("Full scene, not AOI-specific")}</dd>
               </dl>
               <p>
-                {t("Scene metadata is queried from Earth Search using the submitted area, dates and cloud limit. Counts and local sorting cover loaded pages only. The map renders the source true-color COG; comparison requires matching source grids and does not perform scientific band math.")}
+                {t("Earth Search pages load automatically for the submitted area, dates and cloud limit. All returned footprints appear on the map; selecting scenes loads their source true-color COGs. Overlapping imagery is drawn in layer order and is not a cloud-free mosaic or scientific band calculation.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">
