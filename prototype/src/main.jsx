@@ -107,6 +107,7 @@ function App() {
     [sort, setSort] = useState("date");
   const exploreMap = useRef(null);
   const timelineTrack = useRef(null);
+  const [footprintCount, setFootprintCount] = useState(0);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [discoveryCollapsed, setDiscoveryCollapsed] = useState(false);
   const [navCollapsed, setNavCollapsed] = useState(stored("nav-collapsed", false));
@@ -389,7 +390,7 @@ function App() {
                   {liveCatalog?.next && <div className="catalog-next"><Button disabled={liveState === "more"} onClick={() => runSearch(true)}>{liveState === "more" ? t("Loading more…") : t("Load more scenes")}</Button><span>{t("Only loaded results are counted and sorted.")}</span></div>}
                   <div className="panel-foot">
                     <Database size={13} />
-                    <span>{t("Earth Search ·")} {t("live HTTPS catalog")}</span>
+                    <span>{t("Earth Search ·")} {t("live HTTPS catalog")}{selected && <> · {t("{count} footprints on map", { count: footprintCount })}</>}</span>
                   </div>
               </>
             </aside>}
@@ -406,7 +407,7 @@ function App() {
                   <div className="map-controls" role="group" aria-label={t("Map controls")}>
                     <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Zoom in")} title={t("Zoom in")} onClick={() => exploreMap.current?.zoomIn()}><Plus size={18} /></Button>
                     <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Zoom out")} title={t("Zoom out")} onClick={() => exploreMap.current?.zoomOut()}><Minus size={18} /></Button>
-                    <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Fit scene")} title={t("Fit scene")} onClick={() => exploreMap.current?.fit()}><Maximize size={16} /></Button>
+                    <Button variant="secondary" size="icon" className="map-icon" aria-label={t("Fit all scene footprints")} title={t("Fit all scene footprints")} onClick={() => exploreMap.current?.fit()}><Maximize size={16} /></Button>
                     <span className="control-separator" aria-hidden="true" />
                     <Button variant="secondary" size="icon" className={"map-icon " + (showArea ? "control-active" : "")} aria-pressed={showArea} aria-label={t("Toggle saved area")} title={t("Show the searched area")} onClick={() => setShowArea(!showArea)}><SquareDashed size={18} /></Button>
                     <span className="control-separator" aria-hidden="true" />
@@ -419,7 +420,7 @@ function App() {
               {!comparisons.length && <p className="catalog-compare-note">{t("Comparison needs another scene with the same CRS, transform and dimensions.")}</p>}
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap key={selected.crs || selected.id} ref={exploreMap} scene={selected} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} />
+                  <ExploreMap ref={exploreMap} scene={selected} scenes={scenes} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} onFootprintsChange={setFootprintCount} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}

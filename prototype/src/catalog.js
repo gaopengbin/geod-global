@@ -46,7 +46,7 @@ export function normalizeScene(item) {
   const visual = assets.visual || {}, thumbnail = assets.thumbnail?.href || null;
   const epsg = visual["proj:epsg"] ?? properties["proj:epsg"];
   const cloud = typeof properties["eo:cloud_cover"] === "number" && Number.isFinite(properties["eo:cloud_cover"]) ? properties["eo:cloud_cover"] : null;
-  return { id: item.id, collection: item.collection || "sentinel-2-l2a", date: properties.datetime, cloud, thumbnail, source: thumbnail, bbox: item.bbox, assets, properties, crs: visual["proj:code"] ?? properties["proj:code"] ?? (Number.isInteger(epsg) ? `EPSG:${epsg}` : null), grid: { shape: visual["proj:shape"] ?? properties["proj:shape"], transform: visual["proj:transform"] ?? properties["proj:transform"] }, gsd: visual.gsd ?? properties.gsd ?? null, itemURL: `https://earth-search.aws.element84.com/v1/collections/${encodeURIComponent(item.collection || "sentinel-2-l2a")}/items/${encodeURIComponent(item.id)}` };
+  return { id: item.id, collection: item.collection || "sentinel-2-l2a", date: properties.datetime, cloud, thumbnail, source: thumbnail, bbox: item.bbox, geometry: item.geometry, assets, properties, crs: visual["proj:code"] ?? properties["proj:code"] ?? (Number.isInteger(epsg) ? `EPSG:${epsg}` : null), grid: { shape: visual["proj:shape"] ?? properties["proj:shape"], transform: visual["proj:transform"] ?? properties["proj:transform"] }, gsd: visual.gsd ?? properties.gsd ?? null, itemURL: `https://earth-search.aws.element84.com/v1/collections/${encodeURIComponent(item.collection || "sentinel-2-l2a")}/items/${encodeURIComponent(item.id)}` };
 }
 
 export function normalizeSample(catalog) {

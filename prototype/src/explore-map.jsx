@@ -9,6 +9,7 @@ import VectorSource from 'ol/source/Vector.js';
 import Feature from 'ol/Feature.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { fromExtent } from 'ol/geom/Polygon.js';
+import { intersects as extentsIntersect } from 'ol/extent.js';
 import { transform, transformExtent } from 'ol/proj.js';
 import { register } from 'ol/proj/proj4.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
@@ -24,6 +25,37 @@ const overviewLand = new VectorSource({ url: './basemaps/natural-earth-50m-land.
 const overviewCountries = new VectorSource({ url: './basemaps/natural-earth-50m-admin-0-countries.geojson', format: new GeoJSON(), wrapX: false });
 const landStyle = new Style({ fill: new Fill({ color: '#30443c' }), stroke: new Stroke({ color: '#64877e', width: 0.7 }) });
 const countryStyle = new Style({ stroke: new Stroke({ color: '#a6bab0', width: 1.2 }) });
+const footprintStyle = new Style({ stroke: new Stroke({ color: '#9ed4eb', width: 1.25, lineDash: [5, 4] }), fill: new Fill({ color: 'rgba(102, 183, 225, 0.045)' }) });
+const selectedFootprintStyle = new Style({ stroke: new Stroke({ color: '#55b8ff', width: 2 }), fill: new Fill({ color: 'rgba(45, 135, 255, 0.07)' }) });
+
+function sceneFootprint(scene) {
+  let feature;
+  if (['Polygon', 'MultiPolygon'].includes(scene.geometry?.type)) {
+    try {
+      feature = new GeoJSON().readFeature({ type: 'Feature', properties: {}, geometry: scene.geometry },
+        { dataProjection: 'EPSG:4326', featureProjection: OVERVIEW_PROJECTION });
+    } catch { /* Fall back to the catalog bounds below. */ }
+  }
+  if (feature && !validExtent(feature.getGeometry()?.getExtent())) feature = null;
+  if (!feature && Array.isArray(scene.bbox) && scene.bbox.length === 4
+    && scene.bbox.every(Number.isFinite) && scene.bbox[0] < scene.bbox[2] && scene.bbox[1] < scene.bbox[3]) {
+    feature = new Feature(fromExtent(transformExtent(scene.bbox, 'EPSG:4326', OVERVIEW_PROJECTION)));
+  }
+  const extent = feature?.getGeometry()?.getExtent();
+  if (!validExtent(extent)) return null;
+  feature.setId(scene.id);
+  return feature;
+}
+
+function validExtent(extent) {
+  return extent?.length === 4 && extent.every(Number.isFinite) && extent[0] < extent[2] && extent[1] < extent[3];
+}
+
+function fitAllInitially(union, selected) {
+  return validExtent(union) && validExtent(selected)
+    && (union[2] - union[0] > (selected[2] - selected[0]) * 1.35
+      || union[3] - union[1] > (selected[3] - selected[1]) * 1.35);
+}
 
 export function sceneExtent(scene) {
   const [height, width] = scene?.grid?.shape || [];
@@ -40,12 +72,15 @@ function fitExtent(map, extent) {
   if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: 16, duration: 250 });
 }
 
-export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, split, area, areaGeometry, showArea }, ref) {
+export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, reference, split, area, areaGeometry, showArea, onFootprintsChange }, ref) {
   const { t } = useI18n();
   const target = useRef(null);
   const map = useRef(null);
   const referenceLayer = useRef(null);
   const areaLayer = useRef(null);
+  const footprintSource = useRef(null);
+  const footprintUnionRef = useRef(null);
+  const savedViewRef = useRef(null);
   const sceneExtentRef = useRef(null);
   const areaExtentRef = useRef(null);
   const focusExtentRef = useRef(null);
@@ -58,7 +93,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
   useImperativeHandle(ref, () => ({
     zoomIn() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.setResolution(view.getResolution() / 2); } },
     zoomOut() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.setResolution(view.getResolution() * 2); } },
-    fit() { if (map.current && (focusExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, focusExtentRef.current || sceneExtentRef.current); },
+    fit() { if (map.current && (footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current); },
   }), []);
 
   useEffect(() => {
@@ -75,6 +110,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
     let metadataReady = false;
     let initialReady = false;
     let failed = false;
+    let fitted = false;
     let loadingClock;
     const startedAt = Date.now();
     let lastActivityAt = startedAt;
@@ -106,12 +142,15 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
       const base = new WebGLTileLayer({ source, className: 'explore-base-layer', extent: mapExtent, zIndex: 1 });
       const land = new VectorLayer({ source: overviewLand, style: landStyle, zIndex: 0 });
       const countries = new VectorLayer({ source: overviewCountries, style: countryStyle, minResolution: 750, zIndex: 2 });
-      const overlays = new VectorLayer({ source: new VectorSource(), className: 'explore-area-layer', zIndex: 10 });
+      const footprints = new VectorSource({ wrapX: false });
+      const footprintLayer = new VectorLayer({ source: footprints, style: feature => feature.get('selected') ? selectedFootprintStyle : footprintStyle, zIndex: 11 });
+      const overlays = new VectorLayer({ source: new VectorSource(), className: 'explore-area-layer', zIndex: 12 });
+      const previous = savedViewRef.current?.areaKey === areaKey ? savedViewRef.current : null;
       const view = new View({ projection: OVERVIEW_PROJECTION,
-        center: transform([(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2], scene.crs, OVERVIEW_PROJECTION),
-        resolution: 100, minResolution: 2.5, maxResolution: 156543.03392804097, enableRotation: false });
-      instance = new OLMap({ target: target.current, controls: [], layers: [land, base, countries, overlays], view });
-      map.current = instance; areaLayer.current = overlays; sceneExtentRef.current = mapExtent;
+        center: previous?.center || transform([(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2], scene.crs, OVERVIEW_PROJECTION),
+        resolution: previous?.resolution || 100, minResolution: 2.5, maxResolution: 156543.03392804097, enableRotation: false });
+      instance = new OLMap({ target: target.current, controls: [], layers: [land, base, countries, footprintLayer, overlays], view });
+      map.current = instance; areaLayer.current = overlays; footprintSource.current = footprints; sceneExtentRef.current = mapExtent;
       resize = new ResizeObserver(() => { instance.updateSize(); });
       resize.observe(target.current);
       source.on('tileloadstart', () => { pendingTiles += 1; requestedTiles += 1; lastActivityAt = Date.now(); publishLoading(); });
@@ -130,18 +169,47 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, reference, spl
       const projected = transformExtent(area, 'EPSG:4326', OVERVIEW_PROJECTION, 8);
       areaExtentRef.current = intersectBounds(projected, mapExtent) ? projected : null;
       focusExtentRef.current = focusRasterExtent(mapExtent, projected);
-      requestAnimationFrame(() => { if (!cancelled) fitExtent(instance, focusExtentRef.current); });
+      requestAnimationFrame(() => {
+        if (cancelled) return;
+        const size = instance.getSize();
+        if (!previous) fitExtent(instance, fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
+        else if (size?.[0] && size?.[1] && !extentsIntersect(instance.getView().calculateExtent(size), mapExtent)) fitExtent(instance, focusExtentRef.current);
+        fitted = true;
+      });
     } catch (cause) {
       fail(cause.message);
     }
     return () => {
       cancelled = true; clearInterval(loadingClock); resize?.disconnect();
-      if (instance) { instance.setTarget(undefined); instance.dispose(); }
+      if (instance) {
+        if (fitted) savedViewRef.current = { areaKey, center: instance.getView().getCenter()?.slice(), resolution: instance.getView().getResolution() };
+        instance.setTarget(undefined); instance.dispose();
+      }
       source?.dispose();
-      map.current = null; areaLayer.current = null; referenceLayer.current = null;
+      map.current = null; areaLayer.current = null; footprintSource.current = null; referenceLayer.current = null;
       sceneExtentRef.current = null; areaExtentRef.current = null; focusExtentRef.current = null;
     };
   }, [scene?.id, areaKey, retry]);
+
+  useEffect(() => {
+    const source = footprintSource.current;
+    if (!source) return;
+    source.clear();
+    let union = null;
+    let count = 0;
+    const ordered = [...scenes.filter(item => item.id !== scene.id), scene];
+    for (const item of ordered) {
+      const feature = sceneFootprint(item);
+      if (!feature) continue;
+      feature.set('selected', item.id === scene.id);
+      source.addFeature(feature);
+      const extent = feature.getGeometry().getExtent();
+      union = union ? [Math.min(union[0], extent[0]), Math.min(union[1], extent[1]), Math.max(union[2], extent[2]), Math.max(union[3], extent[3])] : extent.slice();
+      count += 1;
+    }
+    footprintUnionRef.current = union;
+    onFootprintsChange?.(count);
+  }, [scenes, scene?.id, areaKey, retry, onFootprintsChange]);
 
   useEffect(() => {
     const instance = map.current;

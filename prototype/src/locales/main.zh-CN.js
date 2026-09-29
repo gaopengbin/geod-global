@@ -239,6 +239,8 @@ export default {
   "scene cloud cover": "整景云量",
   "Thumbnail, not analytical data": "缩略图预览，非分析数据",
   "Georeferenced COG display · source details": "地理配准 COG 显示 · 数据来源",
+  "{count} footprints on map": "图上 {count} 景范围",
+  "Fit all scene footprints": "适应全部影像范围",
   "Copernicus Sentinel data ({year}) · Earth Search · Natural Earth overview": "Copernicus Sentinel 数据（{year}）· Earth Search · Natural Earth 概览",
   "Observation timeline": "观测时间轴",
   "Loaded scenes": "已加载影像",

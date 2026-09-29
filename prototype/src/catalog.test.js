@@ -29,6 +29,7 @@ test("STAC normalization preserves source assets and actual projection", () => {
   assert.equal(scene.assets.scl.href, item.assets.scl.href);
   assert.equal(scene.assets.visual.href, item.assets.visual.href);
   assert.equal(scene.thumbnail, item.assets.thumbnail.href);
+  assert.deepEqual(scene.geometry, item.geometry);
   item.assets.thumbnail.href = "javascript:alert(1)";
   item.properties["eo:cloud_cover"] = null;
   assert.equal(normalizeScene(item).thumbnail, null);
