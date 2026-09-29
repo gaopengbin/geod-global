@@ -1,5 +1,11 @@
 /* Beautiful UI tokens style every Radix/shadcn adaptation. Only UI-owned
    classes and data-slots are selected; business layout stays with its owner. */
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+*::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: var(--scrollbar-thumb); background-clip: padding-box; }
+*::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
+*::-webkit-scrollbar-corner { background: transparent; }
 .bui-button { cursor: pointer; border: 0; flex-shrink: 0; text-decoration: none; }
 .bui-button svg { flex-shrink: 0; }
 .bui-button:disabled { cursor: not-allowed; }

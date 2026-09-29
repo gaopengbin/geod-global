@@ -4,7 +4,6 @@ import {
   Compass,
   Layers,
   Folder,
-  Workflow,
   ListTodo,
   Database,
   Settings,
@@ -19,12 +18,8 @@ import {
   SquareDashed,
   SlidersHorizontal,
   Download,
-  Check,
   ExternalLink,
   ArrowUpRight,
-  ArrowLeft,
-  Play,
-  Pause,
   RotateCcw,
   Sun,
   Moon,
@@ -32,25 +27,16 @@ import {
   MapPin,
   Info,
   Satellite,
-  Mountain,
-  Box,
-  Image as ImageIcon,
-  File,
   PanelRightClose,
   PanelRightOpen,
-  GitBranch,
   ShieldCheck,
   CheckCircle2,
   AlertCircle,
-  MoreHorizontal,
-  Keyboard,
-  Save,
-  Trash2,
 } from "lucide-react";
 import "./ui/foundation.css";
-import { Button, Badge, Input, Textarea, Select, Switch, Progress, Modal, EmptyState,
-  Table, THead, TBody, TR, TH, TD, Disclosure, Surface, SidebarNav,
-  SegmentedControl, Toast, Spinner } from "./ui/index.jsx";
+import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
+  Disclosure, Surface, SidebarNav,
+  SegmentedControl, Spinner } from "./ui/index.jsx";
 import "./styles.css";
 import "./catalog.css";
 import { INITIAL_SEARCH, SAMPLE_BBOX, normalizeSample, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
@@ -68,17 +54,14 @@ const nav = [
   ["Workspace", Layers],
   ["My Data", Folder],
   ["Tasks", ListTodo],
-  ["Sources", Database],
 ];
-const domains = [
-  ["Satellite", Satellite],
-  ["Imagery", ImageIcon],
-  ["Elevation", Mountain],
-  ["Vector", GitBranch],
-  ["3D", Box],
-  ["Local Data", Folder],
-];
-const stamp = (value) => value.slice(0, 10);
+const pageFromHash = () => {
+  let requested;
+  try { requested = decodeURIComponent(location.hash.slice(1)); }
+  catch { return "Explore"; }
+  if (requested === "Recipes") return "My Data";
+  return [...nav.map(([name]) => name), "Settings"].includes(requested) ? requested : "Explore";
+};
 function stored(key, fallback) {
   try {
     return JSON.parse(localStorage.getItem("geod-design-" + key)) ?? fallback;
@@ -125,38 +108,20 @@ function App() {
   }
   const bbox = live ? (appliedSearch?.bbox || pendingBounds) : SAMPLE_BBOX;
   const areaName = live ? (areaPolygon?.place?.name || "Custom search area") : "San Francisco Bay";
-  const [page, setPage] = useState(
-    [...nav.map((n) => n[0]), "Settings", "Cloud", "Recipes"].includes(
-      decodeURIComponent(location.hash.slice(1)),
-    )
-      ? decodeURIComponent(location.hash.slice(1))
-      : "Explore",
-  );
-  const [domain, setDomain] = useState("Satellite"),
-    [selected, setSelected] = useState(null),
+  const [page, setPage] = useState(pageFromHash);
+  const [selected, setSelected] = useState(null),
     [query, setQuery] = useState(""),
     [cloud, setCloud] = useState(60),
     [sort, setSort] = useState("date");
   const exploreMap = useRef(null);
-  const [period, setPeriod] = useState("all"),
-    [condition, setCondition] = useState("ready");
+  const [period, setPeriod] = useState("all");
   const [compare, setCompare] = useState(false),
     [compareId, setCompareId] = useState(""),
     [split, setSplit] = useState(50),
     [showArea, setShowArea] = useState(true),
     [inspector, setInspector] = useState(window.innerWidth >= 1280);
   const [modal, setModal] = useState(null),
-    [theme, setTheme] = useState(stored("theme", "light")),
-    [toast, setToast] = useState(""),
-    [format, setFormat] = useState("COG"),
-    [recipeName, setRecipeName] = useState("San Francisco · Sentinel-2");
-  const [recipes, setRecipes] = useState(stored("recipes", [])),
-    [tasks, setTasks] = useState(stored("tasks", [])),
-    [outputs, setOutputs] = useState(stored("outputs", [])),
-    [telemetry, setTelemetry] = useState(false),
-    [localFile, setLocalFile] = useState(null);
-  const [enabled, setEnabled] = useState(true),
-    [cmd, setCmd] = useState("");
+    [theme, setTheme] = useState(stored("theme", "light"));
   const load = () => {
     setLoadError(false);
     fetch("./samples/manifest.json")
@@ -186,10 +151,8 @@ function App() {
     setCompare(false);
     setQuery("");
     setPeriod("all");
-    setCondition("ready");
     const first = mode === "sample" ? sampleCatalog?.scenes[0] : liveCatalog?.scenes[0];
     setSelected(first || null);
-    setRecipeName(mode === "sample" ? "San Francisco · Sentinel-2" : "Custom area · Sentinel-2");
   };
   const runSearch = async (more = false, submittedInput = searchInput) => {
     let submitted, url;
@@ -214,7 +177,6 @@ function App() {
       else {
         setLiveCatalog(result);
         setSelected(result.scenes[0] || null);
-        setRecipeName("Custom area · " + (result.scenes[0]?.date.slice(0, 10) || "Sentinel-2"));
       }
       setLiveState("ready");
     } catch (error) {
@@ -256,9 +218,13 @@ function App() {
     ]] },
   });
   useEffect(() => {
-    const change = () =>
-      setPage(decodeURIComponent(location.hash.slice(1)) || "Explore");
+    const change = () => {
+      const next = pageFromHash();
+      if (location.hash !== "#" + encodeURIComponent(next)) history.replaceState(null, "", "#" + encodeURIComponent(next));
+      setPage(next);
+    };
     window.addEventListener("hashchange", change);
+    change();
     return () => window.removeEventListener("hashchange", change);
   }, []);
   useEffect(() => {
@@ -267,63 +233,12 @@ function App() {
     localStorage.setItem("geod-design-theme", JSON.stringify(theme));
   }, [theme]);
   useEffect(() => {
-    localStorage.setItem("geod-design-recipes", JSON.stringify(recipes));
-  }, [recipes]);
-  useEffect(() => {
-    localStorage.setItem("geod-design-tasks", JSON.stringify(tasks));
-  }, [tasks]);
-  useEffect(() => {
-    localStorage.setItem("geod-design-outputs", JSON.stringify(outputs));
-  }, [outputs]);
-  useEffect(() => {
-    const f = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault();
-        setModal("commands");
-      }
-      if (e.key === "Escape" && !document.querySelector('[role="dialog"][data-state="open"]'))
-        setCompare(false);
+    const onKeyDown = (event) => {
+      if (event.key === "Escape" && !document.querySelector('[role="dialog"][data-state="open"]')) setCompare(false);
     };
-    window.addEventListener("keydown", f);
-    return () => window.removeEventListener("keydown", f);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
-  // These are explicit design simulations. No worker, network download or raster output is implied.
-  useEffect(() => {
-    if (!tasks.some((t) => t.status === "Running")) return;
-    const timer = setTimeout(
-      () =>
-        setTasks((items) =>
-          items.map((t) =>
-            t.status === "Running"
-              ? {
-                  ...t,
-                  progress: Math.min(t.progress + 20, 100),
-                  status: t.progress >= 80 ? "Succeeded" : "Running",
-                }
-              : t,
-          ),
-        ),
-      650,
-    );
-    return () => clearTimeout(timer);
-  }, [tasks]);
-  useEffect(() => {
-    const done = tasks.filter((t) => t.status === "Succeeded");
-    if (done.length)
-      setOutputs((old) => {
-        const fresh = done.filter((t) => !old.some((o) => o.id === t.id));
-        return fresh.length
-          ? [
-              ...fresh.map((t) => ({
-                ...t,
-                kind: "Simulation report",
-                createdAt: new Date().toISOString(),
-              })),
-              ...old,
-            ]
-          : old;
-      });
-  }, [tasks]);
   const showJSON = (filename, value) =>
     setModal({ type: "json", filename, value });
   const go = (p) => {
@@ -331,101 +246,17 @@ function App() {
     setPage(p);
   };
   const scenes = catalog?.scenes || [];
-  const filtered = enabled
-    ? scenes
-        .filter(
-          (s) =>
-            (live || (s.cloud ?? 101) <= cloud) &&
-            (s.id.toLowerCase().includes(query.toLowerCase()) ||
-              s.date.includes(query)) &&
-            (live || period === "all" || Number(s.date.slice(8, 10)) <= 15),
-        )
-        .sort((a, b) =>
-          sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date),
-        )
-    : [];
+  const filtered = scenes
+    .filter((s) =>
+      (live || (s.cloud ?? 101) <= cloud) &&
+      (s.id.toLowerCase().includes(query.toLowerCase()) || s.date.includes(query)) &&
+      (live || period === "all" || Number(s.date.slice(8, 10)) <= 15),
+    )
+    .sort((a, b) => sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date));
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
-  const recipe = () => ({
-    schemaVersion: "design-prototype/v1",
-    status: "proposed",
-    name: recipeName,
-    area: { name: areaName, bbox, crs: "EPSG:4326" },
-    input: {
-      provider: "earth-search",
-      collection: "sentinel-2-l2a",
-      itemId: selected.id,
-      asset: "visual",
-      href: selected.assets.visual?.href,
-    },
-    processing: [{ operator: "clip_to_area", implemented: false }],
-    output: { format, crs: selected.crs, resolution: selected.gsd },
-    execution: { mode: "design-only", requiresCoreIntegration: true },
-    provenance: {
-      catalogQuery: catalog.query,
-      retrievedAt: catalog.retrievedAt,
-    },
-  });
-  const saveRecipe = () => {
-    const r = {
-      ...recipe(),
-      id: crypto.randomUUID(),
-      savedAt: new Date().toISOString(),
-    };
-    setRecipes((old) => [r, ...old]);
-    setModal(null);
-    setToast("Design recipe saved in this browser.");
-  };
-  const simulate = () => {
-    const t = {
-      id: crypto.randomUUID(),
-      name: recipeName,
-      sceneId: selected.id,
-      format,
-      status: "Running",
-      progress: 0,
-      simulation: true,
-    };
-    setTasks((old) => [t, ...old]);
-    setModal(null);
-    go("Tasks");
-  };
-  const changeTask = (id, status) =>
-    setTasks((old) => old.map((t) => (t.id === id ? { ...t, status } : t)));
   const workspace = page === "Explore" || page === "Workspace";
-  const sourceRows = [
-    [
-      "Earth Search",
-      "Sentinel-2 L2A",
-      "Public catalog",
-      "Live search + 7 cached sample records",
-    ],
-    [
-      "Copernicus Data Space",
-      "Satellite data",
-      "Planned",
-      "Authentication not connected",
-    ],
-    [
-      "OpenStreetMap",
-      "Vector features",
-      "Planned",
-      "Feature adapter not connected",
-    ],
-    [
-      "Authorized imagery",
-      "WMS / WMTS / XYZ",
-      "Planned",
-      "Bring your own source",
-    ],
-    [
-      "Local files",
-      "COG / GeoJSON / 3D Tiles",
-      "Planned",
-      "Arbitrary local file import not connected",
-    ],
-  ];
   if (loadError && !live)
     return (
       <main className="boot">
@@ -450,7 +281,6 @@ function App() {
         brand={<a className="brand" href="#Explore" aria-label={t("GeoD home")}><span className="brand-mark"><Layers size={20} /></span><strong>{t("GeoD")}</strong></a>}
         items={nav.map(([name, icon]) => ({ id: name, label: t(name), icon, href: "#" + encodeURIComponent(name), active: page === name }))}
         footerItems={[
-          { id: "Cloud", label: t("Cloud"), icon: Cloud, href: "#Cloud", active: page === "Cloud" },
           { id: "Settings", label: t("Settings"), icon: Settings, href: "#Settings", active: page === "Settings" },
           { id: "Help", label: t("Help"), icon: HelpCircle, onClick: () => setModal("about") },
         ]}
@@ -469,15 +299,6 @@ function App() {
           <div className="top-actions">
             <Badge>{live ? t("Live catalog") : t("Sample catalog")}</Badge>
             <Button
-              className="command-trigger"
-              aria-label={t("Search commands")}
-              onClick={() => setModal("commands")}
-            >
-              <Search size={15} />
-              <span>{t("Search commands")}</span>
-              <kbd>{t("Ctrl K")}</kbd>
-            </Button>
-            <Button
               className="icon-btn"
               aria-label={t("Toggle color theme")}
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -494,19 +315,8 @@ function App() {
               <div className="panel-heading">
                 <div>
                   <span className="eyebrow">{t("DATA EXPLORER")}</span>
-                  <h1>
-                    {page === "Workspace"
-                      ? t("Your layers")
-                      : t("Find your next dataset")}
-                  </h1>
+                  <h1>{t("Find your next dataset")}</h1>
                 </div>
-                <Button
-                  className="icon-btn"
-                  aria-label={t("Source information")}
-                  onClick={() => go("Sources")}
-                >
-                  <MoreHorizontal size={20} />
-                </Button>
               </div>
               <Button className="area-picker" onClick={() => setModal("area")}>
                 <MapPin size={17} />
@@ -518,10 +328,7 @@ function App() {
               </Button>
               <SegmentedControl className="catalog-switch" aria-label={t("Catalog mode")} value={catalogMode} onValueChange={switchCatalog}
                 items={[{ value: "sample", label: t("Sample catalog") }, { value: "live", label: t("Live catalog") }]} />
-              <SegmentedControl className="domain-tabs" aria-label={t("Data categories")} value={domain} onValueChange={setDomain}
-                items={domains.map(([value, icon]) => ({ value, label: t(value), icon }))} />
-              {domain === "Satellite" ? (
-                <>
+              <>
                   <div className="filters">
                     {live && <form className="catalog-form" onSubmit={submitSearch}>
                       <label>{t("WGS 84 bounds · west, south, east, north")}<Input name="bbox" aria-label={t("Search bounding box")} value={searchInput.bbox} onChange={updateSearchField} />
@@ -559,13 +366,6 @@ function App() {
                           <option value="first">{t("Jun 1–15, 2025")}</option>
                         </Select>
                       </label>
-                      <Button
-                        className="filter-btn"
-                        aria-label={t("Sample states")}
-                        onClick={() => setModal("states")}
-                      >
-                        <SlidersHorizontal size={16} />
-                      </Button>
                     </div>}
                     {!live && <label className="range-label">
                       <span>{t("Scene cloud cover")}</span>
@@ -584,7 +384,7 @@ function App() {
                   <div className="results-heading">
                     <span>
                       <strong>
-                        {condition === "empty" ? 0 : filtered.length}
+                        {filtered.length}
                       </strong>{" "}{t("scenes")}<span className="muted">· {live ? t("loaded results") : t("catalog snapshot")}</span>
                     </span>
                     <Select
@@ -597,22 +397,7 @@ function App() {
                     </Select>
                   </div>
                   <div className="scene-list">
-                    {live && liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : live && !liveCatalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.")}</EmptyState> : condition === "error" ? (
-                      <EmptyState
-                        icon={AlertCircle}
-                        title={t("Source unavailable")}
-                        action={
-                          <Button
-                            onClick={() => setCondition("ready")}
-                            icon={RotateCcw}
-                          >{t("Retry sample")}</Button>
-                        }
-                      >{t("The design scenario represents a failed catalog request. Your workspace is kept.")}</EmptyState>
-                    ) : condition === "loading" ? (
-                      <div className="loading-state">
-                        <Spinner />{t("Loading sample results…")}<Button onClick={() => setCondition("ready")}>{t("Show loaded state")}</Button>
-                      </div>
-                    ) : condition === "empty" || !filtered.length ? (
+                    {live && liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : live && !liveCatalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.")}</EmptyState> : !filtered.length ? (
                       <EmptyState
                         icon={Search}
                         title={t("No matching scenes")}
@@ -622,8 +407,6 @@ function App() {
                               setQuery("");
                               setCloud(100);
                               setPeriod("all");
-                              setEnabled(true);
-                              setCondition("ready");
                               if (live) {
                                 const reset = { ...(appliedSearch || searchInput), cloud: 100 };
                                 setSearchInput({ ...reset, bbox: Array.isArray(reset.bbox) ? reset.bbox.join(", ") : reset.bbox });
@@ -642,7 +425,6 @@ function App() {
                           }
                           onClick={() => {
                             setSelected(s);
-                            setRecipeName((live ? "Custom area · " : "San Francisco · ") + stamp(s.date));
                           }}
                         >
                           <SceneThumbnail
@@ -679,78 +461,7 @@ function App() {
                     <Database size={13} />
                     <span>{t("Earth Search ·")} {live ? t("live HTTPS catalog") : t("June 2025 snapshot")}</span>
                   </div>
-                </>
-              ) : (
-                <div className="domain-placeholder">
-                  <div className="domain-title">
-                    <span className="eyebrow">{t(domain).toUpperCase()}</span>
-                    <h2>
-                      {t({
-                          Imagery: "Explore imagery sources",
-                          Elevation: "Prepare terrain products",
-                          Vector: "Build a project dataset",
-                          "3D": "Inspect spatial assets",
-                          "Local Data": "Bring your own data",
-                        }[domain])}
-                    </h2>
-                  </div>
-                  {domain === "Local Data" ? (
-                    <>
-                      <p>{t("This file picker reads names and sizes. Inspect and clip downloaded SCL rasters from My Data.")}</p>
-                      <label className="field file-picker">
-                        <Plus size={16} />{t("Choose a local file")}<Input
-                          type="file"
-                          onChange={(e) =>
-                            setLocalFile(e.target.files[0] || null)
-                          }
-                        />
-                      </label>
-                      {localFile && (
-                        <Surface className="info-box">
-                          <strong>{localFile.name}</strong>
-                          <p>
-                            {number(localFile.size / 1024, { maximumFractionDigits: 1 })} {t("KB · stays on this device")}</p>
-                        </Surface>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {{
-                        Imagery: [
-                          "Historical imagery",
-                          "Authorized WMS / WMTS",
-                          "Custom tile service",
-                        ],
-                        Elevation: [
-                          "Elevation model",
-                          "Hillshade & slope",
-                          "Contours",
-                        ],
-                        Vector: [
-                          "Buildings & roads",
-                          "GeoJSON & GeoPackage",
-                          "PMTiles & MBTiles",
-                        ],
-                        "3D": [
-                          "Remote 3D Tiles",
-                          "Local tileset",
-                          "Terrain & models",
-                        ],
-                      }[domain].map((label) => (
-                        <Button
-                          className="domain-option"
-                          key={label}
-                          onClick={() => setModal("planned")}
-                        >
-                          <span>{t(label)}</span>
-                          <ChevronRight size={16} />
-                        </Button>
-                      ))}
-                      <p className="muted">{t("This category is part of the full design. Its source adapter is not connected in this prototype.")}</p>
-                    </>
-                  )}
-                </div>
-              )}
+              </>
             </aside>
             {selected ? <main className="map-workspace">
               <div className="map-toolbar">
@@ -931,8 +642,6 @@ function App() {
                     <dd>{t(areaName)}</dd>
                     <dt>{t("Selection")}</dt>
                     <dd>{t("Bounding box")}</dd>
-                    <dt>{t("Processing")}</dt>
-                    <dd>{t("Local · planned")}</dd>
                   </dl>
                   <Button
                     className="text-link"
@@ -983,105 +692,6 @@ function App() {
                   }
                 />
                 <RuntimeTasks areaBounds={bbox} areaPolygon={live ? areaPolygon : null} />
-                <Disclosure className="design-simulations" summary={<>{t("Design simulations below · {count} sample tasks", { count: number(tasks.length) })}</>}>
-                <Surface className="notice">
-                  <Info size={17} />
-                  <span>{t("These sample tasks simulate processing. Real downloads and clipping jobs appear above.")}</span>
-                </Surface>
-                {!tasks.length ? (
-                  <EmptyState
-                    icon={ListTodo}
-                    title={t("Your next task starts with an area")}
-                    action={
-                      <Button primary onClick={() => go("Explore")}>{t("Explore data")}</Button>
-                    }
-                  >{t("Choose a scene and prepare an export to review the task lifecycle.")}</EmptyState>
-                ) : (
-                  <div className="task-list">
-                    {tasks.map((task) => (
-                      <Surface as="article" className="task-card" key={task.id}>
-                        <div className="task-icon">
-                          <Download size={22} />
-                        </div>
-                        <div className="task-main">
-                          <div className="task-title">
-                            <h3>{task.name}</h3>
-                            <Badge
-                              tone={
-                                task.status === "Succeeded"
-                                  ? "green"
-                                  : task.status === "Failed"
-                                    ? "red"
-                                    : "blue"
-                              }
-                            >
-                              {task.status === "Succeeded"
-                                ? t("Simulation complete")
-                                : t(task.status)}
-                            </Badge>
-                          </div>
-                          <p>
-                            {task.sceneId} · {task.format} {t("design")}</p>
-                          <Progress value={task.progress} max={100} aria-label={t("Design simulation only")} />
-                          <div className="task-stage">
-                            <span>
-                              {task.status === "Succeeded"
-                                ? t("Sample report available; no raster was created")
-                                : task.status === "Failed"
-                                  ? t("Simulated connection interruption; retry as a new attempt")
-                                  : task.status === "Cancelled"
-                                    ? t("Simulation cancelled")
-                                    : t("Simulated {stage}", { stage: t(task.progress < 40 ? "source read" : task.progress < 80 ? "processing" : "validation") })}
-                            </span>
-                            <strong>{task.progress}%</strong>
-                          </div>
-                        </div>
-                        <div className="task-actions">
-                          {task.status === "Running" ? (
-                            <>
-                              <Button
-                                icon={Pause}
-                                onClick={() => changeTask(task.id, "Paused")}
-                              >{t("Pause")}</Button>
-                              <Button onClick={() => changeTask(task.id, "Failed")}>{t("Simulate failure")}</Button>
-                            </>
-                          ) : task.status === "Paused" ? (
-                            <Button
-                              icon={Play}
-                              onClick={() => changeTask(task.id, "Running")}
-                            >{t("Resume")}</Button>
-                          ) : task.status === "Failed" ? (
-                            <Button
-                              icon={RotateCcw}
-                              onClick={() =>
-                                setTasks((old) => [
-                                  {
-                                    ...task,
-                                    id: crypto.randomUUID(),
-                                    parentId: task.id,
-                                    progress: 0,
-                                    status: "Running",
-                                  },
-                                  ...old,
-                                ])
-                              }
-                            >{t("Retry")}</Button>
-                          ) : null}
-                          {["Running", "Paused"].includes(task.status) && (
-                            <Button
-                              className="text-link danger"
-                              onClick={() => changeTask(task.id, "Cancelled")}
-                            >{t("Cancel")}</Button>
-                          )}
-                          {task.status === "Succeeded" && (
-                            <Button onClick={() => go("My Data")}>{t("View report")}</Button>
-                          )}
-                        </div>
-                      </Surface>
-                    ))}
-                  </div>
-                )}
-                </Disclosure>
               </>
             ) : page === "My Data" ? (
               <>
@@ -1094,224 +704,6 @@ function App() {
                 <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
                   <ExecutableRecipes areaBounds={bbox} areaPolygon={live ? areaPolygon : null} onReviewJSON={showJSON} />
                 </Disclosure>
-                <Disclosure className="design-simulations" summary={<>{t("Design simulation reports · {count} reports", { count: number(outputs.length) })}</>}>
-                {!outputs.length ? (
-                  <EmptyState
-                    title={t("A place for finished work")}
-                    action={
-                      <Button primary onClick={() => go("Explore")}>{t("Prepare an export")}</Button>
-                    }
-                  >{t("Sample tasks add simulation reports here. Real GeoTIFF outputs are listed above.")}</EmptyState>
-                ) : (
-                  <div className="output-grid">
-                    {outputs.map((o) => (
-                      <Surface as="article" className="output-card" key={o.id}>
-                        <img
-                          src={
-                            (sampleCatalog?.scenes.find((s) => s.id === o.sceneId) || scenes.find((s) => s.id === o.sceneId))?.thumbnail
-                          }
-                          alt={t("Source scene thumbnail, not exported output")}
-                        />
-                        <div>
-                          <Badge>{t("Simulation report")}</Badge>
-                          <h3>{o.name}</h3>
-                          <p>{t("Source preview · No raster output")}</p>
-                          <div className="row-actions">
-                            <Button
-                              icon={Download}
-                              onClick={() =>
-                                showJSON("geod-design-report.json", {
-                                  ...o,
-                                  warning:
-                                    "Design simulation only. No raster output or scientific validation.",
-                                })
-                              }
-                            >{t("Report JSON")}</Button>
-                            <Button
-                              className="icon-btn"
-                              aria-label={t("Remove report {name}", { name: o.name })}
-                              onClick={() =>
-                                setModal({ type: "delete", id: o.id })
-                              }
-                            >
-                              <Trash2 size={16} />
-                            </Button>
-                          </div>
-                        </div>
-                      </Surface>
-                    ))}
-                  </div>
-                )}
-                </Disclosure>
-              </>
-            ) : page === "Recipes" ? (
-              <>
-                <PageHeading
-                  eyebrow={t("REPEATABLE WORK")}
-                  title={t("Recipes")}
-                  sub={t("Repeat a verified rectangle or polygon clip from a pinned SCL source file.")}
-                />
-                <ExecutableRecipes areaBounds={bbox} areaPolygon={live ? areaPolygon : null} onReviewJSON={showJSON} />
-                <Disclosure className="design-simulations" summary={<>{t("Design recipe simulations · {count} recipes", { count: number(recipes.length) })}</>}>
-                <Surface className="notice">
-                  <Workflow size={17} />{t("These design recipes use design-prototype/v1 and do not execute. Saved executable recipes are listed above.")}</Surface>
-                {!recipes.length ? (
-                  <EmptyState
-                    icon={Workflow}
-                    title={t("Make a good workflow repeatable")}
-                    action={
-                      <Button primary disabled={!selected} onClick={() => setModal("recipe")}>{t("Save current selection")}</Button>
-                    }
-                  >{t("Save an area, a fixed scene and output preferences. Your recipe stays in this browser.")}</EmptyState>
-                ) : (
-                  <div className="table-wrap">
-                    <Table>
-                      <THead>
-                        <TR>
-                          <TH>{t("Recipe")}</TH>
-                          <TH>{t("Input")}</TH>
-                          <TH>{t("Output")}</TH>
-                          <TH>{t("Saved")}</TH>
-                          <TH>{t("Actions")}</TH>
-                        </TR>
-                      </THead>
-                      <TBody>
-                        {recipes.map((r) => (
-                          <TR key={r.id}>
-                            <TD>
-                              <strong>{r.name}</strong>
-                              <small className="block">
-                                {t(r.area?.name || "Saved area")} {t("· fixed scene")}</small>
-                            </TD>
-                            <TD>{t("Sentinel-2 L2A")}</TD>
-                            <TD>{r.output.format}</TD>
-                            <TD>{date(r.savedAt)}</TD>
-                            <TD>
-                              <div className="row-actions">
-                                <Button
-                                  icon={Download}
-                                  onClick={() =>
-                                    showJSON("geod-design-recipe.json", r)
-                                  }
-                                >{t("JSON")}</Button>
-                                <Button
-                                  icon={Play}
-                                  disabled={!scenes.some((s) => s.id === r.input.itemId)}
-                                  title={t("Review is available when the saved scene is loaded in the current catalog")}
-                                  onClick={() => {
-                                    setSelected(
-                                      scenes.find(
-                                        (s) => s.id === r.input.itemId,
-                                      ) || selected,
-                                    );
-                                    setRecipeName(r.name);
-                                    setFormat(r.output.format);
-                                    setModal("export");
-                                  }}
-                                >{t("Review")}</Button>
-                              </div>
-                            </TD>
-                          </TR>
-                        ))}
-                      </TBody>
-                    </Table>
-                  </div>
-                )}
-                </Disclosure>
-              </>
-            ) : page === "Sources" ? (
-              <>
-                <PageHeading
-                  eyebrow={t("DATA CONNECTIONS")}
-                  title={t("Sources")}
-                  sub={t("Know where your data comes from, before you use it.")}
-                  action={
-                    <Button icon={Plus} onClick={() => setModal("planned")}>{t("Add source")}</Button>
-                  }
-                />
-                <div className="table-wrap">
-                  <Table>
-                    <THead>
-                      <TR>
-                        <TH>{t("Source")}</TH>
-                        <TH>{t("Data")}</TH>
-                        <TH>{t("Connection")}</TH>
-                        <TH>{t("Availability")}</TH>
-                        <TH>{t("Action")}</TH>
-                      </TR>
-                    </THead>
-                    <TBody>
-                      {sourceRows.map(([name, data, status, desc], i) => (
-                        <TR key={name}>
-                          <TD>
-                            <strong>{t(name)}</strong>
-                          </TD>
-                          <TD>{t(data)}</TD>
-                          <TD>
-                            <Badge tone={i === 0 ? "green" : ""}>
-                              {i === 0 && !enabled ? t("Disabled") : t(status)}
-                            </Badge>
-                          </TD>
-                          <TD>{t(desc)}</TD>
-                          <TD>
-                            {i === 0 ? (
-                              <Button onClick={() => setEnabled(!enabled)}>
-                                {enabled ? t("Hide source results") : t("Show source results")}
-                              </Button>
-                            ) : (
-                              <Button onClick={() => setModal("planned")}>{t("View plan")}</Button>
-                            )}
-                          </TD>
-                        </TR>
-                      ))}
-                    </TBody>
-                  </Table>
-                </div>
-                <Surface className="info-box">
-                  <ShieldCheck size={23} />
-                  <h3>{t("Access and permission travel together")}</h3>
-                  <p>{t("The full product will track preview, download, offline use and redistribution separately. A connected source alone will not enable every operation.")}</p>
-                  <Button
-                    className="text-link"
-                    disabled={!selected}
-                    onClick={() => setModal("provenance")}
-                  >{t("Inspect selected scene evidence")}<ArrowUpRight size={14} />
-                  </Button>
-                </Surface>
-              </>
-            ) : page === "Cloud" ? (
-              <>
-                <PageHeading
-                  eyebrow={t("OPTIONAL SERVICES")}
-                  title={t("A workspace you can share")}
-                  sub={t("Local work remains yours. Collaboration is a separate product decision.")}
-                />
-                <div className="cloud-layout">
-                  <Surface className="cloud-diagram">
-                    <Surface className="diagram-node">
-                      <Folder />
-                      <strong>{t("Local workspace")}</strong>
-                      <span>{t("Files & processing")}</span>
-                    </Surface>
-                    <div className="diagram-connector" />
-                    <Surface className="diagram-node outline">
-                      <Cloud />
-                      <strong>{t("Optional sync")}</strong>
-                      <span>{t("Selected metadata only")}</span>
-                    </Surface>
-                  </Surface>
-                  <div className="cloud-copy">
-                    <Badge>{t("Proposal · not connected")}</Badge>
-                    <h2>{t("Share the workflow.")}<br />{t("Keep control of the data.")}</h2>
-                    <p>{t("Private recipe versions, shared source configuration and run summaries are proposed collaboration features.")}</p>
-                    <ul>
-                      <li>{t("Choose exactly which metadata leaves your device.")}</li>
-                      <li>{t("Use your own storage and execution environment.")}</li>
-                      <li>{t("Export your recipes when you leave.")}</li>
-                    </ul>
-                    <Surface className="notice">{t("Pricing and the commercial model are undecided. No checkout or account creation is active.")}</Surface>
-                  </div>
-                </div>
               </>
             ) : page === "Settings" ? (
               <>
@@ -1345,29 +737,8 @@ function App() {
                       <option value="dark">{t("Dark")}</option>
                     </Select>
                   </div>
-                  <div>
-                    <span>
-                      <strong>{t("Usage analytics")}</strong>
-                      <small>{t("No analytics is sent by this prototype.")}</small>
-                    </span>
-                    <Switch checked={telemetry} onCheckedChange={setTelemetry} aria-label={t("Usage analytics design toggle")} />
-                  </div>
-                  <div>
-                    <span>
-                      <strong>{t("Local design data")}</strong>
-                      <small>{t("Design recipes, sample tasks and reports use browser storage. Executable recipes and real files use the local service.")}</small>
-                    </span>
-                    <Button onClick={() => setModal("reset")}>{t("Clear design data")}</Button>
-                  </div>
-                  <div>
-                    <span>
-                      <strong>{t("Keyboard navigation")}</strong>
-                      <small>{t("Open command search with Ctrl / Cmd + K. Close dialogs with Esc.")}</small>
-                    </span>
-                    <Keyboard size={22} />
-                  </div>
                 </Surface>
-                <DiagnosticsPanel />
+                <Disclosure className="settings-diagnostics" summary={t("Local diagnostics · advanced")}><DiagnosticsPanel /></Disclosure>
               </>
             ) : (
               <EmptyState
@@ -1380,118 +751,24 @@ function App() {
         <footer className="statusbar">
           <span>
             <span className="status-dot" />{t("Local workspace")}<span className="status-divider">/</span>{t("No account required")}</span>
-          <span>
-            {tasks.filter((t) => t.status === "Running").length
-              ? t("{count} simulation running", { count: number(tasks.filter((task) => task.status === "Running").length) })
-              : live ? t("Live catalog · original source assets") : t("Sample catalog · cached scene metadata")}
-            <span className="status-divider">/</span>
-            <Button onClick={() => setModal("about")}>{t("Development 0.1")}</Button>
-          </span>
+          <span>{live ? t("Live catalog · original source assets") : t("Sample catalog · cached scene metadata")}</span>
         </footer>
       </div>
-      <Toast message={toast ? t(toast) : ""} onDismiss={() => setToast("")} closeLabel={t("Close dialog")} />
       {modal && (
         <Modal closeLabel={t("Close dialog")}
           title={
             t(typeof modal === "object"
-              ? modal.type === "json"
-                ? "Export JSON"
-                : "Remove report"
+              ? "Export JSON"
               : {
-                  export: "Prepare export",
-                  recipe: "Save design recipe",
                   area: "Select search area",
                   provenance: "Data provenance",
-                  commands: "Search commands",
-                  states: "Review interface states",
-                  planned: "Planned capability",
                   about: "About this workspace",
-                  reset: "Clear local design data",
                 }[modal])
           }
           onClose={() => setModal(null)}
-          wide={modal === "export" || modal === "area"}
+          wide={modal === "area"}
         >
-          {modal === "export" && selected ? (
-            <>
-              <div className="dialog-body export-layout">
-                <div>
-                  <Badge tone="blue">{t("DESIGN SIMULATION")}</Badge>
-                  <h3>{recipeName}</h3>
-                  <p className="muted">{t("Preview planned export options. Real SCL clipping starts from a downloaded file in My Data.")}</p>
-                  <label className="field">{t("Output format")}<Select
-                      value={format}
-                      onChange={(e) => setFormat(e.target.value)}
-                    >
-                      <option>{t("COG")}</option>
-                      <option>{t("GeoTIFF")}</option>
-                    </Select>
-                  </label>
-                  <label className="field">{t("Coordinate reference")}<Input
-                      value={selected.crs || t("Source CRS not specified")}
-                      readOnly
-                    />
-                  </label>
-                  <div className="two-fields">
-                    <label className="field">{t("Pixel size")}<Input value={selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("Not specified")} readOnly />
-                    </label>
-                    <label className="field">{t("Processing location")}<Input value={t("Design simulation only")} readOnly />
-                    </label>
-                  </div>
-                </div>
-                <Surface className="export-summary">
-                  <h3>{t("Export plan")}</h3>
-                  <div>
-                    <Check size={16} />{t("Use the fixed source scene")}</div>
-                  <div>
-                    <Check size={16} />{t("Clip to saved bounding box")}</div>
-                  <div>
-                    <Check size={16} />{t("Preserve source & recipe")}</div>
-                  <div>
-                    <Info size={16} />{t("This export configuration is a design simulation")}</div>
-                  <hr />
-                  <p>{t("This design dialog does not create files. Download SCL, then use Clip raster in My Data to create a GeoTIFF.")}</p>
-                </Surface>
-              </div>
-              <div className="dialog-footer">
-                <Button onClick={() => setModal(null)}>{t("Cancel")}</Button>
-                <Button
-                  icon={Download}
-                  onClick={() => showJSON("geod-design-recipe.json", recipe())}
-                >{t("Download plan JSON")}</Button>
-                <Button primary icon={Play} onClick={simulate}>{t("Simulate task")}</Button>
-              </div>
-            </>
-          ) : modal === "recipe" && selected ? (
-            <>
-              <div className="dialog-body">
-                <label className="field">{t("Recipe name")}<Input
-                    autoFocus
-                    value={recipeName}
-                    onChange={(e) => setRecipeName(e.target.value)}
-                  />
-                </label>
-                <dl>
-                  <dt>{t("Area")}</dt>
-                  <dd>{t(areaName)}</dd>
-                  <dt>{t("Fixed observation")}</dt>
-                  <dd>{date(selected.date)}</dd>
-                  <dt>{t("Planned output")}</dt>
-                  <dd>{format} · {selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("source resolution")}</dd>
-                </dl>
-                <Surface className="notice">{t("Saved locally. No credentials are included. This design recipe is not yet executable.")}</Surface>
-              </div>
-              <div className="dialog-footer">
-                <Button onClick={() => setModal(null)}>{t("Cancel")}</Button>
-                <Button
-                  primary
-                  icon={Save}
-                  disabled={!recipeName.trim()}
-                  onClick={saveRecipe}
-                >{t("Save recipe")}</Button>
-              </div>
-            </>
-          ) : modal === "area" ? (
+          {modal === "area" ? (
             <React.Suspense fallback={<p role="status"><Spinner/>{t("Loading reference map…")}</p>}><AreaPicker initialBbox={pendingBounds} sample={!live} onApply={applyMapArea} onExport={exportMapArea} onClose={() => setModal(null)}/></React.Suspense>
           ) : modal === "provenance" && selected && catalog ? (
             <div className="dialog-body">
@@ -1521,92 +798,6 @@ function App() {
                 </a>
               </div>
             </div>
-          ) : modal === "commands" ? (
-            <div className="dialog-body">
-              <label className="search-input">
-                <Search size={17} />
-                <Input
-                  autoFocus
-                  placeholder={t("Go to a page or action…")}
-                  value={cmd}
-                  onChange={(e) => setCmd(e.target.value)}
-                  aria-label={t("Command search")}
-                />
-              </label>
-              <div className="command-results">
-                {[
-                  ...nav.map(([n]) => [n, () => go(n)]),
-                  ["Cloud", () => go("Cloud")],
-                  ["Settings", () => go("Settings")],
-                ]
-                  .filter(([n]) => n.toLowerCase().includes(cmd.toLowerCase()) || t(n).toLocaleLowerCase(locale).includes(cmd.toLocaleLowerCase(locale)))
-                  .map(([n, fn]) => (
-                    <Button
-                      key={n}
-                      onClick={() => {
-                        setModal(null);
-                        fn();
-                        setCmd("");
-                      }}
-                    >
-                      <span>{t(n)}</span>
-                      <ChevronRight size={16} />
-                    </Button>
-                  ))}
-              </div>
-            </div>
-          ) : modal === "states" ? (
-            <div className="dialog-body">
-              <p>{t("These controls preview catalog interface states. They do not alter the source service.")}</p>
-              {[
-                ["ready", "Ready · real cached scenes"],
-                ["empty", "Empty results"],
-                ["loading", "Loading"],
-                ["error", "Source error"],
-              ].map(([v, label]) => (
-                <Button
-                  key={v}
-                  className="state-option"
-                  onClick={() => {
-                    setCondition(v);
-                    setModal(null);
-                  }}
-                >
-                  <span>{t(label)}</span>
-                  {condition === v && <Check size={17} />}
-                </Button>
-              ))}
-            </div>
-          ) : modal === "planned" ? (
-            <div className="dialog-body">
-              <p>{t("This belongs to the full product scope. The current design prototype does not connect this adapter or execute this operation.")}</p>
-              <p className="muted">{t("The implementation map and release gates in the specification track the remaining work.")}</p>
-              <Button
-                onClick={() => {
-                  setModal(null);
-                  go("Sources");
-                }}
-              >{t("View source catalog")}</Button>
-            </div>
-          ) : modal === "reset" ? (
-            <>
-              <div className="dialog-body">
-                <p>{t("Remove browser design recipes, sample tasks and reports? Real downloads, executable recipes and output files are retained.")}</p>
-              </div>
-              <div className="dialog-footer">
-                <Button onClick={() => setModal(null)}>{t("Keep data")}</Button>
-                <Button
-                  primary
-                  onClick={() => {
-                    setRecipes([]);
-                    setTasks([]);
-                    setOutputs([]);
-                    setModal(null);
-                    setToast("Local design data cleared.");
-                  }}
-                >{t("Clear design data")}</Button>
-              </div>
-            </>
           ) : typeof modal === "object" && modal.type === "json" ? (
             <>
               <div className="dialog-body">
@@ -1628,37 +819,18 @@ function App() {
                 >{t("Save JSON file")}</Button>
               </div>
             </>
-          ) : typeof modal === "object" ? (
-            <>
-              <div className="dialog-body">
-                <p>{t("Remove this simulation report from the library? Files on your computer are unaffected.")}</p>
-              </div>
-              <div className="dialog-footer">
-                <Button onClick={() => setModal(null)}>{t("Keep report")}</Button>
-                <Button
-                  primary
-                  onClick={() => {
-                    setOutputs((old) => old.filter((o) => o.id !== modal.id));
-                    setTasks((old) => old.filter((t) => t.id !== modal.id));
-                    setModal(null);
-                  }}
-                >{t("Remove report")}</Button>
-              </div>
-            </>
           ) : (
             <div className="dialog-body">
               <span className="brand-mark">
                 <Layers />
               </span>
               <h3>{t("GeoD Global · local workspace")}</h3>
-              <p>{t("A local geospatial workspace with live catalog search, original downloads, SCL inspection, and rectangle or polygon clipping. Other processing tools remain design previews.")}</p>
+              <p>{t("Search Earth Search, download source files, inspect SCL pixels, and clip a raster locally by rectangle or administrative polygon.")}</p>
               <ul>
                 <li>{t("Live Earth Search queries and a separate cached sample catalog.")}</li>
                 <li>{t("Catalog filters and compatible scene comparison with local preferences.")}</li>
                 <li>{t("Original source asset downloads with local task history.")}</li>
                 <li>{t("Verified SCL pixel inspection and rectangle or polygon GeoTIFF clips.")}</li>
-                <li>{t("Six data domains, with unconnected adapters marked.")}</li>
-                <li>{t("Cloud features and commercial terms remain proposals.")}</li>
               </ul>
               <p className="muted">{t("Inter and sample previews are bundled locally. Live searches, remote previews and asset downloads contact their source providers. This workspace sends no analytics.")}</p>
             </div>

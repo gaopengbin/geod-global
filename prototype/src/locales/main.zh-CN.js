@@ -131,6 +131,8 @@ export default {
   "Loading the sample workspace…": "正在加载样例工作空间…",
   "GeoD home": "GeoD 首页",
   "Cloud": "云服务",
+  "Local diagnostics · advanced": "本地诊断 · 高级",
+  "Search Earth Search, download source files, inspect SCL pixels, and clip a raster locally by rectangle or administrative polygon.": "从 Earth Search 搜索影像、下载源文件、检查 SCL 像素，并按矩形或行政区多边形在本地裁剪栅格。",
   "Settings": "设置",
   "Help": "帮助",
   "Earth Search workspace": "Earth Search 工作空间",

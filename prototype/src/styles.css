@@ -1724,6 +1724,8 @@ dd {
 .command-results [data-slot="button"] { justify-content: space-between; white-space: normal; height: auto; }
 .file-picker { margin-top: 14px; }
 .diagnostics-panel { max-width: 850px; padding: 24px; }
+.settings-diagnostics { max-width: 850px; margin-top: 18px; }
+.settings-diagnostics .diagnostics-panel { margin-top: 6px; }
 .range-label [data-slot="slider"] { min-height: 24px; }
 @media (max-width: 760px) {
   .brand { justify-content: center; padding: 6px; }

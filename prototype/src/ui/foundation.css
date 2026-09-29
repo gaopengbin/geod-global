@@ -36,6 +36,9 @@
   --accent: oklch(0.626 0.205 254.947);
   --accent-ink: oklch(0.556 0.187 255.617);
   --accent-tint: oklch(0.96 0.019 252.878);
+  --scrollbar-thumb: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+  --scrollbar-thumb-hover: var(--accent);
+  --scrollbar-track: transparent;
 
   /* semantic */
   --green: oklch(0.603 0.155 150.883);
@@ -84,6 +87,9 @@
   --accent: oklch(0.68 0.173 253.301);
   --accent-ink: oklch(0.788 0.113 248.33);
   --accent-tint: oklch(0.68 0.173 253.301 / 0.16);
+  --scrollbar-thumb: color-mix(in srgb, var(--accent) 50%, var(--line-strong));
+  --scrollbar-thumb-hover: var(--accent);
+  --scrollbar-track: transparent;
 
   --green: oklch(0.705 0.154 153.814);
   --green-tint: oklch(0.705 0.154 153.814 / 0.14);

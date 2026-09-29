@@ -60,7 +60,7 @@ WP-Q01 跨平台QA / WP-Q02 许可安全 / WP-Q03 发行 / WP-O01 支持与运�
 
 ### WP-D01 — 完整信息架构
 
-**交付**：Explore、Workspace、My Data、Tasks、Sources、Settings、可选Cloud/Teams/Billing 的导航图；裁剪方案在 My Data 中作为折叠高级功能，不占一级入口。Area/Scene/Layer/Recipe/Job/Artifact 对象关系仍保留。
+**当前交付**：Explore、Workspace、My Data、Tasks 四个主入口，Settings与Help在侧栏底部；裁剪方案在 My Data 中作为折叠高级功能。Sources、Cloud/Teams/Billing及未接入数据域暂不提供入口，待真实能力通过验收再加入。Area/Scene/Layer/Recipe/Job/Artifact 对象关系仍保留。
 
 **验收**：同一AOI跨数据域不丢；用户不创建账号/项目即可开始本地工作；从任意任务能找到成果与参数；从成果能找到来源与配方。
 
