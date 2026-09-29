@@ -22,6 +22,7 @@ use tiff::{
     ColorType,
 };
 use tokio::io::AsyncWriteExt;
+use tokio::sync::mpsc::UnboundedSender;
 use tokio_util::sync::CancellationToken;
 use uuid::Uuid;
 
@@ -217,7 +218,6 @@ impl JobManager {
             _ = token.cancelled() => return Err("Mosaic cancelled".into()),
             permit = self.inner.raster_permits.clone().acquire_owned() => permit.map_err(io_error)?,
         };
-        self.progress(id, 0, None).await?;
         let job = self.get(id).await.ok_or("Unknown mosaic job")?;
         let spec = job
             .mosaic
@@ -235,6 +235,9 @@ impl JobManager {
             let store = self.inner.store.lock().await;
             validate_mosaic_sources(&job, &store.jobs)?
         };
+        let total_steps = sources.len() as u64 * 2 + 1;
+        self.mosaic_progress(id, 0, total_steps, "Checking downloaded sources")
+            .await?;
         let source_provenance = sources
             .iter()
             .map(|source| {
@@ -256,7 +259,8 @@ impl JobManager {
         let output_id = id.to_owned();
         let asset_key = spec.asset_key.clone();
         let cancellation = token.clone();
-        let output = tokio::task::spawn_blocking(move || {
+        let (progress_tx, mut progress_rx) = tokio::sync::mpsc::unbounded_channel();
+        let worker = tokio::task::spawn_blocking(move || {
             let _permit = permit;
             write_mosaic(
                 &root,
@@ -265,10 +269,23 @@ impl JobManager {
                 &asset_key,
                 &output_id,
                 &cancellation,
+                Some(&progress_tx),
             )
-        })
-        .await
-        .map_err(io_error)??;
+        });
+        let mut update_error = None;
+        while let Some((completed, stage)) = progress_rx.recv().await {
+            if let Err(error) = self
+                .mosaic_progress(id, completed, total_steps, stage)
+                .await
+            {
+                update_error.get_or_insert(error);
+            }
+        }
+        let output = worker.await.map_err(io_error)??;
+        if let Some(error) = update_error {
+            let _ = tokio::fs::remove_file(&output.path).await;
+            return Err(error);
+        }
         let manifest_path = self
             .inner
             .root
@@ -318,6 +335,26 @@ impl JobManager {
             return Err(error);
         }
         Ok(())
+    }
+
+    async fn mosaic_progress(
+        &self,
+        id: &str,
+        completed: u64,
+        total: u64,
+        stage: &str,
+    ) -> Result<()> {
+        let mut store = self.inner.store.lock().await;
+        let job = store.jobs.get_mut(id).ok_or("Unknown mosaic job")?;
+        if !active(&job.status) {
+            return Err("Mosaic cancelled".into());
+        }
+        job.status = JobStatus::Running;
+        job.bytes_downloaded = completed;
+        job.total_bytes = Some(total);
+        job.validation = stage.into();
+        job.updated_at = now();
+        self.persist(&store.jobs).await
     }
 }
 
@@ -503,13 +540,20 @@ fn write_mosaic(
     key: &str,
     output_id: &str,
     cancel: &CancellationToken,
+    progress: Option<&UnboundedSender<(u64, &'static str)>>,
 ) -> Result<MosaicOutput> {
     if sources.is_empty() || sources.len() != project.scenes.len() {
         return Err("Project source count changed".into());
     }
     let mut rasters = Vec::with_capacity(sources.len());
-    for source in sources {
+    let report = |completed, stage| {
+        if let Some(progress) = progress {
+            let _ = progress.send((completed, stage));
+        }
+    };
+    for (index, source) in sources.iter().enumerate() {
         rasters.push(source_raster(root, source, key, cancel)?);
+        report(index as u64 + 1, "Checking downloaded sources");
     }
     let first = &rasters[0];
     let crs = first.crs.clone();
@@ -562,7 +606,7 @@ fn write_mosaic(
     let mut pixels = vec![0u8; count as usize * bands];
     let mut covered = vec![false; count as usize];
     let deadline = Instant::now() + Duration::from_secs(180);
-    for raster in &mut rasters {
+    for (index, raster) in rasters.iter_mut().enumerate() {
         copy_source(
             raster,
             left,
@@ -576,6 +620,10 @@ fn write_mosaic(
             cancel,
             deadline,
         )?;
+        report(
+            sources.len() as u64 + index as u64 + 1,
+            "Combining scene pixels",
+        );
     }
     let mut masked_pixels = 0u64;
     if let Some(geometry) = &project.geometry {
@@ -605,7 +653,10 @@ fn write_mosaic(
         covered_pixels,
         overlap_policy: "newest non-nodata scene wins; unfilled pixels are zero".into(),
     };
-    encode_mosaic(root, output_id, &plan, &pixels, cancel)
+    report(sources.len() as u64 * 2, "Writing and checking GeoTIFF");
+    let output = encode_mosaic(root, output_id, &plan, &pixels, cancel)?;
+    report(sources.len() as u64 * 2 + 1, "Writing and checking GeoTIFF");
+    Ok(output)
 }
 
 fn copy_source(
@@ -914,6 +965,7 @@ mod tests {
         );
         let sources = [first, second];
         let root = directory.path().canonicalize().unwrap();
+        let (progress_tx, mut progress_rx) = tokio::sync::mpsc::unbounded_channel();
         let output = write_mosaic(
             &root,
             &project(&sources, "scl"),
@@ -921,8 +973,15 @@ mod tests {
             "scl",
             &Uuid::new_v4().to_string(),
             &CancellationToken::new(),
+            Some(&progress_tx),
         )
         .unwrap();
+        let mut progress = Vec::new();
+        while let Ok(update) = progress_rx.try_recv() {
+            progress.push(update);
+        }
+        assert_eq!(progress.first(), Some(&(1, "Checking downloaded sources")));
+        assert_eq!(progress.last(), Some(&(5, "Writing and checking GeoTIFF")));
         assert_eq!(output.plan.band_count, 1);
         assert_eq!((output.plan.width, output.plan.height), (2, 2));
         assert_eq!(output.plan.covered_pixels, 4);
@@ -955,6 +1014,7 @@ mod tests {
             "visual",
             &Uuid::new_v4().to_string(),
             &CancellationToken::new(),
+            None,
         )
         .unwrap();
         assert_eq!(output.plan.band_count, 3);
@@ -983,6 +1043,7 @@ mod tests {
             "visual",
             &Uuid::new_v4().to_string(),
             &CancellationToken::new(),
+            None,
         )
         .unwrap();
         assert_eq!(
@@ -1032,6 +1093,7 @@ mod tests {
             "visual",
             &Uuid::new_v4().to_string(),
             &CancellationToken::new(),
+            None,
         )
         .unwrap();
         assert!(output.plan.masked_pixels > 0);

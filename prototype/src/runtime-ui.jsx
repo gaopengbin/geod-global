@@ -165,9 +165,9 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
       icon: derived ? Crop : Download,
       status: job.status,
       statusLabel: t(library ? mosaic ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
-      progress: derived ? null : progress,
+      progress: mosaic ? progress : derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
-      meta: library ? date(job.updatedAt) : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
+      meta: library ? date(job.updatedAt) : mosaic && job.status === 'running' ? <>{t(job.validation || 'Checking downloaded sources')} · {number(job.bytesDownloaded)} / {number(job.totalBytes || 0)} {t('steps')}</> : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
       details: library ? <Disclosure className="runtime-file-details" summary={t('File details and provenance')}>
         <DerivedArtifactDetails job={job}/>
         {mosaic && <p>{t('{count} verified sources · {width} × {height} pixels · {crs}', { count: job.mosaicOutput?.sourceCount || 0, width: job.mosaicOutput?.width || 0, height: job.mosaicOutput?.height || 0, crs: job.mosaicOutput?.crs || '' })}</p>}
