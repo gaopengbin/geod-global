@@ -28,6 +28,8 @@ import {
   Info,
   PanelRightClose,
   PanelRightOpen,
+  PanelLeftClose,
+  PanelLeftOpen,
   ShieldCheck,
   CheckCircle2,
   AlertCircle,
@@ -115,6 +117,9 @@ function App() {
   const exploreMap = useRef(null);
   const timelineTrack = useRef(null);
   const [period, setPeriod] = useState("all");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [discoveryCollapsed, setDiscoveryCollapsed] = useState(false);
+  const [navCollapsed, setNavCollapsed] = useState(stored("nav-collapsed", false));
   const [compare, setCompare] = useState(false),
     [compareId, setCompareId] = useState(""),
     [split, setSplit] = useState(50),
@@ -151,6 +156,7 @@ function App() {
     setCompare(false);
     setQuery("");
     setPeriod("all");
+    setFiltersOpen(mode === "live");
     const first = mode === "sample" ? sampleCatalog?.scenes[0] : liveCatalog?.scenes[0];
     setSelected(first || null);
   };
@@ -179,6 +185,7 @@ function App() {
         setSelected(result.scenes[0] || null);
       }
       setLiveState("ready");
+      if (!more) setFiltersOpen(false);
     } catch (error) {
       setLiveError(error.name === "AbortError" ? "Search cancelled." : error.name === "TimeoutError" ? "Earth Search did not respond within 30 seconds. Try again." : error.message);
       setLiveState("error");
@@ -233,6 +240,9 @@ function App() {
     localStorage.setItem("geod-design-theme", JSON.stringify(theme));
   }, [theme]);
   useEffect(() => {
+    localStorage.setItem("geod-design-nav-collapsed", JSON.stringify(navCollapsed));
+  }, [navCollapsed]);
+  useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key === "Escape" && !document.querySelector('[role="dialog"][data-state="open"]')) setCompare(false);
     };
@@ -265,6 +275,7 @@ function App() {
       (live || period === "all" || Number(s.date.slice(8, 10)) <= 15),
     )
     .sort((a, b) => sort === "cloud" ? (a.cloud ?? 101) - (b.cloud ?? 101) : b.date.localeCompare(a.date));
+  const activeFilters = live ? 0 : Number(period !== "all") + Number(cloud !== 60);
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
@@ -289,10 +300,12 @@ function App() {
   return (
     <div className="app">
       <SidebarNav
+        className={navCollapsed ? "nav-collapsed" : ""}
         ariaLabel={t("GeoD home")}
         brand={<a className="brand" href="#Explore" aria-label={t("GeoD home")}><span className="brand-mark"><Layers size={20} /></span><strong>{t("GeoD")}</strong></a>}
         items={nav.map(([name, icon]) => ({ id: name, label: t(name), icon, href: "#" + encodeURIComponent(name), active: page === name }))}
         footerItems={[
+          { id: "Toggle navigation", label: t(navCollapsed ? "Expand navigation" : "Collapse navigation"), icon: navCollapsed ? PanelLeftOpen : PanelLeftClose, onClick: () => setNavCollapsed(value => !value), "data-nav-toggle": true },
           { id: "Settings", label: t("Settings"), icon: Settings, href: "#Settings", active: page === "Settings" },
           { id: "Help", label: t("Help"), icon: HelpCircle, onClick: () => setModal("about") },
         ]}
@@ -300,13 +313,16 @@ function App() {
       />
       <div className="app-main">
         <header className="topbar">
-          <div className="breadcrumb">
+          <div className="topbar-left">
+            {page === "Explore" && discoveryCollapsed && <Button variant="secondary" size="sm" icon={PanelLeftOpen} className="discovery-toggle" aria-label={t("Show scene list")} aria-controls="explore-discovery" aria-expanded={false} onClick={() => setDiscoveryCollapsed(false)}>{t("Imagery scenes")}</Button>}
+            <div className="breadcrumb">
             <span className="project-icon">
               <Folder size={16} />
             </span>
             <strong>{live ? t("Earth Search workspace") : t("Bay Area study")}</strong>
             <ChevronRight size={14} />
             <span>{t(page)}</span>
+            </div>
           </div>
           <div className="top-actions">
             <Badge>{live ? t("Live catalog") : t("Sample catalog")}</Badge>
@@ -322,13 +338,13 @@ function App() {
           </div>
         </header>
         {page === "Workspace" ? <React.Suspense fallback={<main className="wm-map-loading" role="status">{t("Loading local map…")}</main>}><WorkspaceMap /></React.Suspense> : workspace ? (
-          <div className={"workspace " + (!inspector || !selected ? "no-inspector" : "")}>
-            <aside className="discovery">
+          <div className={"workspace " + (!inspector || !selected ? "no-inspector " : "") + (discoveryCollapsed ? "no-discovery" : "")}>
+            {!discoveryCollapsed && <aside className="discovery" id="explore-discovery">
               <div className="panel-heading">
                 <div>
-                  <span className="eyebrow">{t("DATA EXPLORER")}</span>
-                  <h1>{t("Find your next dataset")}</h1>
+                  <h1>{t("Imagery scenes")}</h1>
                 </div>
+                <Button variant="quiet" size="icon" aria-label={t("Hide scene list")} title={t("Hide scene list")} aria-controls="explore-discovery" aria-expanded={true} onClick={() => setDiscoveryCollapsed(true)}><PanelLeftClose size={18} /></Button>
               </div>
               <Button className="area-picker" onClick={() => setModal("area")}>
                 <MapPin size={17} />
@@ -341,7 +357,12 @@ function App() {
               <SegmentedControl className="catalog-switch" aria-label={t("Catalog mode")} value={catalogMode} onValueChange={switchCatalog}
                 items={[{ value: "sample", label: t("Sample catalog") }, { value: "live", label: t("Live catalog") }]} />
               <>
-                  <div className="filters">
+                  <label className="search-input scene-search">
+                    <Search size={16} />
+                    <Input aria-label={t("Search scenes")} value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("Search scene ID or date")} />
+                  </label>
+                  {liveError && <p className="catalog-error" role="alert">{catalogError(liveError)}</p>}
+                  <div className="filters" id="scene-filters" hidden={!filtersOpen}>
                     {live && <form className="catalog-form" onSubmit={submitSearch}>
                       <label>{t("WGS 84 bounds · west, south, east, north")}<Input name="bbox" aria-label={t("Search bounding box")} value={searchInput.bbox} onChange={updateSearchField} />
                       </label>
@@ -357,17 +378,7 @@ function App() {
                       </div>
                       {(liveState === "loading" || liveState === "more") && <Button type="button" onClick={cancelSearch}>{t("Cancel search")}</Button>}
                     </form>}
-                    {liveError && <p className="catalog-error" role="alert">{catalogError(liveError)}</p>}
                     {live && appliedSearch && <p className="catalog-query-note">{t("{status}: {start} – {end} · clouds ≤ {cloud} · [{bbox}]", { status: catalog ? t("Showing") : t("Requested"), start: date(appliedSearch.start), end: date(appliedSearch.end), cloud: number(appliedSearch.cloud / 100, { style: "percent" }), bbox: appliedSearch.bbox.join(", ") })}</p>}
-                    <label className="search-input">
-                      <Search size={16} />
-                      <Input
-                        aria-label={t("Search scenes")}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder={t("Search scene ID or date")}
-                      />
-                    </label>
                     {!live && <div className="filter-row">
                       <label className="select-wrap">{t("Date")}<Select
                           aria-label={t("Date range")}
@@ -394,19 +405,16 @@ function App() {
                     </label>}
                   </div>
                   <div className="results-heading">
-                    <span>
-                      <strong>
-                        {filtered.length}
-                      </strong>{" "}{t("scenes")}<span className="muted">· {live ? t("loaded results") : t("catalog snapshot")}</span>
+                    <span className="results-count">
+                      <strong>{filtered.length}</strong><span className="results-count-label"> {t("scenes")}</span>
                     </span>
-                    <Select
-                      aria-label={t("Sort scenes")}
-                      value={sort}
-                      onChange={(e) => setSort(e.target.value)}
-                    >
-                      <option value="date">{t("Newest")}</option>
-                      <option value="cloud">{t("Clearest")}</option>
-                    </Select>
+                    <div className="results-actions">
+                      <Button size="sm" icon={SlidersHorizontal} className="filter-toggle" aria-label={activeFilters ? t("Filters · {count} active", { count: number(activeFilters) }) : t("Filters")} aria-expanded={filtersOpen} aria-controls="scene-filters" onClick={() => setFiltersOpen(value => !value)}>{t("Filters")}{activeFilters > 0 && <span className="filter-count" aria-hidden="true">{number(activeFilters)}</span>}</Button>
+                      <Select aria-label={t("Sort scenes")} value={sort} onChange={(e) => setSort(e.target.value)}>
+                        <option value="date">{t("Newest")}</option>
+                        <option value="cloud">{t("Clearest")}</option>
+                      </Select>
+                    </div>
                   </div>
                   <div className="scene-list">
                     {live && liveState === "loading" ? <div className="loading-state" role="status"><Spinner />{t("Searching Earth Search…")}</div> : live && !liveCatalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t("Set your area and dates above. Results come directly from Earth Search; the sample catalog is separate.")}</EmptyState> : !filtered.length ? (
@@ -474,7 +482,7 @@ function App() {
                     <span>{t("Earth Search ·")} {live ? t("live HTTPS catalog") : t("June 2025 snapshot")}</span>
                   </div>
               </>
-            </aside>
+            </aside>}
             {selected ? <main className="map-workspace">
               <div className="map-toolbar">
                 <SegmentedControl className="preview-mode" aria-label={t("Preview")} value={compare ? "compare" : "preview"}
