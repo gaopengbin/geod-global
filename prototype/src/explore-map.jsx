@@ -31,10 +31,7 @@ const footprintStyle = new Style({ stroke: new Stroke({ color: '#9ed4eb', width:
 const selectedFootprintStyle = new Style({ stroke: new Stroke({ color: '#55b8ff', width: 2 }), fill: new Fill({ color: 'rgba(45, 135, 255, 0.07)' }) });
 const queuedFootprintStyle = new Style({ stroke: new Stroke({ color: '#f4b544', width: 2.5 }), fill: new Fill({ color: 'rgba(244, 181, 68, 0.13)' }) });
 const loadedFootprintStyle = new Style({ stroke: new Stroke({ color: '#6ed7a3', width: 2 }), fill: new Fill({ color: 'rgba(68, 193, 135, 0.08)' }) });
-const focusedFootprintStyle = [
-  new Style({ stroke: new Stroke({ color: '#fff', width: 6 }) }),
-  new Style({ stroke: new Stroke({ color: '#1685ff', width: 3.5 }), fill: new Fill({ color: 'rgba(22, 133, 255, 0.1)' }) }),
-];
+const focusedFootprintStyle = new Style({ stroke: new Stroke({ color: '#f044d2', width: 4.5 }), fill: new Fill({ color: 'rgba(240, 68, 210, 0.1)' }) });
 
 function sceneFootprint(scene) {
   let feature;
@@ -160,7 +157,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       const land = new VectorLayer({ source: overviewLand, style: landStyle, zIndex: 0 });
       const countries = new VectorLayer({ source: overviewCountries, style: countryStyle, minResolution: 750, zIndex: 2 });
       const footprints = new VectorSource({ wrapX: false });
-      const footprintLayer = new VectorLayer({ source: footprints, style: feature => feature.get('focused') ? focusedFootprintStyle : feature.get('queued') ? queuedFootprintStyle : feature.get('loaded') ? loadedFootprintStyle : feature.get('active') ? selectedFootprintStyle : footprintStyle, zIndex: 11 });
+      const footprintLayer = new VectorLayer({ source: footprints, style: feature => feature.get('hidden') ? null : feature.get('focused') ? focusedFootprintStyle : feature.get('queued') ? queuedFootprintStyle : feature.get('loaded') ? loadedFootprintStyle : feature.get('active') ? selectedFootprintStyle : footprintStyle, zIndex: 11 });
       const overlays = new VectorLayer({ source: new VectorSource(), className: 'explore-area-layer', zIndex: 12 });
       const previous = savedViewRef.current?.areaKey === areaKey ? savedViewRef.current : null;
       const view = new View({ projection: OVERVIEW_PROJECTION,
@@ -222,16 +219,28 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     const selectedSet = new Set(selectedIds);
     const loadedSet = new Set(loadedScenes.map(item => item.id));
     const focusedSet = new Set(focusedIds);
-    const focusedExtents = new Set();
+    const focusedFootprints = new Set();
+    const renderedFootprints = new Map();
     const focusedFeatures = [];
     for (const item of scenes) {
       const feature = sceneFootprint(item);
       if (!feature) continue;
       const extent = feature.getGeometry().getExtent();
-      const extentKey = extent.map(value => value.toFixed(1)).join(',');
-      const focused = focusedSet.has(item.id) && !focusedExtents.has(extentKey);
-      if (focused) focusedExtents.add(extentKey);
-      feature.setProperties({ queued: selectedSet.has(item.id) && !loadedSet.has(item.id), loaded: loadedSet.has(item.id), active: item.id === activeSceneId, focused });
+      const footprintKey = JSON.stringify(feature.getGeometry().getCoordinates());
+      const focused = focusedSet.has(item.id) && !focusedFootprints.has(footprintKey);
+      if (focused) focusedFootprints.add(footprintKey);
+      const queued = selectedSet.has(item.id) && !loadedSet.has(item.id);
+      const loaded = loadedSet.has(item.id);
+      const active = item.id === activeSceneId;
+      const priority = focused ? 4 : queued ? 3 : loaded ? 2 : active ? 1 : 0;
+      // Keep every scene hit-testable while drawing identical footprints only once.
+      const rendered = renderedFootprints.get(footprintKey);
+      const hidden = rendered && rendered.priority >= priority;
+      if (!hidden) {
+        rendered?.feature.set('hidden', true);
+        renderedFootprints.set(footprintKey, { feature, priority });
+      }
+      feature.setProperties({ queued, loaded, active, focused, hidden: !!hidden });
       if (focused) focusedFeatures.push(feature);
       else source.addFeature(feature);
       union = union ? [Math.min(union[0], extent[0]), Math.min(union[1], extent[1]), Math.max(union[2], extent[2]), Math.max(union[3], extent[3])] : extent.slice();
