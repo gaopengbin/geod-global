@@ -24,6 +24,8 @@ export default {
   'Active raster provenance': '当前栅格的来源',
   'Inspect pixels': '查看像元',
   'Draw rectangle': '绘制矩形',
+  'Clip area': '裁剪区域',
+  'Close map tools': '关闭地图工具',
   'Fit active raster': '定位当前栅格',
   'Raster map. Arrow keys pan, plus and minus zoom, Enter reads the centre pixel, Escape cancels drawing.': '栅格地图。方向键平移，加减键缩放，回车读取中心像元，Escape 取消绘制。',
   'Build a map from your local rasters': '使用本地栅格创建地图',

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Crosshair, Crop, Eye, EyeOff, Layers, Maximize, Minus, MousePointer2, Plus, RefreshCw, SquareDashed, Trash2 } from 'lucide-react';
+import { Crosshair, Crop, Eye, EyeOff, Layers, Maximize, Minus, MousePointer2, Plus, RefreshCw, SquareDashed, Trash2, X } from 'lucide-react';
 import OLMap from 'ol/Map.js';
 import View from 'ol/View.js';
 import ImageLayer from 'ol/layer/Image.js';
@@ -50,6 +50,7 @@ export function WorkspaceMap() {
   const [loadError, setLoadError] = useState('');
   const [failedJob, setFailedJob] = useState(null);
   const [mode, setMode] = useState('inspect');
+  const [panel, setPanel] = useState(null);
   const [cursor, setCursor] = useState(null);
   const [boundsInput, setBoundsInput] = useState(['', '', '', '']);
   const [pixel, setPixel] = useState(null);
@@ -105,6 +106,7 @@ export function WorkspaceMap() {
   const inspect = async coordinate => {
     const entry = activeRef.current;
     if (!entry?.visible || !coordinate || pixelBusy) return;
+    setPanel('pixel');
     setLastPoint(coordinate); setPixel(null); setPixelError('');
     if (!coordinateToPixel(coordinate, entry.metadata)) { setPixelError('Choose a point inside the active raster.'); return; }
     const sequence = ++pixelSequence.current;
@@ -119,7 +121,7 @@ export function WorkspaceMap() {
     } finally { if (mounted.current && sequence === pixelSequence.current) setPixelBusy(false); }
   };
 
-  handlers.current = { inspect, rectangle: rectangle => { setBoundsInput(rectangle.map(value => String(Math.round(value * 1000) / 1000))); setMode('inspect'); } };
+  handlers.current = { inspect, rectangle: rectangle => { setBoundsInput(rectangle.map(value => String(Math.round(value * 1000) / 1000))); setMode('inspect'); setPanel('clip'); } };
 
   useEffect(() => {
     if (!crs || !mapTarget.current) return;
@@ -179,7 +181,7 @@ export function WorkspaceMap() {
 
   useEffect(() => {
     pixelSequence.current++; pixelRequest.current?.abort(); setPixel(null); setPixelError(''); setPixelBusy(false); setLastPoint(null);
-    setBoundsInput(['', '', '', '']); setMode('inspect');
+    setBoundsInput(['', '', '', '']); setMode('inspect'); setPanel(null);
   }, [activeId]);
 
   useEffect(() => { if (drawing.current) { drawing.current.abortDrawing(); drawing.current.setActive(mode === 'draw' && Boolean(active?.visible)); } }, [mode, active?.visible, crs]);
@@ -225,28 +227,27 @@ export function WorkspaceMap() {
       {active && <Disclosure className="wm-provenance" summary={t('Active raster provenance')}><p className="mono">{active.job.id}</p><p>{active.job.attribution}</p><p className="mono">SHA-256 · {active.metadata.sha256}</p></Disclosure>}
     </aside>
     <section className="wm-main">
-      <div className="wm-toolbar"><div className="wm-mode"><Button selected={mode === 'inspect'} aria-pressed={mode === 'inspect'} disabled={!active?.visible} onClick={() => setMode('inspect')}><MousePointer2 size={15}/>{t('Inspect pixels')}</Button><Button selected={mode === 'draw'} aria-pressed={mode === 'draw'} disabled={!active?.visible} onClick={() => setMode(mode === 'draw' ? 'inspect' : 'draw')}><SquareDashed size={15}/>{t('Draw rectangle')}</Button></div><div className="wm-navigation"><Button size="icon" aria-label={t('Zoom in')} disabled={!entries.length} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() + 1)}><Plus size={17}/></Button><Button size="icon" aria-label={t('Zoom out')} disabled={!entries.length} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() - 1)}><Minus size={17}/></Button><Button disabled={!active} onClick={() => fit(active)}><Maximize size={15}/>{t('Fit active raster')}</Button></div></div>
+      <div className="wm-toolbar"><div className="wm-mode"><Button selected={mode === 'inspect' && panel === 'pixel'} aria-pressed={mode === 'inspect' && panel === 'pixel'} disabled={!active?.visible} onClick={() => { setMode('inspect'); setPanel(panel === 'pixel' ? null : 'pixel'); }}><MousePointer2 size={15}/>{t('Inspect pixels')}</Button><Button selected={mode === 'draw'} aria-pressed={mode === 'draw'} disabled={!active?.visible} onClick={() => { setMode(mode === 'draw' ? 'inspect' : 'draw'); setPanel(null); }}><SquareDashed size={15}/>{t('Draw rectangle')}</Button><Button selected={panel === 'clip'} aria-expanded={panel === 'clip'} aria-controls="wm-tool-panel" disabled={!active?.visible} onClick={() => { setMode('inspect'); setPanel(panel === 'clip' ? null : 'clip'); }}><Crop size={15}/>{t('Clip area')}</Button></div><div className="wm-navigation"><Button size="icon" aria-label={t('Zoom in')} disabled={!entries.length} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() + 1)}><Plus size={17}/></Button><Button size="icon" aria-label={t('Zoom out')} disabled={!entries.length} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() - 1)}><Minus size={17}/></Button><Button disabled={!active} onClick={() => fit(active)}><Maximize size={15}/>{t('Fit active raster')}</Button></div></div>
       <div className="wm-map-container">
         <div ref={mapTarget} className={'wm-map ' + (mode === 'draw' ? 'drawing' : '')} tabIndex={0} role="application" aria-label={t('Raster map. Arrow keys pan, plus and minus zoom, Enter reads the centre pixel, Escape cancels drawing.')} onKeyDown={event => { if (event.key === 'Escape') { drawing.current?.abortDrawing(); setMode('inspect'); } if (event.key === 'Enter' && mode === 'inspect') { event.preventDefault(); inspect(map.current?.getView().getCenter()); } }}/>
         {!entries.length && <EmptyState className="wm-empty" icon={Layers} title={t('Build a map from your local rasters')} description={t(selectedCandidate ? 'Choose a completed SCL raster on the left, then add it to this map. You can inspect pixels or draw a clip after it loads.' : 'No completed SCL raster is available yet. Download one in Explore, then return here to add it to the map.')} action={selectedCandidate ? <Button primary disabled={Boolean(loadingId) || !health} onClick={() => addLayer(selectedCandidate)}>{loadingId ? <Spinner size={16}/> : <Plus size={16}/>} {t(loadingId ? 'Reading local raster…' : 'Add selected raster to map')}</Button> : <Button asChild><a href="#Explore">{t('Explore data')}</a></Button>}/>}
         {entries.length > 0 && <div className="wm-map-caption"><Badge>{crs}</Badge><Badge>{t('Georeferenced SCL overview · nearest-neighbour display')}</Badge></div>}
         {mode === 'draw' && <p className="wm-draw-hint" role="status">{t('Click two opposite corners. Escape cancels. Review the rectangle before running a clip.')}</p>}
+        {panel && <Surface as="aside" id="wm-tool-panel" className="wm-tool-panel" aria-label={t(panel === 'pixel' ? 'Source pixel inspector' : 'Map clip selection')}>
+          <div className="wm-tool-heading"><h2>{panel === 'pixel' ? t('Source pixel inspector') : <><Crop size={16}/>{t('Map clip selection')}</>}</h2><Button size="icon" variant="quiet" aria-label={t('Close map tools')} onClick={() => setPanel(null)}><X size={16}/></Button></div>
+          {panel === 'pixel' ? <section className="wm-pixel-panel" aria-label={t('Source pixel inspector')}><p>{t('Click the active raster to read its full-resolution file. The overview image is only a display preview.')}</p>
+            {pixelBusy && <p className="wm-reading" role="status"><Spinner size={16}/>{t('Reading the original pixel…')}</p>}
+            {pixelError && <MapError message={pixelError} onRetry={lastPoint && active?.visible ? () => inspect(lastPoint) : undefined} busy={pixelBusy}/>}
+            {pixel && <div className="wm-pixel-value" role="status"><span className="wm-swatch" style={{ background: pixel.color }}/><div><strong>{t(pixel.label)} · {number(pixel.value)}</strong><p>{t('Column {column}, row {row}', { column: number(pixel.pixel[0]), row: number(pixel.pixel[1]) })} · {t('zero-based')}</p><small className="mono">{formatCoordinate(pixel.coordinate)} m</small>{pixel.isNoData && <p>{t('This pixel is NoData.')}</p>}</div></div>}
+            {active && <Disclosure className="wm-legend" summary={t('SCL class legend')}><ul>{active.metadata.classes.map(item => <li key={item.value}><i style={{ background: item.color }}/><span>{number(item.value)} · {t(item.label)}</span></li>)}</ul></Disclosure>}
+          </section> : <section className="wm-clip-panel" aria-label={t('Map clip selection')}><p>{t('Draw a rectangle or enter bounds in source metres, then check the selected clip before running it.')}</p><div className="wm-bounds">{['Min X', 'Min Y', 'Max X', 'Max Y'].map((label, index) => <label className="runtime-field" key={label}>{t(label)}<Input type="number" step="any" value={boundsInput[index]} disabled={!active} onChange={event => setBoundsInput(old => old.map((value, i) => i === index ? event.target.value : value))}/></label>)}</div>
+            {pixelWindow && <p className="wm-window-hint">{t('Preview window: {width} × {height} pixels at {x}, {y}. The native plan verifies these bounds and the source checksum.', { width: number(pixelWindow[2]), height: number(pixelWindow[3]), x: number(pixelWindow[0]), y: number(pixelWindow[1]) })}</p>}
+            {active && boundsInput.every(value => value !== '') && !pixelWindow && <p className="wm-error" role="alert">{t('Enter an ordered rectangle that overlaps the active raster.')}</p>}
+            <div className="wm-clip-actions"><Button size="sm" disabled={!active} onClick={() => setBoundsInput(active.metadata.bounds.map(String))}>{t('Use full raster extent')}</Button><Button size="sm" primary disabled={!active || !pixelWindow || !health} onClick={reviewClip}><Crop size={15}/>{t('Review selected clip')}</Button></div>
+          </section>}
+        </Surface>}
       </div>
       <div className="wm-coordinate-bar"><span className="mono">{cursor && crs ? `${crs} · ${formatCoordinate(cursor)} m` : t('Move across the map to read source coordinates')}</span><Button disabled={!inspectable} onClick={() => inspect(map.current?.getView().getCenter())}><Crosshair size={14}/>{t('Read centre pixel')}</Button></div>
-      <div className="wm-panels">
-        <section className="wm-pixel-panel" aria-label={t('Source pixel inspector')}><h2>{t('Source pixel inspector')}</h2><p>{t('Click the active raster to read its full-resolution file. The overview image is only a display preview.')}</p>
-          {pixelBusy && <p className="wm-reading" role="status"><Spinner size={16}/>{t('Reading the original pixel…')}</p>}
-          {pixelError && <MapError message={pixelError} onRetry={lastPoint && active?.visible ? () => inspect(lastPoint) : undefined} busy={pixelBusy}/>}
-          {pixel && <div className="wm-pixel-value" role="status"><span className="wm-swatch" style={{ background: pixel.color }}/><div><strong>{t(pixel.label)} · {number(pixel.value)}</strong><p>{t('Column {column}, row {row}', { column: number(pixel.pixel[0]), row: number(pixel.pixel[1]) })} · {t('zero-based')}</p><small className="mono">{formatCoordinate(pixel.coordinate)} m</small>{pixel.isNoData && <p>{t('This pixel is NoData.')}</p>}</div></div>}
-          {active && <Disclosure className="wm-legend" summary={t('SCL class legend')}><ul>{active.metadata.classes.map(item => <li key={item.value}><i style={{ background: item.color }}/><span>{number(item.value)} · {t(item.label)}</span></li>)}</ul></Disclosure>}
-        </section>
-        <section className="wm-clip-panel" aria-label={t('Map clip selection')}><h2><Crop size={16}/>{t('Map clip selection')}</h2><p>{t('Draw a rectangle or enter bounds in source metres, then check the selected clip before running it.')}</p><div className="wm-bounds">{['Min X', 'Min Y', 'Max X', 'Max Y'].map((label, index) => <label className="runtime-field" key={label}>{t(label)}<Input type="number" step="any" value={boundsInput[index]} disabled={!active} onChange={event => setBoundsInput(old => old.map((value, i) => i === index ? event.target.value : value))}/></label>)}</div>
-          {pixelWindow && <p className="wm-window-hint">{t('Preview window: {width} × {height} pixels at {x}, {y}. The native plan verifies these bounds and the source checksum.', { width: number(pixelWindow[2]), height: number(pixelWindow[3]), x: number(pixelWindow[0]), y: number(pixelWindow[1]) })}</p>}
-          {active && boundsInput.every(value => value !== '') && !pixelWindow && <p className="wm-error" role="alert">{t('Enter an ordered rectangle that overlaps the active raster.')}</p>}
-          <div className="wm-clip-actions"><Button size="sm" disabled={!active} onClick={() => setBoundsInput(active.metadata.bounds.map(String))}>{t('Use full raster extent')}</Button><Button size="sm" primary disabled={!active || !pixelWindow || !health} onClick={reviewClip}><Crop size={15}/>{t('Review selected clip')}</Button></div>
-        </section>
-      </div>
-      <p className="wm-footer-note">{t('Local previews only. No online basemap is requested. Display layers share their source CRS; output pixels are not reprojected.')}</p>
     </section>
     {editor && <RecipeEditorDialog sourceJob={editor.job} initialRecipe={editor.recipe} initialMetadata={editor.metadata} onClose={() => setEditor(null)}/>}
   </main>;
