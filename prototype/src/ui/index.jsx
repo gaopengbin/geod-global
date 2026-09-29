@@ -38,8 +38,8 @@ export const buttonVariants = cva(
       destructive: 'bg-red-tint text-red hover:bg-red hover:text-white',
     },
     size: {
-      xs: 'h-8 rounded-full px-2.5 text-sm font-normal leading-none gap-1',
-      sm: 'h-8 px-3 text-sm leading-none rounded-full gap-1.5',
+      xs: 'h-7 rounded-full px-2.5 text-[12px] font-normal leading-none gap-1',
+      sm: 'h-[27px] px-3 text-[13px] leading-none rounded-full gap-1.5',
       md: 'px-4 py-[9px] text-sm leading-none rounded-full gap-2',
       icon: 'size-8 p-0 rounded-control gap-0',
       row: 'w-full h-auto rounded-card px-3 py-2 text-sm gap-2 text-left',
@@ -58,7 +58,7 @@ export const Button = forwardRef(function Button({ variant, size, primary, selec
 // sources. All shadcn palette aliases are replaced with Beautiful UI tokens.
 export function Badge({ tone, variant, className, asChild = false, ...props }) {
   const Comp = asChild ? Slot : 'span';
-  return <Comp data-slot="badge" data-tone={tone || variant || 'neutral'} className={cn('bui-badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 py-0.5 text-sm font-medium whitespace-nowrap', className)} {...props} />;
+  return <Comp data-slot="badge" data-tone={tone || variant || 'neutral'} className={cn('bui-badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap', className)} {...props} />;
 }
 
 const fieldClasses = 'w-full min-w-0 rounded-control border border-line-strong bg-surface px-3 py-2 text-sm text-ink transition-[color,box-shadow] placeholder:text-ink-3 disabled:cursor-not-allowed disabled:opacity-50';
@@ -176,7 +176,7 @@ export function Toast({ message, onDismiss, closeLabel = 'Close', duration = 450
 export function SidebarNav({ items = [], footerItems = [], brand, footer, ariaLabel, className, ...props }) {
   const itemView = ({ id, label, icon: Icon, href, active, badge, onClick, ...item }) => {
     const Comp = href ? 'a' : 'button';
-    return <Comp key={id} data-slot="sidebar-item" data-active={active || undefined} href={href} type={href ? undefined : 'button'} onClick={onClick} aria-current={active ? 'page' : undefined} aria-label={label} title={label} className="bui-sidebar-row relative z-10 mx-2 flex h-9 items-center rounded-control px-2 text-left transition-[background-color,color,transform] duration-150 active:scale-[0.98]" {...item}><span className="flex size-5 shrink-0 items-center justify-center">{Icon && (React.isValidElement(Icon) ? Icon : <Icon size={18} aria-hidden="true" />)}</span><span className="bui-sidebar-copy ml-2 min-w-0 flex-1 truncate text-sm font-medium">{label}</span>{badge != null && <span className="bui-sidebar-badge text-sm tabular-nums">{badge}</span>}</Comp>;
+    return <Comp key={id} data-slot="sidebar-item" data-active={active || undefined} href={href} type={href ? undefined : 'button'} onClick={onClick} aria-current={active ? 'page' : undefined} aria-label={label} title={label} className="bui-sidebar-row relative z-10 mx-2 flex h-9 items-center rounded-control px-2 text-left transition-[background-color,color,transform] duration-150 active:scale-[0.98]" {...item}><span className="flex size-5 shrink-0 items-center justify-center">{Icon && (React.isValidElement(Icon) ? Icon : <Icon size={18} aria-hidden="true" />)}</span><span className="bui-sidebar-copy ml-2 min-w-0 flex-1 truncate text-sm font-medium">{label}</span>{badge != null && <span className="bui-sidebar-badge text-xs tabular-nums">{badge}</span>}</Comp>;
   };
   return <aside data-slot="sidebar" aria-label={ariaLabel} className={cn('bui-sidebar', className)} {...props}><div className="bui-sidebar-brand">{brand}</div><nav className="bui-sidebar-items" aria-label={ariaLabel}>{items.map(itemView)}</nav><div className="bui-sidebar-bottom">{footerItems.map(itemView)}{footer && <div className="bui-sidebar-footer">{footer}</div>}</div></aside>;
 }

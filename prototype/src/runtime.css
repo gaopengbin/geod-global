@@ -1,6 +1,6 @@
 .runtime-section { margin: 24px 0 32px; min-width: 0; }
 .runtime-section h2 { font-size: 18px; }
-.runtime-connection { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; color: var(--ink-2); font-size: 14px; }
+.runtime-connection { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; color: var(--ink-2); font-size: 12px; }
 .runtime-path { flex-basis: 100%; overflow-wrap: anywhere; }
 .runtime-disconnected { display: flex; gap: 10px; align-items: flex-start; padding: 14px; }
 .runtime-disconnected p { margin: 5px 0; }
@@ -10,9 +10,9 @@
 .runtime-empty p { margin: 0; }
 .runtime-jobs { margin-top: 16px; }
 .runtime-task-history { margin-top: 18px; }
-.runtime-task-history > .bui-disclosure-trigger { font-size: 14px; color: var(--ink); }
+.runtime-task-history > .bui-disclosure-trigger { font-size: 13px; color: var(--ink); }
 .saved-clip-plans { margin: 20px 0 16px; border-top: 1px solid var(--line-soft); }
-.saved-clip-plans > .bui-disclosure-trigger { font-size: 14px; color: var(--ink); }
+.saved-clip-plans > .bui-disclosure-trigger { font-size: 13px; color: var(--ink); }
 .saved-clip-plans .processing-recipes { margin: 8px 0 16px; }
 .runtime-library { margin-top: 16px; }
 .runtime-library .library-filters { margin-top: 12px; }
@@ -24,10 +24,10 @@
 .runtime-library .bui-task-details { grid-column: 1; margin-top: 0; }
 .runtime-library .bui-task-actions { grid-column: 2; grid-row: 1 / span 2; padding-top: 0; }
 .runtime-file-details .bui-disclosure-trigger { padding: 6px 0; }
-.runtime-results-count { color: var(--ink-2); font-size: 14px; margin: 0; }
+.runtime-results-count { color: var(--ink-2); font-size: 12px; margin: 0; }
 .runtime-job-details { min-width: 0; }
-.runtime-job-status { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--ink-2); font-size: 14px; margin: 0 0 12px; }
-.runtime-details { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 8px 12px; margin: 16px 0; font-size: 14px; }
+.runtime-job-status { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--ink-2); font-size: 12px; margin: 0 0 12px; }
+.runtime-details { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 8px 12px; margin: 16px 0; font-size: 12px; }
 .runtime-details dt { color: var(--ink-2); }
 .runtime-details dd { margin: 0; }
 .runtime-wrap { overflow-wrap: anywhere; word-break: break-word; }
@@ -36,10 +36,10 @@
 .runtime-dialog-body { min-width: 0; }
 .runtime-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 .runtime-field { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; min-width: 0; }
-.runtime-notice { display: flex; align-items: flex-start; gap: 10px; padding: 14px; margin-top: 16px; font-size: 14px; line-height: 1.6; }
+.runtime-notice { display: flex; align-items: flex-start; gap: 10px; padding: 14px; margin-top: 16px; font-size: 12px; line-height: 1.6; }
 .runtime-notice > svg { flex-shrink: 0; margin-top: 2px; }
-.runtime-help { color: var(--ink-2); font-size: 14px; line-height: 1.5; margin: 10px 0 0; }
-.runtime-raster-id { margin: 0 0 18px; font-size: 14px; color: var(--ink-2); }
+.runtime-help { color: var(--ink-2); font-size: 12px; line-height: 1.5; margin: 10px 0 0; }
+.runtime-raster-id { margin: 0 0 18px; font-size: 12px; color: var(--ink-2); }
 .runtime-raster-loading { display: flex; align-items: center; flex-direction: column; gap: 14px; text-align: center; padding: 64px 24px; color: var(--ink-2); }
 .runtime-raster-loading strong { color: var(--ink); }
 .runtime-raster-loading p { margin: 0; max-width: 440px; }
@@ -47,20 +47,20 @@
 .runtime-raster-figure { margin: 0; min-width: 0; }
 .runtime-raster-image { overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .runtime-raster-image img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; image-rendering: pixelated; }
-.runtime-raster-figure figcaption { font-size: 14px; line-height: 1.55; color: var(--ink-2); margin-top: 10px; }
+.runtime-raster-figure figcaption { font-size: 12px; line-height: 1.55; color: var(--ink-2); margin-top: 10px; }
 .runtime-raster-metadata h3, .runtime-raster-legend h3 { font-size: 14px; margin: 0 0 14px; }
 .runtime-raster-metadata .runtime-details { grid-template-columns: minmax(90px, .9fr) minmax(0, 1fr); margin: 0; gap: 12px; }
 .runtime-raster-metadata dd { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .runtime-raster-bounds { display: grid; gap: 5px; }
 .runtime-raster-legend { margin-top: 24px; padding-top: 20px; }
-.runtime-raster-legend > p { font-size: 14px; line-height: 1.5; color: var(--ink-2); margin: -6px 0 14px; }
+.runtime-raster-legend > p { font-size: 12px; line-height: 1.5; color: var(--ink-2); margin: -6px 0 14px; }
 .runtime-raster-legend ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
-.runtime-raster-legend li { display: flex; gap: 9px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 14px; min-width: 0; }
+.runtime-raster-legend li { display: flex; gap: 9px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 12px; min-width: 0; }
 .runtime-raster-swatch { width: 14px; height: 14px; border: 1px solid var(--line); flex-shrink: 0; }
 .runtime-raster-class { min-width: 0; overflow-wrap: anywhere; line-height: 1.5; }
 .runtime-raster-count { display: flex; flex-direction: column; gap: 3px; margin-left: auto; flex-shrink: 0; text-align: right; font-variant-numeric: tabular-nums; }
 .runtime-raster-count small { color: var(--ink-2); }
-.runtime-raster-provenance { margin-top: 18px; font-size: 14px; }
+.runtime-raster-provenance { margin-top: 18px; font-size: 12px; }
 .artifact-export { margin-top: 14px; }
 .artifact-package { margin-top: 12px; padding: 16px; }
 .artifact-package p { line-height: 1.6; }

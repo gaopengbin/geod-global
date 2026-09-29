@@ -48,7 +48,7 @@ h3 {
 }
 
 small {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .muted {
@@ -61,7 +61,7 @@ kbd {
 }
 
 .eyebrow {
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   font-weight: 650;
   color: var(--ink-2);
@@ -139,7 +139,7 @@ kbd {
   gap: 13px;
   white-space: nowrap;
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .breadcrumb strong {
@@ -165,11 +165,11 @@ kbd {
   gap: 10px;
   align-items: center;
   padding: 6px 8px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .command-trigger kbd {
-  font-size: 14px;
+  font-size: 12px;
   margin-left: 20px;
   background: var(--surface);
   padding: 0 4px;
@@ -178,7 +178,7 @@ kbd {
 }
 
 .local-status {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
   display: flex;
   gap: 7px;
@@ -251,12 +251,12 @@ kbd {
 
 .area-picker strong {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
 }
 
 .area-picker small {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
 }
 
@@ -298,7 +298,7 @@ kbd {
   flex: 1;
   padding-left: 9px;
   gap: 6px;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
 }
 
@@ -307,7 +307,7 @@ kbd {
   grid-template-columns: 1fr auto;
   gap: 9px;
   margin-top: 16px;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
 }
 
@@ -327,7 +327,7 @@ kbd {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 12px;
   gap: 4px;
 }
 
@@ -366,7 +366,7 @@ kbd {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.25;
 }
 
@@ -379,7 +379,7 @@ kbd {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
   margin-top: 1px;
 }
@@ -398,7 +398,7 @@ kbd {
 .panel-foot {
   padding: 6px 18px;
   border-top: 1px solid var(--line);
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
   display: flex;
   align-items: center;
@@ -422,11 +422,11 @@ kbd {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .domain-placeholder p {
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 22px;
 }
 
@@ -511,7 +511,7 @@ kbd {
 }
 
 .scene-caption p {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
   display: flex;
   gap: 9px;
@@ -525,7 +525,7 @@ kbd {
   background: #172326cc;
   min-height: 35px;
   color: #e9eef0;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -535,7 +535,7 @@ kbd {
 
 .map-attribution button {  padding: 0;
   color: inherit;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -564,15 +564,15 @@ kbd {
 }
 
 .timeline-label .eyebrow {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .timeline-label strong {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 650;
 }
 
-.timeline-label small { color: var(--ink-2); font-size: 14px; }
+.timeline-label small { color: var(--ink-2); font-size: 12px; }
 
 .timeline-track {
   flex: 1 1 auto;
@@ -654,8 +654,8 @@ kbd {
 }
 
 .timeline-track .selected:hover { background: var(--accent-tint); }
-.timeline-date { font-size: 14px; font-weight: 650; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.timeline-cloud { display: flex; align-items: center; gap: 3px; font-size: 14px; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.timeline-date { font-size: 13px; font-weight: 650; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.timeline-cloud { display: flex; align-items: center; gap: 3px; font-size: 12px; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .timeline-track .selected .timeline-cloud { color: var(--accent); }
 
 .compare-line {
@@ -708,7 +708,7 @@ kbd {
   background: var(--surface);
   border-radius: 6px;
   box-shadow: var(--shadow-raised);
-  font-size: 14px;
+  font-size: 12px;
   pointer-events: auto;
 }
 
@@ -723,7 +723,7 @@ kbd {
 .compare-controls [data-slot="select-trigger"] {
   padding: 3px 0;
   border: 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .inspector {
@@ -748,7 +748,7 @@ kbd {
 }
 
 .inspector > p {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
 }
 
@@ -758,12 +758,12 @@ kbd {
 }
 
 .detail-section h3 {
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 8px;
 }
 
 .detail-section dl {
-  font-size: 14px;
+  font-size: 12px;
   gap: 7px 6px;
   margin: 8px 0;
 }
@@ -788,14 +788,14 @@ dd {
 }
 
 .scene-id {
-  font-size: 14px;
+  font-size: 12px;
   overflow-wrap: anywhere;
   color: var(--ink-2);
   margin: 8px 0 2px;
 }
 
 .detail-section .text-link {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .inspector-bottom {
@@ -816,7 +816,7 @@ dd {
   align-items: center;
   justify-content: space-between;
   padding: 0 18px;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
   gap: 12px;
 }
@@ -833,7 +833,7 @@ dd {
 }
 
 .statusbar button {  color: var(--ink-2);
-  font-size: 14px;
+  font-size: 12px;
   padding: 0;
 }
 
@@ -859,7 +859,7 @@ dd {
 
 .page-heading p {
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 13px;
   margin: 0;
 }
 
@@ -870,7 +870,7 @@ dd {
   color: var(--ink-2);
   padding: 13px 15px;
   margin: 18px 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .notice svg {
@@ -900,7 +900,7 @@ dd {
 
 .info-box p {
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .task-list {
@@ -945,7 +945,7 @@ dd {
 
 .task-main p {
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 12px;
   overflow-wrap: anywhere;
   margin: 7px 0 18px;
 }
@@ -954,7 +954,7 @@ dd {
   display: flex;
   gap: 14px;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
   margin-top: 10px;
 }
@@ -991,7 +991,7 @@ dd {
 }
 
 .output-card p {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
 }
 
@@ -1037,7 +1037,7 @@ dd {
 }
 
 .diagram-node span {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--ink-2);
 }
 
@@ -1058,7 +1058,7 @@ dd {
 
 .cloud-copy p,
 .cloud-copy ul {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--ink-2);
 }
 
@@ -1083,7 +1083,7 @@ dd {
 
 .settings-list strong {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .settings-list small {
@@ -1098,7 +1098,7 @@ dd {
 }
 
 .dialog-body p {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--ink-2);
 }
 
@@ -1114,7 +1114,7 @@ dd {
 .dialog-body li {
   margin-bottom: 8px;
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .dialog-footer {
@@ -1131,7 +1131,7 @@ dd {
   flex-direction: column;
   gap: 7px;
   margin-bottom: 18px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -1152,7 +1152,7 @@ dd {
 }
 
 .export-summary {  padding: 20px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .export-summary h3 {
@@ -1172,7 +1172,7 @@ dd {
 }
 
 .export-summary p {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .export-summary hr {
@@ -1188,7 +1188,7 @@ dd {
 }
 
 .hash {
-  font-size: 14px !important;
+  font-size: 12px !important;
   word-break: break-all;
   background: var(--page);
   padding: 12px;
@@ -1204,7 +1204,7 @@ dd {
   display: flex;
   gap: 7px;
   align-items: center;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .command-results {
@@ -1230,7 +1230,7 @@ dd {
   align-items: center;
   flex-direction: column;
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .boot {
@@ -1337,7 +1337,7 @@ dd {
 .map-attribution {
     flex-direction: column;
     align-items: flex-start;
-    font-size: 14px;
+    font-size: 12px;
   }
 
 .timeline {
@@ -1449,7 +1449,7 @@ dd {
   }
 
 .breadcrumb {
-    font-size: 14px;
+    font-size: 12px;
   }
 
 .top-actions > [data-slot="badge"] {
@@ -1559,7 +1559,7 @@ dd {
   }
 
 .task-stage {
-    font-size: 14px;
+    font-size: 12px;
   }
 
 .task-title {
@@ -1634,7 +1634,7 @@ dd {
 .scene-info small,
 .detail-section dl,
 .detail-section .text-link {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .scene-info small > span {
@@ -1643,11 +1643,11 @@ dd {
 
 .inspector > p,
 .range-label {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .scene-id {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .inspector-bottom {
@@ -1667,7 +1667,7 @@ dd {
 }
 
 /* Layout adapters for shared library primitives; no alternate widget skin. */
-.sidebar-local-label { display: flex; gap: 7px; align-items: center; color: var(--ink-2); font-size: 14px; }
+.sidebar-local-label { display: flex; gap: 7px; align-items: center; color: var(--ink-2); font-size: 12px; }
 .app-main { overflow: hidden; }
 .content-page { background: var(--page); }
 .area-picker { height: auto; justify-content: flex-start; white-space: normal; }
@@ -1676,7 +1676,7 @@ dd {
 .domain-option, .state-option { height: auto; white-space: normal; }
 .catalog-switch { margin: 0 18px 8px; }
 .domain-tabs { margin: 0 16px; padding: 0 0 16px; border-radius: 0; background: transparent; box-shadow: none; }
-.domain-tabs [data-slot="segmented-item"] { min-width: 0; white-space: normal; font-size: 14px; padding: 7px 4px; height: auto; }
+.domain-tabs [data-slot="segmented-item"] { min-width: 0; white-space: normal; font-size: 12px; padding: 7px 4px; height: auto; }
 .search-input { position: relative; padding: 0; }
 .search-input > svg { position: absolute; left: 10px; z-index: 1; pointer-events: none; color: var(--ink-2); }
 .search-input [data-slot="input"] { width: 100%; padding-left: 34px; }
@@ -1686,7 +1686,7 @@ dd {
 .results-heading > [data-slot="select-trigger"] { width: auto; max-width: 130px; }
 .results-heading > [data-slot="select-wrapper"] { width: auto; max-width: 130px; }
 .map-controls [data-slot="button"] { width: 30px; height: 30px; padding: 0; flex: none; }
-.map-attribution [data-slot="button"] { color: inherit; background: transparent; padding: 0; min-height: 0; height: auto; font-size: 14px; }
+.map-attribution [data-slot="button"] { color: inherit; background: transparent; padding: 0; min-height: 0; height: auto; font-size: 12px; }
 .statusbar [data-slot="button"] { min-height: 0; height: auto; padding: 0; font-size: inherit; }
 .settings-list [data-slot="select-trigger"] { width: min(180px, 100%); flex-shrink: 0; }
 .settings-list [data-slot="select-wrapper"] { width: 180px; max-width: 100%; flex-shrink: 0; }
