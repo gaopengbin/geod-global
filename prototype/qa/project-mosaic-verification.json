@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-29",
+  "date": "2026-09-30",
   "scope": "multi-scene project and bounded SCL/RGB mosaic",
   "realScl": {
     "itemId": "S2C_10SEG_20250627_0_L2A",
@@ -17,6 +17,7 @@
   },
   "realTciHeader": {
     "contentLength": 242742218,
+    "sourceSha256": "3491bcc41b21fb9cca934c1046a4462a5fbfd2621fcad5fe034acfcfc94b3f5a",
     "dimensions": [10980, 10980],
     "bands": 3,
     "dataType": "uint8",
@@ -25,7 +26,15 @@
     "tileSize": [1024, 1024],
     "compression": "deflate",
     "nodata": 0,
-    "fullFileDownloadedAndProcessed": false
+    "fullFileDownloadedAndProcessed": true,
+    "projectBoundsWgs84": [-122.44, 37.75, -122.43, 37.76],
+    "resultBytes": 28600,
+    "resultSha256": "a914a97b429e6575526d5e688aae81ea60b74e3f9e15c0054a16bd9ac4dfaac7",
+    "resultShape": [112, 90],
+    "resultBands": 3,
+    "sourceWindow": [4934, 2066, 90, 112],
+    "independentCheck": "Rasterio output RGB array exactly equals the corresponding complete-source pixel window; source and result SHA-256 independently rechecked",
+    "transfer": "Isolated GeoD runtime used the enabled Windows 127.0.0.1:10808 proxy; TCP route observed, 242742218 bytes transferred and SHA-256 recorded in 14.7 seconds"
   },
   "automatedChecks": [
     "SCL overlap uses newer non-NoData class values while preserving older pixels under zero",
