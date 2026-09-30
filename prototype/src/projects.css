@@ -11,7 +11,10 @@
 .projects-heading p, .project-summary p { margin: 4px 0 0; color: var(--text-muted, #65707a); font-size: 12px; }
 .projects-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 12px; align-items: start; }
 .projects-list:has(.project-row-focused) { grid-template-columns: minmax(0, 1fr); }
-.project-row { display: grid; gap: 14px; padding: 16px; }
+.project-row { display: grid; gap: 8px; padding: 12px 16px; border: 1px solid var(--line-soft); box-shadow: none; }
+.project-summary { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: start; gap: 12px; }
+.project-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-control); background: var(--inset); color: var(--ink-2); }
+.project-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 8px 0 0 44px; border-top: 1px solid var(--line-soft); }
 .project-assets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .project-asset { display: grid; gap: 10px; padding: 12px; }
 .project-asset-summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; font-size: 12px; }
@@ -30,26 +33,23 @@
 .project-save-form p { margin: 0; }
 .project-save-form label { display: grid; gap: 7px; font-weight: 600; }
 .project-save-form footer { display: flex; justify-content: flex-end; gap: 8px; }
-.project-title-block { flex: 0 1 auto; min-width: 0; }
-.project-name { display: flex; align-items: center; gap: 6px; }
+.project-title-block { min-width: 0; }
+.project-name { display: grid; grid-template-columns: minmax(0, 1fr) 32px; align-items: center; width: fit-content; max-width: 100%; min-height: 32px; gap: 4px 8px; }
+.project-name > [data-slot=badge] { grid-column: 1 / -1; justify-self: start; }
 .project-name h3 { overflow-wrap: anywhere; }
+.project-metadata { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-height: 22px; }
+.project-metadata > span + span { padding-left: 10px; border-left: 1px solid var(--line); }
 .project-rename { display: flex; gap: 6px; align-items: flex-end; }
 .project-rename label { display: grid; gap: 6px; flex: 1; min-width: 0; font-size: 12px; }
 .project-open { justify-self: start; }
-.project-file-count { color: var(--ink-2); padding-left: 8px; border-left: 1px solid var(--line); }
+.project-file-count { color: var(--ink-2); font-size: 12px; line-height: 18px; }
 .project-guide { margin: 0; font-size: 12px; line-height: 1.6; color: var(--ink-2); }
 .project-files { min-width: 0; }
 .project-files h4 { display: flex; align-items: center; gap: 8px; margin: 16px 0 10px; font-size: 14px; }
 .project-row-focused { gap: 10px; }
 .project-row-focused .project-summary { justify-content: flex-start; }
-.project-row-focused .project-title-block { flex: 0 1 auto; }
-.project-row-focused .project-summary > .bui-badge { flex-shrink: 0; }
 .project-row-focused .project-files h4 { margin: 6px 0 10px; }
 .project-scenes > .bui-disclosure-trigger { padding: 5px 0; }
 .project-file-list .runtime-jobs { margin-top: 0; }
 .project-file-list .runtime-details { max-width: 850px; text-align: left; }
 .project-file-list .runtime-details dd { text-align: left; }
-@media (max-width: 760px) {
-  .project-summary { align-items: flex-start; flex-wrap: wrap; }
-  .project-title-block { flex-basis: 100%; }
-}

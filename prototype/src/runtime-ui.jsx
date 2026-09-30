@@ -220,6 +220,7 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
       description: library ? type : `${t(mosaic ? projectClip ? 'Project clip task' : 'Project mosaic task' : derived ? 'Raster clip task' : 'Source download task')}${mosaic && projectName ? '' : ` · ${job.itemId}`}`,
       icon: derived ? Crop : Download,
       status: job.status,
+      statusTone: library ? 'neutral' : undefined,
       statusLabel: t(library ? mosaic && !projectClip ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
       progress: mosaic ? progress : derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
@@ -238,7 +239,7 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
         {errors[job.id] && <RuntimeError message={errors[job.id]} summary="The task action failed. Check the service connection and try again."/>}
       </div> : null,
       actions: library ? canInspect && <>
-        <Button variant="primary" onClick={() => setInspect(job)}><Scan size={15}/>{t('Inspect raster')}</Button>
+        <Button size="sm" onClick={() => setInspect(job)}><Scan size={16}/>{t('Inspect raster')}</Button>
         {!derived && !projectName && <ClipRasterButton job={job} areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
       </> : active || ['failed', 'cancelled', 'interrupted'].includes(job.status) ? <>
         {active && <Button disabled={busy[job.id]} onClick={() => run(job, 'cancel')}><X size={15}/>{t(derived ? 'Cancel processing' : 'Cancel download')}</Button>}
@@ -254,7 +255,7 @@ export function RuntimeTasks({ areaBounds, areaPolygon }) {
   const { t, number } = useI18n();
   const pending = jobs.filter(job => job.status !== 'succeeded');
   const completed = jobs.filter(job => job.status === 'succeeded');
-  return <section className="runtime-section" aria-label={t('Local file tasks')}><h2>{t('Tasks needing attention')}</h2><Connection compact/>
+  return <section className="runtime-section" aria-label={t('Local file tasks')}><header className="runtime-section-heading"><h2>{t('Tasks needing attention')}</h2><Connection compact/></header>
     {pending.length ? <RuntimeJobRows jobs={pending} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <Surface variant="inset" className="runtime-empty"><p>{t('No tasks need attention. Start a download in Explore; finished files are in My Data.')}</p></Surface>}
     {completed.length > 0 && <Disclosure className="runtime-task-history" summary={t('Completed task history · {count}', { count: number(completed.length) })}><RuntimeJobRows jobs={completed} areaBounds={areaBounds} areaPolygon={areaPolygon}/></Disclosure>}
   </section>;
@@ -267,5 +268,5 @@ export function RuntimeLibrary({ areaBounds, areaPolygon }) {
   const [kind, setKind] = useState('all');
   const completed = jobs.filter(job => job.status === 'succeeded');
   const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind !== 'download')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
-  return <section className="runtime-section runtime-library" aria-label={t('Local source files and outputs')}><h2>{t('Available files')} <Badge>{number(completed.length)}</Badge></h2><Connection compact/>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p className="runtime-results-count">{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
+  return <section className="runtime-section runtime-library" aria-label={t('Local source files and outputs')}><header className="runtime-section-heading"><h2>{t('Available files')} <Badge>{number(completed.length)}</Badge></h2><Connection compact/></header>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p className="runtime-results-count">{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
 }

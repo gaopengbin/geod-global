@@ -830,6 +830,10 @@ dd {
   min-width: 0;
 }
 .content-stack { width: 100%; max-width: 1180px; min-width: 0; margin-inline: auto; }
+.content-stack [data-slot=button] { min-height: 32px; height: 32px; padding: 0 12px; border-radius: var(--radius-control); font-size: 13px; line-height: 16px; gap: 6px; }
+.content-stack [data-slot=button][data-size=icon] { width: 32px; padding: 0; }
+.content-stack [data-slot=button] > svg { width: 16px; height: 16px; }
+.content-stack [data-slot=badge] { min-height: 22px; padding: 2px 8px; font-size: 12px; line-height: 18px; }
 
 .page-heading {
   display: flex;

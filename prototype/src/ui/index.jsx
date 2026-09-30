@@ -50,8 +50,9 @@ export const buttonVariants = cva(
 export const Button = forwardRef(function Button({ variant, size, primary, selected, icon: Icon, className = '', asChild = false, children, type, ...props }, ref) {
   const legacy = className.split(/\s+/);
   const resolvedVariant = variant || (primary || legacy.includes('primary') ? 'primary' : legacy.some(x => ['icon-btn', 'nav-item'].includes(x)) ? 'quiet' : legacy.includes('text-link') ? 'link' : 'secondary');
+  const resolvedSize = size || (legacy.includes('icon-btn') ? 'icon' : 'md');
   const Comp = asChild ? Slot : 'button';
-  return <Comp ref={ref} type={asChild ? undefined : type || 'button'} data-slot="button" data-variant={resolvedVariant} data-selected={selected || undefined} aria-pressed={selected === undefined ? undefined : selected} className={cn('bui-button', buttonVariants({ variant: resolvedVariant, size: size || (legacy.includes('icon-btn') ? 'icon' : 'md') }), className)} {...props}>{asChild ? children : <>{Icon && <Icon size={16} aria-hidden="true" />}{children}</>}</Comp>;
+  return <Comp ref={ref} type={asChild ? undefined : type || 'button'} data-slot="button" data-size={resolvedSize} data-variant={resolvedVariant} data-selected={selected || undefined} aria-pressed={selected === undefined ? undefined : selected} className={cn('bui-button', buttonVariants({ variant: resolvedVariant, size: resolvedSize }), className)} {...props}>{asChild ? children : <>{Icon && <Icon size={16} aria-hidden="true" />}{children}</>}</Comp>;
 });
 
 // Badge/input/textarea/native select/table structure follows the pinned shadcn
@@ -187,8 +188,15 @@ export function TaskRows({ items = [], className, ariaLabel, layout = 'tasks' })
   return <div data-slot="task-rows" data-layout={layout} role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} />)}</div>;
 }
 function TaskRow({ item }) {
-  const { title, description, meta, status, statusLabel, progress, progressLabel, details, actions, icon: Icon } = item;
+  const { title, description, meta, status, statusLabel, statusTone, progress, progressLabel, details, actions, icon: Icon } = item;
   const StatusIcon = Icon || (status === 'succeeded' ? Check : ['failed', 'interrupted'].includes(status) ? CircleAlert : status === 'cancelled' ? X : Clock3);
   const tone = status === 'succeeded' ? 'green' : ['failed', 'interrupted'].includes(status) ? 'red' : status === 'running' ? 'blue' : 'neutral';
-  return <article data-slot="task-row" role="listitem" data-status={status} className="bui-task-row"><div className="bui-task-main"><span className="bui-task-icon" data-tone={tone}>{status === 'running' ? <Spinner /> : <StatusIcon size={17} aria-hidden="true" />}</span><div className="bui-task-copy"><strong>{title}</strong>{description && <p>{description}</p>}</div>{meta && <span className="bui-task-meta">{meta}</span>}{statusLabel && <Badge tone={tone}>{statusLabel}</Badge>}</div>{status === 'running' && <Progress value={progress} aria-label={progressLabel} />}{details && <div className="bui-task-details">{details}</div>}{actions && <div className="bui-task-actions">{actions}</div>}</article>;
+  return <article data-slot="task-row" role="listitem" data-status={status} className="bui-task-row">
+    <div className="bui-task-main">
+      <span className="bui-task-icon" data-tone={tone}>{status === 'running' ? <Spinner /> : <StatusIcon size={16} aria-hidden="true" />}</span>
+      <div className="bui-task-copy"><strong>{title}</strong><div className="bui-task-info">{description && <p>{description}</p>}{meta && <span className="bui-task-meta">{meta}</span>}{statusLabel && <Badge tone={statusTone || tone}>{statusLabel}</Badge>}</div></div>
+    </div>
+    {status === 'running' && <Progress value={progress} aria-label={progressLabel} />}
+    {(details || actions) && <div className="bui-task-footer">{actions && <div className="bui-task-actions">{actions}</div>}{details && <div className="bui-task-details">{details}</div>}</div>}
+  </article>;
 }

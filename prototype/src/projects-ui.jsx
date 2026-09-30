@@ -94,7 +94,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
       </div>
       <div className="project-navigation">
         {!focusedProjectId && onContinueExploring && <Button size="sm" onClick={() => onContinueExploring()}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
-        <Button size="sm" onClick={refresh} aria-label={t('Refresh projects')}><RefreshCw size={15}/></Button>
+        <Button size="icon" onClick={refresh} aria-label={t('Refresh projects')}><RefreshCw size={16}/></Button>
       </div>
     </div>
     {loading && <p role="status"><Spinner size={16}/>{t('Loading projects…')}</p>}
@@ -114,8 +114,15 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
       const mixedCrs = new Set(project.scenes.map(scene => scene.crs).filter(Boolean)).size > 1;
       const orderedDates = project.scenes.map(scene => scene.date).sort();
       return <Surface as="article" id={`project-${project.id}`} className={`project-row${focusedProjectId === project.id ? ' project-row-focused' : ''}`} key={project.id}>
-        <div className="project-summary"><div className="project-title-block">{editingId === project.id ? <form className="project-rename" onSubmit={event => rename(event, project)}><label>{t('Project name')}<Input autoFocus value={draftName} maxLength={120} required onChange={event => setDraftName(event.target.value)}/></label><Button type="submit" size="icon" variant="primary" disabled={!draftName.trim() || Boolean(busy)} aria-label={t('Save project name')}><Check size={15}/></Button><Button type="button" size="icon" disabled={Boolean(busy)} aria-label={t('Cancel renaming')} onClick={() => { setEditingId(''); setRenameError(''); }}><X size={15}/></Button></form> : <div className="project-name"><h3>{project.name}</h3><Button size="icon" variant="ghost" aria-label={t('Rename project {name}', { name: project.name })} onClick={() => { setEditingId(project.id); setDraftName(project.name); setRenameError(''); }}><Pencil size={14}/></Button></div>}<p>{number(project.scenes.length)} {t('scenes')} · {date(orderedDates[0])} – {date(orderedDates.at(-1))}</p>{editingId === project.id && renameError && <p className="projects-error" role="alert">{renameError}</p>}</div><Badge>{t(focusedProjectId === project.id ? 'Current project' : 'Local project')}</Badge></div>
-        {!focused && <Button className="project-open" size="sm" onClick={() => onOpenProject?.(project.id)}><FolderOpen size={15}/>{t('Open project')}<span className="project-file-count">{t('{count} files', { count: number(files.length) })}</span></Button>}
+        <div className="project-summary">
+          <span className="project-icon" aria-hidden="true"><FolderOpen size={16}/></span>
+          <div className="project-title-block">
+            {editingId === project.id ? <form className="project-rename" onSubmit={event => rename(event, project)}><label>{t('Project name')}<Input autoFocus value={draftName} maxLength={120} required onChange={event => setDraftName(event.target.value)}/></label><Button type="submit" size="icon" variant="primary" disabled={!draftName.trim() || Boolean(busy)} aria-label={t('Save project name')}><Check size={16}/></Button><Button type="button" size="icon" disabled={Boolean(busy)} aria-label={t('Cancel renaming')} onClick={() => { setEditingId(''); setRenameError(''); }}><X size={16}/></Button></form> : <div className="project-name"><h3>{project.name}</h3><Button size="icon" variant="quiet" aria-label={t('Rename project {name}', { name: project.name })} onClick={() => { setEditingId(project.id); setDraftName(project.name); setRenameError(''); }}><Pencil size={16}/></Button>{focused && <Badge>{t('Current project')}</Badge>}</div>}
+            <p className="project-metadata"><span>{number(project.scenes.length)} {t('scenes')}</span><span>{date(orderedDates[0])} – {date(orderedDates.at(-1))}</span></p>
+            {editingId === project.id && renameError && <p className="projects-error" role="alert">{renameError}</p>}
+          </div>
+        </div>
+        {!focused && <footer className="project-footer"><Button className="project-open" size="sm" onClick={() => onOpenProject?.(project.id)}><FolderOpen size={16}/>{t('Open project')}</Button><span className="project-file-count">{t('{count} files', { count: number(files.length) })}</span></footer>}
         {focused && <>
         <p className="project-guide">{t('Source files and results stay in this project. Download missing files, then clip a scene or mosaic multiple scenes to the saved area.')}</p>
         <Disclosure className="project-scenes" summary={t('Review selected scenes · {count}', { count: project.scenes.length })}>

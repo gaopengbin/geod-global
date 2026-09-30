@@ -1,5 +1,7 @@
 .runtime-section { margin: 24px 0 32px; min-width: 0; }
 .runtime-section h2 { font-size: 18px; }
+.runtime-section-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
+.runtime-section-heading h2 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 16px; line-height: 24px; }
 .runtime-connection { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; color: var(--ink-2); font-size: 12px; }
 .runtime-path { flex-basis: 100%; overflow-wrap: anywhere; }
 .runtime-disconnected { display: flex; gap: 10px; align-items: flex-start; padding: 14px; }
@@ -16,7 +18,7 @@
 .saved-clip-plans .processing-recipes { margin: 8px 0 16px; }
 .runtime-library { margin-top: 16px; }
 .runtime-library .library-filters { margin-top: 12px; }
-.runtime-file-details .bui-disclosure-trigger { padding: 6px 0; }
+.runtime-file-details .bui-disclosure-trigger { padding: 0 12px; }
 .runtime-results-count { color: var(--ink-2); font-size: 12px; margin: 0; }
 .runtime-job-details { min-width: 0; }
 .runtime-job-status { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--ink-2); font-size: 12px; margin: 0 0 12px; }
