@@ -10,7 +10,7 @@ export function projectRequest({ scenes, bounds, geometry, name }) {
     const assets = Object.fromEntries(downloadableAssets(scene)
       .filter(asset => asset.key === 'scl' || asset.key === 'visual')
       .map(asset => [asset.key, { href: asset.href, mediaType: asset.type }]));
-    if (!assets.scl || !assets.visual) throw new Error(`Scene ${scene.id} does not provide both SCL and true-color source files.`);
+    if (!Object.keys(assets).length) throw new Error(`Scene ${scene.id} has no supported source raster.`);
     return {
       itemId: scene.id,
       date: scene.date,
@@ -26,4 +26,41 @@ export function projectRequest({ scenes, bounds, geometry, name }) {
 
 export async function createProject(request) {
   return runtimeRequest('createProject', request);
+}
+
+export function jobsForProject(project, jobs) {
+  const outputs = new Set(jobs.filter(job => job.mosaic?.projectId === project.id).map(job => job.id));
+  const sources = new Set(jobs.filter(job => job.kind === 'download' && project.scenes.some(scene =>
+      scene.itemId === job.itemId && scene.assets?.[job.assetKey]?.href === job.href
+    )).map(job => job.id));
+  let changed;
+  do {
+    changed = false;
+    for (const job of jobs) {
+      const parent = job.parentId || job.recipe?.source?.jobId;
+      if (!outputs.has(job.id) && parent && outputs.has(parent)) {
+        outputs.add(job.id); changed = true;
+      }
+    }
+  } while (changed);
+  return jobs.filter(job => sources.has(job.id) || outputs.has(job.id));
+}
+
+export async function createProjectAndQueue(request, assetKeys, invoke = runtimeRequest) {
+  if (!Array.isArray(assetKeys) || !assetKeys.length || new Set(assetKeys).size !== assetKeys.length
+    || assetKeys.some(key => key !== 'scl' && key !== 'visual')) {
+    throw new Error('Choose SCL, true-color imagery, or both for the download.');
+  }
+  const project = await invoke('createProject', request);
+  const downloads = [];
+  try {
+    for (const assetKey of assetKeys) {
+      downloads.push(await invoke('downloadProject', { id: project.id, assetKey }));
+    }
+  } catch (error) {
+    error.project = project;
+    error.downloads = downloads;
+    throw error;
+  }
+  return { project, downloads };
 }

@@ -5,6 +5,8 @@ import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { ClipRasterButton, DerivedArtifactDetails } from './processing-ui.jsx';
 import { ArtifactPackageButton } from './artifact-ui.jsx';
+import { createProjectAndQueue, projectRequest } from './projects-client.js';
+import { displayLocalPath } from './local-path.js';
 import { Badge, Button, Disclosure, Input, Modal, Select, Spinner, Surface, TaskRows } from './ui/index.jsx';
 import './runtime.css';
 
@@ -54,44 +56,78 @@ function RuntimeError({ message, summary }) {
 function Connection({ compact = false }) {
   const { health, error, checking, refresh } = useContext(RuntimeContext);
   const { t } = useI18n();
-  if (health) return <div className="runtime-connection"><Badge tone="success"><CheckCircle2 size={13}/>{t(desktopAvailable() ? 'Desktop task service connected' : 'Local task service connected')}</Badge>{!compact && <span className="runtime-path">{health.storageRoot}</span>}</div>;
+  if (health) return <div className="runtime-connection"><Badge tone="success"><CheckCircle2 size={13}/>{t(desktopAvailable() ? 'Desktop task service connected' : 'Local task service connected')}</Badge>{!compact && <span className="runtime-path">{displayLocalPath(health.storageRoot)}</span>}</div>;
   if (checking) return <p className="runtime-connection" role="status"><Spinner size={15}/>{t('Connecting to the task service…')}</p>;
   return <Surface variant="inset" className="runtime-disconnected"><AlertCircle size={16}/><div><strong>{t('Local task service is offline')}</strong><p>{t('Open GeoD Global Desktop, or run {command} beside the browser preview.', { command: 'npm run runtime' })}</p>{error && <Disclosure summary={t('Technical details')}><small>{t(error)}</small></Disclosure>}</div><Button variant="ghost" size="icon" aria-label={t('Reconnect task service')} onClick={refresh}><RefreshCw size={16}/></Button></Surface>;
 }
 
-export function DownloadAssetButton({ scene }) {
-  const { health, act } = useContext(RuntimeContext);
-  const { t } = useI18n();
+export function DownloadAssetButton({ scene, areaBounds, areaPolygon, areaName, onOpenProject }) {
+  const { health, jobs, refresh } = useContext(RuntimeContext);
+  const { t, date, number } = useI18n();
   const [open, setOpen] = useState(false);
-  const [assetKey, setAssetKey] = useState('scl');
+  const [choice, setChoice] = useState('visual');
+  const [name, setName] = useState('');
+  const [created, setCreated] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const mounted = useRef(true);
-  const options = downloadableAssets(scene);
-  const asset = options.find(item => item.key === assetKey) || options[0];
+  const options = downloadableAssets(scene).filter(item => item.key === 'scl' || item.key === 'visual');
+  const available = new Set(options.map(item => item.key));
+  const keys = choice === 'both' ? ['visual', 'scl'] : [choice];
+  const createdJobs = created?.jobIds?.map(id => jobs.find(job => job.id === id)).filter(Boolean) || [];
+  const allDone = createdJobs.length > 0 && createdJobs.every(job => job.status === 'succeeded');
+  const failed = createdJobs.some(job => ['failed', 'cancelled', 'interrupted'].includes(job.status));
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const close = () => { if (!busy) { setOpen(false); setError(''); } };
-  const start = async () => {
-    if (!asset) return;
+  const show = () => {
+    if (created) { setOpen(true); return; }
+    setChoice(available.has('visual') ? 'visual' : 'scl');
+    setName(`${t(areaName)} · ${date(scene.date)}`);
+    setError(''); setOpen(true);
+  };
+  const start = async event => {
+    event?.preventDefault();
+    if (!options.length || !name.trim()) return;
     setBusy(true); setError('');
     try {
-      await act('create', { itemId: scene.id, assetKey: asset.key, href: asset.href, mediaType: asset.type, title: `${scene.id} · ${asset.key.toUpperCase()}` });
-      if (mounted.current) { setOpen(false); location.hash = 'Tasks'; }
-    } catch (e) { if (mounted.current) setError(e.message); }
-    finally { if (mounted.current) setBusy(false); }
+      const result = created?.project
+        ? { project: created.project, downloads: await Promise.all(keys.map(assetKey => runtimeRequest('downloadProject', { id: created.project.id, assetKey }))) }
+        : await createProjectAndQueue(projectRequest({ scenes: [scene], bounds: areaBounds, geometry: areaPolygon?.geometry || areaPolygon, name }), keys);
+      await refresh();
+      if (mounted.current) setCreated({ project: result.project, queued: true, jobIds: result.downloads.flatMap(item => item.jobs.map(job => job.id)) });
+    } catch (cause) {
+      await refresh();
+      if (mounted.current) {
+        if (cause.project) setCreated({ project: cause.project, queued: false, jobIds: (cause.downloads || []).flatMap(item => item.jobs.map(job => job.id)) });
+        setError(cause.message);
+      }
+    } finally { if (mounted.current) setBusy(false); }
   };
+  const openProject = () => { if (created?.project) { close(); onOpenProject?.(created.project.id); } };
   return <>
-    <Button variant="primary" disabled={!options.length} onClick={() => { setAssetKey(options[0]?.key); setOpen(true); }}><Download size={15}/>{t('Choose a file to download')}</Button>
-    {open && <Modal title={t('Download source asset')} onClose={close} closeDisabled={busy} closeLabel={t('Close download')}>
-      <div className="runtime-dialog-body">
-        <p className="mono runtime-wrap">{scene.id}</p>
-        <label className="runtime-field">{t('Asset')}<Select aria-label={t('Download asset')} disabled={busy} value={asset?.key || ''} onChange={event => setAssetKey(event.target.value)}>{options.map(option => <option value={option.key} key={option.key}>{t(option.key === 'scl' ? 'SCL classification · can clip · GeoTIFF · 20 m' : option.key === 'visual' ? 'True-color image · project processing · GeoTIFF · 10 m' : 'JPEG thumbnail · preview only')}</option>)}</Select></label>
-        <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t(asset?.key === 'scl' ? 'Downloads the full SCL classification raster. After it finishes, open My Data to inspect or clip it; this download does not crop the file.' : asset?.key === 'visual' ? 'Downloads the full true-color GeoTIFF. Save selected scenes as a project to mosaic and clip true-color imagery.' : 'Downloads only the JPEG preview, not the full-resolution raster. It cannot be clipped.')}</span></Surface>
-        <p className="runtime-help">{t('Files are saved to the local workspace, not your browser Downloads folder. The current limit is 512 MiB per file.')}</p>
-        <dl className="runtime-details"><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Asset')}</dt><dd><a href={asset?.href} target="_blank" rel="noreferrer">{asset?.title || asset?.key}</a></dd><dt>{t('Save under')}</dt><dd className="runtime-wrap">{health?.storageRoot || t('Local task service required')}</dd><dt>{t('Checks')}</dt><dd>{t('Transfer size, file signature and SHA-256. Pixel inspection is available for SCL files only.')}</dd></dl>
+    <Button variant="primary" disabled={!options.length && !created} onClick={show}><Download size={15}/>{t(created ? 'View project download' : 'Create project and download')}</Button>
+    {created && <p className="runtime-project-hint">{t('Project saved: {name}', { name: created.project.name })} · {t(allDone ? 'Files ready' : failed ? 'Download needs attention' : created.queued ? 'Downloading in background' : 'Download not started')}</p>}
+    {open && <Modal title={t(created ? 'Project download' : 'Create project and download')} onClose={close} closeDisabled={busy} closeLabel={t('Close download')}>
+      {created ? <div className="runtime-dialog-body runtime-project-result">
+        <CheckCircle2 size={22}/><h3>{created.project.name}</h3>
+        <p>{t(created.queued ? allDone ? 'The files are ready in this project. Open it to inspect and clip them.' : failed ? 'A download needs attention. Open the project to retry or inspect the task.' : 'The project is saved and its source download is running in the background.' : 'The project was saved, but its download was not added to the queue. Retry below.')}</p>
+        {createdJobs.length > 0 && <p className="runtime-help">{t('{done} of {total} files downloaded', { done: number(createdJobs.filter(job => job.status === 'succeeded').length), total: number(createdJobs.length) })}</p>}
+        {error && <RuntimeError message={error} summary="The project was saved, but the download could not start."/>}
+        <footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Continue exploring')}</Button>{!created.queued && <Button disabled={busy || !health} onClick={start}>{t(busy ? 'Starting…' : 'Retry download')}</Button>}<Button variant="primary" disabled={busy} onClick={openProject}>{t('Open project')}</Button></footer>
+      </div> : <form className="runtime-dialog-body" onSubmit={start}>
+        <p className="runtime-help">{t('A local project keeps this scene, its source links and your search area together. Name it before downloading.')}</p>
+        <label className="runtime-field">{t('Project name')}<Input value={name} maxLength={120} required disabled={busy} onChange={event => setName(event.target.value)}/></label>
+        <label className="runtime-field">{t('Download content')}<Select aria-label={t('Download content')} value={choice} disabled={busy} onChange={event => setChoice(event.target.value)}>
+          {available.has('visual') && <option value="visual">{t('True-color GeoTIFF · 10 m')}</option>}
+          {available.has('scl') && <option value="scl">{t('SCL classification GeoTIFF · 20 m')}</option>}
+          {available.has('visual') && available.has('scl') && <option value="both">{t('Both source files')}</option>}
+        </Select></label>
+        <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t('GeoD saves complete source files in the local workspace. Open the project later to inspect or clip them; downloading does not crop the source.')}</span></Surface>
+        <Disclosure summary={t('Source and file checks · advanced')}><dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{scene.id}</dd><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Checks')}</dt><dd>{t('Transfer size, file signature and SHA-256. Pixel inspection is available for SCL files only.')}</dd></dl></Disclosure>
         <Connection compact/>
         {error && <RuntimeError message={error} summary="The download could not start. Check the service connection and try again."/>}
-      </div><footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Cancel')}</Button><Button variant="primary" disabled={busy || !health || !asset} onClick={start}><Download size={15}/>{t(busy ? 'Starting…' : 'Start download')}</Button></footer>
+        <footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Cancel')}</Button><Button variant="primary" type="submit" disabled={busy || !health || !name.trim() || !keys.every(key => available.has(key))}><Download size={15}/>{t(busy ? 'Creating project…' : 'Create project and start download')}</Button></footer>
+      </form>}
     </Modal>}
   </>;
 }
@@ -128,13 +164,13 @@ function RasterDialog({ job, onClose }) {
         </div>
         <section className="runtime-raster-legend" aria-labelledby={legendId}><h3 id={legendId}>{t('Scene classes')}</h3><p>{t('Counts cover the current raster, including no-data pixels.')}</p><ul>{data.classes.map(item => <li key={item.value}><span className="runtime-raster-swatch" style={{ backgroundColor: item.color }} aria-hidden="true"/><span className="runtime-raster-class">{number(item.value)} · {t(item.label)}</span><span className="runtime-raster-count">{t('{count} pixels', { count: number(item.count) })}<small>{formatClassShare(item.count, data.width * data.height, locale)}</small></span></li>)}</ul></section>
         <Surface as="div" variant="inset" className="runtime-notice"><CheckCircle2 size={17}/><span>{t(job.kind === 'raster_clip' ? 'The preview and counts come from the derived GeoTIFF after SHA-256 verification. Source pixels were clipped without resampling or reprojection.' : 'The preview and class counts were decoded from this local file after SHA-256 verification. Source classifications are not an independent accuracy assessment. No clipping or reprojection is applied.')}</span></Surface>
-        <Disclosure className="runtime-raster-provenance" summary={t('File and provenance')}><dl className="runtime-details"><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{data.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd></dl></Disclosure>
+        <Disclosure className="runtime-raster-provenance" summary={t('File and provenance')}><dl className="runtime-details"><dt>{t('File')}</dt><dd className="mono runtime-wrap">{displayLocalPath(job.outputPath)}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{data.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd></dl></Disclosure>
       </>}
     </div><footer className="runtime-dialog-actions"><Button onClick={onClose}>{t('Close')}</Button></footer>
   </Modal>;
 }
 
-function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
+export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon, projectName }) {
   const { act } = useContext(RuntimeContext);
   const { t, locale, number, date } = useI18n();
   const [busy, setBusy] = useState({});
@@ -154,24 +190,25 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
     const active = ['queued', 'running'].includes(job.status);
     const derived = job.kind !== 'download';
     const mosaic = job.kind === 'raster_mosaic';
+    const projectClip = mosaic && job.mosaic?.sources?.length === 1;
     const canInspect = job.status === 'succeeded' && job.assetKey === 'scl' && /^image\/(?:tiff|geotiff)(?:;|$)/i.test(job.mediaType || '');
     const progress = Number.isFinite(job.totalBytes) && job.totalBytes > 0 && Number.isFinite(job.bytesDownloaded)
       ? Math.max(0, Math.min(100, job.bytesDownloaded / job.totalBytes * 100)) : null;
-    const type = mosaic ? t('Project mosaic · GeoTIFF') : derived ? t('Clipped raster · GeoTIFF') : t(job.assetKey === 'scl' ? 'SCL raster · GeoTIFF' : job.assetKey === 'visual' ? 'True-color image · GeoTIFF' : 'Preview image · JPEG');
+    const type = mosaic ? t(projectClip ? 'Project clip · GeoTIFF' : 'Project mosaic · GeoTIFF') : derived ? t('Clipped raster · GeoTIFF') : t(job.assetKey === 'scl' ? 'SCL raster · GeoTIFF' : job.assetKey === 'visual' ? 'True-color image · GeoTIFF' : 'Preview image · JPEG');
     return {
       id: job.id,
-      title: job.title || job.itemId,
-      description: library ? type : `${t(mosaic ? 'Project mosaic task' : derived ? 'Raster clip task' : 'Source download task')} · ${job.itemId}`,
+      title: projectName && mosaic ? `${projectName} · ${t(projectClip ? 'Area clip' : 'Mosaic and clip')} · ${job.assetKey === 'scl' ? 'SCL' : t('True-color imagery')}` : job.title || job.itemId,
+      description: library ? type : `${t(mosaic ? projectClip ? 'Project clip task' : 'Project mosaic task' : derived ? 'Raster clip task' : 'Source download task')}${mosaic && projectName ? '' : ` · ${job.itemId}`}`,
       icon: derived ? Crop : Download,
       status: job.status,
-      statusLabel: t(library ? mosaic ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
+      statusLabel: t(library ? mosaic && !projectClip ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
       progress: mosaic ? progress : derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
       meta: library ? date(job.updatedAt) : mosaic && job.status === 'running' ? <>{t(job.validation || 'Checking downloaded sources')} · {number(job.bytesDownloaded)} / {number(job.totalBytes || 0)} {t('steps')}</> : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
       details: library ? <Disclosure className="runtime-file-details" summary={t('File details and provenance')}>
-        <DerivedArtifactDetails job={job}/>
+        {derived && !mosaic && <DerivedArtifactDetails job={job}/>}
         {mosaic && <p>{t('{count} verified sources · {width} × {height} pixels · {crs}', { count: job.mosaicOutput?.sourceCount || 0, width: job.mosaicOutput?.width || 0, height: job.mosaicOutput?.height || 0, crs: job.mosaicOutput?.crs || '' })}</p>}
-        <dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{job.itemId}</dd><dt>{t('File')}</dt><dd className="mono runtime-wrap">{job.outputPath}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t(derived ? 'Generated locally from the checked source clip. Inspect the result to read output pixels and spatial metadata.' : 'Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl>
+        <dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{job.itemId}</dd><dt>{t('File')}</dt><dd className="mono runtime-wrap">{displayLocalPath(job.outputPath)}</dd><dt>SHA-256</dt><dd className="mono runtime-wrap">{job.sha256}</dd><dt>{t('Source')}</dt><dd className="runtime-wrap"><a href={job.href} target="_blank" rel="noreferrer">{job.href}</a></dd><dt>{t('Updated')}</dt><dd>{date(job.updatedAt)}</dd><dt>{t('Validation')}</dt><dd>{t(derived ? 'Generated locally from the checked source clip. Inspect the result to read output pixels and spatial metadata.' : 'Transfer size and file signature checked. Use Inspect raster on an SCL file to decode pixels and read spatial metadata.')}</dd></dl>
         {job.kind === 'raster_clip' && <ArtifactPackageButton job={job}/>}
         {desktopAvailable() && <Button disabled={busy[job.id]} onClick={() => run(job, 'reveal')}><FolderOpen size={15}/>{t('Show in folder')}</Button>}
         {derived && !desktopAvailable() && <Button onClick={() => { const link = document.createElement('a'); link.href = `http://127.0.0.1:4318/jobs/${encodeURIComponent(job.id)}/file`; link.download = `${job.id}.tif`; link.click(); }}><Download size={15}/>{t('Download result GeoTIFF')}</Button>}
@@ -183,7 +220,7 @@ function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon }) {
       </div> : null,
       actions: library ? canInspect && <>
         <Button variant="primary" onClick={() => setInspect(job)}><Scan size={15}/>{t('Inspect raster')}</Button>
-        {!derived && <ClipRasterButton job={job} areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
+        {!derived && !projectName && <ClipRasterButton job={job} areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
       </> : active || ['failed', 'cancelled', 'interrupted'].includes(job.status) ? <>
         {active && <Button disabled={busy[job.id]} onClick={() => run(job, 'cancel')}><X size={15}/>{t(derived ? 'Cancel processing' : 'Cancel download')}</Button>}
         {['failed', 'cancelled', 'interrupted'].includes(job.status) && <Button disabled={busy[job.id]} onClick={() => run(job, 'retry')}><RefreshCw size={15}/>{t('Retry from start')}</Button>}

@@ -100,6 +100,15 @@ async fn create_project(
 }
 
 #[tauri::command]
+async fn rename_project(
+    id: String,
+    name: String,
+    manager: State<'_, JobManager>,
+) -> Result<Project, String> {
+    manager.rename_project(&id, &name).await
+}
+
+#[tauri::command]
 async fn download_project(
     id: String,
     asset_key: String,
@@ -279,6 +288,7 @@ fn main() {
             list_jobs,
             list_projects,
             create_project,
+            rename_project,
             download_project,
             mosaic_project,
             create_job,

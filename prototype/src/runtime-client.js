@@ -36,7 +36,7 @@ export function validateRasterInspection(data) {
 }
 
 export async function runtimeRequest(operation, payload, signal) {
-  const commands = { health: 'health', diagnostics: 'diagnostics', proxy: 'get_proxy_settings', saveProxy: 'save_proxy_settings', testProxy: 'test_proxy_settings', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster', pixel: 'sample_raster', package: 'prepare_artifact', revealPackage: 'reveal_artifact', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe', projects: 'list_projects', createProject: 'create_project', downloadProject: 'download_project', mosaicProject: 'mosaic_project' };
+  const commands = { health: 'health', diagnostics: 'diagnostics', proxy: 'get_proxy_settings', saveProxy: 'save_proxy_settings', testProxy: 'test_proxy_settings', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster', pixel: 'sample_raster', package: 'prepare_artifact', revealPackage: 'reveal_artifact', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe', projects: 'list_projects', createProject: 'create_project', renameProject: 'rename_project', downloadProject: 'download_project', mosaicProject: 'mosaic_project' };
   if (!commands[operation]) throw new Error('Unknown task service operation.');
   const recipeOperation = ['planRecipe', 'saveRecipe', 'runRecipe'].includes(operation);
   const timeout = AbortSignal.timeout(['raster', 'pixel', 'package', 'revealPackage', 'downloadProject', 'mosaicProject'].includes(operation) || recipeOperation ? 60000 : operation === 'testProxy' ? 30000 : 10000);
@@ -51,13 +51,13 @@ export async function runtimeRequest(operation, payload, signal) {
       throw new Error(typeof error === 'string' ? error : error?.message || 'The desktop task command failed.');
     }
   }
-  const routes = { health: '/health', diagnostics: '/diagnostics', proxy: '/proxy', saveProxy: '/proxy', testProxy: '/proxy/test', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster`, pixel: `/jobs/${encodeURIComponent(payload?.id)}/pixel?${new URLSearchParams({x: String(payload?.x), y: String(payload?.y)})}`, package: `/jobs/${encodeURIComponent(payload?.id)}/package`, recipes: '/recipes', planRecipe: '/recipes/plan', saveRecipe: '/recipes', runRecipe: '/recipes/run', projects: '/projects', createProject: '/projects', downloadProject: `/projects/${encodeURIComponent(payload?.id)}/downloads`, mosaicProject: `/projects/${encodeURIComponent(payload?.id)}/mosaics` };
+  const routes = { health: '/health', diagnostics: '/diagnostics', proxy: '/proxy', saveProxy: '/proxy', testProxy: '/proxy/test', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster`, pixel: `/jobs/${encodeURIComponent(payload?.id)}/pixel?${new URLSearchParams({x: String(payload?.x), y: String(payload?.y)})}`, package: `/jobs/${encodeURIComponent(payload?.id)}/package`, recipes: '/recipes', planRecipe: '/recipes/plan', saveRecipe: '/recipes', runRecipe: '/recipes/run', projects: '/projects', createProject: '/projects', renameProject: `/projects/${encodeURIComponent(payload?.id)}/rename`, downloadProject: `/projects/${encodeURIComponent(payload?.id)}/downloads`, mosaicProject: `/projects/${encodeURIComponent(payload?.id)}/mosaics` };
   if (!routes[operation]) throw new Error('Open the desktop app to reveal local files.');
-  const mutation = ['create', 'cancel', 'retry', 'package', 'createProject', 'downloadProject', 'mosaicProject', 'saveProxy', 'testProxy'].includes(operation) || recipeOperation;
+  const mutation = ['create', 'cancel', 'retry', 'package', 'createProject', 'renameProject', 'downloadProject', 'mosaicProject', 'saveProxy', 'testProxy'].includes(operation) || recipeOperation;
   const response = await fetch(SERVICE + routes[operation], {
     method: mutation ? 'POST' : 'GET',
     headers: mutation ? { 'Content-Type': 'application/json', 'X-GeoD-Client': 'geod-global' } : {},
-    body: ['create', 'createProject', 'saveProxy', 'testProxy'].includes(operation) || recipeOperation ? JSON.stringify(payload) : ['downloadProject', 'mosaicProject'].includes(operation) ? JSON.stringify({ assetKey: payload.assetKey }) : mutation ? '{}' : undefined,
+    body: ['create', 'createProject', 'saveProxy', 'testProxy'].includes(operation) || recipeOperation ? JSON.stringify(payload) : operation === 'renameProject' ? JSON.stringify({ name: payload.name }) : ['downloadProject', 'mosaicProject'].includes(operation) ? JSON.stringify({ assetKey: payload.assetKey }) : mutation ? '{}' : undefined,
     signal: requestSignal,
   });
   const body = await response.json();

@@ -59,10 +59,15 @@ const nav = [
 ];
 const pageFromHash = () => {
   let requested;
-  try { requested = decodeURIComponent(location.hash.slice(1)); }
+  try { requested = decodeURIComponent(location.hash.slice(1).split('?')[0]); }
   catch { return "Explore"; }
   if (requested === "Recipes") return "My Data";
   return [...nav.map(([name]) => name), "Settings"].includes(requested) ? requested : "Explore";
+};
+const projectFromHash = () => {
+  if (pageFromHash() !== 'My Data') return null;
+  const id = new URLSearchParams(location.hash.split('?')[1] || '').get('project');
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id || '') ? id : null;
 };
 function stored(key, fallback) {
   try {
@@ -105,6 +110,7 @@ function App() {
   const bbox = appliedSearch?.bbox || pendingBounds;
   const areaName = areaPolygon?.place?.name || "Custom search area";
   const [page, setPage] = useState(pageFromHash);
+  const [focusedProjectId, setFocusedProjectId] = useState(projectFromHash);
   const [selected, setSelected] = useState(null),
     [query, setQuery] = useState(""),
     [sort, setSort] = useState("date");
@@ -199,8 +205,11 @@ function App() {
   useEffect(() => {
     const change = () => {
       const next = pageFromHash();
-      if (location.hash !== "#" + encodeURIComponent(next)) history.replaceState(null, "", "#" + encodeURIComponent(next));
+      const project = projectFromHash();
+      const hash = "#" + encodeURIComponent(next) + (project ? `?project=${project}` : '');
+      if (location.hash !== hash) history.replaceState(null, "", hash);
       setPage(next);
+      setFocusedProjectId(project);
     };
     window.addEventListener("hashchange", change);
     change();
@@ -223,10 +232,12 @@ function App() {
   }, []);
   const showJSON = (filename, value) =>
     setModal({ type: "json", filename, value });
-  const go = (p) => {
-    location.hash = encodeURIComponent(p);
+  const go = (p, projectId = null) => {
+    location.hash = encodeURIComponent(p) + (projectId ? `?project=${projectId}` : '');
     setPage(p);
+    setFocusedProjectId(projectId);
   };
+  const openProject = (id) => go('My Data', id);
   const scenes = useMemo(() => catalog?.scenes || [], [catalog]);
   useEffect(() => {
     const track = timelineTrack.current;
@@ -441,7 +452,7 @@ function App() {
                       <Button size="sm" onClick={() => setSelectedIds([])} disabled={!selectedIds.length}>{t("Clear")}</Button>
                     </div>
                     <Button primary onClick={loadSelected} disabled={!selectedIds.length || selectedIds.length > 16}>{t("Load selected imagery · {count}", { count: selectedIds.length })}</Button>
-                    <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={() => go('My Data')}/>
+                    <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project => openProject(project.id)}/>
                     {selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 COGs for this browser map. Narrow the filters or clear some scenes.")}</span>}
                   </div>}
                   <div className="panel-foot">
@@ -608,8 +619,7 @@ function App() {
                   </Button>
                 </div>
                 <div className="inspector-bottom">
-                  <DownloadAssetButton scene={selected} />
-                  <Button icon={Folder} onClick={() => go("My Data")}>{t("View downloads & clipping")}</Button>
+                  <DownloadAssetButton key={selected.id} scene={selected} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} onOpenProject={openProject} />
                 </div>
               </aside>
             )}
@@ -634,16 +644,16 @@ function App() {
               </>
             ) : page === "My Data" ? (
               <>
-                <PageHeading
+                {!focusedProjectId && <PageHeading
                   eyebrow={t("LOCAL LIBRARY")}
                   title={t("My Data")}
                   sub={t("Find downloaded files and clipping results ready to inspect or use.")}
-                />
-                <ProjectsLibrary />
-                <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />
-                <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
+                />}
+                <ProjectsLibrary focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} />
+                {!focusedProjectId && <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />}
+                {!focusedProjectId && <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
                   <ExecutableRecipes areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON} />
-                </Disclosure>
+                </Disclosure>}
               </>
             ) : page === "Settings" ? (
               <>

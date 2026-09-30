@@ -72,14 +72,17 @@ fn valid_bounds(bounds: [f64; 4]) -> bool {
         && bounds[1] < bounds[3]
 }
 
+fn validate_project_name(name: &str) -> Result<String> {
+    let name = name.trim();
+    if name.is_empty() || name.chars().count() > 120 || name.chars().any(char::is_control) {
+        return Err("Project name must contain 1 to 120 printable characters".into());
+    }
+    Ok(name.to_owned())
+}
+
 impl CreateProjectRequest {
     fn validate(&self, fixture_origin: Option<&str>) -> Result<()> {
-        if self.name.trim().is_empty()
-            || self.name.chars().count() > 120
-            || self.name.chars().any(char::is_control)
-        {
-            return Err("Project name must contain 1 to 120 printable characters".into());
-        }
+        validate_project_name(&self.name)?;
         if !valid_bounds(self.bounds) {
             return Err(
                 "Project bounds must be an increasing WGS84 west/south/east/north rectangle".into(),
@@ -192,7 +195,7 @@ impl JobManager {
         let timestamp = now();
         let project = Project {
             id: Uuid::new_v4().to_string(),
-            name: request.name,
+            name: validate_project_name(&request.name)?,
             bounds: request.bounds,
             geometry: request.geometry,
             scenes: request.scenes,
@@ -206,6 +209,21 @@ impl JobManager {
             return Err(error);
         }
         Ok(project)
+    }
+
+    pub async fn rename_project(&self, id: &str, name: &str) -> Result<Project> {
+        let name = validate_project_name(name)?;
+        let mut projects = self.inner.projects.lock().await;
+        let previous = projects.get(id).cloned().ok_or("Unknown project")?;
+        let mut renamed = previous.clone();
+        renamed.name = name;
+        renamed.updated_at = now();
+        projects.insert(id.to_owned(), renamed.clone());
+        if let Err(error) = self.persist_projects(&projects).await {
+            projects.insert(id.to_owned(), previous);
+            return Err(error);
+        }
+        Ok(renamed)
     }
 
     async fn persist_projects(&self, projects: &BTreeMap<String, Project>) -> Result<()> {
@@ -288,5 +306,114 @@ impl JobManager {
             asset_key: asset_key.into(),
             jobs,
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::{
+        body::{to_bytes, Body},
+        http::{Request, StatusCode},
+    };
+    use tower::ServiceExt;
+
+    fn project_request() -> CreateProjectRequest {
+        CreateProjectRequest {
+            name: "  Original project  ".into(),
+            bounds: [-123.0, 37.0, -122.0, 38.0],
+            geometry: None,
+            scenes: vec![ProjectScene {
+                item_id: "S2C_TEST".into(),
+                date: "2026-09-28T00:00:00Z".into(),
+                cloud: Some(0.0),
+                crs: Some("EPSG:32610".into()),
+                grid_code: None,
+                bbox: [-123.0, 37.0, -122.0, 38.0],
+                assets: BTreeMap::from([(
+                    "scl".into(),
+                    ProjectAsset {
+                        href: format!(
+                            "https://{}/sentinel-s2-l2a-cogs/10/S/EG/2026/9/S2C_TEST/SCL.tif",
+                            crate::SOURCE_HOST
+                        ),
+                        media_type: "image/tiff; application=geotiff".into(),
+                    },
+                )]),
+            }],
+        }
+    }
+
+    #[tokio::test]
+    async fn rename_is_persisted_and_preserves_project_identity_and_sources() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let project = manager.create_project(project_request()).await.unwrap();
+        assert_eq!(project.name, "Original project");
+        for invalid in [
+            " ".to_owned(),
+            "x".repeat(121),
+            "name\nwith control".to_owned(),
+        ] {
+            assert!(manager.rename_project(&project.id, &invalid).await.is_err());
+            assert_eq!(manager.list_projects().await[0].name, project.name);
+        }
+        assert!(manager
+            .rename_project("unknown", "Valid name")
+            .await
+            .is_err());
+        let renamed = manager
+            .rename_project(&project.id, "  湾区影像工程  ")
+            .await
+            .unwrap();
+        assert_eq!(renamed.id, project.id);
+        assert_eq!(renamed.created_at, project.created_at);
+        assert_eq!(renamed.bounds, project.bounds);
+        assert_eq!(
+            renamed.scenes[0].assets["scl"].href,
+            project.scenes[0].assets["scl"].href
+        );
+        drop(manager);
+        let reopened = JobManager::open(directory.path()).await.unwrap();
+        assert_eq!(reopened.list_projects().await[0].name, "湾区影像工程");
+    }
+
+    #[tokio::test]
+    async fn rename_http_route_requires_mutation_guard_and_returns_saved_project() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let project = manager.create_project(project_request()).await.unwrap();
+        let app = crate::service::router(manager);
+        for (origin, client, expected) in [
+            ("https://evil.example", true, StatusCode::FORBIDDEN),
+            (crate::service::ALLOWED_ORIGIN, false, StatusCode::FORBIDDEN),
+            (crate::service::ALLOWED_ORIGIN, true, StatusCode::OK),
+        ] {
+            let mut request = Request::builder()
+                .method("POST")
+                .uri(format!("/projects/{}/rename", project.id))
+                .header("Host", "127.0.0.1:4318")
+                .header("Origin", origin)
+                .header("Content-Type", "application/json");
+            if client {
+                request = request.header("X-GeoD-Client", "geod-global");
+            }
+            let response = app
+                .clone()
+                .oneshot(
+                    request
+                        .body(Body::from(r#"{"name":"HTTP renamed"}"#))
+                        .unwrap(),
+                )
+                .await
+                .unwrap();
+            assert_eq!(response.status(), expected);
+            if expected == StatusCode::OK {
+                let body = to_bytes(response.into_body(), 100_000).await.unwrap();
+                let saved: Project = serde_json::from_slice(&body).unwrap();
+                assert_eq!(saved.name, "HTTP renamed");
+                assert_eq!(saved.id, project.id);
+            }
+        }
     }
 }

@@ -74,6 +74,24 @@ const rasterFixture = () => ({
   sha256: 'a'.repeat(64),
 });
 
+test('project rename uses matching native and protected HTTP contracts', async () => {
+  const calls = [];
+  globalThis.window = { __TAURI__: { core: { invoke: async (command, payload) => calls.push([command, payload]) } } };
+  try {
+    await runtimeRequest('renameProject', { id: 'project-id', name: 'New name' });
+    assert.deepEqual(calls, [['rename_project', { id: 'project-id', name: 'New name' }]]);
+  } finally { delete globalThis.window; }
+  const previousFetch = globalThis.fetch;
+  globalThis.fetch = async (url, options) => { calls.push([url, options]); return { ok: true, json: async () => ({}) }; };
+  try {
+    await runtimeRequest('renameProject', { id: 'project/id', name: 'New name' });
+    assert.equal(calls[1][0], 'http://127.0.0.1:4318/projects/project%2Fid/rename');
+    assert.equal(calls[1][1].method, 'POST');
+    assert.equal(calls[1][1].body, JSON.stringify({ name: 'New name' }));
+    assert.equal(calls[1][1].headers['X-GeoD-Client'], 'geod-global');
+  } finally { globalThis.fetch = previousFetch; }
+});
+
 test('raster inspection accepts only complete pixel metadata and local PNG previews', () => {
   const fixture = rasterFixture();
   assert.equal(validateRasterInspection(fixture), fixture);

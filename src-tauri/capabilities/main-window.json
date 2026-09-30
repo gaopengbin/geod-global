@@ -12,6 +12,7 @@
     "allow-list-jobs",
     "allow-list-projects",
     "allow-create-project",
+    "allow-rename-project",
     "allow-download-project",
     "allow-mosaic-project",
     "allow-create-job",

@@ -19,3 +19,20 @@
 .project-save-form p { margin: 0; }
 .project-save-form label { display: grid; gap: 7px; font-weight: 600; }
 .project-save-form footer { display: flex; justify-content: flex-end; gap: 8px; }
+.project-title-block { flex: 1; min-width: 0; }
+.project-name { display: flex; align-items: center; gap: 6px; }
+.project-name h3 { overflow-wrap: anywhere; }
+.project-rename { display: flex; gap: 6px; align-items: flex-end; }
+.project-rename label { display: grid; gap: 6px; flex: 1; min-width: 0; font-size: 12px; }
+.project-open { justify-self: start; }
+.project-file-count { color: var(--ink-2); padding-left: 8px; border-left: 1px solid var(--line); }
+.project-guide { margin: 0; font-size: 12px; line-height: 1.6; color: var(--ink-2); }
+.project-files { min-width: 0; }
+.project-files h4 { display: flex; align-items: center; gap: 8px; margin: 16px 0 10px; font-size: 14px; }
+@media (max-width: 760px) {
+  .project-summary { align-items: flex-start; flex-wrap: wrap; }
+  .project-title-block { flex-basis: 100%; }
+  .project-assets > div { flex-wrap: wrap; }
+  .project-files .bui-task-row { grid-template-columns: 1fr; }
+  .project-files .bui-task-actions { grid-column: 1; grid-row: auto; padding-top: 3px; }
+}

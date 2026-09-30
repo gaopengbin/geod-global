@@ -39,6 +39,10 @@
 .runtime-notice { display: flex; align-items: flex-start; gap: 10px; padding: 14px; margin-top: 16px; font-size: 12px; line-height: 1.6; }
 .runtime-notice > svg { flex-shrink: 0; margin-top: 2px; }
 .runtime-help { color: var(--ink-2); font-size: 12px; line-height: 1.5; margin: 10px 0 0; }
+.runtime-project-hint { margin: 8px 0 0; font-size: 12px; line-height: 1.5; color: var(--ink-2); overflow-wrap: anywhere; }
+.runtime-project-result > svg { color: var(--blue); }
+.runtime-project-result h3 { margin: 10px 0 8px; font-size: 18px; overflow-wrap: anywhere; }
+.runtime-project-result > p { line-height: 1.6; }
 .runtime-raster-id { margin: 0 0 18px; font-size: 12px; color: var(--ink-2); }
 .runtime-raster-loading { display: flex; align-items: center; flex-direction: column; gap: 14px; text-align: center; padding: 64px 24px; color: var(--ink-2); }
 .runtime-raster-loading strong { color: var(--ink); }

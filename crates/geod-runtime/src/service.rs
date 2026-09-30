@@ -129,6 +129,22 @@ async fn create_project(
         .map_err(api_error)
 }
 #[derive(serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RenameProjectRequest {
+    name: String,
+}
+async fn rename_project(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+    Json(request): Json<RenameProjectRequest>,
+) -> std::result::Result<Json<crate::Project>, ApiError> {
+    manager
+        .rename_project(&id, &request.name)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+#[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct ProjectDownloadRequest {
     asset_key: String,
@@ -339,6 +355,7 @@ pub fn router(manager: JobManager) -> Router {
         .route("/proxy/test", post(test_proxy_settings))
         .route("/jobs", get(jobs).post(create))
         .route("/projects", get(projects).post(create_project))
+        .route("/projects/{id}/rename", post(rename_project))
         .route("/projects/{id}/downloads", post(download_project))
         .route("/projects/{id}/mosaics", post(mosaic_project))
         .route("/jobs/{id}", get(job))
