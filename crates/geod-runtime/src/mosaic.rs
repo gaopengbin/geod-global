@@ -606,21 +606,14 @@ fn write_mosaic(
     ];
     let mut pixels = vec![0u8; count as usize * bands];
     let mut covered = vec![false; count as usize];
+    let grid = MosaicGrid {
+        origin: [left, top],
+        dimensions: [width, height],
+        pixel_size: [dx, dy],
+    };
     let deadline = Instant::now() + Duration::from_secs(180);
     for (index, raster) in rasters.iter_mut().enumerate() {
-        copy_source(
-            raster,
-            left,
-            top,
-            width,
-            height,
-            dx,
-            dy,
-            &mut pixels,
-            &mut covered,
-            cancel,
-            deadline,
-        )?;
+        copy_source(raster, &grid, &mut pixels, &mut covered, cancel, deadline)?;
         report(
             sources.len() as u64 + index as u64 + 1,
             "Combining scene pixels",
@@ -660,19 +653,26 @@ fn write_mosaic(
     Ok(output)
 }
 
+#[derive(Clone, Copy)]
+struct MosaicGrid {
+    origin: [f64; 2],
+    dimensions: [u32; 2],
+    pixel_size: [f64; 2],
+}
+
 fn copy_source(
     raster: &mut SourceRaster,
-    left: f64,
-    top: f64,
-    width: u32,
-    height: u32,
-    dx: f64,
-    dy: f64,
+    grid: &MosaicGrid,
     output: &mut [u8],
     covered: &mut [bool],
     cancel: &CancellationToken,
     deadline: Instant,
 ) -> Result<()> {
+    let MosaicGrid {
+        origin: [left, top],
+        dimensions: [width, height],
+        pixel_size: [dx, dy],
+    } = *grid;
     let offset_x = aligned((raster.bounds[0] - left) / dx)?;
     let offset_y = aligned((top - raster.bounds[3]) / dy)?;
     let (chunk_w, chunk_h) = raster.decoder.chunk_dimensions();

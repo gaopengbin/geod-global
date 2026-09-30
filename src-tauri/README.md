@@ -42,7 +42,7 @@ tray icon to restore the window. Its localized menu can open the task page or
 explicitly quit. Only explicit exit quiesces IPC, interrupts unfinished jobs and
 waits for worker cleanup and saved state. Reopen to retry interrupted tasks from
 the start. Completed files and user-cancelled statuses remain intact. The tray
-uses Tauri's Rust API, with no frontend window/tray control capability. Settings
+uses [Tauri's Rust tray API](https://v2.tauri.app/learn/system-tray/), with no frontend window/tray control capability. Settings
 explains this behavior only inside the desktop.
 
 ## Windows evaluation packages
