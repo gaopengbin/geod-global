@@ -5,6 +5,56 @@ import { readFileSync } from 'node:fs';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { POLYGON_RECIPE_SCHEMA, validateRecipe } from './processing-client.js';
 
+function bundledRegions() {
+  const data = JSON.parse(readFileSync(new URL('../public/basemaps/natural-earth-50m-admin-0-countries.geojson', import.meta.url)));
+  return new GeoJSON().readFeatures(data, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' }).map(feature => administrativePlace(feature, 'country'));
+}
+
+test('bundled Hong Kong, Macau and Taiwan search has accurate labels and simplified/traditional aliases', () => {
+  const regions = bundledRegions();
+  for (const query of ['香港', '香港特別行政區', 'Hong Kong SAR']) {
+    const place = searchAdministrativePlaces(regions, query)[0];
+    assert.equal(place.code, 'HKG');
+    assert.equal(place.nameZh, '香港');
+    assert.equal(place.levelLabel, 'Special administrative region');
+    assert.equal(place.displayParentCode, 'CHN');
+  }
+  for (const query of ['澳门', '澳門', '澳门特别行政区', 'Macao']) {
+    const place = searchAdministrativePlaces(regions, query)[0];
+    assert.equal(place.code, 'MAC');
+    assert.equal(place.levelLabel, 'Special administrative region');
+    assert.equal(place.displayParentCode, 'CHN');
+  }
+  for (const query of ['台湾', '台灣', '臺灣', 'Taiwan']) {
+    const place = searchAdministrativePlaces(regions, query)[0];
+    assert.equal(place.code, 'TWN');
+    assert.equal(place.nameZh, '台湾');
+    assert.equal(place.levelLabel, 'Region');
+  }
+});
+
+test('Macau whole-area duplicates merge without hiding subdivisions or altering source geometry routing', () => {
+  const regions = bundledRegions();
+  const index = JSON.parse(readFileSync(new URL('../public/basemaps/admin1-10m/index.json', import.meta.url)));
+  const subdivisions = index.areas.map(indexedAdministrativePlace);
+  const places = [...regions, ...subdivisions];
+  for (const query of ['澳门', '澳門', 'Macau']) {
+    assert.deepEqual(searchAdministrativePlaces(places, query).map(place => place.code), ['MAC']);
+  }
+  const fallback = searchAdministrativePlaces(subdivisions, '澳門')[0];
+  assert.equal(fallback.code, 'MAC+00?');
+  assert.equal(fallback.parentCode, 'MAC');
+  assert.equal(fallback.levelLabel, 'Special administrative region');
+  const district = searchAdministrativePlaces(places, '中西区')[0];
+  assert.equal(district.parentCode, 'HKG');
+  const city = searchAdministrativePlaces(places, '高雄市')[0];
+  assert.equal(city.parentCode, 'TWN');
+  const taiwan = searchAdministrativePlaces(places, '台湾')[0];
+  const geometry = new GeoJSON().writeGeometryObject(taiwan.feature.getGeometry(), { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
+  const original = JSON.parse(readFileSync(new URL('../public/basemaps/natural-earth-50m-admin-0-countries.geojson', import.meta.url))).features.find(feature => feature.properties.ADM0_A3 === 'TWN');
+  assert.deepEqual(geometry, original.geometry);
+});
+
 test('administrative place search accepts localized names and keeps country results ahead of provinces', () => {
   const feature = (properties, bounds) => ({ getProperties: () => properties, getGeometry: () => ({ getExtent: () => bounds }) });
   const china = administrativePlace(feature({ ADM0_A3: 'CHN', NAME_EN: 'China', NAME_ZH: '中国' }, [73, 18, 135, 54]), 'country');
