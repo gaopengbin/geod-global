@@ -50,12 +50,13 @@
     "package:windows": "powershell -NoProfile -File scripts/package-windows.ps1",
     "test": "node --test prototype/src/*.test.js",
     "test:runtime": "cargo test --locked -p geod-runtime",
+    "test:desktop": "cargo test --locked -p geod-global-desktop --features custom-protocol",
     "check:isolation": "node scripts/verify-repository.mjs",
     "check:contracts": "python GeoD-Global-Spec/contracts/verify_contracts.py",
     "check:recipes": "python scripts/check-recipe-schema.py",
     "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes",
     "verify": "npm run check && npm test && npm run test:ui && npm run build",
-    "verify:all": "npm run verify && npm run test:runtime",
+    "verify:all": "npm run verify && npm run test:runtime && npm run test:desktop",
     "test:ui": "vitest run"
   }
 }

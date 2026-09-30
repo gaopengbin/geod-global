@@ -379,6 +379,8 @@ mod tests {
             parent_id: None,
             recipe: None,
             crop: None,
+            mosaic: None,
+            mosaic_output: None,
             manifest_path: None,
             item_id: "S2_TEST".into(),
             asset_key: "thumbnail".into(),

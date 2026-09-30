@@ -27,16 +27,19 @@
 
 ## 快速启动
 
-Node.js 22.12+、npm 10+；在仓库根目录执行：
+桌面版是主要开发与验收入口。需要 Node.js 22.12+、npm 10+、Rust 1.91.1+ 和 [Tauri 平台依赖](src-tauri/README.md)。在仓库根目录执行：
 
 ```sh
 npm ci
-npm run dev
+npm run desktop:dev
 ```
 
-打开 <http://127.0.0.1:4317/>。实时目录无需登录；浏览器中的真实文件下载另开一个终端运行（需要Rust 1.91.1+）：
+此命令启动 GeoD Global 桌面窗口并管理 Vite 热更新；不要同时另开 `npm run dev` 占用 4317 端口。桌面版通过 Tauri IPC 直接调用 Rust 核心，不需要 4318 服务。任务与文件保存在独立应用 ID `xyz.laogao.geod.global` 的本地应用数据目录，与浏览器调试目录分开。
+
+浏览器仅用于辅助调试。在未运行桌面开发入口时启动以下两个命令，然后打开 <http://127.0.0.1:4317/>。实时目录无需登录：
 
 ```sh
+npm run dev
 npm run runtime
 ```
 
@@ -50,6 +53,8 @@ npm run desktop:build
 ```
 
 桌面版直接调用Rust核心，不需要单独启动4318服务，数据保存在独立应用ID `xyz.laogao.geod.global` 的本地应用数据目录。`desktop:build` 生成调试版可执行文件，尚不是签名发行版或安装包；平台依赖和命令见 [桌面说明](src-tauri/README.md)。
+
+`npm run test:desktop` 校验桌面导航、来源链接和本地文件访问边界；需先生成前端资源。`npm run verify:all` 会先构建前端，再运行处理核心和桌面测试，因此需要上述 Tauri 平台依赖。自动化测试和进程启动检查不能代替原生窗口中的实际操作验收。
 
 Windows便携ZIP与NSIS安装器已从干净提交生成，逐文件校验、实际包CLI裁剪流程和桌面进程启动检查通过；文件位置与SHA-256见[本地评估包验收](docs/releases/2026-09-22-windows-artifact-acceptance.md)。重建、第三方许可收集和校验流程见[Windows打包说明](docs/releases/windows-packaging.md)。这些是未签名的本地评估产物；原生桌面交互、干净机器安装／卸载、签名和公开发布仍需分别完成。
 
