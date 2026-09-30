@@ -1,12 +1,14 @@
 .wm-map-loading { padding: 32px; color: var(--ink-2); }
 .wm-tool-panel { animation: fade-up var(--motion-normal) var(--motion-ease); }
 .wm-workspace { display: grid; grid-template-columns: 290px minmax(0, 1fr); flex: 1; min-height: 0; min-width: 0; overflow: hidden; }
-.wm-sidebar { padding: 24px 18px; background: var(--surface); border-right: 1px solid var(--line); min-width: 0; min-height: 0; overflow: auto; }
+.wm-sidebar { padding: 18px; background: var(--surface); border-right: 1px solid var(--line); min-width: 0; min-height: 0; overflow: auto; }
+.wm-sidebar-collapsed { grid-template-columns: minmax(0, 1fr) !important; }
 .wm-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .wm-heading h1 { font-size: 22px; margin: 4px 0 0; letter-spacing: -.5px; }
 .wm-heading > svg { color: var(--ink-2); }
 .wm-intro, .wm-note, .wm-add-layer small, .wm-tool-panel section > p { color: var(--ink-2); line-height: 1.65; }
-.wm-add-layer { display: grid; gap: 10px; margin: 24px 0 18px; }
+.wm-add-layer { display: grid; gap: 10px; margin: 14px 0 18px; }
+.wm-add-layer .runtime-field { margin: 0; }
 .wm-add-layer select { width: 100%; min-width: 0; text-overflow: ellipsis; }
 .wm-add-layer small { font-size: 12px; }
 .wm-layer-list { display: grid; gap: 10px; }
@@ -27,7 +29,9 @@
 .wm-provenance { padding: 14px 0; border-top: 1px solid var(--line); }
 .wm-provenance p { overflow-wrap: anywhere; font-size: 12px; color: var(--ink-2); }
 .wm-main { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
-.wm-toolbar { flex: 0 0 auto; padding: 12px 18px; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wm-toolbar { flex: 0 0 auto; padding: 10px 14px; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wm-toolbar [data-slot=button], .wm-coordinate-bar [data-slot=button] { min-height: 32px; height: 32px; padding: 0 10px; font-size: 13px; border-radius: var(--radius-control); }
+.wm-toolbar [data-size=icon] { width: 32px; padding: 0; }
 .wm-mode, .wm-navigation { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .wm-map-container { position: relative; flex: 1 1 auto; min-height: 0; background: var(--canvas); }
 .wm-map { position: absolute; inset: 0; cursor: crosshair; }

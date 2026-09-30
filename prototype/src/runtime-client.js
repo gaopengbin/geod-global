@@ -40,12 +40,13 @@ export function validateRasterInspection(data) {
     || data.previewWidth > 768 || data.previewHeight > 768
     || typeof data.previewDataUrl !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(data.previewDataUrl)
     || typeof data.sha256 !== 'string' || !/^[a-f0-9]{64}$/i.test(data.sha256)
-    || !Array.isArray(data.classes) || !data.classes.length
+    || ![1, 3].includes(data.bandCount)
+    || !Array.isArray(data.classes) || (data.bandCount === 1 ? !data.classes.length : data.classes.length !== 0)
     || data.classes.some(item => !Number.isSafeInteger(item.value) || item.value < 0 || item.value > 255
       || typeof item.label !== 'string' || !/^#[a-f0-9]{6}$/i.test(item.color)
       || !Number.isSafeInteger(item.count) || item.count < 0)
     || new Set(data.classes.map(item => item.value)).size !== data.classes.length
-    || data.classes.reduce((sum, item) => sum + item.count, 0) !== data.width * data.height
+    || (data.bandCount === 1 && data.classes.reduce((sum, item) => sum + item.count, 0) !== data.width * data.height)
     || (data.nodata !== null && !Number.isFinite(data.nodata))) {
     throw new Error('The raster service returned incomplete or invalid inspection data.');
   }

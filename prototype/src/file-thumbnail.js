@@ -8,11 +8,12 @@ let queue = Promise.resolve();
 export function fileThumbnailKey(job) { return `${job.id}:${job.sha256}`; }
 export function cachedFileThumbnail(job) { return cache.get(fileThumbnailKey(job)); }
 
-export function loadFileThumbnail(job, request = runtimeRequest) {
+export function loadFileThumbnail(job, request = runtimeRequest, canLoad = () => true) {
   const key = fileThumbnailKey(job);
   if (cache.has(key)) return Promise.resolve(cache.get(key));
   if (pending.has(key)) return pending.get(key);
   const task = queue.then(async () => {
+    if (!canLoad()) throw new Error('The task service is offline.');
     const data = await request('thumbnail', { id: job.id });
     if (data.jobId !== job.id || data.sha256 !== job.sha256) throw new Error('The preview does not match this file.');
     cache.set(key, data);

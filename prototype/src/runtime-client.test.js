@@ -141,6 +141,14 @@ test('raster inspection accepts only complete pixel metadata and local PNG previ
   ]) assert.throws(() => validateRasterInspection({ ...fixture, ...changes }), /invalid inspection data/);
 });
 
+test('RGB inspection accepts three channels without fabricating SCL classes', () => {
+  const rgb = { ...rasterFixture(), bandCount: 3, classes: [] };
+  assert.equal(validateRasterInspection(rgb), rgb);
+  assert.throws(() => validateRasterInspection({ ...rgb, bandCount: 4 }), /invalid inspection data/);
+  assert.throws(() => validateRasterInspection({ ...rgb, classes: rasterFixture().classes }), /invalid inspection data/);
+  assert.throws(() => validateRasterInspection({ ...rgb, bandCount: 1 }), /invalid inspection data/);
+});
+
 test('native raster inspection sends only the job identifier and can stop waiting', async () => {
   const calls = [];
   let finish;

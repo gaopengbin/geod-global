@@ -123,15 +123,15 @@
 .bui-task-row:has([data-slot=disclosure][data-state=open]) { grid-column: 1 / -1; }
 /* File cards group preview, metadata and actions into one compact media item. */
 .bui-task-rows[data-layout=files] { gap: 16px; }
-.bui-task-rows[data-layout=files] .bui-task-row { grid-template-columns: 88px minmax(0, 1fr); align-items: start; column-gap: 16px; row-gap: 8px; padding: 16px; border-color: var(--line); }
+.bui-task-rows[data-layout=files] .bui-task-row { grid-template-columns: 72px minmax(0, 1fr); align-items: start; column-gap: 16px; row-gap: 8px; padding: 16px; border-color: var(--line); }
 .bui-task-rows[data-layout=files] .bui-task-main { display: contents; }
-.bui-task-rows[data-layout=files] .bui-task-main > :first-child { width: 88px; height: 88px; grid-column: 1; grid-row: 1 / span 2; }
+.bui-task-rows[data-layout=files] .bui-task-main > :first-child { width: 72px; height: 72px; grid-column: 1; grid-row: 1 / span 2; }
 .bui-task-rows[data-layout=files] .bui-task-copy { grid-column: 2; }
-.bui-task-rows[data-layout=files] .bui-task-copy strong { display: block; min-height: 0; font-size: 13px; line-height: 20px; }
+.bui-task-rows[data-layout=files] .bui-task-copy strong { display: block; min-height: 0; font-size: 14px; line-height: 20px; }
 .bui-task-rows[data-layout=files] .bui-task-info { gap: 4px 8px; margin-top: 6px; }
-.bui-task-rows[data-layout=files] .bui-task-meta { flex-basis: 100%; order: 3; padding-left: 0; border: 0; }
+.bui-task-rows[data-layout=files] .bui-task-meta { padding-left: 0; border: 0; }
 .bui-task-rows[data-layout=files] .bui-task-footer { grid-column: 2; padding: 0; border: 0; gap: 8px 12px; }
-.bui-task-rows[data-layout=files] .bui-task-details .bui-disclosure-trigger { box-shadow: none; background: transparent; padding: 0; color: var(--ink-2); font-size: 12px; }
+.bui-task-rows[data-layout=files] .bui-task-details .bui-disclosure-trigger { box-shadow: none; background: transparent; padding: 0; color: var(--ink-2); font-size: 12px; min-height: 32px; }
 .bui-task-rows[data-layout=files] .bui-task-details .bui-disclosure-trigger:hover { color: var(--accent-ink); }
 .bui-task-rows[data-layout=files] .bui-task-details .bui-disclosure-content { padding-top: 12px; border-top: 1px solid var(--line); }
 @media (max-width: 480px) {

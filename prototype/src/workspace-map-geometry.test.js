@@ -57,3 +57,16 @@ test('pixel results must identify the requested source, checksum, grid cell and 
   for (const changes of [{ jobId: 'other' }, { sha256: 'b'.repeat(64) }, { pixel: [1, 2] }, { coordinate: [130, 251] }, { value: 12 }])
     assert.throws(() => verifyPixelResult({ ...result, ...changes }, job, metadata, coordinate));
 });
+
+test('RGB map queries validate original channels and reject band or color substitutions', () => {
+  const source = { ...job, assetKey: 'visual' };
+  const rgb = { ...metadata, bandCount: 3 };
+  assert.equal(verifiedMapMetadata(source, rgb), rgb);
+  assert.throws(() => verifiedMapMetadata(source, metadata));
+  const coordinate = [129, 251];
+  const result = { jobId: job.id, sha256: job.sha256, crs: metadata.crs, coordinate, pixel: [1, 1], values: [25, 50, 75], value: 25, label: 'RGB', color: '#19324b', isNoData: false };
+  assert.equal(verifyPixelResult(result, source, rgb, coordinate), result);
+  for (const changes of [{ values: [25, 50] }, { values: [256, 50, 75] }, { color: '#000000' }, { pixel: [0, 1] }])
+    assert.throws(() => verifyPixelResult({ ...result, ...changes }, source, rgb, coordinate));
+  assert.throws(() => mapClipRecipe(source, rgb, [111, 222, 155, 266], 'RGB'), /Use the project/);
+});

@@ -92,6 +92,7 @@ fn thumbnail(root: &Path, job: &Job) -> Result<FileThumbnail> {
         width,
         height,
         job.asset_key == "scl",
+        raster.nodata,
         deadline,
     )?;
     let mut png_bytes = Vec::new();
@@ -119,14 +120,27 @@ fn sample_preview<R: Read + Seek>(
     width: u32,
     height: u32,
     scl: bool,
+    nodata: Option<u8>,
     deadline: Instant,
 ) -> Result<(u32, u32, Vec<u8>)> {
+    sample_preview_with_edge(decoder, [width, height], scl, nodata, EDGE, deadline)
+}
+
+pub(crate) fn sample_preview_with_edge<R: Read + Seek>(
+    decoder: &mut Decoder<R>,
+    dimensions: [u32; 2],
+    scl: bool,
+    nodata: Option<u8>,
+    edge: u32,
+    deadline: Instant,
+) -> Result<(u32, u32, Vec<u8>)> {
+    let [width, height] = dimensions;
     if width == 0 || height == 0 || width > 20000 || height > 20000 {
         return Err("Preview raster dimensions are unsupported".into());
     }
     let longest = width.max(height);
-    let pw = (width as u64 * EDGE.min(longest) as u64 / longest as u64).max(1) as u32;
-    let ph = (height as u64 * EDGE.min(longest) as u64 / longest as u64).max(1) as u32;
+    let pw = (width as u64 * edge.min(longest) as u64 / longest as u64).max(1) as u32;
+    let ph = (height as u64 * edge.min(longest) as u64 / longest as u64).max(1) as u32;
     let (cw, ch) = decoder.chunk_dimensions();
     if cw == 0 || ch == 0 {
         return Err("Preview chunks are invalid".into());
@@ -180,11 +194,12 @@ fn sample_preview<R: Read + Seek>(
                 [sample[0], sample[1], sample[2]]
             };
             rgba[target * 4..target * 4 + 3].copy_from_slice(&color);
-            rgba[target * 4 + 3] = if sample.iter().all(|value| *value == 0) {
-                0
-            } else {
-                255
-            };
+            rgba[target * 4 + 3] =
+                if nodata.is_some_and(|value| sample.iter().all(|sample| *sample == value)) {
+                    0
+                } else {
+                    255
+                };
         }
     }
     Ok((pw, ph, rgba))
@@ -229,6 +244,7 @@ mod tests {
             321,
             81,
             true,
+            Some(0),
             Instant::now() + Duration::from_secs(1),
         )
         .unwrap();
@@ -249,6 +265,7 @@ mod tests {
             2,
             1,
             false,
+            Some(0),
             Instant::now() + Duration::from_secs(1),
         )
         .unwrap();
@@ -274,6 +291,7 @@ mod tests {
                 1,
                 1,
                 true,
+                Some(0),
                 Instant::now() + Duration::from_secs(1),
             );
             if let Some(expected) = expected {
@@ -282,5 +300,25 @@ mod tests {
                 assert!(result.is_err());
             }
         }
+    }
+
+    #[test]
+    fn valid_black_rgb_pixels_remain_opaque_without_nodata() {
+        let mut bytes = Cursor::new(Vec::new());
+        TiffEncoder::new(&mut bytes)
+            .unwrap()
+            .write_image::<colortype::RGB8>(1, 1, &[0, 0, 0])
+            .unwrap();
+        let mut decoder = Decoder::new(Cursor::new(bytes.into_inner())).unwrap();
+        let (_, _, pixels) = sample_preview(
+            &mut decoder,
+            1,
+            1,
+            false,
+            None,
+            Instant::now() + Duration::from_secs(1),
+        )
+        .unwrap();
+        assert_eq!(pixels, [0, 0, 0, 255]);
     }
 }

@@ -1,4 +1,4 @@
-//! Bounded, local inspection of downloaded Sentinel-2 scene classification files.
+//! Bounded, local inspection of managed Sentinel-2 SCL and UInt8 RGB files.
 //! Palette reference: https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel-2/scene-classification/
 //! GeoTIFF tags are read from the file; no catalog values substitute for missing metadata.
 use crate::{extension, Job, JobManager, JobStatus, Result};
@@ -63,6 +63,8 @@ pub struct RasterPixel {
     pub pixel: [u32; 2],
     pub center: [f64; 2],
     pub value: u8,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub values: Option<[u8; 3]>,
     pub label: String,
     pub color: String,
     pub is_no_data: bool,
@@ -105,14 +107,18 @@ impl JobManager {
         }
         let job = self.get(id).await.ok_or("Unknown job")?;
         let root = self.inner.root.clone();
-        let permit = self
-            .inner
-            .raster_permits
-            .clone()
-            .try_acquire_owned()
-            .map_err(|_| "The raster worker is busy; try the pixel query again shortly")?;
+        let permit = tokio::time::timeout(
+            Duration::from_secs(5),
+            self.inner.raster_permits.clone().acquire_owned(),
+        )
+        .await
+        .map_err(|_| "The raster worker is busy; try the pixel query again shortly")?
+        .map_err(fail)?;
         tokio::task::spawn_blocking(move || {
             let _permit = permit;
+            if job.asset_key == "visual" {
+                return rgb::sample(&root, &job, x, y);
+            }
             let raster = load_verified_raster(&root, &job, None)?;
             sample_pixel(raster, &job.id, x, y)
         })
@@ -123,18 +129,20 @@ impl JobManager {
     pub async fn inspect_raster(&self, id: &str) -> Result<RasterInspection> {
         let job = self.get(id).await.ok_or("Unknown job")?;
         let root = self.inner.root.clone();
-        let permit = self
-            .inner
-            .raster_permits
-            .clone()
-            .try_acquire_owned()
-            .map_err(|_| {
-                "Raster inspection is busy. Try again when the current inspection finishes."
-            })?;
+        let permit = tokio::time::timeout(
+            Duration::from_secs(5),
+            self.inner.raster_permits.clone().acquire_owned(),
+        )
+        .await
+        .map_err(|_| "Raster inspection is busy. Try again when the current inspection finishes.")?
+        .map_err(fail)?;
         // Own the permit inside the blocking task: dropping an HTTP request cannot
         // release it while decoding is still running and admit unbounded work.
         tokio::task::spawn_blocking(move || {
             let _permit = permit;
+            if job.asset_key == "visual" {
+                return rgb::inspect(&root, &job);
+            }
             inspect_download(&root, &job)
         })
         .await
@@ -165,11 +173,14 @@ fn sample_pixel(raster: DecodedRaster, id: &str, x: f64, y: f64) -> Result<Raste
             top - (row as f64 + 0.5) * raster.pixel_size[1],
         ],
         value,
+        values: None,
         label: label.into(),
         color: format!("#{:02x}{:02x}{:02x}", rgb[0], rgb[1], rgb[2]),
         is_no_data: raster.nodata == Some(value),
     })
 }
+
+mod rgb;
 
 fn fail(error: impl std::fmt::Display) -> String {
     format!("Cannot inspect this GeoTIFF: {error}")

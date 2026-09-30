@@ -52,6 +52,15 @@ export function jobsForProject(project, jobs) {
   return jobs.filter(job => sources.has(job.id) || outputs.has(job.id));
 }
 
+export function projectSourceJobs(project, jobs, assetKey) {
+  return project.scenes.map(scene => {
+    const matches = jobs.filter(job => job.kind === 'download' && job.itemId === scene.itemId
+      && job.assetKey === assetKey && job.href === scene.assets?.[assetKey]?.href)
+      .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
+    return matches.find(job => job.status === 'succeeded') || matches[0];
+  }).filter(Boolean);
+}
+
 function validateAssetKeys(assetKeys) {
   if (!Array.isArray(assetKeys) || !assetKeys.length || new Set(assetKeys).size !== assetKeys.length
     || assetKeys.some(key => key !== 'scl' && key !== 'visual')) {

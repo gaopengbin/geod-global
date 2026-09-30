@@ -48,6 +48,7 @@ import { desktopAvailable, runtimeRequest } from "./runtime-client.js";
 import { mergeProjectCatalog, projectCatalogScenes, projectExploreSearch } from "./project-explore.js";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { ProxySettingsPanel } from "./proxy-ui.jsx";
+import { normalizeNavigationHash } from './navigation.js';
 import { I18nProvider, useI18n } from "./i18n.jsx";
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
@@ -231,8 +232,7 @@ function App() {
     const change = () => {
       const next = pageFromHash();
       const project = projectFromHash();
-      const fileView = next === 'My Data' && new URLSearchParams(location.hash.split('?')[1] || '').get('view') === 'files';
-      const hash = "#" + encodeURIComponent(next) + (project ? `?project=${project}` : fileView ? '?view=files' : '');
+      const hash = normalizeNavigationHash(location.hash);
       if (location.hash !== hash) history.replaceState(null, "", hash);
       setPage(next);
       setFocusedProjectId(next === 'My Data' ? project : null);
@@ -687,7 +687,6 @@ function App() {
             {page === "Tasks" ? (
               <>
                 <PageHeading
-                  eyebrow={t("EXECUTION")}
                   title={t("Tasks")}
                   sub={t("See downloads and clipping in progress, and retry failed tasks.")}
                   action={
@@ -707,9 +706,8 @@ function App() {
             ) : page === "Settings" ? (
               <>
                 <PageHeading
-                  eyebrow={t("YOUR WORKSPACE")}
                   title={t("Settings")}
-                  sub={t("A local-first workspace, on your terms.")}
+                  sub={t("Manage language, appearance, network and local storage.")}
                 />
                 <Surface className="settings-list">
                   <div>
@@ -725,7 +723,7 @@ function App() {
                   <div>
                     <span>
                       <strong>{t("Appearance")}</strong>
-                      <small>{t("Saved on this browser.")}</small>
+                      <small>{t("Saved on this device.")}</small>
                     </span>
                     <Select
                       aria-label={t("Appearance")}
@@ -852,7 +850,7 @@ function PageHeading({ eyebrow, title, sub, action }) {
   return (
     <div className="page-heading">
       <div>
-        <span className="eyebrow">{eyebrow}</span>
+        {eyebrow && <span className="eyebrow">{eyebrow}</span>}
         <h1>{title}</h1>
         <p>{sub}</p>
       </div>

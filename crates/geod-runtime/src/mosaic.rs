@@ -363,10 +363,10 @@ pub(crate) struct SourceRaster {
     pub(crate) decoder: Decoder<BufReader<File>>,
     pub(crate) width: u32,
     pub(crate) height: u32,
-    crs: String,
-    bounds: [f64; 4],
-    pixel_size: [f64; 2],
-    nodata: Option<u8>,
+    pub(crate) crs: String,
+    pub(crate) bounds: [f64; 4],
+    pub(crate) pixel_size: [f64; 2],
+    pub(crate) nodata: Option<u8>,
     bands: usize,
 }
 

@@ -3,17 +3,11 @@ import { ArrowLeft, Check, Compass, Download, FolderOpen, Layers, Pencil, Refres
 import { RuntimeContext } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
-import { Badge, Button, Disclosure, Input, Modal, Spinner, Surface } from './ui/index.jsx';
-import { createProject, jobsForProject, MAX_PROJECT_SCENES, projectRequest } from './projects-client.js';
+import { Badge, Button, Disclosure, Input, Modal, Progress, SegmentedControl, Spinner, Surface } from './ui/index.jsx';
+import { createProject, jobsForProject, projectSourceJobs, MAX_PROJECT_SCENES, projectRequest } from './projects-client.js';
 import { RuntimeJobRows } from './runtime-ui.jsx';
+import { FileThumbnail } from './file-thumbnail.jsx';
 import './projects.css';
-
-const projectJobs = (project, jobs, assetKey) => project.scenes.map(scene =>
-  jobs.find(job => job.itemId === scene.itemId && job.assetKey === assetKey
-    && job.href === scene.assets?.[assetKey]?.href && job.status === 'succeeded')
-  || jobs.find(job => job.itemId === scene.itemId && job.assetKey === assetKey
-    && job.href === scene.assets?.[assetKey]?.href && ['queued', 'running'].includes(job.status))
-).filter(Boolean);
 
 export function SaveProjectButton({ scenes, bounds, geometry, areaName, onSaved }) {
   const { t } = useI18n();
@@ -62,12 +56,13 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
   const [draftName, setDraftName] = useState('');
   const [renameError, setRenameError] = useState('');
   const [search, setSearch] = useState('');
+  const [fileView, setFileView] = useState('all');
   const refresh = useCallback(async () => {
     try { setProjects(await runtimeRequest('projects')); setError(''); }
     catch (cause) { setError(cause.message); }
     finally { setLoading(false); }
   }, []);
-  useEffect(() => { refresh(); }, [refresh]);
+  useEffect(() => { refresh(); }, [refresh, Boolean(health), focusedProjectId]);
   const rename = async (event, project) => {
     event.preventDefault();
     setBusy(`${project.id}:rename`); setRenameError('');
@@ -108,19 +103,25 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
       const related = jobsForProject(project, jobs);
       const pending = related.filter(job => job.status !== 'succeeded');
       const files = related.filter(job => job.status === 'succeeded');
-      const scl = projectJobs(project, jobs, 'scl');
-      const visual = projectJobs(project, jobs, 'visual');
+      const scl = projectSourceJobs(project, jobs, 'scl');
+      const visual = projectSourceJobs(project, jobs, 'visual');
       const completed = entries => entries.filter(job => job.status === 'succeeded').length;
       const mosaicJobs = jobs.filter(job => job.kind === 'raster_mosaic' && job.mosaic?.projectId === project.id);
       const latestMosaic = key => mosaicJobs.find(job => job.assetKey === key);
       const mixedCrs = new Set(project.scenes.map(scene => scene.crs).filter(Boolean)).size > 1;
       const orderedDates = project.scenes.map(scene => scene.date).sort();
+      const activeCount = related.filter(job => ['queued', 'running'].includes(job.status)).length;
+      const preview = files.find(job => job.assetKey === 'visual') || files.find(job => job.assetKey === 'scl');
+      const sourceFiles = files.filter(job => job.kind === 'download');
+      const outputs = files.filter(job => job.kind !== 'download');
+      const visibleFiles = fileView === 'sources' ? sourceFiles : fileView === 'outputs' ? outputs : files;
       return <Surface as="article" id={`project-${project.id}`} className={`project-row${focusedProjectId === project.id ? ' project-row-focused' : ''}`} key={project.id}>
         <div className="project-summary">
-          <span className="project-icon" aria-hidden="true"><FolderOpen size={16}/></span>
+          {!focused && preview ? <FileThumbnail job={preview}/> : <span className="project-icon" aria-hidden="true"><FolderOpen size={16}/></span>}
           <div className="project-title-block">
             {editingId === project.id ? <form className="project-rename" onSubmit={event => rename(event, project)}><label>{t('Project name')}<Input autoFocus value={draftName} maxLength={120} required onChange={event => setDraftName(event.target.value)}/></label><Button type="submit" size="icon" variant="primary" disabled={!draftName.trim() || Boolean(busy)} aria-label={t('Save project name')}><Check size={16}/></Button><Button type="button" size="icon" disabled={Boolean(busy)} aria-label={t('Cancel renaming')} onClick={() => { setEditingId(''); setRenameError(''); }}><X size={16}/></Button></form> : <div className="project-name"><h3>{focused ? project.name : <Button variant="link" className="project-open-title" aria-label={`${t('Open project')} · ${project.name}`} onClick={() => onOpenProject?.(project.id)}>{project.name}</Button>}</h3><Button size="icon" variant="quiet" aria-label={t('Rename project {name}', { name: project.name })} onClick={() => { setEditingId(project.id); setDraftName(project.name); setRenameError(''); }}><Pencil size={16}/></Button>{focused && <Badge>{t('Current project')}</Badge>}</div>}
             <p className="project-metadata"><span>{number(project.scenes.length)} {t('scenes')}</span>{!focused && <span>{t('{count} files', { count: number(files.length) })}</span>}<span className="project-date-range">{date(orderedDates[0])}{orderedDates[0] !== orderedDates.at(-1) && <> – {date(orderedDates.at(-1))}</>}</span></p>
+            {!focused && <p className="project-card-state"><Badge tone={activeCount ? 'blue' : 'neutral'}>{t(activeCount ? '{count} active tasks' : outputs.length ? '{count} processing results' : 'Ready to continue', { count: number(activeCount || outputs.length) })}</Badge></p>}
             {editingId === project.id && renameError && <p className="projects-error" role="alert">{renameError}</p>}
           </div>
         </div>
@@ -137,16 +138,23 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
             const available = project.scenes.every(scene => scene.assets?.[key]);
             return <Surface variant="inset" className="project-asset" key={key}>
               <div className="project-asset-summary"><strong>{t(key === 'visual' ? 'True-color imagery' : 'SCL classification')}</strong><span>{t('{done} / {total} downloaded', { done: completed(sources), total: project.scenes.length })}</span></div>
+              <Progress value={completed(sources)} max={project.scenes.length} aria-label={t(key === 'visual' ? 'True-color files ready' : 'SCL files ready')}/>
               {available && <div className="project-actions"><Button variant={ready ? "secondary" : "primary"} size="sm" disabled={!health || Boolean(busy) || ready || active} onClick={() => execute(project, key, 'downloadProject')}><Download size={15}/>{t(key === 'visual' ? 'Download true-color' : 'Download SCL')}</Button><Button variant={ready ? "primary" : "secondary"} size="sm" disabled={!health || Boolean(busy) || mixedCrs || !ready || ['queued', 'running'].includes(latestMosaic(key)?.status)} onClick={() => execute(project, key, 'mosaicProject')}><Layers size={15}/>{t(project.scenes.length === 1 ? key === 'visual' ? 'Clip true-color to project area' : 'Clip SCL to project area' : key === 'visual' ? 'Mosaic and clip true-color' : 'Mosaic and clip SCL')}</Button></div>}
+              <p className="project-asset-help">{t(!available ? 'Some scenes do not provide this file type.' : active ? 'Downloads are running. Processing becomes available when every source is ready.' : !ready ? 'Download the missing source files before processing.' : 'Source files are ready. The output uses the saved project area.')}</p>
             </Surface>;
           })}
         </div>
         {busy.startsWith(`${project.id}:`) && <span className="project-busy" role="status"><Spinner size={15}/>{t(busy.endsWith(':rename') ? 'Saving project name…' : 'Adding scenes to the local queue…')}</span>}
         {mixedCrs && <p className="projects-error">{t('This project crosses UTM zones. Create one project per CRS to mosaic without reprojection.')}</p>}
         <div className="project-files">
-          {pending.length > 0 && <><h4>{t('Project downloads and processing')}</h4><RuntimeJobRows jobs={pending} projectName={project.name}/></>}
+          {pending.length > 0 && <><h4>{t('Project downloads and processing')}</h4><RuntimeJobRows jobs={pending} projectName={project.name} projectId={project.id}/></>}
           <h4>{t('Project files')} <Badge>{number(files.length)}</Badge></h4>
-          {files.length > 0 ? <div className="project-file-list"><RuntimeJobRows jobs={files} library projectName={project.name}/></div> : <Surface variant="inset" className="projects-empty"><span>{t('Completed source files and clipping results will appear here.')}</span></Surface>}
+          <SegmentedControl value={fileView} onValueChange={setFileView} aria-label={t('Project file view')} items={[
+            { value: 'all', label: `${t('All files')} · ${number(files.length)}` },
+            { value: 'sources', label: `${t('Downloaded sources')} · ${number(sourceFiles.length)}` },
+            { value: 'outputs', label: `${t('Processing results')} · ${number(outputs.length)}` },
+          ]}/>
+          {visibleFiles.length > 0 ? <div className="project-file-list"><RuntimeJobRows jobs={visibleFiles} library projectName={project.name} projectId={project.id}/></div> : <Surface variant="inset" className="projects-empty"><span>{t(fileView === 'outputs' ? 'Run a project clip or mosaic to create your first result.' : 'Completed source files and clipping results will appear here.')}</span></Surface>}
         </div>
         </>}
       </Surface>;

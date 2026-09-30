@@ -63,4 +63,12 @@ export default {
   'The raster bounds and pixel grid are inconsistent.': '栅格边界与像元网格不一致。',
   'The rectangle must overlap the active raster.': '矩形必须与当前栅格相交。',
   'The pixel response does not match the active raster and coordinate.': '像元响应与当前栅格及请求坐标不一致。',
+  "Hide layers": "收起图层面板",
+  "Open local RGB or SCL files. Inspect original pixels; process true-color imagery in its project.": "查看本地真彩色或 SCL 文件、读取原始像元。真彩色拼接裁剪在所属工程中进行。",
+  "No additional local rasters": "没有其他可用栅格",
+  "Choose a local RGB or SCL file, then open it on the map.": "选择本地真彩色或 SCL 文件，即可在地图上查看。",
+  "Download a true-color or SCL file in Explore, then open it here.": "先在探索页下载真彩色或 SCL 文件，再在这里打开。",
+  "Local true-color overview · original pixels available": "本地真彩色概览 · 可读取原始像元",
+  "Use the project to clip or mosaic true-color imagery.": "请在所属工程中裁剪或拼接真彩色影像。",
+  "This file is unavailable. Choose a completed local raster.": "该文件不可用，请选择已完成的本地栅格。",
 };

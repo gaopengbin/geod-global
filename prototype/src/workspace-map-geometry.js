@@ -13,9 +13,9 @@ export function utmDefinition(crs) {
 
 export function verifiedMapMetadata(job, metadata) {
   utmDefinition(metadata?.crs);
-  if (job?.status !== 'succeeded' || job?.assetKey !== 'scl' || !job.sha256
+  if (job?.status !== 'succeeded' || !['scl', 'visual'].includes(job?.assetKey) || !job.sha256
     || metadata?.sha256?.toLowerCase() !== job.sha256.toLowerCase()
-    || metadata?.bandCount !== 1 || metadata?.dataType !== 'UInt8'
+    || metadata?.bandCount !== (job.assetKey === 'visual' ? 3 : 1) || metadata?.dataType !== 'UInt8'
     || !validBounds(metadata.bounds) || !Number.isSafeInteger(metadata.width) || metadata.width < 1
     || !Number.isSafeInteger(metadata.height) || metadata.height < 1
     || !Array.isArray(metadata.pixelSize) || metadata.pixelSize.length !== 2
@@ -63,6 +63,7 @@ export function previewPixelWindow(bounds, metadata) {
 }
 
 export function mapClipRecipe(job, metadata, bounds, name) {
+  if (job.assetKey !== 'scl') throw new Error('Use the project to clip or mosaic true-color imagery.');
   verifiedMapMetadata(job, metadata);
   if (!previewPixelWindow(bounds, metadata)) throw new Error('The rectangle must overlap the active raster.');
   return validateRecipe({ schemaVersion: RECIPE_SCHEMA, name,
@@ -77,7 +78,10 @@ export function verifyPixelResult(result, job, metadata, coordinate) {
     || result.pixel.some((value, index) => value !== pixel[index])
     || !Array.isArray(result.coordinate) || result.coordinate.length !== 2
     || result.coordinate.some((value, index) => !Number.isFinite(value) || Math.abs(value - coordinate[index]) > 1e-7)
-    || !Number.isInteger(result.value) || result.value < 0 || result.value > 11
+    || (job.assetKey === 'visual' ? !Array.isArray(result.values) || result.values.length !== 3
+      || result.values.some(value => !Number.isInteger(value) || value < 0 || value > 255)
+      || result.color?.toLowerCase() !== '#' + result.values.map(value => value.toString(16).padStart(2, '0')).join('')
+      : !Number.isInteger(result.value) || result.value < 0 || result.value > 11)
     || typeof result.label !== 'string' || !/^#[a-f\d]{6}$/i.test(result.color) || typeof result.isNoData !== 'boolean')
     throw new Error('The pixel response does not match the active raster and coordinate.');
   return result;

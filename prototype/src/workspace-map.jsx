@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Crosshair, Crop, Eye, EyeOff, Layers, Maximize, Minus, MousePointer2, Plus, RefreshCw, SquareDashed, Trash2, X } from 'lucide-react';
+import { Crosshair, Crop, Eye, EyeOff, FolderOpen, Layers, Maximize, Minus, MousePointer2, PanelLeftClose, PanelLeftOpen, Plus, RefreshCw, SquareDashed, Trash2, X } from 'lucide-react';
 import OLMap from 'ol/Map.js';
 import View from 'ol/View.js';
 import ImageLayer from 'ol/layer/Image.js';
@@ -16,6 +16,7 @@ import { register } from 'ol/proj/proj4.js';
 import proj4 from 'proj4';
 import { useRuntime } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
+import { jobsForProject } from './projects-client.js';
 import { useI18n } from './i18n.jsx';
 import { RecipeEditorDialog } from './processing-ui.jsx';
 import { Badge, Button, Disclosure, EmptyState, Input, Select, Spinner, Surface } from './ui/index.jsx';
@@ -42,7 +43,10 @@ function MapError({ message, onRetry, busy }) {
 
 export function WorkspaceMap() {
   const { t, number } = useI18n();
-  const { jobs, health, checking, refresh } = useRuntime();
+  const { jobs, projects = [], health, checking, refresh } = useRuntime();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [requestedFile, setRequestedFile] = useState(() => new URLSearchParams(location.hash.split('?')[1] || '').get('file'));
+  const [requestedProject, setRequestedProject] = useState(() => new URLSearchParams(location.hash.split('?')[1] || '').get('project'));
   const [entries, setEntries] = useState([]);
   const [activeId, setActiveId] = useState('');
   const [candidate, setCandidate] = useState('');
@@ -76,8 +80,11 @@ export function WorkspaceMap() {
   const crs = entries[0]?.metadata.crs || '';
   const bounds = useMemo(() => boundsInput.map(value => value.trim() === '' ? NaN : Number(value)), [boundsInput]);
   const pixelWindow = active && validBounds(bounds) ? previewPixelWindow(bounds, active.metadata) : null;
-  const candidates = jobs.filter(job => job.status === 'succeeded' && job.assetKey === 'scl' && job.sha256 && !entries.some(entry => entry.job.id === job.id));
+  const candidates = jobs.filter(job => job.status === 'succeeded' && ['scl', 'visual'].includes(job.assetKey) && job.sha256 && !entries.some(entry => entry.job.id === job.id));
   const selectedCandidate = candidates.find(job => job.id === candidate) || candidates[0];
+  const owningProjects = active ? projects.filter(project => jobsForProject(project, jobs).some(job => job.id === active.job.id)) : [];
+  const activeProject = owningProjects.find(project => project.id === requestedProject) || owningProjects[0];
+  const clipAvailable = active?.job.assetKey === 'scl';
   activeRef.current = active;
 
   useEffect(() => {
@@ -102,6 +109,24 @@ export function WorkspaceMap() {
       if (mounted.current && sequence === layerSequence.current && error.name !== 'AbortError') { setLoadError(error.message); setFailedJob(job); }
     } finally { if (mounted.current && sequence === layerSequence.current) setLoadingId(''); }
   };
+
+  useEffect(() => {
+    const restore = () => {
+      const params = new URLSearchParams(location.hash.split('?')[1] || '');
+      setRequestedFile(params.get('file'));
+      setRequestedProject(params.get('project'));
+    };
+    window.addEventListener('hashchange', restore);
+    return () => window.removeEventListener('hashchange', restore);
+  }, []);
+  useEffect(() => {
+    if (!requestedFile || !health || loadingId) return;
+    const loaded = entries.find(entry => entry.job.id === requestedFile);
+    if (loaded) { setActiveId(loaded.job.id); setRequestedFile(null); return; }
+    const target = candidates.find(job => job.id === requestedFile);
+    if (target) { setCandidate(target.id); setRequestedFile(null); addLayer(target); }
+    else if (!checking) { setLoadError('This file is unavailable. Choose a completed local raster.'); setRequestedFile(null); }
+  }, [requestedFile, Boolean(health), loadingId, jobs]);
 
   const inspect = async coordinate => {
     const entry = activeRef.current;
@@ -211,11 +236,11 @@ export function WorkspaceMap() {
   const formatCoordinate = coordinate => coordinate.map(value => number(value, { maximumFractionDigits: 2 })).join(' · ');
   const inspectable = Boolean(active?.visible && health && !pixelBusy);
 
-  return <main className="wm-workspace" aria-label={t('Local raster map workspace')}>
-    <aside className="wm-sidebar">
-      <div className="wm-heading"><div><span className="eyebrow">{t('LOCAL RASTER MAP')}</span><h1>{t('Your layers')}</h1></div><Layers size={22}/></div>
-      <p className="wm-intro">{t('Choose a completed SCL file, add it to the map, then inspect pixels or select an area to clip.')}</p>
-      <div className="wm-add-layer"><label className="runtime-field">{t('Raster to add to the map')}<Select value={selectedCandidate?.id || ''} disabled={!candidates.length || Boolean(loadingId)} onChange={event => setCandidate(event.target.value)}>{!candidates.length && <option value="">{t('No additional SCL rasters')}</option>}{candidates.map(job => <option value={job.id} key={job.id}>{job.kind === 'raster_clip' ? t('Derived') : t('Source')} · {job.title || job.itemId}</option>)}</Select></label><Button primary disabled={!selectedCandidate || Boolean(loadingId) || entries.length >= MAX_MAP_LAYERS || !health} onClick={() => addLayer(selectedCandidate)}>{loadingId ? <Spinner size={16}/> : <Plus size={16}/>}{t(loadingId ? 'Reading local raster…' : 'Add layer')}</Button><small>{t('Up to {count} layers in the same CRS. Unload a layer to release its preview.', { count: number(MAX_MAP_LAYERS) })}</small></div>
+  return <main className={`wm-workspace${sidebarOpen ? '' : ' wm-sidebar-collapsed'}`} aria-label={t('Local raster map workspace')}>
+    {sidebarOpen && <aside className="wm-sidebar">
+      <div className="wm-heading"><h1>{t('Your layers')}</h1><Button size="icon" variant="quiet" aria-label={t('Hide layers')} onClick={() => setSidebarOpen(false)}><PanelLeftClose size={18}/></Button></div>
+      <p className="wm-intro">{t('Open local RGB or SCL files. Inspect original pixels; process true-color imagery in its project.')}</p>
+      <div className="wm-add-layer"><label className="runtime-field">{t('Raster to add to the map')}<Select value={selectedCandidate?.id || ''} disabled={!candidates.length || Boolean(loadingId)} onChange={event => setCandidate(event.target.value)}>{!candidates.length && <option value="">{t('No additional local rasters')}</option>}{candidates.map(job => <option value={job.id} key={job.id}>{t(job.assetKey === 'visual' ? 'True-color imagery' : 'SCL classification')} · {job.title || job.itemId}</option>)}</Select></label><Button primary disabled={!selectedCandidate || Boolean(loadingId) || entries.length >= MAX_MAP_LAYERS || !health} onClick={() => addLayer(selectedCandidate)}>{loadingId ? <Spinner size={16}/> : <Plus size={16}/>}{t(loadingId ? 'Reading local raster…' : 'Add layer')}</Button><small>{t('Up to {count} layers in the same CRS. Unload a layer to release its preview.', { count: number(MAX_MAP_LAYERS) })}</small></div>
       {!health && <Surface className="wm-connection" role="status"><p>{t(checking ? 'Connecting to the task service…' : 'Local task service is offline')}</p><Button onClick={refresh}><RefreshCw size={14}/>{t('Reconnect task service')}</Button></Surface>}
       {loadError && <MapError message={loadError} onRetry={failedJob ? () => addLayer(failedJob) : undefined} busy={Boolean(loadingId)}/>}
       <div className="wm-layer-list" aria-label={t('Map layers')}>{entries.map((entry, index) => <Surface as="article" key={entry.job.id} className={'wm-layer ' + (entry.job.id === activeId ? 'active' : '')}>
@@ -226,21 +251,36 @@ export function WorkspaceMap() {
       </Surface>)}</div>
       {entries.length > 0 && <p className="wm-note">{t('The last added layer is drawn on top. The selected layer supplies pixel values and clip input.')}</p>}
       {active && <Disclosure className="wm-provenance" summary={t('Active raster provenance')}><p className="mono">{active.job.id}</p><p>{active.job.attribution}</p><p className="mono">SHA-256 · {active.metadata.sha256}</p></Disclosure>}
-    </aside>
+    </aside>}
     <section className="wm-main">
-      <div className="wm-toolbar"><div className="wm-mode"><Button selected={mode === 'inspect' && panel === 'pixel'} aria-pressed={mode === 'inspect' && panel === 'pixel'} disabled={!active?.visible} onClick={() => { setMode('inspect'); setPanel(panel === 'pixel' ? null : 'pixel'); }}><MousePointer2 size={15}/>{t('Inspect pixels')}</Button><Button selected={mode === 'draw'} aria-pressed={mode === 'draw'} disabled={!active?.visible} onClick={() => { setMode(mode === 'draw' ? 'inspect' : 'draw'); setPanel(null); }}><SquareDashed size={15}/>{t('Draw rectangle')}</Button><Button selected={panel === 'clip'} aria-expanded={panel === 'clip'} aria-controls="wm-tool-panel" disabled={!active?.visible} onClick={() => { setMode('inspect'); setPanel(panel === 'clip' ? null : 'clip'); }}><Crop size={15}/>{t('Clip area')}</Button></div><div className="wm-navigation"><Button size="icon" aria-label={t('Zoom in')} disabled={!entries.length} onClick={() => zoom(1)}><Plus size={17}/></Button><Button size="icon" aria-label={t('Zoom out')} disabled={!entries.length} onClick={() => zoom(-1)}><Minus size={17}/></Button><Button disabled={!active} onClick={() => fit(active)}><Maximize size={15}/>{t('Fit active raster')}</Button></div></div>
+      <div className="wm-toolbar">
+        <div className="wm-mode">
+          {!sidebarOpen && <Button size="sm" onClick={() => setSidebarOpen(true)}><PanelLeftOpen size={16}/>{t('Your layers')}</Button>}
+          <Button selected={mode === 'inspect' && panel === 'pixel'} aria-pressed={mode === 'inspect' && panel === 'pixel'} disabled={!active?.visible} onClick={() => { setMode('inspect'); setPanel(panel === 'pixel' ? null : 'pixel'); }}><MousePointer2 size={15}/>{t('Inspect pixels')}</Button>
+          {clipAvailable && <>
+            <Button selected={mode === 'draw'} aria-pressed={mode === 'draw'} disabled={!active?.visible} onClick={() => { setMode(mode === 'draw' ? 'inspect' : 'draw'); setPanel(null); }}><SquareDashed size={15}/>{t('Draw rectangle')}</Button>
+            <Button selected={panel === 'clip'} aria-expanded={panel === 'clip'} aria-controls="wm-tool-panel" disabled={!active?.visible} onClick={() => { setMode('inspect'); setPanel(panel === 'clip' ? null : 'clip'); }}><Crop size={15}/>{t('Clip area')}</Button>
+          </>}
+          {activeProject && <Button asChild size="sm"><a href={`#My%20Data?project=${encodeURIComponent(activeProject.id)}`}><FolderOpen size={15}/>{t('Open project')}</a></Button>}
+        </div>
+        <div className="wm-navigation">
+          <Button size="icon" aria-label={t('Zoom in')} disabled={!entries.length} onClick={() => zoom(1)}><Plus size={17}/></Button>
+          <Button size="icon" aria-label={t('Zoom out')} disabled={!entries.length} onClick={() => zoom(-1)}><Minus size={17}/></Button>
+          <Button disabled={!active} onClick={() => fit(active)}><Maximize size={15}/>{t('Fit active raster')}</Button>
+        </div>
+      </div>
       <div className="wm-map-container">
         <div ref={mapTarget} className={'wm-map ' + (mode === 'draw' ? 'drawing' : '')} tabIndex={0} role="application" aria-label={t('Raster map. Arrow keys pan, plus and minus zoom, Enter reads the centre pixel, Escape cancels drawing.')} onKeyDown={event => { if (event.key === 'Escape') { drawing.current?.abortDrawing(); setMode('inspect'); } if (event.key === 'Enter' && mode === 'inspect') { event.preventDefault(); inspect(map.current?.getView().getCenter()); } }}/>
-        {!entries.length && <EmptyState className="wm-empty" icon={Layers} title={t('Build a map from your local rasters')} description={t(selectedCandidate ? 'Choose a completed SCL raster on the left, then add it to this map. You can inspect pixels or draw a clip after it loads.' : 'No completed SCL raster is available yet. Download one in Explore, then return here to add it to the map.')} action={selectedCandidate ? <Button primary disabled={Boolean(loadingId) || !health} onClick={() => addLayer(selectedCandidate)}>{loadingId ? <Spinner size={16}/> : <Plus size={16}/>} {t(loadingId ? 'Reading local raster…' : 'Add selected raster to map')}</Button> : <Button asChild><a href="#Explore">{t('Explore data')}</a></Button>}/>}
-        {entries.length > 0 && <div className="wm-map-caption"><Badge>{crs}</Badge><Badge>{t('Georeferenced SCL overview · nearest-neighbour display')}</Badge></div>}
+        {!entries.length && <EmptyState className="wm-empty" icon={Layers} title={t('Build a map from your local rasters')} description={t(selectedCandidate ? 'Choose a local RGB or SCL file, then open it on the map.' : 'Download a true-color or SCL file in Explore, then open it here.')} action={selectedCandidate ? <Button primary disabled={Boolean(loadingId) || !health} onClick={() => addLayer(selectedCandidate)}>{loadingId ? <Spinner size={16}/> : <Plus size={16}/>} {t(loadingId ? 'Reading local raster…' : 'Add selected raster to map')}</Button> : <Button asChild><a href="#Explore">{t('Explore data')}</a></Button>}/>}
+        {entries.length > 0 && <div className="wm-map-caption"><Badge>{crs}</Badge><Badge>{t(active?.job.assetKey === 'visual' ? 'Local true-color overview · original pixels available' : 'Georeferenced SCL overview · nearest-neighbour display')}</Badge></div>}
         {mode === 'draw' && <p className="wm-draw-hint" role="status">{t('Click two opposite corners. Escape cancels. Review the rectangle before running a clip.')}</p>}
         {panel && <Surface as="aside" id="wm-tool-panel" className="wm-tool-panel" aria-label={t(panel === 'pixel' ? 'Source pixel inspector' : 'Map clip selection')}>
           <div className="wm-tool-heading"><h2>{panel === 'pixel' ? t('Source pixel inspector') : <><Crop size={16}/>{t('Map clip selection')}</>}</h2><Button size="icon" variant="quiet" aria-label={t('Close map tools')} onClick={() => setPanel(null)}><X size={16}/></Button></div>
           {panel === 'pixel' ? <section className="wm-pixel-panel" aria-label={t('Source pixel inspector')}><p>{t('Click the active raster to read its full-resolution file. The overview image is only a display preview.')}</p>
             {pixelBusy && <p className="wm-reading" role="status"><Spinner size={16}/>{t('Reading the original pixel…')}</p>}
             {pixelError && <MapError message={pixelError} onRetry={lastPoint && active?.visible ? () => inspect(lastPoint) : undefined} busy={pixelBusy}/>}
-            {pixel && <div className="wm-pixel-value" role="status"><span className="wm-swatch" style={{ background: pixel.color }}/><div><strong>{t(pixel.label)} · {number(pixel.value)}</strong><p>{t('Column {column}, row {row}', { column: number(pixel.pixel[0]), row: number(pixel.pixel[1]) })} · {t('zero-based')}</p><small className="mono">{formatCoordinate(pixel.coordinate)} m</small>{pixel.isNoData && <p>{t('This pixel is NoData.')}</p>}</div></div>}
-            {active && <Disclosure className="wm-legend" summary={t('SCL class legend')}><ul>{active.metadata.classes.map(item => <li key={item.value}><i style={{ background: item.color }}/><span>{number(item.value)} · {t(item.label)}</span></li>)}</ul></Disclosure>}
+            {pixel && <div className="wm-pixel-value" role="status"><span className="wm-swatch" style={{ background: pixel.color }}/><div><strong>{pixel.values ? `R ${number(pixel.values[0])} · G ${number(pixel.values[1])} · B ${number(pixel.values[2])}` : `${t(pixel.label)} · ${number(pixel.value)}`}</strong><p>{t('Column {column}, row {row}', { column: number(pixel.pixel[0]), row: number(pixel.pixel[1]) })} · {t('zero-based')}</p><small className="mono">{formatCoordinate(pixel.coordinate)} m</small>{pixel.isNoData && <p>{t('This pixel is NoData.')}</p>}</div></div>}
+            {active?.job.assetKey === 'scl' && <Disclosure className="wm-legend" summary={t('SCL class legend')}><ul>{active.metadata.classes.map(item => <li key={item.value}><i style={{ background: item.color }}/><span>{number(item.value)} · {t(item.label)}</span></li>)}</ul></Disclosure>}
           </section> : <section className="wm-clip-panel" aria-label={t('Map clip selection')}><p>{t('Draw a rectangle or enter bounds in source metres, then check the selected clip before running it.')}</p><div className="wm-bounds">{['Min X', 'Min Y', 'Max X', 'Max Y'].map((label, index) => <label className="runtime-field" key={label}>{t(label)}<Input type="number" step="any" value={boundsInput[index]} disabled={!active} onChange={event => setBoundsInput(old => old.map((value, i) => i === index ? event.target.value : value))}/></label>)}</div>
             {pixelWindow && <p className="wm-window-hint">{t('Preview window: {width} × {height} pixels at {x}, {y}. The native plan verifies these bounds and the source checksum.', { width: number(pixelWindow[2]), height: number(pixelWindow[3]), x: number(pixelWindow[0]), y: number(pixelWindow[1]) })}</p>}
             {active && boundsInput.every(value => value !== '') && !pixelWindow && <p className="wm-error" role="alert">{t('Enter an ordered rectangle that overlaps the active raster.')}</p>}

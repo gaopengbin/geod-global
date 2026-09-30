@@ -407,6 +407,8 @@ export default {
   "A local-first workspace, on your terms.": "以本地为优先，按你的习惯工作。",
   "Appearance": "外观",
   "Saved on this browser.": "保存在此浏览器中。",
+  "Saved on this device.": "保存在当前设备中。",
+  "Manage language, appearance, network and local storage.": "管理语言、外观、网络和本地存储。",
   "Light": "浅色",
   "Dark": "深色",
   "Usage analytics": "使用统计",

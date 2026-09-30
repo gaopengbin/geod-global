@@ -2,6 +2,46 @@ use super::*;
 use std::collections::BTreeMap;
 use tiff::encoder::{colortype, TiffEncoder};
 
+#[tokio::test]
+async fn interactive_queries_wait_for_previous_worker_instead_of_failing_immediately() {
+    let directory = tempfile::tempdir().unwrap();
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    let job = record(&manager.inner.root, &fixture(1, 1, &[4], 32610, false));
+    manager
+        .inner
+        .store
+        .lock()
+        .await
+        .jobs
+        .insert(job.id.clone(), job.clone());
+
+    let permit = manager
+        .inner
+        .raster_permits
+        .clone()
+        .acquire_owned()
+        .await
+        .unwrap();
+    let (result, ()) = tokio::join!(manager.inspect_raster(&job.id), async {
+        tokio::time::sleep(Duration::from_millis(20)).await;
+        drop(permit);
+    });
+    assert_eq!(result.unwrap().width, 1);
+
+    let permit = manager
+        .inner
+        .raster_permits
+        .clone()
+        .acquire_owned()
+        .await
+        .unwrap();
+    let (result, ()) = tokio::join!(manager.sample_raster(&job.id, 500001.0, 4199999.0), async {
+        tokio::time::sleep(Duration::from_millis(20)).await;
+        drop(permit);
+    });
+    assert_eq!(result.unwrap().value, 4);
+}
+
 pub(crate) fn fixture(width: u32, height: u32, pixels: &[u8], epsg: u16, matrix: bool) -> Vec<u8> {
     let mut buffer = Cursor::new(Vec::new());
     {
