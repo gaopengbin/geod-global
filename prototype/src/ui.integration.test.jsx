@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { describe, expect, it } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Button, Input, Select, Switch, Modal, Progress, Disclosure, SegmentedControl } from './ui/index.jsx';
 
@@ -90,6 +90,26 @@ describe('Shared UI behavior used by catalog, recipes and workspace', () => {
     expect(closes).toBe(0);
     expect(screen.getByRole('dialog', { name: 'Saving recipe' })).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Close' }).disabled).toBe(true);
+  });
+
+  it('lets the modal exit before notifying its parent, and cancels pending dismissal on unmount', () => {
+    vi.useFakeTimers();
+    try {
+      const onClose = vi.fn();
+      const panel = render(<Modal title="Preview" closeLabel="Close preview" onClose={onClose}><p>Local file</p></Modal>);
+      fireEvent.click(screen.getByRole('button', { name: 'Close preview' }));
+      expect(onClose).not.toHaveBeenCalled();
+      act(() => vi.advanceTimersByTime(180));
+      expect(onClose).toHaveBeenCalledTimes(1);
+      panel.unmount();
+
+      const cancelled = vi.fn();
+      const second = render(<Modal title="Preview" closeLabel="Close preview" onClose={cancelled}><p>Local file</p></Modal>);
+      fireEvent.click(screen.getByRole('button', { name: 'Close preview' }));
+      second.unmount();
+      act(() => vi.advanceTimersByTime(180));
+      expect(cancelled).not.toHaveBeenCalled();
+    } finally { vi.useRealTimers(); }
   });
 
   it('supports keyboard changes and native form values for slider and checkbox', async () => {

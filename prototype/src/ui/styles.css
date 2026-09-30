@@ -51,7 +51,7 @@
 .bui-progress-indicator { width: 100%; height: 100%; background: var(--accent); transition: transform 250ms; }
 .bui-progress[data-state=indeterminate] .bui-progress-indicator { width: 35%; animation: bui-progress-slide 1.4s ease-in-out infinite; }
 @keyframes bui-progress-slide { from { transform: translateX(-100%); } to { transform: translateX(390%); } }
-.bui-dialog-overlay { position: fixed; inset: 0; z-index: 100; background: rgb(15 23 42 / 35%); backdrop-filter: blur(3px); animation: fade-in 140ms ease-out; }
+.bui-dialog-overlay { position: fixed; inset: 0; z-index: 100; background: rgb(15 23 42 / 35%); backdrop-filter: blur(3px); }
 .bui-dialog-content { position: fixed; z-index: 101; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(560px, calc(100vw - 32px)); max-height: min(88dvh, 900px); display: flex; flex-direction: column; border-radius: var(--radius-window); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-overlay); outline: none; }
 .bui-dialog-wide { width: min(960px, calc(100vw - 32px)); }
 .bui-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 20px 22px 16px; border-bottom: 1px solid var(--line); }
@@ -78,13 +78,13 @@
 .bui-empty-state h3 { margin: 4px 0 0; color: var(--ink); font-size: 16px; font-weight: 600; }
 .bui-empty-state p { max-width: 440px; margin: 0; font-size: 13px; line-height: 1.6; }
 .bui-empty-action { margin-top: 8px; }
-.bui-spinner { flex-shrink: 0; animation: spin 1s linear infinite; }
+.bui-spinner { display: inline-block; flex-shrink: 0; transform-origin: center; transform-box: fill-box; animation: bui-spin 800ms linear infinite; }
 .bui-segmented { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: var(--radius-control); background: var(--inset); box-shadow: var(--shadow-hairline); }
 .bui-segmented-item { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 29px; padding: 5px 10px; border: 0; border-radius: 6px; background: transparent; color: var(--ink-2); font-size: 12px; font-weight: 500; white-space: nowrap; cursor: pointer; }
 .bui-segmented-item[data-state=on] { color: var(--ink); background: var(--surface); box-shadow: var(--shadow-btn); }
 .bui-segmented-item:disabled { opacity: .45; cursor: not-allowed; }
 .bui-toast-viewport { position: fixed; z-index: 200; right: 24px; bottom: 24px; display: flex; flex-direction: column; gap: 10px; width: min(390px, calc(100vw - 32px)); padding: 0; margin: 0; list-style: none; outline: none; }
-.bui-toast { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: var(--radius-card); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-overlay); font-size: 13px; animation: fade-up 160ms ease-out; }
+.bui-toast { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: var(--radius-card); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-overlay); font-size: 13px; }
 .bui-sidebar { display: flex; flex-direction: column; width: clamp(190px, 15vw, 224px); flex: 0 0 auto; min-height: 0; padding: 12px 0; color: var(--ink); background: var(--canvas); border-right: 1px solid var(--line); }
 .bui-sidebar-brand { padding: 4px 16px 22px; }
 .bui-sidebar-items { display: flex; flex-direction: column; gap: 3px; min-height: 0; overflow-y: auto; }
@@ -118,4 +118,3 @@
 .bui-task-row:has([data-slot=disclosure][data-state=open]) { grid-column: 1 / -1; }
 @media (max-width: 1099px) { .bui-sidebar { width: 72px; } .bui-sidebar-copy, .bui-sidebar-badge { display: none; } .bui-sidebar-row { justify-content: center; height: 38px; } .bui-sidebar-brand { padding: 4px 14px 18px; } .bui-sidebar-footer { display: none; } .bui-sidebar [data-nav-toggle] { display: none; } }
 @media (max-width: 600px) { .bui-dialog-content, .bui-dialog-wide { width: calc(100vw - 20px); max-height: 92dvh; } .bui-dialog-header { padding: 16px; } .bui-dialog-body { padding: 16px; } .bui-toast-viewport { right: 16px; bottom: 16px; } }
-@media (prefers-reduced-motion: reduce) { [class*="bui-"] { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

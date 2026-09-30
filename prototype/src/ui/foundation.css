@@ -42,6 +42,12 @@
   --scrollbar-thumb-hover: var(--accent);
   --scrollbar-track: transparent;
 
+  /* Shared motion stays enabled, including loading indicators. */
+  --motion-fast: 160ms;
+  --motion-normal: 240ms;
+  --motion-slow: 320ms;
+  --motion-ease: cubic-bezier(0.23, 1, 0.32, 1);
+
   /* semantic */
   --green: oklch(0.603 0.155 150.883);
   --green-tint: oklch(0.958 0.017 159.118);
@@ -202,11 +208,11 @@
   }
 }
 
-@keyframes spin {
+@keyframes bui-spin {
+  from { transform: rotate(0deg); }
   to {
     transform: rotate(360deg);
   }
 }
 
 :root { --font-inter: Inter, system-ui, sans-serif; --font-mono-face: Consolas, monospace; }
-@media (prefers-reduced-motion: reduce) { [data-slot], [data-slot]::before, [data-slot]::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }

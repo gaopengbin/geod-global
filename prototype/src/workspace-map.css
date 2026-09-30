@@ -1,4 +1,5 @@
 .wm-map-loading { padding: 32px; color: var(--ink-2); }
+.wm-tool-panel { animation: fade-up var(--motion-normal) var(--motion-ease); }
 .wm-workspace { display: grid; grid-template-columns: 290px minmax(0, 1fr); flex: 1; min-height: 0; min-width: 0; overflow: hidden; }
 .wm-sidebar { padding: 24px 18px; background: var(--surface); border-right: 1px solid var(--line); min-width: 0; min-height: 0; overflow: auto; }
 .wm-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }

@@ -2,7 +2,7 @@
  * Exact upstream snapshots, hashes, licenses and adaptations: third-party/.
  * Radix owns interactive state, focus, keyboard and form integration.
  */
-import React, { forwardRef, useId, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useId, useRef, useState } from 'react';
 import { cva } from 'class-variance-authority';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -18,6 +18,7 @@ import * as ToastPrimitive from '@radix-ui/react-toast';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown, CircleAlert, Clock3, LoaderCircle, X } from 'lucide-react';
 import './styles.css';
+import './motion.css';
 
 export const cn = (...inputs) => twMerge(clsx(inputs));
 
@@ -142,7 +143,17 @@ export const DialogContent = forwardRef(function DialogContent({ className, chil
 });
 export function Modal({ title, description, onClose, closeDisabled = false, closeLabel = 'Close', wide, children, className, ...props }) {
   const returnFocus = useRef(typeof document === 'undefined' ? null : document.activeElement);
-  return <DialogPrimitive.Root open onOpenChange={open => { if (!open && !closeDisabled) onClose?.(); }}><DialogContent className={cn(wide && 'bui-dialog-wide', className)} {...(!description ? { 'aria-describedby': undefined } : {})} onCloseAutoFocus={event => { event.preventDefault(); if (returnFocus.current?.isConnected) returnFocus.current.focus(); }} onEscapeKeyDown={event => { if (closeDisabled) event.preventDefault(); }} onPointerDownOutside={event => { if (closeDisabled) event.preventDefault(); }} {...props}>
+  const [open, setOpen] = useState(true);
+  const dismiss = useRef(onClose);
+  dismiss.current = onClose;
+  // Parents conditionally render Modal. Keep it mounted while Radix plays its
+  // exit animation, then notify the parent; the timer also works without CSS.
+  useEffect(() => {
+    if (open) return;
+    const timer = setTimeout(() => dismiss.current?.(), 180);
+    return () => clearTimeout(timer);
+  }, [open]);
+  return <DialogPrimitive.Root open={open} onOpenChange={next => { if (!next && !closeDisabled) setOpen(false); }}><DialogContent className={cn(wide && 'bui-dialog-wide', className)} {...(!description ? { 'aria-describedby': undefined } : {})} onCloseAutoFocus={event => { event.preventDefault(); if (returnFocus.current?.isConnected) returnFocus.current.focus(); }} onEscapeKeyDown={event => { if (closeDisabled) event.preventDefault(); }} onPointerDownOutside={event => { if (closeDisabled) event.preventDefault(); }} {...props}>
     <header className="bui-dialog-header"><div><DialogPrimitive.Title className="bui-dialog-title">{title}</DialogPrimitive.Title>{description && <DialogPrimitive.Description className="bui-dialog-description">{description}</DialogPrimitive.Description>}</div><DialogPrimitive.Close asChild><Button variant="quiet" size="icon" disabled={closeDisabled} aria-label={closeLabel}><X size={18} aria-hidden="true" /></Button></DialogPrimitive.Close></header>
     <div className="bui-dialog-body">{children}</div>
   </DialogContent></DialogPrimitive.Root>;

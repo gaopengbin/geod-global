@@ -102,8 +102,8 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   const shouldLoad = loadedScenes.some(item => item.id === scene?.id) && (!activeDay || scene?.date?.slice(0, 10) === activeDay);
 
   useImperativeHandle(ref, () => ({
-    zoomIn() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.setResolution(view.getResolution() / 2); } },
-    zoomOut() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.setResolution(view.getResolution() * 2); } },
+    zoomIn() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.animate({ resolution: view.getResolution() / 2, duration: 240 }); } },
+    zoomOut() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.animate({ resolution: view.getResolution() * 2, duration: 240 }); } },
     fit() { if (map.current && (footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current); },
   }), []);
 
