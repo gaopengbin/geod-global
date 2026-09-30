@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { administrativePlace, indexedAdministrativePlace, searchAdministrativePlaces } from './admin-areas.js';
+import { administrativePlace, administrativeSelection, indexedAdministrativePlace, searchAdministrativePlaces } from './admin-areas.js';
 import { readFileSync } from 'node:fs';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { POLYGON_RECIPE_SCHEMA, validateRecipe } from './processing-client.js';
@@ -9,6 +9,28 @@ function bundledRegions() {
   const data = JSON.parse(readFileSync(new URL('../public/basemaps/natural-earth-50m-admin-0-countries.geojson', import.meta.url)));
   return new GeoJSON().readFeatures(data, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' }).map(feature => administrativePlace(feature, 'country'));
 }
+
+test('saved and exported area names remain normalized across locales and source-name changes', () => {
+  const regions = bundledRegions();
+  for (const [code, nameZh, nameEn] of [['HKG', '香港', 'Hong Kong'], ['MAC', '澳门', 'Macau'], ['TWN', '台湾', 'Taiwan']]) {
+    const original = regions.find(place => place.code === code);
+    const changed = original.feature.clone();
+    changed.set('NAME_ZH', 'Unexpected upstream name');
+    changed.set('NAME_EN', 'Unexpected upstream name');
+    for (const place of [original, administrativePlace(changed, 'country')]) {
+      assert.deepEqual(administrativeSelection(place, 'zh-CN'), { kind: 'region', code, name: nameZh, source: place.source });
+      assert.deepEqual(administrativeSelection(place, 'en'), { kind: 'region', code, name: nameEn, source: place.source });
+      assert.equal('feature' in administrativeSelection(place, 'zh-CN'), false);
+      assert.equal('aliases' in administrativeSelection(place, 'zh-CN'), false);
+    }
+  }
+  const index = JSON.parse(readFileSync(new URL('../public/basemaps/admin1-10m/index.json', import.meta.url)));
+  const subdivision = indexedAdministrativePlace(index.areas.find(place => place.parentCode === 'TWN'));
+  assert.equal(administrativeSelection(subdivision, 'zh-CN').kind, 'subdivision');
+  assert.equal(administrativeSelection(subdivision, 'zh-CN').code, subdivision.code);
+  const macauFallback = indexedAdministrativePlace(index.areas.find(place => place.code === 'MAC+00?'));
+  assert.equal(administrativeSelection(macauFallback, 'zh-CN').kind, 'region');
+});
 
 test('bundled Hong Kong, Macau and Taiwan search has accurate labels and simplified/traditional aliases', () => {
   const regions = bundledRegions();

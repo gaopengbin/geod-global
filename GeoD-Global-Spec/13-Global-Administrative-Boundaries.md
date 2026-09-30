@@ -1,5 +1,13 @@
 # 全球一级行政区边界：当前可执行范围
 
+## 行政区名称与分类验收
+
+数据源的 Admin-0 分组代码只用于加载边界文件，不能直接解释为“国家”。展示统一经过 `admin-areas.js`：香港、澳门显示特别行政区及中国归属；台湾显示“台湾 / Taiwan”和地区标签，支持简繁体别名。澳门的同范围 Admin-1 条目在 Admin-0 已加载时合并显示，数据源代码及原始几何保留用于定位和裁剪。
+
+搜索、选中详情、保存选区和导出名称使用同一套规范化信息。保存的 `kind` 使用 `region` 或 `subdivision`，禁止把内部 `country` 图层类型作为行政分类传播。上游名称变更、中英文名称、简繁体搜索、重复条目及保存字段的回归检查已加入 `npm test`，因此前端 CI 验证失败时不能通过。
+
+名称与分类测试不等于地图国界审核。正式发行仍须单独验收底图、行政区几何、国界及争议区域表现；数据提供方的原始划分和“仅供制图参考”提示不能替代该验收。该项未经审核通过，不得宣称地图边界已完成验收。
+
 选区弹窗现在捆绑 Natural Earth 1:1000 万 Admin-1 v5.1.1 的 4596 个一级行政区，涉及 251 个国家或地区代码。英文、中文及数据提供的本地名称进入搜索索引；选中结果后按国家读取 GeoJSON 几何，因此打开弹窗不会一次加载约 52 MB 的全部边界。国家轮廓仍来自独立的 1:5000 万 Admin-0 图层。少数小国在此 Admin-1 数据集中没有下级区划。
 
 数据来自 [Natural Earth 官方 Admin-1 下载](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/)，其[使用条款](https://www.naturalearthdata.com/about/terms-of-use/)将这些矢量数据列为公有领域。应用保留原始下载地址、版本、ZIP SHA-256、每个派生文件 SHA-256 与要素数，见[`manifest.json`](../prototype/public/basemaps/admin1-10m/manifest.json)。边界用于制图和产品交互，不作为法定国界或行政界线判断。

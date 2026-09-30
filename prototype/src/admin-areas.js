@@ -3,9 +3,9 @@ const fold = value => String(value || '').normalize('NFKD').replace(/[\u0300-\u0
 // Natural Earth grouping codes locate source geometry. They do not determine
 // the political/administrative category displayed by the application.
 const regionPresentation = {
-  HKG: { nameZh: '香港', levelLabel: 'Special administrative region', displayParentCode: 'CHN', aliases: ['香港特别行政区', '香港特別行政區', 'Hong Kong SAR'] },
-  MAC: { nameZh: '澳门', levelLabel: 'Special administrative region', displayParentCode: 'CHN', aliases: ['澳門', '澳门特别行政区', '澳門特別行政區', 'Macao', 'Macau SAR'] },
-  TWN: { nameZh: '台湾', levelLabel: 'Region', aliases: ['台灣', '臺灣', '台湾地区', '台灣地區', '臺灣地區', 'Taiwan'] },
+  HKG: { nameEn: 'Hong Kong', nameZh: '香港', levelLabel: 'Special administrative region', displayParentCode: 'CHN', aliases: ['香港特别行政区', '香港特別行政區', 'Hong Kong SAR'] },
+  MAC: { nameEn: 'Macau', nameZh: '澳门', levelLabel: 'Special administrative region', displayParentCode: 'CHN', aliases: ['澳門', '澳门特别行政区', '澳門特別行政區', 'Macao', 'Macau SAR'] },
+  TWN: { nameEn: 'Taiwan', nameZh: '台湾', levelLabel: 'Region', aliases: ['台灣', '臺灣', '台湾地区', '台灣地區', '臺灣地區', 'Taiwan'] },
 };
 
 function presentPlace(place, extraAliases = []) {
@@ -13,7 +13,14 @@ function presentPlace(place, extraAliases = []) {
   const presentation = regionPresentation[wholeRegionCode] || {};
   return { ...place, levelLabel: place.kind === 'country' ? 'Country / region' : 'Administrative area',
     ...presentation, canonicalRegionCode: wholeRegionCode,
-    aliases: [place.nameZh, ...extraAliases, ...(presentation.aliases || [])].filter(Boolean) };
+    aliases: [place.nameEn, place.nameZh, ...extraAliases, ...(presentation.aliases || [])].filter(Boolean) };
+}
+
+// Persist presentation metadata only. The legacy country/province kinds are
+// source-layer routing keys, not an administrative classification to export.
+export function administrativeSelection(place, locale) {
+  return { kind: place.canonicalRegionCode ? 'region' : 'subdivision', code: place.code,
+    name: locale === 'zh-CN' && place.nameZh ? place.nameZh : place.nameEn, source: place.source };
 }
 
 export function administrativePlace(feature, kind, source = 'Natural Earth 1:50m') {

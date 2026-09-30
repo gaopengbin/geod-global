@@ -10,7 +10,7 @@ import Feature from 'ol/Feature.js';
 import { fromExtent } from 'ol/geom/Polygon.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import { asArray } from 'ol/color.js';
-import { administrativePlace, indexedAdministrativePlace, searchAdministrativePlaces } from './admin-areas.js';
+import { administrativePlace, administrativeSelection, indexedAdministrativePlace, searchAdministrativePlaces } from './admin-areas.js';
 import { validateBounds } from './catalog.js';
 import { useI18n } from './i18n.jsx';
 import { Badge, Button, Input, Spinner } from './ui/index.jsx';
@@ -232,7 +232,7 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
       const geometry = new GeoJSON().writeGeometryObject(focusedPlace.feature.getGeometry(), { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
       const bounds = validateBounds(focusedPlace.bounds);
       setFields(bounds.map(String));
-      setSelectedPolygon({ geometry, place: { kind: focusedPlace.kind, code: focusedPlace.code, name: nameOf(focusedPlace), source: focusedPlace.source } });
+      setSelectedPolygon({ geometry, place: administrativeSelection(focusedPlace, locale) });
       setDrawError(false);
     } catch { setDrawError(true); }
   };
