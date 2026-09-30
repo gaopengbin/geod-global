@@ -119,7 +119,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
         {focused && <>
         <p className="project-guide">{t('Source files and results stay in this project. Download missing files, then clip a scene or mosaic multiple scenes to the saved area.')}</p>
         <Disclosure className="project-scenes" summary={t('Review selected scenes · {count}', { count: project.scenes.length })}>
-          <ul>{project.scenes.map(scene => <li key={scene.itemId}><span>{date(scene.date)}</span><code>{scene.itemId}</code><span>{scene.cloud == null ? t('Unknown') : number(scene.cloud / 100, { style: 'percent', maximumFractionDigits: 1 })}</span></li>)}</ul>
+          <ul>{project.scenes.map(scene => <li key={scene.itemId}><span>{date(scene.date)}</span><code>{scene.itemId}</code><span>{t('Cloud cover')} · {scene.cloud == null ? t('Unknown') : number(scene.cloud / 100, { style: 'percent', maximumFractionDigits: 1 })}</span></li>)}</ul>
         </Disclosure>
         <div className="project-assets">
           {['visual', 'scl'].map(key => {
