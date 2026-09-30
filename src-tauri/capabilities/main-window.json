@@ -13,6 +13,7 @@
     "allow-list-projects",
     "allow-create-project",
     "allow-rename-project",
+    "allow-add-project-scenes",
     "allow-download-project",
     "allow-mosaic-project",
     "allow-create-job",

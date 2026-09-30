@@ -1,9 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use geod_runtime::{
-    CreateJobRequest, CreateProjectRequest, Job, JobManager, JobStatus, Project, ProjectDownloads,
-    ProxySettings, ProxyTest, RasterInspection, RasterPixel, RasterRecipe, RecipePlan,
-    RuntimeHealth, SavedRecipe,
+    AddProjectScenesRequest, CreateJobRequest, CreateProjectRequest, Job, JobManager, JobStatus,
+    Project, ProjectDownloads, ProxySettings, ProxyTest, RasterInspection, RasterPixel,
+    RasterRecipe, RecipePlan, RuntimeHealth, SavedRecipe,
 };
 use std::path::{Path, PathBuf};
 use tauri::{Manager, State, WebviewWindowBuilder};
@@ -109,12 +109,24 @@ async fn rename_project(
 }
 
 #[tauri::command]
+async fn add_project_scenes(
+    id: String,
+    request: AddProjectScenesRequest,
+    manager: State<'_, JobManager>,
+) -> Result<Project, String> {
+    manager.add_project_scenes(&id, request).await
+}
+
+#[tauri::command]
 async fn download_project(
     id: String,
     asset_key: String,
+    item_ids: Option<Vec<String>>,
     manager: State<'_, JobManager>,
 ) -> Result<ProjectDownloads, String> {
-    manager.enqueue_project(&id, &asset_key).await
+    manager
+        .enqueue_project_selection(&id, &asset_key, item_ids)
+        .await
 }
 
 #[tauri::command]
@@ -289,6 +301,7 @@ fn main() {
             list_projects,
             create_project,
             rename_project,
+            add_project_scenes,
             download_project,
             mosaic_project,
             create_job,

@@ -133,6 +133,17 @@ async fn create_project(
 struct RenameProjectRequest {
     name: String,
 }
+async fn add_project_scenes(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+    Json(request): Json<crate::AddProjectScenesRequest>,
+) -> std::result::Result<Json<crate::Project>, ApiError> {
+    manager
+        .add_project_scenes(&id, request)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
 async fn rename_project(
     State(manager): State<JobManager>,
     Path(id): Path<String>,
@@ -149,13 +160,20 @@ async fn rename_project(
 struct ProjectDownloadRequest {
     asset_key: String,
 }
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SelectedProjectDownloadRequest {
+    asset_key: String,
+    #[serde(default)]
+    item_ids: Option<Vec<String>>,
+}
 async fn download_project(
     State(manager): State<JobManager>,
     Path(id): Path<String>,
-    Json(request): Json<ProjectDownloadRequest>,
+    Json(request): Json<SelectedProjectDownloadRequest>,
 ) -> std::result::Result<(StatusCode, Json<crate::ProjectDownloads>), ApiError> {
     manager
-        .enqueue_project(&id, &request.asset_key)
+        .enqueue_project_selection(&id, &request.asset_key, request.item_ids)
         .await
         .map(|downloads| (StatusCode::ACCEPTED, Json(downloads)))
         .map_err(api_error)
@@ -356,6 +374,7 @@ pub fn router(manager: JobManager) -> Router {
         .route("/jobs", get(jobs).post(create))
         .route("/projects", get(projects).post(create_project))
         .route("/projects/{id}/rename", post(rename_project))
+        .route("/projects/{id}/scenes", post(add_project_scenes))
         .route("/projects/{id}/downloads", post(download_project))
         .route("/projects/{id}/mosaics", post(mosaic_project))
         .route("/jobs/{id}", get(job))

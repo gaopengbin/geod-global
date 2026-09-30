@@ -26,6 +26,36 @@ beforeEach(() => {
 });
 
 describe('Named project download and scoped processing flow', () => {
+  it('adds chosen scenes to the current project and downloads both sources without creating a project', async () => {
+    const user = userEvent.setup();
+    const added = { ...scene, id: 'S2_NEW' };
+    const updated = { ...project, scenes: [...project.scenes, { ...project.scenes[0], itemId: added.id }] };
+    const onUpdated = vi.fn();
+    runtimeRequest.mockImplementation(async operation => operation === 'addProjectScenes' ? updated : { jobs: [{ id: operation }] });
+    wrap(<DownloadAssetButton scene={added} scenes={[added]} project={project} areaBounds={[-1, -1, 1, 1]} areaName="Different search area" onProjectUpdated={onUpdated}/>);
+    await user.click(screen.getByRole('button', { name: '加入当前工程并下载 · 1 景' }));
+    expect(screen.getByText('湾区工程')).toBeTruthy();
+    expect(screen.queryByRole('textbox', { name: '工程名称' })).toBeNull();
+    await user.click(screen.getByRole('combobox', { name: '下载内容' }));
+    await user.click(screen.getByRole('option', { name: '真彩色 + SCL 分类栅格' }));
+    await user.click(screen.getByRole('button', { name: '加入工程并开始下载' }));
+    await screen.findByRole('button', { name: '打开工程' });
+    expect(runtimeRequest.mock.calls.map(([operation]) => operation)).toEqual(['addProjectScenes', 'downloadProject', 'downloadProject']);
+    expect(runtimeRequest.mock.calls[0][1].id).toBe(project.id);
+    expect(runtimeRequest.mock.calls[1][1]).toEqual({ id: project.id, assetKey: 'visual', itemIds: [added.id] });
+    expect(runtimeRequest.mock.calls[2][1]).toEqual({ id: project.id, assetKey: 'scl', itemIds: [added.id] });
+    expect(onUpdated).toHaveBeenCalledWith(updated);
+  });
+
+  it('counts existing and new scenes together before enforcing the project limit', async () => {
+    const user = userEvent.setup();
+    const full = { ...project, scenes: Array.from({ length: 32 }, (_, index) => ({ ...project.scenes[0], itemId: `existing-${index}` })) };
+    wrap(<DownloadAssetButton scene={scene} project={full}/>);
+    await user.click(screen.getByRole('button', { name: '加入当前工程并下载 · 1 景' }));
+    expect(screen.getByRole('button', { name: '加入工程并开始下载' }).disabled).toBe(true);
+    expect(screen.getByRole('alert').textContent).toContain('33');
+    expect(runtimeRequest).not.toHaveBeenCalled();
+  });
   it('downloads all eight chosen scenes as one project and shows sixteen files when both source types are chosen', async () => {
     const user = userEvent.setup();
     const scenes = Array.from({ length: 8 }, (_, index) => ({ ...scene, id: `S2C_${index}` }));
@@ -123,8 +153,9 @@ describe('Named project download and scoped processing flow', () => {
     await user.click(screen.getByRole('button', { name: '保存工程名称' }));
     await screen.findByRole('heading', { name: '已改名的工程' });
     expect(act).toHaveBeenCalledWith('renameProject', { id: 'p1', name: '已改名的工程' });
-    await user.click(screen.getByRole('button', { name: '返回探索，继续选景' }));
+    await user.click(screen.getByRole('button', { name: '继续在此工程选景' }));
     expect(continueExploring).toHaveBeenCalledTimes(1);
+    expect(continueExploring).toHaveBeenCalledWith({ ...project, name: '已改名的工程' });
     expect(act).toHaveBeenCalledTimes(1);
   });
 });

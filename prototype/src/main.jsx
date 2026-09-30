@@ -43,6 +43,8 @@ import { SAMPLE_BBOX, defaultLiveSearch, searchURL, validateBounds, validateSear
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
 import { ProjectsLibrary, SaveProjectButton } from "./projects-ui.jsx";
 import { scenesForDownload } from "./projects-client.js";
+import { runtimeRequest } from "./runtime-client.js";
+import { mergeProjectCatalog, projectCatalogScenes, projectExploreSearch } from "./project-explore.js";
 import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { ProxySettingsPanel } from "./proxy-ui.jsx";
@@ -66,7 +68,7 @@ const pageFromHash = () => {
   return [...nav.map(([name]) => name), "Settings"].includes(requested) ? requested : "Explore";
 };
 const projectFromHash = () => {
-  if (pageFromHash() !== 'My Data') return null;
+  if (!['My Data', 'Explore'].includes(pageFromHash())) return null;
   const id = new URLSearchParams(location.hash.split('?')[1] || '').get('project');
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id || '') ? id : null;
 };
@@ -111,7 +113,11 @@ function App() {
   const bbox = appliedSearch?.bbox || pendingBounds;
   const areaName = areaPolygon?.place?.name || "Custom search area";
   const [page, setPage] = useState(pageFromHash);
-  const [focusedProjectId, setFocusedProjectId] = useState(projectFromHash);
+  const [focusedProjectId, setFocusedProjectId] = useState(() => pageFromHash() === 'My Data' ? projectFromHash() : null);
+  const [exploringProjectId, setExploringProjectId] = useState(() => pageFromHash() === 'Explore' ? projectFromHash() : null);
+  const [activeProject, setActiveProject] = useState(null);
+  const [projectError, setProjectError] = useState('');
+  const restoredProjectId = useRef(null);
   const [selected, setSelected] = useState(null),
     [query, setQuery] = useState(""),
     [sort, setSort] = useState("date");
@@ -138,7 +144,7 @@ function App() {
     [inspector, setInspector] = useState(window.innerWidth >= 1280);
   const [modal, setModal] = useState(null),
     [theme, setTheme] = useState(stored("theme", "light"));
-  const runSearch = async (submittedInput = searchInput) => {
+  const runSearch = async (submittedInput = searchInput, restoredProject = null) => {
     let submitted, url;
     try {
       submitted = validateSearch({ ...submittedInput, limit: 100 });
@@ -146,9 +152,10 @@ function App() {
     } catch (error) { setLiveError(error.message); return; }
     setLiveError("");
     setLiveState("loading");
-    setLiveCatalog(null);
-    setSelected(null);
-    setSelectedIds([]);
+    const savedScenes = restoredProject ? projectCatalogScenes(restoredProject) : [];
+    setLiveCatalog(savedScenes.length ? mergeProjectCatalog({ complete: false, pages: 0 }, savedScenes) : null);
+    setSelected(savedScenes[0] || null);
+    setSelectedIds(savedScenes.map(scene => scene.id));
     setLoadedIds([]);
     setVisibleLoadedIds([]);
     setActiveDay(null);
@@ -156,8 +163,25 @@ function App() {
     setCompare(false);
     setAppliedSearch(submitted);
     setQuery("");
+    let previewRestored = false;
     try {
-      const result = await searchRunner.current.runAll(url, { onPage: page => setLiveCatalog(page) });
+      const result = await searchRunner.current.runAll(url, { onPage: page => {
+        const merged = savedScenes.length ? mergeProjectCatalog(page, savedScenes) : page;
+        setLiveCatalog(merged);
+        if (savedScenes.length) {
+          setSelected(current => merged.scenes.find(scene => scene.id === current?.id) || current);
+          if (!previewRestored) {
+            const savedIds = new Set(savedScenes.map(scene => scene.id));
+            const visible = merged.scenes.filter(scene => savedIds.has(scene.id) && scene.assets.visual && scene.grid?.shape?.length === 2 && scene.grid?.transform?.length === 6).slice(0, 16);
+            if (visible.length) {
+              previewRestored = true;
+              setLoadedIds(visible.map(scene => scene.id));
+              setVisibleLoadedIds(visible.map(scene => scene.id));
+              setSelected(visible[0]);
+            }
+          }
+        }
+      } });
       if (!result) return;
       setLiveState("ready");
       setFiltersOpen(false);
@@ -168,7 +192,7 @@ function App() {
     }
   };
   useEffect(() => {
-    runSearch(searchInput);
+    if (!(pageFromHash() === 'Explore' && projectFromHash())) runSearch(searchInput);
     return () => searchRunner.current.cancel();
   }, []);
   const cancelSearch = () => { searchRunner.current.cancel(); setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
@@ -210,7 +234,8 @@ function App() {
       const hash = "#" + encodeURIComponent(next) + (project ? `?project=${project}` : '');
       if (location.hash !== hash) history.replaceState(null, "", hash);
       setPage(next);
-      setFocusedProjectId(project);
+      setFocusedProjectId(next === 'My Data' ? project : null);
+      setExploringProjectId(next === 'Explore' ? project : null);
     };
     window.addEventListener("hashchange", change);
     change();
@@ -231,14 +256,37 @@ function App() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
+  useEffect(() => {
+    if (!exploringProjectId) return;
+    let current = true;
+    const controller = new AbortController();
+    setProjectError('');
+    runtimeRequest('projects', undefined, controller.signal).then(projects => {
+      if (!current) return;
+      const project = projects.find(item => item.id === exploringProjectId);
+      if (!project) throw new Error('This project could not be found. Return to all projects or refresh the list.');
+      setActiveProject(project);
+      if (restoredProjectId.current !== project.id) {
+        restoredProjectId.current = project.id;
+        const next = projectExploreSearch(project, searchInput);
+        setSearchInput(next);
+        setAreaPolygon({ geometry: project.geometry || null, bounds: project.bounds, place: { name: project.name } });
+        runSearch(next, project);
+      }
+    }).catch(error => { if (current) setProjectError(error.message); });
+    return () => { current = false; controller.abort(); };
+  }, [exploringProjectId]);
   const showJSON = (filename, value) =>
     setModal({ type: "json", filename, value });
   const go = (p, projectId = null) => {
     location.hash = encodeURIComponent(p) + (projectId ? `?project=${projectId}` : '');
     setPage(p);
-    setFocusedProjectId(projectId);
+    setFocusedProjectId(p === 'My Data' ? projectId : null);
+    setExploringProjectId(p === 'Explore' ? projectId : null);
   };
   const openProject = (id) => go('My Data', id);
+  const continueInProject = project => go('Explore', project?.id || activeProject?.id || null);
+  const currentProject = activeProject?.id === exploringProjectId ? activeProject : null;
   const scenes = useMemo(() => catalog?.scenes || [], [catalog]);
   useEffect(() => {
     const track = timelineTrack.current;
@@ -317,12 +365,16 @@ function App() {
             <span className="project-icon">
               <Folder size={16} />
             </span>
-            <strong>{t("Earth Search workspace")}</strong>
+            <strong>{currentProject?.name || t("Earth Search workspace")}</strong>
             <ChevronRight size={14} />
             <span>{t(page)}</span>
             </div>
           </div>
           <div className="top-actions">
+            {page === 'Explore' && exploringProjectId && <>
+              <Button size="sm" icon={Folder} onClick={() => openProject(exploringProjectId)}>{t('Return to project details')}</Button>
+              <Button size="icon" variant="quiet" aria-label={t('Leave project exploration')} title={t('Leave project exploration')} onClick={() => { setActiveProject(null); restoredProjectId.current = null; go('Explore'); }}><X size={15}/></Button>
+            </>}
             <Button
               className="icon-btn"
               aria-label={t("Toggle color theme")}
@@ -334,6 +386,8 @@ function App() {
               <span />{t("Local workspace")}</span>
           </div>
         </header>
+        {page === 'Explore' && exploringProjectId && !currentProject && !projectError && <p className="project-context-status" role="status"><Spinner size={15}/>{t('Loading project scenes…')}</p>}
+        {page === 'Explore' && exploringProjectId && projectError && <p className="project-context-status projects-error" role="alert">{t(projectError)}</p>}
         {page === "Workspace" ? <React.Suspense fallback={<main className="wm-map-loading" role="status">{t("Loading local map…")}</main>}><WorkspaceMap /></React.Suspense> : workspace ? (
           <div className={"workspace " + (!inspector || (!selected && !mapMatches.length) ? "no-inspector " : "") + (discoveryCollapsed ? "no-discovery" : "")}>
             {!discoveryCollapsed && <aside className="discovery" id="explore-discovery">
@@ -454,7 +508,7 @@ function App() {
                       <Button size="sm" onClick={() => setSelectedIds([])} disabled={!selectedIds.length}>{t("Clear")}</Button>
                     </div>
                     <Button primary onClick={loadSelected} disabled={!selectedIds.length || selectedIds.length > 16}>{t("Load selected imagery · {count}", { count: selectedIds.length })}</Button>
-                    <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project => openProject(project.id)}/>
+                    {exploringProjectId ? currentProject && <DownloadAssetButton key={[exploringProjectId, ...downloadScenes.map(scene => scene.id)].join('|')} scene={selected || downloadScenes[0]} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} project={currentProject} onProjectUpdated={setActiveProject} onOpenProject={openProject}/> : <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project => openProject(project.id)}/>}
                     {selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 COGs for this browser map. Narrow the filters or clear some scenes.")}</span>}
                   </div>}
                   <div className="panel-foot">
@@ -620,9 +674,9 @@ function App() {
                   >{t("Inspect area")}<ArrowUpRight size={14} />
                   </Button>
                 </div>
-                <div className="inspector-bottom">
+                {!exploringProjectId && <div className="inspector-bottom">
                   <DownloadAssetButton key={[selected.id, ...downloadScenes.map(scene => scene.id)].join('|')} scene={selected} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} onOpenProject={openProject} />
-                </div>
+                </div>}
               </aside>
             )}
           </div>
@@ -651,7 +705,7 @@ function App() {
                   title={t("My Data")}
                   sub={t("Find downloaded files and clipping results ready to inspect or use.")}
                 />}
-                <ProjectsLibrary focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} onContinueExploring={() => go('Explore')} />
+                <ProjectsLibrary focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} onContinueExploring={continueInProject} />
                 {!focusedProjectId && <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />}
                 {!focusedProjectId && <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
                   <ExecutableRecipes areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON} />

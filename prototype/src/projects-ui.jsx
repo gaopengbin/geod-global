@@ -88,12 +88,12 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
     <div className="projects-heading">
       <div className={focusedProjectId ? 'project-navigation' : undefined}>
         {focusedProjectId ? <>
-          {onContinueExploring && <Button size="sm" onClick={onContinueExploring}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
+          {onContinueExploring && <Button size="sm" disabled={!shown.length} onClick={() => onContinueExploring(shown[0])}><Compass size={15}/>{t('Explore and add scenes to this project')}</Button>}
           <Button size="sm" variant="ghost" onClick={onCloseProject}><ArrowLeft size={15}/>{t('All projects')}</Button>
         </> : <><h2>{t('Saved scene projects')}</h2><p>{t('Open a project to see its downloads, files and processing results.')}</p></>}
       </div>
       <div className="project-navigation">
-        {!focusedProjectId && onContinueExploring && <Button size="sm" onClick={onContinueExploring}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
+        {!focusedProjectId && onContinueExploring && <Button size="sm" onClick={() => onContinueExploring()}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
         <Button size="sm" onClick={refresh} aria-label={t('Refresh projects')}><RefreshCw size={15}/></Button>
       </div>
     </div>

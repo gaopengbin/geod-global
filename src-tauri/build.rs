@@ -10,6 +10,7 @@ fn main() {
             "list_projects",
             "create_project",
             "rename_project",
+            "add_project_scenes",
             "download_project",
             "mosaic_project",
             "create_job",

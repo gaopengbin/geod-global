@@ -74,6 +74,27 @@ const rasterFixture = () => ({
   sha256: 'a'.repeat(64),
 });
 
+test('project scene additions and selected downloads use matching native and HTTP contracts', async () => {
+  const scenes = [{ itemId: 'new' }];
+  const calls = [];
+  globalThis.window = { __TAURI__: { core: { invoke: async (command, payload) => calls.push([command, payload]) } } };
+  try {
+    await runtimeRequest('addProjectScenes', { id: 'project-id', scenes });
+    await runtimeRequest('downloadProject', { id: 'project-id', assetKey: 'scl', itemIds: ['new'] });
+    assert.deepEqual(calls, [['add_project_scenes', { id: 'project-id', request: { scenes } }], ['download_project', { id: 'project-id', assetKey: 'scl', itemIds: ['new'] }]]);
+  } finally { delete globalThis.window; }
+  const previousFetch = globalThis.fetch;
+  globalThis.fetch = async (url, options) => { calls.push([url, options]); return { ok: true, json: async () => ({}) }; };
+  try {
+    await runtimeRequest('addProjectScenes', { id: 'project/id', scenes });
+    await runtimeRequest('downloadProject', { id: 'project/id', assetKey: 'scl', itemIds: ['new'] });
+    assert.equal(calls[2][0], 'http://127.0.0.1:4318/projects/project%2Fid/scenes');
+    assert.equal(calls[2][1].body, JSON.stringify({ scenes }));
+    assert.equal(calls[2][1].headers['X-GeoD-Client'], 'geod-global');
+    assert.equal(calls[3][1].body, JSON.stringify({ assetKey: 'scl', itemIds: ['new'] }));
+  } finally { globalThis.fetch = previousFetch; }
+});
+
 test('project rename uses matching native and protected HTTP contracts', async () => {
   const calls = [];
   globalThis.window = { __TAURI__: { core: { invoke: async (command, payload) => calls.push([command, payload]) } } };

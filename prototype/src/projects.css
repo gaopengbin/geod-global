@@ -2,6 +2,10 @@
 .projects-heading, .project-summary, .project-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .projects-heading { flex-wrap: wrap; }
 .project-navigation { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.project-context-status { margin: 0; padding: 8px 16px; font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.topbar-left .breadcrumb { min-width: 0; }
+.topbar-left .breadcrumb strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.topbar .top-actions { flex-shrink: 0; gap: 8px; }
 .projects-heading h2, .project-summary h3 { margin: 0; font-size: 16px; }
 .projects-heading p, .project-summary p { margin: 4px 0 0; color: var(--text-muted, #65707a); font-size: 12px; }
 .projects-list { display: grid; gap: 8px; }

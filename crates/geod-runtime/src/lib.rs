@@ -12,7 +12,7 @@ pub mod proxy;
 pub mod raster;
 pub mod service;
 pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
-pub use projects::{CreateProjectRequest, Project, ProjectDownloads};
+pub use projects::{AddProjectScenesRequest, CreateProjectRequest, Project, ProjectDownloads};
 pub use proxy::{ProxySettings, ProxyTest};
 pub use raster::{RasterClass, RasterInspection, RasterPixel};
 

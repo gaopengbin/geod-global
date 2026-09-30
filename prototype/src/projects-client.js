@@ -52,16 +52,19 @@ export function jobsForProject(project, jobs) {
   return jobs.filter(job => sources.has(job.id) || outputs.has(job.id));
 }
 
-export async function createProjectAndQueue(request, assetKeys, invoke = runtimeRequest) {
+function validateAssetKeys(assetKeys) {
   if (!Array.isArray(assetKeys) || !assetKeys.length || new Set(assetKeys).size !== assetKeys.length
     || assetKeys.some(key => key !== 'scl' && key !== 'visual')) {
     throw new Error('Choose SCL, true-color imagery, or both for the download.');
   }
-  const project = await invoke('createProject', request);
+}
+
+export async function queueProjectDownloads(project, assetKeys, invoke = runtimeRequest, itemIds) {
+  validateAssetKeys(assetKeys);
   const downloads = [];
   try {
     for (const assetKey of assetKeys) {
-      downloads.push(await invoke('downloadProject', { id: project.id, assetKey }));
+      downloads.push(await invoke('downloadProject', { id: project.id, assetKey, ...(itemIds ? { itemIds } : {}) }));
     }
   } catch (error) {
     error.project = project;
@@ -69,4 +72,15 @@ export async function createProjectAndQueue(request, assetKeys, invoke = runtime
     throw error;
   }
   return { project, downloads };
+}
+
+export async function createProjectAndQueue(request, assetKeys, invoke = runtimeRequest) {
+  validateAssetKeys(assetKeys);
+  return queueProjectDownloads(await invoke('createProject', request), assetKeys, invoke);
+}
+
+export async function addProjectScenesAndQueue(id, request, assetKeys, invoke = runtimeRequest) {
+  validateAssetKeys(assetKeys);
+  const project = await invoke('addProjectScenes', { id, scenes: request.scenes });
+  return queueProjectDownloads(project, assetKeys, invoke, request.scenes.map(scene => scene.itemId));
 }

@@ -62,7 +62,8 @@ network-facing authentication boundary.
 | GET | `/jobs/{id}/metadata` | Revalidated project-mosaic provenance JSON as an attachment |
 | GET | `/projects` | Persisted multi-scene projects |
 | POST | `/projects` | Save selected scenes, area and optional polygon |
-| POST | `/projects/{id}/downloads` | Queue or reuse every `scl` or `visual` source download in the project |
+| POST | `/projects/{id}/downloads` | Queue or reuse `scl` or `visual` sources; optional `itemIds` restricts the request to selected project scenes |
+| POST | `/projects/{id}/scenes` | Append validated scenes without replacing existing pinned sources, project name or clipping area |
 | POST | `/projects/{id}/mosaics` | Queue a pinned, pixel-aligned mosaic and area clip for `scl` or `visual` |
 | POST | `/jobs/{id}/package` | Verify and prepare a derived-output ZIP; return its metadata as JSON |
 | GET | `/jobs/{id}/package` | Read and revalidate an already prepared ZIP; return its bytes as an attachment |

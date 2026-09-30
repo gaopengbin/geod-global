@@ -43,6 +43,12 @@ pub struct CreateProjectRequest {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct AddProjectScenesRequest {
+    pub scenes: Vec<ProjectScene>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Project {
     pub id: String,
     pub name: String,
@@ -226,6 +232,53 @@ impl JobManager {
         Ok(renamed)
     }
 
+    pub async fn add_project_scenes(
+        &self,
+        id: &str,
+        request: AddProjectScenesRequest,
+    ) -> Result<Project> {
+        if request.scenes.is_empty() || request.scenes.len() > MAX_PROJECT_SCENES {
+            return Err(format!(
+                "Select 1 to {MAX_PROJECT_SCENES} scenes to add to the project"
+            ));
+        }
+        let mut projects = self.inner.projects.lock().await;
+        let previous = projects.get(id).cloned().ok_or("Unknown project")?;
+        let mut updated = previous.clone();
+        let mut ids: HashSet<_> = updated
+            .scenes
+            .iter()
+            .map(|scene| scene.item_id.clone())
+            .collect();
+        for scene in request.scenes {
+            // A catalogue refresh must not replace an already pinned source or metadata.
+            if ids.insert(scene.item_id.clone()) {
+                updated.scenes.push(scene);
+            }
+        }
+        #[cfg(test)]
+        let origin = self.inner.fixture_origin.as_deref();
+        #[cfg(not(test))]
+        let origin = None;
+        CreateProjectRequest {
+            name: updated.name.clone(),
+            bounds: updated.bounds,
+            geometry: updated.geometry.clone(),
+            scenes: updated.scenes.clone(),
+        }
+        .validate(origin)?;
+        if updated.scenes.len() == previous.scenes.len() {
+            return Ok(previous);
+        }
+        updated.updated_at = now();
+        projects.insert(id.to_owned(), updated.clone());
+        if let Err(error) = self.persist_projects(&projects).await {
+            projects.insert(id.to_owned(), previous);
+            return Err(error);
+        }
+        Ok(updated)
+    }
+
     async fn persist_projects(&self, projects: &BTreeMap<String, Project>) -> Result<()> {
         let bytes = serde_json::to_vec_pretty(projects).map_err(io_error)?;
         let temporary = self.inner.root.join("projects.json.tmp");
@@ -241,6 +294,15 @@ impl JobManager {
     }
 
     pub async fn enqueue_project(&self, id: &str, asset_key: &str) -> Result<ProjectDownloads> {
+        self.enqueue_project_selection(id, asset_key, None).await
+    }
+
+    pub async fn enqueue_project_selection(
+        &self,
+        id: &str,
+        asset_key: &str,
+        item_ids: Option<Vec<String>>,
+    ) -> Result<ProjectDownloads> {
         if asset_key != "scl" && asset_key != "visual" {
             return Err("Choose SCL or true-color imagery for the project download".into());
         }
@@ -252,10 +314,26 @@ impl JobManager {
             .get(id)
             .cloned()
             .ok_or("Unknown project")?;
+        let selected = item_ids.map(|ids| ids.into_iter().collect::<HashSet<_>>());
+        if let Some(ids) = &selected {
+            if ids.is_empty()
+                || ids
+                    .iter()
+                    .any(|id| !project.scenes.iter().any(|scene| &scene.item_id == id))
+            {
+                return Err("Choose scene IDs belonging to this project".into());
+            }
+        }
         let mut store = self.inner.store.lock().await;
         let mut jobs = Vec::with_capacity(project.scenes.len());
         let mut created = Vec::new();
         for scene in &project.scenes {
+            if selected
+                .as_ref()
+                .is_some_and(|ids| !ids.contains(&scene.item_id))
+            {
+                continue;
+            }
             let asset = scene.assets.get(asset_key).ok_or_else(|| {
                 format!(
                     "Scene {} does not provide a {} asset",
@@ -341,6 +419,177 @@ mod tests {
                     },
                 )]),
             }],
+        }
+    }
+
+    fn scene_with_id(original: &ProjectScene, id: &str) -> ProjectScene {
+        let mut scene = original.clone();
+        scene.item_id = id.into();
+        for asset in scene.assets.values_mut() {
+            asset.href = asset.href.replace(&original.item_id, id);
+        }
+        scene
+    }
+
+    #[tokio::test]
+    async fn adding_scenes_preserves_identity_area_and_pinned_sources_and_is_idempotent() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let original = manager.create_project(project_request()).await.unwrap();
+        let mut existing = original.scenes[0].clone();
+        existing.assets.get_mut("scl").unwrap().href =
+            "https://untrusted.example/changed.tif".into();
+        let added = scene_with_id(&original.scenes[0], "S2_ADDED");
+        let request = AddProjectScenesRequest {
+            scenes: vec![existing, added.clone(), added],
+        };
+        let updated = manager
+            .add_project_scenes(&original.id, request.clone())
+            .await
+            .unwrap();
+        assert_eq!(updated.id, original.id);
+        assert_eq!(updated.name, original.name);
+        assert_eq!(updated.created_at, original.created_at);
+        assert_eq!(updated.bounds, original.bounds);
+        assert_eq!(
+            serde_json::to_value(&updated.geometry).unwrap(),
+            serde_json::to_value(&original.geometry).unwrap()
+        );
+        assert_eq!(updated.scenes.len(), 2);
+        assert_eq!(
+            updated.scenes[0].assets["scl"].href,
+            original.scenes[0].assets["scl"].href
+        );
+        assert_eq!(
+            manager
+                .add_project_scenes(&original.id, request)
+                .await
+                .unwrap()
+                .scenes
+                .len(),
+            2
+        );
+        drop(manager);
+        assert_eq!(
+            JobManager::open(directory.path())
+                .await
+                .unwrap()
+                .list_projects()
+                .await[0]
+                .scenes
+                .len(),
+            2
+        );
+    }
+
+    #[tokio::test]
+    async fn invalid_or_excessive_additions_do_not_modify_the_saved_project() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let original = manager.create_project(project_request()).await.unwrap();
+        let mut invalid = original.scenes[0].clone();
+        invalid.item_id = "S2_INVALID".into();
+        invalid.assets.get_mut("scl").unwrap().href = "https://untrusted.example/source.tif".into();
+        assert!(manager
+            .add_project_scenes(
+                &original.id,
+                AddProjectScenesRequest {
+                    scenes: vec![invalid]
+                }
+            )
+            .await
+            .is_err());
+        let scenes = (0..MAX_PROJECT_SCENES)
+            .map(|index| scene_with_id(&original.scenes[0], &format!("S2_NEW_{index}")))
+            .collect();
+        assert!(manager
+            .add_project_scenes(&original.id, AddProjectScenesRequest { scenes })
+            .await
+            .is_err());
+        assert_eq!(manager.list_projects().await[0].scenes.len(), 1);
+        assert!(manager
+            .add_project_scenes(
+                "missing",
+                AddProjectScenesRequest {
+                    scenes: original.scenes.clone()
+                }
+            )
+            .await
+            .is_err());
+    }
+
+    #[tokio::test]
+    async fn selected_download_reuses_only_selected_sources_and_rejects_unknown_ids() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let mut request = project_request();
+        let added = scene_with_id(&request.scenes[0], "S2_OTHER");
+        request.scenes.push(added);
+        let project = manager.create_project(request).await.unwrap();
+        let bytes = crate::raster::tests::fixture(2, 2, &[1, 2, 3, 4], 32610, false);
+        let mut source = crate::raster::tests::record(manager.storage_root(), &bytes);
+        source.item_id = project.scenes[0].item_id.clone();
+        source.asset_key = "scl".into();
+        source.href = project.scenes[0].assets["scl"].href.clone();
+        manager
+            .inner
+            .store
+            .lock()
+            .await
+            .jobs
+            .insert(source.id.clone(), source.clone());
+        for ids in [vec![], vec!["not-in-project".into()]] {
+            assert!(manager
+                .enqueue_project_selection(&project.id, "scl", Some(ids))
+                .await
+                .is_err());
+        }
+        let result = manager
+            .enqueue_project_selection(&project.id, "scl", Some(vec![source.item_id.clone()]))
+            .await
+            .unwrap();
+        assert_eq!(result.jobs.len(), 1);
+        assert_eq!(result.jobs[0].id, source.id);
+        assert_eq!(manager.list().await.len(), 1);
+    }
+
+    #[tokio::test]
+    async fn add_scenes_http_route_checks_origin_and_client_and_keeps_project_id() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let project = manager.create_project(project_request()).await.unwrap();
+        let added = scene_with_id(&project.scenes[0], "S2_HTTP_ADDED");
+        let payload = serde_json::to_string(&AddProjectScenesRequest {
+            scenes: vec![added],
+        })
+        .unwrap();
+        let app = crate::service::router(manager);
+        for (origin, client, expected) in [
+            ("https://evil.example", true, StatusCode::FORBIDDEN),
+            (crate::service::ALLOWED_ORIGIN, false, StatusCode::FORBIDDEN),
+            (crate::service::ALLOWED_ORIGIN, true, StatusCode::OK),
+        ] {
+            let mut request = Request::builder()
+                .method("POST")
+                .uri(format!("/projects/{}/scenes", project.id))
+                .header("Host", "127.0.0.1:4318")
+                .header("Origin", origin)
+                .header("Content-Type", "application/json");
+            if client {
+                request = request.header("X-GeoD-Client", "geod-global");
+            }
+            let response = app
+                .clone()
+                .oneshot(request.body(Body::from(payload.clone())).unwrap())
+                .await
+                .unwrap();
+            assert_eq!(response.status(), expected);
+            if expected == StatusCode::OK {
+                let body = to_bytes(response.into_body(), 100_000).await.unwrap();
+                let saved: Project = serde_json::from_slice(&body).unwrap();
+                assert_eq!(saved.id, project.id);
+                assert_eq!(saved.scenes.len(), 2);
+            }
         }
     }
 
