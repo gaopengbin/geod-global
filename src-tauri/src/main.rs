@@ -2,7 +2,8 @@
 
 use geod_runtime::{
     CreateJobRequest, CreateProjectRequest, Job, JobManager, JobStatus, Project, ProjectDownloads,
-    RasterInspection, RasterPixel, RasterRecipe, RecipePlan, RuntimeHealth, SavedRecipe,
+    ProxySettings, ProxyTest, RasterInspection, RasterPixel, RasterRecipe, RecipePlan,
+    RuntimeHealth, SavedRecipe,
 };
 use std::path::{Path, PathBuf};
 use tauri::{Manager, State, WebviewWindowBuilder};
@@ -57,6 +58,27 @@ fn health(manager: State<'_, JobManager>) -> RuntimeHealth {
 #[tauri::command]
 async fn diagnostics(manager: State<'_, JobManager>) -> Result<serde_json::Value, String> {
     Ok(manager.diagnostics().await)
+}
+
+#[tauri::command]
+async fn get_proxy_settings(manager: State<'_, JobManager>) -> Result<ProxySettings, String> {
+    Ok(manager.proxy_settings().await)
+}
+
+#[tauri::command]
+async fn save_proxy_settings(
+    settings: ProxySettings,
+    manager: State<'_, JobManager>,
+) -> Result<ProxySettings, String> {
+    manager.save_proxy_settings(settings).await
+}
+
+#[tauri::command]
+async fn test_proxy_settings(
+    settings: ProxySettings,
+    manager: State<'_, JobManager>,
+) -> Result<ProxyTest, String> {
+    manager.test_proxy_settings(settings).await
 }
 
 #[tauri::command]
@@ -251,6 +273,9 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             health,
             diagnostics,
+            get_proxy_settings,
+            save_proxy_settings,
+            test_proxy_settings,
             list_jobs,
             list_projects,
             create_project,

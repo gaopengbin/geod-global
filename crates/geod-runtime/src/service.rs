@@ -1,5 +1,5 @@
 //! Loopback development adapter; desktop commands use JobManager directly.
-use crate::{CreateJobRequest, CreateProjectRequest, JobManager, RasterRecipe};
+use crate::{CreateJobRequest, CreateProjectRequest, JobManager, ProxySettings, RasterRecipe};
 use axum::{
     extract::{DefaultBodyLimit, Path, Query, Request, State},
     http::{header, HeaderValue, Method, StatusCode},
@@ -88,6 +88,29 @@ async fn health(State(manager): State<JobManager>) -> Json<crate::RuntimeHealth>
 
 async fn diagnostics(State(manager): State<JobManager>) -> Json<serde_json::Value> {
     Json(manager.diagnostics().await)
+}
+async fn proxy_settings(State(manager): State<JobManager>) -> Json<ProxySettings> {
+    Json(manager.proxy_settings().await)
+}
+async fn save_proxy_settings(
+    State(manager): State<JobManager>,
+    Json(request): Json<ProxySettings>,
+) -> std::result::Result<Json<ProxySettings>, ApiError> {
+    manager
+        .save_proxy_settings(request)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+async fn test_proxy_settings(
+    State(manager): State<JobManager>,
+    Json(request): Json<ProxySettings>,
+) -> std::result::Result<Json<crate::ProxyTest>, ApiError> {
+    manager
+        .test_proxy_settings(request)
+        .await
+        .map(Json)
+        .map_err(api_error)
 }
 async fn jobs(State(manager): State<JobManager>) -> Json<Vec<crate::Job>> {
     Json(manager.list().await)
@@ -312,6 +335,8 @@ pub fn router(manager: JobManager) -> Router {
     Router::new()
         .route("/health", get(health))
         .route("/diagnostics", get(diagnostics))
+        .route("/proxy", get(proxy_settings).post(save_proxy_settings))
+        .route("/proxy/test", post(test_proxy_settings))
         .route("/jobs", get(jobs).post(create))
         .route("/projects", get(projects).post(create_project))
         .route("/projects/{id}/downloads", post(download_project))

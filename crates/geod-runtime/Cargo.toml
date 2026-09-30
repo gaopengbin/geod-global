@@ -14,7 +14,7 @@ fs2 = "0.4"
 futures-util = "0.3"
 png = "=0.18.1"
 proj4rs = { version = "=0.2.0", default-features = false }
-reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream", "system-proxy"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream", "system-proxy", "socks"] }
 rmcp = { version = "=3.4.0", default-features = false, features = ["server", "transport-io"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }

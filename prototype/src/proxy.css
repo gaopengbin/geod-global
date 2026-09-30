@@ -1,0 +1,13 @@
+.proxy-settings { max-width: 850px; margin-top: 16px; padding: 24px; }
+.proxy-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.proxy-heading h2 { margin: 0; font-size: 16px; }
+.proxy-heading p, .proxy-note { margin: 6px 0 0; color: var(--ink-2); font-size: 12px; line-height: 1.55; }
+.proxy-fields { display: grid; gap: 16px; margin-top: 22px; max-width: 520px; }
+.proxy-fields label { display: grid; gap: 8px; font-size: 13px; font-weight: 600; }
+.proxy-fields small { color: var(--ink-2); font-size: 12px; font-weight: 400; }
+.proxy-fields [data-slot="select-wrapper"], .proxy-fields [data-slot="select-trigger"] { width: 100%; }
+.proxy-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+.proxy-message { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font-size: 12px; overflow-wrap: anywhere; }
+.proxy-message-success { color: var(--positive, #16774b); }
+.proxy-message-error { color: var(--danger, #b42318); }
+.proxy-settings > .proxy-note:last-child { margin-top: 18px; }

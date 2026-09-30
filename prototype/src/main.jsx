@@ -44,6 +44,7 @@ import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } fr
 import { ProjectsLibrary, SaveProjectButton } from "./projects-ui.jsx";
 import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
+import { ProxySettingsPanel } from "./proxy-ui.jsx";
 import { I18nProvider, useI18n } from "./i18n.jsx";
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
@@ -677,6 +678,7 @@ function App() {
                     </Select>
                   </div>
                 </Surface>
+                <ProxySettingsPanel />
                 <Disclosure className="settings-diagnostics" summary={t("Local diagnostics · advanced")}><DiagnosticsPanel /></Disclosure>
               </>
             ) : (

@@ -1675,6 +1675,7 @@ dd {
   .brand { justify-content: center; padding: 6px; }
   .brand strong, .sidebar-local-label { display: none; }
   .app-main { overflow: visible; }
+  .settings-list > div { flex-direction: column; align-items: stretch; gap: 10px; padding-block: 16px; }
   .settings-list [data-slot="select-trigger"] { max-width: 100%; width: 100%; }
   .settings-list [data-slot="select-wrapper"] { width: 100%; }
   .top-actions { gap: 6px; }

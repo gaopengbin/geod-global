@@ -29,6 +29,43 @@ test('native command string errors become visible Error messages', async () => {
   } finally { delete globalThis.window; }
 });
 
+test('proxy settings use the same payload contract in desktop and browser runtimes', async () => {
+  const settings = { mode: 'custom', url: 'http://127.0.0.1:10808' };
+  const nativeCalls = [];
+  globalThis.window = { __TAURI__: { core: { invoke: async (command, payload) => {
+    nativeCalls.push({ command, payload });
+    return settings;
+  } } } };
+  try {
+    await runtimeRequest('proxy');
+    await runtimeRequest('saveProxy', settings);
+    await runtimeRequest('testProxy', settings);
+    assert.deepEqual(nativeCalls, [
+      { command: 'get_proxy_settings', payload: {} },
+      { command: 'save_proxy_settings', payload: { settings } },
+      { command: 'test_proxy_settings', payload: { settings } },
+    ]);
+  } finally { delete globalThis.window; }
+
+  const previousFetch = globalThis.fetch;
+  const browserCalls = [];
+  globalThis.fetch = async (url, options) => {
+    browserCalls.push({ url, options });
+    return { ok: true, json: async () => settings };
+  };
+  try {
+    await runtimeRequest('proxy');
+    await runtimeRequest('saveProxy', settings);
+    await runtimeRequest('testProxy', settings);
+    assert.deepEqual(browserCalls.map(call => [call.url, call.options.method, call.options.body]), [
+      ['http://127.0.0.1:4318/proxy', 'GET', undefined],
+      ['http://127.0.0.1:4318/proxy', 'POST', JSON.stringify(settings)],
+      ['http://127.0.0.1:4318/proxy/test', 'POST', JSON.stringify(settings)],
+    ]);
+    assert.equal(browserCalls[1].options.headers['X-GeoD-Client'], 'geod-global');
+  } finally { globalThis.fetch = previousFetch; }
+});
+
 const rasterFixture = () => ({
   width: 4, height: 4, bandCount: 1, dataType: 'UInt8', crs: 'EPSG:32610',
   bounds: [500000, 4100000, 500080, 4100080], pixelSize: [20, 20], nodata: 0,

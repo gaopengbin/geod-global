@@ -6,6 +6,9 @@
   "permissions": [
     "allow-health",
     "allow-diagnostics",
+    "allow-get-proxy-settings",
+    "allow-save-proxy-settings",
+    "allow-test-proxy-settings",
     "allow-list-jobs",
     "allow-list-projects",
     "allow-create-project",

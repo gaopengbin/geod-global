@@ -8,10 +8,12 @@ pub mod mcp;
 pub mod mosaic;
 pub mod processing;
 pub mod projects;
+pub mod proxy;
 pub mod raster;
 pub mod service;
 pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
 pub use projects::{CreateProjectRequest, Project, ProjectDownloads};
+pub use proxy::{ProxySettings, ProxyTest};
 pub use raster::{RasterClass, RasterInspection, RasterPixel};
 
 use chrono::Utc;
@@ -117,7 +119,7 @@ struct Inner {
     store: Mutex<Store>,
     recipes: Mutex<BTreeMap<String, SavedRecipe>>,
     projects: Mutex<BTreeMap<String, Project>>,
-    client: reqwest::Client,
+    proxy_settings: Mutex<ProxySettings>,
     permits: Semaphore,
     raster_permits: Arc<Semaphore>,
     _directory_lock: std::fs::File,
@@ -355,13 +357,8 @@ impl JobManager {
         }
         let recipes = processing::load_recipes(&root).await?;
         let projects = projects::load_projects(&root, fixture_origin.as_deref()).await?;
-        let client = reqwest::Client::builder()
-            .redirect(reqwest::redirect::Policy::none())
-            .connect_timeout(Duration::from_secs(20))
-            .timeout(Duration::from_secs(30 * 60))
-            .user_agent(concat!("GeoD-Global/", env!("CARGO_PKG_VERSION")))
-            .build()
-            .map_err(io_error)?;
+        let proxy_settings = proxy::load(&root).await?;
+        proxy::download_client(&proxy_settings)?;
         let manager = Self {
             inner: Arc::new(Inner {
                 root,
@@ -371,7 +368,7 @@ impl JobManager {
                 }),
                 recipes: Mutex::new(recipes),
                 projects: Mutex::new(projects),
-                client,
+                proxy_settings: Mutex::new(proxy_settings),
                 permits: Semaphore::new(2),
                 raster_permits: Arc::new(Semaphore::new(1)),
                 _directory_lock: directory_lock,
@@ -755,9 +752,11 @@ impl JobManager {
         };
         self.progress(id, 0, None).await?;
         let job = self.get(id).await.ok_or("Unknown job")?;
+        let proxy_settings = self.proxy_settings().await;
+        let client = proxy::download_client(&proxy_settings)?;
         let response = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
-            response = self.inner.client.get(&job.href).send() => response.map_err(io_error)?,
+            response = client.get(&job.href).send() => response.map_err(io_error)?,
         };
         if !response.status().is_success() {
             return Err(format!(

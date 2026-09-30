@@ -3,6 +3,9 @@ fn main() {
         tauri_build::AppManifest::new().commands(&[
             "health",
             "diagnostics",
+            "get_proxy_settings",
+            "save_proxy_settings",
+            "test_proxy_settings",
             "list_jobs",
             "list_projects",
             "create_project",
