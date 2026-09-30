@@ -1,4 +1,5 @@
 .projects-library { display: grid; gap: 14px; margin: 0 0 22px; }
+.projects-library-focused { width: 100%; max-width: 1180px; margin-inline: auto; }
 .projects-heading, .project-summary, .project-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .projects-heading { flex-wrap: wrap; }
 .project-navigation { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -11,9 +12,12 @@
 .projects-list { display: grid; gap: 8px; }
 .project-row { display: grid; gap: 14px; padding: 16px; }
 .project-assets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.project-assets > div { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; border-radius: 8px; background: var(--surface-subtle, #f5f6f7); padding: 10px 12px; font-size: 12px; }
+.project-asset { display: grid; gap: 10px; padding: 12px; }
+.project-asset-summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+.project-asset-summary span { color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .project-assets strong { font-weight: 600; }
 .project-actions { justify-content: flex-start; flex-wrap: wrap; }
+.project-busy { display: flex; align-items: center; gap: 7px; font-size: 12px; }
 .projects-empty { display: flex; gap: 10px; align-items: center; padding: 18px; }
 .projects-error { color: #b42318; }
 .project-output-status { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted, #65707a); }
@@ -35,10 +39,33 @@
 .project-guide { margin: 0; font-size: 12px; line-height: 1.6; color: var(--ink-2); }
 .project-files { min-width: 0; }
 .project-files h4 { display: flex; align-items: center; gap: 8px; margin: 16px 0 10px; font-size: 14px; }
+.project-row-focused { gap: 10px; }
+.project-row-focused .project-summary { justify-content: flex-start; }
+.project-row-focused .project-title-block { flex: 0 1 auto; }
+.project-row-focused .project-summary > .bui-badge { flex-shrink: 0; }
+.project-row-focused .project-files h4 { margin: 6px 0 10px; }
+.project-scenes > .bui-disclosure-trigger { padding: 5px 0; }
+.project-file-list .runtime-jobs { margin-top: 0; }
+.project-file-list .bui-task-rows { gap: 0; border: 1px solid var(--line-soft); border-radius: var(--radius-card); overflow: hidden; }
+.project-file-list .bui-task-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 0 12px; padding: 10px 12px; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--line-soft); }
+.project-file-list .bui-task-row:last-child { border-bottom: 0; }
+.project-file-list .bui-task-main { min-width: 0; flex-wrap: wrap; gap: 6px 10px; }
+.project-file-list .bui-task-copy { flex: 0 1 auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.project-file-list .bui-task-copy strong { font-weight: 600; }
+.project-file-list .bui-task-copy p { margin: 0; }
+.project-file-list .bui-task-meta { margin-left: 0; }
+.project-file-list .bui-task-details { grid-column: 2; margin: 0; padding: 0; }
+.project-file-list .bui-task-actions { grid-column: 3; grid-row: 1; padding: 0; }
+.project-file-list .bui-task-row:has(.runtime-file-details[data-state=open]) .bui-task-details { grid-column: 1 / -1; grid-row: 2; padding-left: 37px; }
+.project-file-list .runtime-file-details .bui-disclosure-trigger { padding: 3px 0; }
+.project-file-list .runtime-details { max-width: 850px; }
 @media (max-width: 760px) {
   .project-summary { align-items: flex-start; flex-wrap: wrap; }
   .project-title-block { flex-basis: 100%; }
-  .project-assets > div { flex-wrap: wrap; }
-  .project-files .bui-task-row { grid-template-columns: 1fr; }
-  .project-files .bui-task-actions { grid-column: 1; grid-row: auto; padding-top: 3px; }
+  .project-file-list .bui-task-row { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  .project-file-list .bui-task-copy { min-width: 0; flex: 1; display: block; }
+  .project-file-list .bui-task-copy p { margin-top: 3px; }
+  .project-file-list .bui-task-main { align-items: flex-start; }
+  .project-file-list .bui-task-details, .project-file-list .bui-task-row:has(.runtime-file-details[data-state=open]) .bui-task-details { grid-column: 1; grid-row: auto; padding-left: 37px; }
+  .project-file-list .bui-task-actions { grid-column: 1; grid-row: auto; padding-left: 37px; }
 }

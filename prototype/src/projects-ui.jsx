@@ -84,7 +84,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
     finally { setBusy(''); }
   };
   const shown = focusedProjectId ? projects.filter(project => project.id === focusedProjectId) : projects;
-  return <section className="projects-library" aria-label={t('Saved scene projects')}>
+  return <section className={`projects-library${focusedProjectId ? ' projects-library-focused' : ''}`} aria-label={t('Saved scene projects')}>
     <div className="projects-heading">
       <div className={focusedProjectId ? 'project-navigation' : undefined}>
         {focusedProjectId ? <>
@@ -122,23 +122,23 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
           <ul>{project.scenes.map(scene => <li key={scene.itemId}><span>{date(scene.date)}</span><code>{scene.itemId}</code><span>{scene.cloud == null ? t('Unknown') : number(scene.cloud / 100, { style: 'percent', maximumFractionDigits: 1 })}</span></li>)}</ul>
         </Disclosure>
         <div className="project-assets">
-          <div><strong>{t('True-color imagery')}</strong><span>{t('{done} / {total} downloaded', { done: completed(visual), total: project.scenes.length })}</span></div>
-          <div><strong>{t('SCL classification')}</strong><span>{t('{done} / {total} downloaded', { done: completed(scl), total: project.scenes.length })}</span></div>
-        </div>
-        <div className="project-actions">
-          {['visual', 'scl'].filter(key => project.scenes.every(scene => scene.assets?.[key])).map(key => {
+          {['visual', 'scl'].map(key => {
             const sources = key === 'visual' ? visual : scl;
             const ready = completed(sources) === project.scenes.length;
             const active = sources.some(job => ['queued', 'running'].includes(job.status));
-            return <React.Fragment key={key}><Button size="sm" disabled={!health || Boolean(busy) || ready || active} onClick={() => execute(project, key, 'downloadProject')}><Download size={15}/>{t(key === 'visual' ? 'Download true-color' : 'Download SCL')}</Button><Button size="sm" disabled={!health || Boolean(busy) || mixedCrs || !ready || ['queued', 'running'].includes(latestMosaic(key)?.status)} onClick={() => execute(project, key, 'mosaicProject')}><Layers size={15}/>{t(project.scenes.length === 1 ? key === 'visual' ? 'Clip true-color to project area' : 'Clip SCL to project area' : key === 'visual' ? 'Mosaic and clip true-color' : 'Mosaic and clip SCL')}</Button></React.Fragment>;
+            const available = project.scenes.every(scene => scene.assets?.[key]);
+            return <Surface variant="inset" className="project-asset" key={key}>
+              <div className="project-asset-summary"><strong>{t(key === 'visual' ? 'True-color imagery' : 'SCL classification')}</strong><span>{t('{done} / {total} downloaded', { done: completed(sources), total: project.scenes.length })}</span></div>
+              {available && <div className="project-actions"><Button size="sm" disabled={!health || Boolean(busy) || ready || active} onClick={() => execute(project, key, 'downloadProject')}><Download size={15}/>{t(key === 'visual' ? 'Download true-color' : 'Download SCL')}</Button><Button size="sm" disabled={!health || Boolean(busy) || mixedCrs || !ready || ['queued', 'running'].includes(latestMosaic(key)?.status)} onClick={() => execute(project, key, 'mosaicProject')}><Layers size={15}/>{t(project.scenes.length === 1 ? key === 'visual' ? 'Clip true-color to project area' : 'Clip SCL to project area' : key === 'visual' ? 'Mosaic and clip true-color' : 'Mosaic and clip SCL')}</Button></div>}
+            </Surface>;
           })}
-          {busy.startsWith(`${project.id}:`) && <span role="status"><Spinner size={15}/>{t(busy.endsWith(':rename') ? 'Saving project name…' : 'Adding scenes to the local queue…')}</span>}
         </div>
+        {busy.startsWith(`${project.id}:`) && <span className="project-busy" role="status"><Spinner size={15}/>{t(busy.endsWith(':rename') ? 'Saving project name…' : 'Adding scenes to the local queue…')}</span>}
         {mixedCrs && <p className="projects-error">{t('This project crosses UTM zones. Create one project per CRS to mosaic without reprojection.')}</p>}
         <div className="project-files">
           {pending.length > 0 && <><h4>{t('Project downloads and processing')}</h4><RuntimeJobRows jobs={pending} projectName={project.name}/></>}
           <h4>{t('Project files')} <Badge>{number(files.length)}</Badge></h4>
-          {files.length > 0 ? <RuntimeJobRows jobs={files} library projectName={project.name}/> : <Surface variant="inset" className="projects-empty"><span>{t('Completed source files and clipping results will appear here.')}</span></Surface>}
+          {files.length > 0 ? <div className="project-file-list"><RuntimeJobRows jobs={files} library projectName={project.name}/></div> : <Surface variant="inset" className="projects-empty"><span>{t('Completed source files and clipping results will appear here.')}</span></Surface>}
         </div>
         </>}
       </Surface>;
