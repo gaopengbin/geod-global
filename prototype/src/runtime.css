@@ -17,7 +17,12 @@
 .saved-clip-plans > .bui-disclosure-trigger { font-size: 13px; color: var(--ink); }
 .saved-clip-plans .processing-recipes { margin: 8px 0 16px; }
 .runtime-library { margin-top: 16px; }
-.runtime-library .library-filters { margin-top: 12px; }
+.library-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.library-search { position: relative; width: min(360px, 100%); }
+.library-search > svg { position: absolute; left: 12px; top: 50%; translate: 0 -50%; color: var(--ink-2); pointer-events: none; }
+.library-search [data-slot=input] { width: 100%; padding-left: 36px; }
+.library-toolbar [data-slot=select-wrapper] { width: 160px; }
+.library-toolbar [data-slot=select-trigger] { width: 100%; }
 .runtime-file-details .bui-disclosure-trigger { padding: 0 12px; }
 .runtime-results-count { color: var(--ink-2); font-size: 12px; margin: 0; }
 .runtime-job-details { min-width: 0; }
@@ -63,9 +68,6 @@
 .artifact-export { margin-top: 14px; }
 .artifact-package { margin-top: 12px; padding: 16px; }
 .artifact-package p { line-height: 1.6; }
-.library-filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin: 12px 0 8px; }
-.library-filters .runtime-field { margin: 0; }
-.library-filters label:first-child { flex: 0 1 420px; min-width: 0; }
 
 @media (max-width: 760px) {
   .runtime-raster-grid { grid-template-columns: 1fr; }
@@ -76,8 +78,7 @@
   .runtime-raster-loading { padding: 40px 10px; }
 }
 @media (max-width: 620px) {
-  .library-filters { align-items: stretch; flex-direction: column; gap: 10px; }
-  .library-filters label:first-child { flex: 0 1 auto; }
+  .library-search { width: 100%; }
   .runtime-details { grid-template-columns: 1fr; gap: 4px; }
   .runtime-details dd { margin-bottom: 8px; }
   .runtime-disconnected { flex-wrap: wrap; }
@@ -85,5 +86,3 @@
 }
 .runtime-file-thumbnail { display: flex; align-items: center; justify-content: center; flex-direction: column; width: 72px; height: 72px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--inset); color: var(--accent-ink); overflow: hidden; }
 .runtime-file-thumbnail img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; animation: pop-in var(--motion-slow) var(--motion-ease); }
-.bui-task-row[data-preview=true] .bui-task-main { grid-template-columns: 72px minmax(0, 1fr); align-items: center; }
-.bui-task-row[data-preview=true] .bui-task-footer { padding-left: 84px; }

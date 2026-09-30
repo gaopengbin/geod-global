@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
-import { Crop, Download, FolderOpen, RefreshCw, X, CheckCircle2, AlertCircle, HardDrive, Scan } from 'lucide-react';
+import { Crop, Download, FolderOpen, RefreshCw, Search, X, CheckCircle2, AlertCircle, HardDrive, Scan } from 'lucide-react';
 import { desktopAvailable, downloadableAssets, formatBytes, formatClassShare, runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
@@ -226,7 +226,7 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
       statusLabel: t(library ? mosaic && !projectClip ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
       progress: mosaic ? progress : derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
-      meta: library ? date(job.updatedAt) : mosaic && job.status === 'running' ? <>{t(job.validation || 'Checking downloaded sources')} · {number(job.bytesDownloaded)} / {number(job.totalBytes || 0)} {t('steps')}</> : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
+      meta: library ? t('Saved on {date}', { date: date(job.updatedAt) }) : mosaic && job.status === 'running' ? <>{t(job.validation || 'Checking downloaded sources')} · {number(job.bytesDownloaded)} / {number(job.totalBytes || 0)} {t('steps')}</> : derived ? t('Local raster processing') : <>{bytes(job.bytesDownloaded)}{job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{active && progress !== null ? ` · ${t('{percent}% transferred', { percent: number(Math.floor(progress)) })}` : ''}</>,
       details: library ? <Disclosure className="runtime-file-details" summary={t('File details and provenance')}>
         {derived && !mosaic && <DerivedArtifactDetails job={job}/>}
         {mosaic && <p>{t('{count} verified sources · {width} × {height} pixels · {crs}', { count: job.mosaicOutput?.sourceCount || 0, width: job.mosaicOutput?.width || 0, height: job.mosaicOutput?.height || 0, crs: job.mosaicOutput?.crs || '' })}</p>}
@@ -264,11 +264,19 @@ export function RuntimeTasks({ areaBounds, areaPolygon }) {
 }
 
 export function RuntimeLibrary({ areaBounds, areaPolygon }) {
-  const { jobs } = useContext(RuntimeContext);
+  const { jobs, health } = useContext(RuntimeContext);
   const { t, number } = useI18n();
   const [search, setSearch] = useState('');
   const [kind, setKind] = useState('all');
   const completed = jobs.filter(job => job.status === 'succeeded');
   const filtered = completed.filter(job => (kind === 'all' || (kind === 'derived') === (job.kind !== 'download')) && [job.title, job.itemId, job.id].some(value => String(value || '').toLocaleLowerCase().includes(search.trim().toLocaleLowerCase())));
-  return <section className="runtime-section runtime-library" aria-label={t('Local source files and outputs')}><header className="runtime-section-heading"><h2>{t('Available files')} <Badge>{number(completed.length)}</Badge></h2><Connection compact/></header>{completed.length > 0 && <><div className="library-filters"><label className="runtime-field">{t('Search local data')}<Input type="search" value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></label><label className="runtime-field">{t('Data type')}<Select value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All files')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select></label></div><p className="runtime-results-count">{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p></>}{filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}</section>;
+  return <section className="runtime-section runtime-library" aria-label={t('Local source files and outputs')}>
+    {!health && <Connection compact/>}
+    {completed.length > 0 && <div className="library-toolbar">
+      <div className="library-search"><Search size={16} aria-hidden="true"/><Input type="search" aria-label={t('Search local data')} value={search} placeholder={t('Search name, scene or job ID')} onChange={event => setSearch(event.target.value)}/></div>
+      <Select aria-label={t('File origin')} value={kind} onChange={event => setKind(event.target.value)}><option value="all">{t('All origins')}</option><option value="derived">{t('Derived outputs')}</option><option value="download">{t('Downloaded sources')}</option></Select>
+      <p className="runtime-results-count" role="status">{t('{shown} of {total} files', { shown: number(filtered.length), total: number(completed.length) })}</p>
+    </div>}
+    {filtered.length ? <RuntimeJobRows jobs={filtered} areaBounds={areaBounds} areaPolygon={areaPolygon} library/> : <Surface variant="inset" className="runtime-empty"><p>{t(completed.length ? 'No local files match these filters.' : 'Completed downloads appear here with their local path, source and checksum.')}</p></Surface>}
+  </section>;
 }

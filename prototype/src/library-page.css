@@ -1,0 +1,15 @@
+/* Library composition uses the same shared controls, tokens and spacing. */
+.data-library-page { display: grid; gap: 24px; }
+.data-library-heading { display: flex; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap; gap: 16px 24px; }
+.data-library-heading > div { max-width: 620px; }
+.data-library-heading h1 { margin: 0 0 6px; font-size: 24px; line-height: 32px; }
+.data-library-heading p { margin: 0; color: var(--ink-2); font-size: 13px; line-height: 20px; }
+.data-library-view { min-width: 0; animation: fade-up var(--motion-normal) var(--motion-ease); }
+.data-library-page > .bui-segmented { position: sticky; top: 0; z-index: 10; background: var(--page); }
+.data-library-page .library-toolbar, .data-library-page .projects-heading { position: sticky; top: 42px; z-index: 9; background: var(--page); padding: 12px 0; margin-top: -12px; }
+.data-library-page .projects-library, .data-library-page .runtime-library { margin: 0; }
+.data-library-page .projects-heading h2 { font-size: 14px; }
+@media (max-width: 600px) {
+  .data-library-page { gap: 20px; }
+  .data-library-heading { align-items: flex-start; }
+}

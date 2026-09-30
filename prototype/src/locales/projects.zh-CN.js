@@ -1,4 +1,12 @@
 export default {
+  'Projects': '工程',
+  'Library view': '数据视图',
+  'Explore imagery': '探索影像',
+  'Projects keep scenes together. Files are your downloaded sources and processing results.': '按工程继续下载与处理，或查看全部本地文件。',
+  'Search projects': '搜索工程',
+  'Search project name': '搜索工程名称',
+  '{count} projects': '{count} 个工程',
+  'No projects match this search.': '没有匹配的工程。',
   'Save selected as project': '将所选影像保存为工程',
   'Save scene project': '保存多景工程',
   'This project keeps the selected scene IDs, source links and area together for later downloads and processing.': '工程会保存所选景、源文件链接和区域，供后续批量下载与处理。',

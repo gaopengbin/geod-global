@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { ArrowLeft, Check, Compass, Download, FolderOpen, Layers, Pencil, RefreshCw, X } from 'lucide-react';
+import { ArrowLeft, Check, Compass, Download, FolderOpen, Layers, Pencil, RefreshCw, Search, X } from 'lucide-react';
 import { RuntimeContext } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
@@ -61,6 +61,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
   const [editingId, setEditingId] = useState('');
   const [draftName, setDraftName] = useState('');
   const [renameError, setRenameError] = useState('');
+  const [search, setSearch] = useState('');
   const refresh = useCallback(async () => {
     try { setProjects(await runtimeRequest('projects')); setError(''); }
     catch (cause) { setError(cause.message); }
@@ -83,23 +84,24 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
     catch (cause) { setError(cause.message); }
     finally { setBusy(''); }
   };
-  const shown = focusedProjectId ? projects.filter(project => project.id === focusedProjectId) : projects;
+  const shown = focusedProjectId ? projects.filter(project => project.id === focusedProjectId) : projects.filter(project => project.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()));
   return <section className={`projects-library${focusedProjectId ? ' projects-library-focused' : ''}`} aria-label={t('Saved scene projects')}>
     <div className="projects-heading">
       <div className={focusedProjectId ? 'project-navigation' : undefined}>
         {focusedProjectId ? <>
           {onContinueExploring && <Button size="sm" disabled={!shown.length} onClick={() => onContinueExploring(shown[0])}><Compass size={15}/>{t('Explore and add scenes to this project')}</Button>}
           <Button size="sm" variant="ghost" onClick={onCloseProject}><ArrowLeft size={15}/>{t('All projects')}</Button>
-        </> : <><h2>{t('Saved scene projects')}</h2><p>{t('Open a project to see its downloads, files and processing results.')}</p></>}
+        </> : <div className="project-search"><Search size={16} aria-hidden="true"/><Input type="search" aria-label={t('Search projects')} placeholder={t('Search project name')} value={search} onChange={event => setSearch(event.target.value)}/></div>}
       </div>
       <div className="project-navigation">
-        {!focusedProjectId && onContinueExploring && <Button size="sm" onClick={() => onContinueExploring()}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
         <Button size="icon" onClick={refresh} aria-label={t('Refresh projects')}><RefreshCw size={16}/></Button>
+        {!focusedProjectId && !loading && <span className="project-result-count">{t('{count} projects', { count: number(shown.length) })}</span>}
       </div>
     </div>
     {loading && <p role="status"><Spinner size={16}/>{t('Loading projects…')}</p>}
     {error && <p className="projects-error" role="alert">{error}</p>}
     {!loading && !projects.length && !error && <Surface className="projects-empty"><Layers size={19}/><span>{t('Choose scenes in Explore, then save them as a project.')}</span></Surface>}
+    {!loading && !focusedProjectId && projects.length > 0 && !shown.length && <Surface className="projects-empty"><Search size={19}/><span>{t('No projects match this search.')}</span></Surface>}
     {!loading && focusedProjectId && projects.length > 0 && !shown.length && <p role="alert">{t('This project could not be found. Return to all projects or refresh the list.')}</p>}
     <div className="projects-list">{shown.map(project => {
       const focused = focusedProjectId === project.id;
@@ -117,12 +119,11 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
         <div className="project-summary">
           <span className="project-icon" aria-hidden="true"><FolderOpen size={16}/></span>
           <div className="project-title-block">
-            {editingId === project.id ? <form className="project-rename" onSubmit={event => rename(event, project)}><label>{t('Project name')}<Input autoFocus value={draftName} maxLength={120} required onChange={event => setDraftName(event.target.value)}/></label><Button type="submit" size="icon" variant="primary" disabled={!draftName.trim() || Boolean(busy)} aria-label={t('Save project name')}><Check size={16}/></Button><Button type="button" size="icon" disabled={Boolean(busy)} aria-label={t('Cancel renaming')} onClick={() => { setEditingId(''); setRenameError(''); }}><X size={16}/></Button></form> : <div className="project-name"><h3>{project.name}</h3><Button size="icon" variant="quiet" aria-label={t('Rename project {name}', { name: project.name })} onClick={() => { setEditingId(project.id); setDraftName(project.name); setRenameError(''); }}><Pencil size={16}/></Button>{focused && <Badge>{t('Current project')}</Badge>}</div>}
-            <p className="project-metadata"><span>{number(project.scenes.length)} {t('scenes')}</span><span>{date(orderedDates[0])} – {date(orderedDates.at(-1))}</span></p>
+            {editingId === project.id ? <form className="project-rename" onSubmit={event => rename(event, project)}><label>{t('Project name')}<Input autoFocus value={draftName} maxLength={120} required onChange={event => setDraftName(event.target.value)}/></label><Button type="submit" size="icon" variant="primary" disabled={!draftName.trim() || Boolean(busy)} aria-label={t('Save project name')}><Check size={16}/></Button><Button type="button" size="icon" disabled={Boolean(busy)} aria-label={t('Cancel renaming')} onClick={() => { setEditingId(''); setRenameError(''); }}><X size={16}/></Button></form> : <div className="project-name"><h3>{focused ? project.name : <Button variant="link" className="project-open-title" aria-label={`${t('Open project')} · ${project.name}`} onClick={() => onOpenProject?.(project.id)}>{project.name}</Button>}</h3><Button size="icon" variant="quiet" aria-label={t('Rename project {name}', { name: project.name })} onClick={() => { setEditingId(project.id); setDraftName(project.name); setRenameError(''); }}><Pencil size={16}/></Button>{focused && <Badge>{t('Current project')}</Badge>}</div>}
+            <p className="project-metadata"><span>{number(project.scenes.length)} {t('scenes')}</span>{!focused && <span>{t('{count} files', { count: number(files.length) })}</span>}<span className="project-date-range">{date(orderedDates[0])}{orderedDates[0] !== orderedDates.at(-1) && <> – {date(orderedDates.at(-1))}</>}</span></p>
             {editingId === project.id && renameError && <p className="projects-error" role="alert">{renameError}</p>}
           </div>
         </div>
-        {!focused && <footer className="project-footer"><Button className="project-open" size="sm" onClick={() => onOpenProject?.(project.id)}><FolderOpen size={16}/>{t('Open project')}</Button><span className="project-file-count">{t('{count} files', { count: number(files.length) })}</span></footer>}
         {focused && <>
         <p className="project-guide">{t('Source files and results stay in this project. Download missing files, then clip a scene or mosaic multiple scenes to the saved area.')}</p>
         <Disclosure className="project-scenes" summary={t('Review selected scenes · {count}', { count: project.scenes.length })}>

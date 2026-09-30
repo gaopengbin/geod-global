@@ -40,12 +40,12 @@ import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
 import "./styles.css";
 import "./catalog.css";
 import { SAMPLE_BBOX, defaultLiveSearch, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
-import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
-import { ProjectsLibrary, SaveProjectButton } from "./projects-ui.jsx";
+import { RuntimeProvider, DownloadAssetButton, RuntimeTasks } from "./runtime-ui.jsx";
+import { SaveProjectButton } from "./projects-ui.jsx";
+import { LibraryPage } from "./library-page.jsx";
 import { scenesForDownload } from "./projects-client.js";
 import { runtimeRequest } from "./runtime-client.js";
 import { mergeProjectCatalog, projectCatalogScenes, projectExploreSearch } from "./project-explore.js";
-import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { ProxySettingsPanel } from "./proxy-ui.jsx";
 import { I18nProvider, useI18n } from "./i18n.jsx";
@@ -231,7 +231,8 @@ function App() {
     const change = () => {
       const next = pageFromHash();
       const project = projectFromHash();
-      const hash = "#" + encodeURIComponent(next) + (project ? `?project=${project}` : '');
+      const fileView = next === 'My Data' && new URLSearchParams(location.hash.split('?')[1] || '').get('view') === 'files';
+      const hash = "#" + encodeURIComponent(next) + (project ? `?project=${project}` : fileView ? '?view=files' : '');
       if (location.hash !== hash) history.replaceState(null, "", hash);
       setPage(next);
       setFocusedProjectId(next === 'My Data' ? project : null);
@@ -701,16 +702,7 @@ function App() {
               </>
             ) : page === "My Data" ? (
               <>
-                {!focusedProjectId && <PageHeading
-                  eyebrow={t("LOCAL LIBRARY")}
-                  title={t("My Data")}
-                  sub={t("Find downloaded files and clipping results ready to inspect or use.")}
-                />}
-                <ProjectsLibrary focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} onContinueExploring={continueInProject} />
-                {!focusedProjectId && <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />}
-                {!focusedProjectId && <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
-                  <ExecutableRecipes areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON} />
-                </Disclosure>}
+                <LibraryPage focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} onContinueExploring={continueInProject} areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON}/>
               </>
             ) : page === "Settings" ? (
               <>

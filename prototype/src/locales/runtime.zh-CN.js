@@ -1,4 +1,7 @@
 export default {
+  'File origin': '文件来源',
+  'All origins': '全部来源',
+  'Saved on {date}': '保存于 {date}',
   'Local SCL file preview': '本地 SCL 分类图预览',
   'Local true-color file preview': '本地真彩色文件预览',
   'File preview unavailable': '文件预览暂不可用',
