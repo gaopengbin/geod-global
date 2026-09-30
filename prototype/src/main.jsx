@@ -682,6 +682,7 @@ function App() {
           </div>
         ) : (
           <main className="content-page">
+            <div className="content-stack">
             {page === "Tasks" ? (
               <>
                 <PageHeading
@@ -753,6 +754,7 @@ function App() {
                 action={<Button onClick={() => go("Explore")}>{t("Explore")}</Button>}
               >{t("Use the navigation to return to your data.")}</EmptyState>
             )}
+            </div>
           </main>
         )}
         <footer className="statusbar">

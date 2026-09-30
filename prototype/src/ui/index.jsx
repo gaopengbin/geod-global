@@ -183,8 +183,8 @@ export function SidebarNav({ items = [], footerItems = [], brand, footer, ariaLa
 
 // Adapted from Beautiful UI TaskRows. Removed useTick, all demo records and
 // staged status transitions. Status/progress/actions are controlled inputs.
-export function TaskRows({ items = [], className, ariaLabel }) {
-  return <div data-slot="task-rows" role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} />)}</div>;
+export function TaskRows({ items = [], className, ariaLabel, layout = 'tasks' }) {
+  return <div data-slot="task-rows" data-layout={layout} role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} />)}</div>;
 }
 function TaskRow({ item }) {
   const { title, description, meta, status, statusLabel, progress, progressLabel, details, actions, icon: Icon } = item;

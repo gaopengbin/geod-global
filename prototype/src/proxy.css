@@ -1,5 +1,5 @@
 .proxy-settings { max-width: 850px; margin-top: 16px; padding: 24px; }
-.proxy-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.proxy-heading { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; }
 .proxy-heading h2 { margin: 0; font-size: 16px; }
 .proxy-heading p, .proxy-note { margin: 6px 0 0; color: var(--ink-2); font-size: 12px; line-height: 1.55; }
 .proxy-fields { display: grid; gap: 16px; margin-top: 22px; max-width: 520px; }

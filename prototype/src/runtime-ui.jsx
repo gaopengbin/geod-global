@@ -246,7 +246,7 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
       </> : null,
     };
   });
-  return <><TaskRows className="runtime-jobs" items={items} ariaLabel={t(library ? 'Local source files and outputs' : 'Local file tasks')}/>{inspect && <RasterDialog job={inspect} onClose={() => setInspect(null)}/>}</>;
+  return <><TaskRows className="runtime-jobs" layout={library ? 'files' : 'tasks'} items={items} ariaLabel={t(library ? 'Local source files and outputs' : 'Local file tasks')}/>{inspect && <RasterDialog job={inspect} onClose={() => setInspect(null)}/>}</>;
 }
 
 export function RuntimeTasks({ areaBounds, areaPolygon }) {
