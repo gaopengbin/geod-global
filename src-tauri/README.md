@@ -29,6 +29,13 @@ On Windows, this produces `target/debug/geod-global-desktop.exe`. It embeds
 without Vite. `tauri dev` uses the loopback Vite
 development server configured at port 4317.
 
+`npm run desktop:dev` is the primary development entry point. It owns Vite and
+opens the native window with hot reload; do not start a separate Vite process on
+the same port. Repeated launches restore and focus the existing main window
+through the official [Single Instance plugin](https://v2.tauri.app/plugin/single-instance/)
+before opening the exclusive runtime store. This adds no frontend filesystem,
+shell, remote-origin or IPC permissions.
+
 ## Windows evaluation packages
 
 From a source-frozen checkout, run:
