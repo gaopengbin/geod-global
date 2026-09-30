@@ -1,4 +1,9 @@
 export default {
+  'Local SCL file preview': '本地 SCL 分类图预览',
+  'Local true-color file preview': '本地真彩色文件预览',
+  'File preview unavailable': '文件预览暂不可用',
+  'Loading file preview': '正在生成文件预览',
+  'Retry file preview': '重试文件预览',
   'Create project and download · {count} scenes': '新建工程并下载 · {count} 景',
   'The chosen scenes, source links and search area will be saved together in one project.': '待下载影像、源文件链接和搜索范围将一起保存到同一个工程中。',
   'Download scope': '下载范围',

@@ -9,6 +9,7 @@ import { addProjectScenesAndQueue, createProjectAndQueue, MAX_PROJECT_SCENES, pr
 import { displayLocalPath } from './local-path.js';
 import { Badge, Button, Disclosure, Input, Modal, Select, Spinner, Surface, TaskRows } from './ui/index.jsx';
 import './runtime.css';
+import { FileThumbnail } from './file-thumbnail.jsx';
 
 const STATUS = { queued: 'Queued', running: 'Downloading', succeeded: 'Downloaded', failed: 'Failed', cancelled: 'Cancelled', interrupted: 'Interrupted' };
 
@@ -219,6 +220,7 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
       title: projectName && mosaic ? `${projectName} · ${t(projectClip ? 'Area clip' : 'Mosaic and clip')} · ${job.assetKey === 'scl' ? 'SCL' : t('True-color imagery')}` : job.title || job.itemId,
       description: library ? type : `${t(mosaic ? projectClip ? 'Project clip task' : 'Project mosaic task' : derived ? 'Raster clip task' : 'Source download task')}${mosaic && projectName ? '' : ` · ${job.itemId}`}`,
       icon: derived ? Crop : Download,
+      preview: library && ['scl', 'visual'].includes(job.assetKey) ? <FileThumbnail key={`${job.id}:${job.sha256}`} job={job}/> : null,
       status: job.status,
       statusTone: library ? 'neutral' : undefined,
       statusLabel: t(library ? mosaic && !projectClip ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),

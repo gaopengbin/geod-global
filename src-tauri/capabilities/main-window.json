@@ -20,6 +20,7 @@
     "allow-cancel-job",
     "allow-retry-job",
     "allow-inspect-raster",
+    "allow-file-thumbnail",
     "allow-sample-raster",
     "allow-prepare-artifact",
     "allow-reveal-artifact",

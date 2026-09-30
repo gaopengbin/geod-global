@@ -83,3 +83,7 @@
   .runtime-disconnected { flex-wrap: wrap; }
   .runtime-dialog-actions > * { flex: 1; }
 }
+.runtime-file-thumbnail { display: flex; align-items: center; justify-content: center; flex-direction: column; width: 72px; height: 72px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--inset); color: var(--accent-ink); overflow: hidden; }
+.runtime-file-thumbnail img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
+.bui-task-row[data-preview=true] .bui-task-main { grid-template-columns: 72px minmax(0, 1fr); align-items: center; }
+.bui-task-row[data-preview=true] .bui-task-footer { padding-left: 84px; }

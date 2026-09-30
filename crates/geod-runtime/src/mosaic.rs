@@ -358,10 +358,10 @@ impl JobManager {
     }
 }
 
-struct SourceRaster {
-    decoder: Decoder<BufReader<File>>,
-    width: u32,
-    height: u32,
+pub(crate) struct SourceRaster {
+    pub(crate) decoder: Decoder<BufReader<File>>,
+    pub(crate) width: u32,
+    pub(crate) height: u32,
     crs: String,
     bounds: [f64; 4],
     pixel_size: [f64; 2],
@@ -369,7 +369,7 @@ struct SourceRaster {
     bands: usize,
 }
 
-fn source_raster(
+pub(crate) fn source_raster(
     root: &Path,
     job: &Job,
     key: &str,

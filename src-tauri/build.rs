@@ -17,6 +17,7 @@ fn main() {
             "cancel_job",
             "retry_job",
             "inspect_raster",
+            "file_thumbnail",
             "sample_raster",
             "prepare_artifact",
             "reveal_artifact",

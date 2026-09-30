@@ -165,6 +165,14 @@ async fn inspect_raster(
 }
 
 #[tauri::command]
+async fn file_thumbnail(
+    id: String,
+    manager: State<'_, JobManager>,
+) -> Result<geod_runtime::thumbnail::FileThumbnail, String> {
+    manager.file_thumbnail(&id).await
+}
+
+#[tauri::command]
 async fn sample_raster(
     id: String,
     x: f64,
@@ -308,6 +316,7 @@ fn main() {
             cancel_job,
             retry_job,
             inspect_raster,
+            file_thumbnail,
             sample_raster,
             prepare_artifact,
             reveal_artifact,

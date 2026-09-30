@@ -12,7 +12,7 @@
 .bui-button[data-selected=true] { color: var(--accent-ink); background: var(--accent-tint); box-shadow: var(--shadow-hairline); }
 .bui-button:focus-visible, .bui-sidebar-row:focus-visible, .bui-segmented-item:focus-visible, .bui-disclosure-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .bui-badge { color: var(--ink-2); background: var(--hover); }
-.bui-badge[data-tone=green], .bui-badge[data-tone=success] { color: var(--green); background: var(--green-tint); }
+.bui-badge[data-tone=green], .bui-badge[data-tone=success] { color: var(--accent-ink); background: var(--accent-tint); }
 .bui-badge[data-tone=red], .bui-badge[data-tone=error], .bui-badge[data-tone=destructive] { color: var(--red); background: var(--red-tint); }
 .bui-badge[data-tone=blue], .bui-badge[data-tone=accent] { color: var(--accent-ink); background: var(--accent-tint); }
 .bui-badge[data-tone=orange], .bui-badge[data-tone=warning], .bui-badge[data-tone=amber] { color: var(--orange); background: var(--orange-tint); }
@@ -98,7 +98,7 @@
 .bui-task-row { min-width: 0; display: grid; gap: 8px; padding: 12px 16px; border: 1px solid var(--line-soft); border-radius: var(--radius-card); background: var(--surface); }
 .bui-task-main { min-width: 0; display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: start; gap: 12px; }
 .bui-task-icon { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: var(--radius-control); color: var(--ink-2); background: var(--inset); }
-.bui-task-icon[data-tone=green] { color: var(--green); background: var(--green-tint); }
+.bui-task-icon[data-tone=green] { color: var(--accent-ink); background: var(--accent-tint); }
 .bui-task-icon[data-tone=red] { color: var(--red); background: var(--red-tint); }
 .bui-task-icon[data-tone=blue] { color: var(--accent); background: var(--accent-tint); }
 .bui-task-copy { min-width: 0; }

@@ -8,7 +8,7 @@
 .topbar-left .breadcrumb strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .topbar .top-actions { flex-shrink: 0; gap: 8px; }
 .projects-heading h2, .project-summary h3 { margin: 0; font-size: 16px; }
-.projects-heading p, .project-summary p { margin: 4px 0 0; color: var(--text-muted, #65707a); font-size: 12px; }
+.projects-heading p, .project-summary p { margin: 4px 0 0; color: var(--ink-2); font-size: 12px; }
 .projects-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 12px; align-items: start; }
 .projects-list:has(.project-row-focused) { grid-template-columns: minmax(0, 1fr); }
 .project-row { display: grid; gap: 8px; padding: 12px 16px; border: 1px solid var(--line-soft); box-shadow: none; }
@@ -24,7 +24,7 @@
 .project-busy { display: flex; align-items: center; gap: 7px; font-size: 12px; }
 .projects-empty { display: flex; gap: 10px; align-items: center; padding: 18px; }
 .projects-error { color: #b42318; }
-.project-output-status { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted, #65707a); }
+.project-output-status { display: flex; gap: 16px; font-size: 12px; color: var(--ink-2); }
 .project-scenes ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 0 20px; margin: 8px 0 0; padding: 0; list-style: none; max-height: 240px; overflow: auto; }
 .project-scenes li { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--border-subtle, #e8eaed); font-size: 12px; }
 .project-scenes li code { overflow-wrap: anywhere; }

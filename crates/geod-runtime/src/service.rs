@@ -273,6 +273,17 @@ async fn raster(
         .map_err(api_error)
 }
 
+async fn thumbnail(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Json<crate::thumbnail::FileThumbnail>, ApiError> {
+    manager
+        .file_thumbnail(&id)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+
 #[derive(serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 struct PixelQuery {
@@ -381,6 +392,7 @@ pub fn router(manager: JobManager) -> Router {
         .route("/jobs/{id}/cancel", post(cancel))
         .route("/jobs/{id}/retry", post(retry))
         .route("/jobs/{id}/raster", get(raster))
+        .route("/jobs/{id}/thumbnail", get(thumbnail))
         .route("/jobs/{id}/pixel", get(pixel))
         .route("/jobs/{id}/file", get(download_derived))
         .route("/jobs/{id}/metadata", get(download_mosaic_metadata))

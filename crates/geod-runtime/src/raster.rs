@@ -83,7 +83,7 @@ pub(crate) struct DecodedRaster {
 }
 
 // Standard SCL class values and display colors, independently applied to decoded pixels.
-const PALETTE: [(&str, [u8; 3]); 12] = [
+pub(crate) const PALETTE: [(&str, [u8; 3]); 12] = [
     ("No data", [0, 0, 0]),
     ("Saturated or defective", [255, 0, 0]),
     ("Terrain shadow", [47, 47, 47]),

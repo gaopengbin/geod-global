@@ -4,6 +4,17 @@ export function desktopAvailable() {
   return Boolean(globalThis.window?.__TAURI__?.core?.invoke);
 }
 
+export function validateFileThumbnail(data, id) {
+  if (!data || data.jobId !== id || !/^[a-f0-9]{64}$/i.test(data.sha256 || '')
+    || !Number.isSafeInteger(data.width) || data.width < 1 || data.width > 160
+    || !Number.isSafeInteger(data.height) || data.height < 1 || data.height > 160
+    || typeof data.dataUrl !== 'string' || data.dataUrl.length > 200000
+    || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(data.dataUrl)) {
+    throw new Error('The file preview returned invalid data.');
+  }
+  return data;
+}
+
 function waitForNative(promise, signal) {
   return new Promise((resolve, reject) => {
     const abort = () => reject(signal.reason || new DOMException('Request cancelled', 'AbortError'));
@@ -36,22 +47,22 @@ export function validateRasterInspection(data) {
 }
 
 export async function runtimeRequest(operation, payload, signal) {
-  const commands = { health: 'health', diagnostics: 'diagnostics', proxy: 'get_proxy_settings', saveProxy: 'save_proxy_settings', testProxy: 'test_proxy_settings', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster', pixel: 'sample_raster', package: 'prepare_artifact', revealPackage: 'reveal_artifact', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe', projects: 'list_projects', createProject: 'create_project', renameProject: 'rename_project', addProjectScenes: 'add_project_scenes', downloadProject: 'download_project', mosaicProject: 'mosaic_project' };
+  const commands = { health: 'health', diagnostics: 'diagnostics', proxy: 'get_proxy_settings', saveProxy: 'save_proxy_settings', testProxy: 'test_proxy_settings', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', raster: 'inspect_raster', thumbnail: 'file_thumbnail', pixel: 'sample_raster', package: 'prepare_artifact', revealPackage: 'reveal_artifact', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe', projects: 'list_projects', createProject: 'create_project', renameProject: 'rename_project', addProjectScenes: 'add_project_scenes', downloadProject: 'download_project', mosaicProject: 'mosaic_project' };
   if (!commands[operation]) throw new Error('Unknown task service operation.');
   const recipeOperation = ['planRecipe', 'saveRecipe', 'runRecipe'].includes(operation);
-  const timeout = AbortSignal.timeout(['raster', 'pixel', 'package', 'revealPackage', 'downloadProject', 'mosaicProject'].includes(operation) || recipeOperation ? 60000 : operation === 'testProxy' ? 30000 : 10000);
+  const timeout = AbortSignal.timeout(['raster', 'thumbnail', 'pixel', 'package', 'revealPackage', 'downloadProject', 'mosaicProject'].includes(operation) || recipeOperation ? 60000 : operation === 'testProxy' ? 30000 : 10000);
   const requestSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
   requestSignal.throwIfAborted();
   if (desktopAvailable()) {
     try {
       const result = await waitForNative(window.__TAURI__.core.invoke(commands[operation], operation === 'addProjectScenes' ? { id: payload.id, request: { scenes: payload.scenes } } : ['create', 'createProject'].includes(operation) ? { request: payload } : ['saveProxy', 'testProxy'].includes(operation) ? { settings: payload } : recipeOperation ? { recipe: payload } : payload || {}), requestSignal);
-      return operation === 'raster' ? validateRasterInspection(result) : result;
+      return operation === 'thumbnail' ? validateFileThumbnail(result, payload.id) : operation === 'raster' ? validateRasterInspection(result) : result;
     } catch (error) {
       if (error?.name === 'AbortError' || error?.name === 'TimeoutError') throw error;
       throw new Error(typeof error === 'string' ? error : error?.message || 'The desktop task command failed.');
     }
   }
-  const routes = { health: '/health', diagnostics: '/diagnostics', proxy: '/proxy', saveProxy: '/proxy', testProxy: '/proxy/test', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster`, pixel: `/jobs/${encodeURIComponent(payload?.id)}/pixel?${new URLSearchParams({x: String(payload?.x), y: String(payload?.y)})}`, package: `/jobs/${encodeURIComponent(payload?.id)}/package`, recipes: '/recipes', planRecipe: '/recipes/plan', saveRecipe: '/recipes', runRecipe: '/recipes/run', projects: '/projects', createProject: '/projects', renameProject: `/projects/${encodeURIComponent(payload?.id)}/rename`, addProjectScenes: `/projects/${encodeURIComponent(payload?.id)}/scenes`, downloadProject: `/projects/${encodeURIComponent(payload?.id)}/downloads`, mosaicProject: `/projects/${encodeURIComponent(payload?.id)}/mosaics` };
+  const routes = { thumbnail: `/jobs/${encodeURIComponent(payload?.id)}/thumbnail`, health: '/health', diagnostics: '/diagnostics', proxy: '/proxy', saveProxy: '/proxy', testProxy: '/proxy/test', list: '/jobs', create: '/jobs', cancel: `/jobs/${encodeURIComponent(payload?.id)}/cancel`, retry: `/jobs/${encodeURIComponent(payload?.id)}/retry`, raster: `/jobs/${encodeURIComponent(payload?.id)}/raster`, pixel: `/jobs/${encodeURIComponent(payload?.id)}/pixel?${new URLSearchParams({x: String(payload?.x), y: String(payload?.y)})}`, package: `/jobs/${encodeURIComponent(payload?.id)}/package`, recipes: '/recipes', planRecipe: '/recipes/plan', saveRecipe: '/recipes', runRecipe: '/recipes/run', projects: '/projects', createProject: '/projects', renameProject: `/projects/${encodeURIComponent(payload?.id)}/rename`, addProjectScenes: `/projects/${encodeURIComponent(payload?.id)}/scenes`, downloadProject: `/projects/${encodeURIComponent(payload?.id)}/downloads`, mosaicProject: `/projects/${encodeURIComponent(payload?.id)}/mosaics` };
   if (!routes[operation]) throw new Error('Open the desktop app to reveal local files.');
   const mutation = ['create', 'cancel', 'retry', 'package', 'createProject', 'renameProject', 'addProjectScenes', 'downloadProject', 'mosaicProject', 'saveProxy', 'testProxy'].includes(operation) || recipeOperation;
   const response = await fetch(SERVICE + routes[operation], {
@@ -62,7 +73,7 @@ export async function runtimeRequest(operation, payload, signal) {
   });
   const body = await response.json();
   if (!response.ok) throw new Error(typeof body.error === 'string' ? body.error : body.message || `Task service returned ${response.status}`);
-  return operation === 'raster' ? validateRasterInspection(body) : body;
+  return operation === 'thumbnail' ? validateFileThumbnail(body, payload.id) : operation === 'raster' ? validateRasterInspection(body) : body;
 }
 
 export function downloadableAssets(scene) {

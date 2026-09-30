@@ -28,11 +28,11 @@ export const buttonVariants = cva(
   'inline-flex items-center justify-center font-medium select-none transition-[transform,background-color,opacity] duration-150 ease-out active:scale-[0.96] disabled:opacity-50 disabled:pointer-events-none',
   { variants: {
     variant: {
-      primary: `bg-ink text-canvas hover:opacity-90 dark:bg-ink dark:text-canvas ${filledShadow}`,
+      primary: `bg-primary text-white hover:bg-primary-hover ${filledShadow}`,
       secondary: 'bg-surface text-ink shadow-btn hover:bg-inset aria-expanded:bg-hover',
       ghost: 'bg-hover-2 text-ink hover:bg-line-strong',
-      accent: `bg-accent text-white hover:bg-accent-ink ${filledShadow}`,
-      success: `bg-green text-white hover:brightness-95 ${filledShadow}`,
+      accent: `bg-primary text-white hover:bg-primary-hover ${filledShadow}`,
+      success: `bg-primary text-white hover:bg-primary-hover ${filledShadow}`,
       quiet: 'text-ink hover:bg-hover',
       link: 'text-accent-ink hover:underline underline-offset-4',
       destructive: 'bg-red-tint text-red hover:bg-red hover:text-white',
@@ -188,12 +188,12 @@ export function TaskRows({ items = [], className, ariaLabel, layout = 'tasks' })
   return <div data-slot="task-rows" data-layout={layout} role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} />)}</div>;
 }
 function TaskRow({ item }) {
-  const { title, description, meta, status, statusLabel, statusTone, progress, progressLabel, details, actions, icon: Icon } = item;
+  const { title, description, meta, status, statusLabel, statusTone, progress, progressLabel, details, actions, preview, icon: Icon } = item;
   const StatusIcon = Icon || (status === 'succeeded' ? Check : ['failed', 'interrupted'].includes(status) ? CircleAlert : status === 'cancelled' ? X : Clock3);
-  const tone = status === 'succeeded' ? 'green' : ['failed', 'interrupted'].includes(status) ? 'red' : status === 'running' ? 'blue' : 'neutral';
-  return <article data-slot="task-row" role="listitem" data-status={status} className="bui-task-row">
+  const tone = ['succeeded', 'running'].includes(status) ? 'blue' : ['failed', 'interrupted'].includes(status) ? 'red' : 'neutral';
+  return <article data-slot="task-row" role="listitem" data-status={status} data-preview={preview ? true : undefined} className="bui-task-row">
     <div className="bui-task-main">
-      <span className="bui-task-icon" data-tone={tone}>{status === 'running' ? <Spinner /> : <StatusIcon size={16} aria-hidden="true" />}</span>
+      {preview || <span className="bui-task-icon" data-tone={tone}>{status === 'running' ? <Spinner /> : <StatusIcon size={16} aria-hidden="true" />}</span>}
       <div className="bui-task-copy"><strong>{title}</strong><div className="bui-task-info">{description && <p>{description}</p>}{meta && <span className="bui-task-meta">{meta}</span>}{statusLabel && <Badge tone={statusTone || tone}>{statusLabel}</Badge>}</div></div>
     </div>
     {status === 'running' && <Progress value={progress} aria-label={progressLabel} />}

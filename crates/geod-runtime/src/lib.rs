@@ -11,6 +11,7 @@ pub mod projects;
 pub mod proxy;
 pub mod raster;
 pub mod service;
+pub mod thumbnail;
 pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
 pub use projects::{AddProjectScenesRequest, CreateProjectRequest, Project, ProjectDownloads};
 pub use proxy::{ProxySettings, ProxyTest};
@@ -122,6 +123,7 @@ struct Inner {
     proxy_settings: Mutex<ProxySettings>,
     permits: Semaphore,
     raster_permits: Arc<Semaphore>,
+    thumbnail_permits: Arc<Semaphore>,
     _directory_lock: std::fs::File,
     #[cfg(test)]
     fixture_origin: Option<String>,
@@ -371,6 +373,7 @@ impl JobManager {
                 proxy_settings: Mutex::new(proxy_settings),
                 permits: Semaphore::new(2),
                 raster_permits: Arc::new(Semaphore::new(1)),
+                thumbnail_permits: Arc::new(Semaphore::new(1)),
                 _directory_lock: directory_lock,
                 #[cfg(test)]
                 fixture_origin,
