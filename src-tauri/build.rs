@@ -1,6 +1,7 @@
 fn main() {
     tauri_build::try_build(tauri_build::Attributes::new().app_manifest(
         tauri_build::AppManifest::new().commands(&[
+            "set_desktop_locale",
             "health",
             "diagnostics",
             "get_proxy_settings",

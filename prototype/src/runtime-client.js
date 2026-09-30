@@ -4,6 +4,12 @@ export function desktopAvailable() {
   return Boolean(globalThis.window?.__TAURI__?.core?.invoke);
 }
 
+export async function syncDesktopLocale(locale) {
+  if (!['en', 'zh-CN'].includes(locale)) throw new Error('Unsupported desktop language.');
+  if (!desktopAvailable()) return;
+  await window.__TAURI__.core.invoke('set_desktop_locale', { locale });
+}
+
 export function validateFileThumbnail(data, id) {
   if (!data || data.jobId !== id || !/^[a-f0-9]{64}$/i.test(data.sha256 || '')
     || !Number.isSafeInteger(data.width) || data.width < 1 || data.width > 160

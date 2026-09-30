@@ -44,7 +44,7 @@ import { RuntimeProvider, DownloadAssetButton, RuntimeTasks } from "./runtime-ui
 import { SaveProjectButton } from "./projects-ui.jsx";
 import { LibraryPage } from "./library-page.jsx";
 import { scenesForDownload } from "./projects-client.js";
-import { runtimeRequest } from "./runtime-client.js";
+import { desktopAvailable, runtimeRequest } from "./runtime-client.js";
 import { mergeProjectCatalog, projectCatalogScenes, projectExploreSearch } from "./project-explore.js";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { ProxySettingsPanel } from "./proxy-ui.jsx";
@@ -736,6 +736,13 @@ function App() {
                       <option value="dark">{t("Dark")}</option>
                     </Select>
                   </div>
+                  {desktopAvailable() && <div>
+                    <span>
+                      <strong>{t("Run in the background")}</strong>
+                      <small>{t("Closing the window keeps downloads and processing running in the system tray. Click the tray icon to reopen; choose Quit to stop tasks and exit.")}</small>
+                    </span>
+                    <Badge>{t("Enabled")}</Badge>
+                  </div>}
                 </Surface>
                 <ProxySettingsPanel />
                 <Disclosure className="settings-diagnostics" summary={t("Local diagnostics · advanced")}><DiagnosticsPanel /></Disclosure>

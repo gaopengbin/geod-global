@@ -113,6 +113,17 @@ pub struct RuntimeHealth {
 struct Store {
     jobs: BTreeMap<String, Job>,
     active: BTreeMap<String, CancellationToken>,
+    closing: bool,
+}
+
+impl Store {
+    fn accepting_jobs(&self) -> Result<()> {
+        if self.closing {
+            Err("The runtime is shutting down; reopen the application to start tasks".into())
+        } else {
+            Ok(())
+        }
+    }
 }
 
 struct Inner {
@@ -356,6 +367,11 @@ impl JobManager {
                 job.manifest_path = None;
                 job.mosaic_output = None;
             }
+            if job.kind == "download" && job.status != JobStatus::Succeeded {
+                // A forcibly terminated transfer must not leave an orphaned partial.
+                let _ =
+                    tokio::fs::remove_file(root.join("assets").join(format!("{id}.part"))).await;
+            }
         }
         let recipes = processing::load_recipes(&root).await?;
         let projects = projects::load_projects(&root, fixture_origin.as_deref()).await?;
@@ -367,6 +383,7 @@ impl JobManager {
                 store: Mutex::new(Store {
                     jobs,
                     active: BTreeMap::new(),
+                    closing: false,
                 }),
                 recipes: Mutex::new(recipes),
                 projects: Mutex::new(projects),
@@ -573,6 +590,7 @@ impl JobManager {
     pub async fn create(&self, request: CreateJobRequest) -> Result<Job> {
         self.validate(&request)?;
         let mut store = self.inner.store.lock().await;
+        store.accepting_jobs()?;
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
         }
@@ -611,6 +629,7 @@ impl JobManager {
 
     pub async fn retry(&self, id: &str) -> Result<Job> {
         let mut store = self.inner.store.lock().await;
+        store.accepting_jobs()?;
         if store.active.contains_key(id) {
             return Err("This operation is still finishing; retry shortly".into());
         }
@@ -695,7 +714,7 @@ impl JobManager {
             let mut store = manager.inner.store.lock().await;
             if let Err(error) = result {
                 if let Some(job) = store.jobs.get_mut(&id) {
-                    if job.status != JobStatus::Cancelled {
+                    if active(&job.status) {
                         job.status = JobStatus::Failed;
                         job.error = Some(error);
                         job.updated_at = now();
@@ -733,6 +752,36 @@ impl JobManager {
             }
             tokio::time::sleep(Duration::from_millis(40)).await;
         }
+    }
+
+    /// Stop accepting jobs, interrupt unfinished work and wait for its actual
+    /// cleanup. Closing a window to the tray must never call this method.
+    /// Reopening the store makes interrupted jobs available for explicit retry.
+    pub async fn shutdown(&self) -> Result<()> {
+        let ids = {
+            let mut store = self.inner.store.lock().await;
+            store.closing = true;
+            for job in store.jobs.values_mut() {
+                if active(&job.status) {
+                    job.status = JobStatus::Interrupted;
+                    job.error = Some("The application exited before this operation completed. Retry restarts the operation.".into());
+                    job.updated_at = now();
+                }
+            }
+            // Cancel even workers whose user-cancelled record is already terminal.
+            for token in store.active.values() {
+                token.cancel();
+            }
+            if let Err(error) = self.persist(&store.jobs).await {
+                // Still drain workers and retry the durable write after cleanup.
+                eprintln!("Cannot save initial shutdown state: {error}");
+            }
+            store.active.keys().cloned().collect::<Vec<_>>()
+        };
+        for id in ids {
+            self.wait(&id).await?;
+        }
+        self.persist(&self.inner.store.lock().await.jobs).await
     }
 
     async fn progress(&self, id: &str, bytes: u64, total: Option<u64>) -> Result<()> {
@@ -817,7 +866,7 @@ impl JobManager {
         let sha256 = format!("{:x}", hasher.finalize());
         let mut store = self.inner.store.lock().await;
         let record = store.jobs.get_mut(id).ok_or("Unknown job")?;
-        if token.is_cancelled() || record.status == JobStatus::Cancelled {
+        if token.is_cancelled() || !active(&record.status) {
             return Err("Transfer cancelled".into());
         }
         let before_commit = record.clone();

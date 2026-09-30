@@ -141,6 +141,7 @@ impl JobManager {
             return Err("Selected scenes span multiple UTM zones; split them into one project per CRS before mosaicking".into());
         }
         let mut store = self.inner.store.lock().await;
+        store.accepting_jobs()?;
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
         }
@@ -1104,6 +1105,69 @@ mod tests {
         let bytes = buffer.as_bytes();
         assert_eq!(&bytes[0..3], &[1, 2, 3]);
         assert_eq!(&bytes[31 * 3..32 * 3], &[0, 0, 0]);
+    }
+
+    #[tokio::test]
+    async fn shutdown_drains_queued_mosaic_and_blocks_project_enqueues() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let bytes = crate::raster::tests::fixture(2, 2, &[1, 2, 3, 4], 32610, false);
+        let mut source = crate::raster::tests::record(manager.storage_root(), &bytes);
+        source.item_id = "SCENE_0".into();
+        source.href = format!(
+            "https://{}/sentinel-s2-l2a-cogs/10/S/EG/2026/9/SCENE_0/SCL.tif",
+            crate::SOURCE_HOST
+        );
+        let request = project(&[source.clone()], "scl");
+        {
+            let mut store = manager.inner.store.lock().await;
+            store.jobs.insert(source.id.clone(), source.clone());
+            manager.persist(&store.jobs).await.unwrap();
+        }
+        let project = manager
+            .create_project(CreateProjectRequest {
+                name: request.name,
+                bounds: request.bounds,
+                geometry: None,
+                scenes: request.scenes,
+            })
+            .await
+            .unwrap();
+        let permit = manager
+            .inner
+            .raster_permits
+            .clone()
+            .acquire_owned()
+            .await
+            .unwrap();
+        let mosaic = manager
+            .run_project_mosaic(&project.id, "scl")
+            .await
+            .unwrap();
+        tokio::time::timeout(Duration::from_secs(3), manager.shutdown())
+            .await
+            .unwrap()
+            .unwrap();
+        let mosaic = manager.wait(&mosaic.id).await.unwrap();
+        assert_eq!(mosaic.status, JobStatus::Interrupted);
+        assert!(mosaic.mosaic_output.is_none() && mosaic.manifest_path.is_none());
+        assert!(!directory
+            .path()
+            .join("assets")
+            .join(format!("{}.tif", mosaic.id))
+            .exists());
+        assert_eq!(std::fs::read(source.output_path.unwrap()).unwrap(), bytes);
+        assert!(manager
+            .run_project_mosaic(&project.id, "scl")
+            .await
+            .unwrap_err()
+            .contains("shutting down"));
+        assert!(manager
+            .enqueue_project(&project.id, "scl")
+            .await
+            .unwrap_err()
+            .contains("shutting down"));
+        drop(permit);
     }
 
     #[tokio::test]

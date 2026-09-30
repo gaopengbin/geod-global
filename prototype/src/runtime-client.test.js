@@ -1,6 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { downloadableAssets, formatBytes, formatClassShare, runtimeRequest, validateRasterInspection } from './runtime-client.js';
+import { downloadableAssets, formatBytes, formatClassShare, runtimeRequest, syncDesktopLocale, validateRasterInspection } from './runtime-client.js';
+
+test('tray language synchronization is desktop-only and accepts supported languages', async () => {
+  const previousFetch = globalThis.fetch;
+  globalThis.fetch = () => { throw new Error('Browser must not contact a service for tray settings'); };
+  try {
+    await syncDesktopLocale('en');
+    const calls = [];
+    globalThis.window = { __TAURI__: { core: { invoke: async (...args) => calls.push(args) } } };
+    await syncDesktopLocale('zh-CN');
+    await syncDesktopLocale('en');
+    await assert.rejects(syncDesktopLocale('../invalid'), /Unsupported/);
+    assert.deepEqual(calls, [['set_desktop_locale', { locale: 'zh-CN' }], ['set_desktop_locale', { locale: 'en' }]]);
+  } finally { delete globalThis.window; globalThis.fetch = previousFetch; }
+});
 
 test('only supported original Sentinel assets enter download review', () => {
   const allowed = 'https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/test/SCL.tif';

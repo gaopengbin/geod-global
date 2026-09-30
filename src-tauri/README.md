@@ -36,6 +36,15 @@ through the official [Single Instance plugin](https://v2.tauri.app/plugin/single
 before opening the exclusive runtime store. This adds no frontend filesystem,
 shell, remote-origin or IPC permissions.
 
+Closing the main window keeps the process in the native system tray; downloads
+and raster workers continue independently of the webview's timers. Click the
+tray icon to restore the window. Its localized menu can open the task page or
+explicitly quit. Only explicit exit quiesces IPC, interrupts unfinished jobs and
+waits for worker cleanup and saved state. Reopen to retry interrupted tasks from
+the start. Completed files and user-cancelled statuses remain intact. The tray
+uses Tauri's Rust API, with no frontend window/tray control capability. Settings
+explains this behavior only inside the desktop.
+
 ## Windows evaluation packages
 
 From a source-frozen checkout, run:

@@ -325,6 +325,7 @@ impl JobManager {
             }
         }
         let mut store = self.inner.store.lock().await;
+        store.accepting_jobs()?;
         let mut jobs = Vec::with_capacity(project.scenes.len());
         let mut created = Vec::new();
         for scene in &project.scenes {

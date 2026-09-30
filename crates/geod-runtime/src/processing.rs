@@ -235,6 +235,7 @@ impl JobManager {
     pub async fn run_recipe(&self, recipe: RasterRecipe) -> Result<Job> {
         recipe.validate()?;
         let mut store = self.inner.store.lock().await;
+        store.accepting_jobs()?;
         let source = validate_source(&recipe, store.jobs.get(&recipe.source.job_id))?;
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());

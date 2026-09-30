@@ -265,6 +265,8 @@ async fn restart_marks_unfinished_jobs_interrupted_without_resuming() {
         store.jobs.get_mut(&job.id).unwrap().status = JobStatus::Running;
         manager.persist(&store.jobs).await.unwrap();
     }
+    let partial = dir.path().join("assets").join(format!("{}.part", job.id));
+    std::fs::write(&partial, b"interrupted transfer").unwrap();
     drop(manager);
     let reopened = JobManager::open_inner(dir.path(), Some(server.origin.clone()))
         .await
@@ -273,11 +275,179 @@ async fn restart_marks_unfinished_jobs_interrupted_without_resuming() {
     assert_eq!(recovered.status, JobStatus::Interrupted);
     assert!(recovered.output_path.is_none());
     assert!(recovered.sha256.is_none());
+    assert!(
+        !partial.exists(),
+        "restart must remove the interrupted transfer's partial file"
+    );
     reopened.retry(&job.id).await.unwrap();
     assert_eq!(
         settled(&reopened, &job.id).await.status,
         JobStatus::Succeeded
     );
+}
+
+#[tokio::test]
+async fn shutdown_drains_running_and_queued_downloads_and_preserves_completed_files() {
+    let server = fixture().await;
+    let dir = tempfile::tempdir().unwrap();
+    let manager = JobManager::open_inner(dir.path(), Some(server.origin.clone()))
+        .await
+        .unwrap();
+    let completed = manager
+        .create(request(&server.origin, "/ok"))
+        .await
+        .unwrap();
+    let completed = manager.wait(&completed.id).await.unwrap();
+    let first = manager
+        .create(request(&server.origin, "/slow"))
+        .await
+        .unwrap();
+    let second = manager
+        .create(request(&server.origin, "/slow"))
+        .await
+        .unwrap();
+    tokio::time::timeout(Duration::from_secs(3), async {
+        while manager.get(&first.id).await.unwrap().bytes_downloaded == 0
+            || manager.get(&second.id).await.unwrap().bytes_downloaded == 0
+        {
+            tokio::time::sleep(Duration::from_millis(10)).await;
+        }
+    })
+    .await
+    .unwrap();
+    let queued = manager
+        .create(request(&server.origin, "/slow"))
+        .await
+        .unwrap();
+    assert_eq!(
+        manager.get(&queued.id).await.unwrap().status,
+        JobStatus::Queued
+    );
+    tokio::time::timeout(Duration::from_secs(3), manager.shutdown())
+        .await
+        .unwrap()
+        .unwrap();
+    assert!(manager.inner.store.lock().await.active.is_empty());
+    for job in [&first, &second, &queued] {
+        let (record, settled) = manager.get_with_settled(&job.id).await.unwrap();
+        assert!(settled);
+        assert_eq!(record.status, JobStatus::Interrupted);
+        assert!(record.output_path.is_none() && record.sha256.is_none());
+        assert!(!dir
+            .path()
+            .join("assets")
+            .join(format!("{}.part", job.id))
+            .exists());
+    }
+    assert_eq!(
+        std::fs::read(completed.output_path.as_ref().unwrap()).unwrap(),
+        JPEG
+    );
+    assert_eq!(
+        manager.get(&completed.id).await.unwrap().sha256,
+        completed.sha256
+    );
+    assert!(manager
+        .create(request(&server.origin, "/ok"))
+        .await
+        .unwrap_err()
+        .contains("shutting down"));
+    assert!(manager
+        .retry(&first.id)
+        .await
+        .unwrap_err()
+        .contains("shutting down"));
+    manager.shutdown().await.unwrap(); // Repeated exit is idempotent.
+    drop(manager);
+    let reopened = JobManager::open_inner(dir.path(), Some(server.origin.clone()))
+        .await
+        .unwrap();
+    assert_eq!(
+        reopened.get(&first.id).await.unwrap().status,
+        JobStatus::Interrupted
+    );
+    assert_eq!(reopened.retry(&queued.id).await.unwrap().attempts, 2);
+    reopened.cancel(&queued.id).await.unwrap();
+    reopened.wait(&queued.id).await.unwrap();
+}
+
+#[tokio::test]
+async fn shutdown_preserves_user_cancel_and_drains_even_when_state_cannot_be_written() {
+    let server = fixture().await;
+    let dir = tempfile::tempdir().unwrap();
+    let manager = JobManager::open_inner(dir.path(), Some(server.origin.clone()))
+        .await
+        .unwrap();
+    let cancelled = manager
+        .create(request(&server.origin, "/slow"))
+        .await
+        .unwrap();
+    manager.cancel(&cancelled.id).await.unwrap();
+    manager.wait(&cancelled.id).await.unwrap();
+    let interrupted = manager
+        .create(request(&server.origin, "/slow"))
+        .await
+        .unwrap();
+    // A directory at the atomic-write path simulates a real filesystem failure.
+    std::fs::create_dir(dir.path().join("jobs.json.tmp")).unwrap();
+    assert!(
+        tokio::time::timeout(Duration::from_secs(3), manager.shutdown())
+            .await
+            .unwrap()
+            .is_err()
+    );
+    assert!(manager.inner.store.lock().await.active.is_empty());
+    assert_eq!(
+        manager.get(&cancelled.id).await.unwrap().status,
+        JobStatus::Cancelled
+    );
+    assert_eq!(
+        manager.get(&interrupted.id).await.unwrap().status,
+        JobStatus::Interrupted
+    );
+    assert!(!dir
+        .path()
+        .join("assets")
+        .join(format!("{}.part", interrupted.id))
+        .exists());
+    std::fs::remove_dir(dir.path().join("jobs.json.tmp")).unwrap();
+    manager.shutdown().await.unwrap();
+}
+
+#[tokio::test]
+async fn shutdown_interrupts_queued_clip_without_removing_its_original_source() {
+    let (directory, manager, source) = raster_manager().await;
+    let original = std::fs::read(source.output_path.as_ref().unwrap()).unwrap();
+    let permit = manager
+        .inner
+        .raster_permits
+        .clone()
+        .acquire_owned()
+        .await
+        .unwrap();
+    let clip = manager.run_recipe(clip_recipe(&source)).await.unwrap();
+    tokio::time::timeout(Duration::from_secs(3), manager.shutdown())
+        .await
+        .unwrap()
+        .unwrap();
+    let clip = manager.wait(&clip.id).await.unwrap();
+    assert_eq!(clip.status, JobStatus::Interrupted);
+    assert!(clip.crop.is_none() && clip.manifest_path.is_none());
+    assert!(!directory
+        .path()
+        .join("assets")
+        .join(format!("{}.tif", clip.id))
+        .exists());
+    assert_eq!(
+        std::fs::read(source.output_path.as_ref().unwrap()).unwrap(),
+        original
+    );
+    assert!(manager
+        .run_recipe(clip_recipe(&source))
+        .await
+        .unwrap_err()
+        .contains("shutting down"));
+    drop(permit);
 }
 
 #[tokio::test]

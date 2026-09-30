@@ -22,7 +22,12 @@ $registryPath = 'HKCU:\' + $registrySubkey
 $shortcutPath = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\GeoD Global.lnk'
 $dataRoot = Join-Path $env:LOCALAPPDATA 'xyz.laogao.geod.global'
 
-function FileHash([string]$path) { (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant() }
+function FileHash([string]$path) {
+    $hash = [Security.Cryptography.SHA256]::Create()
+    $stream = [IO.File]::OpenRead($path)
+    try { return ([BitConverter]::ToString($hash.ComputeHash($stream))).Replace('-', '').ToLowerInvariant() }
+    finally { $stream.Dispose(); $hash.Dispose() }
+}
 function DataSnapshot {
     $snapshot = @{}
     if (Test-Path -LiteralPath $dataRoot) {

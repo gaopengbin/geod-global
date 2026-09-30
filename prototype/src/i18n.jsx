@@ -7,6 +7,7 @@ import artifactChinese from './locales/artifact.zh-CN.js';
 import workspaceChinese from './locales/workspace.zh-CN.js';
 import projectsChinese from './locales/projects.zh-CN.js';
 import proxyChinese from './locales/proxy.zh-CN.js';
+import { syncDesktopLocale } from './runtime-client.js';
 
 const chinese = { ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese, ...projectsChinese, ...proxyChinese };
 const I18nContext = createContext(null);
@@ -18,6 +19,7 @@ export function I18nProvider({ children }) {
     saveLocale(browserStorage(), locale);
     document.documentElement.lang = locale;
     document.title = locale === 'zh-CN' ? 'GeoD Global · 本地工作空间' : 'GeoD Global · Local workspace';
+    syncDesktopLocale(locale).catch(error => console.warn('Could not update the desktop tray language:', error));
   }, [locale]);
   const value = useMemo(() => ({
     locale,

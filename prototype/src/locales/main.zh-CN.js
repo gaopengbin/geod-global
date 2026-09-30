@@ -1,4 +1,7 @@
 export default {
+  "Run in the background": "后台运行",
+  "Closing the window keeps downloads and processing running in the system tray. Click the tray icon to reopen; choose Quit to stop tasks and exit.": "关闭窗口后，下载和处理会在系统托盘中继续运行。点击托盘图标重新打开；选择“退出并停止任务”才会结束任务并退出软件。",
+  "Enabled": "已启用",
   "GeoD": "GeoD",
   "GP": "GP",
   "Ctrl K": "Ctrl K",
