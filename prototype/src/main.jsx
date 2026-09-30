@@ -651,7 +651,7 @@ function App() {
                   title={t("My Data")}
                   sub={t("Find downloaded files and clipping results ready to inspect or use.")}
                 />}
-                <ProjectsLibrary focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} />
+                <ProjectsLibrary focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} onContinueExploring={() => go('Explore')} />
                 {!focusedProjectId && <RuntimeLibrary areaBounds={bbox} areaPolygon={areaPolygon} />}
                 {!focusedProjectId && <Disclosure className="saved-clip-plans" summary={t("Saved clip plans · advanced")}>
                   <ExecutableRecipes areaBounds={bbox} areaPolygon={areaPolygon} onReviewJSON={showJSON} />

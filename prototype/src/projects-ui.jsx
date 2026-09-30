@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { ArrowLeft, Check, Download, FolderOpen, Layers, Pencil, RefreshCw, X } from 'lucide-react';
+import { ArrowLeft, Check, Compass, Download, FolderOpen, Layers, Pencil, RefreshCw, X } from 'lucide-react';
 import { RuntimeContext } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
@@ -51,7 +51,7 @@ export function SaveProjectButton({ scenes, bounds, geometry, areaName, onSaved 
   </>;
 }
 
-export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProject }) {
+export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProject, onContinueExploring }) {
   const { t, date, number } = useI18n();
   const { jobs, health, act } = useContext(RuntimeContext);
   const [projects, setProjects] = useState([]);
@@ -85,7 +85,18 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
   };
   const shown = focusedProjectId ? projects.filter(project => project.id === focusedProjectId) : projects;
   return <section className="projects-library" aria-label={t('Saved scene projects')}>
-    <div className="projects-heading"><div>{focusedProjectId ? <Button size="sm" variant="ghost" onClick={onCloseProject}><ArrowLeft size={15}/>{t('All projects')}</Button> : <><h2>{t('Saved scene projects')}</h2><p>{t('Open a project to see its downloads, files and processing results.')}</p></>}</div><Button size="sm" onClick={refresh} aria-label={t('Refresh projects')}><RefreshCw size={15}/></Button></div>
+    <div className="projects-heading">
+      <div className={focusedProjectId ? 'project-navigation' : undefined}>
+        {focusedProjectId ? <>
+          {onContinueExploring && <Button size="sm" onClick={onContinueExploring}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
+          <Button size="sm" variant="ghost" onClick={onCloseProject}><ArrowLeft size={15}/>{t('All projects')}</Button>
+        </> : <><h2>{t('Saved scene projects')}</h2><p>{t('Open a project to see its downloads, files and processing results.')}</p></>}
+      </div>
+      <div className="project-navigation">
+        {!focusedProjectId && onContinueExploring && <Button size="sm" onClick={onContinueExploring}><Compass size={15}/>{t('Return to Explore · choose more scenes')}</Button>}
+        <Button size="sm" onClick={refresh} aria-label={t('Refresh projects')}><RefreshCw size={15}/></Button>
+      </div>
+    </div>
     {loading && <p role="status"><Spinner size={16}/>{t('Loading projects…')}</p>}
     {error && <p className="projects-error" role="alert">{error}</p>}
     {!loading && !projects.length && !error && <Surface className="projects-empty"><Layers size={19}/><span>{t('Choose scenes in Explore, then save them as a project.')}</span></Surface>}

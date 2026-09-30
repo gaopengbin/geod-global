@@ -11,6 +11,7 @@ export default {
   'Saved scene projects': '我的工程',
   'Open project': '打开工程',
   'All projects': '全部工程',
+  'Return to Explore · choose more scenes': '返回探索，继续选景',
   'Current project': '当前工程',
   'Save project name': '保存工程名称',
   'Cancel renaming': '取消改名',

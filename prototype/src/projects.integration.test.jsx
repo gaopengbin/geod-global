@@ -107,11 +107,12 @@ describe('Named project download and scoped processing flow', () => {
     const user = userEvent.setup();
     runtimeRequest.mockResolvedValue([project, { ...project, id: 'other', name: '另一个工程' }]);
     const act = vi.fn().mockImplementation(async (_, payload) => ({ ...project, name: payload.name }));
+    const continueExploring = vi.fn();
     const jobs = [
       { id: 'j1', kind: 'download', itemId: scene.id, assetKey: 'visual', href: scene.assets.visual.href, status: 'succeeded', title: '工程真彩色', updatedAt: scene.date },
       { id: 'j2', kind: 'download', itemId: 'unrelated', assetKey: 'visual', href: 'other', status: 'succeeded', title: '无关文件', updatedAt: scene.date },
     ];
-    wrap(<ProjectsLibrary focusedProjectId="p1"/>, context({ jobs, act }));
+    wrap(<ProjectsLibrary focusedProjectId="p1" onContinueExploring={continueExploring}/>, context({ jobs, act }));
     await screen.findByRole('heading', { name: '湾区工程' });
     expect(screen.queryByText('另一个工程')).toBeNull();
     expect(screen.getByText('工程真彩色')).toBeTruthy();
@@ -122,5 +123,8 @@ describe('Named project download and scoped processing flow', () => {
     await user.click(screen.getByRole('button', { name: '保存工程名称' }));
     await screen.findByRole('heading', { name: '已改名的工程' });
     expect(act).toHaveBeenCalledWith('renameProject', { id: 'p1', name: '已改名的工程' });
+    await user.click(screen.getByRole('button', { name: '返回探索，继续选景' }));
+    expect(continueExploring).toHaveBeenCalledTimes(1);
+    expect(act).toHaveBeenCalledTimes(1);
   });
 });
