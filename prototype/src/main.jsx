@@ -42,6 +42,7 @@ import "./catalog.css";
 import { SAMPLE_BBOX, defaultLiveSearch, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks, RuntimeLibrary } from "./runtime-ui.jsx";
 import { ProjectsLibrary, SaveProjectButton } from "./projects-ui.jsx";
+import { scenesForDownload } from "./projects-client.js";
 import { ExecutableRecipes } from "./processing-ui.jsx";
 import { DiagnosticsPanel } from "./diagnostics-ui.jsx";
 import { ProxySettingsPanel } from "./proxy-ui.jsx";
@@ -268,6 +269,7 @@ function App() {
   }, [filtered.length, visibleListCount]);
   const sceneById = useMemo(() => new Map(scenes.map(scene => [scene.id, scene])), [scenes]);
   const loadedScenes = useMemo(() => loadedIds.map(id => sceneById.get(id)).filter(Boolean), [loadedIds, sceneById]);
+  const downloadScenes = useMemo(() => scenesForDownload({ scenes, selectedIds, loadedIds, currentScene: selected }), [scenes, selectedIds, loadedIds, selected]);
   const visibleLoadedScenes = useMemo(() => loadedScenes.filter(scene => visibleLoadedIds.includes(scene.id)), [loadedScenes, visibleLoadedIds]);
   const days = useMemo(() => [...new Set(scenes.map(scene => scene.date.slice(0, 10)))].sort(), [scenes]);
   const dayCounts = useMemo(() => scenes.reduce((counts, scene) => {
@@ -619,7 +621,7 @@ function App() {
                   </Button>
                 </div>
                 <div className="inspector-bottom">
-                  <DownloadAssetButton key={selected.id} scene={selected} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} onOpenProject={openProject} />
+                  <DownloadAssetButton key={[selected.id, ...downloadScenes.map(scene => scene.id)].join('|')} scene={selected} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} onOpenProject={openProject} />
                 </div>
               </aside>
             )}

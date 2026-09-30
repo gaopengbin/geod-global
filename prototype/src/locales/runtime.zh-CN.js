@@ -1,4 +1,11 @@
 export default {
+  'Create project and download · {count} scenes': '新建工程并下载 · {count} 景',
+  'The chosen scenes, source links and search area will be saved together in one project.': '待下载影像、源文件链接和搜索范围将一起保存到同一个工程中。',
+  'Download scope': '下载范围',
+  'All chosen scenes · {count}': '全部待下载影像 · {count} 景',
+  'Current scene only · 1': '仅当前查看的影像 · 1 景',
+  '{scenes} scenes · {files} source files to download': '将下载 {scenes} 景影像 · {files} 个源文件',
+  'These scenes have no common supported source file type. Adjust the selection before downloading.': '这些影像没有共同支持的源文件类型，请调整选择后下载。',
   'Queued': '排队中',
   'Downloading': '下载中',
   'Downloaded': '已下载',

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectAndQueue, jobsForProject, MAX_PROJECT_SCENES, projectRequest } from './projects-client.js';
+import { createProjectAndQueue, jobsForProject, MAX_PROJECT_SCENES, projectRequest, scenesForDownload } from './projects-client.js';
 
 const source = 'https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2025/6/S2C_TEST/';
 const scene = (id = 'S2C_TEST') => ({
@@ -11,6 +11,18 @@ const scene = (id = 'S2C_TEST') => ({
     visual: { href: `${source}TCI.tif`, type: 'image/tiff; application=geotiff' },
     thumbnail: { href: `${source}preview.jpg`, type: 'image/jpeg' },
   },
+});
+
+test('batch download retains eight selected scenes when focus and visible map layers contain only one', () => {
+  const scenes = Array.from({ length: 10 }, (_, index) => scene(`S2_${index}`));
+  const selectedIds = scenes.slice(0, 8).map(item => item.id);
+  const result = scenesForDownload({ scenes, selectedIds, loadedIds: [scenes[0].id], currentScene: scenes[9] });
+  assert.deepEqual(result.map(item => item.id), selectedIds);
+  const request = projectRequest({ scenes: result, bounds: [-123, 37, -122, 38], name: 'Eight scenes' });
+  assert.deepEqual(request.scenes.map(item => item.itemId), selectedIds);
+  assert.deepEqual(scenesForDownload({ scenes, loadedIds: selectedIds, currentScene: scenes[9] }), result);
+  assert.deepEqual(scenesForDownload({ scenes, currentScene: scenes[9] }), [scenes[9]]);
+  assert.deepEqual(scenesForDownload({ scenes, selectedIds: ['stale-selection'], currentScene: scenes[9] }), []);
 });
 
 test('project request preserves chosen scene provenance, both source types and polygon', () => {

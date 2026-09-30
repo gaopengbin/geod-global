@@ -26,6 +26,43 @@ beforeEach(() => {
 });
 
 describe('Named project download and scoped processing flow', () => {
+  it('downloads all eight chosen scenes as one project and shows sixteen files when both source types are chosen', async () => {
+    const user = userEvent.setup();
+    const scenes = Array.from({ length: 8 }, (_, index) => ({ ...scene, id: `S2C_${index}` }));
+    let saved;
+    runtimeRequest.mockImplementation(async (operation, payload) => {
+      if (operation === 'createProject') { saved = { id: 'eight', ...payload }; return saved; }
+      return { jobs: saved.scenes.map(item => ({ id: `${item.itemId}-${payload.assetKey}` })) };
+    });
+    wrap(<DownloadAssetButton scene={scenes[0]} scenes={scenes} areaBounds={scene.bbox} areaName="北京"/>);
+    await user.click(screen.getByRole('button', { name: '新建工程并下载 · 8 景' }));
+    expect(screen.getByText('将下载 8 景影像 · 8 个源文件')).toBeTruthy();
+    await user.click(screen.getByRole('combobox', { name: '下载内容' }));
+    await user.click(screen.getByRole('option', { name: '真彩色 + SCL 分类栅格' }));
+    expect(screen.getByText('将下载 8 景影像 · 16 个源文件')).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: '创建工程并开始下载' }));
+    await screen.findByRole('button', { name: '打开工程' });
+    expect(saved.scenes.map(item => item.itemId)).toEqual(scenes.map(item => item.id));
+    expect(runtimeRequest.mock.calls.slice(1)).toEqual([
+      ['downloadProject', { id: 'eight', assetKey: 'visual' }],
+      ['downloadProject', { id: 'eight', assetKey: 'scl' }],
+    ]);
+  });
+
+  it('reduces a batch to one scene only after explicitly choosing the current-scene scope', async () => {
+    const user = userEvent.setup();
+    const scenes = Array.from({ length: 8 }, (_, index) => ({ ...scene, id: `S2C_${index}` }));
+    runtimeRequest.mockImplementation(async (operation, payload) => operation === 'createProject' ? { id: 'one', ...payload } : { jobs: [{ id: 'one-job' }] });
+    wrap(<DownloadAssetButton scene={scenes[3]} scenes={scenes} areaBounds={scene.bbox} areaName="北京"/>);
+    await user.click(screen.getByRole('button', { name: '新建工程并下载 · 8 景' }));
+    await user.click(screen.getByRole('combobox', { name: '下载范围' }));
+    await user.click(screen.getByRole('option', { name: '仅当前查看的影像 · 1 景' }));
+    expect(screen.getByText('将下载 1 景影像 · 1 个源文件')).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: '创建工程并开始下载' }));
+    await screen.findByRole('button', { name: '打开工程' });
+    expect(runtimeRequest.mock.calls[0][1].scenes.map(item => item.itemId)).toEqual([scenes[3].id]);
+  });
+
   it('creates the named project with both sources, stays in Explore and opens only on explicit click', async () => {
     const user = userEvent.setup();
     const open = vi.fn();

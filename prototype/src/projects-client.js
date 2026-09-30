@@ -2,6 +2,12 @@ import { downloadableAssets, runtimeRequest } from './runtime-client.js';
 
 export const MAX_PROJECT_SCENES = 32;
 
+export function scenesForDownload({ scenes, selectedIds = [], loadedIds = [], currentScene }) {
+  const byId = new Map(scenes.map(scene => [scene.id, scene]));
+  const ids = selectedIds.length ? selectedIds : loadedIds.length ? loadedIds : currentScene ? [currentScene.id] : [];
+  return [...new Set(ids)].map(id => byId.get(id)).filter(Boolean);
+}
+
 export function projectRequest({ scenes, bounds, geometry, name }) {
   if (!Array.isArray(scenes) || !scenes.length || scenes.length > MAX_PROJECT_SCENES) {
     throw new Error(`Select 1 to ${MAX_PROJECT_SCENES} scenes for one local project.`);

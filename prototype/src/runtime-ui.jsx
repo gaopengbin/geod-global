@@ -5,7 +5,7 @@ import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { ClipRasterButton, DerivedArtifactDetails } from './processing-ui.jsx';
 import { ArtifactPackageButton } from './artifact-ui.jsx';
-import { createProjectAndQueue, projectRequest } from './projects-client.js';
+import { createProjectAndQueue, MAX_PROJECT_SCENES, projectRequest } from './projects-client.js';
 import { displayLocalPath } from './local-path.js';
 import { Badge, Button, Disclosure, Input, Modal, Select, Spinner, Surface, TaskRows } from './ui/index.jsx';
 import './runtime.css';
@@ -61,17 +61,20 @@ function Connection({ compact = false }) {
   return <Surface variant="inset" className="runtime-disconnected"><AlertCircle size={16}/><div><strong>{t('Local task service is offline')}</strong><p>{t('Open GeoD Global Desktop, or run {command} beside the browser preview.', { command: 'npm run runtime' })}</p>{error && <Disclosure summary={t('Technical details')}><small>{t(error)}</small></Disclosure>}</div><Button variant="ghost" size="icon" aria-label={t('Reconnect task service')} onClick={refresh}><RefreshCw size={16}/></Button></Surface>;
 }
 
-export function DownloadAssetButton({ scene, areaBounds, areaPolygon, areaName, onOpenProject }) {
+export function DownloadAssetButton({ scene, scenes = [scene], areaBounds, areaPolygon, areaName, onOpenProject }) {
   const { health, jobs, refresh } = useContext(RuntimeContext);
   const { t, date, number } = useI18n();
   const [open, setOpen] = useState(false);
   const [choice, setChoice] = useState('visual');
+  const [scope, setScope] = useState('all');
   const [name, setName] = useState('');
   const [created, setCreated] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const mounted = useRef(true);
-  const options = downloadableAssets(scene).filter(item => item.key === 'scl' || item.key === 'visual');
+  const targets = scope === 'current' ? [scene] : scenes;
+  const options = downloadableAssets(targets[0]).filter(item => (item.key === 'scl' || item.key === 'visual')
+    && targets.every(target => downloadableAssets(target).some(asset => asset.key === item.key)));
   const available = new Set(options.map(item => item.key));
   const keys = choice === 'both' ? ['visual', 'scl'] : [choice];
   const createdJobs = created?.jobIds?.map(id => jobs.find(job => job.id === id)).filter(Boolean) || [];
@@ -81,18 +84,19 @@ export function DownloadAssetButton({ scene, areaBounds, areaPolygon, areaName, 
   const close = () => { if (!busy) { setOpen(false); setError(''); } };
   const show = () => {
     if (created) { setOpen(true); return; }
-    setChoice(available.has('visual') ? 'visual' : 'scl');
-    setName(`${t(areaName)} · ${date(scene.date)}`);
+    setScope('all');
+    setChoice(scenes.every(target => downloadableAssets(target).some(asset => asset.key === 'visual')) ? 'visual' : 'scl');
+    setName(`${t(areaName)} · ${scenes.length > 1 ? t('{count} scenes', { count: number(scenes.length) }) : date(scene.date)}`);
     setError(''); setOpen(true);
   };
   const start = async event => {
     event?.preventDefault();
-    if (!options.length || !name.trim()) return;
+    if (!options.length || !name.trim() || targets.length > MAX_PROJECT_SCENES || !keys.every(key => available.has(key))) return;
     setBusy(true); setError('');
     try {
       const result = created?.project
         ? { project: created.project, downloads: await Promise.all(keys.map(assetKey => runtimeRequest('downloadProject', { id: created.project.id, assetKey }))) }
-        : await createProjectAndQueue(projectRequest({ scenes: [scene], bounds: areaBounds, geometry: areaPolygon?.geometry || areaPolygon, name }), keys);
+        : await createProjectAndQueue(projectRequest({ scenes: targets, bounds: areaBounds, geometry: areaPolygon?.geometry || areaPolygon, name }), keys);
       await refresh();
       if (mounted.current) setCreated({ project: result.project, queued: true, jobIds: result.downloads.flatMap(item => item.jobs.map(job => job.id)) });
     } catch (cause) {
@@ -105,7 +109,7 @@ export function DownloadAssetButton({ scene, areaBounds, areaPolygon, areaName, 
   };
   const openProject = () => { if (created?.project) { close(); onOpenProject?.(created.project.id); } };
   return <>
-    <Button variant="primary" disabled={!options.length && !created} onClick={show}><Download size={15}/>{t(created ? 'View project download' : 'Create project and download')}</Button>
+    <Button variant="primary" disabled={!scenes.length && !created} onClick={show}><Download size={15}/>{created ? t('View project download') : scenes.length > 1 ? t('Create project and download · {count} scenes', { count: number(scenes.length) }) : t('Create project and download')}</Button>
     {created && <p className="runtime-project-hint">{t('Project saved: {name}', { name: created.project.name })} · {t(allDone ? 'Files ready' : failed ? 'Download needs attention' : created.queued ? 'Downloading in background' : 'Download not started')}</p>}
     {open && <Modal title={t(created ? 'Project download' : 'Create project and download')} onClose={close} closeDisabled={busy} closeLabel={t('Close download')}>
       {created ? <div className="runtime-dialog-body runtime-project-result">
@@ -115,7 +119,15 @@ export function DownloadAssetButton({ scene, areaBounds, areaPolygon, areaName, 
         {error && <RuntimeError message={error} summary="The project was saved, but the download could not start."/>}
         <footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Continue exploring')}</Button>{!created.queued && <Button disabled={busy || !health} onClick={start}>{t(busy ? 'Starting…' : 'Retry download')}</Button>}<Button variant="primary" disabled={busy} onClick={openProject}>{t('Open project')}</Button></footer>
       </div> : <form className="runtime-dialog-body" onSubmit={start}>
-        <p className="runtime-help">{t('A local project keeps this scene, its source links and your search area together. Name it before downloading.')}</p>
+        <p className="runtime-help">{t('The chosen scenes, source links and search area will be saved together in one project.')}</p>
+        {scenes.length > 1 && <label className="runtime-field">{t('Download scope')}<Select aria-label={t('Download scope')} value={scope} disabled={busy} onChange={event => {
+          const next = event.target.value === 'current' ? [scene] : scenes;
+          setScope(event.target.value);
+          setChoice(next.every(target => downloadableAssets(target).some(asset => asset.key === 'visual')) ? 'visual' : 'scl');
+        }}><option value="all">{t('All chosen scenes · {count}', { count: number(scenes.length) })}</option><option value="current">{t('Current scene only · 1')}</option></Select></label>}
+        <p className="runtime-help" role="status">{t('{scenes} scenes · {files} source files to download', { scenes: number(targets.length), files: number(targets.length * keys.length) })}</p>
+        {targets.length > MAX_PROJECT_SCENES && <p className="projects-error" role="alert">{t('Narrow the selection to {max} scenes to save one project.', { max: MAX_PROJECT_SCENES })}</p>}
+        {!options.length && <p className="projects-error" role="alert">{t('These scenes have no common supported source file type. Adjust the selection before downloading.')}</p>}
         <label className="runtime-field">{t('Project name')}<Input value={name} maxLength={120} required disabled={busy} onChange={event => setName(event.target.value)}/></label>
         <label className="runtime-field">{t('Download content')}<Select aria-label={t('Download content')} value={choice} disabled={busy} onChange={event => setChoice(event.target.value)}>
           {available.has('visual') && <option value="visual">{t('True-color GeoTIFF · 10 m')}</option>}
@@ -123,10 +135,10 @@ export function DownloadAssetButton({ scene, areaBounds, areaPolygon, areaName, 
           {available.has('visual') && available.has('scl') && <option value="both">{t('Both source files')}</option>}
         </Select></label>
         <Surface as="div" variant="inset" className="runtime-notice"><HardDrive size={17}/><span>{t('GeoD saves complete source files in the local workspace. Open the project later to inspect or clip them; downloading does not crop the source.')}</span></Surface>
-        <Disclosure summary={t('Source and file checks · advanced')}><dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{scene.id}</dd><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Checks')}</dt><dd>{t('Transfer size, file signature and SHA-256. Pixel inspection is available for SCL files only.')}</dd></dl></Disclosure>
+        <Disclosure summary={t('Source and file checks · advanced')}><dl className="runtime-details"><dt>{t('Scene')}</dt><dd className="mono runtime-wrap">{targets.map(target => target.id).join(', ')}</dd><dt>{t('Source')}</dt><dd>Earth Search / Sentinel-2 L2A</dd><dt>{t('Checks')}</dt><dd>{t('Transfer size, file signature and SHA-256. Pixel inspection is available for SCL files only.')}</dd></dl></Disclosure>
         <Connection compact/>
         {error && <RuntimeError message={error} summary="The download could not start. Check the service connection and try again."/>}
-        <footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Cancel')}</Button><Button variant="primary" type="submit" disabled={busy || !health || !name.trim() || !keys.every(key => available.has(key))}><Download size={15}/>{t(busy ? 'Creating project…' : 'Create project and start download')}</Button></footer>
+        <footer className="runtime-dialog-actions"><Button disabled={busy} onClick={close}>{t('Cancel')}</Button><Button variant="primary" type="submit" disabled={busy || !health || !name.trim() || !targets.length || targets.length > MAX_PROJECT_SCENES || !keys.every(key => available.has(key))}><Download size={15}/>{t(busy ? 'Creating project…' : 'Create project and start download')}</Button></footer>
       </form>}
     </Modal>}
   </>;
