@@ -1,5 +1,9 @@
 # GeoD Global
 
+GeoD Global is an independent Windows desktop workspace for geospatial data preparation. This public repository is a development snapshot, not a supported public release. Newer work is still being developed and verified separately.
+
+**License:** first-party project code is licensed under [GNU GPL version 3 only](LICENSE), copyright © 2026 Gao Pengbin. Commercial use is permitted under the GPL; distribution of covered software must follow its corresponding-source and licensing requirements. Third-party code, fonts, data and assets retain their own notices and terms. See [commercial licensing inquiries](COMMERCIAL-LICENSING.md) for the separate possibility of additional permissions.
+
 独立海外桌面产品仓库。产品目标是围绕同一区域发现、预览、比较、获取、处理和导出空间数据，并保留来源及可重复工作流。
 
 **当前状态：独立工程已接入中英文界面、Earth Search 实时检索、Rust 文件下载、真实二维栅格工作区、SCL 像元检查与矩形裁剪、可执行配方、成果交付包、CLI 和本地 MCP。Tauri 桌面壳与浏览器调试入口复用同一执行核心。完整产品规格仍在逐步实施。**
@@ -96,6 +100,6 @@ src-tauri/             独立桌面壳，直接调用同一Rust核心
 
 样本模式使用本地保存的七条 Sentinel-2 元数据和提供商 JPEG 缩略图。来源、原始链接及校验值见 `prototype/public/samples/manifest.json`；Inter 字体许可随包保存，中文使用平台字体回退。Live catalog会访问Earth Search，预览远程缩略图；点击下载会获取选定的真实源文件。下载阶段检查传输大小、文件签名及SHA-256；单独执行SCL检查时还会读取地理标签、解码像元并统计类别。两者均不代表分类精度认证，其他栅格类型尚未实现通用读取。
 
-新产品代码的对外许可和商业包装尚待决定，根包以 `private: true` / `UNLICENSED` 防止被误当作已发布公共软件包。这不改变国内版或第三方资产已有权利。今后引入共享库必须保留其许可通知。
+2026-10-03，作者选择将本仓自有项目代码按 `GPL-3.0-only` 开放，完整条款见 [LICENSE](LICENSE)。根包的 `private: true` 仅用于防止误发布 npm 包，不表示 GitHub 源码仍为私有。商业授权可另议，当前没有在 GPL 之外自动授予商业例外；第三方代码、字体、数据与资产仍保留各自已有条款，今后引入共享库必须保留其许可通知。
 
-独立远程仓库为 [gaopengbin/geod-global](https://github.com/gaopengbin/geod-global)，创建时为私有仓库。GitHub 源码访问、Actions 产物与 Release 下载均受仓库权限控制；公开发布和更改源码许可是另外的决定。
+独立远程仓库为 [gaopengbin/geod-global](https://github.com/gaopengbin/geod-global)，创建时为私有，2026-10-03 已公开。此前 v0.1.0 的旧预览 Release 已设为草稿，保留资产但不推荐作为当前试用包；历史 Actions 的 unsigned 构建产物也不是已通过当前产品验收的正式版本。本站公开源码不代表已提供正式支持、完整产品范围或通过公开安装包验收。
