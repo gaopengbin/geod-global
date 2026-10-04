@@ -7,7 +7,7 @@
 A Windows workspace for discovering imagery, inspecting source pixels,
 preparing supported rasters, and keeping their provenance close.
 
-**[Download candidate](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.1)** · **[Explore the workflow](#one-workflow-from-discovery-to-delivery)** · **[Build from source](#build-from-source)** · **[Share feedback](https://github.com/gaopengbin/geod-global/issues)**
+**[Download candidate](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.2)** · **[Explore the workflow](#one-workflow-from-discovery-to-delivery)** · **[Build from source](#build-from-source)** · **[Share feedback](https://github.com/gaopengbin/geod-global/issues)**
 
 English · [简体中文](README.zh-CN.md)
 
@@ -41,7 +41,7 @@ Finding a scene is only the beginning. GeoD Global brings discovery, source file
 
 ## Current scope
 
-**Windows 0.1.0-rc.1 release candidate · GPLv3 source.** Downloads and their actual publication status are listed on [GitHub Releases](https://github.com/gaopengbin/geod-global/releases). The candidate is for evaluation and feedback; the complete product plan remains in development.
+**Windows 0.1.0-rc.2 release candidate · GPLv3 source.** Downloads and their actual publication status are listed on [GitHub Releases](https://github.com/gaopengbin/geod-global/releases). The candidate is for evaluation and feedback; the complete product plan remains in development.
 
 | Included in this candidate | Remaining limits |
 | :--- | :--- |
@@ -50,7 +50,7 @@ Finding a scene is only the beginning. GeoD Global brings discovery, source file
 | Named projects, task retry, persistent thumbnails, CLI and local MCP | Protected original downloads and an in-app Agent assistant remain pending |
 | Branded desktop header, resizable panels, tray background tasks, English / Chinese and light / dark themes | Unsigned Windows x64; native GUI and clean-machine acceptance remain separate |
 
-Choose the per-user installer or portable ZIP on the release page. Windows 10/11 x64 and WebView2 Evergreen Runtime are required; development tools are unnecessary. The files are unsigned, and this candidate is not the latest stable release. [Windows setup](docs/releases/WINDOWS-README.md) · [Candidate notes](docs/releases/0.1.0-rc.1.md).
+Choose the per-user installer or portable ZIP on the release page. Windows 10/11 x64 and WebView2 Evergreen Runtime are required; development tools are unnecessary. The files are unsigned, and this candidate is not the latest stable release. [Windows setup](docs/releases/WINDOWS-README.md) · [Candidate notes](docs/releases/0.1.0-rc.2.md).
 
 The source menu distinguishes online previews, imagery loaded after selection and footprint-only catalogues. [Public preview checks](docs/explore-public-previews.md) · [Provider capabilities and original-file evidence](docs/providers.md). NASA Earthdata / Copernicus authorization setup is included; protected original downloads remain disabled pending real-account verification.
 

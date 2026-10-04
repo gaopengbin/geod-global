@@ -2,7 +2,7 @@
 
 [Product overview](../README.md) · [完整中文开发与验收参考](development-guide.zh-CN.md)
 
-This guide describes the current 0.1.0-rc.1 source and its shared desktop/runtime core. Exact product support and real-data acceptance are recorded in the [provider guide](providers.md) and [candidate notes](releases/0.1.0-rc.1.md).
+This guide describes the current 0.1.0-rc.2 source and its shared desktop/runtime core. Exact product support and real-data acceptance are recorded in the [provider guide](providers.md) and [candidate notes](releases/0.1.0-rc.2.md).
 
 ## Prerequisites and commands
 

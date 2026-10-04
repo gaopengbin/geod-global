@@ -7,7 +7,7 @@
 面向 Windows 的空间数据工作区：发现影像、检查源像元、
 准备支持的栅格，并把来源信息留在项目里。
 
-**[下载候选版](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.1)** · **[查看工作流](#从发现到交付)** · **[源码启动](#从源码启动)** · **[反馈任务](https://github.com/gaopengbin/geod-global/issues)**
+**[下载候选版](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.2)** · **[查看工作流](#从发现到交付)** · **[源码启动](#从源码启动)** · **[反馈任务](https://github.com/gaopengbin/geod-global/issues)**
 
 [English](README.md) · 简体中文
 
@@ -41,7 +41,7 @@
 
 ## 当前范围
 
-**Windows 0.1.0-rc.1 发布候选，源码采用 GPLv3。** 下载及实际公开状态以 [GitHub Releases](https://github.com/gaopengbin/geod-global/releases) 为准。候选版供试用和反馈，完整产品规划继续实施。
+**Windows 0.1.0-rc.2 发布候选，源码采用 GPLv3。** 下载及实际公开状态以 [GitHub Releases](https://github.com/gaopengbin/geod-global/releases) 为准。候选版供试用和反馈，完整产品规划继续实施。
 
 | 本候选已具备 | 剩余限制 |
 | :--- | :--- |
@@ -50,7 +50,7 @@
 | 命名工程、任务重试、持久缩略图、CLI 和本地 MCP | 受保护原产品下载及软件内 Agent 助手仍待完成 |
 | 品牌顶部栏、面板拖动调整、托盘后台运行、中英文与明暗主题 | Windows x64 未签名，原生窗口及干净设备验收单独进行 |
 
-发布页提供当前用户安装程序和便携 ZIP。需要 Windows 10/11 x64 和 WebView2 Runtime，无需开发工具。文件未签名，此候选不设为最新稳定版。[安装说明](docs/releases/WINDOWS-README.md) · [候选范围](docs/releases/0.1.0-rc.1.md)。
+发布页提供当前用户安装程序和便携 ZIP。需要 Windows 10/11 x64 和 WebView2 Runtime，无需开发工具。文件未签名，此候选不设为最新稳定版。[安装说明](docs/releases/WINDOWS-README.md) · [候选范围](docs/releases/0.1.0-rc.2.md)。
 
 来源菜单区分在线预览、选景后加载和仅显示范围。[公开预览验收](docs/explore-public-previews.md)与[原文件及处理能力](docs/providers.md)分别记录。“设置”已提供 NASA Earthdata / Copernicus 授权入口，受保护原文件下载仍待真实账号验收，暂不开放。
 

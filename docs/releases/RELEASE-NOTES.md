@@ -1,4 +1,4 @@
-# GeoD Global 0.1.0-rc.1 — Windows release candidate
+# GeoD Global 0.1.0-rc.2 — Windows release candidate
 
 Independent Windows 10/11 x64 geospatial desktop workspace with English and
 Simplified Chinese UI. This prerelease is available for evaluation; the complete
@@ -32,6 +32,8 @@ not imply arbitrary GIS format or processing support.
 
 ## Fixes in this release
 
+- Restore clean Windows/Linux dependency installation with the complete locked
+  optional peer graph; existing dependency versions are unchanged.
 - Accept verified legacy NAIP catalogue identities and their matching 0.6 m
   four-band aerial COGs.
 - Accept verified Sentinel-1 RTC platform and polarization identities, including

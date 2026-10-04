@@ -2,7 +2,7 @@
 
 [English development guide](development-guide.md) · [中文概览](../README.zh-CN.md)
 
-本指南对应 0.1.0-rc.1 源码和共用桌面 / 运行时核心。产品支持范围、真实数据证据和待验收事项以[数据源说明](providers.md)、[公开预览](explore-public-previews.md)及[候选说明](releases/0.1.0-rc.1.md)为准。
+本指南对应 0.1.0-rc.2 源码和共用桌面 / 运行时核心。产品支持范围、真实数据证据和待验收事项以[数据源说明](providers.md)、[公开预览](explore-public-previews.md)及[候选说明](releases/0.1.0-rc.2.md)为准。
 
 ## 本地开发
 
