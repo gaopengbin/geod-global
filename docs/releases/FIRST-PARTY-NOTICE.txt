@@ -1,12 +1,22 @@
 GeoD Global
 
-This repository's first-party packages are marked UNLICENSED or
-LicenseRef-Proprietary. No open-source license for first-party code is granted
-by this release-candidate bundle. Preparation of a local build does not publish
-the software or establish commercial licensing terms.
+Copyright (c) 2026 Gao Pengbin.
+
+First-party GeoD Global code is licensed under GPL-3.0-only. The complete
+GNU General Public License version 3 is included in LICENSE. There is no
+warranty, to the extent permitted by applicable law; see that license.
+
+The bundle includes the corresponding tracked project source in SOURCE/,
+with the exact source commit and archive checksum recorded in SOURCE.txt
+and release-manifest.json. It includes the locked dependency manifests and
+build scripts. The same commit is available from the public GitHub repository.
+See SOURCE.txt and the source archive's README for build instructions.
+
+COMMERCIAL-LICENSING.md describes inquiries for additional permissions;
+it does not grant an exception or change the GPL terms for this release.
 
 Third-party components retain their own licenses and notices. Their texts,
 package versions and applicable source archives are in THIRD-PARTY/.
 
-This unsigned local release candidate is independent of the domestic GeoD
+This unsigned Windows release candidate is independent of the domestic GeoD
 application. Its application identifier is xyz.laogao.geod.global.

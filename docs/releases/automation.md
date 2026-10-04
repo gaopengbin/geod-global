@@ -39,12 +39,12 @@ gh run download RUN_ID --name geod-global-windows-x64-unsigned
 
 1. 保持 `package.json`、`package-lock.json` 两处根版本、`src-tauri/tauri.conf.json`、两个 crate 的 `Cargo.toml` 以及 `Cargo.lock` 中本地包版本一致。修改 Cargo 版本后运行 `cargo check --locked -p geod-runtime` 会提示锁文件过期；用 `cargo check -p geod-runtime` 更新并审查锁文件变化。
 2. 更新 `docs/releases/RELEASE-NOTES.md`，准确描述该版本能力和未完成验收。提交版本及说明修改并推送。
-3. 以下以当前 `0.1.0` 为例，在干净提交运行：
+3. 以下以当前 `0.1.0-rc.1` 为例，在干净提交运行：
 
 ```sh
-python scripts/release.py check --tag v0.1.0 --require-clean
-git tag -a v0.1.0 -m "GeoD Global 0.1.0 Windows evaluation"
-git push origin v0.1.0
+python scripts/release.py check --tag v0.1.0-rc.1 --require-clean
+git tag -a v0.1.0-rc.1 -m "GeoD Global 0.1.0-rc.1 Windows release candidate"
+git push origin v0.1.0-rc.1
 ```
 
 版本脚本支持严格 SemVer（包括预发布后缀），且标签必须精确等于 `v` 加清单版本。检查不会自动修改版本或创建标签。由人或正常 Git 凭据推送标签；不要依赖使用工作流自身 `GITHUB_TOKEN` 推标签去触发另一条工作流。

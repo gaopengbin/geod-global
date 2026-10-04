@@ -17,6 +17,71 @@ spec.loader.exec_module(packaging)
 
 class PackagingTests(unittest.TestCase):
     @staticmethod
+    def first_party_source_fixture(root):
+        (root / 'LICENSE').write_bytes((Path(__file__).resolve().parents[1] / 'LICENSE').read_bytes())
+        (root / 'COMMERCIAL-LICENSING.md').write_text('Test fixture for licensing inquiries.\n', encoding='utf-8')
+        (root / 'Cargo.toml').write_text('[workspace.package]\nlicense = "GPL-3.0-only"\n', encoding='utf-8')
+        packaging.write_json(root / 'package.json', {'license': 'GPL-3.0-only'})
+        (root / 'README.md').write_text('Synthetic project source fixture; no distributable binary.\n', encoding='utf-8')
+        (root / '.gitignore').write_text('.verification/\n', encoding='utf-8')
+        notice = root / 'docs/releases/FIRST-PARTY-NOTICE.txt'
+        notice.parent.mkdir(parents=True)
+        notice.write_text('GPL-3.0-only test fixture.\n', encoding='utf-8')
+        packaging.command('git', 'init', '--quiet', capture=True)
+        packaging.command('git', 'add', '--all', capture=True)
+        packaging.command('git', '-c', 'user.name=Packaging Test', '-c', 'user.email=packaging@example.invalid',
+                          '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'Synthetic source fixture', capture=True)
+        return packaging.source_identity()
+
+    def test_first_party_archive_matches_commit_and_excludes_ignored_private_output(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+            root = Path(folder)
+            identity = self.first_party_source_fixture(root)
+            payload = root / '.verification/payload'
+            payload.mkdir(parents=True)
+            (payload.parent / 'private.txt').write_text('Synthetic ignored private output', encoding='utf-8')
+            self.assertFalse(packaging.source_identity()['dirty'])
+            record = packaging.collect_first_party_source(payload, identity)
+            archive_path = payload / record['path']
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertIn('Cargo.toml', archive.namelist())
+                self.assertEqual(archive.read('README.md').decode('utf-8').replace('\r\n', '\n'), (root / 'README.md').read_text(encoding='utf-8'))
+                self.assertEqual(archive.read('LICENSE').decode('utf-8').replace('\r\n', '\n'), (root / 'LICENSE').read_text(encoding='utf-8'))
+                self.assertFalse(any(name.startswith(('.git/', '.verification/')) for name in archive.namelist()))
+            self.assertEqual(record['commit'], identity['commit'])
+            self.assertEqual(record['sha256'], packaging.digest(archive_path))
+            self.assertEqual((payload / 'LICENSE').read_bytes(), (root / 'LICENSE').read_bytes())
+            self.assertIn(identity['commit'], (payload / 'SOURCE.txt').read_text(encoding='utf-8'))
+            self.assertIn(record['sha256'], (payload / 'SOURCE.txt').read_text(encoding='utf-8'))
+
+    def test_first_party_source_rejects_dirty_checkout_and_wrong_revision(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+            root = Path(folder)
+            identity = self.first_party_source_fixture(root)
+            payload = root / '.verification/payload'
+            payload.mkdir(parents=True)
+            for changed, message in [({**identity, 'dirty': True}, 'clean committed checkout'),
+                                     ({**identity, 'commit': 'a' * 40}, 'differs from the build checkout')]:
+                with self.subTest(message=message), self.assertRaisesRegex(RuntimeError, message):
+                    packaging.collect_first_party_source(payload, changed)
+            self.assertEqual(list(payload.iterdir()), [])
+
+    def test_first_party_source_rejects_license_metadata_mismatch_and_missing_terms(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+            root = Path(folder)
+            identity = self.first_party_source_fixture(root)
+            payload = root / '.verification/payload'
+            payload.mkdir(parents=True)
+            packaging.write_json(root / 'package.json', {'license': 'UNLICENSED'})
+            with self.assertRaisesRegex(RuntimeError, 'licenses must agree'):
+                packaging.collect_first_party_source(payload, identity)
+            packaging.write_json(root / 'package.json', {'license': 'GPL-3.0-only'})
+            (root / 'LICENSE').write_text('Missing actual license terms.\n', encoding='utf-8')
+            with self.assertRaisesRegex(RuntimeError, 'complete first-party GPLv3 license'):
+                packaging.collect_first_party_source(payload, identity)
+            self.assertEqual(list(payload.iterdir()), [])
+
+    @staticmethod
     def vendored_sources(root):
         for name, expected in packaging.VENDORED_UI.items():
             source = root / 'third-party' / name

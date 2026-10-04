@@ -45,6 +45,10 @@ not imply arbitrary GIS format or processing support.
 
 Choose the portable `.zip` or the per-user `-setup.exe` installer. Both contain the desktop application, CLI, examples, documentation, provenance and third-party notices. Verify downloads against `SHA256SUMS.txt`; `artifacts.json` records the exact source commit and artifact sizes and hashes.
 
+First-party code is GPL-3.0-only. Both packages include the license and a source
+archive for the exact built commit, with build instructions and locked dependency
+manifests. Third-party components and data retain their own notices and terms.
+
 Requires Windows 10/11 x64 and Microsoft Edge WebView2 Evergreen Runtime. The installer does not install WebView2. User data is retained on uninstall.
 
 ## Evaluation status

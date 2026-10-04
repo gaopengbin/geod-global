@@ -3,7 +3,7 @@
   "version": "0.1.0-rc.1",
   "private": true,
   "type": "module",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-only",
   "description": "Independent GeoD Global product repository and desktop workspace design.",
   "engines": {
     "node": ">=22.12.0",

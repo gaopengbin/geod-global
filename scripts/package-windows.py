@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tarfile
 import time
+import tomllib
 import urllib.error
 import urllib.request
 import zipfile
@@ -118,6 +119,41 @@ def source_identity(build_only=False):
             'dirty': bool(command('git', 'status', '--porcelain', capture=True)),
             'treeSha256': hashlib.sha256(json.dumps(records, sort_keys=True).encode()).hexdigest(),
             'files': records}
+
+
+def collect_first_party_source(payload, identity):
+    """Ship the exact clean source revision alongside GPL-covered binaries."""
+    commit = identity.get('commit', '')
+    if identity.get('dirty') is not False or not re.fullmatch(r'[0-9a-f]{40}', commit):
+        raise RuntimeError('GPL source packaging requires a clean committed checkout')
+    if command('git', 'rev-parse', 'HEAD', capture=True) != commit:
+        raise RuntimeError('GPL source revision differs from the build checkout')
+    package = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))
+    workspace = tomllib.loads((ROOT / 'Cargo.toml').read_text(encoding='utf-8'))
+    if package.get('license') != 'GPL-3.0-only' or workspace.get('workspace', {}).get('package', {}).get('license') != 'GPL-3.0-only':
+        raise RuntimeError('First-party package licenses must agree on GPL-3.0-only')
+    license_text = (ROOT / 'LICENSE').read_text(encoding='utf-8')
+    if 'GNU GENERAL PUBLIC LICENSE' not in license_text or 'Version 3, 29 June 2007' not in license_text:
+        raise RuntimeError('The complete first-party GPLv3 license is required')
+    for name in ['LICENSE', 'COMMERCIAL-LICENSING.md']:
+        shutil.copyfile(ROOT / name, payload / name)
+    shutil.copyfile(ROOT / 'docs/releases/FIRST-PARTY-NOTICE.txt', payload / 'FIRST-PARTY-NOTICE.txt')
+    source_directory = payload / 'SOURCE'
+    source_directory.mkdir()
+    archive = source_directory / f'GeoD-Global-source_{commit}.zip'
+    command('git', 'archive', '--format=zip', '--output', str(archive), commit)
+    record = {'license': 'GPL-3.0-only', 'commit': commit, 'path': relative(archive, payload),
+              'bytes': archive.stat().st_size, 'sha256': digest(archive),
+              'repository': 'https://github.com/gaopengbin/geod-global'}
+    (payload / 'SOURCE.txt').write_text(
+        f"GeoD Global corresponding project source\nLicense: GPL-3.0-only\n"
+        f"Commit: {commit}\nArchive: {record['path']}\nSHA-256: {record['sha256']}\n"
+        f"Repository: {record['repository']}/tree/{commit}\n\n"
+        "Extract the source archive and follow README.md / docs/development-guide.md.\n"
+        "The archive contains the build scripts and locked dependency manifests.\n"
+        "Third-party notices and applicable dependency source archives are in THIRD-PARTY/.\n",
+        encoding='utf-8')
+    return record
 
 
 def build_receipt_path(profile):
@@ -653,7 +689,7 @@ def main():
     shutil.copytree(ROOT / 'schemas', payload / 'schemas')
     shutil.copyfile(ROOT / 'crates/geod-runtime/README.md', payload / 'docs/runtime.md')
     shutil.copyfile(ROOT / 'docs/releases/WINDOWS-README.md', payload / 'README.md')
-    shutil.copyfile(ROOT / 'docs/releases/FIRST-PARTY-NOTICE.txt', payload / 'FIRST-PARTY-NOTICE.txt')
+    first_party_source = collect_first_party_source(payload, identity)
     release_notes = ROOT / 'docs/releases' / (config['version'] + '.md')
     if release_notes.is_file():
         (payload / 'docs/releases').mkdir()
@@ -675,6 +711,7 @@ def main():
     manifest = {'schemaVersion':'geod-windows-release/v1', 'product':'GeoD Global', 'version':config['version'],
                 'identifier':config['identifier'], 'channel':'release-candidate' if '-rc.' in config['version'] else 'local-evaluation', 'createdAt':stamp,
                 'target':TARGET, 'profile':args.profile, 'source':identity,
+                'firstPartySource':first_party_source,
                 'build':{**receipt,'cliHelpSmoke':'passed'},
                 'signatures':signatures, 'nativeDllImports':native_imports, 'thirdPartyPackageCount':dependencies,
                 'runtimeRequirements':['Windows 10/11 x64', 'Microsoft Edge WebView2 Evergreen runtime'],

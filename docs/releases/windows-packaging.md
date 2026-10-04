@@ -29,6 +29,14 @@ only; no system environment variable is changed. PE imports are checked after
 building, and packaging rejects remaining dynamic Visual C++ runtime imports.
 The packaged CLI is also run with `--help` as a read-only JSON smoke check.
 
+Distribution packaging requires a clean committed checkout. First-party code is
+GPL-3.0-only: the package includes LICENSE, the first-party notice, commercial
+licensing inquiry terms and a SOURCE/ ZIP generated from the exact build commit.
+SOURCE.txt and the release manifest record the source archive's commit and hash.
+The source contains the tracked build scripts and locked dependency manifests;
+generated local output and application data are excluded. Third-party dependency
+notices and applicable source archives remain separate in THIRD-PARTY/.
+
 Output goes into a new `.verification/packages/GeoD-Global_...` directory. Each
 name includes version, target, profile, Git revision, dirty status and UTC time.
 Existing output directories are never erased or reused. Source files are hashed
