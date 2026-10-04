@@ -32,6 +32,32 @@ VENDORED_UI = {
 # The published npm tarballs omit license files. Use reviewed, immutable upstream
 # texts only for these exact package versions; reject a changed response or cache.
 NPM_UPSTREAM_LICENSES = {
+    '@cesium/wasm-splats': {
+        'version': '0.1.0-alpha.2', 'license': 'Apache-2.0',
+        'url': 'https://api.github.com/repos/CesiumGS/cesium-wasm-utils/contents/LICENSE.md?ref=96a2fbae7ab1d117dd533fe558f0e061bed6762b',
+        'sha256': '28a2c9a11e7da1844f91eec9dafb9de21b3f70f21b994691062f00dcbdc0e900',
+    },
+    'draco3d': {
+        'version': '1.5.7', 'license': 'Apache-2.0',
+        'url': 'https://api.github.com/repos/google/draco/contents/LICENSE?ref=8786740086a9f4d83f44aa83badfbea4dce7a1b5',
+        'sha256': 'd3709b0fb4b8a94bbb1d02b8a2e484f258b0d9c5c5a01f940391f3fe662cd1a4',
+    },
+    'bitmap-sdf': {
+        'version': '1.0.4', 'license': 'MIT',
+        # The published README contains the copyright and MIT declaration;
+        # ship it together with the full pinned SPDX terms, not as a substitute.
+        'url': 'https://api.github.com/repos/dfcreative/bitmap-sdf/contents/readme.md?ref=78de3569d32404a7009f62bea3befca55838118a',
+        'sha256': '94f041253026585010ee5c32bc0bbab0ba8dec7004a96dc1975e288665791b41',
+        'file': 'NOTICE-README.md', 'standardLicense': 'MIT',
+    },
+    'mersenne-twister': {
+        'version': '1.1.0', 'license': 'MIT',
+        # Published metadata declares MIT; the exact source also carries the
+        # original MT19937 BSD conditions. Preserve that source notice in full.
+        'url': 'https://api.github.com/repos/boo1ean/mersenne-twister/contents/src/mersenne-twister.js?ref=83844a282375c657473edbe11aa2e2be85fe1746',
+        'sha256': 'b197b673a9e8add2068c9062e5f9222f73ae46ff03634909db28a924fdcad0eb',
+        'file': 'NOTICE-source.txt', 'standardLicense': 'MIT',
+    },
     '@napi-rs/wasm-runtime': {
         'version': '1.2.4', 'license': 'MIT',
         'url': 'https://raw.githubusercontent.com/napi-rs/napi-rs/7e3f293e2d6a3032eabfe51ff38bcaa82d342a2f/LICENSE',
@@ -205,7 +231,10 @@ def license_files(directory):
 
 def download_license(url, max_bytes):
     """Read a complete bounded license, retrying only transient network failures."""
-    request = urllib.request.Request(url, headers={'User-Agent': 'GeoD-Global-license-packaging/0.1'})
+    headers = {'User-Agent': 'GeoD-Global-license-packaging/0.1'}
+    if url.startswith('https://api.github.com/repos/'):
+        headers['Accept'] = 'application/vnd.github.raw+json'
+    request = urllib.request.Request(url, headers=headers)
     for attempt in range(LICENSE_DOWNLOAD_ATTEMPTS):
         try:
             with urllib.request.urlopen(request, timeout=LICENSE_DOWNLOAD_TIMEOUT) as response:
@@ -297,10 +326,13 @@ def pinned_npm_license(package, destination):
         cache.write_bytes(data)
     if digest(cache) != expected['sha256']:
         raise RuntimeError(f"Cached npm license checksum mismatch: {package['name']}")
-    target = destination / 'LICENSE'
+    target = destination / expected.get('file', 'LICENSE')
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(cache, target)
-    return [{'file': target.name, 'source': expected['url'], 'sha256': digest(target)}]
+    texts = [{'file': target.name, 'source': expected['url'], 'sha256': digest(target)}]
+    if expected.get('standardLicense'):
+        texts.append(standard_license(expected['standardLicense'], destination))
+    return texts
 
 
 def collect_vendored_notices(payload):

@@ -191,6 +191,29 @@ class PackagingTests(unittest.TestCase):
         for name in ['docs/releases/acceptance.md','README.md','prototype/README.md','prototype/qa/result.png','src-tauri/README.md','examples/clip.recipe.json']:
             self.assertFalse(packaging.is_build_input(name),name)
 
+    def test_published_attribution_requires_separate_complete_license_terms(self):
+        notice = b'Fixture upstream copyright and MIT declaration\n'
+        expected = {**packaging.NPM_UPSTREAM_LICENSES['bitmap-sdf'], 'sha256': hashlib.sha256(notice).hexdigest()}
+        package = {'name': 'bitmap-sdf', 'version': '1.0.4', 'license': 'MIT'}
+        for terms_available in [True, False]:
+            with self.subTest(terms_available=terms_available), tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)), mock.patch.dict(packaging.NPM_UPSTREAM_LICENSES, {'bitmap-sdf': expected}):
+                responses = [notice, b'Fixture complete MIT terms\n' if terms_available else RuntimeError('Missing complete terms')]
+                with mock.patch.object(packaging, 'download_license', side_effect=responses):
+                    destination = Path(folder) / 'notices'
+                    if not terms_available:
+                        with self.assertRaisesRegex(RuntimeError, 'Missing complete terms'):
+                            packaging.pinned_npm_license(package, destination)
+                    else:
+                        records = packaging.pinned_npm_license(package, destination)
+                        self.assertEqual({record['file'] for record in records}, {'NOTICE-README.md', 'MIT.txt'})
+                        self.assertEqual((destination / 'NOTICE-README.md').read_bytes(), notice)
+                        self.assertIn(b'complete MIT terms', (destination / 'MIT.txt').read_bytes())
+
+    def test_github_content_source_requests_raw_text_before_checksum_validation(self):
+        with mock.patch.object(packaging.urllib.request, 'urlopen', return_value=self.license_response()) as request:
+            self.assertEqual(packaging.download_license('https://api.github.com/repos/example/project/contents/LICENSE?ref=' + 'a' * 40, 1024), b'license text')
+            self.assertEqual(request.call_args.args[0].get_header('Accept'), 'application/vnd.github.raw+json')
+
     def test_cargo_build_pins_output_despite_environment_target_dir(self):
         with mock.patch.dict(packaging.os.environ, {'CARGO_TARGET_DIR':'some-other-target'}):
             args = packaging.cargo_build_command('release')
