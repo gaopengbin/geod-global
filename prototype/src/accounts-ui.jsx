@@ -86,7 +86,7 @@ export function ProviderAccountsPanel() {
     })}</div>
     <p className="accounts-note"><ShieldCheck size={14}/>{t('Tokens are saved in Windows Credential Manager. Passwords and two-step codes are never saved.')}</p>
     {error && <p className="account-error" role="alert">{error.text}<small>{t('Reference: {id}', { id: error.reference })}</small></p>}
-    {target && <AccountConnectDialog provider={target} onClose={() => setTarget(null)} onConnected={value => { update(value); setError(null); setTarget(null); }}/>} 
+    {target && <AccountConnectDialog provider={target} onClose={() => setTarget(null)} onConnected={value => { update(value); setError(null); setTarget(null); }}/>}
   </Surface>;
 }
 
