@@ -16,6 +16,9 @@
 .bui-select-content { transform-origin: var(--radix-select-content-transform-origin); }
 .bui-select-content[data-state=open] { animation: pop-in var(--motion-fast) var(--motion-ease); }
 .bui-select-content[data-state=closed] { animation: bui-pop-out var(--motion-fast) ease-in; }
+.bui-popover-content { transform-origin: var(--radix-popover-content-transform-origin); }
+.bui-popover-content[data-state=open] { animation: pop-in var(--motion-fast) var(--motion-ease); }
+.bui-popover-content[data-state=closed] { animation: bui-pop-out var(--motion-fast) ease-in; pointer-events: none; }
 .bui-tooltip { transform-origin: var(--radix-tooltip-content-transform-origin); }
 .bui-tooltip[data-state=delayed-open], .bui-tooltip[data-state=instant-open] { animation: pop-in var(--motion-fast) var(--motion-ease); }
 .bui-tooltip[data-state=closed] { animation: bui-pop-out var(--motion-fast) ease-in; }

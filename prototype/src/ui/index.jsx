@@ -9,6 +9,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Slot } from '@radix-ui/react-slot';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import * as PopoverPrimitive from '@radix-ui/react-popover';
 export { DatePicker } from './date-picker.jsx';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import * as SliderPrimitive from '@radix-ui/react-slider';
@@ -102,15 +103,22 @@ export const Input = forwardRef(function Input({ type = 'text', className, ...pr
 export const Textarea = forwardRef(function Textarea({ className, ...props }, ref) {
   return <textarea ref={ref} data-slot="textarea" className={cn('bui-textarea flex min-h-24', fieldClasses, className)} {...props} />;
 });
-function selectOptions(children) {
+function selectOptions(children, group = null) {
   return React.Children.toArray(children).flatMap(child => {
     if (!React.isValidElement(child)) return [];
-    if (child.type === 'option') return [{ value: String(child.props.value ?? child.props.children), label: child.props.children, disabled: child.props.disabled }];
-    return selectOptions(child.props.children);
+    if (child.type === 'option') return [{ value: String(child.props.value ?? child.props.children), label: child.props.children, description:child.props['data-description'], disabled: child.props.disabled || group?.disabled, group }];
+    if (child.type === 'optgroup') return selectOptions(child.props.children, { key: child.key, label: child.props.label, disabled: child.props.disabled });
+    return selectOptions(child.props.children, group);
   });
 }
-export const Select = forwardRef(function Select({ className, children, value, defaultValue, onChange, onInput, name, required, disabled, readOnly, form, id, ...props }, ref) {
+export const Select = forwardRef(function Select({ className, contentClassName, displayValue, children, value, defaultValue, onChange, onInput, name, required, disabled, readOnly, form, id, ...props }, ref) {
   const options = selectOptions(children);
+  const groups = [];
+  for (const option of options) {
+    const last = groups.at(-1);
+    if (last?.group === option.group) last.options.push(option);
+    else groups.push({ group: option.group, options: [option] });
+  }
   const emptyKey = `__geod_empty_${useId()}`;
   const [internal, setInternal] = useState(() => String(defaultValue ?? options[0]?.value ?? ''));
   const actual = value === undefined ? internal : String(value);
@@ -127,12 +135,19 @@ export const Select = forwardRef(function Select({ className, children, value, d
   };
   return <div data-slot="select-wrapper" className="bui-select-wrapper relative min-w-0">
     <SelectPrimitive.Root value={actual === '' ? emptyKey : actual} onValueChange={update} disabled={disabled || readOnly}>
-      <SelectPrimitive.Trigger ref={node => { triggerRef.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; }} id={id} data-slot="select-trigger" className={cn('bui-select flex items-center justify-between gap-2', fieldClasses, className)} aria-required={required || undefined} {...props}><span className="min-w-0 flex-1 truncate text-left"><SelectPrimitive.Value>{selected?.label ?? ''}</SelectPrimitive.Value></span><SelectPrimitive.Icon asChild><ChevronDown className="shrink-0" size={15} aria-hidden="true" /></SelectPrimitive.Icon></SelectPrimitive.Trigger>
-      <SelectPrimitive.Portal><SelectPrimitive.Content data-slot="select-content" className="bui-select-content" position="popper" sideOffset={5} collisionPadding={12}><SelectPrimitive.ScrollUpButton className="bui-select-scroll"><ChevronDown size={14} className="rotate-180" /></SelectPrimitive.ScrollUpButton><SelectPrimitive.Viewport className="bui-select-viewport">{options.map(option => <SelectPrimitive.Item key={option.value} value={option.value === '' ? emptyKey : option.value} disabled={option.disabled} className="bui-select-item"><SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText><SelectPrimitive.ItemIndicator><Check size={14} aria-hidden="true" /></SelectPrimitive.ItemIndicator></SelectPrimitive.Item>)}</SelectPrimitive.Viewport><SelectPrimitive.ScrollDownButton className="bui-select-scroll"><ChevronDown size={14} /></SelectPrimitive.ScrollDownButton></SelectPrimitive.Content></SelectPrimitive.Portal>
+      <SelectPrimitive.Trigger ref={node => { triggerRef.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; }} id={id} data-slot="select-trigger" className={cn('bui-select flex items-center justify-between gap-2', fieldClasses, className)} aria-required={required || undefined} {...props}><span className="min-w-0 flex-1 truncate text-left"><SelectPrimitive.Value>{displayValue ?? selected?.label ?? ''}</SelectPrimitive.Value></span><SelectPrimitive.Icon asChild><ChevronDown className="shrink-0" size={15} aria-hidden="true" /></SelectPrimitive.Icon></SelectPrimitive.Trigger>
+      <SelectPrimitive.Portal><SelectPrimitive.Content data-slot="select-content" className={cn('bui-select-content', contentClassName)} position="popper" sideOffset={5} collisionPadding={12}><SelectPrimitive.ScrollUpButton className="bui-select-scroll"><ChevronDown size={14} className="rotate-180" /></SelectPrimitive.ScrollUpButton><SelectPrimitive.Viewport className="bui-select-viewport">{groups.map(({ group, options: entries }, index) => {
+        const items = entries.map(option => <SelectPrimitive.Item key={option.value} value={option.value === '' ? emptyKey : option.value} disabled={option.disabled} className="bui-select-item"><SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>{option.description && <span data-slot="select-item-description" aria-hidden="true">{option.description}</span>}<SelectPrimitive.ItemIndicator data-slot="select-item-indicator"><Check size={14} aria-hidden="true" /></SelectPrimitive.ItemIndicator></SelectPrimitive.Item>);
+        return group ? <SelectPrimitive.Group className="bui-select-group" key={group.key ?? index}><SelectPrimitive.Label className="bui-select-group-label">{group.label}</SelectPrimitive.Label>{items}</SelectPrimitive.Group> : <React.Fragment key={index}>{items}</React.Fragment>;
+      })}</SelectPrimitive.Viewport><SelectPrimitive.ScrollDownButton className="bui-select-scroll"><ChevronDown size={14} /></SelectPrimitive.ScrollDownButton></SelectPrimitive.Content></SelectPrimitive.Portal>
     </SelectPrimitive.Root>
     <select ref={selectRef} data-slot="select-form-control" className="bui-form-control" tabIndex={-1} aria-hidden="true" name={name} value={actual} form={form} required={required} disabled={disabled} onChange={event => update(event.target.value)} onInvalid={() => triggerRef.current?.focus()}>{children}</select>
   </div>;
 });
+
+export function Popover({ trigger, children, open, onOpenChange, className, align = 'end', ...props }) {
+  return <PopoverPrimitive.Root open={open} onOpenChange={onOpenChange}><PopoverPrimitive.Trigger asChild>{trigger}</PopoverPrimitive.Trigger><PopoverPrimitive.Portal><PopoverPrimitive.Content data-slot="popover-content" className={cn('bui-popover-content', className)} align={align} sideOffset={6} collisionPadding={12} {...props}>{children}</PopoverPrimitive.Content></PopoverPrimitive.Portal></PopoverPrimitive.Root>;
+}
 
 export function Switch({ className, ...props }) {
   return <SwitchPrimitive.Root data-slot="switch" className={cn('bui-switch', className)} {...props}><SwitchPrimitive.Thumb className="bui-switch-thumb" /></SwitchPrimitive.Root>;

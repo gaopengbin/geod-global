@@ -1,0 +1,105 @@
+{
+  "schema": "geod-modis-vegetation-online-preview-verification/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-04T10:15:31.386Z",
+  "scope": "Single-item MOD13Q1/MYD13Q1 v061 NDVI/EVI online display; not original downloads, scientific processing or a packaged desktop window acceptance",
+  "providerApi": "https://planetarycomputer.microsoft.com/api/data/v1/docs",
+  "nativeWindowTested": false,
+  "usedUserDesktop": false,
+  "originalDownloadsCreated": 0,
+  "sourceFiles": [
+    {
+      "path": "prototype/src/main.jsx",
+      "sha256": "82d0666414d50f7832e65ec534ca5cf009ff0a6917e14bbd4aec73d35b4fa6d0"
+    },
+    {
+      "path": "prototype/src/explore-map.jsx",
+      "sha256": "61c886e71f59b9356c2f5309124e54e10320d494a0bbcd152dd05caee6d507ef"
+    },
+    {
+      "path": "prototype/src/explore-map.css",
+      "sha256": "d8caabacdf492eb4f0855cf68d69ff6256d4bde263b02316ab312d40d179a869"
+    },
+    {
+      "path": "prototype/src/vegetation-preview.js",
+      "sha256": "9d7ae4b5b66a4d87acd8be02dfb40026de9a68e615b9815f0b27b9b3501a33b3"
+    },
+    {
+      "path": "prototype/src/vegetation-preview-source.js",
+      "sha256": "771307c26b60cd99af5ee82639d8b19e9ef09f3e2d54511603fe70d9b98df559"
+    },
+    {
+      "path": "prototype/src/vegetation-preview-ui.jsx",
+      "sha256": "0cb0ac8d56d2bdf391c914ce8aa375db677389428f8a13c72f0e0506e26b2521"
+    },
+    {
+      "path": "prototype/src/locales/main.zh-CN.js",
+      "sha256": "0b7e96054a7fa663a08b2391c1721bfdcb09355c78bf0ac2b6cccab5bfa43663"
+    }
+  ],
+  "rendererEntrySha256": "848cf3a00cdd4396490dd2cfd6dd0e5235852698506202398d497e6cb15e68a6",
+  "browser": {
+    "receiptPath": "G:\\code\\geod-global\\.verification\\vegetation-preview-2026-10-04T10-15-31-379Z\\verification.json",
+    "sha256": "bf781f19045fd3e7900e17b0273ddb11bdc837c7c612f370fc451d3d3fff5578",
+    "cases": 9,
+    "successfulTileResponses": 363,
+    "configurations": [
+      "1440x960 English light, historical live catalogue",
+      "900x680 Chinese dark, current live catalogue"
+    ],
+    "coverage": [
+      "both indices decode into distinct nonuniform map canvases",
+      "date and source switching",
+      "cancel stale requests",
+      "tile error and retry",
+      "no attribution/legend overlap",
+      "desktop CSP and actual browser CORS"
+    ]
+  },
+  "independentPixels": {
+    "receiptPath": "G:\\code\\geod-global\\.verification\\modis-explore-preview\\pixel-check\\verification.json",
+    "sha256": "9fc72770835f3f6cefb2b08baef5bb522dc26213ea6fbba01e9e0312883db24b",
+    "verifiedSamples": 242,
+    "method": "Reproject tile-pixel centers to SHA-256 pinned original Int16 COGs with Rasterio and compare NoData and nearest-neighbor DN through the RdYlGn palette",
+    "sources": [
+      {
+        "itemId": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+        "assetKey": "ndvi",
+        "sha256": "97e4b77bcc19767f2757c24d2610407d75ed65efcbb926dacd3127cb214f4299",
+        "pngSha256": "2b0427f5f558d70eb4979a60b9179f6f4ad0d1d8d07e2b19fc1ca0f661f656ef"
+      },
+      {
+        "itemId": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+        "assetKey": "evi",
+        "sha256": "7db84c7e21dcbb1fbfce838761d0eaf0a8dd560f0b4c91d18269f4ecc9b12a44",
+        "pngSha256": "57f7b06f1ae87258e2c82f2f0d787695d8709b832a7a21d039db8a58e1d1661e"
+      }
+    ]
+  },
+  "display": {
+    "rawDnRange": [
+      -2000,
+      10000
+    ],
+    "scientificRange": [
+      -0.2,
+      1
+    ],
+    "nodata": -3000,
+    "palette": "rdylgn",
+    "projection": "EPSG:3857",
+    "resampling": "nearest",
+    "qualityMaskApplied": false,
+    "localPaletteIndependent": true
+  },
+  "regression": {
+    "nodeTests": 279,
+    "uiTests": 243,
+    "build": "passed",
+    "additionalChecksAfterLayoutAdjustment": [
+      "focused preview contract tests",
+      "production build",
+      "live browser verification"
+    ]
+  }
+}

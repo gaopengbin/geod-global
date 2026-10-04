@@ -30,10 +30,10 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   ShieldCheck,
-  KeyRound,
   CheckCircle2,
   ListChecks,
   MousePointer2,
+  Mountain,
 } from "lucide-react";
 import "./ui/foundation.css";
 import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
@@ -56,7 +56,10 @@ import { normalizeNavigationHash } from './navigation.js';
 import { I18nProvider, useI18n } from "./i18n.jsx";
 import { AppHeader, GeoDBrand } from './app-header.jsx';
 import { CatalogFilters } from './catalog-filters.jsx';
-import { PROVIDERS, providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel, demTileLabel, copDemLabel } from './providers.js';
+import { CatalogSourcePanel } from './catalog-source-panel.jsx';
+import { CatalogPreviewControls } from './catalog-preview-ui.jsx';
+import { catalogPreviewKind, catalogPreviewChannel, catalogBrowsePreview } from './catalog-preview.js';
+import { providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel, demTileLabel, copDemLabel } from './providers.js';
 import { imageryHrefs } from './explore-imagery.js';
 import { RELEASE_VERSION } from './release-policy.js';
 
@@ -126,6 +129,8 @@ function App() {
   const isVegetation = sourceProvider.id === 'planetary-vegetation';
   const isViirs = sourceProvider.id.startsWith('nasa-viirs-');
   const isAerial = sourceProvider.domain === 'aerial';
+  const previewKind = catalogPreviewKind(sourceProvider);
+  const beforeAerialDates = useRef(null);
   const [preparingImagery, setPreparingImagery] = useState(false);
   const imagerySequence = useRef(0);
   const [liveState, setLiveState] = useState("idle");
@@ -156,12 +161,15 @@ function App() {
   const [loadedIds, setLoadedIds] = useState([]);
   const [visibleLoadedIds, setVisibleLoadedIds] = useState([]);
   const [activeDay, setActiveDay] = useState(null);
+  const [vegetationIndex, setVegetationIndex] = useState('ndvi');
+  const [radarPolarization, setRadarPolarization] = useState('vv');
   const [mapMatches, setMapMatches] = useState([]);
   const [boxSelect, setBoxSelect] = useState(false);
   useEffect(() => { setMapMatches([]); }, [query]);
   const exploreMap = useRef(null);
   const timelineTrack = useRef(null);
   const sceneListRef = useRef(null);
+  const attributionRef = useRef(null);
   const listEndRef = useRef(null);
   const [visibleListCount, setVisibleListCount] = useState(100);
   const [footprintCount, setFootprintCount] = useState(0);
@@ -208,6 +216,9 @@ function App() {
       const result = await searchRunner.current.runAll(url, { onPage: page => {
         const merged = savedScenes.length ? mergeProjectCatalog(page, savedScenes) : page;
         setLiveCatalog(merged);
+        if (!savedScenes.length && catalogPreviewKind(submitted.provider)) {
+          setSelected(current => merged.scenes.find(scene => scene.id === current?.id) || merged.scenes[0] || null);
+        }
         if (savedScenes.length) {
           setSelected(current => merged.scenes.find(scene => scene.id === current?.id) || current);
           if (!previewRestored) {
@@ -358,6 +369,17 @@ function App() {
   const loadedScenes = useMemo(() => loadedIds.map(id => sceneById.get(id)).filter(Boolean), [loadedIds, sceneById]);
   const downloadScenes = useMemo(() => scenesForDownload({ scenes, selectedIds, loadedIds, currentScene: selected }), [scenes, selectedIds, loadedIds, selected]);
   const visibleLoadedScenes = useMemo(() => loadedScenes.filter(scene => visibleLoadedIds.includes(scene.id)), [loadedScenes, visibleLoadedIds]);
+  const mapScene = previewKind ? filtered.find(scene => scene.id === selected?.id) || filtered[0] : selected || filtered[0] || scenes[0];
+  const previewChannel = mapScene && previewKind && (previewKind !== 'elevation' || mapScene.grid?.shape) ? catalogPreviewChannel(mapScene,isVegetation ? vegetationIndex : radarPolarization) : undefined;
+  useEffect(() => {
+    const attribution = attributionRef.current;
+    if (!attribution) return;
+    const measure = () => attribution.parentElement?.style.setProperty('--map-attribution-height', `${attribution.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(attribution);
+    return () => observer.disconnect();
+  }, [page, scenes.length]);
   const days = useMemo(() => [...new Set(scenes.map(scene => scene.date.slice(0, 10)))].sort(), [scenes]);
   const dayCounts = useMemo(() => scenes.reduce((counts, scene) => {
     const day = scene.date.slice(0, 10);
@@ -393,7 +415,7 @@ function App() {
   const showDay = day => {
     setActiveDay(day);
     setMapMatches([]);
-    setSelected(visibleLoadedScenes.filter(scene => !day || scene.date.slice(0, 10) === day).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
+    setSelected((previewKind || !canLoadMap ? scenes : visibleLoadedScenes).filter(scene => !day || scene.date.slice(0, 10) === day).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
   };
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
@@ -473,22 +495,16 @@ function App() {
                   <Button variant="quiet" size="icon" aria-label={t("Hide scene list")} title={t("Hide scene list")} aria-controls="explore-discovery" aria-expanded={true} onClick={() => setDiscoveryCollapsed(true)}><PanelLeftClose size={18} /></Button>
                 </div>
               </div>
-              <label className="catalog-source-picker"><span>{t('Data source')}</span><Select aria-label={t('Data source')} value={sourceProvider.id} onChange={event => {
-                const next = { ...searchInput, provider: event.target.value };
+              <CatalogSourcePanel provider={sourceProvider} onOpenStac={() => setStacOpen(true)} onOpenWcs={() => setWcsOpen(true)} onChange={provider => {
+                const next = { ...searchInput, provider };
                 if (next.provider === 'planetary-naip' && sourceProvider.id !== next.provider) {
+                  beforeAerialDates.current = {start:searchInput.start,end:searchInput.end};
                   next.start = '2010-01-01'; next.end = new Date().toISOString().slice(0,10);
+                } else if (sourceProvider.id === 'planetary-naip' && next.provider !== sourceProvider.id && beforeAerialDates.current) {
+                  Object.assign(next,beforeAerialDates.current); beforeAerialDates.current = null;
                 }
                 setSearchInput(next); runSearch(next);
-              }}>{PROVIDERS.map(provider => <option key={provider.id} value={provider.id}>{provider.name}</option>)}</Select></label>
-              <Button className="catalog-custom-source" size="sm" onClick={() => setStacOpen(true)}>{t('Custom raster sources')}</Button>
-              <Button className="catalog-custom-source" size="sm" onClick={() => setWcsOpen(true)}>{t('Coverage services (WCS)')}</Button>
-              {sourceProvider.account && <div className="catalog-source-authorization"><p className="catalog-source-note">{t(isViirs ? 'Public catalogue and browse; authorize Earthdata for originals.' : isSrtm ? 'SRTMGL1 v003 · Int16 · EGM96. Search without an account; authorize Earthdata in Settings before downloading originals.' : sourceProvider.id === 'copernicus' ? 'Public catalogue and previews; downloading original SAFE products requires Copernicus authorization.' : 'Public HLS catalogue and previews; downloading original bands requires Earthdata authorization.')}</p><Button asChild size="icon" tooltip={t('Manage authorization')}><a href={`#Settings?account=${sourceProvider.account}`} aria-label={t('Manage authorization')}><KeyRound size={16} aria-hidden="true"/></a></Button></div>}
-              {isElevation && !isSrtm && <p className="catalog-source-note">{t('Public surface elevation tiles · Float32 · EGM2008. Download to view heights locally. No account required.')}</p>}
-              {isRadar && <p className="catalog-source-note">{t('Terrain-corrected radar · 10 m · linear gamma0. Cloud filtering does not apply. Download originals to view and query backscatter locally.')}</p>}
-              {isAerial && <p className="catalog-source-note">{t('US aerial imagery · RGB + NIR originals. Dates vary by state; no cloud filter. No account required.')}</p>}
-              {isComposite && <p className="catalog-source-note">{t(isVegetation ? '16-day · nominal 250 m · NDVI / EVI. Download index COGs to read original DN and scaled values in Workspace.' : isViirs ? '8-day · nominal 1 km · HDF5. Prepare M5/M4/M3 after download for local RGB and project processing.' : '8-day composites · nominal 500 m · sinusoidal grid. Download reflectance COGs for local RGB; scene cloud filtering is unavailable.')}</p>}
-              {sourceProvider.id === 'nasa-viirs-npp' && <p className="catalog-source-note">{t('New Suomi-NPP delivery stops Nov 1, 2026. Prefer NOAA-21 / NOAA-20.')} <a href="https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VNP09A1_002" target="_blank" rel="noreferrer">{t('Official source')}</a></p>}
-              {sourceProvider.id === 'planetary-landsat' && <p className="catalog-source-note">{t('30 m true-color display from original reflectance bands. Downloads retain all three original bands.')}</p>}
+              }}/>
               <Button className="area-picker" onClick={() => setModal("area")}>
                 <MapPin size={17} />
                 <span>
@@ -548,10 +564,10 @@ function App() {
                           onClick={() => toggleScene(s.id)}
                           aria-label={t("Select scene {date} {id}", { date: isElevation ? demTileLabel(s.id) : compositePeriodLabel(s, date), id: s.id })}
                         >
-                          <SceneThumbnail
-                            src={s.thumbnail}
-                            alt={isElevation ? t('Elevation browse preview, {id}', { id: demTileLabel(s.id) }) : t("True-color preview, {date}", { date: compositePeriodLabel(s, date) })}
-                          />
+                          {previewKind === 'elevation' ? <span className="catalog-elevation-tile" aria-label={t('Elevation tile, {id}',{id:demTileLabel(s.id)})}><Mountain size={25} aria-hidden="true"/><span>{number(s.gsd)} m</span></span> : <SceneThumbnail
+                            src={catalogBrowsePreview(s)}
+                            alt={isVegetation ? t('Vegetation index browse image') : isRadar ? t('Radar backscatter browse image') : isElevation ? t('Elevation browse preview, {id}', { id: demTileLabel(s.id) }) : t("True-color preview, {date}", { date: compositePeriodLabel(s, date) })}
+                          />}
                           <div className="scene-info">
                             <strong title={isComposite ? compositePeriodLabel(s, date) : undefined}>{isElevation ? demTileLabel(s.id) : compositePeriodLabel(s, date, locale)}</strong>
                             <span>
@@ -575,7 +591,7 @@ function App() {
                     {filtered.length > visibleListCount && <div ref={listEndRef} className="catalog-list-progress" role="status">{t("Showing {shown} of {total} scenes · scroll for more", { shown: visibleListCount, total: filtered.length })}</div>}
                   </div>
                   {catalog && selectedIds.length > 0 && <div className="catalog-selection-actions">
-                    <div><strong title={t("Click footprints or drag a box on the map to choose scenes.")}>{t("{count} scenes selected", { count: selectedIds.length })}</strong><Button variant="quiet" size="xs" onClick={() => updateSelection([])}>{t("Clear")}</Button></div>
+                    <div><strong title={t("Click footprints or drag a box on the map to choose scenes.")}>{t("{count} scenes selected", { count: selectedIds.length })}</strong><Button variant="quiet" size="xs" onClick={() => updateSelection([])}>{t("Clear selection")}</Button></div>
                     {canLoadMap && <Button primary onClick={loadSelected} disabled={awaitingSelectedGrid || preparingImagery || !selectedIds.length || selectedIds.length > 16}>{awaitingSelectedGrid ? <><Spinner />{t('Reading imagery metadata…')}</> : preparingImagery ? <><Spinner />{t('Preparing imagery access…')}</> : t("Load selected imagery · {count}", { count: selectedIds.length })}</Button>}
                     {sourceProvider.download && (exploringProjectId || !canLoadMap ? (!exploringProjectId || currentProject) && <DownloadAssetButton key={[exploringProjectId, ...downloadScenes.map(scene => scene.id)].join('|')} scene={selected || downloadScenes[0]} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} project={currentProject || undefined} onProjectUpdated={setActiveProject} onOpenProject={openProject}/> : <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project => openProject(project.id)}/>)}
                     {canLoadMap && selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 COGs for this browser map. Narrow the filters or clear some scenes.")}</span>}
@@ -591,13 +607,13 @@ function App() {
             {scenes.length ? <main className="map-workspace">
               <div className="map-toolbar">
                 <div className="map-view-controls">
-                <SegmentedControl className="preview-mode" aria-label={t("Preview")} value={compare ? "compare" : "preview"}
+                {previewKind ? <CatalogPreviewControls kind={previewKind} scene={mapScene} value={previewChannel} onValueChange={isVegetation ? setVegetationIndex : setRadarPolarization}/> : <SegmentedControl className="preview-mode" aria-label={t("Preview")} value={compare ? "compare" : "preview"}
                   onValueChange={value => { setCompare(value === "compare"); if (value === "compare") setCompareId(other?.id || ""); }}
-                  items={[
+                  items={canLoadMap ? [
                     { value: "preview", label: t("Preview"), icon: Layers },
                     { value: "compare", label: t("Compare"), icon: SlidersHorizontal, disabled: !comparisons.length,
                       title: t(comparisons.length ? "Compare scenes with matching source grids" : "Comparison needs two true-color COGs with the same CRS, transform and dimensions") },
-                  ]} />
+                  ] : [{value:'preview',label:t('Footprints'),icon:SquareDashed}]} />}
                 {visibleLoadedScenes.filter(scene => !activeDay || scene.date.slice(0, 10) === activeDay).length > 1 && <Select className="front-layer-picker" aria-label={t("Front imagery layer")} value={selected?.id || ''} onChange={event => setSelected(sceneById.get(event.target.value))}>
                   {visibleLoadedScenes.filter(scene => !activeDay || scene.date.slice(0, 10) === activeDay).map(scene => <option key={scene.id} value={scene.id}>{date(scene.date, { year: undefined, month: '2-digit', day: '2-digit' })} · {scene.properties["grid:code"] || scene.id}</option>)}
                 </Select>}
@@ -621,7 +637,7 @@ function App() {
               </div>
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap ref={exploreMap} scene={selected || filtered[0] || scenes[0]} scenes={filtered} loadedScenes={visibleLoadedScenes} selectedIds={selectedIds} focusedIds={mapMatches} activeSceneId={selected?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} onFootprintsPick={ids => { setMapMatches(ids); if (ids.length) setInspector(true); }} onFootprintsChange={setFootprintCount} />
+                  <ExploreMap ref={exploreMap} scene={mapScene || scenes[0]} scenes={filtered} loadedScenes={visibleLoadedScenes} selectedIds={selectedIds} focusedIds={mapMatches} activeSceneId={mapScene?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} previewChannel={previewChannel} onFootprintsPick={ids => { setMapMatches(ids); if (ids.length) setInspector(true); }} onFootprintsChange={setFootprintCount} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
@@ -658,9 +674,9 @@ function App() {
                   </Surface>
                 </div>
               )}
-              <div className="map-attribution">
+              <div className="map-attribution" ref={attributionRef}>
                 <span>{t(isViirs ? "NASA/NOAA VIIRS composites ({year}) · {source} · Natural Earth overview" : isComposite ? "NASA MODIS composites ({year}) · {source} · Natural Earth overview" : isAerial ? "USDA NAIP aerial imagery ({year}) · {source} · Natural Earth overview" : isSrtm ? "NASA SRTMGL1 v003 · {source} · Natural Earth overview" : isElevation ? "Copernicus DEM · {source} · Natural Earth overview" : sourceProvider.id === 'planetary-landsat' ? "USGS Landsat data ({year}) · {source} · Natural Earth overview" : sourceProvider.id === 'nasa-earthdata' ? "NASA HLS data ({year}) · {source} · Natural Earth overview" : "Copernicus Sentinel data ({year}) · {source} · Natural Earth overview", { source: sourceProvider.name, year: (selected || scenes[0]).date.slice(0, 4) })}</span>
-                <Button variant="quiet" disabled={!selected} onClick={() => setModal("provenance")}>{t(canLoadMap ? "Georeferenced COG display · source details" : "Scene footprints · source details")}<Info size={12} />
+                <Button variant="quiet" disabled={!selected} onClick={() => setModal("provenance")}>{t(isVegetation ? 'Online index preview · source details' : previewKind ? 'Online map preview · source details' : visibleLoadedScenes.length ? "Georeferenced COG display · source details" : "Scene footprints · source details")}<Info size={12} />
                 </Button>
               </div>
               {!isElevation && <div className="timeline">
@@ -809,7 +825,7 @@ function App() {
                 <dt>{t("Metadata fetched")}</dt>
                 <dd>{date(catalog.retrievedAt)}</dd>
                 <dt>{t("Map source")}</dt>
-                <dd>{t(isRadar ? 'Sentinel-1 IW RTC COGs contain linear gamma0 backscatter. Provider previews are display images. Local display uses dB stretching; original Float32 values remain unchanged. No additional calibration or speckle filtering is applied.' : isViirs ? 'VIIRS footprints and public browse images. Authorized downloads retain the complete original HDF5. Prepare M5, M4 and M3 in the project to view and process local science bands; no QA mask is applied.' : isVegetation ? 'NASA MOD13Q1/MYD13Q1 v061 NDVI/EVI COGs converted by Planetary Computer. Downloads retain original signed DN and the sinusoidal grid. The full NASA HDF and QA layers are not included.' : isComposite ? 'NASA MODIS 8-day surface reflectance distributed as Planetary Computer converted COGs. Downloads retain original DN and the sinusoidal grid; quality and pixel state layers can be downloaded and decoded locally. The original HDF is not included, and quality masks are not applied.' : isAerial ? 'Original four-band aerial COG; RGB display uses bands 1–3. Near-infrared is retained and can be read from downloaded originals in Workspace.' : isSrtm ? 'SRTM tile footprints and provider browse images. Download original HGT ZIPs to inspect signed heights in Workspace.' : isElevation ? 'Elevation tile footprints. Downloaded original Float32 heights can be viewed and queried in Workspace.' : sourceProvider.id === 'planetary-landsat' ? 'Original red, green and blue COGs; display reflectance 0–0.3 with gamma 2.2. Downloads retain original DN.' : canLoadMap ? 'Georeferenced true-color COG; list thumbnails are provider previews' : sourceProvider.id === 'copernicus' ? 'Scene footprints and provider thumbnails; original downloads are complete SAFE product archives' : sourceProvider.download ? 'Scene footprints and provider thumbnails; downloads contain original reflectance bands' : 'Scene footprints and provider thumbnails; original product access requires authorization')}</dd>
+                <dd>{t(isRadar ? 'Online radar previews display original linear gamma0 as −30–0 dB grayscale for the selected polarization. Downloads keep the original Float32 values. No extra calibration or speckle filtering is applied.' : isViirs ? 'VIIRS footprints and public browse images. Authorized downloads retain the complete original HDF5. Prepare M5, M4 and M3 in the project to view and process local science bands; no QA mask is applied.' : isVegetation ? 'Online NDVI/EVI previews use Planetary Computer PNG tiles in Web Mercator, colored from −0.2 to 1.0 with the RdYlGn palette. No quality mask is applied. Original downloads retain signed DN and the sinusoidal grid; science and QA layers are available separately.' : isComposite ? 'Online MODIS RGB previews use bands 1, 4 and 3 with reflectance 0–0.3 and gamma 2.2. Downloads retain signed DN and the sinusoidal grid. No quality mask is applied; QA layers are separate.' : isAerial ? 'Original four-band aerial COG; RGB display uses bands 1–3. Near-infrared is retained and can be read from downloaded originals in Workspace.' : isSrtm ? 'SRTM tile footprints and provider browse images. Download original HGT ZIPs to inspect signed heights in Workspace.' : isElevation ? 'Online height previews read original Float32 COG samples and preserve the Point grid. Grayscale stretches −100–1000 metres above EGM2008 for display only. Downloaded originals can be queried in Workspace.' : sourceProvider.id === 'planetary-landsat' ? 'Original red, green and blue COGs; display reflectance 0–0.3 with gamma 2.2. Downloads retain original DN.' : canLoadMap ? 'Georeferenced true-color COG; list thumbnails are provider previews' : sourceProvider.id === 'copernicus' ? 'Scene footprints and provider thumbnails; original downloads are complete SAFE product archives' : sourceProvider.download ? 'Scene footprints and provider thumbnails; downloads contain original reflectance bands' : 'Scene footprints and provider thumbnails; original product access requires authorization')}</dd>
                 {!isElevation && !isAerial && !isComposite && !isRadar && <><dt>{t("Cloud cover")}</dt>
                 <dd>{t("Full scene, not AOI-specific")}</dd></>}
               </dl>

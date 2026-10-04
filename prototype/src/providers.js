@@ -3,6 +3,7 @@ import { vegetationAssetIdentity, vegetationIdentity } from './vegetation.js';
 import { MODIS_SCIENCE, MODIS_SCIENCE_KEYS } from './modis-science-layers.js';
 import { VIIRS_PRODUCTS, viirsIdentity, viirsAssetIdentity } from './viirs.js';
 import { RADAR_HOST, radarAssetIdentity } from './radar.js';
+import { retryPreviewRequest } from './preview-network.js';
 // Source-specific capabilities; a public catalogue does not imply asset access.
 export const PROVIDERS = Object.freeze([
   { id: 'planetary-vegetation', name: 'MODIS NDVI / EVI · Planetary Computer', collection: 'modis-13Q1-061', dataset: 'MODIS 16-day Vegetation Indices v6.1', domain: 'composite', search: 'https://planetarycomputer.microsoft.com/api/stac/v1/search', catalog: 'https://planetarycomputer.microsoft.com/api/stac/v1/', terms: 'https://planetarycomputer.microsoft.com/dataset/modis-13Q1-061', download: true, map: false },
@@ -58,9 +59,9 @@ function validNaipDate(value) {
   return Number.isFinite(Date.parse(date)) && new Date(date).toISOString().slice(0,10).replaceAll('-', '') === value;
 }
 function naipFilename(stem) {
-  const m = /^m_(\d{7})_(nw|ne|sw|se)_(\d{2})_(030|060|100|1)_(\d{8})(?:_(\d{8}))?$/.exec(stem);
+  const m = /^m_(\d{7})_(nw|ne|sw|se)_(\d{2})_(030|060|100|1|h|\.6)_(\d{8})(?:_(\d{8}))?$/.exec(stem);
   if (!m || Number(m[3]) < 1 || Number(m[3]) > 23 || !validNaipDate(m[5]) || m[6] && !validNaipDate(m[6])) return null;
-  return { grid:m[1], cm:m[4] === '1' ? '100' : m[4], date:m[5] };
+  return { grid:m[1], cm:({1:'100',h:'060','.6':'060'})[m[4]] || m[4], date:m[5] };
 }
 export function naipIdentity(path) {
   if (typeof path !== 'string') return null;
@@ -73,8 +74,16 @@ export function naipMatchesItem(path, itemId) {
   const identity = naipIdentity(path);
   // Some catalogue IDs retain a second date absent from the original filename.
   // Preserve the full ID; the native downloader checks its official item too.
-  return Boolean(identity && (identity === itemId || identity.split('_').length === 7
-    && typeof itemId === 'string' && itemId.startsWith(`${identity}_`) && validNaipDate(itemId.slice(identity.length + 1))));
+  // Reviewed 2016 files use `h` for half-metre-class imagery, while their
+  // official catalogue IDs use `.6`. The directory and TIFF still specify 0.6 m.
+  const catalogueIdentity = identity?.split('_').map((part,index) => index === 5 && part === 'h' ? '.6' : part).join('_');
+  return Boolean(identity && [identity,catalogueIdentity].some(value => value === itemId || value.split('_').length === 7
+    && typeof itemId === 'string' && itemId.startsWith(`${value}_`) && validNaipDate(itemId.slice(value.length + 1))));
+}
+export function naipLegacyNir(path, itemId) {
+  if (!naipMatchesItem(path,itemId)) return false;
+  const fileResolution = naipIdentity(path).split('_')[5], itemResolution = itemId.split('_')[5];
+  return fileResolution === '1' && itemResolution === '1' || fileResolution === 'h' && itemResolution === '.6';
 }
 export function naipPixelSize(itemId) {
   const m = /^([a-z]{2})_(m_.+)$/.exec(itemId), info = m && naipFilename(m[2]);
@@ -171,11 +180,24 @@ export function providerForAssets(assets) {
 let access, pendingAccess;
 let landsatAccess, pendingLandsatAccess;
 let naipAccess, pendingNaipAccess;
+async function requestPublicAccess(url,fetcher) {
+  const signal=AbortSignal.timeout(30_000);
+  try {
+    return await retryPreviewRequest(async()=>{
+      const response=await fetcher(url,{credentials:'omit',signal});
+      if(response.status>=500)throw new Error('Planetary Computer data access is unavailable. Retry loading imagery.');
+      return response;
+    },signal);
+  } catch(error) {
+    if(['AbortError','TimeoutError'].includes(error.name))throw error;
+    throw new Error('Planetary Computer data access is unavailable. Retry loading imagery.');
+  }
+}
 async function prepareNaipAccess(hrefs, { fetcher, force, now }) {
   if (!hrefs.every(href => isSupportedAsset(href, 'aerial'))) throw new Error('Unsupported NAIP data access.');
   if (!force && naipAccess?.expires > now + 60_000) return;
   if (!pendingNaipAccess) pendingNaipAccess = (async () => {
-    const response = await fetcher('https://planetarycomputer.microsoft.com/api/sas/v1/token/naipeuwest/naip', { credentials: 'omit', signal: AbortSignal.timeout(30_000) });
+    const response = await requestPublicAccess('https://planetarycomputer.microsoft.com/api/sas/v1/token/naipeuwest/naip',fetcher);
     if (!response.ok) throw new Error('Planetary Computer data access is unavailable. Retry loading imagery.');
     const data = await response.json(), expires = Date.parse(data?.['msft:expiry']), token = new URLSearchParams(data?.token);
     const end = Date.parse(token.get('se'));
@@ -193,7 +215,7 @@ async function prepareLandsatAccess(hrefs, { fetcher, force, now }) {
   // Like the official SDK, share one container token across all selected
   // scenes/bands. Per-file signing would make 48 requests for 16 RGB scenes.
   if (!pendingLandsatAccess) pendingLandsatAccess = (async () => {
-    const response = await fetcher('https://planetarycomputer.microsoft.com/api/sas/v1/token/landsateuwest/landsat-c2', { credentials: 'omit', signal: AbortSignal.timeout(30_000) });
+    const response = await requestPublicAccess('https://planetarycomputer.microsoft.com/api/sas/v1/token/landsateuwest/landsat-c2',fetcher);
     if (!response.ok) throw new Error(response.status === 429 ? 'Planetary Computer is rate limiting data access. Wait a moment before retrying.' : 'Planetary Computer data access is unavailable. Retry loading imagery.');
     const data = await response.json(), expires = Date.parse(data?.['msft:expiry']), token = new URLSearchParams(data?.token);
     if (!Number.isFinite(expires) || expires <= now + 60_000 || typeof data?.token !== 'string' || data.token.length > 8192
@@ -213,7 +235,7 @@ export async function prepareAssetAccess(hrefs, { fetcher = fetch, signal, force
   if (!hrefs.some(href => { try { return new URL(href).hostname === PC_HOST; } catch { return false; } })) return;
   if (!force && access?.expires > now + 60_000) return;
   if (!pendingAccess) pendingAccess = (async () => {
-    const response = await fetcher('https://planetarycomputer.microsoft.com/api/sas/v1/token/sentinel2l2a01/sentinel2-l2', { credentials: 'omit', signal: AbortSignal.timeout(30_000) });
+    const response = await requestPublicAccess('https://planetarycomputer.microsoft.com/api/sas/v1/token/sentinel2l2a01/sentinel2-l2',fetcher);
     if (!response.ok) throw new Error(response.status === 429 ? 'Planetary Computer is rate limiting data access. Wait a moment before retrying.' : 'Planetary Computer data access is unavailable. Retry loading imagery.');
     const data = await response.json();
     const expires = Date.parse(data['msft:expiry']);

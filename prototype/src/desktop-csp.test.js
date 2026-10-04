@@ -10,6 +10,11 @@ test('desktop policy permits COG fetch and local decode without remote script ex
     const missingCog = structuredClone(config);
     missingCog.app.security[directive] = config.app.security[directive].replace(/connect-src[^;]+/, value => value.replace(' https://sentinel-cogs.s3.us-west-2.amazonaws.com', ''));
     assert.throws(() => verifyDesktopCspConfig(missingCog), /COG requests/);
+    for (const origin of ['https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com','https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com','geod-elevation:','http://geod-elevation.localhost']) {
+      const missingDem=structuredClone(config);
+      missingDem.app.security[directive]=config.app.security[directive].replace(` ${origin}`,'');
+      assert.throws(()=>verifyDesktopCspConfig(missingDem),/COG requests/);
+    }
     const missingWorker = structuredClone(config);
     missingWorker.app.security[directive] = config.app.security[directive].replace("worker-src 'self' blob:", "worker-src 'self'");
     assert.throws(() => verifyDesktopCspConfig(missingWorker), /decoder workers/);

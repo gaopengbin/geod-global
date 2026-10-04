@@ -41,6 +41,22 @@ test('locale-aware acquisition dates keep the UTC observation day and handle mis
   assert.equal(formatNumber('zh-CN', null), '—');
 });
 
+test('RTC catalog validation errors explain the failure in the selected language', async () => {
+  const { default: main } = await import('./locales/main.zh-CN.js');
+  const message = 'The radar catalog record does not match its source product, polarization or raster format. Try searching again.';
+  assert.equal(translate('zh-CN', message, {}, main), '雷达影像的目录记录与源产品编号、极化通道或栅格规格不一致，已停止加载。请重新检索。');
+  assert.equal(translate('en', message, {}, main), message);
+});
+
+test('clearing imagery selection remains distinct from the MODIS clear-sky state', async () => {
+  const { default: main } = await import('./locales/main.zh-CN.js');
+  const { default: modis } = await import('./locales/modis.zh-CN.js');
+  const dictionary = { ...main, ...modis };
+  assert.equal(translate('zh-CN', 'Clear selection', {}, dictionary), '清空');
+  assert.equal(translate('zh-CN', 'Clear', {}, dictionary), '晴空');
+  assert.equal(translate('en', 'Clear selection', {}, dictionary), 'Clear selection');
+});
+
 test('locale resources preserve interpolation contracts and shared messages agree', async () => {
   const { default: main } = await import('./locales/main.zh-CN.js');
   const { default: runtime } = await import('./locales/runtime.zh-CN.js');

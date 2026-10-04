@@ -2,7 +2,12 @@
 .data-library-page { display: grid; grid-template-columns:minmax(0,1fr); min-width:0; gap: 12px; }
 .data-library-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 24px; min-height: 40px; border-bottom: 1px solid var(--line); }
 .data-library-heading > .bui-segmented { border: 0; min-width:0; max-width:100%; gap:16px; overflow-x:auto; }
-.data-library-heading .bui-segmented-item { min-height: 40px; padding-block: 8px; }
+.data-library-heading > .bui-segmented[data-variant=navigation] .bui-segmented-item { min-height: 40px; padding-block: 8px; flex-shrink: 0; }
+/* The shared underline sits outside its own bordered navigation. Here the
+   heading owns that border, so keep it inside the scrollable tab row instead
+   of creating a one-pixel vertical overflow. */
+.data-library-heading > .bui-segmented[data-variant=navigation] .bui-segmented-item::after { bottom: 0; }
+.data-library-heading .bui-segmented-item:focus-visible { outline-offset: -3px; }
 .data-library-view { min-width: 0; animation: fade-up var(--motion-normal) var(--motion-ease); }
 .data-library-page .library-toolbar, .data-library-page .projects-heading { background: var(--page); padding: 0; }
 .data-library-page .projects-library, .data-library-page .runtime-library { margin: 0; }

@@ -8,7 +8,9 @@
 
 探索页选择上述数据源，按区域和日期检索，选择影像后创建工程，或追加到当前工程。默认同时下载 NDVI 和 EVI，也可选择单独一个指数。工程详情提供各指数的下载、拼接和裁剪；回到探索页会恢复来源和已选景，并可随时返回同一工程。
 
-列表显示完整 16 天合成时段及 Terra / Aqua 平台，不提供光学整景云量筛选。探索地图显示影像范围和供应商浏览图；下载后的指数在工作空间按原始正弦投影网格显示。来源的浏览图与本地科学指数预览采用各自的颜色定义，不能用缩略图颜色判断指数校准。
+列表显示完整 16 天合成时段及 Terra / Aqua 平台，不提供光学整景云量筛选。探索地图可直接在线预览当前景，顶部切换 NDVI / EVI，左下角图例显示合成时段及固定 −0.2 至 1.0 范围。预览使用 Planetary Computer Data API 按所选条目和科学波段生成的 Web Mercator PNG 瓦片，以最近邻重投影，NoData −3000 透明，未应用质量掩膜；不需要创建下载任务或先下载整景。网络失败会显示重试入口，切换指数、日期或数据源会取消旧请求。下载后的指数在工作空间按原始正弦投影网格显示，支持原值检查。在线 RdYlGn 配色与本地 modis-vi-v1 配色各自独立，超出产品范围的显示色会截断；预览颜色不用于精确读值或判定质量。[官方 Data API](https://planetarycomputer.microsoft.com/api/data/v1/docs)
+
+列表缩略图也使用固定范围的 NDVI 配色。供应商默认浏览图将原始 DN 区间调色板与 0–255 重标度组合，在实际条目上几乎只显示一种颜色；这里分别指定连续 RdYlGn 调色板及 DN −2000 至 10000 范围，避免这种显示错误。
 
 在“保留原值”模式下，NDVI、EVI 分别保存与处理。重叠区使用较新的有效值，较新文件的 NoData 可以由较旧的有效值补齐；该模式不对两层联合选择同一观测，也不应用质量或云掩膜。新的质量模式使用每景四份原文件联合选择，详见[质量筛选](modis-vegetation-quality.md)。同一幅合成影像内，不同像元可能来自不同观测日期。[MOD13 v6.1 用户指南](https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf)
 
@@ -45,6 +47,8 @@
 ## 复核与剩余范围
 
 可重复脚本包括[实际原文件下载](../scripts/verify-vegetation-sources.mjs)、[独立全值处理核对](../scripts/verify-vegetation.py)、[两种 MCP](../scripts/verify-vegetation-mcp.py)、[缓存恢复及损坏控制](../scripts/verify-vegetation-cache.py)、[实际界面处理](../scripts/verify-vegetation-ui.mjs)、[实时探索流程](../scripts/verify-vegetation-explore.mjs)和[证据汇总](../scripts/verify-vegetation-closeout.py)。私有原件、失败过程及通过快照分别保留。
+
+在线地图另外使用[实时浏览器验收](../scripts/verify-vegetation-preview.mjs)检查直接网络 / CSP / CORS、两个指数、日期切换、请求取消及错误重试；[独立像元核对](../scripts/verify-vegetation-preview-pixels.py)将真实瓦片像元中心坐标转换回已下载、SHA-256 匹配的原始 COG，比较最近邻 DN、NoData 和显示颜色。两种语言 / 主题 / 窗口配置的九项流程及 242 个独立像元样本通过，[机器记录](../prototype/qa/modis-vegetation-preview-verification.json)绑定源代码及实际响应哈希。Python 3.12 的可选科学验收依赖见[锁定版本](../requirements-raster-qa.txt)。这些验收不创建下载任务，也不替代原生窗口验收。
 
 界面验收使用生产资源、桌面 CSP 和实际原生接口，在隐藏浏览器中运行，未操作用户桌面。它不等同于原生 WebView / 安装版窗口验收；本轮未制作安装包或发布。
 

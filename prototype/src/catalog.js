@@ -95,7 +95,7 @@ export function normalizeScene(item, providerId = 'earth-search') {
     if (!keys.length) throw new Error('The radar scene has no supported polarization.');
     for (const key of keys) {
       const identity = radarAssetIdentity(assets[key].href, key), band = assets[key]['raster:bands']?.[0];
-      if (!identity?.ids.includes(item.id) || !properties['sar:polarizations']?.includes(key.toUpperCase()) || band?.data_type !== 'float32' || band.nodata !== -32768 || band.spatial_resolution !== 10) throw new Error('The radar COG does not match its polarization and RTC product.');
+      if (!identity?.ids.includes(item.id) || !properties['sar:polarizations']?.includes(key.toUpperCase()) || band?.data_type !== 'float32' || band.nodata !== -32768 || band.spatial_resolution !== 10) throw new Error('The radar catalog record does not match its source product, polarization or raster format. Try searching again.');
       assets[key] = { ...assets[key], type: 'image/tiff; application=geotiff' };
     }
     if (assets.rendered_preview) assets.thumbnail = assets.rendered_preview;

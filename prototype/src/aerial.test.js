@@ -79,6 +79,37 @@ test('NAIP extra date binding rejects wrong grids, invalid dates and additional 
  const two='/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif';
  for(const bad of ['me_m_4506963_se_19_030_20231115','me_m_4506963_se_19_030_20231115_20240104','me_m_4506963_se_19_030_20231115_20240103_20250101']) assert.equal(naipMatchesItem(two,bad),false);
 });
+test('captured legacy NAIP h filenames bind the full .6 catalogue ID without failing a page',()=>{
+ const captured=JSON.parse(readFileSync(new URL('../qa/naip-legacy-catalog.json',import.meta.url)));
+ const scenes=captured.features.map(feature=>normalizeScene(feature,'planetary-naip'));
+ assert.equal(scenes.length,15);
+ for (const [index,current] of scenes.entries()) {
+  const feature=captured.features[index], path=new URL(feature.assets.image.href).pathname;
+  assert.equal(current.id,feature.id);assert.equal(current.gsd,0.6);assert.equal(naipPixelSize(current.id),0.6);
+  assert.equal(current.assets.aerial.href,feature.assets.image.href);assert.equal(naipMatchesItem(path,current.id),true);
+  assert.match(aerialTitle(current.id,value=>value),new RegExp(current.date.slice(0,10)));
+  const restored=projectCatalogScenes({id:'legacy',...projectRequest({scenes:[current],bounds:current.bbox,name:'Legacy NAIP'})})[0];
+  assert.equal(restored.id,current.id);assert.equal(restored.assets.aerial.href,current.assets.aerial.href);
+  for(const bad of [current.id.replace('_.6_','_060_'),current.id.replace('_10_','_11_'),current.id.replace('20161004','20161005')+'_20250101',current.id.replace('20161004','20160230')]) assert.equal(naipMatchesItem(path,bad),false);
+  assert.equal(isSupportedAsset(feature.assets.image.href.replace('060cm','100cm'),'aerial'),false);
+ }
+});
+test('legacy 0.6 m NIR tags require the reviewed h/.6 source, four band roles and matching TIFF grid',()=>{
+ const feature=JSON.parse(readFileSync(new URL('../qa/naip-legacy-catalog.json',import.meta.url))).features[0];
+ const current=normalizeScene(feature,'planetary-naip'),[height,width]=current.grid.shape,t=current.grid.transform;
+ const tags={PhotometricInterpretation:2,BitsPerSample:[8,8,8,8],ExtraSamples:[2],SampleFormat:[1,1,1,1]};
+ const image={getGeoKeys:()=>({GTModelTypeGeoKey:1,GTRasterTypeGeoKey:1,ProjectedCSTypeGeoKey:26910}),getSamplesPerPixel:()=>4,fileDirectory:{getValue:name=>tags[name]},getGDALNoData:()=>null,getWidth:()=>width,getHeight:()=>height,getResolution:()=>[0.6,-0.6,0],getOrigin:()=>[t[2],t[5],0]};
+ validateNaipImages([[image]],current);
+ const data={...metadata,width,height,bounds:[t[2],t[5]+t[4]*height,t[2]+t[0]*width,t[5]],crs:current.crs,aerial:{...metadata.aerial,sourceExtraSample:2}};
+ const record={...job,itemId:current.id,href:current.assets.aerial.href};
+ assert.equal(verifiedMapMetadata(record,data),data);
+ assert.throws(()=>verifiedMapMetadata(job,data));
+ assert.throws(()=>validateNaipImages([[image]],{...current,id:current.id.replace('_.6_','_060_')}));
+ assert.throws(()=>validateNaipImages([[image]],{...current,grid:{...current.grid,transform:[0.6,0,t[2]+0.6,0,-0.6,t[5]]}}));
+ const wrongBands={...current,assets:{aerial:{...current.assets.aerial,'eo:bands':['red','green','blue','alpha'].map(common_name=>({common_name}))}}};
+ assert.throws(()=>validateNaipImages([[image]],wrongBands));
+ tags.ExtraSamples=[1];assert.throws(()=>validateNaipImages([[image]],current));
+});
 test('local aerial metadata and NIR pixel validation reject swapped datum and alpha semantics',()=>{
  assert.equal(validateRasterInspection(metadata),metadata); assert.equal(verifiedMapMetadata(job,metadata),metadata);
  assert.match(utmDefinition('EPSG:26910'),/datum=NAD83/); assert.equal(aerialMatchesJob(job,{...metadata,crs:'EPSG:32610'}),false);

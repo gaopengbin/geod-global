@@ -9,6 +9,7 @@ pub mod features;
 pub mod mcp;
 pub mod mosaic;
 mod prepared;
+pub mod preview;
 pub mod processing;
 pub mod projects;
 pub mod providers;
@@ -188,6 +189,7 @@ struct Inner {
     accounts: Mutex<accounts::Accounts>,
     planetary_access: providers::AccessCache,
     permits: Semaphore,
+    preview_permits: Semaphore,
     raster_permits: Arc<Semaphore>,
     thumbnail_permits: Arc<Semaphore>,
     _directory_lock: std::fs::File,
@@ -571,6 +573,7 @@ impl JobManager {
                 wcs: Mutex::new(wcs),
                 proxy_settings: Mutex::new(proxy_settings),
                 permits: Semaphore::new(2),
+                preview_permits: Semaphore::new(4),
                 raster_permits: Arc::new(Semaphore::new(1)),
                 thumbnail_permits: Arc::new(Semaphore::new(1)),
                 _directory_lock: directory_lock,

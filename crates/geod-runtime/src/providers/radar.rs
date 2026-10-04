@@ -15,7 +15,7 @@ pub(crate) fn identity(path: &str) -> Option<(String, String)> {
     }
     let s: Vec<_> = p[7].split('_').collect();
     if s.len() != 9
-        || !matches!(s[0], "S1A" | "S1B" | "S1C")
+        || !matches!(s[0], "S1A" | "S1B" | "S1C" | "S1D")
         || s[1] != "IW"
         || s[2] != "GRDH"
         || !matches!(s[3], "1SDV" | "1SDH" | "1SSV" | "1SSH")
@@ -95,6 +95,27 @@ mod tests {
             path.replace(".rtc.tiff", ".tif"),
         ] {
             assert!(identity(&invalid).is_none(), "{invalid}");
+        }
+    }
+
+    #[test]
+    fn sentinel_1d_keeps_exact_scene_and_polarization_binding() {
+        let path = "/sentinel1-grd-rtc/GRD/2026/9/30/IW/DV/S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_1D03/measurement/iw-vv.rtc.tiff";
+        let id = "S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc";
+        assert_eq!(identity(path), Some((id.into(), "vv".into())));
+        assert!(matches(path, id, "vv"));
+        assert!(matches(&path.replace("iw-vv", "iw-vh"), id, "vh"));
+        assert!(!matches(path, id, "vh"));
+        assert!(!matches(path, &id.replace("00905F", "00905E"), "vv"));
+        assert!(!matches(path, &id.replace("S1D", "S1C"), "vv"));
+        for bad in [
+            path.replace("S1D", "S1E"),
+            path.replace("S1D", "S1d"),
+            path.replace("/2026/9/30/", "/2026/9/29/"),
+            path.replace("/DV/", "/DH/"),
+            path.replace("iw-vv", "iw-hh"),
+        ] {
+            assert!(identity(&bad).is_none(), "{bad}");
         }
     }
 }

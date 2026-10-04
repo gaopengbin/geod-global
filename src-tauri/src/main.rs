@@ -1,5 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod elevation_preview;
 mod lifecycle;
 
 use lifecycle::DesktopLifecycle;
@@ -1433,6 +1434,7 @@ async fn reveal_job(
 
 fn main() {
     tauri::Builder::default()
+        .register_asynchronous_uri_scheme_protocol("geod-elevation", elevation_preview::handle)
         // Claim the application instance before opening its exclusive runtime store.
         .plugin(tauri_plugin_single_instance::init(|app, _, _| {
             restore_window(app);

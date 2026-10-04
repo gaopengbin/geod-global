@@ -1,7 +1,7 @@
 # GeoD Global for Windows
 
-Windows 10 / 11 x64 桌面版。此包为 **0.1.0-rc.1 发布候选**，尚未进行公开发布，
-可先在本机试用。文件未签名，Windows 可能显示未知发布者提示。
+Windows 10 / 11 x64 桌面版。此包为 **0.1.0-rc.1 发布候选**，供试用和反馈，
+尚非稳定正式版。文件未签名，Windows 可能显示未知发布者提示。
 本包的功能范围和限制见 [RELEASE-NOTES.md](RELEASE-NOTES.md)。
 
 ## 安装与启动
@@ -55,7 +55,7 @@ Windows 10 / 11 x64 桌面版。此包为 **0.1.0-rc.1 发布候选**，尚未�
 
 ## English quick start
 
-This is an unsigned Windows x64 release candidate, prepared for local review.
+This is an unsigned Windows x64 release candidate for evaluation and feedback.
 Install the WebView2 Evergreen Runtime, then use the per-user installer or extract
 the entire portable ZIP. Run `geod-global-desktop.exe`; development tools and a
 companion server are unnecessary. Closing the window keeps tasks running in the

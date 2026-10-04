@@ -14,5 +14,14 @@
 .explore-map-progress-stalled { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 2px; color: var(--orange); font-size: 12px; }
 .explore-map-progress-stalled [data-slot="button"] { flex-shrink: 0; }
 .explore-map-progress-compact { top: auto; bottom: 44px; padding: 11px 13px; }
+.explore-map-progress-index.explore-map-progress-compact { top: 112px; bottom: auto; right: 16px; left: auto; translate: none; width: min(300px, calc(100% - 32px)); }
 .explore-map-error { display: grid; gap: 8px; width: min(340px, 80%); }
 .explore-map-error [data-slot="button"] { justify-self: start; }
+.vegetation-preview-legend { position: absolute; bottom: calc(var(--map-attribution-height, 36px) + 12px); left: 16px; width: 230px; max-width: calc(100% - 32px); padding: 10px 12px; border: 1px solid var(--line); box-shadow: var(--shadow-overlay); pointer-events: none; }
+.vegetation-preview-caption, .vegetation-preview-ticks { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 11px; font-variant-numeric: tabular-nums; }
+.vegetation-preview-caption { margin-bottom: 8px; }
+.vegetation-preview-caption strong { color: var(--ink); font-size: 12px; }
+.vegetation-preview-caption > span, .vegetation-preview-ticks, .vegetation-preview-legend p { color: var(--ink-2); }
+.vegetation-preview-ramp { height: 6px; border-radius: 3px; }
+.vegetation-preview-ticks { margin-top: 3px; }
+.vegetation-preview-legend p { margin: 5px 0 0; font-size: 11px; }

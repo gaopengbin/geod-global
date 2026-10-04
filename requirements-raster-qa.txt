@@ -1,0 +1,5 @@
+# Optional independent raster QA on Python 3.12; not application dependencies.
+numpy==1.26.4
+rasterio==1.3.9
+Pillow==11.3.0
+matplotlib==3.10.8

@@ -42,7 +42,7 @@ pub struct AerialDisplay {
     pub pixel_interpretation: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub coverage_mask: Option<String>,
-    /// Some reviewed legacy 1 m NAIP originals label NIR as unassociated alpha.
+    /// Reviewed legacy 1 m and `h` 0.6 m originals label NIR as unassociated alpha.
     /// Preserve that source tag in inspection metadata, never as display alpha.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_extra_sample: Option<u16>,
@@ -165,11 +165,13 @@ pub(crate) fn validate_samples<R: Read + Seek>(decoder: &mut Decoder<R>, job: &J
     if extra == 2
         && !(job.kind == "download"
             && job.asset_key == "aerial"
-            && job.item_id.split('_').nth(5) == Some("1")
-            && providers::naip_pixel_size(&job.item_id) == Some(1.0))
+            && providers::asset_url(&job.href).is_ok_and(|url| {
+                url.host_str() == Some(providers::NAIP_HOST)
+                    && providers::naip_legacy_nir(url.path(), &job.item_id)
+            }))
     {
         return Err(
-            "Unassociated alpha is allowed only for the reviewed legacy 1 m NAIP NIR layout".into(),
+            "Unassociated alpha is allowed only for the reviewed legacy NAIP NIR layouts".into(),
         );
     }
     Ok(extra)
@@ -501,6 +503,35 @@ mod tests {
         }
         let mut record = job(&root, &fixture(0, 26910, 0.6));
         record.item_id = ID.replace("nw", "ne");
+        assert!(crate::raster::rgb::inspect(&root, &record).is_err());
+    }
+
+    #[test]
+    fn reviewed_legacy_half_metre_nir_tag_preserves_zero_nir_and_source_bytes() {
+        let directory = tempfile::tempdir().unwrap();
+        let root = directory.path().canonicalize().unwrap();
+        let original = fixture(2, 26910, 0.6);
+        let mut record = job(&root, &original);
+        record.item_id = "ca_m_3712221_sw_10_.6_20160625_20161004".into();
+        record.href = "https://naipeuwest.blob.core.windows.net/naip/v002/ca/2016/ca_060cm_2016/37122/m_3712221_sw_10_h_20160625.tif".into();
+        let result = crate::raster::rgb::inspect(&root, &record).unwrap();
+        assert_eq!(result.pixel_size, [0.6, 0.6]);
+        assert_eq!(result.aerial.unwrap().source_extra_sample, Some(2));
+        let first = crate::raster::rgb::sample(&root, &record, 543846.1, 4178429.9).unwrap();
+        assert_eq!(first.values, Some([126, 138, 122]));
+        assert_eq!(first.near_infrared, Some(0));
+        assert!(!first.is_no_data);
+        let black = crate::raster::rgb::sample(&root, &record, 543846.7, 4178429.9).unwrap();
+        assert_eq!(black.near_infrared, Some(99));
+        assert!(!black.is_no_data);
+        assert_eq!(
+            std::fs::read(record.output_path.as_ref().unwrap()).unwrap(),
+            original
+        );
+        record.item_id = record.item_id.replace("_.6_", "_060_");
+        assert!(crate::raster::rgb::inspect(&root, &record).is_err());
+        record.item_id = record.item_id.replace("_060_", "_.6_");
+        record.href = record.href.replace("_h_", "_060_");
         assert!(crate::raster::rgb::inspect(&root, &record).is_err());
     }
 }

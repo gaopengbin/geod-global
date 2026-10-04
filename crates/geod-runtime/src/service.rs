@@ -2,7 +2,7 @@
 use crate::{CreateJobRequest, CreateProjectRequest, JobManager, ProxySettings, RasterRecipe};
 use axum::{
     extract::{DefaultBodyLimit, Path, Query, Request, State},
-    http::{header, HeaderValue, Method, StatusCode},
+    http::{header, HeaderMap, HeaderValue, Method, StatusCode},
     middleware::{self, Next},
     response::{IntoResponse, Response},
     routing::{get, post},
@@ -75,7 +75,7 @@ async fn browser_boundary(request: Request, next: Next) -> Response {
         );
         headers.insert(
             header::ACCESS_CONTROL_ALLOW_HEADERS,
-            HeaderValue::from_static("Content-Type, X-GeoD-Client"),
+            HeaderValue::from_static("Content-Type, X-GeoD-Client, Range"),
         );
         headers.insert(header::VARY, HeaderValue::from_static("Origin"));
     }
@@ -88,6 +88,22 @@ fn api_error(error: String) -> ApiError {
 }
 async fn health(State(manager): State<JobManager>) -> Json<crate::RuntimeHealth> {
     Json(manager.health())
+}
+
+async fn elevation_preview(
+    State(manager): State<JobManager>,
+    Path(item): Path<String>,
+    headers: HeaderMap,
+) -> std::result::Result<Response, ApiError> {
+    let range = headers
+        .get(header::RANGE)
+        .and_then(|value| value.to_str().ok())
+        .ok_or_else(|| api_error("A bounded Range header is required".into()))?;
+    manager
+        .read_elevation_preview(&item, range)
+        .await
+        .map(|data| data.into_response().map(axum::body::Body::from))
+        .map_err(api_error)
 }
 
 async fn diagnostics(State(manager): State<JobManager>) -> Json<serde_json::Value> {
@@ -650,6 +666,7 @@ async fn download_mosaic_metadata(
 pub fn router(manager: JobManager) -> Router {
     Router::new()
         .route("/health", get(health))
+        .route("/preview/elevation/{item}", get(elevation_preview))
         .route("/diagnostics", get(diagnostics))
         .route("/accounts", get(provider_accounts))
         .route(

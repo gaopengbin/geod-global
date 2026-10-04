@@ -9,6 +9,7 @@ import { projectCatalogScenes } from './project-explore.js';
 import { validateRasterInspection, downloadableAssets } from './runtime-client.js';
 import { verifiedMapMetadata, verifyPixelResult } from './workspace-map-geometry.js';
 const fixture=JSON.parse(readFileSync(new URL('../qa/sentinel-1-rtc-catalog.json',import.meta.url),'utf8'));
+const currentFixture=JSON.parse(readFileSync(new URL('../qa/sentinel-1d-rtc-catalog.json',import.meta.url),'utf8'));
 
 test('real RTC identities retain polarizations across both catalogue ID generations and project restore',()=>{
   for(const item of fixture.features) {
@@ -27,6 +28,36 @@ test('real RTC identities retain polarizations across both catalogue ID generati
     assert.equal(restored.properties['sat:orbit_state'],'unknown');
     assert.throws(()=>normalizeScene({...item,assets:{...item.assets,vv:{...item.assets.vv,href:item.assets.vh.href}}},'planetary-radar'),/polarization/);
   }
+});
+
+test('a current RTC page containing Sentinel-1D and 1C loads and restores without dropping the whole page',async()=>{
+  const page=await fetchCatalogPage(searchURL({provider:'planetary-radar',bbox:[-122.55,37.68,-122.32,37.84],start:'2026-09-05',end:'2026-10-04',limit:20}),{
+    fetcher:async()=>({ok:true,json:async()=>currentFixture}),
+  });
+  assert.equal(page.scenes.length,currentFixture.features.length);
+  assert.equal(page.scenes.filter(scene=>scene.id.startsWith('S1D_')).length,2);
+  for(const scene of page.scenes) {
+    assert.deepEqual(downloadableAssets(scene).map(a=>a.key),['vv','vh']);
+    const request=projectRequest({name:'Current RTC',scenes:[scene],bounds:[-122.55,37.68,-122.32,37.84]});
+    assert.equal(providerForAssets(request.scenes[0].assets),'planetary-radar');
+    const restored=projectCatalogScenes(request)[0];
+    assert.equal(restored.id,scene.id);
+    assert.deepEqual(downloadableAssets(restored).map(a=>a.href),downloadableAssets(scene).map(a=>a.href));
+    for(const key of ['vv','vh']) {
+      const href=scene.assets[key].href;
+      assert.ok(radarAssetIdentity(href,key).ids.includes(scene.id));
+      assert.equal(isSupportedAsset(href,key),true);
+      assert.equal(isSupportedAsset(href,key === 'vv' ? 'vh' : 'vv'),false);
+    }
+  }
+  const item=currentFixture.features[0], href=item.assets.vv.href;
+  assert.equal(radarAssetIdentity(href,'vv').platform,'Sentinel-1D');
+  for(const invalid of [href.replace('S1D','S1E'),href.replace('S1D','S1d'),href.replace('/2026/9/30/','/2026/9/29/'),href.replace('/DV/','/DH/'),href+'?sig=secret']) assert.equal(isSupportedAsset(invalid,'vv'),false);
+  for(const changed of [
+    {...item,id:item.id.replace('00905F','00905E')},
+    {...item,assets:{...item.assets,vv:{...item.assets.vv,href:item.assets.vh.href}}},
+    ...[{data_type:'uint16'},{nodata:0},{spatial_resolution:30}].map(change=>({...item,assets:{...item.assets,vv:{...item.assets.vv,'raster:bands':[{...item.assets.vv['raster:bands'][0],...change}]}}})),
+  ]) assert.throws(()=>normalizeScene(changed,'planetary-radar'),/source product, polarization or raster format/);
 });
 
 test('RTC search omits cloud filters and preserves polarization through an empty catalogue page',async()=>{

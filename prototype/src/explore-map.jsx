@@ -3,6 +3,7 @@ import { RefreshCw } from 'lucide-react';
 import OLMap from 'ol/Map.js';
 import View from 'ol/View.js';
 import WebGLTileLayer from 'ol/layer/WebGLTile.js';
+import TileLayer from 'ol/layer/Tile.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import DragBox from 'ol/interaction/DragBox.js';
@@ -21,6 +22,9 @@ import { useI18n } from './i18n.jsx';
 import { prepareAssetAccess } from './providers.js';
 import { imageryHrefs } from './explore-imagery.js';
 import { createImagerySource } from './explore-imagery-source.js';
+import { createCatalogPreviewSource } from './explore-preview-source.js';
+import { catalogPreviewKind } from './catalog-preview.js';
+import { CatalogPreviewLegend } from './catalog-preview-ui.jsx';
 import 'ol/ol.css';
 import './explore-map.css';
 
@@ -34,6 +38,13 @@ const selectedFootprintStyle = new Style({ stroke: new Stroke({ color: '#55b8ff'
 const queuedFootprintStyle = new Style({ stroke: new Stroke({ color: '#f4b544', width: 2.5 }), fill: new Fill({ color: 'rgba(244, 181, 68, 0.13)' }) });
 const loadedFootprintStyle = new Style({ stroke: new Stroke({ color: '#6ed7a3', width: 2 }), fill: new Fill({ color: 'rgba(68, 193, 135, 0.08)' }) });
 const focusedFootprintStyle = new Style({ stroke: new Stroke({ color: '#f044d2', width: 4.5 }), fill: new Fill({ color: 'rgba(240, 68, 210, 0.1)' }) });
+// Footprints must not tint calibrated imagery when several acquisitions overlap.
+// Keep a transparent fill for polygon hit testing and retain each state border.
+const rasterFootprintStyles = new Map([footprintStyle, selectedFootprintStyle, queuedFootprintStyle, loadedFootprintStyle, focusedFootprintStyle].map(style => {
+  const outline = style.clone();
+  outline.setFill(new Fill({ color: 'rgba(0, 0, 0, 0)' }));
+  return [style, outline];
+}));
 
 function sceneFootprint(scene) {
   let feature;
@@ -79,7 +90,7 @@ function fitExtent(map, extent) {
   if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: 16, duration: 250 });
 }
 
-export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loadedScenes = [], selectedIds = [], focusedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, onFootprintsPick, onFootprintsChange }, ref) {
+export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loadedScenes = [], selectedIds = [], focusedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, previewChannel, vegetationIndex, onFootprintsPick, onFootprintsChange }, ref) {
   const { t } = useI18n();
   const target = useRef(null);
   const map = useRef(null);
@@ -103,6 +114,11 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   onFootprintsPickRef.current = onFootprintsPick;
   boxSelectRef.current = boxSelect;
   const shouldLoad = loadedScenes.some(item => item.id === scene?.id) && (!activeDay || scene?.date?.slice(0, 10) === activeDay);
+  const channel = previewChannel ?? vegetationIndex, previewKind = catalogPreviewKind(scene?.provider);
+  const onlinePreview = !!channel && !!previewKind && (!activeDay || scene.date.slice(0, 10) === activeDay);
+  const indexPreview = onlinePreview && previewKind === 'vegetation';
+  const shouldRender = shouldLoad || onlinePreview;
+  const rasterBackdrop = shouldRender || loadedScenes.some(item => !activeDay || item.date.slice(0, 10) === activeDay);
   const retryMap = async () => {
     try {
       await prepareAssetAccess([...loadedScenes, reference].flatMap(imageryHrefs), { force: true });
@@ -123,6 +139,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     let cancelled = false;
     let instance;
     let source;
+    let disposePreview;
     let resize;
     let pendingTiles = 0;
     let requestedTiles = 0;
@@ -146,7 +163,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       clearInterval(loadingClock);
       setError(message);
     };
-    if (shouldLoad) loadingClock = setInterval(() => {
+    if (shouldRender) loadingClock = setInterval(() => {
       if (failed || (initialReady && pendingTiles === 0)) return;
       publishLoading();
       if (Date.now() - lastActivityAt >= 45000) fail('The imagery source stopped responding. Try another scene or retry.');
@@ -162,16 +179,25 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
         mapExtent = transformExtent(extent, scene.crs, OVERVIEW_PROJECTION, 16);
       }
       const imagery = shouldLoad ? createImagerySource(scene) : null;
-      source = imagery?.source;
-      const base = source ? new WebGLTileLayer({ source, style: imagery.style, className: 'explore-base-layer', extent: mapExtent, zIndex: 9 }) : null;
+      const preview = onlinePreview ? createCatalogPreviewSource(scene, channel) : null;
+      if (preview) { mapExtent = preview.extent; disposePreview = preview.dispose; }
+      const initialExtent = onlinePreview ? focusRasterExtent(mapExtent, projected) : mapExtent;
+      source = preview?.source || imagery?.source;
+      const base = preview?.imageTiles
+        ? new TileLayer({ source, className: 'explore-index-layer', extent: mapExtent, zIndex: 9 })
+        : source ? new WebGLTileLayer({ source, style: preview?.style || imagery?.style, className: 'explore-base-layer', extent: mapExtent, zIndex: 9 }) : null;
       const land = new VectorLayer({ source: overviewLand, style: landStyle, zIndex: 0 });
       const countries = new VectorLayer({ source: overviewCountries, style: countryStyle, minResolution: 750, zIndex: 2 });
       const footprints = new VectorSource({ wrapX: false });
-      const footprintLayer = new VectorLayer({ source: footprints, style: feature => feature.get('hidden') ? null : feature.get('focused') ? focusedFootprintStyle : feature.get('queued') ? queuedFootprintStyle : feature.get('loaded') ? loadedFootprintStyle : feature.get('active') ? selectedFootprintStyle : footprintStyle, zIndex: 11 });
+      const footprintLayer = new VectorLayer({ source: footprints, style: feature => {
+        if (feature.get('hidden')) return null;
+        const style = feature.get('focused') ? focusedFootprintStyle : feature.get('queued') ? queuedFootprintStyle : feature.get('loaded') ? loadedFootprintStyle : feature.get('active') ? selectedFootprintStyle : footprintStyle;
+        return feature.get('rasterBackdrop') ? rasterFootprintStyles.get(style) : style;
+      }, zIndex: 11 });
       const overlays = new VectorLayer({ source: new VectorSource(), className: 'explore-area-layer', zIndex: 12 });
       const previous = savedViewRef.current?.areaKey === areaKey ? savedViewRef.current : null;
       const view = new View({ projection: OVERVIEW_PROJECTION,
-        center: previous?.center || [(mapExtent[0] + mapExtent[2]) / 2, (mapExtent[1] + mapExtent[3]) / 2],
+        center: previous?.center || [(initialExtent[0] + initialExtent[2]) / 2, (initialExtent[1] + initialExtent[3]) / 2],
         resolution: previous?.resolution || 100, minResolution: 2.5, maxResolution: 156543.03392804097, enableRotation: false });
       instance = new OLMap({ target: target.current, controls: [], layers: [land, ...(base ? [base] : []), countries, footprintLayer, overlays], view });
       map.current = instance; areaLayer.current = overlays; footprintSource.current = footprints; sceneExtentRef.current = mapExtent;
@@ -190,10 +216,12 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
         publishLoading();
         if (!cancelled && !failed && !initialReady) { initialReady = true; setReady(true); }
       });
-      source?.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); fail('The true-color COG tiles could not load. Check your connection or retry.'); });
-      source?.on('error', () => fail('The true-color COG metadata could not load. Check your connection or retry.'));
-      source?.getView().then(() => { metadataReady = true; lastActivityAt = Date.now(); publishLoading(); })
-        .catch(() => fail('The true-color COG metadata could not load. Check your connection or retry.'));
+      source?.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); fail(indexPreview ? 'The index preview tiles could not load. Check your connection or retry.' : onlinePreview ? 'The map preview tiles could not load. Check your connection or retry.' : 'The true-color COG tiles could not load. Check your connection or retry.'); });
+      const metadataFailure = onlinePreview ? 'The map preview metadata could not load. Check your connection or retry.' : 'The true-color COG metadata could not load. Check your connection or retry.';
+      source?.on('error', () => fail(metadataFailure));
+      if (preview?.imageTiles) { metadataReady = true; publishLoading(); }
+      else source?.getView().then(() => { if (cancelled) return; if (preview?.getStyle) base.setStyle(preview.getStyle()); metadataReady = true; lastActivityAt = Date.now(); publishLoading(); })
+        .catch(() => fail(metadataFailure));
       if (!source) { metadataReady = true; initialReady = true; setReady(true); }
       // Focus on the part of the searched area covered by this scene, including when the search spans multiple UTM zones.
       areaExtentRef.current = intersectBounds(projected, mapExtent) ? projected : null;
@@ -201,7 +229,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       requestAnimationFrame(() => {
         if (cancelled) return;
         const size = instance.getSize();
-        if (!previous) fitExtent(instance, !shouldLoad ? footprintUnionRef.current || projected : fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
+        if (!previous) fitExtent(instance, onlinePreview ? focusExtentRef.current : !shouldLoad ? footprintUnionRef.current || projected : fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
         else if (size?.[0] && size?.[1] && !extentsIntersect(instance.getView().calculateExtent(size), mapExtent)) fitExtent(instance, focusExtentRef.current);
         fitted = true;
       });
@@ -214,11 +242,12 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
         if (fitted) savedViewRef.current = { areaKey, center: instance.getView().getCenter()?.slice(), resolution: instance.getView().getResolution() };
         instance.setTarget(undefined); instance.dispose();
       }
-      source?.dispose();
+      if (disposePreview) disposePreview();
+      else source?.dispose();
       map.current = null; areaLayer.current = null; footprintSource.current = null; referenceLayer.current = null;
       sceneExtentRef.current = null; areaExtentRef.current = null; focusExtentRef.current = null;
     };
-  }, [scene?.id, areaKey, retry, shouldLoad]);
+  }, [scene?.id, areaKey, retry, shouldLoad, channel, onlinePreview]);
 
   useEffect(() => {
     const source = footprintSource.current;
@@ -250,7 +279,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
         rendered?.feature.set('hidden', true);
         renderedFootprints.set(footprintKey, { feature, priority });
       }
-      feature.setProperties({ queued, loaded, active, focused, hidden: !!hidden });
+      feature.setProperties({ queued, loaded, active, focused, rasterBackdrop, hidden: !!hidden });
       if (focused) focusedFeatures.push(feature);
       else source.addFeature(feature);
       union = union ? [Math.min(union[0], extent[0]), Math.min(union[1], extent[1]), Math.max(union[2], extent[2]), Math.max(union[3], extent[3])] : extent.slice();
@@ -259,7 +288,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     focusedFeatures.forEach(feature => source.addFeature(feature));
     footprintUnionRef.current = union;
     onFootprintsChange?.(count);
-  }, [scenes, selectedIds, focusedIds, loadedScenes, activeSceneId, areaKey, retry, onFootprintsChange]);
+  }, [scenes, selectedIds, focusedIds, loadedScenes, activeSceneId, areaKey, retry, channel, onlinePreview, rasterBackdrop, onFootprintsChange]);
 
   useEffect(() => {
     const instance = map.current;
@@ -273,7 +302,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     });
     instance.addInteraction(dragBox);
     return () => instance.removeInteraction(dragBox);
-  }, [boxSelect, scene?.id, areaKey, retry, shouldLoad]);
+  }, [boxSelect, scene?.id, areaKey, retry, shouldLoad, channel, onlinePreview]);
 
   useEffect(() => {
     const instance = map.current;
@@ -310,7 +339,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       clearInterval(watch);
       entries.forEach(({ layer, source }) => { instance.removeLayer(layer); layer.setSource(null); source.dispose(); });
     };
-  }, [scene?.id, areaKey, loadedScenes, activeDay, retry, shouldLoad]);
+  }, [scene?.id, areaKey, loadedScenes, activeDay, retry, shouldLoad, channel, onlinePreview]);
 
   useEffect(() => {
     const instance = map.current;
@@ -338,7 +367,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       instance.addLayer(layer); referenceLayer.current = layer;
     }).catch(referenceError);
     return () => { active = false; clearInterval(watch); if (layer) { instance.removeLayer(layer); layer.setSource(null); } referenceSource?.dispose(); if (referenceLayer.current === layer) referenceLayer.current = null; };
-  }, [scene?.id, areaKey, reference?.id, retry]);
+  }, [scene?.id, areaKey, reference?.id, retry, channel, onlinePreview]);
 
   useEffect(() => {
     const source = areaLayer.current?.getSource();
@@ -353,17 +382,18 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     } catch { feature = new Feature(fromExtent(areaExtentRef.current)); }
     feature.setStyle(new Style({ stroke: new Stroke({ color: '#f8fbff', width: 3, lineDash: [8, 5] }), fill: new Fill({ color: 'rgba(45, 135, 255, 0.10)' }) }));
     source.addFeature(feature);
-  }, [scene?.id, areaKey, areaGeometry, showArea, retry]);
+  }, [scene?.id, areaKey, areaGeometry, showArea, retry, channel, onlinePreview]);
 
   const requested = loading.requested + otherLoading.requested + (reference ? referenceLoading.requested : 0);
   const completed = loading.completed + otherLoading.completed + (reference ? referenceLoading.completed : 0);
   const activeRequests = loading.active + otherLoading.active + (reference ? referenceLoading.active : 0);
-  const metadataReady = otherLoading.metadata + (shouldLoad && loading.metadataReady ? 1 : 0) + (reference && referenceLoading.metadataReady ? 1 : 0);
-  const metadataTotal = otherLoading.total + (shouldLoad ? 1 : 0) + (reference ? 1 : 0);
-  return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} data-reference-ready={reference && referenceLoading.ready ? 'true' : 'false'} data-box-select={boxSelect ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
-    <div className="explore-map-target" ref={target} aria-label={t(loadedScenes.length ? 'Georeferenced true-color imagery map' : 'Scene footprint map')} />
-    {!error && ((shouldLoad && !ready) || otherLoading.metadata < otherLoading.total || activeRequests > 0 || (reference && !referenceLoading.ready)) && <Surface className={`explore-map-message explore-map-progress${ready ? ' explore-map-progress-compact' : ''}`}>
-      <div className="explore-map-progress-heading"><Spinner size={17}/><strong>{t(reference && !referenceLoading.ready ? 'Loading reference imagery…' : loadedScenes.length > 1 ? 'Loading selected COG layers · {count}' : 'Loading true-color COG', { count: loadedScenes.length })}</strong><span>{t('Metadata {ready}/{total}', { ready: metadataReady, total: metadataTotal })}</span></div>
+  const metadataReady = otherLoading.metadata + (shouldRender && loading.metadataReady ? 1 : 0) + (reference && referenceLoading.metadataReady ? 1 : 0);
+  const metadataTotal = otherLoading.total + (shouldRender ? 1 : 0) + (reference ? 1 : 0);
+  return <div className="explore-map-root" data-map-ready={ready ? 'true' : 'false'} data-preview-kind={onlinePreview ? previewKind : undefined} data-preview-channel={onlinePreview ? channel : undefined} data-preview-index={indexPreview ? channel : undefined} data-preview-item={onlinePreview ? scene.id : undefined} data-reference-ready={reference && referenceLoading.ready ? 'true' : 'false'} data-box-select={boxSelect ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
+    <div className="explore-map-target" ref={target} aria-label={t(indexPreview ? 'Georeferenced vegetation index map' : onlinePreview ? 'Georeferenced map preview' : loadedScenes.length ? 'Georeferenced true-color imagery map' : 'Scene footprint map')} />
+    {onlinePreview && <CatalogPreviewLegend scene={scene} channel={channel} />}
+    {!error && ((shouldRender && !ready) || otherLoading.metadata < otherLoading.total || activeRequests > 0 || (reference && !referenceLoading.ready)) && <Surface className={`explore-map-message explore-map-progress${ready ? ' explore-map-progress-compact' : ''}${onlinePreview ? ' explore-map-progress-index' : ''}`}>
+      <div className="explore-map-progress-heading"><Spinner size={17}/><strong>{t(onlinePreview ? 'Loading {index} preview…' : reference && !referenceLoading.ready ? 'Loading reference imagery…' : loadedScenes.length > 1 ? 'Loading selected COG layers · {count}' : 'Loading true-color COG', { index: previewKind === 'elevation' ? t('Height') : channel?.toUpperCase(), count: loadedScenes.length })}</strong><span>{t('Metadata {ready}/{total}', { ready: metadataReady, total: metadataTotal })}</span></div>
       <p role="status">{t(requested === 0 && metadataReady < metadataTotal ? 'Reading imagery metadata…' : requested === 0 ? 'Locating tiles for the current view…' : ready ? 'Map visible; loading remaining tiles…' : 'Loading visible imagery tiles…')}</p>
       <Progress value={requested > 0 ? completed : null} max={requested || 100} aria-label={t('Completed imagery tile requests')} />
       <div className="explore-map-progress-detail"><span>{requested > 0 ? <>{t('Tiles returned')} {completed}/{requested} · {t('Active requests')} {activeRequests}</> : t('Waiting for the imagery source')}</span><span>{loading.elapsed}{t(' seconds')}</span></div>

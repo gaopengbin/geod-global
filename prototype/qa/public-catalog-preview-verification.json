@@ -1,0 +1,1011 @@
+{
+  "schema": "geod-public-catalog-preview-verification/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-04T11:55:23.390Z",
+  "scope": "Live public catalogs, production renderer, desktop CSP and actual read-only native DEM Range service in a headless browser; independent scientific display samples. This is not native-window, packaged-release or all-regions acceptance.",
+  "area": {
+    "bbox": [
+      -122.55,
+      37.68,
+      -122.32,
+      37.84
+    ],
+    "dates": [
+      "2026-09-05",
+      "2026-10-04"
+    ],
+    "naipDates": [
+      "2010-01-01",
+      "2026-10-04"
+    ]
+  },
+  "publicSources": 9,
+  "automaticPreviewSources": 5,
+  "loadSelectedPreviewSources": 4,
+  "cases": [
+    {
+      "name": "planetary-vegetation",
+      "scenes": 1,
+      "item": "MYD13Q1.A2026249.h08v05.061.2026266000240",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 266412,
+        "colors": 221,
+        "item": "MYD13Q1.A2026249.h08v05.061.2026266000240",
+        "channel": "ndvi"
+      },
+      "preview": "vegetation",
+      "passed": true
+    },
+    {
+      "name": "vegetation-evi",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 272230,
+        "colors": 153,
+        "item": "MYD13Q1.A2026249.h08v05.061.2026266000240",
+        "channel": "evi"
+      },
+      "passed": true
+    },
+    {
+      "name": "planetary-radar",
+      "scenes": 15,
+      "item": "S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 376502,
+        "colors": 253,
+        "item": "S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc",
+        "channel": "vv"
+      },
+      "preview": "radar",
+      "passed": true
+    },
+    {
+      "name": "radar-polarization-switch",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 376502,
+        "colors": 256,
+        "item": "S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc",
+        "channel": "vh"
+      },
+      "passed": true
+    },
+    {
+      "name": "planetary-modis",
+      "scenes": 2,
+      "item": "MYD09A1.A2026257.h08v05.061.2026266035640",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 640640,
+        "colors": 1775,
+        "item": "MYD09A1.A2026257.h08v05.061.2026266035640",
+        "channel": "rgb"
+      },
+      "preview": "reflectance",
+      "passed": true
+    },
+    {
+      "name": "modis-platform-switch",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 640640,
+        "colors": 1238,
+        "item": "MOD09A1.A2026257.h08v05.061.2026266035435",
+        "channel": "rgb"
+      },
+      "passed": true
+    },
+    {
+      "name": "modis-error-retry",
+      "passed": true
+    },
+    {
+      "name": "planetary-naip",
+      "scenes": 90,
+      "item": "ca_m_3712220_ne_10_060_20220519",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 20352,
+        "colors": 7825,
+        "item": null,
+        "channel": null
+      },
+      "preview": "original-cog",
+      "passed": true
+    },
+    {
+      "name": "naip-legacy-h-cog",
+      "item": "ca_m_3712221_sw_10_.6_20160625_20161004",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 19802,
+        "colors": 9688,
+        "item": null,
+        "channel": null
+      },
+      "passed": true
+    },
+    {
+      "name": "copernicus-dem",
+      "scenes": 1,
+      "item": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 640640,
+        "colors": 97,
+        "item": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "channel": "height"
+      },
+      "preview": "elevation",
+      "passed": true
+    },
+    {
+      "name": "copernicus-dem-90",
+      "scenes": 1,
+      "item": "Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 640640,
+        "colors": 91,
+        "item": "Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+        "channel": "height"
+      },
+      "preview": "elevation",
+      "passed": true
+    },
+    {
+      "name": "earth-search",
+      "scenes": 6,
+      "item": "S2C_10SEG_20260930_0_L2A",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 375160,
+        "colors": 72211,
+        "item": null,
+        "channel": null
+      },
+      "preview": "original-cog",
+      "passed": true
+    },
+    {
+      "name": "planetary-computer",
+      "scenes": 6,
+      "item": "S2C_MSIL2A_20260930T185201_R113_T10SEG_20260930T221307",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 375661,
+        "colors": 82291,
+        "item": null,
+        "channel": null
+      },
+      "preview": "original-cog",
+      "passed": true
+    },
+    {
+      "name": "planetary-landsat",
+      "scenes": 4,
+      "item": "LC09_L2SP_045034_20260926_02_T1",
+      "map": {
+        "width": 770,
+        "height": 832,
+        "valid": 205144,
+        "colors": 58142,
+        "item": null,
+        "channel": null
+      },
+      "preview": "original-cog",
+      "passed": true
+    }
+  ],
+  "display": {
+    "imageryFootprints": "Transparent fill with state borders; overlapping footprints do not tint imagery.",
+    "modisRGB": "Bands 1/4/3, signed DN 0..3000, gamma 2.2, source -28672 NoData; no quality mask.",
+    "radar": "Source linear gamma0, available polarization, -30..0 dB display; no speckle filter; valid zero intensity remains displayed.",
+    "elevation": "Actual Float32 Point-grid original; half-pixel geometry correction; EGM2008 meters -100..1000 grayscale; source NoData only."
+  },
+  "requestEvidence": {
+    "totalCaptured": 375,
+    "successfulPngs": 262,
+    "originalRangeReads": 31,
+    "representativeReceipts": [
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/11/326/793.png?collection=modis-13Q1-061&item=MYD13Q1.A2026249.h08v05.061.2026266000240&assets=250m_16_days_NDVI&rescale=-2000%2C10000&colormap_name=rdylgn&nodata=-3000&unscale=false&resampling=nearest&reproject=nearest&return_mask=true",
+        "status": 200,
+        "sha256": "a2a49e608cd1778453fc80fcc925a4ee8cccfed884b481649e3217fc57c5c572",
+        "bytes": 1133,
+        "capturedFrom": "browser-fetch-response-clone"
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/12/656/1583.png?collection=modis-13Q1-061&item=MYD13Q1.A2026249.h08v05.061.2026266000240&assets=250m_16_days_EVI&rescale=-2000%2C10000&colormap_name=rdylgn&nodata=-3000&unscale=false&resampling=nearest&reproject=nearest&return_mask=true",
+        "status": 200,
+        "sha256": "919af656498cbd30b9dd7fb9f02cddc1d5638e6b8282399090a44883501cbecc",
+        "bytes": 4200,
+        "capturedFrom": "browser-fetch-response-clone"
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/11/325/793.png?collection=sentinel-1-rtc&item=S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc&unscale=false&resampling=nearest&reproject=nearest&return_mask=true&assets=vv&asset_as_band=true&expression=where%28vv%3E0%2C10*log10%28vv%29%2C-30%29&rescale=-30%2C0&nodata=-32768",
+        "status": 200,
+        "sha256": "f3b96c03e5c13b5e5bb072beb4e91b56415cd8f51ea79a85f1b8891cc9f9c3a7",
+        "bytes": 206,
+        "capturedFrom": "browser-fetch-response-clone"
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/12/653/1584.png?collection=sentinel-1-rtc&item=S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc&unscale=false&resampling=nearest&reproject=nearest&return_mask=true&assets=vh&asset_as_band=true&expression=where%28vh%3E0%2C10*log10%28vh%29%2C-30%29&rescale=-30%2C0&nodata=-32768",
+        "status": 200,
+        "sha256": "29be89e6ab222b0c6f79b5ac02c2d00a942827d39910993f3da12288bced3299",
+        "bytes": 5929,
+        "capturedFrom": "browser-fetch-response-clone"
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/11/325/792.png?collection=modis-09A1-061&item=MYD09A1.A2026257.h08v05.061.2026266035640&unscale=false&resampling=nearest&reproject=nearest&return_mask=true&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&rescale=0%2C3000&color_formula=Gamma+RGB+2.2&nodata=-28672",
+        "status": 200,
+        "sha256": "ce311d9bc9322d1ad2938879a3a8aa132e5b60c1901ba25ada98286edfdaff3a",
+        "bytes": 13009,
+        "capturedFrom": "browser-fetch-response-clone"
+      },
+      {
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/12/655/1582.png?collection=modis-09A1-061&item=MOD09A1.A2026257.h08v05.061.2026266035435&unscale=false&resampling=nearest&reproject=nearest&return_mask=true&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&rescale=0%2C3000&color_formula=Gamma+RGB+2.2&nodata=-28672",
+        "status": 200,
+        "sha256": "fafc6cb8822876cb97349274de32653d5ba4397d6144c5c35ebcc7d0042f20d7",
+        "bytes": 7353,
+        "capturedFrom": "browser-fetch-response-clone"
+      },
+      {
+        "url": "https://naipeuwest.blob.core.windows.net/naip/v002/ca/2022/ca_060cm_2022/37122/m_3712220_ne_10_060_20220519.tif",
+        "status": 206,
+        "contentRange": "bytes 0-65535/380604206",
+        "bytes": 65536,
+        "sha256": "dad2a8d353a07af43eafbc3291b3efd7a8493a1f1c174fb20e08f105c8e8f752"
+      },
+      {
+        "url": "https://naipeuwest.blob.core.windows.net/naip/v002/ca/2022/ca_060cm_2022/37122/m_3712220_ne_10_060_20220519.tif",
+        "status": 206,
+        "contentRange": "bytes 65536-393215/380604206",
+        "bytes": 327680,
+        "sha256": "d91cfa18158397f87e2876cef4c342ad80e1c8fe5dca12db10cadd74b842d66b"
+      },
+      {
+        "url": "https://naipeuwest.blob.core.windows.net/naip/v002/ca/2016/ca_060cm_2016/37122/m_3712221_sw_10_h_20160625.tif",
+        "status": 206,
+        "contentRange": "bytes 0-65535/441347476",
+        "bytes": 65536,
+        "sha256": "2275858afb0d0df9d86336919ce6e11292f9cd91bca20cf2ec7f001e310b8c0a"
+      },
+      {
+        "url": "https://naipeuwest.blob.core.windows.net/naip/v002/ca/2016/ca_060cm_2016/37122/m_3712221_sw_10_h_20160625.tif",
+        "status": 206,
+        "contentRange": "bytes 65536-393215/441347476",
+        "bytes": 327680,
+        "sha256": "0ffc15ca8d7c528f3f30ca2db5585ce0d967ebf3a74bbbd9d53db40ccc1597ed"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 0-65535/20060161",
+        "bytes": 65536,
+        "sha256": "c030b9bddcd586784efec2ce97b7f2e7876c5b19ddcdb456ced6cc2c4439ae93",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 10682368-11403263/20060161",
+        "bytes": 720896,
+        "sha256": "00915bff3ca335e85e938567e1cd685f71af38dc5c8e92a1c5cc55fa0c8974da",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 5439488-7012351/20060161",
+        "bytes": 1572864,
+        "sha256": "bf72d92fa800f4c6c0343e8b6099af578810ec464b0f5c929f12d9a5a396d5b6",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 7012352-9175039/20060161",
+        "bytes": 2162688,
+        "sha256": "25660ff735fce788219c2991533ae794b542ccae70f087b3544e211b84803da6",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 11403264-13238271/20060161",
+        "bytes": 1835008,
+        "sha256": "5ea7deb0c476ce892a49fed44abc6eef5ccff47da04648a4b7457ef13f9d5613",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 0-65535/2432905",
+        "bytes": 65536,
+        "sha256": "e7ac15b41c577c69e868aace1cdb368aaf7003eaffc405a3bd88bf7b60101767",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "http://geod-elevation.localhost/Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+        "status": 206,
+        "contentRange": "bytes 589824-2432904/2432905",
+        "bytes": 1843081,
+        "sha256": "043ffe6b35f524792433df13e4479bb6944731732f15164b8d70756a74b0e543",
+        "capturedFrom": "actual-native-read-only-elevation-range"
+      },
+      {
+        "url": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2026/9/S2C_10SEG_20260930_0_L2A/TCI.tif",
+        "status": 206,
+        "contentRange": "bytes 0-65535/250803403",
+        "bytes": 65536,
+        "sha256": "41de44bac5bd7d4d88fb4fb7dfb5fbfe23b66f4710844efcb318525779e73ce7"
+      },
+      {
+        "url": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2026/9/S2C_10SEG_20260930_0_L2A/TCI.tif",
+        "status": 206,
+        "contentRange": "bytes 65536-786431/250803403",
+        "bytes": 720896,
+        "sha256": "bb3f69f5fd9020a01a6249c55ca59e7a142eef2e40d8509060648d09ba2e6c4a"
+      },
+      {
+        "url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2026/09/30/S2C_MSIL2A_20260930T185201_N0513_R113_T10SEG_20260930T221307.SAFE/GRANULE/L2A_T10SEG_A010808_20260930T185736/IMG_DATA/R10m/T10SEG_20260930T185201_TCI_10m.tif",
+        "status": 206,
+        "contentRange": "bytes 0-65535/284659431",
+        "bytes": 65536,
+        "sha256": "c7434e279e227ca2865bd630a8a4492714aca4bee4552192398617e5f264dbb5"
+      },
+      {
+        "url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2026/09/30/S2C_MSIL2A_20260930T185201_N0513_R113_T10SEG_20260930T221307.SAFE/GRANULE/L2A_T10SEG_A010808_20260930T185736/IMG_DATA/R10m/T10SEG_20260930T185201_TCI_10m.tif",
+        "status": 206,
+        "contentRange": "bytes 524288-720895/284659431",
+        "bytes": 196608,
+        "sha256": "fea8337cfead04ed4d8bddf17ab516b814c846e603b750039b03d307b2239f19"
+      },
+      {
+        "url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2026/09/30/S2C_MSIL2A_20260930T185201_N0513_R113_T10SEG_20260930T221307.SAFE/GRANULE/L2A_T10SEG_A010808_20260930T185736/IMG_DATA/R10m/T10SEG_20260930T185201_TCI_10m.tif",
+        "status": 206,
+        "contentRange": "bytes 917504-983039/284659431",
+        "bytes": 65536,
+        "sha256": "8a7b378958b707d0360d755492cc75a1b8b977086ea1b84105fe63a47a2d6d7e"
+      },
+      {
+        "url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2026/09/30/S2C_MSIL2A_20260930T185201_N0513_R113_T10SEG_20260930T221307.SAFE/GRANULE/L2A_T10SEG_A010808_20260930T185736/IMG_DATA/R10m/T10SEG_20260930T185201_TCI_10m.tif",
+        "status": 206,
+        "contentRange": "bytes 720896-917503/284659431",
+        "bytes": 196608,
+        "sha256": "27d05b7ebae98e7d0dc8abee654fdfeb58c96da06c06af6e18adb4a58c25cf98"
+      },
+      {
+        "url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2026/09/30/S2C_MSIL2A_20260930T185201_N0513_R113_T10SEG_20260930T221307.SAFE/GRANULE/L2A_T10SEG_A010808_20260930T185736/IMG_DATA/R10m/T10SEG_20260930T185201_TCI_10m.tif",
+        "status": 206,
+        "contentRange": "bytes 65536-524287/284659431",
+        "bytes": 458752,
+        "sha256": "b34701527cb95ff76b441359a37ba6aa11b5944758484ae42266103ca173c988"
+      },
+      {
+        "url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2026/045/034/LC09_L2SP_045034_20260926_20260927_02_T1/LC09_L2SP_045034_20260926_20260927_02_T1_SR_B3.TIF",
+        "status": 206,
+        "contentRange": "bytes 0-65535/92741773",
+        "bytes": 65536,
+        "sha256": "c2d63ed2ebc8c8e93f9e1c622d2fe68ccde25e62a6f710ba3fd25f1d362dba9e"
+      },
+      {
+        "url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2026/045/034/LC09_L2SP_045034_20260926_20260927_02_T1/LC09_L2SP_045034_20260926_20260927_02_T1_SR_B2.TIF",
+        "status": 206,
+        "contentRange": "bytes 0-65535/92395624",
+        "bytes": 65536,
+        "sha256": "f6e9fbaa41a7f1e91d29f1d0fbf9acbd67e03f6dc049bb3c45561fb50f810ced"
+      },
+      {
+        "url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2026/045/034/LC09_L2SP_045034_20260926_20260927_02_T1/LC09_L2SP_045034_20260926_20260927_02_T1_SR_B4.TIF",
+        "status": 206,
+        "contentRange": "bytes 0-65535/92778042",
+        "bytes": 65536,
+        "sha256": "31714b48b5c94ed0aa7b2136bcf58c2d823b61db3ebadbb35602ef3dd7b88bf9"
+      },
+      {
+        "url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2026/045/034/LC09_L2SP_045034_20260926_20260927_02_T1/LC09_L2SP_045034_20260926_20260927_02_T1_SR_B2.TIF",
+        "status": 206,
+        "contentRange": "bytes 65536-458751/92395624",
+        "bytes": 393216,
+        "sha256": "702a6ec4806a9a148f58aa7fe6be4273dceff73c5823eebdc525f495ccf5b9c4"
+      },
+      {
+        "url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2026/045/034/LC09_L2SP_045034_20260926_20260927_02_T1/LC09_L2SP_045034_20260926_20260927_02_T1_SR_B3.TIF",
+        "status": 206,
+        "contentRange": "bytes 65536-458751/92741773",
+        "bytes": 393216,
+        "sha256": "48839c8a1a6215052a3be68d8e9b60c0cfd7b6deae30db8dfbd27ffcc8cfd60c"
+      },
+      {
+        "url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2026/045/034/LC09_L2SP_045034_20260926_20260927_02_T1/LC09_L2SP_045034_20260926_20260927_02_T1_SR_B4.TIF",
+        "status": 206,
+        "contentRange": "bytes 65536-458751/92778042",
+        "bytes": 393216,
+        "sha256": "a1922ebf068700f90f99b0e3c2f43a12926d9f37d2b587d0e1d4ded3a6e8e042"
+      }
+    ],
+    "fullReceiptReport": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/verification.json"
+  },
+  "independentPixelComparison": {
+    "status": "passed",
+    "samples": 83,
+    "toleranceUint8": 1,
+    "originalDownloadsCreated": 0,
+    "reusedOriginalsSha256Verified": true,
+    "cases": [
+      {
+        "kind": "reflectance",
+        "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "sourceSha256": [
+          "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da"
+        ],
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/12/655/1583.png?collection=modis-09A1-061&item=MYD09A1.A2025177.h08v05.061.2025189031924&unscale=false&resampling=nearest&reproject=nearest&return_mask=true&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&rescale=0%2C3000&color_formula=Gamma+RGB+2.2&nodata=-28672",
+        "pngSha256": "232461c7719cf44360e9c2c616e151db9643f46ccf20d30def3c1cba04e2fe8d",
+        "bytes": 8036,
+        "verifiedSampleCount": 46,
+        "boundarySamplesSkipped": 75,
+        "maxAllowedDisplayDifference": 1,
+        "sampleCount": 46,
+        "representativeSamples": [
+          {
+            "tilePixel": [
+              8,
+              8
+            ],
+            "sourcePixel": [
+              778,
+              531
+            ],
+            "originalValues": [
+              1567.0,
+              1468.0,
+              1255.0
+            ],
+            "rgba": [
+              189,
+              183,
+              171,
+              255
+            ],
+            "expected": [
+              189,
+              183,
+              171,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              56,
+              8
+            ],
+            "sourcePixel": [
+              781,
+              531
+            ],
+            "originalValues": [
+              1739.0,
+              1659.0,
+              1430.0
+            ],
+            "rgba": [
+              198,
+              194,
+              181,
+              255
+            ],
+            "expected": [
+              198,
+              194,
+              181,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              104,
+              8
+            ],
+            "sourcePixel": [
+              784,
+              531
+            ],
+            "originalValues": [
+              1738.0,
+              1672.0,
+              1381.0
+            ],
+            "rgba": [
+              198,
+              195,
+              178,
+              255
+            ],
+            "expected": [
+              198,
+              195,
+              178,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              152,
+              224
+            ],
+            "sourcePixel": [
+              769,
+              545
+            ],
+            "originalValues": [
+              1268.0,
+              1244.0,
+              940.0
+            ],
+            "rgba": [
+              171,
+              170,
+              149,
+              255
+            ],
+            "expected": [
+              171,
+              170,
+              149,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              200,
+              224
+            ],
+            "sourcePixel": [
+              772,
+              545
+            ],
+            "originalValues": [
+              1911.0,
+              1823.0,
+              1480.0
+            ],
+            "rgba": [
+              207,
+              202,
+              184,
+              255
+            ],
+            "expected": [
+              207,
+              202,
+              184,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              248,
+              224
+            ],
+            "sourcePixel": [
+              775,
+              545
+            ],
+            "originalValues": [
+              283.0,
+              572.0,
+              469.0
+            ],
+            "rgba": [
+              87,
+              119,
+              108,
+              255
+            ],
+            "expected": [
+              87,
+              119,
+              108,
+              255
+            ],
+            "noData": false
+          }
+        ]
+      },
+      {
+        "kind": "radar",
+        "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+        "sourceSha256": [
+          "e869896b958541b46062f930c300a0554dd9ae7fa9a7feb1fc1d803ede4dcb7d"
+        ],
+        "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/14/2682/6328.png?collection=sentinel-1-rtc&item=S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc&unscale=false&resampling=nearest&reproject=nearest&return_mask=true&assets=vv&asset_as_band=true&expression=where%28vv%3E0%2C10*log10%28vv%29%2C-30%29&rescale=-30%2C0&nodata=-32768",
+        "pngSha256": "6be05a1c327a88e171822de6f02a16f59444b2b3ebb43e18777130212d7c8d4b",
+        "bytes": 42870,
+        "verifiedSampleCount": 37,
+        "boundarySamplesSkipped": 84,
+        "maxAllowedDisplayDifference": 1,
+        "sampleCount": 37,
+        "representativeSamples": [
+          {
+            "tilePixel": [
+              104,
+              8
+            ],
+            "sourcePixel": [
+              13626,
+              10158
+            ],
+            "originalValues": [
+              0.2578270733356476
+            ],
+            "rgba": [
+              204,
+              204,
+              204,
+              255
+            ],
+            "expected": [
+              204,
+              204,
+              204,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              176,
+              8
+            ],
+            "sourcePixel": [
+              13680,
+              10157
+            ],
+            "originalValues": [
+              0.029817987233400345
+            ],
+            "rgba": [
+              125,
+              125,
+              125,
+              255
+            ],
+            "expected": [
+              125,
+              125,
+              125,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              32,
+              32
+            ],
+            "sourcePixel": [
+              13572,
+              10177
+            ],
+            "originalValues": [
+              0.06607749313116074
+            ],
+            "rgba": [
+              154,
+              154,
+              154,
+              255
+            ],
+            "expected": [
+              154,
+              154,
+              154,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              8,
+              248
+            ],
+            "sourcePixel": [
+              13557,
+              10340
+            ],
+            "originalValues": [
+              0.12950347363948822
+            ],
+            "rgba": [
+              179,
+              179,
+              179,
+              255
+            ],
+            "expected": [
+              179,
+              179,
+              179,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              152,
+              248
+            ],
+            "sourcePixel": [
+              13666,
+              10338
+            ],
+            "originalValues": [
+              0.17027027904987335
+            ],
+            "rgba": [
+              189,
+              189,
+              189,
+              255
+            ],
+            "expected": [
+              189,
+              189,
+              189,
+              255
+            ],
+            "noData": false
+          },
+          {
+            "tilePixel": [
+              200,
+              248
+            ],
+            "sourcePixel": [
+              13702,
+              10337
+            ],
+            "originalValues": [
+              0.03441845253109932
+            ],
+            "rgba": [
+              130,
+              130,
+              130,
+              255
+            ],
+            "expected": [
+              130,
+              130,
+              130,
+              255
+            ],
+            "noData": false
+          }
+        ]
+      }
+    ],
+    "fullReceiptReport": ".verification/provider-audit-20261004/independent-pixels/verification.json"
+  },
+  "ui": {
+    "language": "zh-CN",
+    "viewports": [
+      [
+        1440,
+        960
+      ],
+      [
+        900,
+        680
+      ]
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "horizontalOverflow": false,
+    "sourceMenu": {
+      "downloadableWithoutAccount": 9,
+      "catalogOnlyPendingOriginalAcceptance": 6,
+      "previewModesLabeled": true
+    },
+    "screenshots": [
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/copernicus-dem-1440-zh-light.png",
+        "sha256": "dce4fc416a713bdcec382c8bb2da555f395419e34579813dd4f09ecea3e835e6"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/copernicus-dem-90-1440-zh-light.png",
+        "sha256": "4bca5047d6a9cd59b662ce018f6a66971f786f0852cd4b3e7acc32492a0b54c1"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/earth-search-1440-zh-light.png",
+        "sha256": "32edc0e7671b033f919571422835aa3536bc5eea9aad614ca19c26ec640fd57b"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/modis-900-zh-dark.png",
+        "sha256": "c4caad2ab165de478336ff4f0772243ac2099472833d8264bccb5004448f9ff9"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/modis-failed-request.png",
+        "sha256": "c6ace426874128a3a22db118ba7c398c715bd3893187bf677820801bac255397"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/naip-legacy-2016-1440.png",
+        "sha256": "1ffe36bc071ec564d95253790a54e2c38b2163c74de55e9c802fb3d0413fea2a"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/planetary-computer-1440-zh-light.png",
+        "sha256": "0bdc5cb93964608b3919afd93f9e7dc95f5a87d78c463fdbf638b09e0b479393"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/planetary-landsat-1440-zh-light.png",
+        "sha256": "b98f4451d4e66569060f113bf7cad151eab1ecf7684a62583c85106473712d59"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/planetary-modis-1440-zh-light.png",
+        "sha256": "eed96f12966d840e53f6c62c272571d23c9b19c33be5522587d1969f0fc8935d"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/planetary-naip-1440-zh-light.png",
+        "sha256": "677b387c7359ea7de44bb7a21a46145fd0cf711f35a00f476bf373a3e0252a0f"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/planetary-radar-1440-zh-light.png",
+        "sha256": "16d1d9c53e64ba3b6f983d5f2bf832f683f765ee1725c58398a83dcb63352a82"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/planetary-vegetation-1440-zh-light.png",
+        "sha256": "b03b8e78d6041652780500b47e8c7c67cc91ae6aabc195215663a0af9f5eceaa"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/radar-vh-1440.png",
+        "sha256": "55b72ed094ce3cb186ba63739b3a752f7a1887009b46ecaf5d6bbfce85d6b68f"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/source-capabilities-1440.png",
+        "sha256": "98ad7e45ed3872b23510e711150cc5b80b2628c8f9ab3b21507df9d6b83588e4"
+      },
+      {
+        "path": ".verification/public-catalog-preview-2026-10-04T11-55-23-383Z/source-capabilities-900.png",
+        "sha256": "aada8c34253678df63341671a73c12ab0b937c3333ca07b0cecb8ac51e4a4dec"
+      }
+    ]
+  },
+  "verification": {
+    "rootVerify": "passed",
+    "nodeTestsPassed": 288,
+    "uiTestsPassed": 247,
+    "desktopNativeCheck": "passed",
+    "nativeElevationBridge": "Real 206 responses verified and rendered; bounded range/header unit tests passed.",
+    "pageErrors": [],
+    "cspErrors": [],
+    "failedRequests": [
+      {
+        "url": "https://earth-search.aws.element84.com/v1/search?datetime=2026-09-05T00%3A00%3A00Z%2F2026-10-04T23%3A59%3A59.999Z&query=%7B%22eo%3Acloud_cover%22%3A%7B%22gte%22%3A0%2C%22lte%22%3A60%7D%7D&sortby=-properties.datetime&collections=sentinel-2-l2a&bbox=-122.55%2C37.68%2C-122.32%2C37.84&limit=100&next=2026-09-05T19%3A04%3A06.802000Z",
+        "error": "net::ERR_ABORTED"
+      }
+    ],
+    "runtimeSha256": "3d0dbd2db59d1cc4d7d307c35bc4a31a03a26b6c9ea3e1fc60ba4f707ab87684",
+    "rendererFiles": [
+      {
+        "path": "prototype/dist/assets/chunk-aKtaBQYM.js",
+        "sha256": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236"
+      },
+      {
+        "path": "prototype/dist/assets/i18n-BWA3MVLu.css",
+        "sha256": "385f86f55233b9af5f84f8f022a6cca41af84199b27dbfcd3e2cb1a41ccc9201"
+      },
+      {
+        "path": "prototype/dist/assets/index-C97Cvr4Y.css",
+        "sha256": "bd4ef64c5086a4f957ca0a06a67f2415d697eaefbaa255fb268798bef21e5544"
+      },
+      {
+        "path": "prototype/dist/assets/index-DS_7MLhL.js",
+        "sha256": "890b94acd6d85d089235af5efb7d2719f40ffff0a9c4129bc5af85e7b85da27a"
+      },
+      {
+        "path": "prototype/dist/assets/i18n-AFJdpr62.js",
+        "sha256": "23e571b5ef78aa5de485343801ffca2276e6a6de19cb8b6e6a30bc9488b64e91"
+      },
+      {
+        "path": "prototype/dist/assets/globals-Bg5xiAy0.js",
+        "sha256": "47c17d7246fd7c35eac1c138e939b23180817aa7792469d6b8bc4bae1e50a783"
+      },
+      {
+        "path": "prototype/dist/assets/workspace-map-geometry-Du_DxmiC.js",
+        "sha256": "1432fb0a7b17e4396ef6221ae13c30050a16565d65595a918d64af37e9b8aefe"
+      },
+      {
+        "path": "prototype/dist/assets/rbush-CaohfFwn.js",
+        "sha256": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7"
+      },
+      {
+        "path": "prototype/dist/assets/ol-BM8XMzgm.js",
+        "sha256": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304"
+      },
+      {
+        "path": "prototype/dist/assets/explore-map-BWcDzUGr.js",
+        "sha256": "9d1268af9150c4c361905dfacf033b263098103c4c6dd894c6577ae776895624"
+      },
+      {
+        "path": "prototype/dist/assets/ol-c_1sG1-7.css",
+        "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+      },
+      {
+        "path": "prototype/dist/assets/explore-map-vpcsQMGC.css",
+        "sha256": "f4c0862c7d5e349cff30f6759880daf356af66f7336bdbe5afb1fcb535cc75d9"
+      },
+      {
+        "path": "prototype/dist/assets/common-uuK22kLj.js",
+        "sha256": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+      },
+      {
+        "path": "prototype/dist/assets/GeoJSON-DgGZhlM5.js",
+        "sha256": "0771f23db7c464ca0cc3d79e18edb132452dacdd2d69347ce6e0e143d9485328"
+      },
+      {
+        "path": "prototype/dist/assets/XYZ-CdXEpU98.js",
+        "sha256": "7073345d7171cb3c8ed8419242167cb3e777662908c4efaf7268a6fc5ef5371f"
+      }
+    ],
+    "sourceFilesSha256": {
+      "prototype/src/aerial.js": "16315f24b97d2436a097d04d669ad9f3a92fac8c3aea9d8f35bf9e58a8e523cd",
+      "prototype/src/providers.js": "9dbe194dbde483e4416eae05d3cc0e2b48a1a3b2e10a2a50e6e8f818599f867a",
+      "prototype/src/catalog-preview.js": "b3b83c73c6cc18a8433828f165c7218162e5d6731af53947fedbd4c74148bcb2",
+      "prototype/src/catalog-preview-ui.jsx": "4b94368e026b9d4ef1d0ceebaebf50c2bed8d8de3f9ccdc200d3ba4dc92cf85c",
+      "prototype/src/catalog-source-panel.jsx": "268c196d93df8e0045462e3c58c3cebf55cccbfae1b2be636b68beae91420964",
+      "prototype/src/item-preview-source.js": "9433f82290bb07d6b360a6730eec34db9bfcfb3cb8cb83d2f2de8659f57e726e",
+      "prototype/src/preview-network.js": "b1980e5216c4fbfaa440bd138d2b96a2f1bd77e7287594547cad03944bea5052",
+      "prototype/src/elevation-preview.js": "9ebf016d1459b1b32c8b5c3e9b80c3e9c4345257ce7e30e769e997655c0e6714",
+      "prototype/src/explore-preview-source.js": "02ca1ad773a8041818268c62cdd5b965e137e64f59be753ef7ef87a77183f26b",
+      "prototype/src/explore-map.jsx": "0c8366bf8abc6a7769ce5be883c97d3f1f4bf8b4b957ce1d83fd20335a3eda20",
+      "prototype/src/main.jsx": "4eed9bc5bdaad6d0dea0210896c08cf352e2a55306f893cf720755808a444fa8",
+      "prototype/src/locales/main.zh-CN.js": "4d8382a1ef7cd6f083c64230376f841fdb0e0bc12c813620a6c904e6d6921248",
+      "crates/geod-runtime/src/preview.rs": "cfe553ac59e8aea3c934435b335eab6d3450e9e32d24c0f366233f2be04a6201",
+      "crates/geod-runtime/src/providers.rs": "d6f5e9b9ccfd0d96b85ca9b4079b7b5a26436380861b62eba35d758c1de7c364",
+      "crates/geod-runtime/src/raster/aerial.rs": "481baa95aa896b01c2799e45674cf906cebf2cb09a115e9dc28309336efd2dda",
+      "crates/geod-runtime/src/service.rs": "3b8523a8600ce8e339ef7074739707d4624fb9cd7c36ecea9dae0a4e6280c6d1",
+      "src-tauri/src/elevation_preview.rs": "9d2cb1971b8ea47bbc3ad832093de39be83e365cd4dc46860663231e93bf7a46",
+      "src-tauri/src/main.rs": "0fda62338db4d24064f1c45fee0c92d7ecf3e2a38d415386b68164fbf350f705",
+      "src-tauri/tauri.conf.json": "424cce29f5f675d9a8a2fc4b512ffb0b0fc8951aa3db921da9afe373b8d1a413",
+      "scripts/verify-public-catalog-preview.mjs": "acd849eed089d526c7624e286024b2e9d598baa6b0c8633226d198c91e3b56e9",
+      "scripts/verify-catalog-preview-pixels.py": "387678208d42dd8f193bfe38a49647d1377202f6e6e708da8fee0f2dcba6c604"
+    }
+  },
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "originalDownloadsCreated": 0,
+  "providerAccountsUsed": false,
+  "limitations": [
+    "Only the listed public products, area and dates were exercised live; coverage and publication times vary.",
+    "The 2016 NAIP legacy case used original header and Range reads; it is not a newly accepted complete-file download or processing run.",
+    "The independent 83 pixel samples reused previously accepted complete originals; they do not verify every pixel or count as new downloads.",
+    "The six protected/catalog-only entries still require real account/original-product acceptance.",
+    "Native WebView and packaged release were not operated or visually accepted in this check."
+  ]
+}

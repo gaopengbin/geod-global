@@ -6,7 +6,7 @@ export function radarAssetIdentity(href, key) {
     if (u.protocol !== 'https:' || u.hostname !== RADAR_HOST || u.port && u.port !== '443' || u.username || u.password || u.search || u.hash || u.pathname.includes('%')) return null;
     const p = u.pathname.slice(1).split('/'), s = p[7]?.split('_');
     if (p.length !== 10 || p[0] !== 'sentinel1-grd-rtc' || p[1] !== 'GRD' || p[5] !== 'IW' || p[8] !== 'measurement'
-      || s?.length !== 9 || !/^S1[ABC]$/.test(s[0]) || s[1] !== 'IW' || s[2] !== 'GRDH' || !/^1S(DV|DH|SV|SH)$/.test(s[3])
+      || s?.length !== 9 || !/^S1[ABCD]$/.test(s[0]) || s[1] !== 'IW' || s[2] !== 'GRDH' || !/^1S(DV|DH|SV|SH)$/.test(s[3])
       || !/^\d{6}$/.test(s[6]) || !/^[A-F\d]{6}$/.test(s[7]) || !/^[A-F\d]{4}$/.test(s[8])) return null;
     const date = v => /^\d{8}T\d{6}$/.test(v) ? `${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}T${v.slice(9,11)}:${v.slice(11,13)}:${v.slice(13,15)}Z` : '';
     const start = date(s[4]), end = date(s[5]);

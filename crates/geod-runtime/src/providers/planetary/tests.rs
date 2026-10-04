@@ -185,16 +185,52 @@ fn radar_item(id: &str) -> Value {
         "../../../../../prototype/qa/sentinel-1-rtc-catalog.json"
     ))
     .unwrap();
+    let current: Value = serde_json::from_str(include_str!(
+        "../../../../../prototype/qa/sentinel-1d-rtc-catalog.json"
+    ))
+    .unwrap();
     catalogue["features"]
         .as_array()
         .unwrap()
         .iter()
+        .chain(current["features"].as_array().unwrap().iter())
         .find(|item| item["id"].as_str() == Some(id))
         .unwrap()
         .clone()
 }
 
 const RADAR_ID: &str = "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc";
+const RADAR_D_ID: &str = "S1D_IW_GRDH_1SDV_20260930T140731_20260930T140756_004808_00905F_rtc";
+
+#[tokio::test]
+async fn sentinel_1d_access_pins_the_official_item_and_both_polarizations() {
+    let (cache, client, state, server) = fixture().await;
+    let item = radar_item(RADAR_D_ID);
+    for key in ["vv", "vh"] {
+        let href = item["assets"][key]["href"].as_str().unwrap();
+        let signed = cache.resolve(&client, href, RADAR_D_ID, key).await.unwrap();
+        assert!(signed
+            .query_pairs()
+            .any(|(k, value)| k == "sp" && value == "r"));
+        let mut unsigned = signed;
+        unsigned.set_query(None);
+        assert_eq!(unsigned.as_str(), href);
+        let other_key = if key == "vv" { "vh" } else { "vv" };
+        assert!(cache
+            .resolve(&client, href, RADAR_D_ID, other_key)
+            .await
+            .is_err());
+        // Matching scene tokens alone must not authorize a different source file.
+        let other_product = href.replace("00905F_1D03", "00905F_FFFF");
+        assert!(cache
+            .resolve(&client, &other_product, RADAR_D_ID, key)
+            .await
+            .is_err());
+    }
+    assert_eq!(state.catalogues.load(Ordering::SeqCst), 1);
+    assert_eq!(state.tokens.load(Ordering::SeqCst), 1);
+    server.abort();
+}
 
 #[tokio::test]
 async fn radar_checks_exact_catalogue_polarizations_and_coalesces_read_only_access() {
@@ -233,23 +269,25 @@ async fn radar_checks_exact_catalogue_polarizations_and_coalesces_read_only_acce
 
 #[test]
 fn radar_rejects_wrong_science_profile_or_catalogue_identity() {
-    let good = radar_item(RADAR_ID);
-    assert!(CatalogueItem::from_value(good.clone(), &RADAR, RADAR_ID).is_ok());
-    for (pointer, value) in [
-        ("/properties/sar:instrument_mode", json!("EW")),
-        ("/properties/sar:polarizations", json!(["HH", "HV"])),
-        ("/assets/vv/raster:bands/0/data_type", json!("uint16")),
-        ("/assets/vv/raster:bands/0/nodata", json!(0)),
-        ("/assets/vv/raster:bands/0/spatial_resolution", json!(30)),
-        ("/collection", json!("sentinel-1-grd")),
-        ("/id", json!("another-scene")),
-    ] {
-        let mut bad = good.clone();
-        *bad.pointer_mut(pointer).unwrap() = value;
-        assert!(
-            CatalogueItem::from_value(bad, &RADAR, RADAR_ID).is_err(),
-            "{pointer}"
-        );
+    for id in [RADAR_ID, RADAR_D_ID] {
+        let good = radar_item(id);
+        assert!(CatalogueItem::from_value(good.clone(), &RADAR, id).is_ok());
+        for (pointer, value) in [
+            ("/properties/sar:instrument_mode", json!("EW")),
+            ("/properties/sar:polarizations", json!(["HH", "HV"])),
+            ("/assets/vv/raster:bands/0/data_type", json!("uint16")),
+            ("/assets/vv/raster:bands/0/nodata", json!(0)),
+            ("/assets/vv/raster:bands/0/spatial_resolution", json!(30)),
+            ("/collection", json!("sentinel-1-grd")),
+            ("/id", json!("another-scene")),
+        ] {
+            let mut bad = good.clone();
+            *bad.pointer_mut(pointer).unwrap() = value;
+            assert!(
+                CatalogueItem::from_value(bad, &RADAR, id).is_err(),
+                "{pointer}"
+            );
+        }
     }
 }
 
@@ -359,6 +397,36 @@ fn captured_naip_variants_require_the_exact_official_catalogue_id_and_four_bands
         let original_grid = id.split('_').nth(2).unwrap();
         wrong_grid["assets"]["image"]["href"] = json!(href.replace(original_grid, "0000000"));
         assert!(CatalogueItem::from_value(wrong_grid, &NAIP, id).is_err());
+    }
+}
+
+#[test]
+fn captured_legacy_naip_half_metre_filenames_keep_full_catalogue_ids_and_nir_roles() {
+    let captured: Value = serde_json::from_str(include_str!(
+        "../../../../../prototype/qa/naip-legacy-catalog.json"
+    ))
+    .unwrap();
+    let items = captured["features"].as_array().unwrap();
+    assert_eq!(items.len(), 15);
+    for item in items {
+        let id = item["id"].as_str().unwrap();
+        let resolved = CatalogueItem::from_value(item.clone(), &NAIP, id).unwrap();
+        assert_eq!(resolved.assets["aerial"], item["assets"]["image"]["href"]);
+        assert_eq!(super::super::naip_pixel_size(id), Some(0.6));
+        for wrong_id in [
+            id.replace("_.6_", "_060_"),
+            id.replace("_10_", "_11_"),
+            format!("{id}_20250101"),
+        ] {
+            assert!(CatalogueItem::from_value(item.clone(), &NAIP, &wrong_id).is_err());
+        }
+        let mut wrong = item.clone();
+        wrong["assets"]["image"]["eo:bands"][3]["common_name"] = json!("alpha");
+        assert!(CatalogueItem::from_value(wrong, &NAIP, id).is_err());
+        let mut wrong = item.clone();
+        let href = item["assets"]["image"]["href"].as_str().unwrap();
+        wrong["assets"]["image"]["href"] = json!(href.replace("060cm", "100cm"));
+        assert!(CatalogueItem::from_value(wrong, &NAIP, id).is_err());
     }
 }
 

@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Info, Layers } from 'lucide-react';
 import { Button, Input, Select, Switch, Modal, Progress, Disclosure, SegmentedControl } from './ui/index.jsx';
 
 describe('Shared UI behavior used by catalog, recipes and workspace', () => {
+  it('preserves labeled option groups, inherited disabled state and native form values', async () => {
+    const user = userEvent.setup();
+    const changed = vi.fn();
+    render(<form aria-label="Source selection"><Select name="source" aria-label="Grouped sources" defaultValue="public" onChange={event => changed(event.target.value)}>
+      <optgroup label="Public sources"><option value="public">Public raster</option></optgroup>
+      <optgroup label="Catalog only"><option value="protected">Protected catalog</option></optgroup>
+      <optgroup label="Unsupported" disabled><option value="disabled">Unsupported source</option></optgroup>
+    </Select></form>);
+    await user.click(screen.getByRole('combobox', { name: 'Grouped sources' }));
+    expect(within(screen.getByRole('group', { name: 'Unsupported' })).getByRole('option').getAttribute('aria-disabled')).toBe('true');
+    await user.click(within(screen.getByRole('group', { name: 'Catalog only' })).getByRole('option', { name: 'Protected catalog' }));
+    expect(changed).toHaveBeenCalledWith('protected');
+    expect(new FormData(screen.getByRole('form', { name: 'Source selection' })).get('source')).toBe('protected');
+  });
   it('explains icon-only links on keyboard focus and dismisses their tooltip with Escape', async () => {
     const user = userEvent.setup();
     render(<Button asChild size="icon" tooltip="Open in workspace"><a href="#Workspace?file=source" aria-label="Open in workspace"><Layers aria-hidden="true" /></a></Button>);

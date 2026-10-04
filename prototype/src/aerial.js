@@ -1,4 +1,4 @@
-import { NAIP_HOST, isSupportedAsset, naipMatchesItem, naipPixelSize } from './providers.js';
+import { NAIP_HOST, isSupportedAsset, naipMatchesItem, naipPixelSize, naipLegacyNir } from './providers.js';
 
 const VIEW_BANDS = Object.freeze({rgb:Object.freeze([1,2,3]), cir:Object.freeze([4,1,2]), nir:Object.freeze([4,4,4])});
 export const AERIAL_VIEWS = Object.freeze(Object.keys(VIEW_BANDS));
@@ -30,7 +30,7 @@ export function aerialViewCaption(view) {
 }
 
 export function aerialTitle(itemId, date) {
-  const match=naipPixelSize(itemId) && /^([a-z]{2})_m_(\d{7})_(nw|ne|sw|se)_\d{2}_(?:030|060|100|1)_(\d{4})(\d{2})(\d{2})(?:_\d{8})?$/.exec(itemId);
+  const match=naipPixelSize(itemId) && /^([a-z]{2})_m_(\d{7})_(nw|ne|sw|se)_\d{2}_(?:030|060|100|1|h|\.6)_(\d{4})(\d{2})(\d{2})(?:_\d{8})?$/.exec(itemId);
   return match ? `${date(`${match[4]}-${match[5]}-${match[6]}`)} · ${match[1].toUpperCase()} ${match[2]} ${match[3].toUpperCase()}` : itemId;
 }
 
@@ -40,7 +40,7 @@ export function validAerialMetadata(data) {
     && aerialView(data) !== undefined && info.pixelInterpretation === 'PixelIsArea'
     && (info.coverageMask === undefined || info.coverageMask === 'internal-1bit')
     && (info.sourceExtraSample === undefined || info.sourceExtraSample === 2 && info.coverageMask === undefined
-      && data.pixelSize?.length === 2 && data.pixelSize.every(value => value === 1))
+      && data.pixelSize?.length === 2 && [0.6,1].includes(data.pixelSize[0]) && data.pixelSize[1] === data.pixelSize[0])
     && data.bandCount === 4 && data.dataType === 'UInt8' && data.nodata === null
     && /^EPSG:269(0[1-9]|1[0-9]|2[0-3])$/.test(data.crs) && data.classes?.length === 0
     && data.reflectance === undefined && data.elevation === undefined);
@@ -59,7 +59,7 @@ export function aerialMatchesJob(job, metadata) {
   if (job.kind !== 'download' || metadata.aerial.coverageMask !== undefined || !isSupportedAsset(job.href, 'aerial')) return false;
   const url = new URL(job.href), parts = job.itemId?.split('_');
   return url.hostname === NAIP_HOST && naipMatchesItem(url.pathname, job.itemId)
-    && (metadata.aerial.sourceExtraSample === undefined || parts[5] === '1')
+    && (metadata.aerial.sourceExtraSample === undefined || naipLegacyNir(url.pathname,job.itemId))
     && metadata.crs === `EPSG:${26900 + Number(parts[4])}`
     && metadata.pixelSize?.length === 2 && metadata.pixelSize.every(value => Math.abs(value - naipPixelSize(job.itemId)) < 1e-8);
 }
@@ -79,8 +79,7 @@ export function validateNaipImages(sources, scene) {
   const fd = image?.fileDirectory, tag = name => fd?.getValue(name);
   const shape = scene.grid?.shape, affine = scene.grid?.transform;
   const extra = Array.from(tag('ExtraSamples') || []).join(',');
-  const legacyNir = scene.id?.split('_')[5] === '1' && naipPixelSize(scene.id) === 1
-    && isSupportedAsset(scene.assets?.aerial?.href, 'aerial') && naipMatchesItem(new URL(scene.assets.aerial.href).pathname, scene.id)
+  const legacyNir = isSupportedAsset(scene.assets?.aerial?.href, 'aerial') && naipLegacyNir(new URL(scene.assets.aerial.href).pathname, scene.id)
     && scene.assets.aerial['eo:bands']?.map(band => band.common_name).join(',') === 'red,green,blue,nir';
   if (sources?.length !== 1 || !image || keys?.GTModelTypeGeoKey !== 1 || keys.GTRasterTypeGeoKey !== 1
     || `EPSG:${keys.ProjectedCSTypeGeoKey}` !== scene.crs || !/^EPSG:269(0[1-9]|1[0-9]|2[0-3])$/.test(scene.crs)

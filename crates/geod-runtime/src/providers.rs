@@ -107,7 +107,7 @@ fn naip_filename_parts(stem: &str) -> Option<Vec<&str>> {
         || s[3].len() != 2
         || !s[3].bytes().all(|c| c.is_ascii_digit())
         || !(1..=23).contains(&s[3].parse::<u16>().ok()?)
-        || !matches!(s[4], "030" | "060" | "100" | "1")
+        || !matches!(s[4], "030" | "060" | "100" | "1" | "h" | ".6")
         || !s[5..].iter().all(|value| naip_date(value))
     {
         return None;
@@ -116,7 +116,7 @@ fn naip_filename_parts(stem: &str) -> Option<Vec<&str>> {
 }
 
 /// Reviewed NAIP v002 RGB+NIR COG path. Some filenames carry a second date;
-/// older 1 m filenames use `1` inside a `100cm` directory. Keep both intact.
+/// older files use `1` or `h` inside `100cm` or `060cm` directories. Keep intact.
 pub(crate) fn naip_path(path: &str) -> Option<String> {
     let p: Vec<_> = path.strip_prefix('/')?.split('/').collect();
     if p.len() != 7
@@ -129,7 +129,11 @@ pub(crate) fn naip_path(path: &str) -> Option<String> {
     }
     let stem = p[6].strip_suffix(".tif")?;
     let s = naip_filename_parts(stem)?;
-    let cm = if s[4] == "1" { "100" } else { s[4] };
+    let cm = match s[4] {
+        "1" => "100",
+        "h" | ".6" => "060",
+        value => value,
+    };
     if p[3] != &s[5][..4] || p[5] != &s[1][..5] || p[4] != format!("{}_{}cm_{}", p[2], cm, p[3]) {
         return None;
     }
@@ -140,14 +144,32 @@ pub(crate) fn naip_matches_item(path: &str, item_id: &str) -> bool {
     let Some(identity) = naip_path(path) else {
         return false;
     };
-    identity == item_id
-        // A catalogue ID may retain a second date omitted from its filename.
-        // The subsequent official item lookup must still match the exact ID
-        // and unsigned asset URL; this does not invent an alternate product.
-        || (identity.split('_').count() == 7
-            && item_id
-                .strip_prefix(&format!("{identity}_"))
-                .is_some_and(naip_date))
+    // The reviewed `h` filenames are named `.6` in the official catalogue.
+    // A second catalogue date can be absent from the original filename.
+    // Exact official item ID and unsigned asset URL checks still follow.
+    let mut parts: Vec<_> = identity.split('_').collect();
+    if parts[5] == "h" {
+        parts[5] = ".6";
+    }
+    let catalogue_identity = parts.join("_");
+    [&identity, &catalogue_identity].iter().any(|value| {
+        value.as_str() == item_id
+            || value.split('_').count() == 7
+                && item_id
+                    .strip_prefix(&format!("{value}_"))
+                    .is_some_and(naip_date)
+    })
+}
+
+pub(crate) fn naip_legacy_nir(path: &str, item_id: &str) -> bool {
+    if !naip_matches_item(path, item_id) {
+        return false;
+    }
+    let identity = naip_path(path).unwrap();
+    matches!(
+        (identity.split('_').nth(5), item_id.split('_').nth(5)),
+        (Some("1"), Some("1")) | (Some("h"), Some(".6"))
+    )
 }
 
 pub(crate) fn naip_pixel_size(item_id: &str) -> Option<f64> {
@@ -157,7 +179,7 @@ pub(crate) fn naip_pixel_size(item_id: &str) -> Option<f64> {
     }
     match naip_filename_parts(stem)?[4] {
         "030" => Some(0.3),
-        "060" => Some(0.6),
+        "060" | "h" | ".6" => Some(0.6),
         "100" | "1" => Some(1.0),
         _ => None,
     }
@@ -411,6 +433,11 @@ mod tests {
                 "/naip/v002/ca/2022/ca_060cm_2022/37122/m_3712221_nw_10_060_20220518.tif",
                 0.6,
             ),
+            (
+                "ca_m_3712221_sw_10_.6_20160625_20161004",
+                "/naip/v002/ca/2016/ca_060cm_2016/37122/m_3712221_sw_10_h_20160625.tif",
+                0.6,
+            ),
         ] {
             let url = asset_url(&format!("https://{NAIP_HOST}{path}")).unwrap();
             assert!(matches_item(&url, id, "aerial"));
@@ -421,9 +448,11 @@ mod tests {
                 "aerial"
             ));
             assert!(!matches_item(&url, &id.replace("_m_", "_x_"), "aerial"));
+            let quadrant = id.split('_').nth(3).unwrap();
+            let other = if quadrant == "nw" { "ne" } else { "nw" };
             assert!(!matches_item(
                 &url,
-                &id.replace("_se_", "_sw_").replace("_nw_", "_ne_"),
+                &id.replace(&format!("_{quadrant}_"), &format!("_{other}_")),
                 "aerial"
             ));
         }
