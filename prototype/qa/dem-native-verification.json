@@ -1,0 +1,753 @@
+{
+  "checkedAt": "2026-10-01T17:00:44.068Z",
+  "stage": "Application native DEM search, original download, display, persistent thumbnail and same-grid project processing verification",
+  "implementedInApplication": true,
+  "product": "Copernicus DEM GLO-30 Public, AWS public COG 2021 distribution",
+  "liveGetCatalog": {
+    "endpoint": "https://earth-search.aws.element84.com/v1/search",
+    "collections": "cop-dem-glo-30",
+    "bbox": [
+      -122.55,
+      37.68,
+      -122.32,
+      37.84
+    ],
+    "datetimeFilter": null,
+    "cloudFilter": null,
+    "selectedItem": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM"
+  },
+  "nativeOriginal": {
+    "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+    "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+    "bytesDownloaded": 20060161,
+    "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+    "status": "succeeded"
+  },
+  "metadata": {
+    "width": 3600,
+    "height": 3600,
+    "bandCount": 1,
+    "dataType": "Float32",
+    "crs": "EPSG:4326",
+    "bounds": [
+      -123.00013888888888,
+      37.00013888888889,
+      -122.00013888888888,
+      38.00013888888889
+    ],
+    "pixelSize": [
+      0.0002777777777777778,
+      0.0002777777777777778
+    ],
+    "nodata": null,
+    "previewWidth": 768,
+    "previewHeight": 768,
+    "classes": [],
+    "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+    "elevation": {
+      "product": "cop-dem-glo-30-public",
+      "heightUnit": "metre",
+      "coordinateUnit": "degree",
+      "verticalReference": "EPSG:3855",
+      "pixelInterpretation": "PixelIsPoint",
+      "displayRange": [
+        0,
+        560.0618896484375
+      ],
+      "sampleCount": 589824,
+      "validSampleCount": 589824,
+      "nodataIsNan": false
+    }
+  },
+  "independentReference": {
+    "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+    "independentLibrary": "Rasterio/GDAL",
+    "samples": [
+      {
+        "row": 0,
+        "column": 0,
+        "rasterio": 101.38304901123047,
+        "native": 101.38304901123047,
+        "coordinate": [
+          -123.0,
+          38.0
+        ]
+      },
+      {
+        "row": 49,
+        "column": 1963,
+        "rasterio": -79.07937622070312,
+        "native": -79.07937622070312,
+        "coordinate": [
+          -122.45472222222222,
+          37.98638888888889
+        ]
+      },
+      {
+        "row": 1000,
+        "column": 1000,
+        "rasterio": 0.0,
+        "native": 0,
+        "coordinate": [
+          -122.72222222222221,
+          37.72222222222222
+        ]
+      },
+      {
+        "row": 1800,
+        "column": 1800,
+        "rasterio": 0.0,
+        "native": 0,
+        "coordinate": [
+          -122.5,
+          37.5
+        ]
+      },
+      {
+        "row": 2500,
+        "column": 3000,
+        "rasterio": 657.4219360351562,
+        "native": 657.4219360351562,
+        "coordinate": [
+          -122.16666666666666,
+          37.30555555555556
+        ]
+      },
+      {
+        "row": 3599,
+        "column": 3599,
+        "rasterio": 69.05463409423828,
+        "native": 69.05463409423828,
+        "coordinate": [
+          -122.00027777777777,
+          37.00027777777778
+        ]
+      }
+    ]
+  },
+  "persistentThumbnail": {
+    "dimensions": [
+      160,
+      160
+    ],
+    "samePngAfterManagerRestart": true,
+    "cacheHitValidatesSourceBytes": true
+  },
+  "ui": {
+    "discovery": "Captured real DEM catalogue replay",
+    "runtime": "Actual Rust service and originally downloaded public DEM file",
+    "csp": "Desktop devCsp plus explicit loopback 4318 for the browser-only native HTTP test bridge",
+    "projectCreatedAndQueuedInUI": "27d0233c-e2e5-4c2a-a0ca-bd226837ab72",
+    "completedSourceReusedWithoutRedownload": true,
+    "viewportResults": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "errors": [],
+        "overflow": false,
+        "mapPixel": {
+          "jobId": "5174c5ed-0536-451e-bfe8-5b2da5f03905",
+          "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+          "crs": "EPSG:4326",
+          "coordinate": [
+            -122.50013888888888,
+            37.50013888888889
+          ],
+          "pixel": [
+            1800,
+            1800
+          ],
+          "center": [
+            -122.5,
+            37.5
+          ],
+          "value": 0,
+          "label": "Elevation",
+          "color": "#808080",
+          "isNoData": false
+        }
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "errors": [],
+        "overflow": false,
+        "mapPixel": {
+          "jobId": "5174c5ed-0536-451e-bfe8-5b2da5f03905",
+          "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+          "crs": "EPSG:4326",
+          "coordinate": [
+            -122.50013888888888,
+            37.50013888888889
+          ],
+          "pixel": [
+            1800,
+            1800
+          ],
+          "center": [
+            -122.5,
+            37.5
+          ],
+          "value": 0,
+          "label": "Elevation",
+          "color": "#808080",
+          "isNoData": false
+        }
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "errors": [],
+        "overflow": false,
+        "mapPixel": {
+          "jobId": "5174c5ed-0536-451e-bfe8-5b2da5f03905",
+          "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+          "crs": "EPSG:4326",
+          "coordinate": [
+            -122.50013888888888,
+            37.50013888888889
+          ],
+          "pixel": [
+            1800,
+            1800
+          ],
+          "center": [
+            -122.5,
+            37.5
+          ],
+          "value": 0,
+          "label": "Elevation",
+          "color": "#808080",
+          "isNoData": false
+        }
+      }
+    ],
+    "screenshotsDirectory": ".verification/dem-ui-qa",
+    "controlledStateVerification": {
+      "checkedAt": "2026-10-01T17:00:46.381Z",
+      "fixtureStates": [
+        "empty catalogue",
+        "HTTP 503 catalogue",
+        "delayed inspection",
+        "HTTP 503 inspection"
+      ],
+      "actualRecovery": "Actual Rust inspection of a managed DEM raster backed by originally downloaded public source files",
+      "errors": []
+    }
+  },
+  "remaining": [
+    "different-spacing resampling, reprojection and terrain analysis",
+    "GLO-90/SRTM separate adapters"
+  ],
+  "notes": [
+    "NaN NoData and high-latitude dimension rejection are synthetic fixture tests, not additional actual products",
+    "NASA and CDSE positive account-original acceptance remains pending user accounts"
+  ],
+  "projectProcessing": {
+    "nativeOriginals": [
+      {
+        "id": "5174c5ed-0536-451e-bfe8-5b2da5f03905",
+        "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+        "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+        "bytesDownloaded": 20060161,
+        "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+        "status": "succeeded"
+      },
+      {
+        "id": "01e11acc-f80d-4e8e-a6b2-c4b468119b3d",
+        "itemId": "Copernicus_DSM_COG_10_N37_00_W122_00_DEM",
+        "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W122_00_DEM/Copernicus_DSM_COG_10_N37_00_W122_00_DEM.tif",
+        "bytesDownloaded": 47669564,
+        "sha256": "15d21273ae3d94c3ef19aa6abaef47d5f78bf4ac24e682d131c01bb8b5101db2",
+        "status": "succeeded"
+      }
+    ],
+    "queuedByActualUIActions": true,
+    "discovery": "Actual live public two-tile catalogue response saved before the UI test",
+    "runtime": "Actual Rust native project jobs queued by UI actions",
+    "outputs": [
+      {
+        "label": "elevation-clip",
+        "project": {
+          "id": "27d0233c-e2e5-4c2a-a0ca-bd226837ab72",
+          "name": "Copernicus DEM · 软件内下载流程验收",
+          "bounds": [
+            -122.55,
+            37.68,
+            -122.32,
+            37.84
+          ],
+          "scenes": [
+            {
+              "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+              "date": "2021-04-22T00:00:00Z",
+              "cloud": null,
+              "crs": "EPSG:4326",
+              "gridCode": "CDEM-N37W123",
+              "bbox": [
+                -123.00013888888888,
+                37.00013888888889,
+                -122.00013888888888,
+                38.00013888888889
+              ],
+              "assets": {
+                "elevation": {
+                  "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+                  "mediaType": "image/tiff; application=geotiff"
+                }
+              }
+            }
+          ],
+          "createdAt": "2026-10-01T16:56:56.828482200+00:00",
+          "updatedAt": "2026-10-01T16:56:56.828482200+00:00"
+        },
+        "job": {
+          "id": "4a3e67d9-282c-4368-935f-6caf4e1383b1",
+          "kind": "raster_mosaic",
+          "parentId": null,
+          "recipe": null,
+          "crop": null,
+          "mosaic": {
+            "projectId": "27d0233c-e2e5-4c2a-a0ca-bd226837ab72",
+            "assetKey": "elevation",
+            "sources": [
+              {
+                "jobId": "5174c5ed-0536-451e-bfe8-5b2da5f03905",
+                "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5"
+              }
+            ]
+          },
+          "mosaicOutput": {
+            "width": 829,
+            "height": 577,
+            "bandCount": 1,
+            "crs": "EPSG:4326",
+            "bounds": [
+              -122.55013888888888,
+              37.679861111111116,
+              -122.31986111111111,
+              37.840138888888895
+            ],
+            "pixelSize": [
+              0.0002777777777777778,
+              0.0002777777777777778
+            ],
+            "sourceCount": 1,
+            "maskedPixels": 0,
+            "coveredPixels": 478333,
+            "overlapPolicy": "last ordered valid tile wins; gaps and polygon masks are NaN NoData; zero heights are valid",
+            "elevation": {
+              "product": "cop-dem-glo-30-public",
+              "heightUnit": "metre",
+              "coordinateUnit": "degree",
+              "verticalReference": "EPSG:3855",
+              "pixelInterpretation": "PixelIsPoint"
+            }
+          },
+          "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\dem-native-20261002\\assets\\4a3e67d9-282c-4368-935f-6caf4e1383b1.metadata.json",
+          "safe": null,
+          "safeOutput": null,
+          "itemId": "project:27d0233c-e2e5-4c2a-a0ca-bd226837ab72",
+          "assetKey": "elevation",
+          "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+          "mediaType": "image/tiff",
+          "title": "Copernicus DEM · 软件内下载流程验收 · ELEVATION mosaic",
+          "status": "succeeded",
+          "bytesDownloaded": 782936,
+          "totalBytes": 782936,
+          "sha256": "a350df30e0e0ecdd4971521128b1d852264767457d47d7883abd6b5bc1d42493",
+          "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\dem-native-20261002\\assets\\4a3e67d9-282c-4368-935f-6caf4e1383b1.tif",
+          "error": null,
+          "createdAt": "2026-10-01T17:00:32.468954400+00:00",
+          "updatedAt": "2026-10-01T17:00:34.301614100+00:00",
+          "source": "Project source rasters / pinned original products",
+          "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+          "attempts": 1,
+          "settled": true
+        },
+        "metadata": {
+          "width": 829,
+          "height": 577,
+          "bandCount": 1,
+          "dataType": "Float32",
+          "crs": "EPSG:4326",
+          "bounds": [
+            -122.55013888888888,
+            37.679861111111116,
+            -122.31986111111111,
+            37.840138888888895
+          ],
+          "pixelSize": [
+            0.0002777777777777778,
+            0.0002777777777777778
+          ],
+          "nodata": null,
+          "previewWidth": 768,
+          "previewHeight": 534,
+          "classes": [],
+          "sha256": "a350df30e0e0ecdd4971521128b1d852264767457d47d7883abd6b5bc1d42493",
+          "elevation": {
+            "product": "cop-dem-glo-30-public",
+            "heightUnit": "metre",
+            "coordinateUnit": "degree",
+            "verticalReference": "EPSG:3855",
+            "pixelInterpretation": "PixelIsPoint",
+            "displayRange": [
+              0,
+              194.84642028808594
+            ],
+            "sampleCount": 410112,
+            "validSampleCount": 410112,
+            "nodataIsNan": true
+          }
+        },
+        "uiPixel": "41.010281 m\n\n列 414，行 288 · 从 0 计数\n\n-122.435 · 37.76 °"
+      },
+      {
+        "label": "elevation-mosaic",
+        "project": {
+          "id": "035567ae-9123-4c54-8708-9e0ccfdf6c7d",
+          "name": "Copernicus DEM · 两瓦片真实拼接验收",
+          "bounds": [
+            -122.05,
+            37.68,
+            -121.95,
+            37.84
+          ],
+          "scenes": [
+            {
+              "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+              "date": "2021-04-22T00:00:00Z",
+              "cloud": null,
+              "crs": "EPSG:4326",
+              "gridCode": "CDEM-N37W123",
+              "bbox": [
+                -123.00013888888888,
+                37.00013888888889,
+                -122.00013888888888,
+                38.00013888888889
+              ],
+              "assets": {
+                "elevation": {
+                  "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+                  "mediaType": "image/tiff; application=geotiff"
+                }
+              }
+            },
+            {
+              "itemId": "Copernicus_DSM_COG_10_N37_00_W122_00_DEM",
+              "date": "2021-04-22T00:00:00Z",
+              "cloud": null,
+              "crs": "EPSG:4326",
+              "gridCode": "CDEM-N37W122",
+              "bbox": [
+                -122.00013888888888,
+                37.00013888888889,
+                -121.00013888888888,
+                38.00013888888889
+              ],
+              "assets": {
+                "elevation": {
+                  "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W122_00_DEM/Copernicus_DSM_COG_10_N37_00_W122_00_DEM.tif",
+                  "mediaType": "image/tiff; application=geotiff"
+                }
+              }
+            }
+          ],
+          "createdAt": "2026-10-01T17:00:37.895093800+00:00",
+          "updatedAt": "2026-10-01T17:00:37.895093800+00:00"
+        },
+        "job": {
+          "id": "0cdce786-67d9-425c-95ab-4a9a16d129f7",
+          "kind": "raster_mosaic",
+          "parentId": null,
+          "recipe": null,
+          "crop": null,
+          "mosaic": {
+            "projectId": "035567ae-9123-4c54-8708-9e0ccfdf6c7d",
+            "assetKey": "elevation",
+            "sources": [
+              {
+                "jobId": "01e11acc-f80d-4e8e-a6b2-c4b468119b3d",
+                "sha256": "15d21273ae3d94c3ef19aa6abaef47d5f78bf4ac24e682d131c01bb8b5101db2"
+              },
+              {
+                "jobId": "5174c5ed-0536-451e-bfe8-5b2da5f03905",
+                "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5"
+              }
+            ]
+          },
+          "mosaicOutput": {
+            "width": 361,
+            "height": 577,
+            "bandCount": 1,
+            "crs": "EPSG:4326",
+            "bounds": [
+              -122.05013888888888,
+              37.679861111111116,
+              -121.9498611111111,
+              37.840138888888895
+            ],
+            "pixelSize": [
+              0.0002777777777777778,
+              0.0002777777777777778
+            ],
+            "sourceCount": 2,
+            "maskedPixels": 0,
+            "coveredPixels": 208297,
+            "overlapPolicy": "last ordered valid tile wins; gaps and polygon masks are NaN NoData; zero heights are valid",
+            "elevation": {
+              "product": "cop-dem-glo-30-public",
+              "heightUnit": "metre",
+              "coordinateUnit": "degree",
+              "verticalReference": "EPSG:3855",
+              "pixelInterpretation": "PixelIsPoint"
+            }
+          },
+          "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\dem-native-20261002\\assets\\0cdce786-67d9-425c-95ab-4a9a16d129f7.metadata.json",
+          "safe": null,
+          "safeOutput": null,
+          "itemId": "project:035567ae-9123-4c54-8708-9e0ccfdf6c7d",
+          "assetKey": "elevation",
+          "href": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+          "mediaType": "image/tiff",
+          "title": "Copernicus DEM · 两瓦片真实拼接验收 · ELEVATION mosaic",
+          "status": "succeeded",
+          "bytesDownloaded": 716007,
+          "totalBytes": 716007,
+          "sha256": "36cc33271d332e6baffa109f61dce3733884bdd30798233c1efa6c09850e8679",
+          "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\dem-native-20261002\\assets\\0cdce786-67d9-425c-95ab-4a9a16d129f7.tif",
+          "error": null,
+          "createdAt": "2026-10-01T17:00:38.368627500+00:00",
+          "updatedAt": "2026-10-01T17:00:40.651558100+00:00",
+          "source": "Project source rasters / pinned original products",
+          "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+          "attempts": 1,
+          "settled": true
+        },
+        "metadata": {
+          "width": 361,
+          "height": 577,
+          "bandCount": 1,
+          "dataType": "Float32",
+          "crs": "EPSG:4326",
+          "bounds": [
+            -122.05013888888888,
+            37.679861111111116,
+            -121.9498611111111,
+            37.840138888888895
+          ],
+          "pixelSize": [
+            0.0002777777777777778,
+            0.0002777777777777778
+          ],
+          "nodata": null,
+          "previewWidth": 361,
+          "previewHeight": 577,
+          "classes": [],
+          "sha256": "36cc33271d332e6baffa109f61dce3733884bdd30798233c1efa6c09850e8679",
+          "elevation": {
+            "product": "cop-dem-glo-30-public",
+            "heightUnit": "metre",
+            "coordinateUnit": "degree",
+            "verticalReference": "EPSG:3855",
+            "pixelInterpretation": "PixelIsPoint",
+            "displayRange": [
+              109.40322875976562,
+              475.39959716796875
+            ],
+            "sampleCount": 208297,
+            "validSampleCount": 208297,
+            "nodataIsNan": true
+          }
+        },
+        "uiPixel": "278.630005 m\n\n列 180，行 288 · 从 0 计数\n\n-122 · 37.76 °"
+      }
+    ],
+    "independentReference": {
+      "independentLibrary": "Rasterio/GDAL and NumPy",
+      "results": [
+        {
+          "label": "elevation-clip",
+          "sha256": "a350df30e0e0ecdd4971521128b1d852264767457d47d7883abd6b5bc1d42493",
+          "outputBytes": 782936,
+          "dimensions": [
+            829,
+            577
+          ],
+          "gdalCrs": "EPSG:4326",
+          "horizontalCrs": "EPSG:4326",
+          "verticalReference": "EPSG:3855",
+          "rasterInterpretation": "Point",
+          "dataType": "float32",
+          "nodata": "NaN",
+          "allValidFloat32BitsMatchOriginals": true,
+          "comparedPixels": 478333,
+          "validPixels": 478333,
+          "sourceWindows": [
+            {
+              "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+              "originalSha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+              "sourceWindow": [
+                1620,
+                576,
+                829,
+                577
+              ],
+              "copiedPixels": 478333
+            }
+          ]
+        },
+        {
+          "label": "elevation-mosaic",
+          "sha256": "36cc33271d332e6baffa109f61dce3733884bdd30798233c1efa6c09850e8679",
+          "outputBytes": 716007,
+          "dimensions": [
+            361,
+            577
+          ],
+          "gdalCrs": "EPSG:4326",
+          "horizontalCrs": "EPSG:4326",
+          "verticalReference": "EPSG:3855",
+          "rasterInterpretation": "Point",
+          "dataType": "float32",
+          "nodata": "NaN",
+          "allValidFloat32BitsMatchOriginals": true,
+          "comparedPixels": 208297,
+          "validPixels": 208297,
+          "sourceWindows": [
+            {
+              "itemId": "Copernicus_DSM_COG_10_N37_00_W122_00_DEM",
+              "originalSha256": "15d21273ae3d94c3ef19aa6abaef47d5f78bf4ac24e682d131c01bb8b5101db2",
+              "sourceWindow": [
+                0,
+                576,
+                181,
+                577
+              ],
+              "copiedPixels": 104437
+            },
+            {
+              "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+              "originalSha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+              "sourceWindow": [
+                3420,
+                576,
+                180,
+                577
+              ],
+              "copiedPixels": 103860
+            }
+          ]
+        }
+      ]
+    },
+    "errors": [],
+    "restart": {
+      "checkedAt": "2026-10-01T17:09:28.172Z",
+      "actualNativeProcessRestart": true,
+      "derivedOutputs": [
+        {
+          "jobId": "4a3e67d9-282c-4368-935f-6caf4e1383b1",
+          "sha256": "a350df30e0e0ecdd4971521128b1d852264767457d47d7883abd6b5bc1d42493",
+          "samePersistentPng": true,
+          "samePixelAfterRestart": true,
+          "pixel": {
+            "jobId": "4a3e67d9-282c-4368-935f-6caf4e1383b1",
+            "sha256": "a350df30e0e0ecdd4971521128b1d852264767457d47d7883abd6b5bc1d42493",
+            "crs": "EPSG:4326",
+            "coordinate": [
+              -122.435,
+              37.760000000000005
+            ],
+            "pixel": [
+              414,
+              288
+            ],
+            "center": [
+              -122.43499999999999,
+              37.760000000000005
+            ],
+            "value": 41.01028060913086,
+            "label": "Elevation",
+            "color": "#808080",
+            "isNoData": false
+          }
+        },
+        {
+          "jobId": "0cdce786-67d9-425c-95ab-4a9a16d129f7",
+          "sha256": "36cc33271d332e6baffa109f61dce3733884bdd30798233c1efa6c09850e8679",
+          "samePersistentPng": true,
+          "samePixelAfterRestart": true,
+          "pixel": {
+            "jobId": "0cdce786-67d9-425c-95ab-4a9a16d129f7",
+            "sha256": "36cc33271d332e6baffa109f61dce3733884bdd30798233c1efa6c09850e8679",
+            "crs": "EPSG:4326",
+            "coordinate": [
+              -122,
+              37.760000000000005
+            ],
+            "pixel": [
+              180,
+              288
+            ],
+            "center": [
+              -121.99999999999999,
+              37.760000000000005
+            ],
+            "value": 278.6300048828125,
+            "label": "Elevation",
+            "color": "#808080",
+            "isNoData": false
+          }
+        }
+      ]
+    },
+    "viewportVerification": {
+      "checkedAt": "2026-10-01T17:09:35.033Z",
+      "views": [
+        {
+          "theme": "light",
+          "width": 1440,
+          "overflow": false,
+          "errors": []
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "overflow": false,
+          "errors": []
+        },
+        {
+          "theme": "light",
+          "width": 1024,
+          "overflow": false,
+          "errors": []
+        }
+      ]
+    }
+  },
+  "syntheticAdditionalChecks": [
+    "Adjacent high-latitude Point grid seam",
+    "NaN original NoData and geographic polygon mask; valid zero and negative heights",
+    "Incompatible spacing, changed source SHA-256 and cancellation do not commit output",
+    "Derived file metadata, source pixel values and persistent thumbnails survive manager restart"
+  ],
+  "regression": {
+    "native": {
+      "passed": 145,
+      "optInLiveIgnored": 4
+    },
+    "node": {
+      "passed": 97
+    },
+    "ui": {
+      "passed": 96,
+      "files": 16
+    },
+    "desktopCustomProtocol": {
+      "passed": 4
+    },
+    "repositoryContractsAndBuild": "passed"
+  }
+}

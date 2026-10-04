@@ -1,0 +1,611 @@
+{
+  "checkedAt": "2026-10-02T03:35:30.460Z",
+  "verificationStage": "Original file inspection and RGB, before project processing was implemented",
+  "laterProcessingEvidence": "modis-processing-verification.json",
+  "product": "MODIS Terra/Aqua MOD/MYD09A1 Collection 6.1 8-day surface reflectance",
+  "distribution": "Microsoft Planetary Computer converted COG; not NASA original HDF",
+  "catalogueQuery": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-09A1-061&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.start_datetime&limit=1",
+  "realItemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+  "period": [
+    "2025-06-26T00:00:00.000Z",
+    "2025-07-03T23:59:59Z"
+  ],
+  "files": [
+    {
+      "assetKey": "red",
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif",
+      "bytesDownloaded": 11417054,
+      "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3"
+    },
+    {
+      "assetKey": "green",
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b04.tif",
+      "bytesDownloaded": 11245921,
+      "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229"
+    },
+    {
+      "assetKey": "blue",
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b03.tif",
+      "bytesDownloaded": 10983667,
+      "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da"
+    }
+  ],
+  "dimensions": [
+    2400,
+    2400
+  ],
+  "crs": "MODIS:Sinusoidal",
+  "pixelSize": [
+    463.31271652791725,
+    463.3127165279167
+  ],
+  "pixelInterpretation": "PixelIsArea",
+  "dataType": "Int16",
+  "nodata": -28672,
+  "scale": 0.0001,
+  "offset": 0,
+  "previewDimensions": [
+    768,
+    768
+  ],
+  "independent": {
+    "reader": "Rasterio/GDAL + NumPy + Pillow",
+    "allRgbPreviewPixelsMatch": true,
+    "previewPixels": 589824,
+    "channelValuesCompared": 1769472,
+    "rawChannelSamples": 24,
+    "sourceFiles": [
+      {
+        "band": "red",
+        "bytes": 11417054,
+        "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+        "type": "int16",
+        "nodata": -28672,
+        "rawSamples": 8,
+        "crs": "PROJCS[\"unnamed\",GEOGCS[\"Unknown datum based upon the custom spheroid\",DATUM[\"Not specified (based on custom spheroid)\",SPHEROID[\"Custom spheroid\",6371007.181,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Sinusoidal\"],PARAMETER[\"longitude_of_center\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+        "projectCenterPixel": [
+          769,
+          537
+        ]
+      },
+      {
+        "band": "green",
+        "bytes": 11245921,
+        "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+        "type": "int16",
+        "nodata": -28672,
+        "rawSamples": 8,
+        "crs": "PROJCS[\"unnamed\",GEOGCS[\"Unknown datum based upon the custom spheroid\",DATUM[\"Not specified (based on custom spheroid)\",SPHEROID[\"Custom spheroid\",6371007.181,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Sinusoidal\"],PARAMETER[\"longitude_of_center\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+        "projectCenterPixel": [
+          769,
+          537
+        ]
+      },
+      {
+        "band": "blue",
+        "bytes": 10983667,
+        "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+        "type": "int16",
+        "nodata": -28672,
+        "rawSamples": 8,
+        "crs": "PROJCS[\"unnamed\",GEOGCS[\"Unknown datum based upon the custom spheroid\",DATUM[\"Not specified (based on custom spheroid)\",SPHEROID[\"Custom spheroid\",6371007.181,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Sinusoidal\"],PARAMETER[\"longitude_of_center\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+        "projectCenterPixel": [
+          769,
+          537
+        ]
+      }
+    ],
+    "originalHashesUnchanged": true
+  },
+  "originalPixelSamples": [
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -11119273.540308736,
+        4447570.422308736
+      ],
+      "pixel": [
+        0,
+        0
+      ],
+      "center": [
+        -11119273.540308736,
+        4447570.422308736
+      ],
+      "values": [
+        955,
+        1186,
+        1156
+      ],
+      "reflectances": [
+        0.0955,
+        0.11860000000000001,
+        0.11560000000000001
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -11118810.22759221,
+        4447107.109592208
+      ],
+      "pixel": [
+        1,
+        1
+      ],
+      "center": [
+        -11118810.22759221,
+        4447107.109592208
+      ],
+      "values": [
+        1092,
+        1261,
+        1429
+      ],
+      "reflectances": [
+        0.1092,
+        0.12610000000000002,
+        0.1429
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -10007786.333358264,
+        3336083.215358264
+      ],
+      "pixel": [
+        2399,
+        2399
+      ],
+      "center": [
+        -10007786.333358264,
+        3336083.215358264
+      ],
+      "values": [
+        998,
+        829,
+        593
+      ],
+      "reflectances": [
+        0.0998,
+        0.0829,
+        0.059300000000000005
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -10655960.82378082,
+        3520944.9892529026
+      ],
+      "pixel": [
+        1000,
+        2000
+      ],
+      "center": [
+        -10655960.82378082,
+        3520944.9892529026
+      ],
+      "values": [
+        2694,
+        1815,
+        1158
+      ],
+      "reflectances": [
+        0.26940000000000003,
+        0.18150000000000002,
+        0.1158
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -10563298.280475236,
+        3891595.1624752358
+      ],
+      "pixel": [
+        1200,
+        1200
+      ],
+      "center": [
+        -10563298.280475236,
+        3891595.1624752358
+      ],
+      "values": [
+        2129,
+        1733,
+        1135
+      ],
+      "reflectances": [
+        0.2129,
+        0.1733,
+        0.1135
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -10887617.182044778,
+        3613607.532558486
+      ],
+      "pixel": [
+        500,
+        1800
+      ],
+      "center": [
+        -10887617.182044778,
+        3613607.532558486
+      ],
+      "values": [
+        1321,
+        1035,
+        631
+      ],
+      "reflectances": [
+        0.1321,
+        0.10350000000000001,
+        0.0631
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -10331641.922211278,
+        4215914.064044777
+      ],
+      "pixel": [
+        1700,
+        500
+      ],
+      "center": [
+        -10331641.922211278,
+        4215914.064044777
+      ],
+      "values": [
+        2243,
+        1851,
+        1337
+      ],
+      "reflectances": [
+        0.2243,
+        0.18510000000000001,
+        0.1337
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+          "band": "red"
+        },
+        {
+          "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+          "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+          "band": "green"
+        },
+        {
+          "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+          "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+          "band": "blue"
+        }
+      ],
+      "crs": "MODIS:Sinusoidal",
+      "coordinate": [
+        -10192648.107252901,
+        3520944.9892529026
+      ],
+      "pixel": [
+        2000,
+        2000
+      ],
+      "center": [
+        -10192648.107252901,
+        3520944.9892529026
+      ],
+      "values": [
+        1821,
+        1340,
+        956
+      ],
+      "reflectances": [
+        0.1821,
+        0.134,
+        0.0956
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    }
+  ],
+  "restart": {
+    "checkedAt": "2026-10-02T03:41:40.893Z",
+    "sourcesUnchanged": true,
+    "projectPeriodRestored": true,
+    "rgbPreviewIdentical": true,
+    "thumbnailResponsesIdentical": true
+  },
+  "persistentCache": {
+    "entries": 3,
+    "entryContentsUnchangedAfterRestart": true,
+    "accessTimesUpdateNormally": true
+  },
+  "nativeMosaicRejectedAtOriginalInspectionStage": true,
+  "headlessWorkspaceViews": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "locale": "zh-CN",
+      "errors": [],
+      "overflow": false
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "locale": "en",
+      "errors": [],
+      "overflow": false
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "locale": "zh-CN",
+      "errors": [],
+      "overflow": false
+    }
+  ],
+  "headlessLiveExploreViews": [
+    {
+      "locale": "en",
+      "theme": "light",
+      "actualPublicCatalogue": [
+        {
+          "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-09A1-061&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2026-09-03T00%3A00%3A00Z%2F2026-10-02T23%3A59%3A59.999Z&sortby=-properties.start_datetime&limit=100",
+          "count": 2
+        }
+      ],
+      "cloudFilterAbsent": true,
+      "thumbnails": [
+        {
+          "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=modis-09A1-061&item=MYD09A1.A2026257.h08v05.061.2026266035640&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&tile_format=png&color_formula=gamma%20RGB%203.0,%20saturation%201.9,%20sigmoidal%20RGB%200%200.55&format=png",
+          "loaded": true,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=modis-09A1-061&item=MOD09A1.A2026257.h08v05.061.2026266035435&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&tile_format=png&color_formula=gamma%20RGB%203.0,%20saturation%201.9,%20sigmoidal%20RGB%200%200.55&format=png",
+          "loaded": true,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "errors": []
+    },
+    {
+      "locale": "zh-CN",
+      "theme": "dark",
+      "actualPublicCatalogue": [
+        {
+          "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-09A1-061&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2026-09-03T00%3A00%3A00Z%2F2026-10-02T23%3A59%3A59.999Z&sortby=-properties.start_datetime&limit=100",
+          "count": 2
+        }
+      ],
+      "cloudFilterAbsent": true,
+      "thumbnails": [
+        {
+          "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=modis-09A1-061&item=MYD09A1.A2026257.h08v05.061.2026266035640&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&tile_format=png&color_formula=gamma%20RGB%203.0,%20saturation%201.9,%20sigmoidal%20RGB%200%200.55&format=png",
+          "loaded": true,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=modis-09A1-061&item=MOD09A1.A2026257.h08v05.061.2026266035435&assets=sur_refl_b01&assets=sur_refl_b04&assets=sur_refl_b03&tile_format=png&color_formula=gamma%20RGB%203.0,%20saturation%201.9,%20sigmoidal%20RGB%200%200.55&format=png",
+          "loaded": true,
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "userDesktopOperated": false,
+  "pendingAtOriginalInspectionStage": [
+    "MODIS mosaic and clip",
+    "quality flags and masking",
+    "scientific RGB GeoTIFF export",
+    "NASA original HDF",
+    "other MODIS products",
+    "VIIRS",
+    "reprojection"
+  ],
+  "headlessUiCheckedAt": {
+    "explore": "2026-10-02T03:53:16.602Z",
+    "workspace": "2026-10-02T03:51:26.680Z"
+  },
+  "verification": {
+    "npmVerify": {
+      "passed": true,
+      "nodeTests": 114,
+      "uiTests": 111
+    },
+    "nativeRuntime": {
+      "passed": true,
+      "unitTests": 164,
+      "ignoredTests": 4,
+      "cliTests": 3,
+      "testThreads": 2
+    },
+    "desktopCustomProtocol": {
+      "passed": true,
+      "tests": 4
+    },
+    "cargoFmtCheck": "passed",
+    "cargoClippyWarningsDenied": "passed",
+    "desktopOfficialModisSourceAndLicenceLinkPolicy": "passed"
+  }
+}

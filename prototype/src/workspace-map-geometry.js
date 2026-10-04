@@ -1,10 +1,25 @@
 import { RECIPE_SCHEMA, validateRecipe } from './processing-client.js';
+import { localRasterKeys, reflectanceMatchesJob, validReflectancePixel } from './reflectance.js';
+import { LANDSAT_BANDS } from './providers.js';
+import { elevationMatchesJob, validElevationPixel, isElevationKey } from './elevation.js';
+import { RADAR_KEYS, radarMatchesJob, validRadarPixel } from './radar.js';
+import { aerialMatchesJob, validAerialPixel } from './aerial.js';
+import { qualityMatchesJob, validQualityPixel, QUALITY_KEYS } from './quality.js';
+import { vegetationMatchesJob, validVegetationPixel, VEGETATION_KEYS } from './vegetation.js';
+
+import { MODIS_SCIENCE } from './modis-science-layers.js';
+import { scienceMatchesJob, validSciencePixel } from './modis-science.js';
+
+import { MODIS_CRS, MODIS_PROJECTION } from './modis.js';
+import { VIIRS_CRS } from './viirs.js';
 
 export const MAX_MAP_LAYERS = 4;
 export const validBounds = bounds => Array.isArray(bounds) && bounds.length === 4 && bounds.every(Number.isFinite)
   && bounds[0] < bounds[2] && bounds[1] < bounds[3];
 
 export function utmDefinition(crs) {
+  const nad83 = /^EPSG:269(0[1-9]|1[0-9]|2[0-3])$/.exec(crs);
+  if (nad83) return `+proj=utm +zone=${Number(nad83[1])} +datum=NAD83 +units=m +no_defs`;
   const match = /^EPSG:(326|327)(\d{2})$/.exec(crs);
   const zone = Number(match?.[2]);
   if (!match || zone < 1 || zone > 60) throw new Error('The map supports WGS84 UTM raster projections only.');
@@ -12,10 +27,14 @@ export function utmDefinition(crs) {
 }
 
 export function verifiedMapMetadata(job, metadata) {
-  utmDefinition(metadata?.crs);
-  if (job?.status !== 'succeeded' || !['scl', 'visual'].includes(job?.assetKey) || !job.sha256
+  rasterProjectionDefinition(metadata?.crs);
+  const reflectance = LANDSAT_BANDS.includes(job?.assetKey);
+  const elevation = isElevationKey(job?.assetKey);
+  const aerial = job?.assetKey === 'aerial';
+  if (job?.status !== 'succeeded' || !localRasterKeys.includes(job?.assetKey) || !job.sha256
     || metadata?.sha256?.toLowerCase() !== job.sha256.toLowerCase()
-    || metadata?.bandCount !== (job.assetKey === 'visual' ? 3 : 1) || metadata?.dataType !== 'UInt8'
+    || metadata?.bandCount !== (aerial ? 4 : job.assetKey === 'visual' ? 3 : 1)
+    || (MODIS_SCIENCE[job.assetKey] ? !scienceMatchesJob(job,metadata) : VEGETATION_KEYS.includes(job.assetKey) ? !vegetationMatchesJob(job,metadata) : QUALITY_KEYS.includes(job.assetKey) ? !qualityMatchesJob(job,metadata) : RADAR_KEYS.includes(job.assetKey) ? !radarMatchesJob(job, metadata) : aerial ? !aerialMatchesJob(job, metadata) : elevation ? !elevationMatchesJob(job, metadata) : reflectance ? !reflectanceMatchesJob(job, metadata) : metadata?.dataType !== 'UInt8' || metadata.science !== undefined || metadata.vegetation !== undefined || metadata.quality !== undefined || metadata.reflectance !== undefined || metadata.elevation !== undefined || metadata.aerial !== undefined)
     || !validBounds(metadata.bounds) || !Number.isSafeInteger(metadata.width) || metadata.width < 1
     || !Number.isSafeInteger(metadata.height) || metadata.height < 1
     || !Array.isArray(metadata.pixelSize) || metadata.pixelSize.length !== 2
@@ -25,6 +44,10 @@ export function verifiedMapMetadata(job, metadata) {
   if (expected.some((value, index) => Math.abs(value - metadata.pixelSize[index]) > Math.max(1, value) * 1e-8))
     throw new Error('The raster bounds and pixel grid are inconsistent.');
   return metadata;
+}
+export function rasterProjectionDefinition(crs) {
+  if ([MODIS_CRS, VIIRS_CRS].includes(crs)) return MODIS_PROJECTION;
+  return crs === 'EPSG:4326' ? '+proj=longlat +datum=WGS84 +no_defs' : utmDefinition(crs);
 }
 
 // North-up rasters have their origin at the top-left. The east and south
@@ -78,7 +101,7 @@ export function verifyPixelResult(result, job, metadata, coordinate) {
     || result.pixel.some((value, index) => value !== pixel[index])
     || !Array.isArray(result.coordinate) || result.coordinate.length !== 2
     || result.coordinate.some((value, index) => !Number.isFinite(value) || Math.abs(value - coordinate[index]) > 1e-7)
-    || (job.assetKey === 'visual' ? !Array.isArray(result.values) || result.values.length !== 3
+    || (MODIS_SCIENCE[job.assetKey] ? !validSciencePixel(result,metadata) : VEGETATION_KEYS.includes(job.assetKey) ? !validVegetationPixel(result,metadata) : QUALITY_KEYS.includes(job.assetKey) ? !validQualityPixel(result,metadata) : RADAR_KEYS.includes(job.assetKey) ? !validRadarPixel(result,metadata) : job.assetKey === 'aerial' ? !validAerialPixel(result, metadata) : isElevationKey(job.assetKey) ? !validElevationPixel(result, metadata) : LANDSAT_BANDS.includes(job.assetKey) ? !validReflectancePixel(result, metadata) : job.assetKey === 'visual' ? !Array.isArray(result.values) || result.values.length !== 3
       || result.values.some(value => !Number.isInteger(value) || value < 0 || value > 255)
       || result.color?.toLowerCase() !== '#' + result.values.map(value => value.toString(16).padStart(2, '0')).join('')
       : !Number.isInteger(result.value) || result.value < 0 || result.value > 11)

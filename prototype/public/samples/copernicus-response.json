@@ -1,0 +1,214 @@
+{
+  "type": "FeatureCollection",
+  "links": [
+    {
+      "rel": "next",
+      "type": "application/geo+json",
+      "method": "GET",
+      "href": "https://stac.dataspace.copernicus.eu/v1/search?collections=sentinel-2-l2a&bbox=-122.55,37.68,-122.32,37.84&datetime=2025-06-01T00:00:00Z/2025-06-30T23:59:59Z&limit=1&token=next:sentinel-2-l2a:S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511"
+    },
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "https://stac.dataspace.copernicus.eu/v1/search?collections=sentinel-2-l2a&bbox=-122.55%2c37.68%2c-122.32%2c37.84&datetime=2025-06-01T00%3a00%3a00Z%2f2025-06-30T23%3a59%3a59Z&limit=1"
+    }
+  ],
+  "features": [
+    {
+      "id": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511",
+      "bbox": [
+        -123.00022763545476,
+        36.95147947183065,
+        -121.75064570841931,
+        37.947589571993284
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stac.dataspace.copernicus.eu/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511"
+        },
+        {
+          "rel": "version-history",
+          "href": "https://trace.dataspace.copernicus.eu/api/v1/traces/name/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE.zip",
+          "type": "application/json",
+          "title": "Product history record from the CDSE traceability service"
+        }
+      ],
+      "assets": {
+        "thumbnail": {
+          "href": "https://datahub.creodias.eu/odata/v1/Assets(39a255e8-1723-403f-84d6-1dd6423c5906)/$value",
+          "alternate": {
+            "s3": {
+              "href": "s3://eodata/Sentinel-2/MSI/L2A/2025/06/27/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511-ql.jpg",
+              "auth:refs": [
+                "s3"
+              ],
+              "storage:refs": [
+                "cdse-s3",
+                "creodias-s3"
+              ],
+              "alternate:name": "S3"
+            }
+          },
+          "file:size": 21998,
+          "file:checksum": "d501100da8abaf28f5c134a352d4f9557f4dc8",
+          "file:local_path": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511-ql.jpg",
+          "type": "image/jpeg",
+          "roles": [
+            "thumbnail",
+            "overview"
+          ],
+          "title": "Quicklook",
+          "data_type": "uint8",
+          "proj:code": null,
+          "proj:shape": [
+            343,
+            343
+          ],
+          "alternate:name": "HTTPS"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -123.00022763545476,
+              37.947589571993284
+            ],
+            [
+              -121.75064570841931,
+              37.94095623057468
+            ],
+            [
+              -121.76699475177708,
+              36.95147947183065
+            ],
+            [
+              -123.00022465569249,
+              36.95788109520145
+            ],
+            [
+              -123.00022763545476,
+              37.947589571993284
+            ]
+          ]
+        ]
+      },
+      "collection": "sentinel-2-l2a",
+      "properties": {
+        "gsd": 10,
+        "created": "2025-06-28T00:40:25.000000Z",
+        "updated": "2025-06-28T00:57:05.782051Z",
+        "datetime": "2025-06-27T18:49:41.024Z",
+        "platform": "sentinel-2c",
+        "grid:code": "MGRS-10SEG",
+        "published": "2025-06-28T00:57:05.782051Z",
+        "statistics": {
+          "water": 17.812735,
+          "nodata": 0,
+          "dark_area": 0.041659,
+          "vegetation": 23.808421,
+          "thin_cirrus": 0.000451,
+          "cloud_shadow": 0,
+          "unclassified": 0.339382,
+          "not_vegetated": 22.913431,
+          "high_proba_clouds": 32.260296,
+          "medium_proba_clouds": 2.822698,
+          "saturated_defective": 0
+        },
+        "instruments": [
+          "msi"
+        ],
+        "auth:schemes": {
+          "s3": {
+            "type": "s3"
+          },
+          "oidc": {
+            "type": "openIdConnect",
+            "openIdConnectUrl": "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/.well-known/openid-configuration"
+          }
+        },
+        "end_datetime": "2025-06-27T18:49:41.024Z",
+        "product:type": "S2MSI2A",
+        "view:azimuth": 116.5076195800698,
+        "constellation": "sentinel-2",
+        "eo:snow_cover": 0.000929,
+        "eo:cloud_cover": 35.083443,
+        "start_datetime": "2025-06-27T18:49:41.024Z",
+        "sat:orbit_state": "descending",
+        "storage:schemes": {
+          "cdse-s3": {
+            "type": "custom-s3",
+            "title": "Copernicus Data Space Ecosystem S3",
+            "platform": "https://eodata.dataspace.copernicus.eu",
+            "description": "This endpoint provides access to EO data which is stored on the object storage of both CloudFerro Cloud and OpenTelekom Cloud (OTC). See the [documentation](https://documentation.dataspace.copernicus.eu/APIs/S3.html) for more information, including how to get credentials.",
+            "requester_pays": false
+          },
+          "creodias-s3": {
+            "type": "custom-s3",
+            "title": "CREODIAS S3",
+            "platform": "https://eodata.cloudferro.com",
+            "description": "Comprehensive Earth Observation Data (EODATA) archive offered by CREODIAS as a commercial part of CDSE, designed to provide users with access to a vast repository of satellite data without predefined quota limits.",
+            "requester_pays": true
+          }
+        },
+        "eopf:datatake_id": "GS2C_20250627T184941_004230_N05.11",
+        "processing:level": "L2",
+        "view:sun_azimuth": 129.261471512566,
+        "eopf:datastrip_id": "S2C_OPER_MSI_L2A_DS_2CPS_20250627T234511_S20250627T185915_N05.11",
+        "processing:version": "05.11",
+        "product:timeliness": "PT24H",
+        "sat:absolute_orbit": 4230,
+        "sat:relative_orbit": 113,
+        "view:sun_elevation": 69.6384279172097,
+        "processing:datetime": "2025-06-27T23:45:11.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": {
+          "eometadatatool": "250606095241+dirty"
+        },
+        "eopf:instrument_mode": "INS-NOBS",
+        "eopf:origin_datetime": "2025-06-28T00:40:25.000000Z",
+        "view:incidence_angle": 3.8172791294293362,
+        "product:timeliness_category": "NRT",
+        "sat:platform_international_designator": "2024-157A"
+      },
+      "stac_extensions": [
+        "https://cs-si.github.io/eopf-stac-extension/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/alternate-assets/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/authentication/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/eo/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+        "https://stac-extensions.github.io/grid/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/product/v0.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/timestamps/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.1.0"
+    }
+  ],
+  "numberReturned": 1
+}

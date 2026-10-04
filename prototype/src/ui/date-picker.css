@@ -1,0 +1,37 @@
+.bui-date-trigger[data-slot="button"] {
+  width: 100%; height: 38px; justify-content: space-between; padding-inline: 12px;
+  font-size: 13px; font-weight: 400; font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line); border-radius: var(--radius-control);
+  background: var(--surface); box-shadow: var(--shadow-inset-field);
+}
+.bui-date-trigger > svg { color: var(--ink-2); }
+.bui-calendar-popover {
+  z-index: 150; width: 300px; max-width: calc(100vw - 24px); padding: 12px;
+  border: 1px solid var(--line); border-radius: var(--radius-card);
+  background: var(--surface); color: var(--ink); box-shadow: var(--shadow-raised);
+  transform-origin: var(--radix-popover-content-transform-origin);
+}
+.bui-calendar-popover[data-state="open"] { animation: pop-in var(--motion-fast) var(--motion-ease); }
+.bui-calendar-popover[data-state="closed"] { animation: bui-pop-out var(--motion-fast) ease-in; }
+.bui-calendar .rdp-month { display: grid; grid-template-columns: 32px minmax(0, 1fr) 32px; gap: 8px; }
+.bui-calendar .rdp-month_caption { grid-column: 2; grid-row: 1; display: flex; align-items: center; min-width: 0; }
+.bui-calendar .rdp-button_previous { grid-column: 1; grid-row: 1; }
+.bui-calendar .rdp-button_next { grid-column: 3; grid-row: 1; }
+.bui-calendar .rdp-dropdowns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; width: 100%; }
+.bui-calendar .rdp-dropdowns [data-slot="select-trigger"] { height: 32px; padding-inline: 8px; font-size: 13px; }
+.bui-calendar .rdp-month_grid { grid-column: 1 / -1; width: 100%; border-collapse: collapse; table-layout: fixed; }
+.bui-calendar .rdp-weekday { height: 30px; color: var(--ink-2); font-size: 12px; font-weight: 400; text-align: center; }
+.bui-calendar .rdp-day { padding: 1px; text-align: center; }
+.bui-calendar .rdp-day_button {
+  display: grid; place-items: center; width: 100%; height: 36px; padding: 0;
+  border: 0; border-radius: var(--radius-control); background: transparent; color: inherit;
+  font: inherit; font-size: 13px; cursor: pointer; font-variant-numeric: tabular-nums;
+  transition: background var(--motion-fast), color var(--motion-fast);
+}
+.bui-calendar .rdp-day_button:hover { background: var(--inset); }
+.bui-calendar .rdp-day_button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.bui-calendar .rdp-outside { color: var(--ink-2); }
+.bui-calendar .rdp-today:not(.rdp-selected) .rdp-day_button { color: var(--accent); background: var(--accent-tint); }
+.bui-calendar .rdp-selected .rdp-day_button { color: white; background: var(--accent); font-weight: 600; }
+.bui-calendar .rdp-disabled .rdp-day_button { opacity: .4; cursor: default; }
+.bui-calendar .rdp-hidden { visibility: hidden; }

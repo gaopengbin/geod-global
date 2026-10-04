@@ -1,0 +1,89 @@
+{
+  "checkedAt": "2026-10-03",
+  "scope": "Public PMTiles v3 MVT bounded tile-aligned extraction; not the entire provider integration goal",
+  "realSources": [
+    {
+      "url": "https://r2-public.protomaps.com/protomaps-sample-datasets/cb_2018_us_zcta510_500k.pmtiles",
+      "bounds": [-122.55, 37.65, -122.32, 37.85],
+      "levels": [4, 7],
+      "distinctSourceTiles": 4,
+      "outputBytes": 550666,
+      "outputSha256": "e443032316abbb83553ecc539502ee0d42cf4f5584192dd323f96c96b16f4a3f",
+      "featureRecordsAcrossLevels": 5601,
+      "rawHttpRanges": 7,
+      "etag": "\"49697fcebb04b92d843c8b3003cb83e5\""
+    },
+    {
+      "url": "https://build.protomaps.com/20261002.pmtiles",
+      "officialBuildCatalog": "https://maps.protomaps.com/builds/",
+      "officialVersion": "4.15.2",
+      "declaredSourceBytes": 138538266061,
+      "wholeSourceDownloaded": false,
+      "bounds": [-122.425, 37.775, -122.415, 37.785],
+      "levels": [11, 13],
+      "distinctSourceTiles": 3,
+      "outputBytes": 193343,
+      "outputSha256": "a063c10a20b9e2a60e77edfaeedd666524a51f84d94944349e84c4a6717b513b",
+      "featureRecordsAcrossLevels": 2100,
+      "rawHttpRanges": 9,
+      "realLeafDirectoryTraversal": true
+    }
+  ],
+  "independentReferences": {"pmtiles": "3.8.1", "mapbox-vector-tile": "2.2.0", "isolatedVerificationDependencies": true},
+  "verification": {
+    "allCompressedTileBytesEqualOriginal": true,
+    "coordinateMembershipAndNativeTileReadVerified": true,
+    "allMvtLayerExtentsVersionsAndFeatureCountsVerified": true,
+    "standardPmtilesDirectoryTraversalVerified": true,
+    "sourceRangeEtagsLengthsAndChecksumsVerified": true,
+    "exportEntriesAndAllChecksumsVerified": true,
+    "persistedPackagesIncludingUiDebugReruns": 7,
+    "distinctSourceTilesAcrossTwoSources": 7,
+    "actualProcessRestart": true,
+    "rejectingProxy": true,
+    "newAcquisitionRejectedWithoutPublishingPackage": true,
+    "allPersistedTileBytesAndCompleteExportZipBytesUnchanged": true
+  },
+  "headlessUi": {
+    "actualNativeConnectAndExtract": true,
+    "viewports": [1440, 1024],
+    "locales": ["en", "zh-CN"],
+    "themes": ["light", "dark"],
+    "sharedSelectsAndEqualCardHeights": true,
+    "sourceDetailsAndExport": true,
+    "geographicMvtMapAndAttributeClick": true,
+    "osmRoadLayerFilterAndAttributesWithRemoteRequestsBlocked": true,
+    "desktopDevCspOnConnectionAndExtractionFlow": true,
+    "pageErrors": [],
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false
+  },
+  "regression": {
+    "nativeCorePassed": 360,
+    "nativeIgnoredExplicitly": 4,
+    "cliPassed": 3,
+    "desktopPassed": 4,
+    "frontendLogicPassed": 189,
+    "frontendUiPassed": 177,
+    "registeredDesktopCommands": 85,
+    "dependencyIsolationContractsRecipesAclCspBrandAndBuild": "passed",
+    "strictClippy": "passed",
+    "cargoFmt": "passed"
+  },
+  "localEvidence": [
+    ".verification/pmtiles-public/report.json",
+    ".verification/pmtiles-public/restart-report.json",
+    ".verification/pmtiles-ui/report.json",
+    ".verification/pmtiles-offline-ui/report.json"
+  ],
+  "limits": [
+    "None/gzip MVT only; no local PMTiles import or MBTiles",
+    "512 candidate tiles, 128 MiB package, zoom at most 24",
+    "Public HTTPS path without credentials/query; strong ETag and exact 206 required",
+    "Synchronous acquisition; durable tasks, cancel and resume not implemented",
+    "Whole intersecting tiles; no exact polygon clip or full-resolution geometry claim",
+    "Local preview style; external styles, fonts and sprites not downloaded",
+    "MCP tile commands, engineering composition and installed WebView manual acceptance pending",
+    "NASA/Copernicus protected originals still await accounts; authorization entries retained"
+  ]
+}

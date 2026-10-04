@@ -1,0 +1,2332 @@
+{
+  "schema": "geod-naip-resolution-verification/v1",
+  "checkedAt": "2026-10-03T20:32:12.146987+00:00",
+  "status": "passed",
+  "nativeBinarySha256": "6c5e6a81dbb8485d41afac501782942d1f6bd1331fb24110eb4a199706d346f3",
+  "scope": "Actual official public NAIP original COGs and native same-grid four-channel area results; no installer or release.",
+  "evidenceReports": [
+    {
+      "file": "native-resolution-verification.json",
+      "sha256": "1dd751a608fdcce2f0eef63474d00ef46ba3e3ee11cf418dae503bfb839a4754"
+    },
+    {
+      "file": "independent-resolution-verification.json",
+      "sha256": "f566d240b4fddb0af47914d8531b4d2ae1d75ad6616f0a2cb5eda74da5c34ba8"
+    },
+    {
+      "file": "ui/resolution-verification.json",
+      "sha256": "b8e67edfcce413735a97824cfbb245553b32af16fb9be5b2c5e18c5932212b03"
+    },
+    {
+      "file": "mcp-resolution-verification.json",
+      "sha256": "bab065c0dfbb5f16db005cba61632ce44e5249a298254b59459a17d3592d8ab6"
+    },
+    {
+      "file": "online/resolution-online-verification.json",
+      "sha256": "d3c3463c7ebb84e08059869d7ecc9e321cf93cf8bed43b26941ff8ffba4a18b8"
+    },
+    {
+      "file": "subset-cache-verification.json",
+      "sha256": "6416710e624c569da71408639938a6b4edf9ba6dcf4500945214a704a8f93b39"
+    },
+    {
+      "file": "mcp-resolution-snapshot-verification.json",
+      "sha256": "8288baa9b49f0d0dc84ce5b91e5c36e40508c8efa915b38b96ed5bd464c718ca"
+    },
+    {
+      "file": "ui-snapshot/resolution-verification.json",
+      "sha256": "365fd11960a4b17fb01c3ef14f2d639bf4a40b4f4a0b1208e03a490113c8ab67"
+    }
+  ],
+  "catalogueReplayIsNotOriginalFileAcceptance": true,
+  "signaturesPersisted": false,
+  "originals": [
+    {
+      "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+      "itemId": "fl_m_2808060_se_17_1_20171211_20180201",
+      "href": "https://naipeuwest.blob.core.windows.net/naip/v002/fl/2017/fl_100cm_2017/28080/m_2808060_se_17_1_20171211.tif",
+      "bytes": 148733691,
+      "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+      "grid": {
+        "width": 6771,
+        "height": 7548,
+        "bandCount": 4,
+        "dataType": "UInt8",
+        "crs": "EPSG:26917",
+        "bounds": [
+          542691,
+          3096979,
+          549462,
+          3104527
+        ],
+        "pixelSize": [
+          1,
+          1
+        ],
+        "nodata": null
+      },
+      "physicalSourceTags": {
+        "Compression": 8,
+        "PhotometricInterpretation": 2,
+        "SamplesPerPixel": 4,
+        "ExtraSamples": [
+          2
+        ],
+        "Predictor": 2,
+        "TileWidth": 512,
+        "TileLength": 512,
+        "GDAL_NODATA": null
+      },
+      "gdalSourceColorInterpretation": [
+        "red",
+        "green",
+        "blue",
+        "alpha"
+      ],
+      "bandRoles": "red,green,blue,nir as bound to the exact official NAIP catalogue item",
+      "sourceBytesUnchanged": true,
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            97,
+            112,
+            119,
+            61
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            511,
+            511
+          ],
+          "values": [
+            205,
+            202,
+            197,
+            215
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            512,
+            512
+          ],
+          "values": [
+            202,
+            201,
+            196,
+            215
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            6770,
+            0
+          ],
+          "values": [
+            37,
+            73,
+            69,
+            8
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            0,
+            7547
+          ],
+          "values": [
+            110,
+            138,
+            113,
+            214
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            6770,
+            7547
+          ],
+          "values": [
+            86,
+            135,
+            131,
+            16
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            3385,
+            3774
+          ],
+          "values": [
+            76,
+            124,
+            124,
+            28
+          ],
+          "isNoData": false
+        }
+      ],
+      "images": {
+        "preview": {
+          "dimensions": [
+            689,
+            768
+          ],
+          "pixelsCompared": 529152,
+          "pngSha256": "0620df0c04c80eae3da2cbbb8083c97346c9a77d193a279d78c8dc51539a86a0",
+          "gdalOverviewIndex": 2,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            143,
+            160
+          ],
+          "pixelsCompared": 22880,
+          "pngSha256": "e39bdee966d62e45e9515130bb873264baebcbdf83dae5d5f87d7547963ae8b2",
+          "gdalOverviewIndex": 3,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    },
+    {
+      "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+      "itemId": "fl_m_2708004_ne_17_1_20171211_20180201",
+      "href": "https://naipeuwest.blob.core.windows.net/naip/v002/fl/2017/fl_100cm_2017/27080/m_2708004_ne_17_1_20171211.tif",
+      "bytes": 157022950,
+      "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+      "grid": {
+        "width": 6774,
+        "height": 7549,
+        "bandCount": 4,
+        "dataType": "UInt8",
+        "crs": "EPSG:26917",
+        "bounds": [
+          542716,
+          3090055,
+          549490,
+          3097604
+        ],
+        "pixelSize": [
+          1,
+          1
+        ],
+        "nodata": null
+      },
+      "physicalSourceTags": {
+        "Compression": 8,
+        "PhotometricInterpretation": 2,
+        "SamplesPerPixel": 4,
+        "ExtraSamples": [
+          2
+        ],
+        "Predictor": 2,
+        "TileWidth": 512,
+        "TileLength": 512,
+        "GDAL_NODATA": null
+      },
+      "gdalSourceColorInterpretation": [
+        "red",
+        "green",
+        "blue",
+        "alpha"
+      ],
+      "bandRoles": "red,green,blue,nir as bound to the exact official NAIP catalogue item",
+      "sourceBytesUnchanged": true,
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            164,
+            167,
+            150,
+            222
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            511,
+            511
+          ],
+          "values": [
+            135,
+            146,
+            148,
+            174
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            512,
+            512
+          ],
+          "values": [
+            106,
+            124,
+            128,
+            153
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            6773,
+            0
+          ],
+          "values": [
+            102,
+            147,
+            144,
+            13
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            0,
+            7548
+          ],
+          "values": [
+            68,
+            81,
+            87,
+            141
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            6773,
+            7548
+          ],
+          "values": [
+            112,
+            152,
+            126,
+            218
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            3387,
+            3774
+          ],
+          "values": [
+            51,
+            94,
+            103,
+            15
+          ],
+          "isNoData": false
+        }
+      ],
+      "images": {
+        "preview": {
+          "dimensions": [
+            689,
+            768
+          ],
+          "pixelsCompared": 529152,
+          "pngSha256": "81c538062c2008217a3ad3d4cb2013af64c935d117d64d573e8c2576dbc0281e",
+          "gdalOverviewIndex": 2,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            143,
+            160
+          ],
+          "pixelsCompared": 22880,
+          "pngSha256": "37fd13f1fab2022224ccf818a760ab65871dcbdf73550107d50e33213d454f31",
+          "gdalOverviewIndex": 3,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    },
+    {
+      "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+      "itemId": "me_m_4506963_se_19_030_20231115_20240103",
+      "href": "https://naipeuwest.blob.core.windows.net/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif",
+      "bytes": 1606809310,
+      "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+      "grid": {
+        "width": 17800,
+        "height": 24520,
+        "bandCount": 4,
+        "dataType": "UInt8",
+        "crs": "EPSG:26919",
+        "bounds": [
+          485022,
+          4982754,
+          490362,
+          4990110
+        ],
+        "pixelSize": [
+          0.3,
+          0.3
+        ],
+        "nodata": null
+      },
+      "physicalSourceTags": {
+        "Compression": 8,
+        "PhotometricInterpretation": 2,
+        "SamplesPerPixel": 4,
+        "ExtraSamples": [
+          0
+        ],
+        "Predictor": 2,
+        "TileWidth": 512,
+        "TileLength": 512,
+        "GDAL_NODATA": null
+      },
+      "gdalSourceColorInterpretation": [
+        "red",
+        "green",
+        "blue",
+        "undefined"
+      ],
+      "bandRoles": "red,green,blue,nir as bound to the exact official NAIP catalogue item",
+      "sourceBytesUnchanged": true,
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            176,
+            142,
+            78,
+            223
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            511,
+            511
+          ],
+          "values": [
+            49,
+            60,
+            55,
+            172
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            512,
+            512
+          ],
+          "values": [
+            46,
+            60,
+            58,
+            145
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            17799,
+            0
+          ],
+          "values": [
+            133,
+            126,
+            96,
+            220
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            0,
+            24519
+          ],
+          "values": [
+            47,
+            67,
+            66,
+            184
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            17799,
+            24519
+          ],
+          "values": [
+            149,
+            152,
+            155,
+            239
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            8900,
+            12260
+          ],
+          "values": [
+            76,
+            95,
+            90,
+            202
+          ],
+          "isNoData": false
+        }
+      ],
+      "images": {
+        "preview": {
+          "dimensions": [
+            557,
+            768
+          ],
+          "pixelsCompared": 427776,
+          "pngSha256": "ff3d83e69283b3e9754c250a02a8da21eee097c36ba8681b05419b24d7aa8d8d",
+          "gdalOverviewIndex": 3,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            116,
+            160
+          ],
+          "pixelsCompared": 18560,
+          "pngSha256": "8f81b4966aff84c3c9ab03941b2ac915dd6f7e1208ba4baceed3d65405fc6ffd",
+          "gdalOverviewIndex": 5,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+      "group": "1m",
+      "case": "single",
+      "bytes": 2961191,
+      "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+      "grid": {
+        "width": 990,
+        "height": 979,
+        "bandCount": 4,
+        "crs": "EPSG:26917",
+        "bounds": [
+          545717.0,
+          3096979.0,
+          546707.0,
+          3097958.0
+        ],
+        "pixelSize": [
+          1.0,
+          1.0
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 969210,
+        "overlapPolicy": "newest ordered scene wins; independent internal coverage mask; zero RGB and NIR are valid",
+        "aerial": {
+          "product": "naip",
+          "bands": [
+            "red",
+            "green",
+            "blue",
+            "nir"
+          ],
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "pixelInterpretation": "PixelIsArea",
+          "coverageMask": "internal-1bit"
+        }
+      },
+      "sourcePins": [
+        {
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "itemId": "fl_m_2808060_se_17_1_20171211_20180201",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "window": [
+            0,
+            0,
+            990,
+            979
+          ]
+        }
+      ],
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            62,
+            103,
+            109,
+            14
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            495,
+            489
+          ],
+          "values": [
+            100,
+            130,
+            118,
+            27
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            989,
+            978
+          ],
+          "values": [
+            109,
+            158,
+            126,
+            236
+          ],
+          "isNoData": false
+        }
+      ],
+      "fourChannelSamplesCompared": 3876840,
+      "maskPixelsCompared": 969210,
+      "exactFourChannelsEqual": true,
+      "exactCoverageMaskEqual": true,
+      "polygonRule": "inverse-project every native pixel centre into the original WGS84 polygon and its hole",
+      "images": {
+        "preview": {
+          "dimensions": [
+            768,
+            759
+          ],
+          "pixelsCompared": 582912,
+          "pngSha256": "824817d54b36f9854562853351ab23ece55d7c1c9a490a71b3e1b6561fde4c95",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            160,
+            158
+          ],
+          "pixelsCompared": 25280,
+          "pngSha256": "63a4f55e368023fe23b876735ef8ed494ee32f54f33c95d468b25acbe449921e",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    },
+    {
+      "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+      "group": "1m",
+      "case": "mosaic",
+      "bytes": 3733912,
+      "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+      "grid": {
+        "width": 990,
+        "height": 1334,
+        "bandCount": 4,
+        "crs": "EPSG:26917",
+        "bounds": [
+          545717.0,
+          3096624.0,
+          546707.0,
+          3097958.0
+        ],
+        "pixelSize": [
+          1.0,
+          1.0
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 0,
+        "coveredPixels": 1320660,
+        "overlapPolicy": "newest ordered scene wins; independent internal coverage mask; zero RGB and NIR are valid",
+        "aerial": {
+          "product": "naip",
+          "bands": [
+            "red",
+            "green",
+            "blue",
+            "nir"
+          ],
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "pixelInterpretation": "PixelIsArea",
+          "coverageMask": "internal-1bit"
+        }
+      },
+      "sourcePins": [
+        {
+          "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+          "itemId": "fl_m_2708004_ne_17_1_20171211_20180201",
+          "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+          "window": [
+            0,
+            354,
+            990,
+            1334
+          ]
+        },
+        {
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "itemId": "fl_m_2808060_se_17_1_20171211_20180201",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "window": [
+            0,
+            0,
+            990,
+            979
+          ]
+        }
+      ],
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            62,
+            103,
+            109,
+            14
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            0,
+            667
+          ],
+          "values": [
+            57,
+            96,
+            103,
+            11
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            989,
+            1333
+          ],
+          "values": [
+            67,
+            106,
+            111,
+            27
+          ],
+          "isNoData": false
+        }
+      ],
+      "fourChannelSamplesCompared": 5282640,
+      "maskPixelsCompared": 1320660,
+      "exactFourChannelsEqual": true,
+      "exactCoverageMaskEqual": true,
+      "polygonRule": "inverse-project every native pixel centre into the original WGS84 polygon and its hole",
+      "images": {
+        "preview": {
+          "dimensions": [
+            569,
+            768
+          ],
+          "pixelsCompared": 436992,
+          "pngSha256": "be0fcb350824a000061affef49029c7f9b6b3ac532ab166b494a433e106f60ab",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            118,
+            160
+          ],
+          "pixelsCompared": 18880,
+          "pngSha256": "95e7fb35602503ab6baf0d58815514614738e047c6f6566f751b9b56e5fd5f80",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    },
+    {
+      "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+      "group": "1m",
+      "case": "polygon",
+      "bytes": 3544560,
+      "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+      "grid": {
+        "width": 990,
+        "height": 1334,
+        "bandCount": 4,
+        "crs": "EPSG:26917",
+        "bounds": [
+          545717.0,
+          3096624.0,
+          546707.0,
+          3097958.0
+        ],
+        "pixelSize": [
+          1.0,
+          1.0
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 65850,
+        "coveredPixels": 1254810,
+        "overlapPolicy": "newest ordered scene wins; independent internal coverage mask; zero RGB and NIR are valid",
+        "aerial": {
+          "product": "naip",
+          "bands": [
+            "red",
+            "green",
+            "blue",
+            "nir"
+          ],
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "pixelInterpretation": "PixelIsArea",
+          "coverageMask": "internal-1bit"
+        }
+      },
+      "sourcePins": [
+        {
+          "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+          "itemId": "fl_m_2708004_ne_17_1_20171211_20180201",
+          "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+          "window": [
+            0,
+            354,
+            990,
+            1334
+          ]
+        },
+        {
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "itemId": "fl_m_2808060_se_17_1_20171211_20180201",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "window": [
+            0,
+            0,
+            990,
+            979
+          ]
+        }
+      ],
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "isNoData": true
+        },
+        {
+          "pixel": [
+            397,
+            668
+          ],
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "isNoData": true
+        },
+        {
+          "pixel": [
+            989,
+            1333
+          ],
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "isNoData": true
+        },
+        {
+          "pixel": [
+            875,
+            0
+          ],
+          "values": [
+            108,
+            152,
+            137,
+            32
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            782,
+            666
+          ],
+          "values": [
+            85,
+            126,
+            110,
+            218
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            186,
+            1332
+          ],
+          "values": [
+            53,
+            96,
+            105,
+            9
+          ],
+          "isNoData": false
+        }
+      ],
+      "fourChannelSamplesCompared": 5282640,
+      "maskPixelsCompared": 1320660,
+      "exactFourChannelsEqual": true,
+      "exactCoverageMaskEqual": true,
+      "polygonRule": "inverse-project every native pixel centre into the original WGS84 polygon and its hole",
+      "images": {
+        "preview": {
+          "dimensions": [
+            569,
+            768
+          ],
+          "pixelsCompared": 436992,
+          "pngSha256": "880e2221b74cc2461314438ede4ac4f68701f24a2da2ebfb596612de7b7406b0",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            118,
+            160
+          ],
+          "pixelsCompared": 18880,
+          "pngSha256": "d0dfaea0e3579a5619dccaf6763bfc0a95f0e0e3e88a9f76d39b051725d0897f",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    },
+    {
+      "jobId": "e99c9eab-d9f2-4fa3-aed5-d05751af5374",
+      "group": "0.3m",
+      "case": "single",
+      "bytes": 4252292,
+      "sha256": "d8e1affc8c2a1f2dbac9eeef19d5a60e57aea0a2ec405976146027adf2d7116a",
+      "grid": {
+        "width": 1053,
+        "height": 1113,
+        "bandCount": 4,
+        "crs": "EPSG:26919",
+        "bounds": [
+          487237.8,
+          4985961.899999999,
+          487553.7,
+          4986295.8
+        ],
+        "pixelSize": [
+          0.3,
+          0.3
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 1171989,
+        "overlapPolicy": "newest ordered scene wins; independent internal coverage mask; zero RGB and NIR are valid",
+        "aerial": {
+          "product": "naip",
+          "bands": [
+            "red",
+            "green",
+            "blue",
+            "nir"
+          ],
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "pixelInterpretation": "PixelIsArea",
+          "coverageMask": "internal-1bit"
+        }
+      },
+      "sourcePins": [
+        {
+          "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+          "itemId": "me_m_4506963_se_19_030_20231115_20240103",
+          "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+          "window": [
+            0,
+            0,
+            1053,
+            1113
+          ]
+        }
+      ],
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            73,
+            96,
+            79,
+            204
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            526,
+            556
+          ],
+          "values": [
+            111,
+            132,
+            83,
+            242
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            1052,
+            1112
+          ],
+          "values": [
+            62,
+            76,
+            63,
+            197
+          ],
+          "isNoData": false
+        }
+      ],
+      "fourChannelSamplesCompared": 4687956,
+      "maskPixelsCompared": 1171989,
+      "exactFourChannelsEqual": true,
+      "exactCoverageMaskEqual": true,
+      "polygonRule": "inverse-project every native pixel centre into the original WGS84 polygon and its hole",
+      "images": {
+        "preview": {
+          "dimensions": [
+            726,
+            768
+          ],
+          "pixelsCompared": 557568,
+          "pngSha256": "a661916e1d84ff749673d047a5f4c8504bd03014351662ff5dd0f100b93d970c",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            151,
+            160
+          ],
+          "pixelsCompared": 24160,
+          "pngSha256": "958017ae906615dcd4743dec5621f24169876ddf69c6da760a5914beddaec0fe",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    },
+    {
+      "jobId": "4bdc7666-370a-4ed6-a7d5-86296c1ee11b",
+      "group": "0.3m",
+      "case": "polygon",
+      "bytes": 4072238,
+      "sha256": "e55527fdd22878b8954bb328ab6728370830efe42ce3309a348d33e646e20a7f",
+      "grid": {
+        "width": 1053,
+        "height": 1113,
+        "bandCount": 4,
+        "crs": "EPSG:26919",
+        "bounds": [
+          487237.8,
+          4985961.899999999,
+          487553.7,
+          4986295.8
+        ],
+        "pixelSize": [
+          0.3,
+          0.3
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 51907,
+        "coveredPixels": 1120082,
+        "overlapPolicy": "newest ordered scene wins; independent internal coverage mask; zero RGB and NIR are valid",
+        "aerial": {
+          "product": "naip",
+          "bands": [
+            "red",
+            "green",
+            "blue",
+            "nir"
+          ],
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "pixelInterpretation": "PixelIsArea",
+          "coverageMask": "internal-1bit"
+        }
+      },
+      "sourcePins": [
+        {
+          "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+          "itemId": "me_m_4506963_se_19_030_20231115_20240103",
+          "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+          "window": [
+            0,
+            0,
+            1053,
+            1113
+          ]
+        }
+      ],
+      "points": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "isNoData": true
+        },
+        {
+          "pixel": [
+            509,
+            556
+          ],
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "isNoData": true
+        },
+        {
+          "pixel": [
+            1052,
+            1112
+          ],
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "isNoData": true
+        },
+        {
+          "pixel": [
+            3,
+            0
+          ],
+          "values": [
+            69,
+            90,
+            71,
+            201
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            649,
+            556
+          ],
+          "values": [
+            85,
+            102,
+            65,
+            231
+          ],
+          "isNoData": false
+        },
+        {
+          "pixel": [
+            1050,
+            1112
+          ],
+          "values": [
+            60,
+            79,
+            60,
+            194
+          ],
+          "isNoData": false
+        }
+      ],
+      "fourChannelSamplesCompared": 4687956,
+      "maskPixelsCompared": 1171989,
+      "exactFourChannelsEqual": true,
+      "exactCoverageMaskEqual": true,
+      "polygonRule": "inverse-project every native pixel centre into the original WGS84 polygon and its hole",
+      "images": {
+        "preview": {
+          "dimensions": [
+            726,
+            768
+          ],
+          "pixelsCompared": 557568,
+          "pngSha256": "a60698296d4d92a1f9fa803864c57e2a562c64821201675ab3207798a406e824",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        },
+        "thumbnail": {
+          "dimensions": [
+            151,
+            160
+          ],
+          "pixelsCompared": 24160,
+          "pngSha256": "69b617a7d1d859a81503193fc4ed0588aaf603ca97d074f4e72085325a551289",
+          "gdalOverviewIndex": null,
+          "exactRgbEqual": true,
+          "exactAlphaEqual": true
+        }
+      }
+    }
+  ],
+  "independent": {
+    "tools": {
+      "rasterio": "1.3.9",
+      "shapely": "2.1.2"
+    },
+    "fourChannelSamplesCompared": 23818032,
+    "coverageMaskPixelsCompared": 5954508,
+    "previewPixelsCompared": 4058112,
+    "thumbnailPixelsCompared": 175680
+  },
+  "desktopFrontend": {
+    "renderer": "production build; exact desktop CSP; real native API via loopback bridge",
+    "nativeWindowTested": false,
+    "usedUserDesktop": false,
+    "readOnly": false,
+    "cases": [
+      {
+        "group": "1m",
+        "case": "original",
+        "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 2,
+        "projectCards": 3,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "crs": "EPSG:26917",
+          "coordinate": [
+            546076.5,
+            3100753
+          ],
+          "pixel": [
+            3385,
+            3774
+          ],
+          "center": [
+            546076.5,
+            3100752.5
+          ],
+          "value": 76,
+          "values": [
+            76,
+            124,
+            124
+          ],
+          "nearInfrared": 28,
+          "label": "RGB + NIR",
+          "color": "#4c7c7c",
+          "isNoData": false
+        }
+      },
+      {
+        "group": "1m",
+        "case": "original",
+        "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 2,
+        "projectCards": 3,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+          "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+          "crs": "EPSG:26917",
+          "coordinate": [
+            546103,
+            3093829.5
+          ],
+          "pixel": [
+            3387,
+            3774
+          ],
+          "center": [
+            546103.5,
+            3093829.5
+          ],
+          "value": 51,
+          "values": [
+            51,
+            94,
+            103
+          ],
+          "nearInfrared": 15,
+          "label": "RGB + NIR",
+          "color": "#335e67",
+          "isNoData": false
+        }
+      },
+      {
+        "group": "0.3m",
+        "case": "original",
+        "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 0,
+        "projectCards": 2,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+          "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+          "crs": "EPSG:26919",
+          "coordinate": [
+            487692,
+            4986432
+          ],
+          "pixel": [
+            8900,
+            12260
+          ],
+          "center": [
+            487692.15,
+            4986431.85
+          ],
+          "value": 76,
+          "values": [
+            76,
+            95,
+            90
+          ],
+          "nearInfrared": 202,
+          "label": "RGB + NIR",
+          "color": "#4c5f5a",
+          "isNoData": false
+        }
+      },
+      {
+        "group": "1m",
+        "case": "single",
+        "jobId": "d7efbdc7-17d8-4e43-b8f9-cddc45ab29dc",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 0,
+        "projectCards": 3,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "d7efbdc7-17d8-4e43-b8f9-cddc45ab29dc",
+          "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+          "crs": "EPSG:26917",
+          "coordinate": [
+            546212,
+            3097468.5
+          ],
+          "pixel": [
+            495,
+            489
+          ],
+          "center": [
+            546212.5,
+            3097468.5
+          ],
+          "value": 100,
+          "values": [
+            100,
+            130,
+            118
+          ],
+          "nearInfrared": 27,
+          "label": "RGB + NIR",
+          "color": "#648276",
+          "isNoData": false
+        }
+      },
+      {
+        "group": "1m",
+        "case": "mosaic",
+        "jobId": "2ba82f6a-3958-44b3-9331-e6b8f163e93a",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 0,
+        "projectCards": 4,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "2ba82f6a-3958-44b3-9331-e6b8f163e93a",
+          "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+          "crs": "EPSG:26917",
+          "coordinate": [
+            546212,
+            3097291
+          ],
+          "pixel": [
+            495,
+            667
+          ],
+          "center": [
+            546212.5,
+            3097290.5
+          ],
+          "value": 88,
+          "values": [
+            88,
+            119,
+            111
+          ],
+          "nearInfrared": 23,
+          "label": "RGB + NIR",
+          "color": "#58776f",
+          "isNoData": false
+        }
+      },
+      {
+        "group": "1m",
+        "case": "polygon",
+        "jobId": "15851efc-2cd0-4a35-ab21-e51429d23be1",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 0,
+        "projectCards": 4,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "15851efc-2cd0-4a35-ab21-e51429d23be1",
+          "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+          "crs": "EPSG:26917",
+          "coordinate": [
+            546212,
+            3097291
+          ],
+          "pixel": [
+            495,
+            667
+          ],
+          "center": [
+            546212.5,
+            3097290.5
+          ],
+          "value": 0,
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "nearInfrared": 0,
+          "label": "RGB + NIR",
+          "color": "#000000",
+          "isNoData": true
+        }
+      },
+      {
+        "group": "0.3m",
+        "case": "single",
+        "jobId": "8db07e57-11f3-4587-8bff-c6491de9bdb0",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 0,
+        "projectCards": 3,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "8db07e57-11f3-4587-8bff-c6491de9bdb0",
+          "sha256": "d8e1affc8c2a1f2dbac9eeef19d5a60e57aea0a2ec405976146027adf2d7116a",
+          "crs": "EPSG:26919",
+          "coordinate": [
+            487395.75,
+            4986128.85
+          ],
+          "pixel": [
+            526,
+            556
+          ],
+          "center": [
+            487395.75,
+            4986128.85
+          ],
+          "value": 111,
+          "values": [
+            111,
+            132,
+            83
+          ],
+          "nearInfrared": 242,
+          "label": "RGB + NIR",
+          "color": "#6f8453",
+          "isNoData": false
+        }
+      },
+      {
+        "group": "0.3m",
+        "case": "polygon",
+        "jobId": "9f4b9d39-53e1-49ee-bfd2-33af3c6f95a2",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "paintedRaster": true,
+        "rawFourChannelsRetained": true,
+        "sourceExtraSample": 0,
+        "projectCards": 3,
+        "projectCardHeight": 106,
+        "pixel": {
+          "jobId": "9f4b9d39-53e1-49ee-bfd2-33af3c6f95a2",
+          "sha256": "e55527fdd22878b8954bb328ab6728370830efe42ce3309a348d33e646e20a7f",
+          "crs": "EPSG:26919",
+          "coordinate": [
+            487395.75,
+            4986128.85
+          ],
+          "pixel": [
+            526,
+            556
+          ],
+          "center": [
+            487395.75,
+            4986128.85
+          ],
+          "value": 0,
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "nearInfrared": 0,
+          "label": "RGB + NIR",
+          "color": "#000000",
+          "isNoData": true
+        }
+      }
+    ],
+    "createdByUi": [
+      {
+        "group": "1m",
+        "case": "single",
+        "id": "d7efbdc7-17d8-4e43-b8f9-cddc45ab29dc",
+        "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      },
+      {
+        "group": "1m",
+        "case": "mosaic",
+        "id": "2ba82f6a-3958-44b3-9331-e6b8f163e93a",
+        "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      },
+      {
+        "group": "1m",
+        "case": "polygon",
+        "id": "15851efc-2cd0-4a35-ab21-e51429d23be1",
+        "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      },
+      {
+        "group": "0.3m",
+        "case": "single",
+        "id": "8db07e57-11f3-4587-8bff-c6491de9bdb0",
+        "sha256": "d8e1affc8c2a1f2dbac9eeef19d5a60e57aea0a2ec405976146027adf2d7116a",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      },
+      {
+        "group": "0.3m",
+        "case": "polygon",
+        "id": "9f4b9d39-53e1-49ee-bfd2-33af3c6f95a2",
+        "sha256": "e55527fdd22878b8954bb328ab6728370830efe42ce3309a348d33e646e20a7f",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      }
+    ],
+    "errors": [],
+    "remoteRequests": []
+  },
+  "mcp": {
+    "status": "passed",
+    "readOnly": true,
+    "cases": [
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "original",
+        "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+        "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 2
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "original",
+        "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+        "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 2
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "0.3m",
+        "case": "original",
+        "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+        "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "single",
+        "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+        "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "mosaic",
+        "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+        "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "polygon",
+        "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+        "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "0.3m",
+        "case": "single",
+        "jobId": "e99c9eab-d9f2-4fa3-aed5-d05751af5374",
+        "sha256": "d8e1affc8c2a1f2dbac9eeef19d5a60e57aea0a2ec405976146027adf2d7116a",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "group": "0.3m",
+        "case": "polygon",
+        "jobId": "4bdc7666-370a-4ed6-a7d5-86296c1ee11b",
+        "sha256": "e55527fdd22878b8954bb328ab6728370830efe42ce3309a348d33e646e20a7f",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "original",
+        "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+        "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 2
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "original",
+        "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+        "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 2
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "0.3m",
+        "case": "original",
+        "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+        "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "single",
+        "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+        "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "mosaic",
+        "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+        "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "1m",
+        "case": "polygon",
+        "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+        "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "0.3m",
+        "case": "single",
+        "jobId": "e99c9eab-d9f2-4fa3-aed5-d05751af5374",
+        "sha256": "d8e1affc8c2a1f2dbac9eeef19d5a60e57aea0a2ec405976146027adf2d7116a",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "group": "0.3m",
+        "case": "polygon",
+        "jobId": "4bdc7666-370a-4ed6-a7d5-86296c1ee11b",
+        "sha256": "e55527fdd22878b8954bb328ab6728370830efe42ce3309a348d33e646e20a7f",
+        "pixelsCompared": 5,
+        "previewOmitted": true,
+        "fourOriginalChannelsRetained": true,
+        "aerialProfileAndCoverageRetained": true,
+        "sourceExtraSample": 0
+      }
+    ],
+    "pixelsCompared": 80,
+    "disconnectedAdapterRejected": true
+  },
+  "onlineDisplay": {
+    "status": "passed",
+    "wholeOriginalAcceptance": false,
+    "renderer": "production renderer with the exact desktop CSP",
+    "readbackInstrumentation": "preserve the WebGL draw buffer for actual raster pixel acceptance",
+    "usedUserDesktop": false,
+    "cases": [
+      {
+        "group": "1m",
+        "actualItemId": "fl_m_2808060_se_17_1_20171211_20180201",
+        "gridSpacing": 1,
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "catalog": [
+          {
+            "status": 200,
+            "path": "/api/stac/v1/search",
+            "items": [
+              "fl_m_2808060_se_17_1_20171211_20180201",
+              "fl_m_2708004_ne_17_1_20171211_20180201"
+            ]
+          }
+        ],
+        "cog": [
+          {
+            "status": 206,
+            "path": "/naip/v002/fl/2017/fl_100cm_2017/28080/m_2808060_se_17_1_20171211.tif",
+            "range": "bytes=0-65535"
+          },
+          {
+            "status": 206,
+            "path": "/naip/v002/fl/2017/fl_100cm_2017/28080/m_2808060_se_17_1_20171211.tif",
+            "range": "bytes=65536-393215"
+          }
+        ],
+        "rasterPixels": [
+          {
+            "width": 626,
+            "height": 812,
+            "opaqueSamples": 17016,
+            "distinctRgb": 399,
+            "glError": 0,
+            "displayWidth": 626,
+            "displayHeight": 812,
+            "opacity": "1",
+            "transform": "none"
+          }
+        ],
+        "restoredGridWaitGuard": true
+      },
+      {
+        "group": "0.3m",
+        "actualItemId": "me_m_4506963_se_19_030_20231115_20240103",
+        "gridSpacing": 0.3,
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "catalog": [
+          {
+            "status": 200,
+            "path": "/api/stac/v1/search",
+            "items": [
+              "me_m_4506963_se_19_030_20231115_20240103"
+            ]
+          }
+        ],
+        "cog": [
+          {
+            "status": 206,
+            "path": "/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif",
+            "range": "bytes=0-65535"
+          },
+          {
+            "status": 206,
+            "path": "/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif",
+            "range": "bytes=262144-1114111"
+          },
+          {
+            "status": 206,
+            "path": "/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif",
+            "range": "bytes=1114112-1179647"
+          },
+          {
+            "status": 206,
+            "path": "/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif",
+            "range": "bytes=1179648-1572863"
+          },
+          {
+            "status": 206,
+            "path": "/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif",
+            "range": "bytes=1572864-1638399"
+          }
+        ],
+        "rasterPixels": [
+          {
+            "width": 496,
+            "height": 812,
+            "opaqueSamples": 10586,
+            "distinctRgb": 506,
+            "glError": 0,
+            "displayWidth": 496,
+            "displayHeight": 812,
+            "opacity": "1",
+            "transform": "none"
+          }
+        ],
+        "restoredGridWaitGuard": true
+      }
+    ]
+  },
+  "restart": {
+    "projectsRestored": 5,
+    "completedFilesRestored": 8,
+    "networkMode": "unreachable proxy; local reads only",
+    "thumbnailEntriesUnchanged": true,
+    "hits": [
+      {
+        "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+        "milliseconds": 5.873799999244511
+      },
+      {
+        "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+        "milliseconds": 5.987199999392033
+      },
+      {
+        "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+        "milliseconds": 6.182000000029802
+      },
+      {
+        "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+        "milliseconds": 6.5152000002563
+      },
+      {
+        "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+        "milliseconds": 5.4789999993517995
+      },
+      {
+        "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+        "milliseconds": 5.370600000023842
+      },
+      {
+        "jobId": "e99c9eab-d9f2-4fa3-aed5-d05751af5374",
+        "milliseconds": 7.015100000426173
+      },
+      {
+        "jobId": "4bdc7666-370a-4ed6-a7d5-86296c1ee11b",
+        "milliseconds": 6.6200999999418855
+      }
+    ]
+  },
+  "offline1mSubset": {
+    "status": "passed",
+    "group": "1m",
+    "copiedPreviouslyAcceptedFiles": true,
+    "scope": "Offline restart, persistent cache and read-only MCP for five actual 1 m files in an explicit isolated local snapshot.",
+    "cache": {
+      "schema": "geod-naip-resolution-subset-cache/v1",
+      "checkedAt": "2026-10-03T19:08:28.367Z",
+      "nativeBinarySha256": "6c5e6a81dbb8485d41afac501782942d1f6bd1331fb24110eb4a199706d346f3",
+      "group": "1m",
+      "source": "Explicit local snapshot of two independently verified real originals and three actual native results. No new remote download is claimed.",
+      "nativeWindowTested": false,
+      "usedUserDesktop": false,
+      "networkMode": "unreachable upstream proxy",
+      "entries": [
+        {
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "case": "original",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "thumbnailIdentical": true,
+          "cacheBytesFileIdentityCreationUnchanged": true,
+          "milliseconds": 6.056000000000495,
+          "pixelsCompared": 5
+        },
+        {
+          "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+          "case": "original",
+          "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+          "thumbnailIdentical": true,
+          "cacheBytesFileIdentityCreationUnchanged": true,
+          "milliseconds": 34.04619999999704,
+          "pixelsCompared": 5
+        },
+        {
+          "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+          "case": "single",
+          "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+          "thumbnailIdentical": true,
+          "cacheBytesFileIdentityCreationUnchanged": true,
+          "milliseconds": 36.138999999995576,
+          "pixelsCompared": 5
+        },
+        {
+          "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+          "case": "mosaic",
+          "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+          "thumbnailIdentical": true,
+          "cacheBytesFileIdentityCreationUnchanged": true,
+          "milliseconds": 10.472000000001572,
+          "pixelsCompared": 5
+        },
+        {
+          "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+          "case": "polygon",
+          "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+          "thumbnailIdentical": true,
+          "cacheBytesFileIdentityCreationUnchanged": true,
+          "milliseconds": 9.987600000000384,
+          "pixelsCompared": 5
+        }
+      ],
+      "status": "passed",
+      "changedDerivedRejected": true,
+      "invalidCacheRebuiltFromUnchangedSource": true,
+      "projectsRestored": 3,
+      "filesRestored": 5,
+      "completedAt": "2026-10-03T19:09:16.259Z"
+    },
+    "mcp": {
+      "schema": "geod-naip-resolution-mcp/v1",
+      "checkedAt": "2026-10-03T19:09:43.131275+00:00",
+      "nativeBinarySha256": "6c5e6a81dbb8485d41afac501782942d1f6bd1331fb24110eb4a199706d346f3",
+      "readOnly": true,
+      "usedUserDesktop": false,
+      "cases": [
+        {
+          "mode": "direct read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "original",
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 2
+        },
+        {
+          "mode": "direct read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "original",
+          "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+          "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 2
+        },
+        {
+          "mode": "direct read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "single",
+          "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+          "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 0
+        },
+        {
+          "mode": "direct read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "mosaic",
+          "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+          "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 0
+        },
+        {
+          "mode": "direct read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "polygon",
+          "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+          "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 0
+        },
+        {
+          "mode": "loopback read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "original",
+          "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+          "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 2
+        },
+        {
+          "mode": "loopback read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "original",
+          "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+          "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 2
+        },
+        {
+          "mode": "loopback read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "single",
+          "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+          "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 0
+        },
+        {
+          "mode": "loopback read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "mosaic",
+          "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+          "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 0
+        },
+        {
+          "mode": "loopback read-only; rejected upstream proxy",
+          "group": "1m",
+          "case": "polygon",
+          "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+          "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+          "pixelsCompared": 5,
+          "previewOmitted": true,
+          "fourOriginalChannelsRetained": true,
+          "aerialProfileAndCoverageRetained": true,
+          "sourceExtraSample": 0
+        }
+      ],
+      "disconnectedAdapterRejected": true,
+      "status": "passed",
+      "pixelsCompared": 50,
+      "scope": "Actual 1 m subset in an explicit offline local snapshot; no new downloads or 0.3 m acceptance claimed.",
+      "group": "1m",
+      "snapshotFiles": 5
+    },
+    "desktopFrontend": {
+      "status": "passed",
+      "scope": "Actual 1 m files in a verified offline local snapshot; real processing buttons; no new remote download or 0.3 m acceptance.",
+      "renderer": "production build; exact desktop CSP; real native API via loopback bridge",
+      "frontendFiles": [
+        {
+          "file": "assets/chunk-aKtaBQYM.js",
+          "sha256": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236"
+        },
+        {
+          "file": "assets/common-uuK22kLj.js",
+          "sha256": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+        },
+        {
+          "file": "assets/i18n-DF9CH8GT.js",
+          "sha256": "16e00114034bd6f153ca8b0b8280ca3e44c14bebf388da64df3b1a5074a9bd1a"
+        },
+        {
+          "file": "assets/i18n-DZ60XG39.css",
+          "sha256": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6"
+        },
+        {
+          "file": "assets/ImageStatic-CJOl8TQ_.js",
+          "sha256": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540"
+        },
+        {
+          "file": "assets/index-DQFCcI_p.css",
+          "sha256": "bd5c473f66229f058c55890c42c0e5650dfd5d036d825d8955dd32a93c6723c1"
+        },
+        {
+          "file": "assets/index-p-Cm4ZZK.js",
+          "sha256": "53195d9d7744469e161f653f005b27d57cc4a4153106d3feac0ea6d4245710a8"
+        },
+        {
+          "file": "assets/ol-BM8XMzgm.js",
+          "sha256": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304"
+        },
+        {
+          "file": "assets/ol-c_1sG1-7.css",
+          "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+        },
+        {
+          "file": "assets/rbush-CaohfFwn.js",
+          "sha256": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7"
+        },
+        {
+          "file": "assets/workspace-map-C-qPPDNL.js",
+          "sha256": "47534aba511b6510e17edaffa29501a4f28dc763e0823f7821c716c9e96e0bcb"
+        },
+        {
+          "file": "assets/workspace-map-D_DsgN0i.css",
+          "sha256": "0c1af89bd5473ee8990bc0bab9ffe3159cd9909b2c01327193c73f0c7dbeec8d"
+        },
+        {
+          "file": "assets/workspace-map-geometry-Dx9FsCqg.js",
+          "sha256": "b1921a1d667e3906caa55d42fd66205a916ae37cdc2e50bbfffee9749e8d0727"
+        },
+        {
+          "file": "brand/geod-symbol.png",
+          "sha256": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+        },
+        {
+          "file": "fonts/inter.woff2",
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        {
+          "file": "index.html",
+          "sha256": "dbf92fdc96ea24295490fa71c28ebfc690e244b25c54715f3fd02a9a1d20a453"
+        }
+      ],
+      "readOnly": false,
+      "nativeWindowTested": false,
+      "usedUserDesktop": false,
+      "createdByUi": [
+        {
+          "group": "1m",
+          "case": "single",
+          "id": "76743eec-b4ae-410b-9a0a-e8c4158f5190",
+          "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+          "pinnedSourcesIdentical": true,
+          "outputBytesIdentical": true,
+          "planIdentical": true
+        },
+        {
+          "group": "1m",
+          "case": "mosaic",
+          "id": "31ddbbdb-4cee-40ce-9494-16ea99423803",
+          "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+          "pinnedSourcesIdentical": true,
+          "outputBytesIdentical": true,
+          "planIdentical": true
+        },
+        {
+          "group": "1m",
+          "case": "polygon",
+          "id": "1896d878-8bda-45cc-8be7-cc09894d7a36",
+          "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+          "pinnedSourcesIdentical": true,
+          "outputBytesIdentical": true,
+          "planIdentical": true
+        }
+      ],
+      "compactSourceAccess": [
+        {
+          "width": 1440,
+          "locale": "en",
+          "collapsedByDefault": true,
+          "bothDialogsAccessible": true,
+          "focusRestored": true,
+          "noSaveOrDownloadRequested": true
+        },
+        {
+          "width": 1024,
+          "locale": "zh-CN",
+          "collapsedByDefault": true,
+          "bothDialogsAccessible": true,
+          "focusRestored": true,
+          "noSaveOrDownloadRequested": true
+        }
+      ]
+    }
+  },
+  "pending": [],
+  "limitations": [
+    "No installed WebView manual acceptance.",
+    "No NIR/false-colour display, reflectance calibration or general reprojection.",
+    "Two-date identifiers retain their official identity; the second date is not labelled as another acquisition date."
+  ]
+}

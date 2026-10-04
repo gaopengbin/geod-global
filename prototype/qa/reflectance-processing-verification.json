@@ -1,0 +1,355 @@
+{
+  "schemaVersion": "geod-reflectance-processing-verification/v1",
+  "checkedAt": "2026-10-01T13:21:29.982Z",
+  "scope": "Typed original band project area clip and same-grid mosaic. Actual Landsat single-scene clips; HLS and multi-scene overlap use deterministic fixtures.",
+  "actualData": {
+    "provider": "Microsoft Planetary Computer / Landsat 9 Collection 2 Level-2",
+    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+    "projectId": "126ac898-2cf8-4658-872a-7994dac60360",
+    "originalsPreviouslyDownloaded": true,
+    "newOriginalDownloads": 0,
+    "originals": [
+      {
+        "band": "red",
+        "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+        "bytes": 95591695,
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546"
+      },
+      {
+        "band": "green",
+        "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+        "bytes": 93388645,
+        "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db"
+      },
+      {
+        "band": "blue",
+        "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+        "bytes": 92080083,
+        "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1"
+      }
+    ],
+    "results": [
+      {
+        "band": "red",
+        "width": 680,
+        "height": 596,
+        "comparedPixels": 405280,
+        "changedPixels": 0,
+        "sourceWindow": [
+          2576,
+          2531,
+          680,
+          596
+        ],
+        "dataType": "uint16",
+        "nodata": 0,
+        "scale": 0.0000275,
+        "offset": -0.2,
+        "crs": "EPSG:32610",
+        "pixelSize": [
+          30,
+          30
+        ],
+        "bounds": [
+          539565,
+          4170405,
+          559965,
+          4188285
+        ],
+        "pixelInterpretation": "Area",
+        "sha256": "0840768e94e86553ebbff660e37ed28cc77ef74cb2351131c216d87b4633c5ab"
+      },
+      {
+        "band": "green",
+        "width": 680,
+        "height": 596,
+        "comparedPixels": 405280,
+        "changedPixels": 0,
+        "sourceWindow": [
+          2576,
+          2531,
+          680,
+          596
+        ],
+        "dataType": "uint16",
+        "nodata": 0,
+        "scale": 0.0000275,
+        "offset": -0.2,
+        "crs": "EPSG:32610",
+        "pixelSize": [
+          30,
+          30
+        ],
+        "bounds": [
+          539565,
+          4170405,
+          559965,
+          4188285
+        ],
+        "pixelInterpretation": "Area",
+        "sha256": "07eb7159a457f1c40bc80855c936e99f550db2fbfa060999a4e851a0f4415883"
+      },
+      {
+        "band": "blue",
+        "width": 680,
+        "height": 596,
+        "comparedPixels": 405280,
+        "changedPixels": 0,
+        "sourceWindow": [
+          2576,
+          2531,
+          680,
+          596
+        ],
+        "dataType": "uint16",
+        "nodata": 0,
+        "scale": 0.0000275,
+        "offset": -0.2,
+        "crs": "EPSG:32610",
+        "pixelSize": [
+          30,
+          30
+        ],
+        "bounds": [
+          539565,
+          4170405,
+          559965,
+          4188285
+        ],
+        "pixelInterpretation": "Area",
+        "sha256": "8e7db38e9fe087f29a70e7db78c44987e89a51d17370f991f1fa0010267fd5f6"
+      }
+    ],
+    "comparedOriginalDnPixels": 1215840,
+    "changedDnPixels": 0,
+    "gdalChecks": [
+      "UInt16 sample type",
+      "exact original DN window",
+      "30 m spacing",
+      "same EPSG:32610 CRS",
+      "outer pixel bounds and identical centres",
+      "NoData=0",
+      "embedded scale=0.0000275 offset=-0.2",
+      "output SHA-256"
+    ],
+    "inputRasterType": "PixelIsPoint",
+    "outputRasterType": "PixelIsArea",
+    "halfPixelOffsetIntroduced": false
+  },
+  "persistentState": {
+    "actualRuntimeRestart": true,
+    "results": [
+      {
+        "band": "red",
+        "jobId": "b85d4922-7467-49b7-b584-162b297c03c5",
+        "sha256": "0840768e94e86553ebbff660e37ed28cc77ef74cb2351131c216d87b4633c5ab",
+        "status": "succeeded",
+        "persistedCalibrationUnchanged": true,
+        "thumbnailPngIdentical": true,
+        "requestMs": 12
+      },
+      {
+        "band": "green",
+        "jobId": "eba4c428-bf0b-4f25-a167-88c8ebde8bf9",
+        "sha256": "07eb7159a457f1c40bc80855c936e99f550db2fbfa060999a4e851a0f4415883",
+        "status": "succeeded",
+        "persistedCalibrationUnchanged": true,
+        "thumbnailPngIdentical": true,
+        "requestMs": 9
+      },
+      {
+        "band": "blue",
+        "jobId": "c4876574-a97c-4c83-95f5-d89355cf6ec0",
+        "sha256": "8e7db38e9fe087f29a70e7db78c44987e89a51d17370f991f1fa0010267fd5f6",
+        "status": "succeeded",
+        "persistedCalibrationUnchanged": true,
+        "thumbnailPngIdentical": true,
+        "requestMs": 9
+      }
+    ]
+  },
+  "processingFixtures": {
+    "nativeTests": 6,
+    "includes": [
+      "newest valid DN wins over older values; NoData does not overwrite",
+      "HLS negative and zero DN remain valid; NoData=-9999",
+      "same product/calibration and channel binding",
+      "pixel-centre polygon masking",
+      "PixelIsPoint-to-PixelIsArea centre preservation",
+      "wrong geometry/channel/calibration refusal",
+      "changed source hash and cancellation refusal",
+      "derived inspection, pixel read and persisted thumbnail reuse after restart",
+      "UInt16 and Int16 each 9 million exact DN values across output strip boundaries"
+    ],
+    "actualHlsOriginalDownload": false,
+    "actualMultiSceneLandsatDownload": false
+  },
+  "interface": {
+    "mode": "headless renderer with actual isolated native loopback adapter; native desktop command contracts separately tested",
+    "publicCatalogOnlyReplayed": true,
+    "localDataResponsesMocked": false,
+    "desktopControlled": false,
+    "cases": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "nativeRuntimeResponses": true,
+        "catalogueFixtureOnly": true,
+        "threeProcessButtons": true,
+        "sixNativeThumbnails": true,
+        "derivedBandInspection": true,
+        "pixelText": "DN 11,875\n\n反射率 · 0.126563\n\n列 340，行 298 · 从 0 计数\n\n549,765 · 4,179,345 m",
+        "pixel": {
+          "jobId": "b85d4922-7467-49b7-b584-162b297c03c5",
+          "sha256": "0840768e94e86553ebbff660e37ed28cc77ef74cb2351131c216d87b4633c5ab",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            549765,
+            4179345
+          ],
+          "pixel": [
+            340,
+            298
+          ],
+          "center": [
+            549780,
+            4179330
+          ],
+          "value": 11875,
+          "reflectance": 0.12656250000000002,
+          "label": "red reflectance band",
+          "color": "#202020",
+          "isNoData": false
+        },
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "nativeRuntimeResponses": true,
+        "catalogueFixtureOnly": true,
+        "threeProcessButtons": true,
+        "sixNativeThumbnails": true,
+        "derivedBandInspection": true,
+        "pixelText": "DN 11,875\n\n反射率 · 0.126563\n\n列 340，行 298 · 从 0 计数\n\n549,765 · 4,179,345 m",
+        "pixel": {
+          "jobId": "b85d4922-7467-49b7-b584-162b297c03c5",
+          "sha256": "0840768e94e86553ebbff660e37ed28cc77ef74cb2351131c216d87b4633c5ab",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            549765,
+            4179345
+          ],
+          "pixel": [
+            340,
+            298
+          ],
+          "center": [
+            549780,
+            4179330
+          ],
+          "value": 11875,
+          "reflectance": 0.12656250000000002,
+          "label": "red reflectance band",
+          "color": "#202020",
+          "isNoData": false
+        },
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "nativeRuntimeResponses": true,
+        "catalogueFixtureOnly": true,
+        "threeProcessButtons": true,
+        "sixNativeThumbnails": true,
+        "derivedBandInspection": true,
+        "pixelText": "DN 11,875\n\n反射率 · 0.126563\n\n列 340，行 298 · 从 0 计数\n\n549,765 · 4,179,345 m",
+        "pixel": {
+          "jobId": "b85d4922-7467-49b7-b584-162b297c03c5",
+          "sha256": "0840768e94e86553ebbff660e37ed28cc77ef74cb2351131c216d87b4633c5ab",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            549765,
+            4179345
+          ],
+          "pixel": [
+            340,
+            298
+          ],
+          "center": [
+            549780,
+            4179330
+          ],
+          "value": 11875,
+          "reflectance": 0.12656250000000002,
+          "label": "red reflectance band",
+          "color": "#202020",
+          "isNoData": false
+        },
+        "overflow": false,
+        "errors": []
+      }
+    ],
+    "independentPixelChecks": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "pixel": [
+          340,
+          298
+        ],
+        "value": 11875,
+        "matches": true
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "pixel": [
+          340,
+          298
+        ],
+        "value": 11875,
+        "matches": true
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "pixel": [
+          340,
+          298
+        ],
+        "value": 11875,
+        "matches": true
+      }
+    ],
+    "threeBandProjectProcessingActions": true,
+    "derivedResultTitlesIdentifyBand": true
+  },
+  "validation": {
+    "nodeTestsPassed": 84,
+    "uiTestsPassed": 85,
+    "nativeTestsPassed": 123,
+    "nativeTestsIgnored": 1,
+    "desktopTestsPassed": 4,
+    "runtimeClippy": "passed",
+    "desktopClippy": "passed",
+    "rustfmt": "passed",
+    "isolationAndContracts": "passed",
+    "viteBuild": "passed; existing large chunk warning"
+  },
+  "limitations": [
+    "NASA and Copernicus account authorization and protected positive downloads not verified without real accounts",
+    "Copernicus SAFE JP2 display/processing remains unimplemented",
+    "no RGB composition, QA/Fmask mask, resampling or reprojection",
+    "band inspection maximum file 512 MiB and edge 20000 pixels; typed output read-back requires edge <=20000",
+    "map-drawn standalone recipes remain SCL only; raw band crop uses the project area"
+  ],
+  "distribution": {
+    "desktopDevelopment": "running with hot reload",
+    "installerCreated": false,
+    "published": false
+  }
+}

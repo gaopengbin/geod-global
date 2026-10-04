@@ -1,0 +1,307 @@
+{
+  "verifiedAt": "2026-10-02T13:44:59.053173+00:00",
+  "scope": "Public ArcGIS FeatureServer 2D GeoJSON extraction, application runtime and independent public HTTP",
+  "fixturesUsedForPublicAcceptance": false,
+  "credentialsUsed": false,
+  "networkRoute": "Direct in isolated acceptance storage after system proxy TLS EOF; global/system proxy unchanged",
+  "point": {
+    "serviceUrl": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer",
+    "assetId": "9f06a526-710b-4bec-a11d-38cb0dc74425",
+    "checks": {
+      "actualBatches": 3,
+      "featureCount": 6,
+      "propertyValues": 168,
+      "nullValues": 46,
+      "coordinateValues": 12,
+      "allParsedPropertiesAndCoordinatesEqual": true,
+      "schemaFieldsRetained": 28,
+      "realEmptySelectionAccepted": true
+    },
+    "batchChecks": [
+      {
+        "batch": 0,
+        "features": 2,
+        "sameParsedGeometryAndProperties": true,
+        "responseSha256": "a2aafacf596847217e10ba7e8fa94db3e588d5f7e446ec2c2eb15026d9186d83",
+        "exactResponseBytesHash": true
+      },
+      {
+        "batch": 1,
+        "features": 2,
+        "sameParsedGeometryAndProperties": true,
+        "responseSha256": "fcfa7e4d6c78b785b433db94b63c1f6153a3bdb73ad44fd261ce258efb7b50fd",
+        "exactResponseBytesHash": true
+      },
+      {
+        "batch": 2,
+        "features": 2,
+        "sameParsedGeometryAndProperties": true,
+        "responseSha256": "5516e5e84c56bb24abc9bbeddb396eddb4cf5d8bea439207cf98598e5f5977df",
+        "exactResponseBytesHash": true
+      }
+    ],
+    "sourceSha256": "2b741f286a44d1f0f7927a2f1c1275dbb1c066d9afa7e17d69b4933d59d3fa96"
+  },
+  "shapes": {
+    "serviceUrl": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer",
+    "cases": [
+      {
+        "label": "line",
+        "assetId": "5abcea66-2e6f-4275-a170-f1e4e6d88fab",
+        "serviceId": "e40b2d28-9f1e-40fc-8d22-23c458ca69a5",
+        "layerId": "1",
+        "bounds": [
+          -121.5,
+          38.655,
+          -121.498,
+          38.657
+        ],
+        "featureCount": 1,
+        "dataBatches": 1,
+        "fields": 9,
+        "propertyValues": 9,
+        "coordinateValues": 16,
+        "nullValues": 2,
+        "geometryTypes": [
+          "LineString"
+        ],
+        "sourceSpatialReference": {
+          "falseM": -100000,
+          "falseX": -22041259.1770657,
+          "falseY": -30241100,
+          "falseZ": -100000,
+          "latestWkid": 3857,
+          "mTolerance": 0.001,
+          "mUnits": 10000,
+          "wkid": 102100,
+          "xyTolerance": 0.001,
+          "xyUnits": 142980504.007554,
+          "zTolerance": 0.001,
+          "zUnits": 10000
+        },
+        "outputCrs": "EPSG:4326",
+        "allParsedGeoJSONAndPropertiesEqual": true,
+        "independentEsriPositionsEqual": true,
+        "fullGeometryOutsideSelectionRetained": true,
+        "savedEvidenceSha256": "c0c7943cbb580cfab9e1112820a7967bfc2e566811b7b053b5eb3aa9d4f9c9ce"
+      },
+      {
+        "label": "polygon",
+        "assetId": "65e19eef-55b3-4dda-9775-a2b3d6e27253",
+        "serviceId": "e40b2d28-9f1e-40fc-8d22-23c458ca69a5",
+        "layerId": "2",
+        "bounds": [
+          28.9,
+          -25.9,
+          28.91,
+          -25.89
+        ],
+        "featureCount": 10,
+        "dataBatches": 3,
+        "fields": 9,
+        "propertyValues": 90,
+        "coordinateValues": 184,
+        "nullValues": 0,
+        "geometryTypes": [
+          "Polygon"
+        ],
+        "sourceSpatialReference": {
+          "falseM": -100000,
+          "falseX": -22041259.1770657,
+          "falseY": -30241100,
+          "falseZ": -100000,
+          "latestWkid": 3857,
+          "mTolerance": 0.001,
+          "mUnits": 10000,
+          "wkid": 102100,
+          "xyTolerance": 0.001,
+          "xyUnits": 142980504.007554,
+          "zTolerance": 0.001,
+          "zUnits": 10000
+        },
+        "outputCrs": "EPSG:4326",
+        "allParsedGeoJSONAndPropertiesEqual": true,
+        "independentEsriPositionsEqual": true,
+        "fullGeometryOutsideSelectionRetained": true,
+        "savedEvidenceSha256": "8b62cd7fddd8dca87bd815b084aa905e34eb75c162282b1b273a0e0036ede328"
+      }
+    ]
+  },
+  "totalIndependentlyComparedFeatures": 17,
+  "totalIndependentlyComparedPropertyValues": 267,
+  "totalIndependentlyComparedCoordinateValues": 212,
+  "comparison": "Complete parsed GeoJSON feature equality; additionally all Esri JSON properties and positions. Polygon traversal can reverse, so Esri JSON position multiplicities are compared independently of ring order.",
+  "emptyRegion": {
+    "bounds": [
+      -10,
+      0,
+      -9.999,
+      0.001
+    ],
+    "assetId": "43a286bb-145a-431c-8252-8d1c8093a58d",
+    "features": 0,
+    "dataBatches": 0,
+    "membershipReceipts": 4,
+    "objectIdsNullAcceptedOnlyWithZeroCount": true
+  },
+  "ui": {
+    "checkedAt": "2026-10-02T13:43:48.458Z",
+    "mode": "Headless Chromium with isolated actual native runtime and actual ArcGIS service",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "actualViewportWidth": 1440,
+        "serviceUrl": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer",
+        "assetId": "98fa3239-ee75-4abf-b42c-bfc3e981017e",
+        "features": 6,
+        "batches": 1,
+        "protocolSelectionAndEscape": true,
+        "sampleOnlyFillsForm": true,
+        "actualCollectionRefreshPreservesProtocol": true,
+        "actualNativePublicServiceQuery": true,
+        "queryBounds": [
+          -123,
+          37,
+          -121,
+          39
+        ],
+        "allBrowserExportAttributesAndGeometryEqual": true,
+        "mapCanvasVisible": true,
+        "clickedOriginalFeatureId": "950",
+        "originalAttributesVisible": true,
+        "provenanceVisible": true,
+        "noDocumentHorizontalOverflow": true,
+        "errors": []
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "actualViewportWidth": 1024,
+        "serviceUrl": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer",
+        "assetId": "d9e65dfe-7593-4f95-bbe7-ab0279f5de8c",
+        "features": 6,
+        "batches": 1,
+        "protocolSelectionAndEscape": true,
+        "sampleOnlyFillsForm": true,
+        "actualCollectionRefreshPreservesProtocol": true,
+        "actualNativePublicServiceQuery": true,
+        "queryBounds": [
+          -123,
+          37,
+          -121,
+          39
+        ],
+        "allBrowserExportAttributesAndGeometryEqual": true,
+        "mapCanvasVisible": true,
+        "clickedOriginalFeatureId": "950",
+        "originalAttributesVisible": true,
+        "provenanceVisible": true,
+        "noDocumentHorizontalOverflow": true,
+        "errors": []
+      }
+    ]
+  },
+  "offlineRestart": {
+    "checkedAt": "2026-10-02T13:44:07.013567+00:00",
+    "serviceRegistryRecovered": true,
+    "mode": "Fresh native CLI processes, server stopped; list/inspect/export only",
+    "networkRequiredForReopen": false,
+    "snapshots": [
+      {
+        "assetId": "9f06a526-710b-4bec-a11d-38cb0dc74425",
+        "features": 6,
+        "sourceSha256": "2b741f286a44d1f0f7927a2f1c1275dbb1c066d9afa7e17d69b4933d59d3fa96",
+        "completeProvenanceRecovered": true,
+        "allNativeExportFeaturesEqual": true,
+        "managedSnapshotUnchanged": true
+      },
+      {
+        "assetId": "43a286bb-145a-431c-8252-8d1c8093a58d",
+        "features": 0,
+        "sourceSha256": "a800e129d660edd110ad8105c1366341e4f20797f524c4ea9bbd242463093a92",
+        "completeProvenanceRecovered": true,
+        "allNativeExportFeaturesEqual": true,
+        "managedSnapshotUnchanged": true
+      },
+      {
+        "assetId": "5abcea66-2e6f-4275-a170-f1e4e6d88fab",
+        "features": 1,
+        "sourceSha256": "fe72a432e3ee350551a692009dcb472a22d9c5aae1a179e0e3fb92fdcce6a3ca",
+        "completeProvenanceRecovered": true,
+        "allNativeExportFeaturesEqual": true,
+        "managedSnapshotUnchanged": true
+      },
+      {
+        "assetId": "65e19eef-55b3-4dda-9775-a2b3d6e27253",
+        "features": 10,
+        "sourceSha256": "7611cad639959e1011c439e4a6772fbda4faae4a07506dceb5a7a2d9d8870a28",
+        "completeProvenanceRecovered": true,
+        "allNativeExportFeaturesEqual": true,
+        "managedSnapshotUnchanged": true
+      },
+      {
+        "assetId": "98fa3239-ee75-4abf-b42c-bfc3e981017e",
+        "features": 6,
+        "sourceSha256": "205b8c1809a785372daafb2ef6593fba9295c6872334ce66a155af374e3d886f",
+        "completeProvenanceRecovered": true,
+        "allNativeExportFeaturesEqual": true,
+        "managedSnapshotUnchanged": true
+      },
+      {
+        "assetId": "d9e65dfe-7593-4f95-bbe7-ab0279f5de8c",
+        "features": 6,
+        "sourceSha256": "19319b9d62a5c5a6e8e626bfa8b3d75f8b5cdc630de7e2b954e6ffe7fb6041fa",
+        "completeProvenanceRecovered": true,
+        "allNativeExportFeaturesEqual": true,
+        "managedSnapshotUnchanged": true
+      }
+    ]
+  },
+  "priorOgcRegression": {
+    "offlineFiles": 3,
+    "unchangedManagedSnapshots": true,
+    "allNativeExportsEqual": true
+  },
+  "automatedRegression": {
+    "runtimeUnitTests": 239,
+    "runtimeCliTests": 3,
+    "ignoredRuntimeTests": 4,
+    "arcgisUnitTests": 16,
+    "desktopTests": 4,
+    "nodeTests": 148,
+    "uiTests": 140,
+    "strictClippy": "passed",
+    "dependencyIsolationAndContracts": "passed",
+    "desktopCommandAcl": "passed",
+    "registeredCommands": 57,
+    "productionFrontendBuild": "passed"
+  },
+  "implementationSha256": {
+    "crates/geod-runtime/src/features/arcgis.rs": "c550b56c4154b152adbec43de546344b90076a889cf0911cf90d266b982d9d9d",
+    "crates/geod-runtime/src/features/arcgis/tests.rs": "ac2ded3b55210f7115dcbca6940cf7e57e1dded66a24f1c3c659eddc81b0dc06",
+    "prototype/src/features-client.js": "92c36af095eecf55391508eccf4a96b73ecef6c35e3b0310bfb4c18e4269f6d8",
+    "prototype/src/vector-client.js": "1e9fd8d9b4e4fff748d1c2a2de47e828d27ea0489fe1e84ea44fa2a808643494",
+    "prototype/src/features-ui.jsx": "03b7b80052c35cc3c31cc2d78546a90fc191e0ecf5ecd48b01a5af93e7a26667"
+  },
+  "guardrails": [
+    "Independent before/after count and ID sets plus layer definition recheck",
+    "Exact per-batch ID coverage, schema names and geometry types",
+    "Reject top-level and nested GeoJSON transfer-limit flags",
+    "Reject hashed OIDs, Z/M and explicitly declared curves",
+    "5,000 features, 25 batches, 200 per batch, 20 MiB and 120 seconds; smaller service cap respected",
+    "Public HTTPS validation, no redirects, settings-selected proxy, no protected-service bypass"
+  ],
+  "limitations": [
+    "Mutable public Esri sample services are not production authority or availability guarantees.",
+    "Stable membership and schema checks are not a transactional snapshot of feature values.",
+    "Service-converted WGS84 GeoJSON is not the original geodatabase or a byte-identical HTTP response archive.",
+    "JSON numeric spelling may differ while parsed Double values remain equal.",
+    "No support for attachments, relationships, domains, raw curves, hashed IDs or protected ArcGIS services.",
+    "Windows native WebView interaction was not performed; no packaging, deployment or user desktop control."
+  ]
+}

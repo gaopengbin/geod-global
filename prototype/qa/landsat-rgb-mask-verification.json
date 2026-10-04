@@ -1,0 +1,2339 @@
+{
+  "schema": "geod-landsat-rgb-mask-verification/v1",
+  "status": "passed",
+  "verifiedAt": "2026-10-04T03:17:48.219392+00:00",
+  "scope": "Real Landsat 9 original, same-scene rectangle and polygon with hole; explicit flag policies only. Landsat 8 real RGB and coupled multi-scene screening are not claimed.",
+  "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+  "nativeBinary": {
+    "path": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\runtime-51a09564e71c921f.exe",
+    "sha256": "51a09564e71c921f6f5ddb11e3b3cad8b19a2ed8ece139eda74e7d8642756774"
+  },
+  "evidence": {
+    "native": {
+      "path": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\native-verification.json",
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\accepted-evidence\\native-af64fce2bb9d471e0b6eca9c97620eda84b3d89e35ba2198fef526254a91ba7e.json",
+      "sha256": "af64fce2bb9d471e0b6eca9c97620eda84b3d89e35ba2198fef526254a91ba7e"
+    },
+    "mcp": {
+      "path": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\mcp-verification.json",
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\accepted-evidence\\mcp-2f07653d8efee7da3f4cc68ed297666241f62b099b32db15f192b2f8933c0a6f.json",
+      "sha256": "2f07653d8efee7da3f4cc68ed297666241f62b099b32db15f192b2f8933c0a6f"
+    },
+    "ui": {
+      "path": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\ui-verification.json",
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\accepted-evidence\\ui-0614937589ce9b9c8357a98c45c944d36d75d28880465cb50b1cb1c16ddc4744.json",
+      "sha256": "0614937589ce9b9c8357a98c45c944d36d75d28880465cb50b1cb1c16ddc4744"
+    },
+    "cache": {
+      "path": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-offline-20261004\\cache-verification.json",
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\accepted-evidence\\cache-cd135c84b925338165819eb771bab30c1a3e60d54178a9722a4277244b991819.json",
+      "sha256": "cd135c84b925338165819eb771bab30c1a3e60d54178a9722a4277244b991819"
+    }
+  },
+  "originals": [
+    {
+      "id": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "red",
+      "bytes": 95591695,
+      "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF"
+    },
+    {
+      "id": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "green",
+      "bytes": 93388645,
+      "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF"
+    },
+    {
+      "id": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "blue",
+      "bytes": 92080083,
+      "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF"
+    },
+    {
+      "id": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "qa_pixel",
+      "bytes": 986984,
+      "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF"
+    },
+    {
+      "id": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "qa_radsat",
+      "bytes": 224657,
+      "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF"
+    }
+  ],
+  "native": {
+    "outputs": 12,
+    "allDnCompared": 878416812,
+    "previewRgbaPixelsCompared": 4749312,
+    "rawQueriesCompared": 126,
+    "cases": [
+      {
+        "case": "original",
+        "policy": null,
+        "excludeSnow": false,
+        "id": "83f13d81-d959-4ade-9e98-a85d60747171",
+        "sha256": "ccc2372e8d67742e4cd7addb2fd1616254f5aa29515bf9c771b28a9f9a561768",
+        "bytes": 223494366,
+        "grid": {
+          "width": 7671,
+          "height": 7791,
+          "crs": "EPSG:32610",
+          "bounds": [
+            462285.0,
+            4030485.0,
+            692415.0,
+            4264215.0
+          ],
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "pixelInterpretation": "PixelIsPoint"
+        },
+        "counts": null,
+        "preview": {
+          "width": 756,
+          "height": 768,
+          "rgbaPixelsCompared": 580608,
+          "pngSha256": "94908bfab7e35a2982ceb67f86016dfbca0e1bf0f51cfc849e22e0dbb22c3722"
+        },
+        "packageSha256": "fae00399fbbce6280b6345755462f2d304e0c53796b37a0197e40e0ce0f6609f"
+      },
+      {
+        "case": "original",
+        "policy": "cloud_free",
+        "excludeSnow": false,
+        "id": "aa5125ad-767d-4f6e-84ab-1aace04d53b2",
+        "sha256": "b6b2b831d66495e813d8c009c2f0be4d1a43d88638059fc6110ac659614772a4",
+        "bytes": 140861296,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4030485.0,
+            692415.0,
+            4264215.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 7791,
+          "pixelInterpretation": "PixelIsPoint",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 7671
+        },
+        "counts": {
+          "examinedPixels": 59764761,
+          "rejectedPixels": 33326209,
+          "inputCommonValidPixels": 40715194,
+          "removedValidPixels": 14276837
+        },
+        "preview": {
+          "width": 756,
+          "height": 768,
+          "rgbaPixelsCompared": 580608,
+          "pngSha256": "aac1c7b37d76a38ba8ba7c6003bec3aa419301dcf6e10586aa3edea34add7d20"
+        },
+        "packageSha256": "5cf9a69dc01ca467ebae4bed1c6b710425cb9272935a92f3b8c3bb044c979172"
+      },
+      {
+        "case": "original",
+        "policy": "cloud_free_conservative",
+        "excludeSnow": false,
+        "id": "f4a14394-75e2-4141-a7bb-b3e025256bf7",
+        "sha256": "a9a669f87080774bf0978c806e0ccce7968f291c3ae34a79451b333feb33214c",
+        "bytes": 140854562,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4030485.0,
+            692415.0,
+            4264215.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 7791,
+          "pixelInterpretation": "PixelIsPoint",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 7671
+        },
+        "counts": {
+          "examinedPixels": 59764761,
+          "rejectedPixels": 33328558,
+          "inputCommonValidPixels": 40715194,
+          "removedValidPixels": 14279186
+        },
+        "preview": {
+          "width": 756,
+          "height": 768,
+          "rgbaPixelsCompared": 580608,
+          "pngSha256": "9f0f23c5c19a5524ef0d61e3c208025f32ca217c795f35dd0292be8c15606b2e"
+        },
+        "packageSha256": "ca8c9c128cf5d251779f8cbb3912d613e6c28f26343c3bf1286890451e846a9a"
+      },
+      {
+        "case": "original",
+        "policy": "cloud_free_conservative",
+        "excludeSnow": true,
+        "id": "ff44d823-38da-417d-aac0-88a6f9e41d44",
+        "sha256": "97d73f7e73fde24dba0a447d61f1ba45a137323b00f5e9dc6656099dfcbaa574",
+        "bytes": 140854562,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4030485.0,
+            692415.0,
+            4264215.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 7791,
+          "pixelInterpretation": "PixelIsPoint",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 7671
+        },
+        "counts": {
+          "examinedPixels": 59764761,
+          "rejectedPixels": 33328558,
+          "inputCommonValidPixels": 40715194,
+          "removedValidPixels": 14279186
+        },
+        "preview": {
+          "width": 756,
+          "height": 768,
+          "rgbaPixelsCompared": 580608,
+          "pngSha256": "9f0f23c5c19a5524ef0d61e3c208025f32ca217c795f35dd0292be8c15606b2e"
+        },
+        "packageSha256": "6069d3de29c082051c7a69216d38714a265c3ee4e913172bff6dcf0d795a22a1"
+      },
+      {
+        "case": "single",
+        "policy": null,
+        "excludeSnow": false,
+        "id": "4822f1c1-b2ed-441f-88e1-24e58de563b0",
+        "sha256": "19cee13d9d1cde4230cb403d0fe27acd69944e6ea6d9f29c6852725f3e2ed7db",
+        "bytes": 27170402,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": null,
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "756c08274a98f0efe0c752388e5c005f69bb4279e2a6d57115639dd8d6fe95aa"
+        },
+        "packageSha256": "de841fd0dabe3d97802370aeffd4aae070c7f3304543b6e7c61c6d95f3f7064b"
+      },
+      {
+        "case": "single",
+        "policy": "cloud_free",
+        "excludeSnow": false,
+        "id": "ea0af027-a948-4c56-8f0c-b83aca780410",
+        "sha256": "4f0698e3d14c7b6ac0cbe2a66f3c90f947ee1f8b72596b197bb18dd3f082bd7f",
+        "bytes": 12633145,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "rejectedPixels": 4326273,
+          "inputCommonValidPixels": 4918437,
+          "removedValidPixels": 2526496
+        },
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "e13b0ba1b241915bc351e6ec53da16702dfe39ff0c826c25f18545c08a092c32"
+        },
+        "packageSha256": "4d22b04dee707f06526c0ec5dffa2a402dbb243371fcfe68d5eea42a79583f76"
+      },
+      {
+        "case": "single",
+        "policy": "cloud_free_conservative",
+        "excludeSnow": false,
+        "id": "86ec335e-67a5-46f4-bcf4-ecf45878b66b",
+        "sha256": "69a2f1e199182adc811b7aaa4b77688532781e9e86d97c26330cbf0489fbb082",
+        "bytes": 12630552,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "rejectedPixels": 4327112,
+          "inputCommonValidPixels": 4918437,
+          "removedValidPixels": 2527335
+        },
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "c89debaca82696d9ba7e5b0ae7093be041fae0ffef624d520a63c8c06b9b6f72"
+        },
+        "packageSha256": "1081ec2c41eadc0192a28a6c500e1fe4adfefb9a20249c023cf1a7e599188c77"
+      },
+      {
+        "case": "single",
+        "policy": "cloud_free_conservative",
+        "excludeSnow": true,
+        "id": "732220fa-e6ea-47f1-999a-b02765d85197",
+        "sha256": "40e88c014266e644301a2aac11b8a75c34df24a734e2928f8b145fe705024929",
+        "bytes": 12630552,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "rejectedPixels": 4327112,
+          "inputCommonValidPixels": 4918437,
+          "removedValidPixels": 2527335
+        },
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "c89debaca82696d9ba7e5b0ae7093be041fae0ffef624d520a63c8c06b9b6f72"
+        },
+        "packageSha256": "4d36bb6c2661c6d5dbe21493c94beefc81cb94dcc3e419e4fba3653edd9b60a8"
+      },
+      {
+        "case": "polygon",
+        "policy": null,
+        "excludeSnow": false,
+        "id": "c6e4fb53-a339-4df6-b9d2-78c55629addc",
+        "sha256": "001cb957f7e8b4905ebb853c7d8340569a39b33e66a2bcbef8b8affd5cb8e31a",
+        "bytes": 25652796,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": null,
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "db6d133c22b2579a41245c6333395a6b88b92237ccc654290df37b1ffbc5e0ab"
+        },
+        "packageSha256": "3cccf264fd925a5f894adf5560bc6b21bd8ba9a07272f1ad9309853b7d14891d"
+      },
+      {
+        "case": "polygon",
+        "policy": "cloud_free",
+        "excludeSnow": false,
+        "id": "6612e51f-ca67-443c-8fde-0ff624fd8ccb",
+        "sha256": "c9c4a7868e7682bd93ab56b039605e2e659ee062eabc13c832083d2605dc9cb2",
+        "bytes": 12413891,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "rejectedPixels": 4367598,
+          "inputCommonValidPixels": 4656199,
+          "removedValidPixels": 2305583
+        },
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "47cace744e69e7eab1d193f7b50871e9ce64f81778df0a014eb8dce4fdd52241"
+        },
+        "packageSha256": "00956d3dd53961b935996236313e757d0af1174d2dac1f83c13cb37965b035be"
+      },
+      {
+        "case": "polygon",
+        "policy": "cloud_free_conservative",
+        "excludeSnow": false,
+        "id": "4c5c0361-a92e-4965-a589-9729cf244a4b",
+        "sha256": "ded3e74e25859449202808fbbb6bda174a8c632ae5c531fd2b2f2ae23c2039a1",
+        "bytes": 12411412,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "rejectedPixels": 4368437,
+          "inputCommonValidPixels": 4656199,
+          "removedValidPixels": 2306422
+        },
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "31d3433845365a28a8e16f945fc0f11d3328b01e8b5c033be23bdb0165c920d7"
+        },
+        "packageSha256": "8615bc6303594229833c8c4c42d3a24f75ed44ae92d99030d50e0a5f78b01aec"
+      },
+      {
+        "case": "polygon",
+        "policy": "cloud_free_conservative",
+        "excludeSnow": true,
+        "id": "119df4ab-b08f-410f-8d32-203c8a282863",
+        "sha256": "a49a96e462cd048f1f9b93d62b16d9f631deeccb6e778ef93992001c6ebc3fec",
+        "bytes": 12411412,
+        "grid": {
+          "bounds": [
+            462285.0,
+            4161435.0,
+            570645.0,
+            4217235.0
+          ],
+          "crs": "EPSG:32610",
+          "height": 1860,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            30.0,
+            30.0
+          ],
+          "width": 3612
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "rejectedPixels": 4368437,
+          "inputCommonValidPixels": 4656199,
+          "removedValidPixels": 2306422
+        },
+        "preview": {
+          "width": 768,
+          "height": 395,
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "31d3433845365a28a8e16f945fc0f11d3328b01e8b5c033be23bdb0165c920d7"
+        },
+        "packageSha256": "8d5eaa298df54fb088a61609d63ca7b8e359b8cf17e2f9a9581ffcfd48ad6f8c"
+      }
+    ],
+    "controls": [
+      {
+        "name": "wrong scene",
+        "message": "{\"error\":\"HTTP 400 Bad Request: \\\"Landsat QA_PIXEL and QA_RADSAT must match the pinned RGB scene, processing directory and area\\\"\"}"
+      },
+      {
+        "name": "duplicate flags",
+        "message": "{\"error\":\"HTTP 400 Bad Request: \\\"Landsat quality-layer order differs\\\"\"}"
+      },
+      {
+        "name": "RGB as flag",
+        "message": "{\"error\":\"HTTP 400 Bad Request: \\\"Unsupported Landsat quality layer\\\"\"}"
+      },
+      {
+        "name": "wrong product policy",
+        "message": "{\"error\":\"Invalid JSON input: data did not match any variant of untagged enum QualityMaskRequest at line 13 column 1\"}"
+      }
+    ],
+    "clipChecks": [
+      {
+        "case": "single",
+        "project": {
+          "id": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+          "name": "QA · Landsat same-scene RGB · single",
+          "bounds": [
+            -123.6,
+            37.6,
+            -122.2,
+            38.1
+          ],
+          "scenes": [
+            {
+              "itemId": "LC09_L2SP_044034_20250628_02_T1",
+              "date": "2025-06-28T18:45:46.894588Z",
+              "cloud": 33.6,
+              "crs": "EPSG:32610",
+              "gridCode": null,
+              "bbox": [
+                -123.43266723157255,
+                36.40027484986972,
+                -120.79330801174102,
+                38.52553515013028
+              ],
+              "assets": {
+                "blue": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+                  "rasterBand": {
+                    "dataType": "uint16",
+                    "scale": 2.75e-05,
+                    "offset": -0.2,
+                    "nodata": 0.0,
+                    "spatialResolution": 30.0
+                  }
+                },
+                "green": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+                  "rasterBand": {
+                    "dataType": "uint16",
+                    "scale": 2.75e-05,
+                    "offset": -0.2,
+                    "nodata": 0.0,
+                    "spatialResolution": 30.0
+                  }
+                },
+                "qa_pixel": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized"
+                },
+                "qa_radsat": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized"
+                },
+                "red": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+                  "rasterBand": {
+                    "dataType": "uint16",
+                    "scale": 2.75e-05,
+                    "offset": -0.2,
+                    "nodata": 0.0,
+                    "spatialResolution": 30.0
+                  }
+                }
+              }
+            }
+          ],
+          "createdAt": "2026-10-04T02:36:35.336809900+00:00",
+          "updatedAt": "2026-10-04T02:36:35.336809900+00:00"
+        },
+        "layers": [
+          {
+            "id": "bb797223-34d1-4e33-8fc2-29d77ea9d76a",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "assetKey": "red",
+              "sources": [
+                {
+                  "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+                  "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 0,
+              "coveredPixels": 4918724,
+              "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+              "calibration": {
+                "product": "landsat-c2-l2",
+                "signed": false,
+                "scale": 2.75e-05,
+                "offset": -0.2,
+                "nodata": 0
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\bb797223-34d1-4e33-8fc2-29d77ea9d76a.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+            "assetKey": "red",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · single · RED mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 9078425,
+            "totalBytes": 9078425,
+            "sha256": "6863aebcb46f37f64e91da47b33806daf701ac9bbbd9c5b2d5616d27d8166590",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\bb797223-34d1-4e33-8fc2-29d77ea9d76a.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:36:35.351123900+00:00",
+            "updatedAt": "2026-10-04T02:36:40.294698200+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "5d970880-ec0c-4572-a16d-746d432e1b8f",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "assetKey": "green",
+              "sources": [
+                {
+                  "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+                  "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 0,
+              "coveredPixels": 4918724,
+              "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+              "calibration": {
+                "product": "landsat-c2-l2",
+                "signed": false,
+                "scale": 2.75e-05,
+                "offset": -0.2,
+                "nodata": 0
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\5d970880-ec0c-4572-a16d-746d432e1b8f.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+            "assetKey": "green",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · single · GREEN mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 8943483,
+            "totalBytes": 8943483,
+            "sha256": "d76863834520dc0da91f2509449843790274afedbe933566ac25f1b383caf7a8",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\5d970880-ec0c-4572-a16d-746d432e1b8f.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:36:40.362138500+00:00",
+            "updatedAt": "2026-10-04T02:36:45.332554100+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "5fcdbd37-79d7-45aa-8a28-c9fdf8b8cde9",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "assetKey": "blue",
+              "sources": [
+                {
+                  "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+                  "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 0,
+              "coveredPixels": 4918437,
+              "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+              "calibration": {
+                "product": "landsat-c2-l2",
+                "signed": false,
+                "scale": 2.75e-05,
+                "offset": -0.2,
+                "nodata": 0
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\5fcdbd37-79d7-45aa-8a28-c9fdf8b8cde9.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+            "assetKey": "blue",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · single · BLUE mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 8931392,
+            "totalBytes": 8931392,
+            "sha256": "a98a2b1fc5b0eb900e5b1a3ec191949e7a8dcbee3b54ebfa0af5c555e63d7713",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\5fcdbd37-79d7-45aa-8a28-c9fdf8b8cde9.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:36:45.379329100+00:00",
+            "updatedAt": "2026-10-04T02:36:50.392689300+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "4d14cc17-b9d6-4b2c-b734-1afb599b18b1",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "assetKey": "qa_pixel",
+              "sources": [
+                {
+                  "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                  "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 0,
+              "coveredPixels": 4918724,
+              "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+              "landsatQuality": {
+                "schemaVersion": "geod-landsat-quality-mosaic/v1",
+                "product": "landsat-c2-l2",
+                "band": "qa_pixel",
+                "bits": 16,
+                "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\4d14cc17-b9d6-4b2c-b734-1afb599b18b1.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+            "assetKey": "qa_pixel",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · single · QA_PIXEL mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 195522,
+            "totalBytes": 195522,
+            "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\4d14cc17-b9d6-4b2c-b734-1afb599b18b1.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:36:50.448063300+00:00",
+            "updatedAt": "2026-10-04T02:36:52.322490900+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "Original Landsat quality hashes checked; aligned UInt16 flags and independent internal coverage mask retained; QA_PIXEL bit 0 determines coverage; saturation zero remains valid; no bit merging, averaging, cloud filtering or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "0539c220-3957-4824-9aed-e81a9d07abdc",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "assetKey": "qa_radsat",
+              "sources": [
+                {
+                  "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+                  "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+                }
+              ],
+              "coverageSources": [
+                {
+                  "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                  "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 0,
+              "coveredPixels": 4918724,
+              "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+              "landsatQuality": {
+                "schemaVersion": "geod-landsat-quality-mosaic/v1",
+                "product": "landsat-c2-l2",
+                "band": "qa_radsat",
+                "bits": 16,
+                "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\0539c220-3957-4824-9aed-e81a9d07abdc.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+            "assetKey": "qa_radsat",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · single · QA_RADSAT mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 19578,
+            "totalBytes": 19578,
+            "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\0539c220-3957-4824-9aed-e81a9d07abdc.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:36:52.552755800+00:00",
+            "updatedAt": "2026-10-04T02:36:54.296517600+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "Original Landsat quality hashes checked; aligned UInt16 flags and independent internal coverage mask retained; QA_PIXEL bit 0 determines coverage; saturation zero remains valid; no bit merging, averaging, cloud filtering or resampling",
+            "attempts": 1,
+            "settled": true
+          }
+        ],
+        "proofs": [
+          {
+            "key": "red",
+            "id": "bb797223-34d1-4e33-8fc2-29d77ea9d76a",
+            "sha256": "6863aebcb46f37f64e91da47b33806daf701ac9bbbd9c5b2d5616d27d8166590",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 0,
+            "polygonOutsidePixels": 0
+          },
+          {
+            "key": "green",
+            "id": "5d970880-ec0c-4572-a16d-746d432e1b8f",
+            "sha256": "d76863834520dc0da91f2509449843790274afedbe933566ac25f1b383caf7a8",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 0,
+            "polygonOutsidePixels": 0
+          },
+          {
+            "key": "blue",
+            "id": "5fcdbd37-79d7-45aa-8a28-c9fdf8b8cde9",
+            "sha256": "a98a2b1fc5b0eb900e5b1a3ec191949e7a8dcbee3b54ebfa0af5c555e63d7713",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 0,
+            "polygonOutsidePixels": 0
+          },
+          {
+            "key": "qa_pixel",
+            "id": "4d14cc17-b9d6-4b2c-b734-1afb599b18b1",
+            "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 6718320,
+            "polygonOutsidePixels": 0
+          },
+          {
+            "key": "qa_radsat",
+            "id": "0539c220-3957-4824-9aed-e81a9d07abdc",
+            "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 6718320,
+            "polygonOutsidePixels": 0
+          }
+        ]
+      },
+      {
+        "case": "polygon",
+        "project": {
+          "id": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+          "name": "QA · Landsat same-scene RGB · polygon",
+          "bounds": [
+            -123.6,
+            37.6,
+            -122.2,
+            38.1
+          ],
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -123.6,
+                  37.6
+                ],
+                [
+                  -122.2,
+                  37.6
+                ],
+                [
+                  -122.2,
+                  38.1
+                ],
+                [
+                  -123.6,
+                  38.1
+                ],
+                [
+                  -123.6,
+                  37.6
+                ]
+              ],
+              [
+                [
+                  -123.1,
+                  37.76
+                ],
+                [
+                  -123.1,
+                  37.88
+                ],
+                [
+                  -122.93,
+                  37.88
+                ],
+                [
+                  -122.93,
+                  37.76
+                ],
+                [
+                  -123.1,
+                  37.76
+                ]
+              ]
+            ]
+          },
+          "scenes": [
+            {
+              "itemId": "LC09_L2SP_044034_20250628_02_T1",
+              "date": "2025-06-28T18:45:46.894588Z",
+              "cloud": 33.6,
+              "crs": "EPSG:32610",
+              "gridCode": null,
+              "bbox": [
+                -123.43266723157255,
+                36.40027484986972,
+                -120.79330801174102,
+                38.52553515013028
+              ],
+              "assets": {
+                "blue": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+                  "rasterBand": {
+                    "dataType": "uint16",
+                    "scale": 2.75e-05,
+                    "offset": -0.2,
+                    "nodata": 0.0,
+                    "spatialResolution": 30.0
+                  }
+                },
+                "green": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+                  "rasterBand": {
+                    "dataType": "uint16",
+                    "scale": 2.75e-05,
+                    "offset": -0.2,
+                    "nodata": 0.0,
+                    "spatialResolution": 30.0
+                  }
+                },
+                "qa_pixel": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized"
+                },
+                "qa_radsat": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized"
+                },
+                "red": {
+                  "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+                  "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+                  "rasterBand": {
+                    "dataType": "uint16",
+                    "scale": 2.75e-05,
+                    "offset": -0.2,
+                    "nodata": 0.0,
+                    "spatialResolution": 30.0
+                  }
+                }
+              }
+            }
+          ],
+          "createdAt": "2026-10-04T02:36:54.999807300+00:00",
+          "updatedAt": "2026-10-04T02:36:54.999807300+00:00"
+        },
+        "layers": [
+          {
+            "id": "0831e288-e37c-4b66-bce3-d304aeb26a91",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "assetKey": "red",
+              "sources": [
+                {
+                  "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+                  "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 276690,
+              "coveredPixels": 4656481,
+              "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+              "calibration": {
+                "product": "landsat-c2-l2",
+                "signed": false,
+                "scale": 2.75e-05,
+                "offset": -0.2,
+                "nodata": 0
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\0831e288-e37c-4b66-bce3-d304aeb26a91.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+            "assetKey": "red",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · polygon · RED mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 8574965,
+            "totalBytes": 8574965,
+            "sha256": "e77f56b64c3a0f01e6bfe9fb39fd9373bee63984181efcc7465726c8c1eac8dd",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\0831e288-e37c-4b66-bce3-d304aeb26a91.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:36:55.004033700+00:00",
+            "updatedAt": "2026-10-04T02:37:03.052439400+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "dd7545b6-5024-4362-8168-3adc5caf9e33",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "assetKey": "green",
+              "sources": [
+                {
+                  "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+                  "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 276690,
+              "coveredPixels": 4656481,
+              "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+              "calibration": {
+                "product": "landsat-c2-l2",
+                "signed": false,
+                "scale": 2.75e-05,
+                "offset": -0.2,
+                "nodata": 0
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\dd7545b6-5024-4362-8168-3adc5caf9e33.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+            "assetKey": "green",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · polygon · GREEN mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 8441817,
+            "totalBytes": 8441817,
+            "sha256": "5cac697bdf7a17c2229d19b5987137fad71f4ba3c9f2aeb51c14311926317bae",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\dd7545b6-5024-4362-8168-3adc5caf9e33.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:37:03.175744+00:00",
+            "updatedAt": "2026-10-04T02:37:10.968346800+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "6e60f7ba-2a89-4c69-bda0-1ae31e88ff1e",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "assetKey": "blue",
+              "sources": [
+                {
+                  "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+                  "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 276690,
+              "coveredPixels": 4656199,
+              "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+              "calibration": {
+                "product": "landsat-c2-l2",
+                "signed": false,
+                "scale": 2.75e-05,
+                "offset": -0.2,
+                "nodata": 0
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\6e60f7ba-2a89-4c69-bda0-1ae31e88ff1e.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+            "assetKey": "blue",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · polygon · BLUE mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 8427802,
+            "totalBytes": 8427802,
+            "sha256": "23ab16c7524ed015f8dd23627684a1cf8b6b75d16dcabc83cf5c6f4d1839970b",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\6e60f7ba-2a89-4c69-bda0-1ae31e88ff1e.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:37:11.004740400+00:00",
+            "updatedAt": "2026-10-04T02:37:18.672230400+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "All local sources SHA-256 verified; same-CRS aligned original samples mosaicked and clipped; NoData and calibration retained; output decoded and checked; no reprojection or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "012b4d38-0fa7-4c76-83b1-72425a37dbc2",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "assetKey": "qa_pixel",
+              "sources": [
+                {
+                  "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                  "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 276690,
+              "coveredPixels": 4656481,
+              "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+              "landsatQuality": {
+                "schemaVersion": "geod-landsat-quality-mosaic/v1",
+                "product": "landsat-c2-l2",
+                "band": "qa_pixel",
+                "bits": 16,
+                "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\012b4d38-0fa7-4c76-83b1-72425a37dbc2.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+            "assetKey": "qa_pixel",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · polygon · QA_PIXEL mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 193612,
+            "totalBytes": 193612,
+            "sha256": "77c01fdaadc64386807d40132b6730e84524d7b28a985d0338e2b915f9bc316d",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\012b4d38-0fa7-4c76-83b1-72425a37dbc2.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:37:18.702177900+00:00",
+            "updatedAt": "2026-10-04T02:37:23.234110500+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "Original Landsat quality hashes checked; aligned UInt16 flags and independent internal coverage mask retained; QA_PIXEL bit 0 determines coverage; saturation zero remains valid; no bit merging, averaging, cloud filtering or resampling",
+            "attempts": 1,
+            "settled": true
+          },
+          {
+            "id": "f51132ba-e8e7-49c3-8e24-0256e63dae70",
+            "kind": "raster_mosaic",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": {
+              "projectId": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "assetKey": "qa_radsat",
+              "sources": [
+                {
+                  "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+                  "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+                }
+              ],
+              "coverageSources": [
+                {
+                  "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                  "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                }
+              ]
+            },
+            "mosaicOutput": {
+              "width": 3612,
+              "height": 1860,
+              "bandCount": 1,
+              "crs": "EPSG:32610",
+              "bounds": [
+                462285.0,
+                4161435.0,
+                570645.0,
+                4217235.0
+              ],
+              "pixelSize": [
+                30.0,
+                30.0
+              ],
+              "sourceCount": 1,
+              "maskedPixels": 276690,
+              "coveredPixels": 4656481,
+              "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+              "landsatQuality": {
+                "schemaVersion": "geod-landsat-quality-mosaic/v1",
+                "product": "landsat-c2-l2",
+                "band": "qa_radsat",
+                "bits": 16,
+                "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+              }
+            },
+            "manifestPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\f51132ba-e8e7-49c3-8e24-0256e63dae70.metadata.json",
+            "safe": null,
+            "safeOutput": null,
+            "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+            "assetKey": "qa_radsat",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+            "mediaType": "image/tiff",
+            "title": "QA · Landsat same-scene RGB · polygon · QA_RADSAT mosaic",
+            "status": "succeeded",
+            "bytesDownloaded": 20016,
+            "totalBytes": 20016,
+            "sha256": "1a49acb6cd55e71d093b4e30eee1181be6edb9403d08b4730f9622f4df92ad43",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\landsat-rgb-mask-20261004\\assets\\f51132ba-e8e7-49c3-8e24-0256e63dae70.tif",
+            "error": null,
+            "createdAt": "2026-10-04T02:37:23.317538+00:00",
+            "updatedAt": "2026-10-04T02:37:27.784137800+00:00",
+            "source": "Project source rasters / pinned original products",
+            "validation": "Original Landsat quality hashes checked; aligned UInt16 flags and independent internal coverage mask retained; QA_PIXEL bit 0 determines coverage; saturation zero remains valid; no bit merging, averaging, cloud filtering or resampling",
+            "attempts": 1,
+            "settled": true
+          }
+        ],
+        "proofs": [
+          {
+            "key": "red",
+            "id": "0831e288-e37c-4b66-bce3-d304aeb26a91",
+            "sha256": "e77f56b64c3a0f01e6bfe9fb39fd9373bee63984181efcc7465726c8c1eac8dd",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 0,
+            "polygonOutsidePixels": 276690
+          },
+          {
+            "key": "green",
+            "id": "dd7545b6-5024-4362-8168-3adc5caf9e33",
+            "sha256": "5cac697bdf7a17c2229d19b5987137fad71f4ba3c9f2aeb51c14311926317bae",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 0,
+            "polygonOutsidePixels": 276690
+          },
+          {
+            "key": "blue",
+            "id": "6e60f7ba-2a89-4c69-bda0-1ae31e88ff1e",
+            "sha256": "23ab16c7524ed015f8dd23627684a1cf8b6b75d16dcabc83cf5c6f4d1839970b",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 0,
+            "polygonOutsidePixels": 276690
+          },
+          {
+            "key": "qa_pixel",
+            "id": "012b4d38-0fa7-4c76-83b1-72425a37dbc2",
+            "sha256": "77c01fdaadc64386807d40132b6730e84524d7b28a985d0338e2b915f9bc316d",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 6718320,
+            "polygonOutsidePixels": 276690
+          },
+          {
+            "key": "qa_radsat",
+            "id": "f51132ba-e8e7-49c3-8e24-0256e63dae70",
+            "sha256": "1a49acb6cd55e71d093b4e30eee1181be6edb9403d08b4730f9622f4df92ad43",
+            "pixelsCompared": 6718320,
+            "maskPixelsCompared": 6718320,
+            "polygonOutsidePixels": 276690
+          }
+        ]
+      }
+    ],
+    "originalSourcesUnchanged": true,
+    "restartPassed": true
+  },
+  "mcp": {
+    "modes": [
+      "direct",
+      "loopback"
+    ],
+    "allDnCompared": 40309920,
+    "rawQueriesCompared": 6,
+    "writesDeniedInReadOnlyMode": true,
+    "cleanProtocolEof": true,
+    "loopbackDisconnectReconnectPassed": true
+  },
+  "ui": {
+    "cases": [
+      {
+        "kind": "original",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "id": "05126a26-f4c7-4040-a246-a0ae1aa368e9",
+        "sha256": "cc20b6becf593a14a9e0757a91be18e18ca04b53a9a434eaf68bccc76114427a",
+        "mask": {
+          "schemaVersion": "geod-landsat-rgb-mask/v1",
+          "policy": "cloud_free_conservative",
+          "excludeSnow": true,
+          "sources": [
+            {
+              "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+              "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f",
+              "band": "qa_pixel",
+              "kind": "download",
+              "itemId": "LC09_L2SP_044034_20250628_02_T1",
+              "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+              "bytes": 986984,
+              "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags"
+            },
+            {
+              "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+              "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4",
+              "band": "qa_radsat",
+              "kind": "download",
+              "itemId": "LC09_L2SP_044034_20250628_02_T1",
+              "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+              "bytes": 224657,
+              "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags"
+            }
+          ],
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands"
+        },
+        "counts": {
+          "examinedPixels": 59764761,
+          "rejectedPixels": 33328558,
+          "inputCommonValidPixels": 40715194,
+          "removedValidPixels": 14279186
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "05126a26-f4c7-4040-a246-a0ae1aa368e9",
+            "sha256": "cc20b6becf593a14a9e0757a91be18e18ca04b53a9a434eaf68bccc76114427a"
+          },
+          "sources": [
+            {
+              "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+              "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+              "band": "red"
+            },
+            {
+              "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+              "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+              "band": "green"
+            },
+            {
+              "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+              "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+              "band": "blue"
+            }
+          ],
+          "crs": "EPSG:32610",
+          "coordinate": [
+            577350,
+            4147350
+          ],
+          "pixel": [
+            3835,
+            3895
+          ],
+          "center": [
+            577350,
+            4147350
+          ],
+          "values": [
+            10096,
+            10062,
+            9341
+          ],
+          "reflectances": [
+            0.07763999999999999,
+            0.07670500000000002,
+            0.056877500000000025
+          ],
+          "channelNoData": [
+            false,
+            false,
+            false
+          ],
+          "isNoData": false
+        },
+        "canvases": [
+          {
+            "width": 932,
+            "height": 809,
+            "painted": 254154
+          }
+        ],
+        "actualDraw": {
+          "width": 756,
+          "height": 768,
+          "sourceKind": "ImageBitmap",
+          "painted": 241698,
+          "allSourceRgbaIdentical": true
+        },
+        "drawnPreviewSha256": "9f0f23c5c19a5524ef0d61e3c208025f32ca217c795f35dd0292be8c15606b2e",
+        "screenshot": "masked-original-1440-en.png",
+        "sourceDetails": {
+          "qualityPins": 2,
+          "selectedPolicy": "cloud_free_conservative",
+          "displayedQualityCounts": {
+            "rejectedPixels": 33328558,
+            "removedValidPixels": 14279186
+          }
+        },
+        "libraryThumbnail": {
+          "complete": true,
+          "width": 157,
+          "height": 160,
+          "pngSha256": "4b277b7c175b65c65c64221882dae6e7cb9048454f0f57a1ed535bfd3d74d49c"
+        },
+        "horizontalOverflow": false
+      },
+      {
+        "kind": "single",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "id": "732220fa-e6ea-47f1-999a-b02765d85197",
+        "sha256": "40e88c014266e644301a2aac11b8a75c34df24a734e2928f8b145fe705024929",
+        "mask": {
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "excludeSnow": true,
+          "policy": "cloud_free_conservative",
+          "schemaVersion": "geod-landsat-rgb-mask/v1",
+          "sources": [
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "qa_pixel",
+              "bytes": 195522,
+              "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+              "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "jobId": "4d14cc17-b9d6-4b2c-b734-1afb599b18b1",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "qa_pixel",
+                "createdAt": "2026-10-04T02:36:52.320701500+00:00",
+                "output": {
+                  "bytes": 195522,
+                  "file": "4d14cc17-b9d6-4b2c-b734-1afb599b18b1.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    462285,
+                    4161435,
+                    570645,
+                    4217235
+                  ],
+                  "coveredPixels": 4918724,
+                  "crs": "EPSG:32610",
+                  "height": 1860,
+                  "landsatQuality": {
+                    "band": "qa_pixel",
+                    "bits": 16,
+                    "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+                    "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                    "product": "landsat-c2-l2",
+                    "schemaVersion": "geod-landsat-quality-mosaic/v1"
+                  },
+                  "maskedPixels": 0,
+                  "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+                  "pixelSize": [
+                    30,
+                    30
+                  ],
+                  "sourceCount": 1,
+                  "width": 3612
+                },
+                "project": {
+                  "bounds": [
+                    -123.6,
+                    37.6,
+                    -122.2,
+                    38.1
+                  ],
+                  "geometry": null,
+                  "id": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+                  "name": "QA · Landsat same-scene RGB · single"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "acquiredAt": "2025-06-28T18:45:46.894588Z",
+                    "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags",
+                    "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+                    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+                    "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                    "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                  }
+                ]
+              },
+              "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53"
+            },
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "qa_radsat",
+              "bytes": 19578,
+              "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+              "itemId": "project:b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+              "jobId": "0539c220-3957-4824-9aed-e81a9d07abdc",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "qa_radsat",
+                "coverageSources": [
+                  {
+                    "acquiredAt": "2025-06-28T18:45:46.894588Z",
+                    "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags",
+                    "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+                    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+                    "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                    "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                  }
+                ],
+                "createdAt": "2026-10-04T02:36:54.294733500+00:00",
+                "output": {
+                  "bytes": 19578,
+                  "file": "0539c220-3957-4824-9aed-e81a9d07abdc.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    462285,
+                    4161435,
+                    570645,
+                    4217235
+                  ],
+                  "coveredPixels": 4918724,
+                  "crs": "EPSG:32610",
+                  "height": 1860,
+                  "landsatQuality": {
+                    "band": "qa_radsat",
+                    "bits": 16,
+                    "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+                    "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                    "product": "landsat-c2-l2",
+                    "schemaVersion": "geod-landsat-quality-mosaic/v1"
+                  },
+                  "maskedPixels": 0,
+                  "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+                  "pixelSize": [
+                    30,
+                    30
+                  ],
+                  "sourceCount": 1,
+                  "width": 3612
+                },
+                "project": {
+                  "bounds": [
+                    -123.6,
+                    37.6,
+                    -122.2,
+                    38.1
+                  ],
+                  "geometry": null,
+                  "id": "b4e46bf9-e7cd-4ded-b9e6-16e1b8e5d854",
+                  "name": "QA · Landsat same-scene RGB · single"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "acquiredAt": "2025-06-28T18:45:46.894588Z",
+                    "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags",
+                    "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+                    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+                    "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+                    "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+                  }
+                ]
+              },
+              "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545"
+            }
+          ]
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "inputCommonValidPixels": 4918437,
+          "rejectedPixels": 4327112,
+          "removedValidPixels": 2527335
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "732220fa-e6ea-47f1-999a-b02765d85197",
+            "sha256": "40e88c014266e644301a2aac11b8a75c34df24a734e2928f8b145fe705024929"
+          },
+          "sources": [
+            {
+              "jobId": "bb797223-34d1-4e33-8fc2-29d77ea9d76a",
+              "sha256": "6863aebcb46f37f64e91da47b33806daf701ac9bbbd9c5b2d5616d27d8166590",
+              "band": "red"
+            },
+            {
+              "jobId": "5d970880-ec0c-4572-a16d-746d432e1b8f",
+              "sha256": "d76863834520dc0da91f2509449843790274afedbe933566ac25f1b383caf7a8",
+              "band": "green"
+            },
+            {
+              "jobId": "5fcdbd37-79d7-45aa-8a28-c9fdf8b8cde9",
+              "sha256": "a98a2b1fc5b0eb900e5b1a3ec191949e7a8dcbee3b54ebfa0af5c555e63d7713",
+              "band": "blue"
+            }
+          ],
+          "crs": "EPSG:32610",
+          "coordinate": [
+            516465,
+            4189335
+          ],
+          "pixel": [
+            1806,
+            930
+          ],
+          "center": [
+            516480,
+            4189320
+          ],
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "reflectances": [
+            null,
+            null,
+            null
+          ],
+          "channelNoData": [
+            true,
+            true,
+            true
+          ],
+          "isNoData": true
+        },
+        "canvases": [
+          {
+            "width": 516,
+            "height": 809,
+            "painted": 41824
+          }
+        ],
+        "actualDraw": {
+          "width": 768,
+          "height": 395,
+          "sourceKind": "ImageBitmap",
+          "painted": 37492,
+          "allSourceRgbaIdentical": true
+        },
+        "drawnPreviewSha256": "c89debaca82696d9ba7e5b0ae7093be041fae0ffef624d520a63c8c06b9b6f72",
+        "screenshot": "masked-single-1024-zh-CN.png",
+        "sourceDetails": {
+          "qualityPins": 2,
+          "selectedPolicy": "cloud_free_conservative",
+          "displayedQualityCounts": {
+            "rejectedPixels": 4327112,
+            "removedValidPixels": 2527335
+          }
+        },
+        "libraryThumbnail": {
+          "complete": true,
+          "width": 160,
+          "height": 82,
+          "pngSha256": "0412c862a341a5325f3a822abd1b7ba327c681009e0354dff50c4854b8dee17a"
+        },
+        "horizontalOverflow": false
+      },
+      {
+        "kind": "polygon",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "id": "119df4ab-b08f-410f-8d32-203c8a282863",
+        "sha256": "a49a96e462cd048f1f9b93d62b16d9f631deeccb6e778ef93992001c6ebc3fec",
+        "mask": {
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "excludeSnow": true,
+          "policy": "cloud_free_conservative",
+          "schemaVersion": "geod-landsat-rgb-mask/v1",
+          "sources": [
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "qa_pixel",
+              "bytes": 193612,
+              "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+              "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "jobId": "012b4d38-0fa7-4c76-83b1-72425a37dbc2",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "qa_pixel",
+                "createdAt": "2026-10-04T02:37:23.232115400+00:00",
+                "output": {
+                  "bytes": 193612,
+                  "file": "012b4d38-0fa7-4c76-83b1-72425a37dbc2.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "77c01fdaadc64386807d40132b6730e84524d7b28a985d0338e2b915f9bc316d"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    462285,
+                    4161435,
+                    570645,
+                    4217235
+                  ],
+                  "coveredPixels": 4656481,
+                  "crs": "EPSG:32610",
+                  "height": 1860,
+                  "landsatQuality": {
+                    "band": "qa_pixel",
+                    "bits": 16,
+                    "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+                    "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                    "product": "landsat-c2-l2",
+                    "schemaVersion": "geod-landsat-quality-mosaic/v1"
+                  },
+                  "maskedPixels": 276690,
+                  "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+                  "pixelSize": [
+                    30,
+                    30
+                  ],
+                  "sourceCount": 1,
+                  "width": 3612
+                },
+                "project": {
+                  "bounds": [
+                    -123.6,
+                    37.6,
+                    -122.2,
+                    38.1
+                  ],
+                  "geometry": {
+                    "coordinates": [
+                      [
+                        [
+                          -123.6,
+                          37.6
+                        ],
+                        [
+                          -122.2,
+                          37.6
+                        ],
+                        [
+                          -122.2,
+                          38.1
+                        ],
+                        [
+                          -123.6,
+                          38.1
+                        ],
+                        [
+                          -123.6,
+                          37.6
+                        ]
+                      ],
+                      [
+                        [
+                          -123.1,
+                          37.76
+                        ],
+                        [
+                          -123.1,
+                          37.88
+                        ],
+                        [
+                          -122.93,
+                          37.88
+                        ],
+                        [
+                          -122.93,
+                          37.76
+                        ],
+                        [
+                          -123.1,
+                          37.76
+                        ]
+                      ]
+                    ],
+                    "type": "Polygon"
+                  },
+                  "id": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+                  "name": "QA · Landsat same-scene RGB · polygon"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "acquiredAt": "2025-06-28T18:45:46.894588Z",
+                    "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags",
+                    "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+                    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+                    "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                    "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                  }
+                ]
+              },
+              "sha256": "77c01fdaadc64386807d40132b6730e84524d7b28a985d0338e2b915f9bc316d"
+            },
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "qa_radsat",
+              "bytes": 20016,
+              "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+              "itemId": "project:1a823ffa-8d71-4ea2-9863-2767aa958714",
+              "jobId": "f51132ba-e8e7-49c3-8e24-0256e63dae70",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "qa_radsat",
+                "coverageSources": [
+                  {
+                    "acquiredAt": "2025-06-28T18:45:46.894588Z",
+                    "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags",
+                    "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_PIXEL.TIF",
+                    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+                    "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+                    "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+                  }
+                ],
+                "createdAt": "2026-10-04T02:37:27.782314100+00:00",
+                "output": {
+                  "bytes": 20016,
+                  "file": "f51132ba-e8e7-49c3-8e24-0256e63dae70.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "1a49acb6cd55e71d093b4e30eee1181be6edb9403d08b4730f9622f4df92ad43"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    462285,
+                    4161435,
+                    570645,
+                    4217235
+                  ],
+                  "coveredPixels": 4656481,
+                  "crs": "EPSG:32610",
+                  "height": 1860,
+                  "landsatQuality": {
+                    "band": "qa_radsat",
+                    "bits": 16,
+                    "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+                    "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+                    "product": "landsat-c2-l2",
+                    "schemaVersion": "geod-landsat-quality-mosaic/v1"
+                  },
+                  "maskedPixels": 276690,
+                  "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+                  "pixelSize": [
+                    30,
+                    30
+                  ],
+                  "sourceCount": 1,
+                  "width": 3612
+                },
+                "project": {
+                  "bounds": [
+                    -123.6,
+                    37.6,
+                    -122.2,
+                    38.1
+                  ],
+                  "geometry": {
+                    "coordinates": [
+                      [
+                        [
+                          -123.6,
+                          37.6
+                        ],
+                        [
+                          -122.2,
+                          37.6
+                        ],
+                        [
+                          -122.2,
+                          38.1
+                        ],
+                        [
+                          -123.6,
+                          38.1
+                        ],
+                        [
+                          -123.6,
+                          37.6
+                        ]
+                      ],
+                      [
+                        [
+                          -123.1,
+                          37.76
+                        ],
+                        [
+                          -123.1,
+                          37.88
+                        ],
+                        [
+                          -122.93,
+                          37.88
+                        ],
+                        [
+                          -122.93,
+                          37.76
+                        ],
+                        [
+                          -123.1,
+                          37.76
+                        ]
+                      ]
+                    ],
+                    "type": "Polygon"
+                  },
+                  "id": "1a823ffa-8d71-4ea2-9863-2767aa958714",
+                  "name": "QA · Landsat same-scene RGB · polygon"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "acquiredAt": "2025-06-28T18:45:46.894588Z",
+                    "attribution": "Microsoft Planetary Computer; USGS Landsat 8/9 Collection 2 original QA_PIXEL / QA_RADSAT unsigned quality flags",
+                    "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_QA_RADSAT.TIF",
+                    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+                    "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+                    "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+                  }
+                ]
+              },
+              "sha256": "1a49acb6cd55e71d093b4e30eee1181be6edb9403d08b4730f9622f4df92ad43"
+            }
+          ]
+        },
+        "counts": {
+          "examinedPixels": 6718320,
+          "inputCommonValidPixels": 4656199,
+          "rejectedPixels": 4368437,
+          "removedValidPixels": 2306422
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "119df4ab-b08f-410f-8d32-203c8a282863",
+            "sha256": "a49a96e462cd048f1f9b93d62b16d9f631deeccb6e778ef93992001c6ebc3fec"
+          },
+          "sources": [
+            {
+              "jobId": "0831e288-e37c-4b66-bce3-d304aeb26a91",
+              "sha256": "e77f56b64c3a0f01e6bfe9fb39fd9373bee63984181efcc7465726c8c1eac8dd",
+              "band": "red"
+            },
+            {
+              "jobId": "dd7545b6-5024-4362-8168-3adc5caf9e33",
+              "sha256": "5cac697bdf7a17c2229d19b5987137fad71f4ba3c9f2aeb51c14311926317bae",
+              "band": "green"
+            },
+            {
+              "jobId": "6e60f7ba-2a89-4c69-bda0-1ae31e88ff1e",
+              "sha256": "23ab16c7524ed015f8dd23627684a1cf8b6b75d16dcabc83cf5c6f4d1839970b",
+              "band": "blue"
+            }
+          ],
+          "crs": "EPSG:32610",
+          "coordinate": [
+            516465,
+            4189335
+          ],
+          "pixel": [
+            1806,
+            930
+          ],
+          "center": [
+            516480,
+            4189320
+          ],
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "reflectances": [
+            null,
+            null,
+            null
+          ],
+          "channelNoData": [
+            true,
+            true,
+            true
+          ],
+          "isNoData": true
+        },
+        "canvases": [
+          {
+            "width": 392,
+            "height": 805,
+            "painted": 23009
+          }
+        ],
+        "actualDraw": {
+          "width": 768,
+          "height": 395,
+          "sourceKind": "ImageBitmap",
+          "painted": 19247,
+          "allSourceRgbaIdentical": true
+        },
+        "drawnPreviewSha256": "31d3433845365a28a8e16f945fc0f11d3328b01e8b5c033be23bdb0165c920d7",
+        "screenshot": "masked-polygon-900-en.png",
+        "sourceDetails": {
+          "qualityPins": 2,
+          "selectedPolicy": "cloud_free_conservative",
+          "displayedQualityCounts": {
+            "rejectedPixels": 4368437,
+            "removedValidPixels": 2306422
+          }
+        },
+        "libraryThumbnail": {
+          "complete": true,
+          "width": 160,
+          "height": 82,
+          "pngSha256": "3f00e8ef83a35c857ecd9edd7ad9d0aee8e9a1f29e9d5990b23a52dcbe56b496"
+        },
+        "horizontalOverflow": false
+      }
+    ],
+    "createdByUi": {
+      "id": "05126a26-f4c7-4040-a246-a0ae1aa368e9",
+      "sha256": "cc20b6becf593a14a9e0757a91be18e18ca04b53a9a434eaf68bccc76114427a"
+    },
+    "drawnSourceRgbaPixelsCompared": 1187328,
+    "resources": {
+      "prototype/dist/index.html": "0845685f119f7e06945180ae3d6612b637a58a83f077b04d3a87e82426cab3e0",
+      "prototype/dist/assets/index-BN2SCt4f.js": "46da0f447c30a89d5c774589c4a89c752b90b80e25e019014c7fde3208683e1b",
+      "prototype/dist/assets/chunk-aKtaBQYM.js": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236",
+      "prototype/dist/assets/i18n-DZ60XG39.css": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6",
+      "prototype/dist/assets/index-tfg7QXKt.css": "19eb70dc2a4d1be9670a3d112a500a95e5b654b889f5a88ad7a5d54fa9f71153",
+      "prototype/dist/assets/i18n-BHvF23Hr.js": "169a9207486e493387c15f67b9abf4d5e295db6de89a8f4f68e2eed7e84e2ef8",
+      "prototype/dist/assets/workspace-map-DX3o4W9X.js": "3173715ec91fbb37a7525a80baa748ce27f6ce8ec9f26fc98bd7769ebca8e3a3",
+      "prototype/dist/assets/ol-BM8XMzgm.js": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304",
+      "prototype/dist/assets/workspace-map-geometry-DMi2dHld.js": "6460449887961083d6740c4e644a94431d3880911fc742a4097c71b1e1b3ea1d",
+      "prototype/dist/assets/rbush-CaohfFwn.js": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7",
+      "prototype/dist/assets/ol-c_1sG1-7.css": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77",
+      "prototype/dist/assets/ImageStatic-CJOl8TQ_.js": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540",
+      "prototype/dist/assets/workspace-map-za6H7b8_.css": "69e98ebf56c376e162dc30891fb522b437fe00aa6529968db522123458f9dd9e",
+      "prototype/dist/fonts/inter.woff2": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "prototype/dist/assets/common-uuK22kLj.js": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e",
+      "prototype/dist/brand/geod-symbol.png": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+    },
+    "renderer": "built renderer and exact desktop CSP, real native HTTP bridge",
+    "nativeWindowTested": false,
+    "errors": [],
+    "remoteRequests": [],
+    "spatialCanvasAllPixelsCompared": false,
+    "libraryThumbnailsCompared": 3,
+    "realBusyWorkerRecovery": {
+      "id": "05126a26-f4c7-4040-a246-a0ae1aa368e9",
+      "sha256": "cc20b6becf593a14a9e0757a91be18e18ca04b53a9a434eaf68bccc76114427a",
+      "width": 157,
+      "height": 160,
+      "pngSha256": "4b277b7c175b65c65c64221882dae6e7cb9048454f0f57a1ed535bfd3d74d49c"
+    },
+    "handledBusyReplies": 17
+  },
+  "cache": {
+    "filesRestored": 12,
+    "missingParentJobs": 15,
+    "thumbnailRgbaPixelsCompared": 205440,
+    "cacheEntriesReused": 12,
+    "controls": [
+      {
+        "name": "changed output refused with existing cache",
+        "failures": {
+          "rgb": {
+            "statusCode": 400,
+            "body": {
+              "error": "Reflectance source byte count is invalid or exceeds 512 MiB"
+            }
+          },
+          "thumbnail": {
+            "statusCode": 400,
+            "body": {
+              "error": "Preview source size no longer matches its completed job"
+            }
+          },
+          "package": {
+            "statusCode": 400,
+            "body": {
+              "error": "Reflectance source byte count is invalid or exceeds 512 MiB"
+            }
+          }
+        }
+      },
+      {
+        "name": "corrupt cache rebuilt from unchanged TIFF",
+        "passed": true
+      },
+      {
+        "name": "changed rule manifest refused for delivery",
+        "failure": {
+          "statusCode": 400,
+          "body": {
+            "error": "Scientific RGB metadata differs from its committed specification and samples"
+          }
+        }
+      }
+    ]
+  },
+  "acceptedRenderer": {
+    "snapshot": "G:\\code\\geod-global\\.verification\\renderer-landsat-rgb-mask-accepted-20261004",
+    "files": 662,
+    "receiptSha256": "47c87903700abd66ce6e49fdcc7b2fa4d1d1ec8c17b51cff81aabb68218598e0"
+  },
+  "developmentDesktopBuild": {
+    "path": "G:\\code\\geod-global\\.verification\\renderer-landsat-rgb-mask-accepted-20261004\\desktop-ec2018887323f151.exe",
+    "bytes": 80918528,
+    "sha256": "ec2018887323f15127da1bb35d91a530601dee9697dd84a6789ea52069fe496f",
+    "customProtocol": true,
+    "nativeWindowTested": false,
+    "installerBuilt": false
+  },
+  "previousRenderersPreserved": [
+    {
+      "snapshot": "G:\\code\\geod-global\\.verification\\renderer-modis-coupled-20261004",
+      "files": 661,
+      "receiptSha256": "9bc60986655e98f7c0173a84f843ea5717228223a5e44b6852f8c5a5ac40d029"
+    },
+    {
+      "snapshot": "G:\\code\\geod-global\\.verification\\renderer-landsat-quality-20261004",
+      "files": 662,
+      "receiptSha256": "97fc2a2e8f78dadddf6f9df661815a6c896d0d3039224c8e117492b1acb96f7d"
+    },
+    {
+      "snapshot": "G:\\code\\geod-global\\.verification\\renderer-landsat-quality-processing-accepted-20261004",
+      "files": 662,
+      "receiptSha256": "d991f231bdec2957f6b5aba68e087cdd59670ffeaf129e369e97a8d027e313fb"
+    }
+  ],
+  "canonicalRuntimeUnchanged": true,
+  "boundaries": [
+    "Previously downloaded complete public files are reused; this cohort makes no new provider download.",
+    "Real Landsat 9 same-scene originals and clips; Landsat 8 RGB and coherent multi-scene quality selection remain pending.",
+    "Exact flag selection does not establish atmospheric accuracy or include SR_QA_AEROSOL.",
+    "Synthetic flag and high unsigned DN controls remain separately identified as unit tests.",
+    "Headless production renderer under exact desktop CSP is not native WebView/window acceptance.",
+    "NASA/Copernicus account entries exist; successful production authorization and protected original downloads remain pending."
+  ]
+}

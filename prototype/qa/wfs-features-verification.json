@@ -1,0 +1,1105 @@
+{
+  "checkedAt": "2026-10-02T14:49:51.936453+00:00",
+  "status": "Verified public WFS 2.0 simple-feature increment; broader provider goal remains active",
+  "implementation": "Rust core shared by desktop IPC, HTTP and CLI",
+  "fixturesUsedForPublicAcceptance": false,
+  "desktopWebViewAccepted": false,
+  "usedUserDesktop": false,
+  "publicCases": [
+    {
+      "endpoint": "https://demo.mapserver.org/cgi-bin/wfs",
+      "typeName": "ms:cities",
+      "bounds": [
+        13.2,
+        52.4,
+        13.6,
+        52.6
+      ],
+      "format": "gml32",
+      "pageSize": 1,
+      "assetId": "c0d69d66-388b-4b16-a10f-f0fc52a95d3a",
+      "sourceFeatureCount": 1,
+      "coordinateCount": 1,
+      "geometryCounts": {
+        "Point": 1
+      },
+      "holes": 0,
+      "sourceBytes": 7361,
+      "sourceSha256": "d429e17de4f88d253fe0bce59436af05c70cdd622fa40f6a406d2a77235ebd2e",
+      "exportSha256": "1e8125f8ad45687567e3efe4d7997e196e42c7453412d46f0d47c01b9e5a326b",
+      "schemaProperties": [
+        {
+          "name": "POPULATION",
+          "fieldType": "integer",
+          "nullable": false,
+          "optional": true
+        },
+        {
+          "name": "NAME",
+          "fieldType": "string",
+          "nullable": false,
+          "optional": true
+        }
+      ],
+      "sourceKey": null,
+      "expectedIds": [
+        "cities.5987"
+      ],
+      "sourceDocumentsBytes": 6878,
+      "twoReadsVerified": true,
+      "originalFirstPassIdsPreserved": true,
+      "allPropertiesAndFullCoordinatesVerified": true,
+      "case": "points",
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "features": [
+        {
+          "id": "cities.5987",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        }
+      ],
+      "rawDocuments": [
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acities",
+          "sha256": "0f6f21c42d2b893ca8c93e218d1b20dae3209549047f7c4b619db195da45af71",
+          "bytes": 1026,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-before.xsd"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acities",
+          "sha256": "0f6f21c42d2b893ca8c93e218d1b20dae3209549047f7c4b619db195da45af71",
+          "bytes": 1026,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-after.xsd"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "93dec552b0fe31a17416fe464a21de0bafeaeb87d4b80cb03fcc5db1b84d7d8b",
+          "bytes": 761,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-before.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "9ceecc3460b2ed9ab54032600547b8e505a9043c5baf8e8017687dc8f3c598e6",
+          "bytes": 761,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-after.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=1",
+          "sha256": "32d62b6e0ad50b0ce202a285bf73c5372e9fa59d8e931afa4ff0f0b6eb8a9a95",
+          "bytes": 1652,
+          "returned": 1,
+          "originalDocument": "original-documents/first-001.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=1",
+          "sha256": "070da23fee822c7b4de7cf401a5fbba738a5f2c4c836361ebed9f37558a4923f",
+          "bytes": 1652,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-001.xml"
+        }
+      ],
+      "evidence": ".verification/wfs-public-points/report.json"
+    },
+    {
+      "endpoint": "https://demo.mapserver.org/cgi-bin/wfs",
+      "typeName": "ms:continents",
+      "bounds": [
+        -21.95,
+        64.1,
+        -21.8,
+        64.2
+      ],
+      "format": "gml32",
+      "pageSize": 2,
+      "assetId": "3d25d692-fe24-4472-9793-86647150c957",
+      "sourceFeatureCount": 3,
+      "coordinateCount": 4879,
+      "geometryCounts": {
+        "Polygon": 3
+      },
+      "holes": 0,
+      "sourceBytes": 219437,
+      "sourceSha256": "624333390127c2cd36eec79918f2c21333fe3651f2bf3d2e1877b7e92f1c1714",
+      "exportSha256": "6241b4df9826840724652c2677f3d1c5468cbda7a9ad5fba1e3958edd6f520c4",
+      "schemaProperties": [
+        {
+          "name": "NA2DESC",
+          "fieldType": "string",
+          "nullable": false,
+          "optional": true
+        },
+        {
+          "name": "NA3DESC",
+          "fieldType": "string",
+          "nullable": false,
+          "optional": true
+        }
+      ],
+      "sourceKey": null,
+      "expectedIds": [
+        "continents.11908",
+        "continents.101",
+        "continents.23367"
+      ],
+      "sourceDocumentsBytes": 218692,
+      "twoReadsVerified": true,
+      "originalFirstPassIdsPreserved": true,
+      "allPropertiesAndFullCoordinatesVerified": true,
+      "case": "polygons",
+      "firstReadPages": 2,
+      "verificationPages": 2,
+      "features": [
+        {
+          "id": "continents.11908",
+          "sourceKey": null,
+          "geometryType": "Polygon",
+          "coordinates": 9,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NA2DESC",
+            "NA3DESC"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "continents.101",
+          "sourceKey": null,
+          "geometryType": "Polygon",
+          "coordinates": 4865,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NA2DESC",
+            "NA3DESC"
+          ],
+          "coordinatesOutsideSelection": 4825
+        },
+        {
+          "id": "continents.23367",
+          "sourceKey": null,
+          "geometryType": "Polygon",
+          "coordinates": 5,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NA2DESC",
+            "NA3DESC"
+          ],
+          "coordinatesOutsideSelection": 0
+        }
+      ],
+      "rawDocuments": [
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acontinents",
+          "sha256": "ee468e77d3d4a94c52ba38b9ae49ba4b30e80175f4b4b3b87904b34ffb1aa2e8",
+          "bytes": 1039,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-before.xsd"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acontinents",
+          "sha256": "ee468e77d3d4a94c52ba38b9ae49ba4b30e80175f4b4b3b87904b34ffb1aa2e8",
+          "bytes": 1039,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-after.xsd"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acontinents&bbox=64.1%2C-21.95%2C64.2%2C-21.8%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "d0aef567e8f3d49142c98591234bcce98cfbdc2d1138a2d95583bb905874e83f",
+          "bytes": 765,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-before.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acontinents&bbox=64.1%2C-21.95%2C64.2%2C-21.8%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "b857eea2453c40ad7288e8076b36eddfedf5f3beaf5e642ebb6678ee87dc8e2e",
+          "bytes": 765,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-after.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acontinents&bbox=64.1%2C-21.95%2C64.2%2C-21.8%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=2",
+          "sha256": "72a82e68bcbde89c7eb5992769891daa8c3d53344a1cfc22d1cf17ec2e6e2f5c",
+          "bytes": 105295,
+          "returned": 2,
+          "originalDocument": "original-documents/first-001.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acontinents&bbox=64.1%2C-21.95%2C64.2%2C-21.8%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=2&count=2",
+          "sha256": "f869a45e148fa36d9487b0a0e96368bfaf07238d98d9f2d09cf19b70dd9071ec",
+          "bytes": 2247,
+          "returned": 1,
+          "originalDocument": "original-documents/first-002.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acontinents&bbox=64.1%2C-21.95%2C64.2%2C-21.8%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=2",
+          "sha256": "badab70952bfc710cd5b7399b88a98adb6cec0841e2b7ce4103311a8df342403",
+          "bytes": 105295,
+          "returned": 2,
+          "originalDocument": "original-documents/verification-001.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acontinents&bbox=64.1%2C-21.95%2C64.2%2C-21.8%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=2&count=2",
+          "sha256": "d69b1f2e722857b46acc0d48b8d6655761b231e0b7537aa52987ddcc9823a522",
+          "bytes": 2247,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-002.xml"
+        }
+      ],
+      "evidence": ".verification/wfs-public-polygons/report.json"
+    },
+    {
+      "endpoint": "https://drive.emodnet-geology.eu/geoserver/tno/wfs",
+      "typeName": "tno:CoastalResilienceTolerance_lines",
+      "bounds": [
+        4.25,
+        52.1,
+        4.28,
+        52.12
+      ],
+      "format": "gml32",
+      "pageSize": 2,
+      "assetId": "d2c00d97-509d-4e80-a851-6832f105ef0a",
+      "sourceFeatureCount": 1,
+      "coordinateCount": 8929,
+      "geometryCounts": {
+        "LineString": 1
+      },
+      "holes": 0,
+      "sourceBytes": 414743,
+      "sourceSha256": "27a1d39a1789faeecc5add218da53e0e11fcff72c2a642927e1678196792aeea",
+      "exportSha256": "819287172a55525ab093a50d25d1e61c8eee4a3ae7b8e70cbcb673aa9f915aba",
+      "schemaProperties": [
+        {
+          "name": "id",
+          "fieldType": "long",
+          "nullable": false,
+          "optional": false
+        },
+        {
+          "name": "cvi",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        },
+        {
+          "name": "name_closest",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        },
+        {
+          "name": "notes_closest",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        },
+        {
+          "name": "info_closest",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        }
+      ],
+      "sourceKey": "id",
+      "expectedIds": [
+        "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10376a_146a"
+      ],
+      "sourceDocumentsBytes": 414288,
+      "twoReadsVerified": true,
+      "originalFirstPassIdsPreserved": true,
+      "allPropertiesAndFullCoordinatesVerified": true,
+      "case": "lines-gml",
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "features": [
+        {
+          "id": "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10376a_146a",
+          "sourceKey": 2734,
+          "geometryType": "LineString",
+          "coordinates": 8929,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "cvi",
+            "id",
+            "name_closest",
+            "notes_closest"
+          ],
+          "coordinatesOutsideSelection": 8354
+        }
+      ],
+      "rawDocuments": [
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=tno%3ACoastalResilienceTolerance_lines",
+          "sha256": "1edf2faa7d1b9d48ce411fb418cd16983518f7b4ea89f6c724e115bb04dd9c69",
+          "bytes": 1439,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-before.xsd"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=tno%3ACoastalResilienceTolerance_lines",
+          "sha256": "1edf2faa7d1b9d48ce411fb418cd16983518f7b4ea89f6c724e115bb04dd9c69",
+          "bytes": 1439,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-after.xsd"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "0ca1611ae90261349c8b93d3471e06ef53b3d1aa82e12003c707ffb218f8bd08",
+          "bytes": 824,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-before.xml"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "f8b607d216c7e9748867b914163c93a77706c99e619df91edd2b0fdd326cf52a",
+          "bytes": 824,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-after.xml"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=2&sortBy=id+A",
+          "sha256": "69fc38837fd47af8b6dd6df50153c04a31b981028735a08b2c0ebeb97164dfef",
+          "bytes": 204881,
+          "returned": 1,
+          "originalDocument": "original-documents/first-001.xml"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=2&sortBy=id+A",
+          "sha256": "0dd8a931a1e5486d4c0dfea8bb998bb0d6e53e0f32e8a56d7192ed3ac1d7151e",
+          "bytes": 204881,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-001.xml"
+        }
+      ],
+      "evidence": ".verification/wfs-public-lines-gml/report.json"
+    },
+    {
+      "endpoint": "https://drive.emodnet-geology.eu/geoserver/tno/wfs",
+      "typeName": "tno:CoastalResilienceTolerance_lines",
+      "bounds": [
+        4.25,
+        52.1,
+        4.28,
+        52.12
+      ],
+      "format": "geojson",
+      "pageSize": 2,
+      "assetId": "fd8322fe-d050-4bda-a05b-1b4073bb71b8",
+      "sourceFeatureCount": 1,
+      "coordinateCount": 8929,
+      "geometryCounts": {
+        "LineString": 1
+      },
+      "holes": 0,
+      "sourceBytes": 448963,
+      "sourceSha256": "6fb2a4762ca3e498480c54a3fd721694b04220b3390aee21da4f60c7241b546d",
+      "exportSha256": "4e79894d9386f94a899e1cb3001bf4c4dc4b244926b7396260f920b5f5574110",
+      "schemaProperties": [
+        {
+          "name": "id",
+          "fieldType": "long",
+          "nullable": false,
+          "optional": false
+        },
+        {
+          "name": "cvi",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        },
+        {
+          "name": "name_closest",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        },
+        {
+          "name": "notes_closest",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        },
+        {
+          "name": "info_closest",
+          "fieldType": "string",
+          "nullable": true,
+          "optional": true
+        }
+      ],
+      "sourceKey": "id",
+      "expectedIds": [
+        "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10b7d3_-7079"
+      ],
+      "sourceDocumentsBytes": 448436,
+      "twoReadsVerified": true,
+      "originalFirstPassIdsPreserved": true,
+      "allPropertiesAndFullCoordinatesVerified": true,
+      "case": "lines-json",
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "features": [
+        {
+          "id": "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10b7d3_-7079",
+          "sourceKey": 2734,
+          "geometryType": "LineString",
+          "coordinates": 8929,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "cvi",
+            "id",
+            "info_closest",
+            "name_closest",
+            "notes_closest"
+          ],
+          "coordinatesOutsideSelection": 8354
+        }
+      ],
+      "rawDocuments": [
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=tno%3ACoastalResilienceTolerance_lines",
+          "sha256": "1edf2faa7d1b9d48ce411fb418cd16983518f7b4ea89f6c724e115bb04dd9c69",
+          "bytes": 1439,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-before.xsd"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=tno%3ACoastalResilienceTolerance_lines",
+          "sha256": "1edf2faa7d1b9d48ce411fb418cd16983518f7b4ea89f6c724e115bb04dd9c69",
+          "bytes": 1439,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-after.xsd"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "62a2b38370bfeaccf3714beb0edd271a18e10d8854eb85492b4713817e87ffe9",
+          "bytes": 824,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-before.xml"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "b227723976cf0137da6b084adf14ca7de4a400ac99b1e4aff0c29577ce732cd6",
+          "bytes": 824,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-after.xml"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fjson&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=2&sortBy=id+A",
+          "sha256": "f4434484e1ef6ed854c04732d8f92f65d714bf0baaaf3274cc2c0f4507d36ded",
+          "bytes": 221955,
+          "returned": 1,
+          "originalDocument": "original-documents/first-001.json"
+        },
+        {
+          "url": "https://drive.emodnet-geology.eu/geoserver/tno/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tno%3ACoastalResilienceTolerance_lines&bbox=52.1%2C4.25%2C52.12%2C4.28%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fjson&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=2&sortBy=id+A",
+          "sha256": "caf6113bdf02bc51d15e023edcc610fcce3c02cdac3d72a770f5255bcf130096",
+          "bytes": 221955,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-001.json"
+        }
+      ],
+      "evidence": ".verification/wfs-public-lines-json/report.json"
+    },
+    {
+      "endpoint": "https://demo.mapserver.org/cgi-bin/wfs",
+      "typeName": "ms:cities",
+      "bounds": [
+        13.0,
+        52.0,
+        14.0,
+        53.0
+      ],
+      "format": "gml32",
+      "pageSize": 1,
+      "assetId": "07f1a14c-64d7-4174-9c0a-63d25ef66242",
+      "sourceFeatureCount": 7,
+      "coordinateCount": 7,
+      "geometryCounts": {
+        "Point": 7
+      },
+      "holes": 0,
+      "sourceBytes": 36261,
+      "sourceSha256": "337c2a612c60c9aba030b4d4ad12492ec77a295f320fd0cd9322da7e7e129574",
+      "exportSha256": "771f1e5c05e9abb83e0fbe45573bc1bb8bab2201cea1c9fb8bd6a6709e70f3b6",
+      "schemaProperties": [
+        {
+          "name": "POPULATION",
+          "fieldType": "integer",
+          "nullable": false,
+          "optional": true
+        },
+        {
+          "name": "NAME",
+          "fieldType": "string",
+          "nullable": false,
+          "optional": true
+        }
+      ],
+      "sourceKey": null,
+      "expectedIds": [
+        "cities.5987",
+        "cities.5711",
+        "cities.5915",
+        "cities.5727",
+        "cities.5855",
+        "cities.5986",
+        "cities.5648"
+      ],
+      "sourceDocumentsBytes": 34794,
+      "twoReadsVerified": true,
+      "originalFirstPassIdsPreserved": true,
+      "allPropertiesAndFullCoordinatesVerified": true,
+      "case": "paged-points",
+      "firstReadPages": 7,
+      "verificationPages": 7,
+      "features": [
+        {
+          "id": "cities.5987",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "cities.5711",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "cities.5915",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "cities.5727",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "cities.5855",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "cities.5986",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        },
+        {
+          "id": "cities.5648",
+          "sourceKey": null,
+          "geometryType": "Point",
+          "coordinates": 1,
+          "holes": 0,
+          "geosValid": true,
+          "propertyNames": [
+            "NAME",
+            "POPULATION"
+          ],
+          "coordinatesOutsideSelection": 0
+        }
+      ],
+      "rawDocuments": [
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acities",
+          "sha256": "0f6f21c42d2b893ca8c93e218d1b20dae3209549047f7c4b619db195da45af71",
+          "bytes": 1026,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-before.xsd"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acities",
+          "sha256": "0f6f21c42d2b893ca8c93e218d1b20dae3209549047f7c4b619db195da45af71",
+          "bytes": 1026,
+          "returned": 0,
+          "originalDocument": "original-documents/schema-after.xsd"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "ae2de74a6f1f8e1fdfa92877dffccdf97bc28fe791bed9a37db36f7a402f349a",
+          "bytes": 761,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-before.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+          "sha256": "3c936af4f93437ee060b4ef03fc982775982f5470fa4b3508401899be5900161",
+          "bytes": 761,
+          "returned": 0,
+          "originalDocument": "original-documents/hits-after.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=1",
+          "sha256": "4b64d4d817d7f31596bff7970903bd5622fd8cb6bef976aee831dc07e3bf449b",
+          "bytes": 1988,
+          "returned": 1,
+          "originalDocument": "original-documents/first-001.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=1&count=1",
+          "sha256": "00f07ff0dd3c942b25145a0e0e3165c26f8f34078b3104a5f4a3a6d58ac2318d",
+          "bytes": 2311,
+          "returned": 1,
+          "originalDocument": "original-documents/first-002.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=2&count=1",
+          "sha256": "1c4db0a8055315aae50ddf2417840a6c7b849da0432cd796d6a8051de7a24dd4",
+          "bytes": 2329,
+          "returned": 1,
+          "originalDocument": "original-documents/first-003.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=3&count=1",
+          "sha256": "f60d1bf39a08d6561779467ebe9eeeeab67e94687716adc8bf50bec8240e4706",
+          "bytes": 2331,
+          "returned": 1,
+          "originalDocument": "original-documents/first-004.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=4&count=1",
+          "sha256": "52139b3cfa785c26fd1a7fcedefd4fca5166bbdac7b5a712fbd2cc6215351333",
+          "bytes": 2331,
+          "returned": 1,
+          "originalDocument": "original-documents/first-005.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=5&count=1",
+          "sha256": "38036d0b7893a9740e39640a6c345bf5d75de285127299b601104c1c65950af3",
+          "bytes": 2326,
+          "returned": 1,
+          "originalDocument": "original-documents/first-006.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=6&count=1",
+          "sha256": "e6234d95f042b32c98fddcda1387e64f64d94549bb2bcf106257dfa7d2c8b272",
+          "bytes": 1994,
+          "returned": 1,
+          "originalDocument": "original-documents/first-007.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=1",
+          "sha256": "c86539eaf423437b5186d341b86e4d40ba8875ff443fd0871482be7962186391",
+          "bytes": 1988,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-001.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=1&count=1",
+          "sha256": "b30f798696f2bba4d7ef507075b975f1cf0b91caa69bd9153113967201459577",
+          "bytes": 2311,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-002.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=2&count=1",
+          "sha256": "ec7ed25184d6e403954da2d13a712225614501c9097fa3092a128c47e841a788",
+          "bytes": 2329,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-003.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=3&count=1",
+          "sha256": "55a95de030a07600d3fe0d77e496a7397c908b4a27bcfc821cb43a52f13d40b8",
+          "bytes": 2331,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-004.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=4&count=1",
+          "sha256": "1f88885553d2a952cb64d959110544cdcddc184ca43f238f716faaadd457a2e3",
+          "bytes": 2331,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-005.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=5&count=1",
+          "sha256": "9ced00f58984f349998d3fc6cf78d56f11ce93d177e9f00d1a3f1e6f416519fd",
+          "bytes": 2326,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-006.xml"
+        },
+        {
+          "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52%2C13%2C53%2C14%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=6&count=1",
+          "sha256": "28faa3475193d0040d8fb75ba37c1eec9cf7c47eea8431a578a25d8823439bfc",
+          "bytes": 1994,
+          "returned": 1,
+          "originalDocument": "original-documents/verification-007.xml"
+        }
+      ],
+      "evidence": ".verification/wfs-public-paged-points/report.json"
+    }
+  ],
+  "totals": {
+    "snapshots": 5,
+    "storedFeatureOccurrences": 13,
+    "note": "Includes repeated Berlin point and the same EMODnet line in two formats; not unique objects",
+    "coordinates": 22745,
+    "sourceArchiveBytes": 1126765,
+    "sourceDocumentBytes": 1123088
+  },
+  "negativeAcceptance": {
+    "error": "Runtime HTTP 400: {\"error\":\"WFS response has no usable feature identifier; choose GML 3.2 if the JSON format omits IDs\"}",
+    "vectorRegistryUnchanged": true,
+    "noOrphanSourceFileCreated": true,
+    "allExistingSourceHashesUnchanged": true,
+    "nativeQueryAttempts": 1,
+    "automaticRetries": 0
+  },
+  "offlineRestart": {
+    "binarySha256": "a91f901c51949f8591555f591376f5333f1ba273f1f6b4939bf8b801c1fff4c3",
+    "networkRequests": 0,
+    "serviceRegistryRestoredExactly": true,
+    "registriesByteForByteUnchanged": true,
+    "independentNativeProcessRuns": 12
+  },
+  "ui": [
+    {
+      "width": 1440,
+      "locale": "en",
+      "theme": "light",
+      "actualViewportWidth": 1440,
+      "assetId": "c0d69d66-388b-4b16-a10f-f0fc52a95d3a",
+      "sourceUrl": "https://demo.mapserver.org/cgi-bin/wfs",
+      "collectionId": "ms:cities",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 1,
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "cities.5987",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "locale": "zh-CN",
+      "theme": "dark",
+      "actualViewportWidth": 1024,
+      "assetId": "c0d69d66-388b-4b16-a10f-f0fc52a95d3a",
+      "sourceUrl": "https://demo.mapserver.org/cgi-bin/wfs",
+      "collectionId": "ms:cities",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 1,
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "cities.5987",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "theme": "light",
+      "actualViewportWidth": 1440,
+      "assetId": "3d25d692-fe24-4472-9793-86647150c957",
+      "sourceUrl": "https://demo.mapserver.org/cgi-bin/wfs",
+      "collectionId": "ms:continents",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 3,
+      "firstReadPages": 2,
+      "verificationPages": 2,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "continents.101",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "locale": "zh-CN",
+      "theme": "dark",
+      "actualViewportWidth": 1024,
+      "assetId": "3d25d692-fe24-4472-9793-86647150c957",
+      "sourceUrl": "https://demo.mapserver.org/cgi-bin/wfs",
+      "collectionId": "ms:continents",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 3,
+      "firstReadPages": 2,
+      "verificationPages": 2,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "continents.101",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "theme": "light",
+      "actualViewportWidth": 1440,
+      "assetId": "d2c00d97-509d-4e80-a851-6832f105ef0a",
+      "sourceUrl": "https://drive.emodnet-geology.eu/geoserver/tno/wfs",
+      "collectionId": "tno:CoastalResilienceTolerance_lines",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 1,
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10376a_146a",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "locale": "zh-CN",
+      "theme": "dark",
+      "actualViewportWidth": 1024,
+      "assetId": "d2c00d97-509d-4e80-a851-6832f105ef0a",
+      "sourceUrl": "https://drive.emodnet-geology.eu/geoserver/tno/wfs",
+      "collectionId": "tno:CoastalResilienceTolerance_lines",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 1,
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10376a_146a",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "theme": "light",
+      "actualViewportWidth": 1440,
+      "assetId": "fd8322fe-d050-4bda-a05b-1b4073bb71b8",
+      "sourceUrl": "https://drive.emodnet-geology.eu/geoserver/tno/wfs",
+      "collectionId": "tno:CoastalResilienceTolerance_lines",
+      "format": {
+        "id": "geojson",
+        "mime": "application/json"
+      },
+      "features": 1,
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10b7d3_-7079",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "locale": "zh-CN",
+      "theme": "dark",
+      "actualViewportWidth": 1024,
+      "assetId": "fd8322fe-d050-4bda-a05b-1b4073bb71b8",
+      "sourceUrl": "https://drive.emodnet-geology.eu/geoserver/tno/wfs",
+      "collectionId": "tno:CoastalResilienceTolerance_lines",
+      "format": {
+        "id": "geojson",
+        "mime": "application/json"
+      },
+      "features": 1,
+      "firstReadPages": 1,
+      "verificationPages": 1,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "CoastalResilienceTolerance_lines.fid-2fdf5b74_1a0fd10b7d3_-7079",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "theme": "light",
+      "actualViewportWidth": 1440,
+      "assetId": "07f1a14c-64d7-4174-9c0a-63d25ef66242",
+      "sourceUrl": "https://demo.mapserver.org/cgi-bin/wfs",
+      "collectionId": "ms:cities",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 7,
+      "firstReadPages": 7,
+      "verificationPages": 7,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "cities.5727",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "locale": "zh-CN",
+      "theme": "dark",
+      "actualViewportWidth": 1024,
+      "assetId": "07f1a14c-64d7-4174-9c0a-63d25ef66242",
+      "sourceUrl": "https://demo.mapserver.org/cgi-bin/wfs",
+      "collectionId": "ms:cities",
+      "format": {
+        "id": "gml32",
+        "mime": "application/gml+xml; version=3.2"
+      },
+      "features": 7,
+      "firstReadPages": 7,
+      "verificationPages": 7,
+      "explicitEndpointEmpty": true,
+      "noWfsDemo": true,
+      "defaultAdvertisedGml": true,
+      "allBrowserExportAttributesAndGeometryEqual": true,
+      "clickedActualFeatureId": "cities.5727",
+      "originalAttributesVisible": true,
+      "originalArchiveAndDerivedHashesVisible": true,
+      "noDocumentHorizontalOverflow": true,
+      "noUpstreamQueriesIssuedByUi": true,
+      "errors": []
+    }
+  ],
+  "regressions": {
+    "priorOverpassSnapshots": 5,
+    "priorArcgisSnapshots": 6,
+    "priorOgcSnapshots": 8,
+    "originalAndExportHashesUnchanged": true,
+    "networkRequests": 0
+  },
+  "checks": {
+    "wfsTests": 29,
+    "nativeWorkspacePassed": 295,
+    "nativeIgnoredDocTests": 4,
+    "frontendNodeTests": 161,
+    "frontendUiTests": 153,
+    "runtimeAndDesktopClippy": "passed with warnings denied",
+    "npmVerify": "passed"
+  },
+  "boundaries": [
+    "No NASA Earthdata or Copernicus successful-account download acceptance",
+    "Not a transactional snapshot",
+    "Actual WFS holes and multi-geometries not accepted; synthetic parser regressions only",
+    "No WFS 1.x, complex feature model, referenced geometry, curves, Z/M, protected/intranet source or generic reprojection",
+    "No job queue, resume, exact clipping or vector project processing",
+    "No release package or publication"
+  ]
+}

@@ -1,0 +1,679 @@
+{
+  "checkedAt": "2026-10-03T04:25:43.897806+00:00",
+  "status": "Bounded public WCS 2.0.1 implementation, real native transfer, independent raster checks, offline recovery and headless browser acceptance passed",
+  "syntheticSourcesUsedForPublicAcceptance": false,
+  "originalProviderArchiveClaimed": false,
+  "desktopWebViewAccepted": false,
+  "usedUserDesktop": false,
+  "implementationScope": "WCS 2.0.1 public KVP, named spatial trimming of bounded regular two-dimensional grids and GeoTIFF response",
+  "research": {
+    "status": "passed",
+    "endpoint": "https://ows.emodnet-bathymetry.eu/wcs",
+    "coverageId": "emodnet__mean",
+    "version": "2.0.1",
+    "requestedBounds": [
+      2,
+      53,
+      2.05,
+      53.05
+    ],
+    "singleGetCoverageRequest": true,
+    "requestUrl": "https://ows.emodnet-bathymetry.eu/wcs?service=WCS&version=2.0.1&request=GetCoverage&coverageId=emodnet__mean&subset=Long(2,2.05)&subset=Lat(53,53.05)&format=image%2Ftiff",
+    "responseBytes": 9600,
+    "responseSha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+    "sourceDeclaredCrs": "http://www.opengis.net/def/crs/EPSG/0/4326",
+    "sourceEnvelopeAxisLabels": [
+      "Lat",
+      "Long"
+    ],
+    "sourceGridAxisLabels": [
+      "i",
+      "j"
+    ],
+    "sourceGridLow": [
+      0,
+      0
+    ],
+    "sourceGridHigh": [
+      108959,
+      75839
+    ],
+    "sourceGridOriginInCrsOrder": [
+      89.99947916666666,
+      -70.49947916666666
+    ],
+    "sourceOffsetVectorsInCrsOrder": [
+      [
+        0,
+        0.0010416666666666667
+      ],
+      [
+        -0.0010416666666666667,
+        0
+      ]
+    ],
+    "sourceRange": [
+      {
+        "name": "Depth",
+        "unit": "W.m-2.Sr-1",
+        "nilValues": [
+          {
+            "value": "NaN",
+            "reason": "http://www.opengis.net/def/nil/OGC/0/unknown"
+          }
+        ]
+      }
+    ],
+    "sourceDeclaredSampleType": null,
+    "independentlyDecoded": {
+      "width": 48,
+      "height": 48,
+      "bands": 1,
+      "dataType": "float32",
+      "crs": "EPSG:4326",
+      "pixelInterpretation": "Area",
+      "transform": [
+        0.0010416666666666667,
+        0,
+        2.0000000000000067,
+        0,
+        -0.0010416666666666667,
+        53.04999999999999
+      ],
+      "bounds": [
+        2.0000000000000067,
+        52.99999999999999,
+        2.0500000000000065,
+        53.04999999999999
+      ],
+      "nodataTag": null,
+      "unitTag": null,
+      "samples": 2304,
+      "validSamples": 2304,
+      "minimum": -42.689998626708984,
+      "maximum": -27.3799991607666,
+      "allSamplesSha256": "6f8dc9ce83ef8b2054163c79525af79e95db17bd089110c132c88a9f6c78d90b",
+      "sampleHashEncoding": "row-major little-endian unscaled Float32",
+      "maskSha256": "adea5e0a9361c2700525b2452f81230a0f5c1fb310669e1a5b1d779143b9e297",
+      "rasterioVersion": "1.3.9",
+      "gdalVersion": "3.6.4",
+      "predictedGridMatched": true
+    },
+    "metadataDocuments": [
+      {
+        "operation": "GetCapabilities",
+        "bytes": 15688,
+        "sha256": "6409bd7c9216ef5b3508807d8e530a31272404da26518e29e15fa08d8fa5e0a9"
+      },
+      {
+        "operation": "DescribeCoverage",
+        "bytes": 3693,
+        "sha256": "a74ca89d43fc991b550257f8227319c0adc9b6faa46422488d5b470be1bcb2d9"
+      }
+    ],
+    "bodyRepresentation": "Exact response entity payload after HTTP content decoding, with response headers retained separately",
+    "evidence": ".verification/wcs-research/report.json",
+    "independentGridEvidence": ".verification/wcs-research/independent-grid.json",
+    "rasterEvidence": ".verification/wcs-research/coverage/rasterio-reference.json"
+  },
+  "sourceMetadataConflicts": [
+    {
+      "field": "Depth unit",
+      "declaration": "W.m-2.Sr-1",
+      "observation": "Radiance unit conflicts with Depth field and bathymetry product description",
+      "handling": "Preserve the declared string; do not replace it with metres or apply physical conversion"
+    },
+    {
+      "field": "nil values",
+      "declaration": "NaN",
+      "observation": "Returned TIFF has no nodata tag and all 2304 values are finite",
+      "handling": "Retain source declaration separately from observed file metadata"
+    }
+  ],
+  "rights": {
+    "serviceFees": "NONE",
+    "serviceAccessConstraints": "NONE",
+    "metadataHref": "https://sextant.ifremer.fr/geonetwork/srv/eng/csw?request=GetRecordById&elementSetName=full&service=CSW&version=2.0.2&OutputSchema=http://www.isotc211.org/2005/gmd&id=cf51df64-56f9-4a99-b1aa-36b8d7b743a1",
+    "linkedMetadataAttempt": "ConnectTimeout before an HTTP response; no retry or host switch",
+    "linkedMetadataLiveVerified": false,
+    "specificDataLicenseConfirmed": false,
+    "evidence": ".verification/wcs-research/linked-rights-metadata/receipt.json"
+  },
+  "application": {
+    "status": "passed",
+    "startedAt": "2026-10-02T16:10:48.260101+00:00",
+    "server": "http://127.0.0.1:4366",
+    "dataDirectory": "G:\\code\\geod-global\\.verification\\wcs-runtime",
+    "endpoint": "https://ows.emodnet-bathymetry.eu/wcs",
+    "coverageId": "emodnet__mean",
+    "requestedBounds": [
+      2.0,
+      53.0,
+      2.05,
+      53.05
+    ],
+    "productKind": "server-generated WCS coverage subset",
+    "originalProviderArchiveClaimed": false,
+    "syntheticData": false,
+    "automaticRetries": 0,
+    "desktopWebViewAccepted": false,
+    "wholeRasterNativePixelComparisonClaimed": false,
+    "connectionId": "fdbea06d-ca99-41a4-ad1c-7d523731cf5b",
+    "descriptionId": "fee8d69b95cad12ace4362b9510eb23bb9282ec7cc55ebff872ca6df94a32096",
+    "planId": "895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151",
+    "requestUrl": "https://ows.emodnet-bathymetry.eu/wcs?service=WCS&version=2.0.1&request=GetCoverage&coverageId=emodnet__mean&subset=Lat%2853.000000000000000%2C53.049999999999997%29&subset=Long%282.000000000000000%2C2.049999999999997%29&format=image%2Ftiff",
+    "metadata": [
+      {
+        "file": "metadata/capabilities-6409bd7c9216ef5b3508807d8e530a31272404da26518e29e15fa08d8fa5e0a9.xml",
+        "sha256": "6409bd7c9216ef5b3508807d8e530a31272404da26518e29e15fa08d8fa5e0a9",
+        "bytes": 15688,
+        "kind": "capabilities"
+      },
+      {
+        "file": "metadata/coverage-a74ca89d43fc991b550257f8227319c0adc9b6faa46422488d5b470be1bcb2d9.xml",
+        "sha256": "a74ca89d43fc991b550257f8227319c0adc9b6faa46422488d5b470be1bcb2d9",
+        "bytes": 3693,
+        "kind": "coverage"
+      },
+      {
+        "file": "metadata/description-fee8d69b95cad12ace4362b9510eb23bb9282ec7cc55ebff872ca6df94a32096.json",
+        "sha256": "fee8d69b95cad12ace4362b9510eb23bb9282ec7cc55ebff872ca6df94a32096",
+        "bytes": 2992,
+        "kind": "description"
+      },
+      {
+        "file": "metadata/plan-895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151.json",
+        "sha256": "895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151",
+        "bytes": 127,
+        "kind": "plan"
+      }
+    ],
+    "projectId": "610f8c64-b24f-4d63-8e09-ff060afb310f",
+    "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+    "allDecodedSamplesMatchIndependentResearch": true,
+    "bytes": 9600,
+    "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+    "width": 48,
+    "height": 48,
+    "crs": "EPSG:4326",
+    "bands": [
+      {
+        "index": 1,
+        "dataType": "float32",
+        "nodata": null,
+        "samples": 2304,
+        "validSamples": 2304,
+        "maskSha256": "adea5e0a9361c2700525b2452f81230a0f5c1fb310669e1a5b1d779143b9e297",
+        "sampleSha256": "6f8dc9ce83ef8b2054163c79525af79e95db17bd089110c132c88a9f6c78d90b",
+        "sampleHashEncoding": "row-major little-endian unscaled native sample dtype",
+        "minimum": -42.689998626708984,
+        "maximum": -27.3799991607666,
+        "scale": 1.0,
+        "offset": 0.0,
+        "unit": null,
+        "colorInterpretation": "gray",
+        "overviews": [],
+        "blockShape": [
+          48,
+          48
+        ]
+      }
+    ],
+    "nativePixelProbeCount": 5,
+    "independentDecodedSamples": 2304,
+    "declaredFields": [
+      {
+        "name": "Depth",
+        "description": "Depth",
+        "unit": "W.m-2.Sr-1",
+        "nilValues": [
+          {
+            "value": "NaN",
+            "reason": "http://www.opengis.net/def/nil/OGC/0/unknown"
+          }
+        ]
+      }
+    ],
+    "observedFileNodata": [
+      null
+    ],
+    "sourceWarnings": [
+      "Units and nil values are source declarations; they are preserved without inferring calibrated values or physical meaning.",
+      "Sample types and file NoData are verified from the returned TIFF, independently of the coverage's range declarations.",
+      "Service access constraints are not a blanket data licence; retain and consult linked product metadata."
+    ],
+    "planWarnings": [
+      "Units and nil values are source declarations; they are preserved without inferring calibrated values or physical meaning.",
+      "Sample types and file NoData are verified from the returned TIFF, independently of the coverage's range declarations.",
+      "Service access constraints are not a blanket data licence; retain and consult linked product metadata.",
+      "The result is a server-produced rectangular coverage subset on its native grid; no acquisition date, source survey accuracy, scaling or calibration is inferred.",
+      "Declared nil values may be absent from TIFF NoData. An untagged declared nil sample causes validation to fail rather than being silently treated as valid."
+    ],
+    "metadataLinks": [
+      "https://sextant.ifremer.fr/geonetwork/srv/eng/csw?request=GetRecordById&elementSetName=full&service=CSW&version=2.0.2&OutputSchema=http://www.isotc211.org/2005/gmd&id=cf51df64-56f9-4a99-b1aa-36b8d7b743a1"
+    ],
+    "linkedRightsMetadataFetched": false,
+    "serviceFees": "NONE",
+    "serviceAccessConstraints": "NONE",
+    "finishedAt": "2026-10-02T16:11:03.616005+00:00",
+    "evidence": ".verification/wcs-public-emodnet/report.json",
+    "script": "scripts/verify-wcs-public.py",
+    "successfulGetCoverageTransfers": 1,
+    "nativeTestCoverage": "Source identity, XML/gzip/depth limits, axes, checked grid arithmetic, projected definitions, nil/tag mismatch, cancellation, mixed project persistence, retry deduplication, same-size corruption and restart cleanup"
+  },
+  "offlineRestart": {
+    "status": "passed",
+    "startedAt": "2026-10-03T04:23:05.774962+00:00",
+    "dataDirectory": "G:\\code\\geod-global\\.verification\\wcs-runtime",
+    "binary": "G:\\code\\geod-global\\target\\debug\\geod-runtime.exe",
+    "binarySha256": "2dd7d3162c276506a3b9f4c3561769e9a438d0eceae68db6d7f36a2630db7e01",
+    "networkRequests": 0,
+    "productKind": "server-generated WCS coverage subsets",
+    "originalProviderArchiveClaimed": false,
+    "projects": [
+      "610f8c64-b24f-4d63-8e09-ff060afb310f"
+    ],
+    "plans": [
+      "895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151"
+    ],
+    "jobs": [
+      {
+        "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+        "bytes": 9600,
+        "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+        "independentDecodedSamples": 2304
+      }
+    ],
+    "registryBytesUnchanged": true,
+    "nativeCliRuns": 6,
+    "restoredConnections": 1,
+    "finishedAt": "2026-10-03T04:23:05.995240+00:00",
+    "evidence": ".verification/wcs-restart-current/report.json",
+    "script": "scripts/verify-wcs-restart.py"
+  },
+  "browserUi": {
+    "status": "passed",
+    "checkedAt": "2026-10-03T04:22:04.615Z",
+    "mode": "Headless actual saved WCS project, source plan, georeferenced preview and raw pixels. Local GET only; no public service requests.",
+    "evidence": ".verification/wcs-ui/610f8c64-b24f-4d63-8e09-ff060afb310f/report.json",
+    "viewports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "projectId": "610f8c64-b24f-4d63-8e09-ff060afb310f",
+        "assets": [
+          {
+            "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+            "planId": "895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151",
+            "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+            "width": 48,
+            "height": 48,
+            "bands": [
+              {
+                "index": 1,
+                "dataType": "Float32",
+                "nodata": null
+              }
+            ],
+            "crs": "EPSG:4326",
+            "declaredFields": [
+              {
+                "name": "Depth",
+                "description": "Depth",
+                "unit": "W.m-2.Sr-1",
+                "nilValues": [
+                  {
+                    "value": "NaN",
+                    "reason": "http://www.opengis.net/def/nil/OGC/0/unknown"
+                  }
+                ]
+              }
+            ],
+            "clickedPixel": {
+              "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+              "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+              "column": 23,
+              "row": 24,
+              "values": [
+                -37.54999923706055
+              ],
+              "noData": [
+                false
+              ]
+            },
+            "sourceDescriptionHashVisible": true
+          }
+        ],
+        "savedPlanReviewedOffline": true,
+        "noHorizontalOverflow": true,
+        "actualCachedThumbnails": true,
+        "noPublicRequests": true,
+        "errors": [],
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/95919f40-f427-4b8b-baaf-1bf7fedd88d2/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/plans/895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/jobs/95919f40-f427-4b8b-baaf-1bf7fedd88d2/inspect"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/plans/895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/jobs/95919f40-f427-4b8b-baaf-1bf7fedd88d2/pixel"
+          },
+          {
+            "method": "GET",
+            "path": "/proxy"
+          },
+          {
+            "method": "GET",
+            "path": "/accounts"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/connections"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          }
+        ]
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "projectId": "610f8c64-b24f-4d63-8e09-ff060afb310f",
+        "assets": [
+          {
+            "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+            "planId": "895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151",
+            "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+            "width": 48,
+            "height": 48,
+            "bands": [
+              {
+                "index": 1,
+                "dataType": "Float32",
+                "nodata": null
+              }
+            ],
+            "crs": "EPSG:4326",
+            "declaredFields": [
+              {
+                "name": "Depth",
+                "description": "Depth",
+                "unit": "W.m-2.Sr-1",
+                "nilValues": [
+                  {
+                    "value": "NaN",
+                    "reason": "http://www.opengis.net/def/nil/OGC/0/unknown"
+                  }
+                ]
+              }
+            ],
+            "clickedPixel": {
+              "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+              "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+              "column": 23,
+              "row": 24,
+              "values": [
+                -37.54999923706055
+              ],
+              "noData": [
+                false
+              ]
+            },
+            "sourceDescriptionHashVisible": true
+          }
+        ],
+        "savedPlanReviewedOffline": true,
+        "noHorizontalOverflow": true,
+        "actualCachedThumbnails": true,
+        "noPublicRequests": true,
+        "errors": [],
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/95919f40-f427-4b8b-baaf-1bf7fedd88d2/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/plans/895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/jobs/95919f40-f427-4b8b-baaf-1bf7fedd88d2/inspect"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/plans/895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/jobs/95919f40-f427-4b8b-baaf-1bf7fedd88d2/pixel"
+          },
+          {
+            "method": "GET",
+            "path": "/proxy"
+          },
+          {
+            "method": "GET",
+            "path": "/accounts"
+          },
+          {
+            "method": "GET",
+            "path": "/wcs/connections"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          }
+        ]
+      }
+    ],
+    "independentClickedPixelVerification": {
+      "tool": "rasterio",
+      "checks": [
+        {
+          "width": 1440,
+          "column": 23,
+          "row": 24,
+          "value": -37.54999923706055,
+          "matches": true
+        },
+        {
+          "width": 1024,
+          "column": 23,
+          "row": 24,
+          "value": -37.54999923706055,
+          "matches": true
+        }
+      ]
+    },
+    "acquisitionFormsAcceptance": "Component regression tests; real native source acquisition tested separately through local HTTP",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "screenshotsVisuallyReviewed": [
+      "1440-project.png",
+      "1024-95919f40-f427-4b8b-baaf-1bf7fedd88d2-map.png",
+      "1024-source.png"
+    ]
+  },
+  "officialReferences": [
+    "https://www.ogc.org/standards/wcs/",
+    "https://portal.ogc.org/files/09-110r4",
+    "https://docs.ogc.org/is/09-147r3/09-147r3.pdf",
+    "https://docs.ogc.org/is/12-100r1/12-100r1.pdf",
+    "https://docs.ogc.org/is/09-146r8/09-146r8.html",
+    "https://emodnet.ec.europa.eu/en/emodnet-web-service-documentation",
+    "https://emodnet.ec.europa.eu/en/bathymetry",
+    "https://github.com/EMODnet/emodnet.wcs"
+  ],
+  "boundaries": [
+    "A WCS server-generated subset is distinct from a complete original provider archive or survey.",
+    "Independent full-raster decoding and sampled native pixel comparisons are different acceptance claims.",
+    "The tested grid is a regular, two-dimensional aligned geographic subset; no claim covers general WCS dimensions, interpolation, arbitrary reprojection or all servers.",
+    "Fees and AccessConstraints NONE do not establish a specific data license.",
+    "No formal WCS or COG conformance or desktop WebView acceptance is claimed.",
+    "WCS MCP commands, additional dimensions/formats/versions, protected services and generic scientific processing remain outside this verified increment; the overall provider-integration goal remains active."
+  ],
+  "persistentThumbnailCache": {
+    "status": "passed",
+    "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+    "sourceSha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+    "width": 48,
+    "height": 48,
+    "cacheRecordBytesUnchanged": true,
+    "cacheAccessTimeUpdatedForEviction": true,
+    "previewPngSha256": "d2d6d22dd5fac78ee95c8f62e9a099991a8be2f3c1bb71827fe1acb3fe27d64d",
+    "externalRequests": 0,
+    "phase": "retained persistent cache reused after process restart",
+    "evidence": ".verification/wcs-cache-restart.json",
+    "coldGenerationClaimed": false
+  },
+  "validation": {
+    "nativeWorkspace": {
+      "passed": 331,
+      "ignored": 4,
+      "runtimeLibraryPassed": 324,
+      "runtimeCliPassed": 3,
+      "desktopPassed": 4
+    },
+    "wcsNativeTargeted": {
+      "passed": 15
+    },
+    "clippyWorkspaceAllTargets": "passed without warnings",
+    "frontendFull": {
+      "nodePassed": 172,
+      "uiPassed": 169,
+      "uiFiles": 27,
+      "build": "passed"
+    },
+    "finalLayoutUiRegression": {
+      "passed": 18,
+      "files": 3,
+      "build": "passed"
+    },
+    "desktopCommandAcl": {
+      "passed": true,
+      "registeredCommands": 77
+    },
+    "fixedDuringAcceptance": [
+      "Windows CLI command-dispatcher stack overflow when reopening actual WCS records",
+      "Missing WCS CLI option allowlist routes"
+    ],
+    "localPreviewFirstAttempt": "Preview process was stopped; connection refused. Started local Vite and reran successfully without repeating public acquisition.",
+    "cacheFirstAssertion": "An unchanged-mtime assertion was incorrect: cache hits intentionally update eviction recency. Final verification checks unchanged record contents, exact PNG hash and source identity."
+  },
+  "publicRequestsSummary": {
+    "independentResearchGetCoverage": 1,
+    "nativeApplicationGetCoverage": 1,
+    "automaticRetries": 0,
+    "postAcceptanceExternalRequests": 0
+  },
+  "mcp": {
+    "status": "passed-existing-real-file-reuse",
+    "receipt": "wcs-mcp-verification.json",
+    "checkedAt": "2026-10-03T04:50:48.438916+00:00",
+    "binarySha256": "e36212db97b7cf758fa91cbee0ced08279ed1898c7921b6e3fa2644d7794c4ef",
+    "stdioSessions": 5,
+    "independentOriginalPixelChecks": 25,
+    "externalRequests": 0,
+    "newPublicTransfers": 0,
+    "directAndLoopback": true,
+    "immutablePlanAndProjectRecovery": true,
+    "noClientProvidedTransferUrl": true,
+    "remoteNewAcquisitionThroughMcp": "not-separately-verified"
+  }
+}

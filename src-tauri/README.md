@@ -17,6 +17,36 @@ navigation and new-window requests; remote pages never load inside the app.
 Remote websites receive no IPC capabilities. The frontend does not receive
 arbitrary filesystem, shell, or opener plugin permissions.
 
+## Integrated desktop title bar and brand
+
+The main window uses one 48px application title bar, containing the original
+GeoD G mark, navigation collapse, project/page context and shared theme controls.
+The actual Windows caption controls come from pinned
+[`tauri-plugin-decoration` 3.0.5](https://github.com/oovz/tauri-plugin-decoration).
+They retain native maximize/restore and Snap hit geometry. Closing still hides
+to the existing tray. The title bar's explicit Exit app action explains task
+retention and offers either hiding to the tray or fully shutting down workers.
+The tray menu also retains its explicit exit action.
+
+Windows system menus are opened through a command restricted to the caller's
+window. Drag and double-click use only Tauri's `start_dragging` and
+`internal_toggle_maximize` permissions. The plugin's closed readiness, geometry
+and caption-action commands are scoped to the local `main` window. The capability
+checker verifies all 32 application commands and this exact plugin allowlist;
+there is no generic window, shell or filesystem permission.
+
+Startup keeps native decorations enabled and the window hidden while activation
+is awaited. Failure restores and reveals the native frame; an 8-second Rust
+watchdog also reveals it if the frontend never becomes ready. The CSP adds only
+the plugin's local stylesheet protocol, keeping remote navigation and IPC
+restrictions intact. Browser development has no simulated caption controls.
+
+App, executable, tray, About and favicon branding use the same original GeoD
+symbol. Source provenance, original license and icon generation instructions are
+in [`prototype/public/brand/README.md`](../prototype/public/brand/README.md).
+The [appearance specification](../docs/design/desktop-appearance.md) describes
+the design references and verification criteria.
+
 From the repository root:
 
 ```sh
@@ -42,8 +72,20 @@ tray icon to restore the window. Its localized menu can open the task page or
 explicitly quit. Only explicit exit quiesces IPC, interrupts unfinished jobs and
 waits for worker cleanup and saved state. Reopen to retry interrupted tasks from
 the start. Completed files and user-cancelled statuses remain intact. The tray
-uses [Tauri's Rust tray API](https://v2.tauri.app/learn/system-tray/), with no frontend window/tray control capability. Settings
+uses [Tauri's Rust tray API](https://v2.tauri.app/learn/system-tray/), with no frontend tray control capability. Settings
 explains this behavior only inside the desktop.
+
+The task page can explicitly retry all failed/interrupted jobs through the same
+existing retry command. Batch submission belongs to the application provider,
+so navigating away from the task page does not lose the requested batch. It
+never includes successful or user-cancelled jobs. Requests are serialized,
+per-job actions are guarded, partial rejection remains visible, and disconnection
+stops further submissions until the user reconnects and retries. This is a
+restart from the beginning, not download byte resumption.
+
+Read the [session acceptance record](../docs/releases/2026-10-01-desktop-session-acceptance.md)
+for actual native-window evidence and the separate automated checks. Background
+development does not require operating the user's visible desktop.
 
 ## Windows evaluation packages
 

@@ -1,0 +1,161 @@
+{
+  "checkedAt": "2026-10-03T13:13:05.965081+00:00",
+  "status": "Verified public STAC POST increment; broader source goal remains active",
+  "implementation": "Native Rust core shared by desktop commands, local HTTP and CLI",
+  "nativeBinarySha256": "5b3113dd50ce2874e4bf29add4a8f2b1194e196d11fcd846eae3864312aa259d",
+  "syntheticSourcesUsedForPublicAcceptance": false,
+  "usedUserDesktop": false,
+  "desktopWebViewAccepted": false,
+  "publicCase": {
+    "endpoint": "https://earth-search.aws.element84.com/v1/",
+    "connectionId": "1c87d4c5-a250-44b8-982e-a8552e87e344",
+    "collectionId": "sentinel-2-l2a",
+    "bounds": [
+      13.4,
+      52.5,
+      13.41,
+      52.51
+    ],
+    "datetime": "2024-01-01T00:00:00Z/2024-01-10T23:59:59Z",
+    "searchMethod": "POST",
+    "serverAdvertisedMethods": [
+      "GET",
+      "POST"
+    ],
+    "pageSize": 2,
+    "returnedPerPage": [
+      2,
+      2,
+      2,
+      2,
+      0
+    ],
+    "items": 8,
+    "complete": true,
+    "terminalEmptyPageRetained": true,
+    "actualNextMerge": false,
+    "actualNextMethod": "POST",
+    "independentMetadataRequests": 5,
+    "allOriginalFieldsEqual": true,
+    "exactSnapshotRequestComparisons": 8,
+    "projectId": "64aa5c61-a16c-4b1c-acfe-40154766f036",
+    "selectedItemId": "S2A_32UQD_20240108_0_L2A",
+    "assetKey": "scl",
+    "jobId": "15c9c1c6-d7d6-4808-83a8-6b7c89f5845c",
+    "sourceHref": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/32/U/QD/2024/1/S2A_32UQD_20240108_0_L2A/SCL.tif",
+    "bytes": 2312147,
+    "sha256": "dca16b50bd2612ce593a28f5dc9f1f51d993b21fc0dfb469559e07fb37abdc86",
+    "width": 5490,
+    "height": 5490,
+    "crs": "EPSG:32632",
+    "independentDecodedSamples": 30140100,
+    "nativePixelProbeCount": 6,
+    "actualUiPixelComparisons": 2,
+    "offlineUiPixelComparisons": 2,
+    "fullNativePixelEqualityClaimed": false,
+    "scientificCalibrationOrClassificationPaletteClaimed": false,
+    "cogConformanceClaimed": false
+  },
+  "offlineRestart": {
+    "nativeCliRuns": 12,
+    "snapshots": 8,
+    "projects": 1,
+    "originalJobs": 1,
+    "registryBytesUnchanged": true,
+    "externalNetworkRequests": 0,
+    "isolatedRuntimeProxy": "custom http://127.0.0.1:9; restored after acceptance",
+    "realServiceRestartAndLocalUiReadbackPassed": true
+  },
+  "legacyGetReadback": {
+    "nativeCliRuns": 18,
+    "connections": 3,
+    "snapshots": 10,
+    "projects": 4,
+    "originalJobs": 3,
+    "registryBytesUnchanged": true,
+    "originalFileBytesUnchanged": true,
+    "externalNetworkRequests": 0
+  },
+  "actualBrowserAcceptance": {
+    "viewports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light"
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark"
+      }
+    ],
+    "realNativeHttp": true,
+    "headless": true,
+    "originalFileReusedWithoutTransfer": true,
+    "canonicalProjectPinUsedForDownload": true,
+    "sourceRequestVisible": true,
+    "metadataTextLeftAligned": true,
+    "horizontalOverflow": false,
+    "consoleErrors": 0,
+    "externalBrowserRequests": 0
+  },
+  "checks": {
+    "rustWorkspacePassed": 413,
+    "rustWorkspaceIgnored": 4,
+    "clippy": "passed without warnings",
+    "frontendLogicPassed": 208,
+    "frontendUiPassed": 185,
+    "selectionRetentionComponentRegression": "passed",
+    "productionFrontendBuild": "passed",
+    "rustFormatting": "passed"
+  },
+  "protocolControlOnlyCases": [
+    "POST-only discovery",
+    "merge=true against original body",
+    "GET/POST page method changes",
+    "download revalidation without a GET self link",
+    "credential and private-address rejection",
+    "ambiguous links, repeated page, invalid method/body and bounded request rejection"
+  ],
+  "limitations": [
+    "Public HTTPS and same-origin metadata only; custom request headers and authorization not supported.",
+    "Public Earth Search actually advertised both methods and used POST replacement bodies, not merge=true.",
+    "Static Catalog recursion, cross-host metadata, signed/S3 source URIs, custom-source MCP and generic scientific processing remain pending.",
+    "NASA/Copernicus entry exists; no real authorized original-file acceptance without accounts.",
+    "Headless browser readback does not constitute installed Windows WebView manual acceptance."
+  ],
+  "evidence": [
+    {
+      "path": ".verification/stac-post-api/report.json",
+      "sha256": "8f52b1312b26c6176a173d1eac223496d4d52bb24e720d861592138d6522e9af"
+    },
+    {
+      "path": ".verification/stac-post-independent/report.json",
+      "sha256": "e44603de5f367255f94587bf1e23ab5cbab1c6720f876892333e884f58f389a1"
+    },
+    {
+      "path": ".verification/stac-post-restart/report.json",
+      "sha256": "fb6fddd1a431793bfc7302e1a9f450ffe6d97b711384457bfad3c7eddabde394"
+    },
+    {
+      "path": ".verification/stac-post-legacy-get/report.json",
+      "sha256": "60bc28b487661ad5457884c39e4195a7dc478532913e6445f57845c1eac1c12f"
+    },
+    {
+      "path": ".verification/stac-post-ui/report.json",
+      "sha256": "ecfaa649fb3f80df3b6fa8a703152631e7093f34173ede86c808872d2cdef150"
+    },
+    {
+      "path": ".verification/stac-post-ui/independent-pixels.json",
+      "sha256": "5f238515039bd3bc887bc754cce75f7ce583202115cbb71c1439b8291ede87d6"
+    },
+    {
+      "path": ".verification/stac-post-ui-offline/report.json",
+      "sha256": "6f24dff581fcbf1e38e32e02237098bdc399993d0445469e43354710f8948f46"
+    },
+    {
+      "path": ".verification/stac-post-ui-offline/independent-pixels.json",
+      "sha256": "5f238515039bd3bc887bc754cce75f7ce583202115cbb71c1439b8291ede87d6"
+    }
+  ]
+}

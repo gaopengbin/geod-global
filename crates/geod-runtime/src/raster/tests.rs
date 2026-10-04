@@ -39,7 +39,7 @@ async fn interactive_queries_wait_for_previous_worker_instead_of_failing_immedia
         tokio::time::sleep(Duration::from_millis(20)).await;
         drop(permit);
     });
-    assert_eq!(result.unwrap().value, 4);
+    assert_eq!(result.unwrap().value, 4.0);
 }
 
 pub(crate) fn fixture(width: u32, height: u32, pixels: &[u8], epsg: u16, matrix: bool) -> Vec<u8> {
@@ -117,6 +117,15 @@ pub(crate) fn record(root: &Path, bytes: &[u8]) -> Job {
         mosaic: None,
         mosaic_output: None,
         manifest_path: None,
+        safe: None,
+        safe_output: None,
+        viirs_science: None,
+        transfer: None,
+        viirs_prepare: None,
+        stac_source: None,
+        wcs_source: None,
+        rgb_spec: None,
+        rgb_output: None,
     }
 }
 
@@ -153,7 +162,7 @@ fn real_tiff_geotags_counts_checksum_and_png_pixels_match() {
             [500000.0, 4199960.0, 500060.0, 4200000.0]
         );
         assert_eq!(inspection.pixel_size, [20.0, 20.0]);
-        assert_eq!(inspection.nodata, Some(0));
+        assert_eq!(inspection.nodata, Some(0.0));
         assert_eq!(inspection.sha256, job.sha256.unwrap());
         assert_eq!(inspection.classes.iter().map(|c| c.count).sum::<u64>(), 6);
         assert_eq!(inspection.classes[4].count, 2);
@@ -181,7 +190,7 @@ fn pixel_queries_use_full_resolution_grid_not_preview_and_reject_outer_edges() {
         let decoded = load_verified_raster(directory.path(), &job, None).unwrap();
         let sample = sample_pixel(decoded, &job.id, x, y).unwrap();
         assert_eq!(sample.pixel, expected_pixel);
-        assert_eq!(sample.value, expected_value);
+        assert_eq!(sample.value, f64::from(expected_value));
         assert_eq!(sample.is_no_data, expected_value == 0);
         assert_eq!(sample.sha256, job.sha256.clone().unwrap());
         assert_eq!(

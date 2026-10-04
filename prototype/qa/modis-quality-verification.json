@@ -1,0 +1,1586 @@
+{
+  "schema": "geod-modis-quality-verification/v1",
+  "checkedAt": "2026-10-03T16:25:28.724465+00:00",
+  "status": "passed",
+  "catalog": {
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-09A1-061/items/MYD09A1.A2025177.h08v05.061.2025189031924",
+    "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+    "period": [
+      "2025-06-26T00:00:00.000Z",
+      "2025-07-03T23:59:59Z"
+    ],
+    "assetKeys": [
+      "red",
+      "green",
+      "blue",
+      "modis_qc",
+      "modis_state"
+    ]
+  },
+  "nativeBinarySha256": "52a81580c5e794a13d8d11139f4ffb43d968f2c8b70706307c19fedff83173c1",
+  "desktopDebugBinarySha256": "b4bc7487dd32f420468d0a64acfe18b6f62b29ea9e720929b3f73cb96fa8eef3",
+  "rendererIndexSha256": "233fb7896a402f0a79513ac913f00a3e51cfb6b8e7143635f2d497633a532741",
+  "embeddedRendererAsset": "assets/index-BwsQ6eD9.js",
+  "sources": [
+    {
+      "assetKey": "modis_qc",
+      "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+      "bytes": 7013560,
+      "dtype": "uint32",
+      "originalPixelsCounted": 5760000,
+      "validPixels": 5760000,
+      "counts": [
+        5192134,
+        567807,
+        0,
+        59
+      ],
+      "rawPixelsCompared": 228,
+      "originalMaximum": 2050491267,
+      "undefinedBandCodesPreserved": 0,
+      "pngPixelsCompared": 615424,
+      "originalGridChecked": true,
+      "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+      "quality": {
+        "product": "modis-09a1-v061",
+        "band": "modis_qc",
+        "layer": "sur_refl_qc_500m",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "MODLAND quality",
+        "sampleCount": 5760000,
+        "validSampleCount": 5760000,
+        "countsFullResolution": true,
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "pngSha256": "9d6fa6366e4b03e7618b5ab79a82377a8f9d7a2988e308b059aa978e0ac93fcc",
+      "thumbnailSha256": "cd83451fa12e8ed0029409228e77e28c3d4d6ef54b03dc583c1e4250e0dbed72",
+      "examplePixels": [
+        {
+          "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+          "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -11119273.540308736,
+            4447570.422308736
+          ],
+          "pixel": [
+            0,
+            0
+          ],
+          "center": [
+            -11119273.540308736,
+            4447570.422308736
+          ],
+          "value": 1073741824,
+          "quality": {
+            "layer": "sur_refl_qc_500m",
+            "binary": "01000000000000000000000000000000",
+            "hex": "0x40000000",
+            "fields": [
+              {
+                "name": "MODLAND quality",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Ideal",
+                "defined": true
+              },
+              {
+                "name": "Band 1 quality",
+                "startBit": 2,
+                "endBit": 5,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 2 quality",
+                "startBit": 6,
+                "endBit": 9,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 3 quality",
+                "startBit": 10,
+                "endBit": 13,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 4 quality",
+                "startBit": 14,
+                "endBit": 17,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 5 quality",
+                "startBit": 18,
+                "endBit": 21,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 6 quality",
+                "startBit": 22,
+                "endBit": 25,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 7 quality",
+                "startBit": 26,
+                "endBit": 29,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Atmospheric correction",
+                "startBit": 30,
+                "endBit": 30,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Adjacency correction",
+                "startBit": 31,
+                "endBit": 31,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Ideal MODLAND quality",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        {
+          "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+          "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -11039120.440349407,
+            4156610.036329204
+          ],
+          "pixel": [
+            173,
+            628
+          ],
+          "center": [
+            -11039120.440349407,
+            4156610.036329204
+          ],
+          "value": 1103101952,
+          "quality": {
+            "layer": "sur_refl_qc_500m",
+            "binary": "01000001110000000000000000000000",
+            "hex": "0x41C00000",
+            "fields": [
+              {
+                "name": "MODLAND quality",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Ideal",
+                "defined": true
+              },
+              {
+                "name": "Band 1 quality",
+                "startBit": 2,
+                "endBit": 5,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 2 quality",
+                "startBit": 6,
+                "endBit": 9,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 3 quality",
+                "startBit": 10,
+                "endBit": 13,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 4 quality",
+                "startBit": 14,
+                "endBit": 17,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 5 quality",
+                "startBit": 18,
+                "endBit": 21,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 6 quality",
+                "startBit": 22,
+                "endBit": 25,
+                "value": 7,
+                "label": "Detector noise",
+                "defined": true
+              },
+              {
+                "name": "Band 7 quality",
+                "startBit": 26,
+                "endBit": 29,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Atmospheric correction",
+                "startBit": 30,
+                "endBit": 30,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Adjacency correction",
+                "startBit": 31,
+                "endBit": 31,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Ideal MODLAND quality",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        {
+          "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+          "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10958967.340390077,
+            3865649.650349673
+          ],
+          "pixel": [
+            346,
+            1256
+          ],
+          "center": [
+            -10958967.340390077,
+            3865649.650349673
+          ],
+          "value": 1107296256,
+          "quality": {
+            "layer": "sur_refl_qc_500m",
+            "binary": "01000010000000000000000000000000",
+            "hex": "0x42000000",
+            "fields": [
+              {
+                "name": "MODLAND quality",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Ideal",
+                "defined": true
+              },
+              {
+                "name": "Band 1 quality",
+                "startBit": 2,
+                "endBit": 5,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 2 quality",
+                "startBit": 6,
+                "endBit": 9,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 3 quality",
+                "startBit": 10,
+                "endBit": 13,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 4 quality",
+                "startBit": 14,
+                "endBit": 17,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 5 quality",
+                "startBit": 18,
+                "endBit": 21,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 6 quality",
+                "startBit": 22,
+                "endBit": 25,
+                "value": 8,
+                "label": "Detector interpolated",
+                "defined": true
+              },
+              {
+                "name": "Band 7 quality",
+                "startBit": 26,
+                "endBit": 29,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Atmospheric correction",
+                "startBit": 30,
+                "endBit": 30,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Adjacency correction",
+                "startBit": 31,
+                "endBit": 31,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Ideal MODLAND quality",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        {
+          "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+          "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10878814.240430748,
+            3574689.264370141
+          ],
+          "pixel": [
+            519,
+            1884
+          ],
+          "center": [
+            -10878814.240430748,
+            3574689.264370141
+          ],
+          "value": 1107296256,
+          "quality": {
+            "layer": "sur_refl_qc_500m",
+            "binary": "01000010000000000000000000000000",
+            "hex": "0x42000000",
+            "fields": [
+              {
+                "name": "MODLAND quality",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Ideal",
+                "defined": true
+              },
+              {
+                "name": "Band 1 quality",
+                "startBit": 2,
+                "endBit": 5,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 2 quality",
+                "startBit": 6,
+                "endBit": 9,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 3 quality",
+                "startBit": 10,
+                "endBit": 13,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 4 quality",
+                "startBit": 14,
+                "endBit": 17,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 5 quality",
+                "startBit": 18,
+                "endBit": 21,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 6 quality",
+                "startBit": 22,
+                "endBit": 25,
+                "value": 8,
+                "label": "Detector interpolated",
+                "defined": true
+              },
+              {
+                "name": "Band 7 quality",
+                "startBit": 26,
+                "endBit": 29,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Atmospheric correction",
+                "startBit": 30,
+                "endBit": 30,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Adjacency correction",
+                "startBit": 31,
+                "endBit": 31,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Ideal MODLAND quality",
+          "color": "#2563eb",
+          "isNoData": false
+        }
+      ]
+    },
+    {
+      "assetKey": "modis_state",
+      "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+      "bytes": 1800792,
+      "dtype": "uint16",
+      "originalPixelsCounted": 5760000,
+      "validPixels": 5760000,
+      "counts": [
+        5205714,
+        355421,
+        198865,
+        0
+      ],
+      "rawPixelsCompared": 228,
+      "originalMaximum": 45069,
+      "undefinedBandCodesPreserved": 0,
+      "pngPixelsCompared": 615424,
+      "originalGridChecked": true,
+      "jobId": "fcbe4826-bc65-4efe-8486-19ae1d528693",
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+      "quality": {
+        "product": "modis-09a1-v061",
+        "band": "modis_state",
+        "layer": "sur_refl_state_500m",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Cloud state",
+        "sampleCount": 5760000,
+        "validSampleCount": 5760000,
+        "countsFullResolution": true,
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "pngSha256": "7b1a1df1c8a8822357a6c1f3d28db1329cddbec26af46f219a4ad88ff5747b1f",
+      "thumbnailSha256": "9377aff575b51c22c8cbe427945ed8c5810ef327cb413d99765ae0ad1ce38bb0",
+      "examplePixels": [
+        {
+          "jobId": "fcbe4826-bc65-4efe-8486-19ae1d528693",
+          "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -11119273.540308736,
+            4447570.422308736
+          ],
+          "pixel": [
+            0,
+            0
+          ],
+          "center": [
+            -11119273.540308736,
+            4447570.422308736
+          ],
+          "value": 1081,
+          "quality": {
+            "layer": "sur_refl_state_500m",
+            "binary": "0000010000111001",
+            "hex": "0x0439",
+            "fields": [
+              {
+                "name": "Cloud state",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 1,
+                "label": "Cloudy",
+                "defined": true
+              },
+              {
+                "name": "Cloud shadow",
+                "startBit": 2,
+                "endBit": 2,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Land / water",
+                "startBit": 3,
+                "endBit": 5,
+                "value": 7,
+                "label": "Deep ocean",
+                "defined": true
+              },
+              {
+                "name": "Aerosol correction uncertainty",
+                "startBit": 6,
+                "endBit": 7,
+                "value": 0,
+                "label": "Climatology used",
+                "defined": true
+              },
+              {
+                "name": "Cirrus",
+                "startBit": 8,
+                "endBit": 9,
+                "value": 0,
+                "label": "None",
+                "defined": true
+              },
+              {
+                "name": "Internal cloud",
+                "startBit": 10,
+                "endBit": 10,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Internal fire",
+                "startBit": 11,
+                "endBit": 11,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "MOD35 snow / ice",
+                "startBit": 12,
+                "endBit": 12,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Adjacent to cloud",
+                "startBit": 13,
+                "endBit": 13,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Salt pan",
+                "startBit": 14,
+                "endBit": 14,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal snow",
+                "startBit": 15,
+                "endBit": 15,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Cloudy cloud flag",
+          "color": "#e2e8f0",
+          "isNoData": false
+        },
+        {
+          "jobId": "fcbe4826-bc65-4efe-8486-19ae1d528693",
+          "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -11039120.440349407,
+            4156610.036329204
+          ],
+          "pixel": [
+            173,
+            628
+          ],
+          "center": [
+            -11039120.440349407,
+            4156610.036329204
+          ],
+          "value": 56,
+          "quality": {
+            "layer": "sur_refl_state_500m",
+            "binary": "0000000000111000",
+            "hex": "0x0038",
+            "fields": [
+              {
+                "name": "Cloud state",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Clear",
+                "defined": true
+              },
+              {
+                "name": "Cloud shadow",
+                "startBit": 2,
+                "endBit": 2,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Land / water",
+                "startBit": 3,
+                "endBit": 5,
+                "value": 7,
+                "label": "Deep ocean",
+                "defined": true
+              },
+              {
+                "name": "Aerosol correction uncertainty",
+                "startBit": 6,
+                "endBit": 7,
+                "value": 0,
+                "label": "Climatology used",
+                "defined": true
+              },
+              {
+                "name": "Cirrus",
+                "startBit": 8,
+                "endBit": 9,
+                "value": 0,
+                "label": "None",
+                "defined": true
+              },
+              {
+                "name": "Internal cloud",
+                "startBit": 10,
+                "endBit": 10,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal fire",
+                "startBit": 11,
+                "endBit": 11,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "MOD35 snow / ice",
+                "startBit": 12,
+                "endBit": 12,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Adjacent to cloud",
+                "startBit": 13,
+                "endBit": 13,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Salt pan",
+                "startBit": 14,
+                "endBit": 14,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal snow",
+                "startBit": 15,
+                "endBit": 15,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Clear cloud flag",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        {
+          "jobId": "fcbe4826-bc65-4efe-8486-19ae1d528693",
+          "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10958967.340390077,
+            3865649.650349673
+          ],
+          "pixel": [
+            346,
+            1256
+          ],
+          "center": [
+            -10958967.340390077,
+            3865649.650349673
+          ],
+          "value": 72,
+          "quality": {
+            "layer": "sur_refl_state_500m",
+            "binary": "0000000001001000",
+            "hex": "0x0048",
+            "fields": [
+              {
+                "name": "Cloud state",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Clear",
+                "defined": true
+              },
+              {
+                "name": "Cloud shadow",
+                "startBit": 2,
+                "endBit": 2,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Land / water",
+                "startBit": 3,
+                "endBit": 5,
+                "value": 1,
+                "label": "Land",
+                "defined": true
+              },
+              {
+                "name": "Aerosol correction uncertainty",
+                "startBit": 6,
+                "endBit": 7,
+                "value": 1,
+                "label": "Low",
+                "defined": true
+              },
+              {
+                "name": "Cirrus",
+                "startBit": 8,
+                "endBit": 9,
+                "value": 0,
+                "label": "None",
+                "defined": true
+              },
+              {
+                "name": "Internal cloud",
+                "startBit": 10,
+                "endBit": 10,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal fire",
+                "startBit": 11,
+                "endBit": 11,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "MOD35 snow / ice",
+                "startBit": 12,
+                "endBit": 12,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Adjacent to cloud",
+                "startBit": 13,
+                "endBit": 13,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Salt pan",
+                "startBit": 14,
+                "endBit": 14,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal snow",
+                "startBit": 15,
+                "endBit": 15,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Clear cloud flag",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        {
+          "jobId": "fcbe4826-bc65-4efe-8486-19ae1d528693",
+          "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10878814.240430748,
+            3574689.264370141
+          ],
+          "pixel": [
+            519,
+            1884
+          ],
+          "center": [
+            -10878814.240430748,
+            3574689.264370141
+          ],
+          "value": 1032,
+          "quality": {
+            "layer": "sur_refl_state_500m",
+            "binary": "0000010000001000",
+            "hex": "0x0408",
+            "fields": [
+              {
+                "name": "Cloud state",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Clear",
+                "defined": true
+              },
+              {
+                "name": "Cloud shadow",
+                "startBit": 2,
+                "endBit": 2,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Land / water",
+                "startBit": 3,
+                "endBit": 5,
+                "value": 1,
+                "label": "Land",
+                "defined": true
+              },
+              {
+                "name": "Aerosol correction uncertainty",
+                "startBit": 6,
+                "endBit": 7,
+                "value": 0,
+                "label": "Climatology used",
+                "defined": true
+              },
+              {
+                "name": "Cirrus",
+                "startBit": 8,
+                "endBit": 9,
+                "value": 0,
+                "label": "None",
+                "defined": true
+              },
+              {
+                "name": "Internal cloud",
+                "startBit": 10,
+                "endBit": 10,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Internal fire",
+                "startBit": 11,
+                "endBit": 11,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "MOD35 snow / ice",
+                "startBit": 12,
+                "endBit": 12,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Adjacent to cloud",
+                "startBit": 13,
+                "endBit": 13,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Salt pan",
+                "startBit": 14,
+                "endBit": 14,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal snow",
+                "startBit": 15,
+                "endBit": 15,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Clear cloud flag",
+          "color": "#2563eb",
+          "isNoData": false
+        }
+      ]
+    }
+  ],
+  "legacyProjectQualityAddedWithoutChangingRgb": true,
+  "independentDecoder": "Rasterio 1.3.9 / GDAL 3.6.4",
+  "offlineRestart": {
+    "projectsRestored": true,
+    "legacyQualityPinsRestored": true,
+    "previewsIdentical": true,
+    "thumbnailsIdentical": true,
+    "changedOriginalRejected": true
+  },
+  "renderer": {
+    "renderer": "production build; exact desktop CSP; real native API via loopback bridge",
+    "nativeWindowTested": false,
+    "usedUserDesktop": false,
+    "remoteRequests": [],
+    "errors": [],
+    "cases": [
+      {
+        "key": "modis_qc",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "paintedRaster": true,
+        "pixel": {
+          "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+          "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10563529.9368335,
+            3891826.8188335
+          ],
+          "pixel": [
+            1199,
+            1199
+          ],
+          "center": [
+            -10563761.593191763,
+            3892058.4751917636
+          ],
+          "value": 1107296256,
+          "quality": {
+            "layer": "sur_refl_qc_500m",
+            "binary": "01000010000000000000000000000000",
+            "hex": "0x42000000",
+            "fields": [
+              {
+                "name": "MODLAND quality",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Ideal",
+                "defined": true
+              },
+              {
+                "name": "Band 1 quality",
+                "startBit": 2,
+                "endBit": 5,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 2 quality",
+                "startBit": 6,
+                "endBit": 9,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 3 quality",
+                "startBit": 10,
+                "endBit": 13,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 4 quality",
+                "startBit": 14,
+                "endBit": 17,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 5 quality",
+                "startBit": 18,
+                "endBit": 21,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 6 quality",
+                "startBit": 22,
+                "endBit": 25,
+                "value": 8,
+                "label": "Detector interpolated",
+                "defined": true
+              },
+              {
+                "name": "Band 7 quality",
+                "startBit": 26,
+                "endBit": 29,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Atmospheric correction",
+                "startBit": 30,
+                "endBit": 30,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Adjacency correction",
+                "startBit": 31,
+                "endBit": 31,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Ideal MODLAND quality",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        "bitFieldsVisible": true,
+        "projectCardHeight": 106,
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/fcbe4826-bc65-4efe-8486-19ae1d528693/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/raster"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/pixel"
+          }
+        ]
+      },
+      {
+        "key": "modis_state",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "paintedRaster": true,
+        "pixel": {
+          "jobId": "fcbe4826-bc65-4efe-8486-19ae1d528693",
+          "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10563529.9368335,
+            3891826.8188335
+          ],
+          "pixel": [
+            1199,
+            1199
+          ],
+          "center": [
+            -10563761.593191763,
+            3892058.4751917636
+          ],
+          "value": 72,
+          "quality": {
+            "layer": "sur_refl_state_500m",
+            "binary": "0000000001001000",
+            "hex": "0x0048",
+            "fields": [
+              {
+                "name": "Cloud state",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Clear",
+                "defined": true
+              },
+              {
+                "name": "Cloud shadow",
+                "startBit": 2,
+                "endBit": 2,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Land / water",
+                "startBit": 3,
+                "endBit": 5,
+                "value": 1,
+                "label": "Land",
+                "defined": true
+              },
+              {
+                "name": "Aerosol correction uncertainty",
+                "startBit": 6,
+                "endBit": 7,
+                "value": 1,
+                "label": "Low",
+                "defined": true
+              },
+              {
+                "name": "Cirrus",
+                "startBit": 8,
+                "endBit": 9,
+                "value": 0,
+                "label": "None",
+                "defined": true
+              },
+              {
+                "name": "Internal cloud",
+                "startBit": 10,
+                "endBit": 10,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal fire",
+                "startBit": 11,
+                "endBit": 11,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "MOD35 snow / ice",
+                "startBit": 12,
+                "endBit": 12,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Adjacent to cloud",
+                "startBit": 13,
+                "endBit": 13,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Salt pan",
+                "startBit": 14,
+                "endBit": 14,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              },
+              {
+                "name": "Internal snow",
+                "startBit": 15,
+                "endBit": 15,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Clear cloud flag",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        "bitFieldsVisible": true,
+        "projectCardHeight": 106,
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/fcbe4826-bc65-4efe-8486-19ae1d528693/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/fcbe4826-bc65-4efe-8486-19ae1d528693/raster"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/fcbe4826-bc65-4efe-8486-19ae1d528693/pixel"
+          }
+        ]
+      },
+      {
+        "key": "modis_qc",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "paintedRaster": true,
+        "pixel": {
+          "jobId": "d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b",
+          "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10563529.9368335,
+            3891826.8188335
+          ],
+          "pixel": [
+            1199,
+            1199
+          ],
+          "center": [
+            -10563761.593191763,
+            3892058.4751917636
+          ],
+          "value": 1107296256,
+          "quality": {
+            "layer": "sur_refl_qc_500m",
+            "binary": "01000010000000000000000000000000",
+            "hex": "0x42000000",
+            "fields": [
+              {
+                "name": "MODLAND quality",
+                "startBit": 0,
+                "endBit": 1,
+                "value": 0,
+                "label": "Ideal",
+                "defined": true
+              },
+              {
+                "name": "Band 1 quality",
+                "startBit": 2,
+                "endBit": 5,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 2 quality",
+                "startBit": 6,
+                "endBit": 9,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 3 quality",
+                "startBit": 10,
+                "endBit": 13,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 4 quality",
+                "startBit": 14,
+                "endBit": 17,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 5 quality",
+                "startBit": 18,
+                "endBit": 21,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Band 6 quality",
+                "startBit": 22,
+                "endBit": 25,
+                "value": 8,
+                "label": "Detector interpolated",
+                "defined": true
+              },
+              {
+                "name": "Band 7 quality",
+                "startBit": 26,
+                "endBit": 29,
+                "value": 0,
+                "label": "Best quality",
+                "defined": true
+              },
+              {
+                "name": "Atmospheric correction",
+                "startBit": 30,
+                "endBit": 30,
+                "value": 1,
+                "label": "Yes",
+                "defined": true
+              },
+              {
+                "name": "Adjacency correction",
+                "startBit": 31,
+                "endBit": 31,
+                "value": 0,
+                "label": "No",
+                "defined": true
+              }
+            ]
+          },
+          "label": "Ideal MODLAND quality",
+          "color": "#2563eb",
+          "isNoData": false
+        },
+        "bitFieldsVisible": true,
+        "projectCardHeight": 106,
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/fcbe4826-bc65-4efe-8486-19ae1d528693/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/thumbnail"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/raster"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs/d9c5bc32-5caa-4603-a4b4-d1c89f79bf5b/pixel"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          }
+        ]
+      }
+    ]
+  },
+  "mcp": {
+    "schema": "geod-modis-quality-mcp/v1",
+    "nativeBinarySha256": "52a81580c5e794a13d8d11139f4ffb43d968f2c8b70706307c19fedff83173c1",
+    "readOnly": true,
+    "cases": [
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "assetKey": "modis_qc",
+        "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+        "pixelsCompared": 4,
+        "previewOmitted": true,
+        "allBitFieldsRetained": true
+      },
+      {
+        "mode": "direct read-only; rejected upstream proxy",
+        "assetKey": "modis_state",
+        "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+        "pixelsCompared": 4,
+        "previewOmitted": true,
+        "allBitFieldsRetained": true
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "assetKey": "modis_qc",
+        "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+        "pixelsCompared": 4,
+        "previewOmitted": true,
+        "allBitFieldsRetained": true
+      },
+      {
+        "mode": "loopback read-only; rejected upstream proxy",
+        "assetKey": "modis_state",
+        "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+        "pixelsCompared": 4,
+        "previewOmitted": true,
+        "allBitFieldsRetained": true
+      }
+    ],
+    "disconnectedAdapterRejected": true,
+    "status": "passed"
+  },
+  "checks": {
+    "runtimeTestsPassed": 432,
+    "runtimeTestsIgnored": 4,
+    "desktopTestsPassed": 4,
+    "nodeTestsPassed": 225,
+    "uiTestsPassed": 200,
+    "qualityUiTestsAfterTranslationPassed": 5,
+    "runtimeClippy": "passed",
+    "productionBuild": "passed"
+  },
+  "scope": {
+    "realOriginals": 2,
+    "originalPixelsCounted": 11520000,
+    "rawPixelsCompared": 456,
+    "pngPixelsCompared": 1230848,
+    "qualityMaskApplied": false,
+    "originalNasaHdfDownloaded": false,
+    "positiveEarthdataAuthorizationVerified": false,
+    "positiveCopernicusAuthorizationVerified": false,
+    "unsignedHighBitAndNoDataCoverage": "explicit synthetic originals; real QC tile has no bit 31 or fill samples"
+  },
+  "downloadHistory": "The first state download stalled for 45 seconds and failed. A later native project download succeeded; the original failed record was retained.",
+  "retainedEvidenceDirectory": ".verification/modis-quality-20261004",
+  "definitions": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+}

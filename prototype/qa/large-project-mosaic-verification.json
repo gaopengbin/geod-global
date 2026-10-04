@@ -1,0 +1,130 @@
+{
+  "independentDecoder": "Rasterio / GDAL",
+  "originalProjectId": "f687f983-ef6d-40a5-bc95-90a6907ce88a",
+  "originalProjectBounds": [
+    -123.00634,
+    37.20824,
+    -121.38045,
+    38.19151
+  ],
+  "isolatedStore": "C:\\Users\\Administrator\\AppData\\Local\\xyz.laogao.geod.global\\qa\\large-mosaic-20261001-1557",
+  "retryJobId": "b896cc0f-698f-4c3b-ad6d-ad257305329a",
+  "sourceCount": 10,
+  "noRedownload": true,
+  "sourceFiles": [
+    {
+      "jobId": "d6e012ec-3124-49a5-85d5-db8b6481cc35",
+      "itemId": "S2B_10SFH_20260905_0_L2A",
+      "sha256": "dbe497ecb98292ccf751c2abd5d7b80e423cca8c793c02b8944ba7b7edb12fd4",
+      "contributingPixels": 9608394
+    },
+    {
+      "jobId": "966b3e8d-b878-4af8-a67a-e6ddc7897ced",
+      "itemId": "S2B_10SEH_20260905_0_L2A",
+      "sha256": "5293e74a77097189398024fbea8e018ddec3b3ee1111e69601307fd87f698d41",
+      "contributingPixels": 19212462
+    },
+    {
+      "jobId": "c4594ae7-4b03-42e6-bba9-b9a7b46bfde4",
+      "itemId": "S2B_10SDH_20260905_0_L2A",
+      "sha256": "08073d984ce45132207545476d5f8fe5919753592925dbe8d2e67f6358b7bfd2",
+      "contributingPixels": 0
+    },
+    {
+      "jobId": "00e9e931-ca83-48a7-b63b-5c922bfc688f",
+      "itemId": "S2B_10SFG_20260905_0_L2A",
+      "sha256": "51806ef6bf2f60bca0300f9e358ee61fbbc56bb4000257156bbbbd0440bb3acb",
+      "contributingPixels": 27840977
+    },
+    {
+      "jobId": "4ef784dc-c415-4171-bc0c-1c11a215cebb",
+      "itemId": "S2B_10SEG_20260905_0_L2A",
+      "sha256": "cfa2fda0e48c702fe0856fc951ac992ecacbdf90c9c7e2c444d629698437deff",
+      "contributingPixels": 67613956
+    },
+    {
+      "jobId": "1e4faaca-72c6-4dfe-a3be-4aafa4fc414c",
+      "itemId": "S2B_10SDG_20260905_0_L2A",
+      "sha256": "34fb13a31b934658c00cc12b60e8a91468421814a31edc358811199d94876cd7",
+      "contributingPixels": 0
+    },
+    {
+      "jobId": "bc4609c6-7e93-4927-b51f-c64e5efed81d",
+      "itemId": "S2A_10SEH_20260905_1_L2A",
+      "sha256": "957bbbe6d38405095a0a67288d861afe9ad87027850a33f531954f374a645933",
+      "contributingPixels": 9103232
+    },
+    {
+      "jobId": "628e8e52-ea0a-4e4e-b266-227f2199b39c",
+      "itemId": "S2A_10SDH_20260905_1_L2A",
+      "sha256": "df2eb50f984d364a81e77cb2a563045ff5139d4245b26e67c28601b5e072c43c",
+      "contributingPixels": 2924423
+    },
+    {
+      "jobId": "108ee62e-a04c-40a8-a77a-7bc865c3b4a8",
+      "itemId": "S2A_10SEG_20260905_1_L2A",
+      "sha256": "af2753c7a1b7c2f0b4cb5a7aa666871808ed34160a84b94c6ecf381f33e30f72",
+      "contributingPixels": 14432412
+    },
+    {
+      "jobId": "bbc6c54c-4412-4030-9b76-e06082938185",
+      "itemId": "S2A_10SDG_20260905_1_L2A",
+      "sha256": "da8f06713fe426dc0492a675d34d0c4cdd9541f31dae21b3f17045e6e743a9b3",
+      "contributingPixels": 8473699
+    }
+  ],
+  "width": 14429,
+  "height": 11034,
+  "bands": 3,
+  "verifiedSamples": 477628758,
+  "crs": "EPSG:32610",
+  "pixelSize": [
+    10.0,
+    10.0
+  ],
+  "bounds": [
+    499430.0,
+    4117970.0,
+    643720.0,
+    4228310.0
+  ],
+  "coveredPixels": 159209555,
+  "allSamplesExact": true,
+  "outputBytes": 396701504,
+  "outputSha256": "df02b90d1e7c762b7ce3e1383510d0f2ecd79c052173e8c96b6f0225265ff651",
+  "processingSeconds": 232.25,
+  "outputPath": "\\\\?\\C:\\Users\\Administrator\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\xyz.laogao.geod.global\\qa\\large-mosaic-20261001-1557\\assets\\b896cc0f-698f-4c3b-ad6d-ad257305329a.tif",
+  "runtimeBinarySha256": "b47442447eec84c12fb31328eecad293c79f3fe401377f3729597a3d5f38e729",
+  "sourcesUnchanged": true,
+  "inspection": {
+    "width": 14429,
+    "height": 11034,
+    "bandCount": 3,
+    "crs": "EPSG:32610",
+    "pixelSize": [
+      10.0,
+      10.0
+    ],
+    "previewWidth": 768,
+    "previewHeight": 587,
+    "sha256": "df02b90d1e7c762b7ce3e1383510d0f2ecd79c052173e8c96b6f0225265ff651",
+    "previewPng": true
+  },
+  "pixelInspection": {
+    "coordinate": [
+      571575.0,
+      4173135.0
+    ],
+    "values": [
+      170,
+      152,
+      144
+    ],
+    "independentExactMatch": true
+  },
+  "memoryObservation": {
+    "pid": 72888,
+    "observedPeakWorkingSetBytes": 80916480,
+    "currentWorkingSetBytes": 16371712
+  }
+}

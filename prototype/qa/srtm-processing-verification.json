@@ -1,0 +1,388 @@
+{
+  "checkedAt": "2026-10-02T02:37:53.735Z",
+  "scope": {
+    "actualNativeProcessing": true,
+    "syntheticHgtInputs": true,
+    "actualOriginalDownload": false,
+    "positiveEarthdataAuthorization": false,
+    "terrainAccuracyAssessed": false,
+    "operatedUserDesktop": false
+  },
+  "inputSourcePins": [
+    {
+      "id": "98fc0c48-db97-45ea-a2b3-7582e2553d36",
+      "itemId": "N37W123.SRTMGL1.hgt",
+      "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/SRTMGL1.003/N37W123.SRTMGL1.hgt/N37W123.SRTMGL1.hgt.zip",
+      "sha256": "d3334ad239147b20c0373bb82e62e66b5d1ac0d496e2f651d5cbb81ec7acd7d7",
+      "bytesDownloaded": 189629
+    },
+    {
+      "id": "ae141c19-3414-43cc-946f-0d5fe9a77d97",
+      "itemId": "N37W122.SRTMGL1.hgt",
+      "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/SRTMGL1.003/N37W122.SRTMGL1.hgt/N37W122.SRTMGL1.hgt.zip",
+      "sha256": "0b72cfdfe8d1ef2ad3ea806d9b2958a7a24ca215fc3a081f573b4875bf7fecdf",
+      "bytesDownloaded": 189629
+    }
+  ],
+  "sourceOrigin": "synthetic arrays; manually seeded QA records; no NASA download",
+  "fullMosaic": {
+    "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+    "projectId": "513428df-ec04-4dc8-9deb-2bd88074dfd9",
+    "grid": {
+      "width": 7201,
+      "height": 3601,
+      "bandCount": 1,
+      "crs": "EPSG:4326",
+      "bounds": [
+        -123.00013888888888,
+        36.999861111111116,
+        -120.9998611111111,
+        38.00013888888889
+      ],
+      "pixelSize": [
+        0.0002777777777777778,
+        0.0002777777777777778
+      ],
+      "sourceCount": 2,
+      "maskedPixels": 0,
+      "coveredPixels": 25930800,
+      "overlapPolicy": "last ordered valid tile wins; shared edges occupy one row or column; gaps and polygon masks are -32768; zero and negative heights are valid",
+      "elevation": {
+        "product": "srtmgl1-v003",
+        "heightUnit": "metre",
+        "coordinateUnit": "degree",
+        "verticalReference": "EPSG:5773",
+        "pixelInterpretation": "PixelIsPoint"
+      }
+    },
+    "independentGdal": {
+      "driver": "GTiff",
+      "dtype": "int16",
+      "crs": "EPSG:9707",
+      "nodata": -32768.0,
+      "pixelInterpretation": "Point",
+      "width": 7201,
+      "height": 3601,
+      "bounds": [
+        -123.00013888888888,
+        36.999861111111116,
+        -120.9998611111111,
+        38.00013888888889
+      ],
+      "fullGridCompared": 25930801,
+      "exactMatch": true,
+      "fileSha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db"
+    }
+  },
+  "polygonClip": {
+    "jobId": "5550392b-dfc4-4240-bf0b-012fe68e5756",
+    "projectId": "b6e69bfb-e8a1-4794-a884-b9a5b4674014",
+    "grid": {
+      "width": 3,
+      "height": 4,
+      "bandCount": 1,
+      "crs": "EPSG:4326",
+      "bounds": [
+        -122.00041666666667,
+        37.99902777777778,
+        -121.99958333333333,
+        38.00013888888889
+      ],
+      "pixelSize": [
+        0.0002777777777777778,
+        0.0002777777777777778
+      ],
+      "sourceCount": 2,
+      "maskedPixels": 4,
+      "coveredPixels": 7,
+      "overlapPolicy": "last ordered valid tile wins; shared edges occupy one row or column; gaps and polygon masks are -32768; zero and negative heights are valid",
+      "elevation": {
+        "product": "srtmgl1-v003",
+        "heightUnit": "metre",
+        "coordinateUnit": "degree",
+        "verticalReference": "EPSG:5773",
+        "pixelInterpretation": "PixelIsPoint"
+      }
+    },
+    "independentGdal": {
+      "driver": "GTiff",
+      "dtype": "int16",
+      "crs": "EPSG:9707",
+      "nodata": -32768.0,
+      "pixelInterpretation": "Point",
+      "width": 3,
+      "height": 4,
+      "bounds": [
+        -122.00041666666667,
+        37.99902777777778,
+        -121.99958333333333,
+        38.00013888888889
+      ],
+      "fullGridCompared": 12,
+      "exactMatch": true,
+      "fileSha256": "4b27aefe90f6cd8a7ced2838006eef7814bf6a0cc975c9dc2089b04b86f74af6"
+    }
+  },
+  "originalSourceHashesPreserved": true,
+  "cancelledWithoutOutput": "7c2734c8-38ee-443b-9db3-4877f35f0471",
+  "stagedTemporaryFilesRemaining": 0,
+  "actualRuntimeRestart": {
+    "sameMetadataPixelsAndPng": true,
+    "cacheContentAndFileIdentityUnchanged": true
+  },
+  "nativeMetadata": {
+    "width": 7201,
+    "height": 3601,
+    "bandCount": 1,
+    "dataType": "Int16",
+    "crs": "EPSG:4326",
+    "bounds": [
+      -123.00013888888888,
+      36.999861111111116,
+      -120.9998611111111,
+      38.00013888888889
+    ],
+    "pixelSize": [
+      0.0002777777777777778,
+      0.0002777777777777778
+    ],
+    "nodata": -32768.0,
+    "previewWidth": 768,
+    "previewHeight": 384,
+    "classes": [],
+    "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+    "elevation": {
+      "product": "srtmgl1-v003",
+      "heightUnit": "metre",
+      "coordinateUnit": "degree",
+      "verticalReference": "EPSG:5773",
+      "pixelInterpretation": "PixelIsPoint",
+      "displayRange": [
+        -394.0,
+        4393.0
+      ],
+      "sampleCount": 294912,
+      "validSampleCount": 294912,
+      "nodataIsNan": false
+    }
+  },
+  "nativeSamples": [
+    {
+      "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+      "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+      "crs": "EPSG:4326",
+      "coordinate": [
+        -122.0,
+        38.0
+      ],
+      "pixel": [
+        3600,
+        0
+      ],
+      "center": [
+        -122.0,
+        38.0
+      ],
+      "value": 0,
+      "label": "Elevation",
+      "color": "#808080",
+      "isNoData": false
+    },
+    {
+      "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+      "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+      "crs": "EPSG:4326",
+      "coordinate": [
+        -122.0,
+        37.999722222222225
+      ],
+      "pixel": [
+        3600,
+        1
+      ],
+      "center": [
+        -122.0,
+        37.999722222222225
+      ],
+      "value": 32767,
+      "label": "Elevation",
+      "color": "#808080",
+      "isNoData": false
+    },
+    {
+      "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+      "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+      "crs": "EPSG:4326",
+      "coordinate": [
+        -122.0,
+        37.99944444444444
+      ],
+      "pixel": [
+        3600,
+        2
+      ],
+      "center": [
+        -122.0,
+        37.99944444444445
+      ],
+      "value": -32767,
+      "label": "Elevation",
+      "color": "#808080",
+      "isNoData": false
+    },
+    {
+      "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+      "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+      "crs": "EPSG:4326",
+      "coordinate": [
+        -122.0,
+        37.99916666666667
+      ],
+      "pixel": [
+        3600,
+        3
+      ],
+      "center": [
+        -122.0,
+        37.99916666666667
+      ],
+      "value": -32768,
+      "label": "Elevation",
+      "color": "#808080",
+      "isNoData": true
+    }
+  ],
+  "headlessViews": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "overflow": false,
+      "pixel": {
+        "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+        "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122,
+          37.5
+        ],
+        "pixel": [
+          3600,
+          1800
+        ],
+        "center": [
+          -122,
+          37.5
+        ],
+        "value": 2100,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      "nativeBridge": "actual isolated Rust HTTP runtime on port 4326",
+      "dataOrigin": "synthetic HGT inputs and actual derived GeoTIFF"
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "overflow": false,
+      "pixel": {
+        "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+        "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122,
+          37.5
+        ],
+        "pixel": [
+          3600,
+          1800
+        ],
+        "center": [
+          -122,
+          37.5
+        ],
+        "value": 2100,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      "nativeBridge": "actual isolated Rust HTTP runtime on port 4326",
+      "dataOrigin": "synthetic HGT inputs and actual derived GeoTIFF"
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "overflow": false,
+      "pixel": {
+        "jobId": "3b0d4b66-d612-4fd6-bb7e-f7654dacf2ce",
+        "sha256": "4bd13f535cac575238bd5c74d5d9f5ab02960402c7a524b35626d97a6346f2db",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122,
+          37.5
+        ],
+        "pixel": [
+          3600,
+          1800
+        ],
+        "center": [
+          -122,
+          37.5
+        ],
+        "value": 2100,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      "nativeBridge": "actual isolated Rust HTTP runtime on port 4326",
+      "dataOrigin": "synthetic HGT inputs and actual derived GeoTIFF"
+    }
+  ],
+  "additionalNativeTests": [
+    "Full horizontal shared edge, 7201 columns and exact signed samples",
+    "Full vertical shared edge, 7201 rows and NoData fallback",
+    "Queued polygon masks, Int16/Point/EGM96 metadata and restart",
+    "Source checksum change and cancellation before staging",
+    "Cancellation after HGT staging cleans temporary grids and outputs",
+    "Startup recovery removes only reserved HGT staging names and keeps unrelated partial files"
+  ],
+  "localEvidence": {
+    "native": ".verification/srtm-processing-20261002/",
+    "screenshots": ".verification/srtm-processing-ui/"
+  },
+  "remaining": [
+    "Positive Earthdata authorization and production HGT archive verification",
+    "Repeat processing acceptance with authenticated production originals",
+    "Reprojection and terrain analysis"
+  ],
+  "checks": {
+    "nodeTests": {
+      "passed": 108
+    },
+    "reactIntegrationTests": {
+      "passed": 106,
+      "files": 18
+    },
+    "nativeRuntimeTests": {
+      "passed": 157,
+      "ignored": 4,
+      "failed": 0
+    },
+    "nativeCliTests": {
+      "passed": 3
+    },
+    "desktopCustomProtocolTests": {
+      "passed": 4
+    },
+    "dependencyIsolationAndDocumentationLinks": "passed",
+    "desktopAclAndCsp": "passed",
+    "contractsAndRecipeStructure": "passed; actual processing validated separately",
+    "frontendBuild": "passed; existing main chunk size warning remains",
+    "runtimeClippy": "passed with -D warnings",
+    "cargoFmt": "passed",
+    "packagingOrPublishingPerformed": false
+  }
+}

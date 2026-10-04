@@ -34,7 +34,7 @@ pub struct ClipParameters {
     pub geometry: Option<PolygonGeometry>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type", content = "coordinates", deny_unknown_fields)]
 pub enum PolygonGeometry {
     Polygon(Vec<Vec<[f64; 2]>>),
@@ -81,10 +81,13 @@ impl PolygonGeometry {
                     let [next_x, next_y] = edge[1];
                     if ![x, y, next_x, next_y].iter().all(|v| v.is_finite())
                         || !(-180.0..=180.0).contains(&x)
-                        || !(-80.0..=84.0).contains(&y)
+                        || !(-90.0..=90.0).contains(&y)
                         || (next_x - x).abs() > 180.0
                     {
-                        return Err("Polygon coordinates must be WGS84 within UTM coverage and must not cross the date line".into());
+                        return Err(
+                            "Polygon coordinates must be WGS84 and must not cross the date line"
+                                .into(),
+                        );
                     }
                     extent[0] = extent[0].min(x);
                     extent[1] = extent[1].min(y);
@@ -385,7 +388,15 @@ pub(crate) fn polygon_coverage(
     if width as u64 * height as u64 > 8_000_000 {
         return Err("Polygon mask exceeds 8 million output pixels".into());
     }
-    let (wgs84, utm) = projections(crs)?;
+    let modis = matches!(
+        crs,
+        crate::providers::modis::CRS | crate::providers::viirs::hdf::CRS
+    );
+    let projections = if crs == "EPSG:4326" || modis {
+        None
+    } else {
+        Some(projections(crs)?)
+    };
     let polygons = prepared_polygons(geometry);
     let deadline = Instant::now() + Duration::from_secs(90);
     let mut coverage = Vec::with_capacity(width as usize * height as usize);
@@ -397,18 +408,25 @@ pub(crate) fn polygon_coverage(
         let northing = bounds[3] - (row as f64 + 0.5) * pixel_size[1];
         for col in 0..width {
             let easting = bounds[0] + (col as f64 + 0.5) * pixel_size[0];
-            let mut point = (easting, northing, 0.0);
-            proj4rs::transform::transform(&utm, &wgs84, &mut point)
-                .map_err(|error| format!("Cannot transform mosaic pixel to WGS84: {error}"))?;
-            coverage.push(prepared_contains(
-                &polygons,
-                [point.0.to_degrees(), point.1.to_degrees()],
-            ));
+            let point = if modis {
+                let Some(point) = crate::providers::modis::inverse([easting, northing]) else {
+                    coverage.push(false);
+                    continue;
+                };
+                point
+            } else if let Some((wgs84, utm)) = &projections {
+                let mut point = (easting, northing, 0.0);
+                proj4rs::transform::transform(utm, wgs84, &mut point)
+                    .map_err(|error| format!("Cannot transform mosaic pixel to WGS84: {error}"))?;
+                [point.0.to_degrees(), point.1.to_degrees()]
+            } else {
+                [easting, northing]
+            };
+            coverage.push(prepared_contains(&polygons, point));
         }
     }
-    if !coverage.iter().any(|value| *value) {
-        return Err("The project polygon contains no output pixel centres".into());
-    }
+    // A streamed mosaic window may be completely outside the polygon. The
+    // caller checks retained coverage across the entire output, not each strip.
     Ok(coverage)
 }
 
@@ -417,15 +435,16 @@ fn projections(crs: &str) -> Result<(Proj, Proj)> {
         .strip_prefix("EPSG:")
         .and_then(|value| value.parse::<u16>().ok())
         .ok_or("Invalid source EPSG code")?;
-    let (zone, south) = match epsg {
-        32601..=32660 => (epsg - 32600, false),
-        32701..=32760 => (epsg - 32700, true),
-        _ => return Err("WGS84 crop transformation supports only WGS84 UTM source rasters".into()),
+    let (zone, south, datum) = match epsg {
+        32601..=32660 => (epsg - 32600, false, "WGS84"),
+        32701..=32760 => (epsg - 32700, true, "WGS84"),
+        26901..=26923 => (epsg - 26900, false, "NAD83"),
+        _ => return Err("Crop transformation supports reviewed WGS84 or NAD83 UTM grids".into()),
     };
     let from = Proj::from_proj_string("+proj=longlat +datum=WGS84 +no_defs")
         .map_err(|e| format!("Cannot initialize WGS84 projection: {e}"))?;
     let to = Proj::from_proj_string(&format!(
-        "+proj=utm +zone={zone} {} +datum=WGS84 +units=m +no_defs",
+        "+proj=utm +zone={zone} {} +datum={datum} +units=m +no_defs",
         if south { "+south" } else { "" }
     ))
     .map_err(|e| format!("Cannot initialize source projection: {e}"))?;
@@ -444,6 +463,32 @@ fn project_point(from: &Proj, to: &Proj, longitude: f64, latitude: f64) -> Resul
 }
 
 pub(crate) fn projected_envelope(bounds: [f64; 4], crs: &str) -> Result<[f64; 4]> {
+    if matches!(
+        crs,
+        crate::providers::modis::CRS | crate::providers::viirs::hdf::CRS
+    ) {
+        // Exact rectangular envelope: x = R lon cos(lat) has an interior
+        // latitude extremum only at the equator; y = R lat is monotone.
+        let mut envelope = [
+            f64::INFINITY,
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+            f64::NEG_INFINITY,
+        ];
+        for lon in [bounds[0], bounds[2]] {
+            for lat in [bounds[1], bounds[3], 0.0f64.clamp(bounds[1], bounds[3])] {
+                let [x, y] = crate::providers::modis::forward([lon, lat])?;
+                envelope[0] = envelope[0].min(x);
+                envelope[1] = envelope[1].min(y);
+                envelope[2] = envelope[2].max(x);
+                envelope[3] = envelope[3].max(y);
+            }
+        }
+        return Ok(envelope);
+    }
+    if crs == "EPSG:4326" {
+        return Ok(bounds);
+    }
     let (from, to) = projections(crs)?;
     let mut envelope = [
         f64::INFINITY,

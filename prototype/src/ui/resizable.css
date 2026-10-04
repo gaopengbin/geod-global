@@ -1,0 +1,19 @@
+.bui-panel-group { flex: 1; min-width: 0; min-height: 0; }
+.bui-panel-content { display: flex; flex-direction: column; min-width: 0; min-height: 0; height: 100%; }
+.bui-panel-divider { width: 6px; position: relative; background: var(--surface); touch-action: none; outline: none; }
+.bui-panel-divider::before { content: ''; position: absolute; inset: 0 auto 0 2px; width: 1px; background: var(--line); transition: background-color var(--motion-fast); }
+.bui-panel-divider > span { position: absolute; top: calc(50% - 14px); left: 2px; height: 28px; width: 2px; border-radius: 2px; background: var(--line-strong); transition: background-color var(--motion-fast), height var(--motion-fast); }
+.bui-panel-divider:hover::before, .bui-panel-divider:focus-visible::before, .bui-panel-divider[data-separator="active"]::before { background: var(--accent); width: 2px; }
+.bui-panel-divider:hover > span, .bui-panel-divider:focus-visible > span, .bui-panel-divider[data-separator="active"] > span { background: var(--accent); }
+.bui-panel-divider:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); }
+.bui-panel-divider[aria-disabled="true"] { cursor: default; }
+@media (max-width: 760px) {
+  .app-body.bui-panel-stack > #navigation-pane { width: 62px; flex: 0 0 62px; }
+  .app-body.bui-panel-stack > #work-area-pane { flex: 1; min-width: 0; }
+  .bui-panel-stack.workspace, .bui-panel-stack.wm-panels { flex-direction: column; }
+  .bui-panel-stack.workspace .bui-panel-content, .bui-panel-stack.wm-panels .bui-panel-content { height: auto; }
+}
+.bui-panel-group[data-orientation="vertical"] > .bui-panel-divider { width: 100%; height: 6px; }
+.bui-panel-group[data-orientation="vertical"] > .bui-panel-divider::before { inset: 2px 0 auto; width: 100%; height: 1px; }
+.bui-panel-group[data-orientation="vertical"] > .bui-panel-divider > span { left: calc(50% - 14px); top: 2px; height: 2px; width: 28px; }
+@media (forced-colors: active) { .bui-panel-divider::before, .bui-panel-divider > span { background: ButtonText; } .bui-panel-divider:focus-visible { outline: 1px solid Highlight; } }

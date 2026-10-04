@@ -17,6 +17,18 @@ pub const MAX_PROJECT_SCENES: usize = 32;
 pub struct ProjectAsset {
     pub href: String,
     pub media_type: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub raster_band: Option<ReflectanceBand>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ReflectanceBand {
+    pub data_type: String,
+    pub scale: f64,
+    pub offset: f64,
+    pub nodata: f64,
+    pub spatial_resolution: f64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -56,6 +68,10 @@ pub struct Project {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub geometry: Option<PolygonGeometry>,
     pub scenes: Vec<ProjectScene>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub stac_items: Vec<crate::stac::ProjectItem>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub wcs_items: Vec<crate::wcs::ProjectItem>,
     pub created_at: String,
     pub updated_at: String,
 }
@@ -68,7 +84,7 @@ pub struct ProjectDownloads {
     pub jobs: Vec<Job>,
 }
 
-fn valid_bounds(bounds: [f64; 4]) -> bool {
+pub(crate) fn valid_bounds(bounds: [f64; 4]) -> bool {
     bounds.iter().all(|value| value.is_finite())
         && bounds[0] >= -180.0
         && bounds[2] <= 180.0
@@ -78,7 +94,7 @@ fn valid_bounds(bounds: [f64; 4]) -> bool {
         && bounds[1] < bounds[3]
 }
 
-fn validate_project_name(name: &str) -> Result<String> {
+pub(crate) fn validate_project_name(name: &str) -> Result<String> {
     let name = name.trim();
     if name.is_empty() || name.chars().count() > 120 || name.chars().any(char::is_control) {
         return Err("Project name must contain 1 to 120 printable characters".into());
@@ -128,15 +144,82 @@ impl CreateProjectRequest {
                 return Err("Project scene metadata is invalid".into());
             }
             if scene.assets.is_empty()
-                || scene.assets.len() > 2
+                || scene.assets.len() > crate::providers::SOURCE_ASSET_KEYS.len()
                 || scene
                     .assets
                     .keys()
-                    .any(|key| key != "scl" && key != "visual")
+                    .any(|key| !crate::providers::SOURCE_ASSET_KEYS.contains(&key.as_str()))
             {
-                return Err("Project scenes require SCL and/or true-color assets".into());
+                return Err("Project scenes require supported source raster assets".into());
+            }
+            if let Some(period) = crate::providers::vegetation::period(&scene.item_id) {
+                let expected =
+                    chrono::DateTime::parse_from_rfc3339(&period[0]).map_err(crate::io_error)?;
+                let date =
+                    chrono::DateTime::parse_from_rfc3339(&scene.date).map_err(crate::io_error)?;
+                if date != expected || scene.crs.as_deref() != Some(crate::providers::modis::CRS) {
+                    return Err("MODIS vegetation project date or sinusoidal CRS differs from its pinned product".into());
+                }
             }
             for (key, asset) in &scene.assets {
+                if (crate::providers::modis::QUALITY_KEYS.contains(&key.as_str())
+                    || crate::raster::landsat_quality::KEYS.contains(&key.as_str()))
+                    && asset.raster_band.is_some()
+                {
+                    return Err("Quality bit fields must not carry reflectance calibration".into());
+                }
+                if (matches!(key.as_str(), "red" | "green" | "blue")
+                    || crate::providers::vegetation::is_key(key))
+                    && asset.raster_band.is_none()
+                {
+                    return Err(
+                        "Reflectance source bands require their original conversion metadata"
+                            .into(),
+                    );
+                }
+                if let Some(band) = &asset.raster_band {
+                    let hls = url::Url::parse(&asset.href)
+                        .is_ok_and(|url| url.host_str() == Some(crate::providers::nasa::HOST));
+                    let modis = url::Url::parse(&asset.href)
+                        .is_ok_and(|url| url.host_str() == Some(crate::providers::modis::HOST));
+                    let vegetation = crate::providers::vegetation::is_key(key);
+                    let calibration = if vegetation {
+                        let layer = crate::providers::vegetation::layer(key).unwrap();
+                        modis
+                            && band.data_type == layer.data_type
+                            && band.scale == layer.scale
+                            && band.offset == 0.0
+                            && band.nodata == f64::from(layer.nodata)
+                    } else if modis {
+                        band.data_type == "int16"
+                            && band.scale == 0.0001
+                            && band.offset == 0.0
+                            && band.nodata == -28672.0
+                    } else if hls {
+                        band.data_type == "int16"
+                            && band.scale == 0.0001
+                            && band.offset == 0.0
+                            && band.nodata == -9999.0
+                    } else {
+                        band.data_type == "uint16"
+                            && band.scale == 0.0000275
+                            && band.offset == -0.2
+                            && band.nodata == 0.0
+                    };
+                    if !(matches!(key.as_str(), "red" | "green" | "blue") || vegetation)
+                        || !calibration
+                        || band.spatial_resolution
+                            != if vegetation {
+                                250.0
+                            } else if modis {
+                                500.0
+                            } else {
+                                30.0
+                            }
+                    {
+                        return Err("Unsupported reflectance band metadata".into());
+                    }
+                }
                 validate_request(
                     &CreateJobRequest {
                         item_id: scene.item_id.clone(),
@@ -147,6 +230,25 @@ impl CreateProjectRequest {
                     },
                     fixture_origin,
                 )?;
+            }
+            if scene
+                .assets
+                .keys()
+                .any(|key| crate::raster::landsat_quality::KEYS.contains(&key.as_str()))
+            {
+                let mut directory = None;
+                for (key, asset) in &scene.assets {
+                    if matches!(
+                        key.as_str(),
+                        "red" | "green" | "blue" | "qa_pixel" | "qa_radsat"
+                    ) {
+                        let parent = asset.href.rsplit_once('/').map(|(p, _)| p);
+                        if directory.is_some_and(|p| Some(p) != parent) {
+                            return Err("Landsat QA and RGB must retain the exact same original processing directory".into());
+                        }
+                        directory = parent;
+                    }
+                }
             }
         }
         Ok(())
@@ -174,13 +276,16 @@ pub(crate) async fn load_projects(
         {
             return Err("Saved project has an invalid identifier".into());
         }
-        CreateProjectRequest {
-            name: project.name.clone(),
-            bounds: project.bounds,
-            geometry: project.geometry.clone(),
-            scenes: project.scenes.clone(),
+        crate::stac_projects::validate_project(root, project)?;
+        if !project.scenes.is_empty() {
+            CreateProjectRequest {
+                name: project.name.clone(),
+                bounds: project.bounds,
+                geometry: project.geometry.clone(),
+                scenes: project.scenes.clone(),
+            }
+            .validate(fixture_origin)?;
         }
-        .validate(fixture_origin)?;
     }
     Ok(projects)
 }
@@ -205,6 +310,8 @@ impl JobManager {
             bounds: request.bounds,
             geometry: request.geometry,
             scenes: request.scenes,
+            stac_items: Vec::new(),
+            wcs_items: Vec::new(),
             created_at: timestamp.clone(),
             updated_at: timestamp,
         };
@@ -250,12 +357,45 @@ impl JobManager {
             .iter()
             .map(|scene| scene.item_id.clone())
             .collect();
+        let mut changed = false;
         for scene in request.scenes {
             // A catalogue refresh must not replace an already pinned source or metadata.
             if ids.insert(scene.item_id.clone()) {
                 updated.scenes.push(scene);
+                changed = true;
+            } else if crate::providers::modis::identity(&scene.item_id).is_some()
+                || scene.assets.values().any(|a| {
+                    url::Url::parse(&a.href)
+                        .is_ok_and(|u| u.host_str() == Some(crate::providers::LANDSAT_HOST))
+                })
+            {
+                // Newly supported quality layers may be added to a legacy RGB
+                // scene; its prior assets and acquisition metadata stay pinned.
+                if let Some(existing) = updated.scenes.iter_mut().find(|s| {
+                    s.item_id == scene.item_id
+                        && s.assets.values().any(|asset| {
+                            url::Url::parse(&asset.href).is_ok_and(|url| {
+                                matches!(
+                                    url.host_str(),
+                                    Some(crate::providers::modis::HOST)
+                                        | Some(crate::providers::LANDSAT_HOST)
+                                )
+                            })
+                        })
+                }) {
+                    for (key, asset) in scene.assets {
+                        if (crate::providers::modis::QUALITY_KEYS.contains(&key.as_str())
+                            || crate::raster::landsat_quality::KEYS.contains(&key.as_str()))
+                            && !existing.assets.contains_key(&key)
+                        {
+                            existing.assets.insert(key, asset);
+                            changed = true;
+                        }
+                    }
+                }
             }
         }
+        crate::stac_projects::validate_project(&self.inner.root, &updated)?;
         #[cfg(test)]
         let origin = self.inner.fixture_origin.as_deref();
         #[cfg(not(test))]
@@ -267,7 +407,7 @@ impl JobManager {
             scenes: updated.scenes.clone(),
         }
         .validate(origin)?;
-        if updated.scenes.len() == previous.scenes.len() {
+        if !changed {
             return Ok(previous);
         }
         updated.updated_at = now();
@@ -279,7 +419,10 @@ impl JobManager {
         Ok(updated)
     }
 
-    async fn persist_projects(&self, projects: &BTreeMap<String, Project>) -> Result<()> {
+    pub(crate) async fn persist_projects(
+        &self,
+        projects: &BTreeMap<String, Project>,
+    ) -> Result<()> {
         let bytes = serde_json::to_vec_pretty(projects).map_err(io_error)?;
         let temporary = self.inner.root.join("projects.json.tmp");
         let mut file = tokio::fs::File::create(&temporary)
@@ -303,8 +446,8 @@ impl JobManager {
         asset_key: &str,
         item_ids: Option<Vec<String>>,
     ) -> Result<ProjectDownloads> {
-        if asset_key != "scl" && asset_key != "visual" {
-            return Err("Choose SCL or true-color imagery for the project download".into());
+        if !crate::providers::SOURCE_ASSET_KEYS.contains(&asset_key) {
+            return Err("Choose supported source files for the project download".into());
         }
         let project = self
             .inner
@@ -345,6 +488,9 @@ impl JobManager {
                 job.item_id == scene.item_id
                     && job.asset_key == asset_key
                     && job.href == asset.href
+                    && (asset_key != "viirs"
+                        || job.status != JobStatus::Succeeded
+                        || job.viirs_science.is_some())
                     && matches!(
                         job.status,
                         JobStatus::Succeeded | JobStatus::Queued | JobStatus::Running
@@ -417,6 +563,7 @@ mod tests {
                             crate::SOURCE_HOST
                         ),
                         media_type: "image/tiff; application=geotiff".into(),
+                        raster_band: None,
                     },
                 )]),
             }],
@@ -430,6 +577,274 @@ mod tests {
             asset.href = asset.href.replace(&original.item_id, id);
         }
         scene
+    }
+    #[tokio::test]
+    async fn landsat_conversion_metadata_survives_restart_and_rejects_missing_or_changed_parameters(
+    ) {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let mut request = project_request();
+        let product = "LC09_L2SP_044034_20250628_20250629_02_T1";
+        request.scenes[0].item_id = "LC09_L2SP_044034_20250628_02_T1".into();
+        request.scenes[0].assets = [("red",4), ("green",3), ("blue",2)].into_iter().map(|(key, number)| (key.into(), ProjectAsset {
+            href: format!("https://{}/landsat-c2/level-2/standard/oli-tirs/2025/044/034/{product}/{product}_SR_B{number}.TIF", crate::providers::LANDSAT_HOST),
+            media_type: "image/tiff; application=geotiff; profile=cloud-optimized".into(),
+            raster_band: Some(ReflectanceBand { data_type: "uint16".into(), scale: 0.0000275, offset: -0.2, nodata: 0.0, spatial_resolution: 30.0 }),
+        })).collect();
+        let project = manager.create_project(request.clone()).await.unwrap();
+        drop(manager);
+        let loaded = load_projects(directory.path(), None).await.unwrap();
+        assert_eq!(
+            serde_json::to_value(&loaded[&project.id].scenes).unwrap(),
+            serde_json::to_value(&project.scenes).unwrap()
+        );
+        let mut missing = request.clone();
+        missing.scenes[0].assets.get_mut("red").unwrap().raster_band = None;
+        assert!(missing.validate(None).is_err());
+        request.scenes[0]
+            .assets
+            .get_mut("red")
+            .unwrap()
+            .raster_band
+            .as_mut()
+            .unwrap()
+            .scale = 1.0;
+        assert!(request.validate(None).is_err());
+        let legacy = project_request();
+        let json = serde_json::to_string(&legacy).unwrap();
+        assert!(!json.contains("rasterBand"));
+        assert!(serde_json::from_str::<CreateProjectRequest>(&json)
+            .unwrap()
+            .validate(None)
+            .is_ok());
+    }
+
+    #[tokio::test]
+    async fn landsat_quality_extension_keeps_old_rgb_and_rejects_another_processing_directory() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let mut request = project_request();
+        let product = "LC09_L2SP_044034_20250628_20250629_02_T1";
+        request.scenes[0].item_id = "LC09_L2SP_044034_20250628_02_T1".into();
+        request.scenes[0].assets=[("red",4),("green",3),("blue",2)].into_iter().map(|(key,b)| (key.into(),ProjectAsset {
+            href:format!("https://{}/landsat-c2/level-2/standard/oli-tirs/2025/044/034/{product}/{product}_SR_B{b}.TIF",crate::providers::LANDSAT_HOST),
+            media_type:"image/tiff; application=geotiff".into(),raster_band:Some(ReflectanceBand {data_type:"uint16".into(),scale:0.0000275,offset:-0.2,nodata:0.0,spatial_resolution:30.0}) })).collect();
+        let original = manager.create_project(request.clone()).await.unwrap();
+        let mut incoming = request.scenes.clone();
+        for key in crate::raster::landsat_quality::KEYS {
+            let href = incoming[0].assets["red"]
+                .href
+                .replace("_SR_B4.TIF", &format!("_{}.TIF", key.to_uppercase()));
+            incoming[0].assets.insert(
+                (*key).into(),
+                ProjectAsset {
+                    href,
+                    media_type: "image/tiff; application=geotiff".into(),
+                    raster_band: None,
+                },
+            );
+        }
+        let mut wrong = incoming.clone();
+        wrong[0].assets.get_mut("qa_pixel").unwrap().href = wrong[0].assets["qa_pixel"]
+            .href
+            .replace("_20250629_", "_20250630_");
+        assert!(manager
+            .add_project_scenes(&original.id, AddProjectScenesRequest { scenes: wrong })
+            .await
+            .is_err());
+        incoming[0].date = "2020-01-01T00:00:00Z".into();
+        incoming[0].assets.get_mut("red").unwrap().href =
+            "https://untrusted.example/changed.tif".into();
+        let expanded = manager
+            .add_project_scenes(&original.id, AddProjectScenesRequest { scenes: incoming })
+            .await
+            .unwrap();
+        assert_eq!(expanded.scenes[0].date, original.scenes[0].date);
+        for key in ["red", "green", "blue"] {
+            assert_eq!(
+                expanded.scenes[0].assets[key].href,
+                original.scenes[0].assets[key].href
+            );
+        }
+        assert_eq!(expanded.scenes[0].assets.len(), 5);
+        drop(manager);
+        let restored = load_projects(directory.path(), None).await.unwrap();
+        assert_eq!(restored[&original.id].scenes[0].assets.len(), 5);
+    }
+
+    #[tokio::test]
+    async fn hls_signed_band_calibration_survives_restart_and_cannot_use_landsat_parameters() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let mut request = project_request();
+        let id = "HLS.L30.T10SEG.2025179T184546.v2.0";
+        request.scenes[0].item_id = id.into();
+        request.scenes[0].assets = [("red", "B04"), ("green", "B03"), ("blue", "B02")]
+            .into_iter()
+            .map(|(key, band)| {
+                (
+                    key.into(),
+                    ProjectAsset {
+                        href: format!(
+                            "https://{}/lp-prod-protected/HLSL30.020/{id}/{id}.{band}.tif",
+                            crate::providers::nasa::HOST
+                        ),
+                        media_type: "image/tiff; application=geotiff".into(),
+                        raster_band: Some(ReflectanceBand {
+                            data_type: "int16".into(),
+                            scale: 0.0001,
+                            offset: 0.0,
+                            nodata: -9999.0,
+                            spatial_resolution: 30.0,
+                        }),
+                    },
+                )
+            })
+            .collect();
+        let project = manager.create_project(request.clone()).await.unwrap();
+        drop(manager);
+        let loaded = load_projects(directory.path(), None).await.unwrap();
+        assert_eq!(
+            serde_json::to_value(&loaded[&project.id].scenes).unwrap(),
+            serde_json::to_value(&project.scenes).unwrap()
+        );
+        let band = request.scenes[0]
+            .assets
+            .get_mut("red")
+            .unwrap()
+            .raster_band
+            .as_mut()
+            .unwrap();
+        *band = ReflectanceBand {
+            data_type: "uint16".into(),
+            scale: 0.0000275,
+            offset: -0.2,
+            nodata: 0.0,
+            spatial_resolution: 30.0,
+        };
+        assert!(request.validate(None).is_err());
+        request.scenes[0].assets.get_mut("red").unwrap().raster_band = None;
+        assert!(request.validate(None).is_err());
+    }
+
+    #[tokio::test]
+    async fn modis_five_source_project_and_legacy_quality_extension_keep_existing_pins() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let mut request = project_request();
+        let id = "MYD09A1.A2025177.h08v05.061.2025189031924";
+        request.scenes[0].item_id = id.into();
+        request.scenes[0].date = "2025-06-26T00:00:00Z".into();
+        request.scenes[0].crs = Some(crate::providers::modis::CRS.into());
+        request.scenes[0].cloud = None;
+        request.scenes[0].assets = ["red", "green", "blue", "modis_qc", "modis_state"]
+            .into_iter()
+            .map(|key| {
+                (
+                    key.into(),
+                    ProjectAsset {
+                        href: format!(
+                            "https://{}/modis-061-cogs/MYD09A1/08/05/2025177/{id}{}",
+                            crate::providers::modis::HOST,
+                            crate::providers::modis::suffix(key).unwrap()
+                        ),
+                        media_type: "image/tiff; application=geotiff".into(),
+                        raster_band: ["red", "green", "blue"].contains(&key).then_some(
+                            ReflectanceBand {
+                                data_type: "int16".into(),
+                                scale: 0.0001,
+                                offset: 0.0,
+                                nodata: -28672.0,
+                                spatial_resolution: 500.0,
+                            },
+                        ),
+                    },
+                )
+            })
+            .collect();
+        request.validate(None).unwrap();
+        let full = manager.create_project(request.clone()).await.unwrap();
+        assert_eq!(full.scenes[0].assets.len(), 5);
+        let mut legacy = request.clone();
+        legacy.scenes[0]
+            .assets
+            .retain(|key, _| !crate::providers::modis::QUALITY_KEYS.contains(&key.as_str()));
+        let old = manager.create_project(legacy.clone()).await.unwrap();
+        let mut incoming = request.scenes.clone();
+        incoming[0].date = "2020-01-01T00:00:00Z".into();
+        incoming[0].assets.get_mut("red").unwrap().href =
+            "https://untrusted.example/changed.tif".into();
+        let expanded = manager
+            .add_project_scenes(
+                &old.id,
+                AddProjectScenesRequest {
+                    scenes: incoming.clone(),
+                },
+            )
+            .await
+            .unwrap();
+        assert_eq!(expanded.id, old.id);
+        assert_eq!(expanded.created_at, old.created_at);
+        assert_eq!(expanded.name, old.name);
+        assert_eq!(expanded.bounds, old.bounds);
+        assert_eq!(expanded.scenes[0].date, old.scenes[0].date);
+        assert_eq!(expanded.scenes[0].assets.len(), 5);
+        for (key, asset) in &old.scenes[0].assets {
+            assert_eq!(
+                serde_json::to_value(&expanded.scenes[0].assets[key]).unwrap(),
+                serde_json::to_value(asset).unwrap()
+            );
+        }
+        incoming[0].assets.get_mut("modis_qc").unwrap().href =
+            "https://untrusted.example/changed.tif".into();
+        assert_eq!(
+            manager
+                .add_project_scenes(
+                    &old.id,
+                    AddProjectScenesRequest {
+                        scenes: incoming.clone()
+                    }
+                )
+                .await
+                .unwrap()
+                .scenes[0]
+                .assets["modis_qc"]
+                .href,
+            expanded.scenes[0].assets["modis_qc"].href
+        );
+        let untouched = manager.create_project(legacy).await.unwrap();
+        assert!(manager
+            .add_project_scenes(&untouched.id, AddProjectScenesRequest { scenes: incoming })
+            .await
+            .is_err());
+        assert_eq!(
+            manager
+                .list_projects()
+                .await
+                .iter()
+                .find(|p| p.id == untouched.id)
+                .unwrap()
+                .scenes[0]
+                .assets
+                .len(),
+            3
+        );
+        request.scenes[0]
+            .assets
+            .get_mut("modis_qc")
+            .unwrap()
+            .raster_band = request.scenes[0].assets["red"].raster_band.clone();
+        assert!(request.validate(None).is_err());
+        drop(manager);
+        let restored = JobManager::open(directory.path()).await.unwrap();
+        let projects = restored.list_projects().await;
+        for project in [full, expanded] {
+            assert_eq!(
+                serde_json::to_value(&projects.iter().find(|p| p.id == project.id).unwrap().scenes)
+                    .unwrap(),
+                serde_json::to_value(&project.scenes).unwrap()
+            );
+        }
     }
 
     #[tokio::test]

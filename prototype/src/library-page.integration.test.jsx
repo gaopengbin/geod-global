@@ -8,7 +8,6 @@ import { RuntimeContext } from './runtime-context.js';
 vi.mock('./i18n.jsx', () => ({ useI18n: () => ({ t: value => value, number: value => String(value) }) }));
 vi.mock('./projects-ui.jsx', () => ({ ProjectsLibrary: ({ focusedProjectId }) => <section aria-label="Project content">{focusedProjectId || 'Project index'}</section> }));
 vi.mock('./runtime-ui.jsx', () => ({ RuntimeLibrary: () => <section aria-label="File content">File index</section> }));
-vi.mock('./processing-ui.jsx', () => ({ ExecutableRecipes: () => <p>Advanced saved plans</p> }));
 
 const show = props => render(<RuntimeContext.Provider value={{ jobs: [{ status: 'succeeded' }, { status: 'running' }] }}><LibraryPage {...props}/></RuntimeContext.Provider>);
 
@@ -20,8 +19,9 @@ describe('Library navigation', () => {
       location.hash = '#My%20Data?view=files';
       show();
       expect(screen.getByRole('region', { name: 'File content' })).toBeTruthy();
+      expect(screen.queryByRole('button', { name: /Saved clip plans/ })).toBeNull();
       expect(screen.queryByRole('region', { name: 'Project content' })).toBeNull();
-      expect(screen.getByRole('radio', { name: 'All files · 1' }).getAttribute('aria-checked')).toBe('true');
+      expect(screen.getByRole('radio', { name: 'Raster files · 1' }).getAttribute('aria-checked')).toBe('true');
       await user.click(screen.getByRole('radio', { name: 'Projects' }));
       expect(location.hash).toBe('#My%20Data');
       expect(screen.getByRole('region', { name: 'Project content' })).toBeTruthy();

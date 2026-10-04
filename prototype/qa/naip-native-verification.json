@@ -1,0 +1,346 @@
+{
+  "checkedAt": "2026-10-01T18:05:12.265097+00:00",
+  "stage": "Application NAIP original download, remote RGB map, local RGB + NIR inspection and persistent thumbnail verification",
+  "implementedInApplication": true,
+  "scope": "USDA NAIP four-band Planetary Computer COG distribution; not raw USDA acquisition delivery or generic multiband processing",
+  "liveCatalog": {
+    "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+    "collection": "naip",
+    "bbox": [
+      -122.45,
+      37.72,
+      -122.44,
+      37.73
+    ],
+    "datetime": [
+      "2022-05-01",
+      "2022-05-31"
+    ],
+    "responses": [
+      {
+        "status": 200,
+        "query": "?collections=naip&bbox=-122.45%2C37.72%2C-122.44%2C37.73&datetime=2022-05-01T00%3A00%3A00Z%2F2022-05-31T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=100",
+        "count": 1,
+        "first": "ca_m_3712221_nw_10_060_20220518"
+      }
+    ]
+  },
+  "nativeOriginal": {
+    "itemId": "ca_m_3712221_nw_10_060_20220518",
+    "href": "https://naipeuwest.blob.core.windows.net/naip/v002/ca/2022/ca_060cm_2022/37122/m_3712221_nw_10_060_20220518.tif",
+    "bytesDownloaded": 431299986,
+    "sha256": "8fa6571b8464e6715bb707813ebef6a23502637fe06735ba8c806a40b79ff67a",
+    "status": "succeeded",
+    "createdAt": "2026-10-01T17:27:35.051770400+00:00",
+    "updatedAt": "2026-10-01T17:28:15.744206100+00:00"
+  },
+  "independentHeader": {
+    "dimensions": [
+      9920,
+      12280
+    ],
+    "bandCount": 4,
+    "bitsPerSample": [
+      8,
+      8,
+      8,
+      8
+    ],
+    "compression": "ADOBE_DEFLATE",
+    "predictor": "HORIZONTAL",
+    "photometric": "RGB",
+    "extraSamples": [
+      0
+    ],
+    "tileDimensions": [
+      512,
+      512
+    ],
+    "nodata": null,
+    "overviewDimensions": [
+      [
+        9920,
+        12280
+      ],
+      [
+        4960,
+        6140
+      ],
+      [
+        2480,
+        3070
+      ],
+      [
+        1240,
+        1535
+      ],
+      [
+        620,
+        767
+      ],
+      [
+        310,
+        383
+      ]
+    ]
+  },
+  "independentLocalVerification": {
+    "checkedAt": "2026-10-01T18:02:52.036190+00:00",
+    "jobId": "97c87b89-8892-45d8-8735-f83cd92a103a",
+    "bytes": 431299986,
+    "sha256": "8fa6571b8464e6715bb707813ebef6a23502637fe06735ba8c806a40b79ff67a",
+    "dimensions": [
+      9920,
+      12280
+    ],
+    "bands": {
+      "product": "naip",
+      "bands": [
+        "red",
+        "green",
+        "blue",
+        "nir"
+      ],
+      "displayBands": [
+        1,
+        2,
+        3
+      ],
+      "pixelInterpretation": "PixelIsArea"
+    },
+    "crs": "EPSG:26910",
+    "spacing": [
+      0.6,
+      0.6
+    ],
+    "nodata": null,
+    "pixelsCompared": [
+      {
+        "pixel": [
+          1000,
+          1000
+        ],
+        "values": [
+          126,
+          138,
+          122,
+          99
+        ]
+      },
+      {
+        "pixel": [
+          0,
+          0
+        ],
+        "values": [
+          198,
+          196,
+          194,
+          186
+        ]
+      },
+      {
+        "pixel": [
+          511,
+          511
+        ],
+        "values": [
+          124,
+          134,
+          97,
+          199
+        ]
+      },
+      {
+        "pixel": [
+          512,
+          512
+        ],
+        "values": [
+          121,
+          130,
+          92,
+          200
+        ]
+      },
+      {
+        "pixel": [
+          9919,
+          0
+        ],
+        "values": [
+          132,
+          141,
+          101,
+          189
+        ]
+      },
+      {
+        "pixel": [
+          0,
+          12279
+        ],
+        "values": [
+          66,
+          133,
+          141,
+          59
+        ]
+      },
+      {
+        "pixel": [
+          9919,
+          12279
+        ],
+        "values": [
+          128,
+          130,
+          122,
+          146
+        ]
+      },
+      {
+        "pixel": [
+          5100,
+          6000
+        ],
+        "values": [
+          159,
+          160,
+          157,
+          132
+        ]
+      }
+    ],
+    "previewPixelsCompared": 476160,
+    "pngMatchesIndependentOverview": true,
+    "thumbnailDimensions": [
+      129,
+      160
+    ]
+  },
+  "onlineOriginalMap": {
+    "actualCatalogueResponse": true,
+    "actualSignedAzureRangeResponses": [
+      {
+        "status": 206,
+        "path": "/naip/v002/ca/2022/ca_060cm_2022/37122/m_3712221_nw_10_060_20220518.tif",
+        "range": "bytes=0-65535"
+      },
+      {
+        "status": 206,
+        "path": "/naip/v002/ca/2022/ca_060cm_2022/37122/m_3712221_nw_10_060_20220518.tif",
+        "range": "bytes=65536-393215"
+      }
+    ],
+    "imageryReadinessWaited": true,
+    "restoredGridWaitGuard": true,
+    "pageErrors": [],
+    "canvas": [
+      {
+        "width": 626,
+        "height": 812,
+        "className": ""
+      },
+      {
+        "width": 626,
+        "height": 812,
+        "className": "explore-base-layer"
+      },
+      {
+        "width": 626,
+        "height": 812,
+        "className": ""
+      },
+      {
+        "width": 626,
+        "height": 812,
+        "className": ""
+      }
+    ],
+    "checkedAt": "2026-10-01T17:57:19.861Z",
+    "screenshotVisuallyInspected": true
+  },
+  "restartAndCache": {
+    "checkedAt": "2026-10-01T18:00:33.969514+00:00",
+    "jobRestored": true,
+    "projectRestored": true,
+    "thumbnailIdentical": true,
+    "cacheEntryBytesHashFileIdentityCreationUnchanged": true,
+    "signaturesPersisted": false,
+    "thumbnailRequestMilliseconds": 8.2,
+    "cacheEntries": {
+      "fba6f29cf444c9f84bf5814cc89b6eeccabec8b41f96d5d4088ff3f2ff833964.json": {
+        "size": 74751,
+        "inode": 1125899912176526,
+        "createdNs": 1790876463254398000,
+        "sha256": "2238971c8265aea32e7281eca825639237e0aa723f1305915f3b7eee5a7a8487",
+        "pngSha256": "262627dbfb99c7672848c8f6954808e6c4ac880ba7e31c04ce449ec416f835ae",
+        "pngBytes": 55657
+      }
+    }
+  },
+  "ui": {
+    "views": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "overflow": false,
+        "errors": []
+      }
+    ],
+    "screenshots": [
+      {
+        "path": ".verification/naip-ui/explore.png",
+        "sha256": "177c3b9ac8f2233db88da5c761942cd51ffa35ba823baae629d8cb46aa5ae09f"
+      },
+      {
+        "path": ".verification/naip-ui/project-dark-1440.png",
+        "sha256": "75329eaba41c4585ea9f3dc5429b9c1132ecb317806f0fcc7f009e6c9a012797"
+      },
+      {
+        "path": ".verification/naip-ui/project-light-1024.png",
+        "sha256": "554351ceb7efb2c00ed6b179fbcfb8b5ee96eb4215be7a1634e7733f6aac4909"
+      },
+      {
+        "path": ".verification/naip-ui/project-light-1440.png",
+        "sha256": "4ad5351da321851b381679a33bb57d8b1e281d202dce71cf15f03ed15355d884"
+      },
+      {
+        "path": ".verification/naip-ui/workspace-dark-1440.png",
+        "sha256": "e254a3d121c29d763324eb8f406ecdce29ceb50cabc915a5b95ac8793e5a8a0f"
+      },
+      {
+        "path": ".verification/naip-ui/workspace-light-1024.png",
+        "sha256": "241ba425a57324358e33a00863c7315a667d58cfb122246ef17a74286dddfe6d"
+      },
+      {
+        "path": ".verification/naip-ui/workspace-light-1440.png",
+        "sha256": "a30c11edea10299d5e3aa23684128e6c1fce5691969545fe104555318af3afe9"
+      }
+    ],
+    "runtimeAdapter": "Headless browser on desktop-shared frontend and isolated native loopback service; not an actual native window interaction test",
+    "noCatalogueReplayInOnlineMap": true
+  },
+  "limitations": [
+    "NAIP four-band clipping and mosaicking not implemented",
+    "No local NIR/faux-color display or multispectral analysis",
+    "Reviewed NAD83 UTM north, interleaved UInt8 RGB+NIR, PixelIsArea, no NoData tag, unspecified extra sample",
+    "Bounded raw native decoder supports uncompressed/Deflate with predictor 1/2 only; other encodings not claimed",
+    "Actual sample is one California 0.6 metre tile; 0.3/1 metre paths have fixture validation, not original download evidence",
+    "Original raster and QA screenshots remain in ignored local data, not bundled",
+    "No installers or remote publishing performed"
+  ]
+}

@@ -16,6 +16,9 @@
 .bui-select-content { transform-origin: var(--radix-select-content-transform-origin); }
 .bui-select-content[data-state=open] { animation: pop-in var(--motion-fast) var(--motion-ease); }
 .bui-select-content[data-state=closed] { animation: bui-pop-out var(--motion-fast) ease-in; }
+.bui-tooltip { transform-origin: var(--radix-tooltip-content-transform-origin); }
+.bui-tooltip[data-state=delayed-open], .bui-tooltip[data-state=instant-open] { animation: pop-in var(--motion-fast) var(--motion-ease); }
+.bui-tooltip[data-state=closed] { animation: bui-pop-out var(--motion-fast) ease-in; }
 .bui-select-item { transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease; }
 .bui-select[data-state=open] svg { rotate: 180deg; }
 .bui-select svg { transition: rotate var(--motion-normal) var(--motion-ease); }
@@ -25,7 +28,7 @@
 .bui-dialog-content[data-state=closed] { animation: bui-dialog-out 160ms ease-in; }
 .bui-disclosure-content { overflow: hidden; }
 .bui-disclosure-content[data-state=open] { animation: bui-expand var(--motion-normal) var(--motion-ease); }
-.bui-disclosure-content[data-state=closed] { animation: bui-collapse var(--motion-normal) var(--motion-ease); }
+.bui-disclosure-content[data-state=closed] { animation: bui-collapse var(--motion-normal) var(--motion-ease) forwards; }
 .bui-toast[data-state=open] { animation: fade-up var(--motion-normal) var(--motion-ease); }
 .bui-toast[data-state=closed] { animation: bui-toast-out var(--motion-fast) ease-in; }
 .bui-toast[data-swipe=move] { transform: translateX(var(--radix-toast-swipe-move-x)); }

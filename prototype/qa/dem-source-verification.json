@@ -1,0 +1,111 @@
+{
+  "verifiedAt": "2026-10-01T15:45:49.350869+00:00",
+  "stage": "Pre-adapter verification outside the application",
+  "implementedInApplication": false,
+  "catalogue": {
+    "endpoint": "https://earth-search.aws.element84.com/v1/search",
+    "method": "POST",
+    "query": {
+      "collections": [
+        "cop-dem-glo-30"
+      ],
+      "bbox": [
+        -122.55,
+        37.68,
+        -122.32,
+        37.84
+      ],
+      "limit": 1
+    },
+    "status": 200,
+    "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+    "collection": "cop-dem-glo-30",
+    "fixture": "../public/samples/cop-dem-response.json"
+  },
+  "file": {
+    "source": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+    "status": 200,
+    "authenticatedRequest": false,
+    "bytes": 20060161,
+    "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+    "inspectionTool": "Rasterio / GDAL",
+    "metadata": {
+      "driver": "GTiff",
+      "width": 3600,
+      "height": 3600,
+      "count": 1,
+      "dtype": "float32",
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0002777777777777778,
+        0.0,
+        -123.00013888888888,
+        0.0,
+        -0.0002777777777777778,
+        38.00013888888889
+      ],
+      "bounds": [
+        -123.00013888888888,
+        37.00013888888889,
+        -122.00013888888888,
+        38.00013888888889
+      ],
+      "nodata": null,
+      "areaOrPoint": "Point",
+      "overviews": [
+        2,
+        4,
+        8
+      ],
+      "samples": [
+        {
+          "row": 0,
+          "col": 0,
+          "value": 101.38304901123047
+        },
+        {
+          "row": 1000,
+          "col": 1000,
+          "value": 0.0
+        },
+        {
+          "row": 1800,
+          "col": 1800,
+          "value": 0.0
+        },
+        {
+          "row": 2500,
+          "col": 3000,
+          "value": 657.4219360351562
+        },
+        {
+          "row": 3599,
+          "col": 3599,
+          "value": 69.05463409423828
+        }
+      ],
+      "range": [
+        -79.07937622070312,
+        1006.7305297851562
+      ]
+    }
+  },
+  "productContract": {
+    "domain": "Elevation",
+    "kind": "Digital surface model",
+    "horizontalReference": "EPSG:4326",
+    "verticalReference": "EGM2008 / EPSG:3855 (official product documentation, not inferred from this file)",
+    "heightUnit": "metre",
+    "gridSpacingUnit": "degree",
+    "integerConversionAllowed": false,
+    "zeroIsNoData": false,
+    "opticalCloudFilteringApplicable": false,
+    "acquisitionTimelineApplicable": false,
+    "coverage": "GLO-30 Public; limited public worldwide coverage, ocean cells may be absent"
+  },
+  "references": [
+    "https://registry.opendata.aws/copernicus-dem/",
+    "https://copernicus-dem-30m.s3.amazonaws.com/readme.html",
+    "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM"
+  ]
+}

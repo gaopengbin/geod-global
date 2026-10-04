@@ -1,0 +1,172 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "HLS.L30.T10SEG.2025179T184546.v2.0",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "properties": {
+        "datetime": "2025-06-28T18:45:46.894Z",
+        "eo:cloud_cover": 47,
+        "storage:schemes": {
+          "aws": {
+            "type": "aws-s3",
+            "platform": "https://{bucket}.s3.{region}.amazonaws.com",
+            "bucket": "lp-prod-protected",
+            "region": "us-west-2"
+          }
+        },
+        "start_datetime": "2025-06-28T18:45:46.894Z",
+        "end_datetime": "2025-06-28T18:45:46.894Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -121.7669947,
+              36.9514795
+            ],
+            [
+              -121.7506457,
+              37.9409562
+            ],
+            [
+              -123.0002276,
+              37.9475896
+            ],
+            [
+              -123.0002247,
+              36.9578811
+            ],
+            [
+              -121.7669947,
+              36.9514795
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -123.0002276,
+        36.9514795,
+        -121.7506457,
+        37.9475896
+      ],
+      "assets": {
+        "browse": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.jpg",
+          "title": "Download HLS.L30.T10SEG.2025179T184546.v2.0.jpg",
+          "type": "image/jpeg",
+          "roles": [
+            "browse"
+          ]
+        },
+        "B02": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.B02.tif",
+          "title": "Direct Download [1]",
+          "description": "Download HLS.L30.T10SEG.2025179T184546.v2.0.B02.tif",
+          "roles": [
+            "data"
+          ]
+        },
+        "B03": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.B03.tif",
+          "title": "Direct Download [3]",
+          "description": "Download HLS.L30.T10SEG.2025179T184546.v2.0.B03.tif",
+          "roles": [
+            "data"
+          ]
+        },
+        "B04": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.B04.tif",
+          "title": "Direct Download [4]",
+          "description": "Download HLS.L30.T10SEG.2025179T184546.v2.0.B04.tif",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/HLSL30_2.0/items/HLS.L30.T10SEG.2025179T184546.v2.0",
+          "type": "application/geo+json"
+        },
+        {
+          "rel": "parent",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/HLSL30_2.0/",
+          "type": "application/geo+json"
+        },
+        {
+          "rel": "collection",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/HLSL30_2.0/",
+          "type": "application/geo+json"
+        },
+        {
+          "rel": "root",
+          "href": "https://cmr.earthdata.nasa.gov/stac",
+          "type": "application/json"
+        },
+        {
+          "rel": "provider",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+          "type": "application/json"
+        },
+        {
+          "rel": "via",
+          "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3586922915-LPCLOUD.json",
+          "title": "CMR JSON metadata for item",
+          "type": "application/json"
+        },
+        {
+          "rel": "via",
+          "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3586922915-LPCLOUD.umm_json",
+          "title": "CMR UMM_JSON metadata for item",
+          "type": "application/vnd.nasa.cmr.umm+json"
+        }
+      ],
+      "collection": "HLSL30_2.0"
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=HLSL30_2.0&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&limit=1&query=%7B%22eo%3Acloud_cover%22%3A%7B%22gte%22%3A0%2C%22lte%22%3A60%7D%7D&sortby=-properties.datetime",
+      "type": "application/geo+json",
+      "title": "This search"
+    },
+    {
+      "rel": "root",
+      "href": "https://cmr.earthdata.nasa.gov/stac",
+      "type": "application/json",
+      "title": "Root Catalog"
+    },
+    {
+      "rel": "parent",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+      "type": "application/json",
+      "title": "Provider Catalog"
+    },
+    {
+      "rel": "first",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=HLSL30_2.0&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&limit=1&query=%7B%22eo%3Acloud_cover%22%3A%7B%22gte%22%3A0%2C%22lte%22%3A60%7D%7D&sortby=-properties.datetime",
+      "type": "application/geo+json",
+      "title": "First page of results"
+    },
+    {
+      "rel": "next",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=HLSL30_2.0&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&limit=1&query=%7B%22eo%3Acloud_cover%22%3A%7B%22gte%22%3A0%2C%22lte%22%3A60%7D%7D&sortby=-properties.datetime&cursor=eyJqc29uIjoiWzE3NTExMzYzNDY4OTQsMzU4NjkyMjkxNV0iLCJ1bW0iOiJbMTc1MTEzNjM0Njg5NCwzNTg2OTIyOTE1XSJ9",
+      "type": "application/geo+json",
+      "title": "Next page of results"
+    }
+  ],
+  "context": {
+    "returned": 1,
+    "limit": 1,
+    "matched": 7
+  }
+}

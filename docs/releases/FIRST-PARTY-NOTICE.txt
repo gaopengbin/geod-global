@@ -2,11 +2,11 @@ GeoD Global
 
 This repository's first-party packages are marked UNLICENSED or
 LicenseRef-Proprietary. No open-source license for first-party code is granted
-by this evaluation bundle. Public distribution and commercial licensing terms
-have not been established by the packaging workflow.
+by this release-candidate bundle. Preparation of a local build does not publish
+the software or establish commercial licensing terms.
 
 Third-party components retain their own licenses and notices. Their texts,
 package versions and applicable source archives are in THIRD-PARTY/.
 
-This unsigned local evaluation package is independent of the domestic GeoD
+This unsigned local release candidate is independent of the domestic GeoD
 application. Its application identifier is xyz.laogao.geod.global.

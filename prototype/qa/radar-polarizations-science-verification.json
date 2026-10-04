@@ -1,0 +1,1671 @@
+{
+  "schema": "geod-radar-science-matrix/v1",
+  "status": "passed",
+  "qaOnly": true,
+  "checkedAt": "2026-10-03T22:26:41.892756+00:00",
+  "scope": "Six actual complete RTC originals and nine independently compared regional outputs; whole UI/MCP matrix acceptance is separate.",
+  "nativeBinarySha256": "3b0e845ebea363f154644db9e75f0fff1f852b69201eb2bcbae85174523ea03b",
+  "evidenceReports": [
+    {
+      "file": "native-polarizations-verification.json",
+      "sha256": "1bd1cca0c818faa55fcd91e18785a64f4add9741aae85761e1c946246a765d31",
+      "snapshot": "evidence-snapshots/1bd1cca0c818faa55fcd91e18785a64f4add9741aae85761e1c946246a765d31.json"
+    },
+    {
+      "file": "independent-polarizations-verification.json",
+      "sha256": "8240d3a1758eb1f6eedc4ff8d67a9f07401d6dc0a28d6855703bd827b83f799d",
+      "snapshot": "evidence-snapshots/8240d3a1758eb1f6eedc4ff8d67a9f07401d6dc0a28d6855703bd827b83f799d.json"
+    }
+  ],
+  "originals": [
+    {
+      "jobId": "42320022-3bc5-4d4a-956a-869aad2fddd3",
+      "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+      "key": "vh",
+      "bytes": 1836960069,
+      "sha256": "c41e95940210ffaa830a94af1f78060d015ee44af71c9182f39f96544387deaf",
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            13597,
+            10314
+          ],
+          "gamma0": 0.0205355454236269,
+          "decibels": -16.87493757805423,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            9065,
+            10314
+          ],
+          "gamma0": 0.002910184906795621,
+          "decibels": -25.360794160141683,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            27194,
+            20628
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 5,
+        "previewPixelsCompared": 446976,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 6,
+        "previewPixelsCompared": 19360,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "413c1814-e6ab-4f04-b6b9-c6acc6b255a7",
+      "itemId": "S1A_IW_GRDH_1SDV_20250624T140800_20250624T140825_059789_076CD6_rtc",
+      "key": "vh",
+      "bytes": 1835393471,
+      "sha256": "b5ffe07eefc65d07f492330f00dd2c73214d4abaeed16c60c569be3d8f56ab4f",
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            13755,
+            10323
+          ],
+          "gamma0": 0.0038172220811247826,
+          "decibels": -24.182525726153905,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            9170,
+            10323
+          ],
+          "gamma0": 0.01114970725029707,
+          "decibels": -19.527365354184802,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            27509,
+            20645
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 5,
+        "previewPixelsCompared": 442368,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 6,
+        "previewPixelsCompared": 19200,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "164088bd-7155-474f-8ab2-b05439046732",
+      "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+      "key": "hh",
+      "bytes": 1561291040,
+      "sha256": "e533740d47d39905d2799aac4fd62368ee1a13d0cb22a8f06ac805b4d0900c2e",
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            13612,
+            9863
+          ],
+          "gamma0": 0.013757288455963135,
+          "decibels": -18.61467156555275,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            9075,
+            9863
+          ],
+          "gamma0": 0.08965156227350235,
+          "decibels": -10.47442137994162,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            27224,
+            19726
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 5,
+        "previewPixelsCompared": 427008,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 6,
+        "previewPixelsCompared": 18400,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "256c759a-50fc-4051-92b2-fec0c5093a3c",
+      "itemId": "S1A_IW_GRDH_1SDH_20250630T095224_20250630T095249_059874_rtc",
+      "key": "hh",
+      "bytes": 1791409245,
+      "sha256": "3fa4fcf5ae462fe955b4f6ffaf4c36d1ed7362f6153ca0d599d3f564c1039832",
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            14221,
+            10664
+          ],
+          "gamma0": 0.027934402227401733,
+          "decibels": -15.5386061773924,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            9481,
+            10664
+          ],
+          "gamma0": 0.0600886344909668,
+          "decibels": -12.212076651792454,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            28442,
+            21327
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 5,
+        "previewPixelsCompared": 442368,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 6,
+        "previewPixelsCompared": 19200,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "19ba1134-b11e-478f-b2c0-6f8afbc6f32f",
+      "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+      "key": "hv",
+      "bytes": 1560357565,
+      "sha256": "cf1cfa83fcb573d9fb80a6b23e25ea110fd3ee5055b2a46db0c978a94303ae43",
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            13612,
+            9863
+          ],
+          "gamma0": 0.0032130929175764322,
+          "decibels": -24.93076715155849,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            9075,
+            9863
+          ],
+          "gamma0": 0.011336347088217735,
+          "decibels": -19.45526865637266,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            27224,
+            19726
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 5,
+        "previewPixelsCompared": 427008,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 6,
+        "previewPixelsCompared": 18400,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "aab2f0a1-f683-433f-88dd-ab2639aecee1",
+      "itemId": "S1A_IW_GRDH_1SDH_20250630T095224_20250630T095249_059874_rtc",
+      "key": "hv",
+      "bytes": 1797825799,
+      "sha256": "d9d627202e85a28713d300df55dd4dfe6d32566fec4865ff45c3f985a9d10d9f",
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            14221,
+            10664
+          ],
+          "gamma0": 0.0037046337965875864,
+          "decibels": -24.31254715614902,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            9481,
+            10664
+          ],
+          "gamma0": 0.010073172859847546,
+          "decibels": -19.96833713310749,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            28442,
+            21327
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 5,
+        "previewPixelsCompared": 442368,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 6,
+        "previewPixelsCompared": 19200,
+        "exactRgbaMatch": true
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "jobId": "5cff990d-3f82-484d-b20c-11f1627db371",
+      "projectId": "dfb9dbd9-bbcf-4a1d-85ac-fea9e5d42d81",
+      "case": "single",
+      "key": "vh",
+      "bytes": 144941,
+      "sha256": "698f83a70b0b9e0faf7f33d1bec12fd1e1f51da9e97846c08e88114f1a26e2fe",
+      "plan": {
+        "width": 179,
+        "height": 224,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          544050,
+          4173750,
+          545840,
+          4175990
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 40096,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "VH",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 40096,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 0
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": 0.008419313468039036,
+          "decibels": -20.747233205191392,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            0
+          ],
+          "gamma0": 0.026669658720493317,
+          "decibels": -15.739825417437519,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            0
+          ],
+          "gamma0": 0.004611338954418898,
+          "decibels": -23.36172953984571,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            112
+          ],
+          "gamma0": 0.02939828857779503,
+          "decibels": -15.31677951317567,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            112
+          ],
+          "gamma0": 0.010362781584262848,
+          "decibels": -19.845236553482994,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            112
+          ],
+          "gamma0": 0.039665304124355316,
+          "decibels": -14.015892115146249,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            223
+          ],
+          "gamma0": 0.019579069688916206,
+          "decibels": -17.082079478019732,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            223
+          ],
+          "gamma0": 0.010696806013584137,
+          "decibels": -19.707458800482954,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            223
+          ],
+          "gamma0": 0.010407797060906887,
+          "decibels": -19.826411845659514,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+          "datetime": "2025-06-30T14:07:07.386143Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 40096,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 20320,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "0388e454-4257-45da-8d7b-47a0bd7c5aa2",
+      "projectId": "2562e01f-0452-47a0-8cb6-5f88f66841d4",
+      "case": "mosaic",
+      "key": "vh",
+      "bytes": 144941,
+      "sha256": "698f83a70b0b9e0faf7f33d1bec12fd1e1f51da9e97846c08e88114f1a26e2fe",
+      "plan": {
+        "width": 179,
+        "height": 224,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          544050,
+          4173750,
+          545840,
+          4175990
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 0,
+        "coveredPixels": 40096,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "VH",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 40096,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 40096
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": 0.008419313468039036,
+          "decibels": -20.747233205191392,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            0
+          ],
+          "gamma0": 0.026669658720493317,
+          "decibels": -15.739825417437519,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            0
+          ],
+          "gamma0": 0.004611338954418898,
+          "decibels": -23.36172953984571,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            112
+          ],
+          "gamma0": 0.02939828857779503,
+          "decibels": -15.31677951317567,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            112
+          ],
+          "gamma0": 0.010362781584262848,
+          "decibels": -19.845236553482994,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            112
+          ],
+          "gamma0": 0.039665304124355316,
+          "decibels": -14.015892115146249,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            223
+          ],
+          "gamma0": 0.019579069688916206,
+          "decibels": -17.082079478019732,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            223
+          ],
+          "gamma0": 0.010696806013584137,
+          "decibels": -19.707458800482954,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            223
+          ],
+          "gamma0": 0.010407797060906887,
+          "decibels": -19.826411845659514,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDV_20250624T140800_20250624T140825_059789_076CD6_rtc",
+          "datetime": "2025-06-24T14:08:13.070804Z"
+        },
+        {
+          "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+          "datetime": "2025-06-30T14:07:07.386143Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 40096,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 20320,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "c789066f-752a-4076-81fd-67f2273e11fa",
+      "projectId": "e8da5a93-892a-4a64-95ca-fd019075ccdb",
+      "case": "polygon",
+      "key": "vh",
+      "bytes": 136659,
+      "sha256": "b7e07ba7af52903539e3c0d86ac3568bce4297359d4e6a4f00019f9b50fbc017",
+      "plan": {
+        "width": 179,
+        "height": 224,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          544050,
+          4173750,
+          545840,
+          4175990
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 2535,
+        "coveredPixels": 37561,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "VH",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 40096,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 40096
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            112
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            112
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            112
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            223
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            89,
+            223
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            178,
+            223
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDV_20250624T140800_20250624T140825_059789_076CD6_rtc",
+          "datetime": "2025-06-24T14:08:13.070804Z"
+        },
+        {
+          "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+          "datetime": "2025-06-30T14:07:07.386143Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 40096,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 20320,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "c057b957-fe21-43d5-8505-5b97e21ccbbb",
+      "projectId": "341db51f-a108-4dbc-860e-d59933626695",
+      "case": "single",
+      "key": "hh",
+      "bytes": 69396,
+      "sha256": "f0a6a06bc5cdc4391cc13361e96d783ecc0ae7486b8aca994bc7cf35dec82c3a",
+      "plan": {
+        "width": 86,
+        "height": 226,
+        "bandCount": 1,
+        "crs": "EPSG:32622",
+        "bounds": [
+          558780,
+          7669560,
+          559640,
+          7671820
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 19436,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "HH",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 19436,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 0
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": 0.06296947598457336,
+          "decibels": -12.008699207674168,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            0
+          ],
+          "gamma0": 0.3263152837753296,
+          "decibels": -4.86362584490273,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            0
+          ],
+          "gamma0": 0.1943679302930832,
+          "decibels": -7.113753898505165,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            113
+          ],
+          "gamma0": 0.10733839869499207,
+          "decibels": -9.69244887930259,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            113
+          ],
+          "gamma0": 0.1900811791419983,
+          "decibels": -7.210608826054931,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            113
+          ],
+          "gamma0": 0.16567465662956238,
+          "decibels": -7.8074392083670405,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            225
+          ],
+          "gamma0": 0.10684311389923096,
+          "decibels": -9.71253463129641,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            225
+          ],
+          "gamma0": 0.1342240422964096,
+          "decibels": -8.721696860934893,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            225
+          ],
+          "gamma0": 0.07939821481704712,
+          "decibels": -11.001892621046593,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+          "datetime": "2025-07-12T09:52:35.148790Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 19436,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 9600,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "3afdbb7d-6db5-464c-b1f5-1581fc2360a6",
+      "projectId": "341db51f-a108-4dbc-860e-d59933626695",
+      "case": "single",
+      "key": "hv",
+      "bytes": 68664,
+      "sha256": "49b849cf5d03d0ebbd1533f3e1a91da4d8d207880edd7a86b33ba062704061c0",
+      "plan": {
+        "width": 86,
+        "height": 226,
+        "bandCount": 1,
+        "crs": "EPSG:32622",
+        "bounds": [
+          558780,
+          7669560,
+          559640,
+          7671820
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 19436,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "HV",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 19436,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 0
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": 0.013862271793186665,
+          "decibels": -18.5816559033065,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            0
+          ],
+          "gamma0": 0.012985073029994965,
+          "decibels": -18.86555603490617,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            0
+          ],
+          "gamma0": 0.022860510274767876,
+          "decibels": -16.409140798443843,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            113
+          ],
+          "gamma0": 0.018477775156497955,
+          "decibels": -17.333503218293483,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            113
+          ],
+          "gamma0": 0.0204673632979393,
+          "decibels": -16.889381015930457,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            113
+          ],
+          "gamma0": 0.011847022920846939,
+          "decibels": -19.263907712983542,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            225
+          ],
+          "gamma0": 0.008221355266869068,
+          "decibels": -20.850565843569314,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            225
+          ],
+          "gamma0": 0.018725784495472908,
+          "decibels": -17.275599789733185,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            225
+          ],
+          "gamma0": 0.01823902130126953,
+          "decibels": -17.389984694539685,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+          "datetime": "2025-07-12T09:52:35.148790Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 19436,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 9600,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "a10a455f-f275-460a-b7a3-f111073c80ce",
+      "projectId": "1deb57cd-f7c2-48c3-8048-fced1fd420f5",
+      "case": "mosaic",
+      "key": "hh",
+      "bytes": 69396,
+      "sha256": "f0a6a06bc5cdc4391cc13361e96d783ecc0ae7486b8aca994bc7cf35dec82c3a",
+      "plan": {
+        "width": 86,
+        "height": 226,
+        "bandCount": 1,
+        "crs": "EPSG:32622",
+        "bounds": [
+          558780,
+          7669560,
+          559640,
+          7671820
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 0,
+        "coveredPixels": 19436,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "HH",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 19436,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 19436
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": 0.06296947598457336,
+          "decibels": -12.008699207674168,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            0
+          ],
+          "gamma0": 0.3263152837753296,
+          "decibels": -4.86362584490273,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            0
+          ],
+          "gamma0": 0.1943679302930832,
+          "decibels": -7.113753898505165,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            113
+          ],
+          "gamma0": 0.10733839869499207,
+          "decibels": -9.69244887930259,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            113
+          ],
+          "gamma0": 0.1900811791419983,
+          "decibels": -7.210608826054931,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            113
+          ],
+          "gamma0": 0.16567465662956238,
+          "decibels": -7.8074392083670405,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            225
+          ],
+          "gamma0": 0.10684311389923096,
+          "decibels": -9.71253463129641,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            225
+          ],
+          "gamma0": 0.1342240422964096,
+          "decibels": -8.721696860934893,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            225
+          ],
+          "gamma0": 0.07939821481704712,
+          "decibels": -11.001892621046593,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250630T095224_20250630T095249_059874_rtc",
+          "datetime": "2025-06-30T09:52:36.878715Z"
+        },
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+          "datetime": "2025-07-12T09:52:35.148790Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 19436,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 9600,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "ee647009-3aa6-4514-96a7-0e05c5da685c",
+      "projectId": "1deb57cd-f7c2-48c3-8048-fced1fd420f5",
+      "case": "mosaic",
+      "key": "hv",
+      "bytes": 68664,
+      "sha256": "49b849cf5d03d0ebbd1533f3e1a91da4d8d207880edd7a86b33ba062704061c0",
+      "plan": {
+        "width": 86,
+        "height": 226,
+        "bandCount": 1,
+        "crs": "EPSG:32622",
+        "bounds": [
+          558780,
+          7669560,
+          559640,
+          7671820
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 0,
+        "coveredPixels": 19436,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "HV",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 19436,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 19436
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": 0.013862271793186665,
+          "decibels": -18.5816559033065,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            0
+          ],
+          "gamma0": 0.012985073029994965,
+          "decibels": -18.86555603490617,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            0
+          ],
+          "gamma0": 0.022860510274767876,
+          "decibels": -16.409140798443843,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            113
+          ],
+          "gamma0": 0.018477775156497955,
+          "decibels": -17.333503218293483,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            113
+          ],
+          "gamma0": 0.0204673632979393,
+          "decibels": -16.889381015930457,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            113
+          ],
+          "gamma0": 0.011847022920846939,
+          "decibels": -19.263907712983542,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            225
+          ],
+          "gamma0": 0.008221355266869068,
+          "decibels": -20.850565843569314,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            225
+          ],
+          "gamma0": 0.018725784495472908,
+          "decibels": -17.275599789733185,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            225
+          ],
+          "gamma0": 0.01823902130126953,
+          "decibels": -17.389984694539685,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250630T095224_20250630T095249_059874_rtc",
+          "datetime": "2025-06-30T09:52:36.878715Z"
+        },
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+          "datetime": "2025-07-12T09:52:35.148790Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 19436,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 9600,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "386763d1-bf52-438e-8427-ba79c628abd7",
+      "projectId": "df81b1b8-e3aa-4a0f-9e98-44b959648556",
+      "case": "polygon",
+      "key": "hh",
+      "bytes": 61639,
+      "sha256": "002231fcb24616284a60d966373d52857d3730d333ca5615e41e6c1f14ac1ad4",
+      "plan": {
+        "width": 86,
+        "height": 226,
+        "bandCount": 1,
+        "crs": "EPSG:32622",
+        "bounds": [
+          558780,
+          7669560,
+          559640,
+          7671820
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 2417,
+        "coveredPixels": 17019,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "HH",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 19436,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 19436
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            113
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            113
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            113
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            225
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            225
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            225
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250630T095224_20250630T095249_059874_rtc",
+          "datetime": "2025-06-30T09:52:36.878715Z"
+        },
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+          "datetime": "2025-07-12T09:52:35.148790Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 19436,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 9600,
+        "exactRgbaMatch": true
+      }
+    },
+    {
+      "jobId": "8c013fcf-999e-424c-8ec9-57a904eddb8b",
+      "projectId": "df81b1b8-e3aa-4a0f-9e98-44b959648556",
+      "case": "polygon",
+      "key": "hv",
+      "bytes": 61012,
+      "sha256": "6d621152bbb6939cfe60acf982759052af2a6ea98726c7a762cd93c14ef0bb23",
+      "plan": {
+        "width": 86,
+        "height": 226,
+        "bandCount": 1,
+        "crs": "EPSG:32622",
+        "bounds": [
+          558780,
+          7669560,
+          559640,
+          7671820
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 2417,
+        "coveredPixels": 17019,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "HV",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 19436,
+      "allFloat32BitsMatch": true,
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 19436
+      },
+      "pixels": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            0
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            113
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            113
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            113
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            0,
+            225
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            43,
+            225
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        },
+        {
+          "pixel": [
+            85,
+            225
+          ],
+          "gamma0": -32768.0,
+          "decibels": null,
+          "exactFloat32Match": true
+        }
+      ],
+      "sourceAcquisitions": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250630T095224_20250630T095249_059874_rtc",
+          "datetime": "2025-06-30T09:52:36.878715Z"
+        },
+        {
+          "itemId": "S1A_IW_GRDH_1SDH_20250712T095223_20250712T095246_060049_rtc",
+          "datetime": "2025-07-12T09:52:35.148790Z"
+        }
+      ],
+      "preview": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 19436,
+        "exactRgbaMatch": true
+      },
+      "thumbnail": {
+        "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+        "overviewIndex": 0,
+        "previewPixelsCompared": 9600,
+        "exactRgbaMatch": true
+      }
+    }
+  ],
+  "originalBytes": 10383237189,
+  "independent": {
+    "float32ValuesCompared": 236904,
+    "pixelChecks": 105,
+    "rgbaPixelsCompared": 3097320
+  },
+  "usedUserDesktop": false,
+  "completeProviderIntegration": false,
+  "remaining": [
+    "Full-matrix direct/loopback MCP and renderer/offline acceptance",
+    "Other products and processing capabilities listed in provider-integration-status.md"
+  ]
+}

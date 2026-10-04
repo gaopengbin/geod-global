@@ -22,6 +22,7 @@ const MAX_FILE_BYTES: u64 = 128 * 1024 * 1024;
 const MAX_PIXELS: u64 = 64 * 1024 * 1024;
 const MAX_DIMENSION: u32 = 16384;
 const PREVIEW_EDGE: u32 = 768;
+pub use aerial::AerialView;
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -42,14 +43,28 @@ pub struct RasterInspection {
     pub crs: String,
     /// Outer pixel edges in the projected CRS, [minX, minY, maxX, maxY].
     pub bounds: [f64; 4],
-    /// Positive x/y spacing in metres. Rotated rasters are explicitly unsupported.
+    /// Positive x/y spacing in the source CRS units, metres or degrees.
     pub pixel_size: [f64; 2],
-    pub nodata: Option<u8>,
+    pub nodata: Option<f64>,
     pub preview_data_url: String,
     pub preview_width: u32,
     pub preview_height: u32,
     pub classes: Vec<RasterClass>,
     pub sha256: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub reflectance: Option<reflectance::ReflectanceDisplay>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vegetation: Option<reflectance::VegetationDisplay>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub science: Option<science::ScienceDisplay>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub elevation: Option<elevation::ElevationDisplay>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub aerial: Option<aerial::AerialDisplay>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub radar: Option<radar::RadarDisplay>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub quality: Option<quality::QualityDisplay>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -62,9 +77,23 @@ pub struct RasterPixel {
     pub coordinate: [f64; 2],
     pub pixel: [u32; 2],
     pub center: [f64; 2],
-    pub value: u8,
+    /// Exact integer DN or Float32 elevation promoted to Float64. NaN NoData is null in JSON.
+    #[serde(serialize_with = "serialize_pixel_value")]
+    pub value: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub values: Option<[u8; 3]>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub near_infrared: Option<u8>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub reflectance: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub index_value: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub science: Option<science::SciencePixel>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub decibels: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub quality: Option<quality::QualityPixel>,
     pub label: String,
     pub color: String,
     pub is_no_data: bool,
@@ -116,8 +145,43 @@ impl JobManager {
         .map_err(fail)?;
         tokio::task::spawn_blocking(move || {
             let _permit = permit;
-            if job.asset_key == "visual" {
+            if crate::providers::modis::QUALITY_KEYS.contains(&job.asset_key.as_str()) {
+                return quality::sample(&root, &job, x, y);
+            }
+            if landsat_quality::KEYS.contains(&job.asset_key.as_str()) {
+                return landsat_quality::sample(&root, &job, x, y);
+            }
+            if crate::providers::radar::KEYS.contains(&job.asset_key.as_str()) {
+                return radar::sample(&root, &job, x, y);
+            }
+            if matches!(job.asset_key.as_str(), "visual" | "aerial") {
                 return rgb::sample(&root, &job, x, y);
+            }
+            if matches!(
+                job.asset_key.as_str(),
+                "red"
+                    | "green"
+                    | "blue"
+                    | "ndvi"
+                    | "evi"
+                    | "vi_quality"
+                    | "vi_reliability"
+                    | "vi_doy"
+                    | "vi_red"
+                    | "vi_nir"
+                    | "vi_blue"
+                    | "vi_mir"
+                    | "vi_view_zenith"
+                    | "vi_sun_zenith"
+                    | "vi_relative_azimuth"
+            ) {
+                return reflectance::sample(&root, &job, x, y);
+            }
+            if job.asset_key == "elevation" {
+                return elevation::sample(&root, &job, x, y);
+            }
+            if job.asset_key == "srtm" {
+                return srtm::sample(&root, &job, x, y);
             }
             let raster = load_verified_raster(&root, &job, None)?;
             sample_pixel(raster, &job.id, x, y)
@@ -127,7 +191,18 @@ impl JobManager {
     }
 
     pub async fn inspect_raster(&self, id: &str) -> Result<RasterInspection> {
+        self.inspect_raster_view(id, None).await
+    }
+
+    pub async fn inspect_raster_view(
+        &self,
+        id: &str,
+        aerial_view: Option<AerialView>,
+    ) -> Result<RasterInspection> {
         let job = self.get(id).await.ok_or("Unknown job")?;
+        if aerial_view.is_some() && job.asset_key != "aerial" {
+            return Err("NAIP display selection requires a managed RGB + NIR raster".into());
+        }
         let root = self.inner.root.clone();
         let permit = tokio::time::timeout(
             Duration::from_secs(5),
@@ -140,8 +215,46 @@ impl JobManager {
         // release it while decoding is still running and admit unbounded work.
         tokio::task::spawn_blocking(move || {
             let _permit = permit;
-            if job.asset_key == "visual" {
+            if let Some(view) = aerial_view {
+                return rgb::inspect_with_view(&root, &job, PREVIEW_EDGE, view);
+            }
+            if crate::providers::modis::QUALITY_KEYS.contains(&job.asset_key.as_str()) {
+                return quality::inspect(&root, &job, PREVIEW_EDGE);
+            }
+            if landsat_quality::KEYS.contains(&job.asset_key.as_str()) {
+                return landsat_quality::inspect(&root, &job, PREVIEW_EDGE);
+            }
+            if crate::providers::radar::KEYS.contains(&job.asset_key.as_str()) {
+                return radar::inspect(&root, &job, PREVIEW_EDGE);
+            }
+            if matches!(job.asset_key.as_str(), "visual" | "aerial") {
                 return rgb::inspect(&root, &job);
+            }
+            if matches!(
+                job.asset_key.as_str(),
+                "red"
+                    | "green"
+                    | "blue"
+                    | "ndvi"
+                    | "evi"
+                    | "vi_quality"
+                    | "vi_reliability"
+                    | "vi_doy"
+                    | "vi_red"
+                    | "vi_nir"
+                    | "vi_blue"
+                    | "vi_mir"
+                    | "vi_view_zenith"
+                    | "vi_sun_zenith"
+                    | "vi_relative_azimuth"
+            ) {
+                return reflectance::inspect(&root, &job, PREVIEW_EDGE);
+            }
+            if job.asset_key == "elevation" {
+                return elevation::inspect(&root, &job, PREVIEW_EDGE);
+            }
+            if job.asset_key == "srtm" {
+                return srtm::inspect(&root, &job, PREVIEW_EDGE);
             }
             inspect_download(&root, &job)
         })
@@ -163,6 +276,10 @@ fn sample_pixel(raster: DecodedRaster, id: &str, x: f64, y: f64) -> Result<Raste
     let value = raster.pixels[row as usize * raster.width as usize + column as usize];
     let (label, rgb) = PALETTE[value as usize];
     Ok(RasterPixel {
+        science: None,
+        index_value: None,
+        quality: None,
+        decibels: None,
         job_id: id.into(),
         sha256: raster.sha256,
         crs: raster.crs,
@@ -172,15 +289,38 @@ fn sample_pixel(raster: DecodedRaster, id: &str, x: f64, y: f64) -> Result<Raste
             left + (column as f64 + 0.5) * raster.pixel_size[0],
             top - (row as f64 + 0.5) * raster.pixel_size[1],
         ],
-        value,
+        value: f64::from(value),
         values: None,
+        near_infrared: None,
+        reflectance: None,
         label: label.into(),
         color: format!("#{:02x}{:02x}{:02x}", rgb[0], rgb[1], rgb[2]),
         is_no_data: raster.nodata == Some(value),
     })
 }
 
-mod rgb;
+pub(crate) mod aerial;
+pub(crate) mod elevation;
+pub(crate) mod landsat_quality;
+pub(crate) mod quality;
+pub(crate) mod radar;
+pub(crate) mod reflectance;
+pub(crate) mod rgb;
+pub(crate) mod science;
+pub(crate) mod srtm;
+
+fn serialize_pixel_value<S: serde::Serializer>(
+    value: &f64,
+    serializer: S,
+) -> std::result::Result<S::Ok, S::Error> {
+    if !value.is_finite() {
+        serializer.serialize_none()
+    } else if value.fract() == 0.0 && value.abs() <= 9_007_199_254_740_991.0 {
+        serializer.serialize_i64(*value as i64)
+    } else {
+        serializer.serialize_f64(*value)
+    }
+}
 
 fn fail(error: impl std::fmt::Display) -> String {
     format!("Cannot inspect this GeoTIFF: {error}")
@@ -248,17 +388,18 @@ pub(crate) fn load_verified_raster(
             "The managed assets directory must not redirect outside its original location".into(),
         );
     }
-    let output = Path::new(
-        job.output_path
-            .as_deref()
-            .ok_or("The completed job has no output file")?,
-    )
-    .canonicalize()
-    .map_err(fail)?;
     let expected = assets.join(format!("{}.tif", job.id));
-    if output != expected || !output.is_file() {
-        return Err("Raster inspection is restricted to this job's managed asset file".into());
-    }
+    let output = crate::storage::exact_file(
+        &expected,
+        Path::new(
+            job.output_path
+                .as_deref()
+                .ok_or("The completed job has no output file")?,
+        ),
+    )
+    .map_err(|error| {
+        format!("Raster inspection is restricted to this job's managed asset file: {error}")
+    })?;
     let mut file = File::open(output).map_err(fail)?;
     let size = file.metadata().map_err(fail)?.len();
     if size == 0 || size > MAX_FILE_BYTES {
@@ -297,7 +438,25 @@ pub(crate) fn load_verified_raster(
         );
     }
     // Decode this exact hash-verified snapshot; never reopen the file for pixels.
-    decode_raster(&bytes, sha256, deadline, cancel)
+    let raster = decode_raster(&bytes, sha256, deadline, cancel)?;
+    if job.kind == "raster_prepare" {
+        crate::safe::validate_stored(job)?;
+        let grid = job
+            .safe_output
+            .as_ref()
+            .ok_or("Prepared SAFE grid is missing")?;
+        if grid.width != raster.width
+            || grid.height != raster.height
+            || grid.band_count != 1
+            || grid.crs != raster.crs
+            || grid.bounds != raster.bounds
+            || grid.pixel_size != raster.pixel_size
+            || raster.nodata != Some(0)
+        {
+            return Err("Prepared SAFE raster differs from its recorded grid".into());
+        }
+    }
+    Ok(raster)
 }
 
 pub(crate) fn check_cancel(cancel: Option<&CancellationToken>) -> Result<()> {
@@ -489,6 +648,10 @@ fn preview(raster: DecodedRaster, deadline: Instant) -> Result<RasterInspection>
     }
     check_time(deadline)?;
     Ok(RasterInspection {
+        science: None,
+        vegetation: None,
+        quality: None,
+        radar: None,
         width,
         height,
         band_count: 1,
@@ -496,11 +659,14 @@ fn preview(raster: DecodedRaster, deadline: Instant) -> Result<RasterInspection>
         crs,
         bounds,
         pixel_size,
-        nodata,
+        nodata: nodata.map(f64::from),
         preview_data_url: format!("data:image/png;base64,{}", STANDARD.encode(png_data)),
         preview_width,
         preview_height,
         sha256,
+        reflectance: None,
+        elevation: None,
+        aerial: None,
         classes: PALETTE
             .iter()
             .enumerate()
@@ -515,6 +681,9 @@ fn preview(raster: DecodedRaster, deadline: Instant) -> Result<RasterInspection>
 }
 
 pub(crate) fn validate_geokeys(keys: &[u16]) -> Result<String> {
+    validate_projected_geokeys(keys, false)
+}
+pub(crate) fn validate_projected_geokeys(keys: &[u16], nad83: bool) -> Result<String> {
     if keys.len() < 4
         || keys[0] != 1
         || keys[1] != 1
@@ -545,11 +714,17 @@ pub(crate) fn validate_geokeys(keys: &[u16]) -> Result<String> {
         return Err("Only metre-based projected coordinates are supported".into());
     }
     let epsg = get(3072)?.ok_or("Projected CRS EPSG code is missing from the GeoTIFF")?;
-    if !(32601..=32660).contains(&epsg) && !(32701..=32760).contains(&epsg) {
-        return Err(
+    if if nad83 {
+        !(26901..=26923).contains(&epsg)
+    } else {
+        !(32601..=32660).contains(&epsg) && !(32701..=32760).contains(&epsg)
+    } {
+        return Err(if nad83 {
+            "NAIP requires NAD83 UTM EPSG 26901-26923"
+        } else {
             "Only WGS84 UTM north/south EPSG 32601-32660 and 32701-32760 are currently supported"
-                .into(),
-        );
+        }
+        .into());
     }
     Ok(format!("EPSG:{epsg}"))
 }

@@ -16,7 +16,7 @@ export function FileThumbnail({ job }) {
   const key = fileThumbnailKey(job);
   const connected = useRef(Boolean(health));
   connected.current = Boolean(health);
-  const label = t(job.assetKey === 'scl' ? 'Local SCL file preview' : 'Local true-color file preview');
+  const label = t(['ndvi','evi'].includes(job.assetKey) ? 'Verified local vegetation index preview' : ['modis_qc','modis_state','qa_pixel','qa_radsat'].includes(job.assetKey) ? 'Local quality flags preview' : job.assetKey === 'wcs_coverage' ? 'Local coverage subset grayscale preview' : job.assetKey === 'stac_asset' ? 'Local original raster grayscale preview' : ['vv','vh','hh','hv'].includes(job.assetKey) ? 'Verified local radar preview in dB' : job.assetKey === 'aerial' ? 'Local aerial RGB preview' : ['elevation','srtm'].includes(job.assetKey) ? 'Verified local elevation tile in grayscale' : job.assetKey === 'scl' ? 'Local SCL file preview' : ['visual','reflectance_rgb'].includes(job.assetKey) ? 'Local true-color file preview' : 'Local reflectance band preview');
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') { setVisible(true); return; }
     const observer = new IntersectionObserver(entries => {

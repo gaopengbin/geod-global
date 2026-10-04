@@ -1,0 +1,443 @@
+[
+  {
+    "type": "Feature",
+    "id": "VJ209A1.A2025177.h08v05.002.2025333224010",
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+      "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+    ],
+    "properties": {
+      "datetime": "2025-06-26T00:00:00.000Z",
+      "storage:schemes": {
+        "aws": {
+          "type": "aws-s3",
+          "platform": "https://{bucket}.s3.{region}.amazonaws.com",
+          "bucket": "lp-prod-protected",
+          "region": "us-west-2"
+        }
+      },
+      "start_datetime": "2025-06-26T00:00:00.000Z",
+      "end_datetime": "2025-07-03T23:59:59.000Z"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -115.3696,
+            29.8308
+          ],
+          [
+            -103.6998,
+            29.9063
+          ],
+          [
+            -117.3606,
+            40.0852
+          ],
+          [
+            -130.5407,
+            40
+          ],
+          [
+            -115.3696,
+            29.8308
+          ]
+        ]
+      ]
+    },
+    "bbox": [
+      -130.5407,
+      29.8308,
+      -103.6998,
+      40.0852
+    ],
+    "assets": {
+      "browse": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+        "title": "Download BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+        "type": "image/jpeg",
+        "roles": [
+          "browse"
+        ]
+      },
+      "thumbnail_0": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+        "title": "Thumbnail [0]",
+        "description": "Download BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+        "roles": [
+          "thumbnail"
+        ]
+      },
+      "thumbnail_1": {
+        "href": "s3://lp-prod-public/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+        "title": "Thumbnail [1]",
+        "description": "This link provides direct download access via S3 to the granule",
+        "roles": [
+          "thumbnail"
+        ]
+      },
+      "2025333224010": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/VJ209A1.A2025177.h08v05.002.2025333224010.h5",
+        "title": "Direct Download",
+        "description": "Download VJ209A1.A2025177.h08v05.002.2025333224010.h5",
+        "roles": [
+          "data"
+        ]
+      },
+      "s3_2025333224010": {
+        "href": "s3://lp-prod-protected/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/VJ209A1.A2025177.h08v05.002.2025333224010.h5",
+        "title": "S3 Direct Download",
+        "description": "This link provides direct download access via S3 to the granule",
+        "roles": [
+          "data"
+        ],
+        "storage:refs": [
+          "aws"
+        ]
+      },
+      "metadata": {
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3940249207-LPCLOUD.xml",
+        "title": "CMR XML metadata for G3940249207-LPCLOUD",
+        "type": "application/xml",
+        "roles": [
+          "metadata"
+        ]
+      }
+    },
+    "links": [
+      {
+        "rel": "self",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VJ209A1_002/items/VJ209A1.A2025177.h08v05.002.2025333224010",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "parent",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VJ209A1_002/",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "collection",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VJ209A1_002/",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "root",
+        "href": "https://cmr.earthdata.nasa.gov/stac",
+        "type": "application/json"
+      },
+      {
+        "rel": "provider",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+        "type": "application/json"
+      },
+      {
+        "rel": "via",
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3940249207-LPCLOUD.json",
+        "title": "CMR JSON metadata for item",
+        "type": "application/json"
+      },
+      {
+        "rel": "via",
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3940249207-LPCLOUD.umm_json",
+        "title": "CMR UMM_JSON metadata for item",
+        "type": "application/vnd.nasa.cmr.umm+json"
+      }
+    ],
+    "collection": "VJ209A1_002"
+  },
+  {
+    "type": "Feature",
+    "id": "VJ109A1.A2025177.h08v05.002.2025189193733",
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+      "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+    ],
+    "properties": {
+      "datetime": "2025-06-26T00:00:00.000Z",
+      "storage:schemes": {
+        "aws": {
+          "type": "aws-s3",
+          "platform": "https://{bucket}.s3.{region}.amazonaws.com",
+          "bucket": "lp-prod-protected",
+          "region": "us-west-2"
+        }
+      },
+      "start_datetime": "2025-06-26T00:00:00.000Z",
+      "end_datetime": "2025-07-03T23:59:59.000Z"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -115.3696,
+            29.8308
+          ],
+          [
+            -103.6998,
+            29.9063
+          ],
+          [
+            -117.3606,
+            40.0852
+          ],
+          [
+            -130.5407,
+            40
+          ],
+          [
+            -115.3696,
+            29.8308
+          ]
+        ]
+      ]
+    },
+    "bbox": [
+      -130.5407,
+      29.8308,
+      -103.6998,
+      40.0852
+    ],
+    "assets": {
+      "browse": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+        "title": "Download BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+        "type": "image/jpeg",
+        "roles": [
+          "browse"
+        ]
+      },
+      "thumbnail_0": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+        "title": "Thumbnail [0]",
+        "description": "Download BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+        "roles": [
+          "thumbnail"
+        ]
+      },
+      "thumbnail_1": {
+        "href": "s3://lp-prod-public/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+        "title": "Thumbnail [1]",
+        "description": "This link provides direct download access via S3 to the granule",
+        "roles": [
+          "thumbnail"
+        ]
+      },
+      "2025189193733": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/VJ109A1.A2025177.h08v05.002.2025189193733.h5",
+        "title": "Direct Download",
+        "description": "Download VJ109A1.A2025177.h08v05.002.2025189193733.h5",
+        "roles": [
+          "data"
+        ]
+      },
+      "s3_2025189193733": {
+        "href": "s3://lp-prod-protected/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/VJ109A1.A2025177.h08v05.002.2025189193733.h5",
+        "title": "S3 Direct Download",
+        "description": "This link provides direct download access via S3 to the granule",
+        "roles": [
+          "data"
+        ],
+        "storage:refs": [
+          "aws"
+        ]
+      },
+      "metadata": {
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3596951548-LPCLOUD.xml",
+        "title": "CMR XML metadata for G3596951548-LPCLOUD",
+        "type": "application/xml",
+        "roles": [
+          "metadata"
+        ]
+      }
+    },
+    "links": [
+      {
+        "rel": "self",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VJ109A1_002/items/VJ109A1.A2025177.h08v05.002.2025189193733",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "parent",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VJ109A1_002/",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "collection",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VJ109A1_002/",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "root",
+        "href": "https://cmr.earthdata.nasa.gov/stac",
+        "type": "application/json"
+      },
+      {
+        "rel": "provider",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+        "type": "application/json"
+      },
+      {
+        "rel": "via",
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3596951548-LPCLOUD.json",
+        "title": "CMR JSON metadata for item",
+        "type": "application/json"
+      },
+      {
+        "rel": "via",
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3596951548-LPCLOUD.umm_json",
+        "title": "CMR UMM_JSON metadata for item",
+        "type": "application/vnd.nasa.cmr.umm+json"
+      }
+    ],
+    "collection": "VJ109A1_002"
+  },
+  {
+    "type": "Feature",
+    "id": "VNP09A1.A2025177.h08v05.002.2025202170202",
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+      "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+    ],
+    "properties": {
+      "datetime": "2025-06-26T00:00:00.000Z",
+      "storage:schemes": {
+        "aws": {
+          "type": "aws-s3",
+          "platform": "https://{bucket}.s3.{region}.amazonaws.com",
+          "bucket": "lp-prod-protected",
+          "region": "us-west-2"
+        }
+      },
+      "start_datetime": "2025-06-26T00:00:00.000Z",
+      "end_datetime": "2025-07-03T23:59:59.000Z"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -115.3696,
+            29.8308
+          ],
+          [
+            -103.6998,
+            29.9063
+          ],
+          [
+            -117.3606,
+            40.0852
+          ],
+          [
+            -130.5407,
+            40
+          ],
+          [
+            -115.3696,
+            29.8308
+          ]
+        ]
+      ]
+    },
+    "bbox": [
+      -130.5407,
+      29.8308,
+      -103.6998,
+      40.0852
+    ],
+    "assets": {
+      "browse": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+        "title": "Download BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+        "type": "image/jpeg",
+        "roles": [
+          "browse"
+        ]
+      },
+      "thumbnail_0": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+        "title": "Thumbnail [0]",
+        "description": "Download BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+        "roles": [
+          "thumbnail"
+        ]
+      },
+      "thumbnail_1": {
+        "href": "s3://lp-prod-public/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+        "title": "Thumbnail [1]",
+        "description": "This link provides direct download access via S3 to the granule",
+        "roles": [
+          "thumbnail"
+        ]
+      },
+      "2025202170202": {
+        "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/VNP09A1.A2025177.h08v05.002.2025202170202.h5",
+        "title": "Direct Download",
+        "description": "Download VNP09A1.A2025177.h08v05.002.2025202170202.h5",
+        "roles": [
+          "data"
+        ]
+      },
+      "s3_2025202170202": {
+        "href": "s3://lp-prod-protected/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/VNP09A1.A2025177.h08v05.002.2025202170202.h5",
+        "title": "S3 Direct Download",
+        "description": "This link provides direct download access via S3 to the granule",
+        "roles": [
+          "data"
+        ],
+        "storage:refs": [
+          "aws"
+        ]
+      },
+      "metadata": {
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3617466113-LPCLOUD.xml",
+        "title": "CMR XML metadata for G3617466113-LPCLOUD",
+        "type": "application/xml",
+        "roles": [
+          "metadata"
+        ]
+      }
+    },
+    "links": [
+      {
+        "rel": "self",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VNP09A1_002/items/VNP09A1.A2025177.h08v05.002.2025202170202",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "parent",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VNP09A1_002/",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "collection",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/VNP09A1_002/",
+        "type": "application/geo+json"
+      },
+      {
+        "rel": "root",
+        "href": "https://cmr.earthdata.nasa.gov/stac",
+        "type": "application/json"
+      },
+      {
+        "rel": "provider",
+        "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+        "type": "application/json"
+      },
+      {
+        "rel": "via",
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3617466113-LPCLOUD.json",
+        "title": "CMR JSON metadata for item",
+        "type": "application/json"
+      },
+      {
+        "rel": "via",
+        "href": "https://cmr.earthdata.nasa.gov/search/concepts/G3617466113-LPCLOUD.umm_json",
+        "title": "CMR UMM_JSON metadata for item",
+        "type": "application/vnd.nasa.cmr.umm+json"
+      }
+    ],
+    "collection": "VNP09A1_002"
+  }
+]

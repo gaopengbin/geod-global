@@ -1,0 +1,9 @@
+.scientific-rgb-dialog .bui-dialog-body { display: flex; flex-direction: column; gap: 16px; }
+.scientific-rgb-dialog .runtime-field, .scientific-rgb-dialog .processing-plan, .scientific-rgb-dialog .runtime-dialog-actions { margin: 0; }
+.scientific-rgb-dialog .processing-plan { padding: 0; }
+.scientific-rgb-dialog .runtime-check { display: flex; align-items: center; gap: 8px; margin: 12px 0 6px; font-size: 13px; line-height: 20px; }
+.scientific-rgb-dialog .runtime-check [data-slot=checkbox] { flex-shrink: 0; }
+.scientific-rgb-dialog .scientific-rgb-summary { padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--inset); }
+.scientific-rgb-dialog .runtime-details { margin: 0; gap: 8px 12px; }
+.scientific-rgb-dialog .bui-dialog-body > p { margin: 0; color: var(--ink-2); font-size: 12px; line-height: 1.6; }
+.scientific-rgb-dialog .bui-dialog-body > p[role=status] { display: flex; align-items: center; gap: 8px; }

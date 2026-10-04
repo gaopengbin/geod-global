@@ -1,0 +1,714 @@
+{
+  "checkedAt": "2026-10-02T03:04:27.231Z",
+  "scope": {
+    "completeActualLandsatOriginals": true,
+    "downloadedThisTurn": false,
+    "actualRustCompositeApi": true,
+    "independentGdalAllPreviewPixels": true,
+    "actualNativeProcessRestart": true,
+    "headlessBrowserToNativeApi": true,
+    "userDesktopOperated": false,
+    "positiveEarthdataAccountTest": false,
+    "actualHlsOriginalDownload": false,
+    "compositeScientificFileExport": false
+  },
+  "source": {
+    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+    "product": "landsat-c2-l2",
+    "files": [
+      {
+        "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+        "band": "red",
+        "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "bytes": 95591695
+      },
+      {
+        "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+        "band": "green",
+        "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+        "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+        "bytes": 93388645
+      },
+      {
+        "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+        "band": "blue",
+        "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+        "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+        "bytes": 92080083
+      }
+    ]
+  },
+  "metadata": {
+    "width": 7671,
+    "height": 7791,
+    "crs": "EPSG:32610",
+    "bounds": [
+      462285,
+      4030485,
+      692415,
+      4264215
+    ],
+    "pixelSize": [
+      30,
+      30
+    ],
+    "pixelInterpretation": "PixelIsPoint",
+    "bandCount": 3,
+    "dataType": "UInt16",
+    "nodata": 0,
+    "previewWidth": 756,
+    "previewHeight": 768,
+    "composite": {
+      "product": "landsat-c2-l2",
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "scale": 2.75e-05,
+      "offset": -0.2,
+      "displayRanges": [
+        [
+          7503,
+          30146
+        ],
+        [
+          7971,
+          30114
+        ],
+        [
+          6839,
+          31391
+        ]
+      ],
+      "sampleCount": 580608,
+      "validSampleCount": 395543
+    }
+  },
+  "previewPngSha256": "94908bfab7e35a2982ceb67f86016dfbca0e1bf0f51cfc849e22e0dbb22c3722",
+  "independent": {
+    "independentReader": "Rasterio/GDAL + NumPy + Pillow",
+    "sourceFiles": [
+      {
+        "band": "red",
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "bytes": 95591695,
+        "originalDnSamples": 8
+      },
+      {
+        "band": "green",
+        "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+        "bytes": 93388645,
+        "originalDnSamples": 8
+      },
+      {
+        "band": "blue",
+        "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+        "bytes": 92080083,
+        "originalDnSamples": 8
+      }
+    ],
+    "allPreviewPixelsMatch": true,
+    "previewPixels": 580608,
+    "channelValuesCompared": 1741824,
+    "sampleChannelValuesCompared": 24,
+    "validSampleCount": 395543,
+    "originalHashesUnchanged": true
+  },
+  "originalPixels": [
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        462300,
+        4264200
+      ],
+      "pixel": [
+        0,
+        0
+      ],
+      "center": [
+        462300,
+        4264200
+      ],
+      "values": [
+        0,
+        0,
+        0
+      ],
+      "reflectances": [
+        null,
+        null,
+        null
+      ],
+      "channelNoData": [
+        true,
+        true,
+        true
+      ],
+      "isNoData": true
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        462330,
+        4264170
+      ],
+      "pixel": [
+        1,
+        1
+      ],
+      "center": [
+        462330,
+        4264170
+      ],
+      "values": [
+        0,
+        0,
+        0
+      ],
+      "reflectances": [
+        null,
+        null,
+        null
+      ],
+      "channelNoData": [
+        true,
+        true,
+        true
+      ],
+      "isNoData": true
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        692400,
+        4030500
+      ],
+      "pixel": [
+        7670,
+        7790
+      ],
+      "center": [
+        692400,
+        4030500
+      ],
+      "values": [
+        0,
+        0,
+        0
+      ],
+      "reflectances": [
+        null,
+        null,
+        null
+      ],
+      "channelNoData": [
+        true,
+        true,
+        true
+      ],
+      "isNoData": true
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        492300,
+        4204200
+      ],
+      "pixel": [
+        1000,
+        2000
+      ],
+      "center": [
+        492300,
+        4204200
+      ],
+      "values": [
+        0,
+        0,
+        0
+      ],
+      "reflectances": [
+        null,
+        null,
+        null
+      ],
+      "channelNoData": [
+        true,
+        true,
+        true
+      ],
+      "isNoData": true
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        577350,
+        4147350
+      ],
+      "pixel": [
+        3835,
+        3895
+      ],
+      "center": [
+        577350,
+        4147350
+      ],
+      "values": [
+        10096,
+        10062,
+        9341
+      ],
+      "reflectances": [
+        0.07763999999999999,
+        0.07670500000000002,
+        0.056877500000000025
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        537300,
+        4144200
+      ],
+      "pixel": [
+        2500,
+        4000
+      ],
+      "center": [
+        537300,
+        4144200
+      ],
+      "values": [
+        24571,
+        24277,
+        24784
+      ],
+      "reflectances": [
+        0.4757025,
+        0.46761749999999996,
+        0.48156000000000004
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        612300,
+        4114200
+      ],
+      "pixel": [
+        5000,
+        5000
+      ],
+      "center": [
+        612300,
+        4114200
+      ],
+      "values": [
+        12034,
+        10572,
+        9219
+      ],
+      "reflectances": [
+        0.13093500000000002,
+        0.09072999999999998,
+        0.05352249999999997
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    },
+    {
+      "sources": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "band": "red"
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "band": "green"
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "band": "blue"
+        }
+      ],
+      "crs": "EPSG:32610",
+      "coordinate": [
+        642300,
+        4174200
+      ],
+      "pixel": [
+        6000,
+        3000
+      ],
+      "center": [
+        642300,
+        4174200
+      ],
+      "values": [
+        14541,
+        13899,
+        11351
+      ],
+      "reflectances": [
+        0.19987749999999999,
+        0.1822225,
+        0.11215249999999999
+      ],
+      "channelNoData": [
+        false,
+        false,
+        false
+      ],
+      "isNoData": false
+    }
+  ],
+  "wrongBandOrderRejected": true,
+  "restart": {
+    "actualNativeProcessRestart": true,
+    "sourceJobsRestored": 3,
+    "allGridAndPreviewMetadataIdentical": true,
+    "previewPngIdentical": true,
+    "originalPixelAndReflectancesIdentical": true
+  },
+  "views": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "locale": "zh-CN",
+      "errors": [],
+      "overflow": false,
+      "pixel": {
+        "sources": [
+          {
+            "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+            "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+            "band": "red"
+          },
+          {
+            "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+            "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+            "band": "green"
+          },
+          {
+            "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+            "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+            "band": "blue"
+          }
+        ],
+        "crs": "EPSG:32610",
+        "coordinate": [
+          577350,
+          4147350
+        ],
+        "pixel": [
+          3835,
+          3895
+        ],
+        "center": [
+          577350,
+          4147350
+        ],
+        "values": [
+          10096,
+          10062,
+          9341
+        ],
+        "reflectances": [
+          0.07763999999999999,
+          0.07670500000000002,
+          0.056877500000000025
+        ],
+        "channelNoData": [
+          false,
+          false,
+          false
+        ],
+        "isNoData": false
+      },
+      "nativeBridge": "actual isolated Rust HTTP runtime on port 4327",
+      "source": "real complete Landsat originals"
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "locale": "en",
+      "errors": [],
+      "overflow": false,
+      "pixel": {
+        "sources": [
+          {
+            "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+            "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+            "band": "red"
+          },
+          {
+            "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+            "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+            "band": "green"
+          },
+          {
+            "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+            "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+            "band": "blue"
+          }
+        ],
+        "crs": "EPSG:32610",
+        "coordinate": [
+          577350,
+          4147350
+        ],
+        "pixel": [
+          3835,
+          3895
+        ],
+        "center": [
+          577350,
+          4147350
+        ],
+        "values": [
+          10096,
+          10062,
+          9341
+        ],
+        "reflectances": [
+          0.07763999999999999,
+          0.07670500000000002,
+          0.056877500000000025
+        ],
+        "channelNoData": [
+          false,
+          false,
+          false
+        ],
+        "isNoData": false
+      },
+      "nativeBridge": "actual isolated Rust HTTP runtime on port 4327",
+      "source": "real complete Landsat originals"
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "locale": "zh-CN",
+      "errors": [],
+      "overflow": false,
+      "pixel": {
+        "sources": [
+          {
+            "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+            "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+            "band": "red"
+          },
+          {
+            "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+            "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+            "band": "green"
+          },
+          {
+            "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+            "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+            "band": "blue"
+          }
+        ],
+        "crs": "EPSG:32610",
+        "coordinate": [
+          577350,
+          4147350
+        ],
+        "pixel": [
+          3835,
+          3895
+        ],
+        "center": [
+          577350,
+          4147350
+        ],
+        "values": [
+          10096,
+          10062,
+          9341
+        ],
+        "reflectances": [
+          0.07763999999999999,
+          0.07670500000000002,
+          0.056877500000000025
+        ],
+        "channelNoData": [
+          false,
+          false,
+          false
+        ],
+        "isNoData": false
+      },
+      "nativeBridge": "actual isolated Rust HTTP runtime on port 4327",
+      "source": "real complete Landsat originals"
+    }
+  ],
+  "checks": {
+    "npmVerify": "passed",
+    "nodeTests": 111,
+    "vitestTests": 108,
+    "runtimeLibTests": 160,
+    "runtimeIgnored": 4,
+    "runtimeCliTests": 3,
+    "desktopProtocolTests": 4,
+    "clippyWarningsDenied": "passed"
+  },
+  "remaining": [
+    "NASA HLS production files and positive account authorization",
+    "RGB GeoTIFF export and derived band combinations",
+    "Cloud, QA and saturation masks",
+    "Other planned public data sources"
+  ]
+}

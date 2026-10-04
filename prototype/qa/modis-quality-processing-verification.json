@@ -1,0 +1,1213 @@
+{
+  "schema": "geod-modis-quality-processing-verification/v1",
+  "checkedAt": "2026-10-03T17:01:14.637626+00:00",
+  "status": "passed",
+  "qaOnly": true,
+  "productionData": "Planetary Computer converted MOD/MYD09A1 v061 COGs; not NASA original HDF",
+  "acquisition": "15 actual native original downloads retained; repeated processing checks reuse these originals",
+  "catalog": {
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+    "method": "POST",
+    "body": {
+      "collections": [
+        "modis-09A1-061"
+      ],
+      "bbox": [
+        -110.1,
+        34.96,
+        -109.7,
+        35.04
+      ],
+      "datetime": "2025-06-18T00:00:00Z/2025-07-03T23:59:59Z",
+      "limit": 100
+    },
+    "retrievedAt": "2026-10-03T16:48:30.786Z",
+    "returnedItems": 8,
+    "responseSha256": "cd7e6da83cbc466f73164e50a43c04ad80cb58adc1ad508a76af001f616ea436",
+    "selectedItemIds": [
+      "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "MYD09A1.A2025169.h08v05.061.2025178155736"
+    ]
+  },
+  "originals": [
+    {
+      "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "key": "red",
+      "bytes": 11563085,
+      "sha256": "1ae15397e9589668824bbe5426327d7fbe8417ae2e20fbb89a6bf5552304b812",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_b01.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "key": "red",
+      "bytes": 11417054,
+      "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025169.h08v05.061.2025178155736",
+      "key": "red",
+      "bytes": 10757322,
+      "sha256": "9b73498168d556be35bee3154c883f7c6a5eae07203e7bc875236abf0ac61bda",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025169/MYD09A1.A2025169.h08v05.061.2025178155736_sur_refl_b01.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "key": "green",
+      "bytes": 11298714,
+      "sha256": "68f27769f07bf3bbde62168eae542556c39055a55f8c09e9a2ce19cf903774ff",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_b04.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "key": "green",
+      "bytes": 11245921,
+      "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b04.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025169.h08v05.061.2025178155736",
+      "key": "green",
+      "bytes": 10628560,
+      "sha256": "3e4e2c69c2f5070ed348b1325054aa9a7d051dc1ab2370b7c0e7791efd67be79",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025169/MYD09A1.A2025169.h08v05.061.2025178155736_sur_refl_b04.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "key": "blue",
+      "bytes": 10971484,
+      "sha256": "e0122cb40302bba196fe7d1bc859a6b3a9dc31ac3786ff34b799d4c5af5bd17a",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_b03.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "key": "blue",
+      "bytes": 10983667,
+      "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b03.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025169.h08v05.061.2025178155736",
+      "key": "blue",
+      "bytes": 10448086,
+      "sha256": "85fecffa1f19da510734009f2acd1e37fc4eb1c970e2be80819ad6aae008c1d3",
+      "dtype": "int16",
+      "gridChecked": true,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025169/MYD09A1.A2025169.h08v05.061.2025178155736_sur_refl_b03.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "key": "modis_qc",
+      "bytes": 6935468,
+      "sha256": "cd63947e7d5066eaa3f6707081c2668f29bb12831b9a35f7b0433fc4fd3830ea",
+      "dtype": "uint32",
+      "gridChecked": true,
+      "originalPixelsCounted": 5760000,
+      "counts": [
+        5759014,
+        574,
+        0,
+        412
+      ],
+      "noDataPixels": 0,
+      "minimum": 1073741824,
+      "maximum": 2050720643,
+      "pngPixelsCompared": 615424,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_qc_500m.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "key": "modis_qc",
+      "bytes": 7013560,
+      "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+      "dtype": "uint32",
+      "gridChecked": true,
+      "originalPixelsCounted": 5760000,
+      "counts": [
+        5192134,
+        567807,
+        0,
+        59
+      ],
+      "noDataPixels": 0,
+      "minimum": 1073741824,
+      "maximum": 2050491267,
+      "pngPixelsCompared": 615424,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025169.h08v05.061.2025178155736",
+      "key": "modis_qc",
+      "bytes": 6414725,
+      "sha256": "eeb20abca4658ad4b4fd6b6da44cfea505929ff77ffc570a8103003bc6f29f72",
+      "dtype": "uint32",
+      "gridChecked": true,
+      "originalPixelsCounted": 5760000,
+      "counts": [
+        4807504,
+        952479,
+        0,
+        17
+      ],
+      "noDataPixels": 0,
+      "minimum": 1073741824,
+      "maximum": 2046821251,
+      "pngPixelsCompared": 615424,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025169/MYD09A1.A2025169.h08v05.061.2025178155736_sur_refl_qc_500m.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "key": "modis_state",
+      "bytes": 3372032,
+      "sha256": "6bce8e1c3c2055efa6abc3dba91bfcd48841122f17a940b4f6f0235191b1c939",
+      "dtype": "uint16",
+      "gridChecked": true,
+      "originalPixelsCounted": 5760000,
+      "counts": [
+        5103112,
+        501895,
+        154993,
+        0
+      ],
+      "noDataPixels": 0,
+      "minimum": 8,
+      "maximum": 45070,
+      "pngPixelsCompared": 615424,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_state_500m.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "key": "modis_state",
+      "bytes": 1800792,
+      "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+      "dtype": "uint16",
+      "gridChecked": true,
+      "originalPixelsCounted": 5760000,
+      "counts": [
+        5205714,
+        355421,
+        198865,
+        0
+      ],
+      "noDataPixels": 0,
+      "minimum": 0,
+      "maximum": 45069,
+      "pngPixelsCompared": 615424,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    },
+    {
+      "itemId": "MYD09A1.A2025169.h08v05.061.2025178155736",
+      "key": "modis_state",
+      "bytes": 1159696,
+      "sha256": "2ca7395559fd0a95aa988c27700a29fb59cf90a9ae4b3498e4adfed632f64b75",
+      "dtype": "uint16",
+      "gridChecked": true,
+      "originalPixelsCounted": 5760000,
+      "counts": [
+        5710018,
+        30596,
+        19386,
+        0
+      ],
+      "noDataPixels": 0,
+      "minimum": 0,
+      "maximum": 40980,
+      "pngPixelsCompared": 615424,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025169/MYD09A1.A2025169.h08v05.061.2025178155736_sur_refl_state_500m.tif",
+      "mediaType": "image/tiff; application=geotiff",
+      "width": 2400,
+      "height": 2400
+    }
+  ],
+  "outputs": [
+    {
+      "case": "single",
+      "key": "red",
+      "jobId": "b9546917-b9a6-4f80-849f-e826fad53314",
+      "dtype": "int16",
+      "sha256": "67c322d814c0e4091c7913b5d41874b9b975c1b755fd03def45164ae35258fe1",
+      "outputPixelsCompared": 1120,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 0,
+      "coveredPixels": 1120,
+      "sourcePixelsByPin": [
+        1120
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025177.h08v05.061.2025189031924"
+      ],
+      "counts": null,
+      "bytes": 2518,
+      "width": 56,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -10007554.677,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "single",
+      "key": "green",
+      "jobId": "a0e4f259-5f80-42a4-b631-ed8a8700fde1",
+      "dtype": "int16",
+      "sha256": "87788a7c3ba440a43b95617f3f447ebad4e6f331a9d0cf924eb3c602aea108fc",
+      "outputPixelsCompared": 1120,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 0,
+      "coveredPixels": 1120,
+      "sourcePixelsByPin": [
+        1120
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025177.h08v05.061.2025189031924"
+      ],
+      "counts": null,
+      "bytes": 2459,
+      "width": 56,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -10007554.677,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "single",
+      "key": "blue",
+      "jobId": "1a3b709d-a421-4eb3-b1f0-64780f67890d",
+      "dtype": "int16",
+      "sha256": "e85547e4ed0ee21318ac7c02eda04f7419763f4a6063ec3bb4d7252118bcf0cf",
+      "outputPixelsCompared": 1120,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 0,
+      "coveredPixels": 1120,
+      "sourcePixelsByPin": [
+        1120
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025177.h08v05.061.2025189031924"
+      ],
+      "counts": null,
+      "bytes": 2400,
+      "width": 56,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -10007554.677,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "single",
+      "key": "modis_qc",
+      "jobId": "425fba2f-f72e-444e-aee0-8509f8df13fe",
+      "dtype": "uint32",
+      "sha256": "d20a793439f6d90f59699d1698e247bbf88f6a7f959f4eb5ff8ecb89ba8cfbbc",
+      "outputPixelsCompared": 1120,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 2240,
+      "maskedPixels": 0,
+      "coveredPixels": 1120,
+      "sourcePixelsByPin": [
+        1120
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025177.h08v05.061.2025189031924"
+      ],
+      "counts": [
+        1120,
+        0,
+        0,
+        0
+      ],
+      "bytes": 1057,
+      "width": 56,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -10007554.677,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": 4294967295,
+      "qualityProfile": {
+        "product": "modis-09a1-v061",
+        "band": "modis_qc",
+        "layer": "sur_refl_qc_500m",
+        "bits": 32,
+        "nodata": 4294967295,
+        "pixelInterpretation": "PixelIsArea",
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "calibration": null
+    },
+    {
+      "case": "single",
+      "key": "modis_state",
+      "jobId": "4305cf61-5471-439a-9fc7-e0c6c9c01ab8",
+      "dtype": "uint16",
+      "sha256": "bbd5e63932cb809c26b1d216c26e209768b8c70e5a57cf5b05268dfdce62ff50",
+      "outputPixelsCompared": 1120,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 2240,
+      "maskedPixels": 0,
+      "coveredPixels": 1120,
+      "sourcePixelsByPin": [
+        1120
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025177.h08v05.061.2025189031924"
+      ],
+      "counts": [
+        1120,
+        0,
+        0,
+        0
+      ],
+      "bytes": 886,
+      "width": 56,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -10007554.677,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": 65535,
+      "qualityProfile": {
+        "product": "modis-09a1-v061",
+        "band": "modis_state",
+        "layer": "sur_refl_state_500m",
+        "bits": 16,
+        "nodata": 65535,
+        "pixelInterpretation": "PixelIsArea",
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "calibration": null
+    },
+    {
+      "case": "mosaic",
+      "key": "red",
+      "jobId": "9a98e1c4-3536-4524-902c-1af8a0a22f58",
+      "dtype": "int16",
+      "sha256": "ecccf97e4ad7a78836e03bb3552100a0d0beabc413b3640f9ed8a8ffbf47f5da",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 0,
+      "coveredPixels": 2000,
+      "sourcePixelsByPin": [
+        0,
+        1120,
+        880
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": null,
+      "bytes": 3878,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "mosaic",
+      "key": "green",
+      "jobId": "67c9b578-472e-4330-98b8-513fadd467e1",
+      "dtype": "int16",
+      "sha256": "9fd32005269def50d053f4ffb6ebdd073f14af8dc9a8567a8ec4a53ff013c64d",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 0,
+      "coveredPixels": 2000,
+      "sourcePixelsByPin": [
+        0,
+        1120,
+        880
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": null,
+      "bytes": 3774,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "mosaic",
+      "key": "blue",
+      "jobId": "cd1e28be-b833-4740-911a-85be4d80f806",
+      "dtype": "int16",
+      "sha256": "39d6f90c535c7bfa35e2f96075cbbdcb9bc2b440aba3f6daf85becaf1e1280e3",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 0,
+      "coveredPixels": 2000,
+      "sourcePixelsByPin": [
+        0,
+        1120,
+        880
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": null,
+      "bytes": 3666,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "mosaic",
+      "key": "modis_qc",
+      "jobId": "006f43cb-1283-4346-8f91-8c9d281679c4",
+      "dtype": "uint32",
+      "sha256": "10560417c09d413f7571d19e98ef6ab7542c146bca957f0f59c011174c0ff79a",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 4000,
+      "maskedPixels": 0,
+      "coveredPixels": 2000,
+      "sourcePixelsByPin": [
+        0,
+        1120,
+        880
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": [
+        2000,
+        0,
+        0,
+        0
+      ],
+      "bytes": 1209,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": 4294967295,
+      "qualityProfile": {
+        "product": "modis-09a1-v061",
+        "band": "modis_qc",
+        "layer": "sur_refl_qc_500m",
+        "bits": 32,
+        "nodata": 4294967295,
+        "pixelInterpretation": "PixelIsArea",
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "calibration": null
+    },
+    {
+      "case": "mosaic",
+      "key": "modis_state",
+      "jobId": "f2bdbe52-619d-4a35-8edf-7ee3551b6679",
+      "dtype": "uint16",
+      "sha256": "73077193d4efc9394021b6f49e79dce7ae6c0293476358c062a4487cd7062fba",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 4000,
+      "maskedPixels": 0,
+      "coveredPixels": 2000,
+      "sourcePixelsByPin": [
+        0,
+        1120,
+        880
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": [
+        2000,
+        0,
+        0,
+        0
+      ],
+      "bytes": 951,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": 65535,
+      "qualityProfile": {
+        "product": "modis-09a1-v061",
+        "band": "modis_state",
+        "layer": "sur_refl_state_500m",
+        "bits": 16,
+        "nodata": 65535,
+        "pixelInterpretation": "PixelIsArea",
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "calibration": null
+    },
+    {
+      "case": "polygon",
+      "key": "red",
+      "jobId": "72ae2960-da28-4066-81bb-22324b6e8332",
+      "dtype": "int16",
+      "sha256": "eb74a56f58229f06986a2f492e7527312eefe04dd8b0df6089f018f874ff363a",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 442,
+      "coveredPixels": 1558,
+      "sourcePixelsByPin": [
+        0,
+        890,
+        668
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": null,
+      "bytes": 3261,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "polygon",
+      "key": "green",
+      "jobId": "18216ac8-1a01-4aed-8814-9d5fa2918121",
+      "dtype": "int16",
+      "sha256": "69b8de1292f8f1a8e9654101095b6e6fffa7611cb033c1cb91430de530897f8f",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 442,
+      "coveredPixels": 1558,
+      "sourcePixelsByPin": [
+        0,
+        890,
+        668
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": null,
+      "bytes": 3181,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "polygon",
+      "key": "blue",
+      "jobId": "da46cbad-8ed5-470f-b1b0-790e308be270",
+      "dtype": "int16",
+      "sha256": "cc675a33dd12148f68dc9b3098e7dbf0bfc9a43d7dd56d616333ee90b7df9da0",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 0,
+      "maskedPixels": 442,
+      "coveredPixels": 1558,
+      "sourcePixelsByPin": [
+        0,
+        890,
+        668
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": null,
+      "bytes": 3096,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": -28672,
+      "qualityProfile": null,
+      "calibration": {
+        "product": "modis-09a1-v061",
+        "signed": true,
+        "scale": 0.0001,
+        "offset": 0,
+        "nodata": -28672
+      }
+    },
+    {
+      "case": "polygon",
+      "key": "modis_qc",
+      "jobId": "0746b282-6428-4fab-8598-c16d01fc4bf5",
+      "dtype": "uint32",
+      "sha256": "283834e1e8ead5ce83340247e4a4aa38bb45f4ec6844d5cd029d79e25ab1034c",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 4000,
+      "maskedPixels": 442,
+      "coveredPixels": 1558,
+      "sourcePixelsByPin": [
+        0,
+        890,
+        668
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": [
+        1558,
+        0,
+        0,
+        0
+      ],
+      "bytes": 1210,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": 4294967295,
+      "qualityProfile": {
+        "product": "modis-09a1-v061",
+        "band": "modis_qc",
+        "layer": "sur_refl_qc_500m",
+        "bits": 32,
+        "nodata": 4294967295,
+        "pixelInterpretation": "PixelIsArea",
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "calibration": null
+    },
+    {
+      "case": "polygon",
+      "key": "modis_state",
+      "jobId": "ff51b853-c7d4-4467-9f3d-4fad063328e9",
+      "dtype": "uint16",
+      "sha256": "3642fec25ce3b16465e9e26d02cba07b68bb9366e712fbdc22ea98d3bd5bfe47",
+      "outputPixelsCompared": 2000,
+      "rawSamplesCompared": 9,
+      "pngPixelsCompared": 4000,
+      "maskedPixels": 442,
+      "coveredPixels": 1558,
+      "sourcePixelsByPin": [
+        0,
+        890,
+        668
+      ],
+      "sourcePeriodOrder": [
+        "MYD09A1.A2025169.h08v05.061.2025178155736",
+        "MYD09A1.A2025177.h08v05.061.2025189031924",
+        "MYD09A1.A2025177.h09v05.061.2025189031843"
+      ],
+      "counts": [
+        1558,
+        0,
+        0,
+        0
+      ],
+      "bytes": 952,
+      "width": 100,
+      "height": 20,
+      "crs": "MODIS:Sinusoidal",
+      "bounds": [
+        -10033500.189125562,
+        3887193.691668221,
+        -9987168.91747277,
+        3896459.945998779
+      ],
+      "pixelSize": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "nodata": 65535,
+      "qualityProfile": {
+        "product": "modis-09a1-v061",
+        "band": "modis_state",
+        "layer": "sur_refl_state_500m",
+        "bits": 16,
+        "nodata": 65535,
+        "pixelInterpretation": "PixelIsArea",
+        "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+      },
+      "calibration": null
+    }
+  ],
+  "originalBytes": 126010166,
+  "originalQualityPixelsCounted": 34560000,
+  "outputPixelsCompared": 25600,
+  "nativePixelResultsCompared": 135,
+  "qualityPreviewAndThumbnailRgbaPixelsCompared": 3713024,
+  "independentDecoder": "Rasterio 1.3.9 / GDAL 3.6.4",
+  "qualityMaskApplied": false,
+  "qualityRankingApplied": false,
+  "bitsMerged": false,
+  "resamplingApplied": false,
+  "cases": [
+    {
+      "case": "single",
+      "projectBounds": [
+        -110.1,
+        34.96,
+        -109.7,
+        35.04
+      ],
+      "geometry": null,
+      "sourceScenes": 1
+    },
+    {
+      "case": "mosaic",
+      "projectBounds": [
+        -110.1,
+        34.96,
+        -109.7,
+        35.04
+      ],
+      "geometry": null,
+      "sourceScenes": 3
+    },
+    {
+      "case": "polygon",
+      "projectBounds": [
+        -110.1,
+        34.96,
+        -109.7,
+        35.04
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -110.1,
+              34.96
+            ],
+            [
+              -109.7,
+              34.96
+            ],
+            [
+              -109.7,
+              35.04
+            ],
+            [
+              -110.1,
+              35.04
+            ],
+            [
+              -110.1,
+              34.96
+            ]
+          ],
+          [
+            [
+              -110.01,
+              34.99
+            ],
+            [
+              -110.01,
+              35.01
+            ],
+            [
+              -109.99,
+              35.01
+            ],
+            [
+              -109.99,
+              34.99
+            ],
+            [
+              -110.01,
+              34.99
+            ]
+          ]
+        ]
+      },
+      "sourceScenes": 3
+    }
+  ],
+  "offlineRestart": {
+    "projectsRestored": 3,
+    "originalFilesIdentical": 15,
+    "outputFilesIdentical": 15,
+    "previewsIdentical": 21,
+    "thumbnailsIdentical": 21,
+    "diskCacheEntriesReusedWithoutRegeneration": 21,
+    "changedDerivedRejected": true,
+    "restoredDerivedCacheIdentical": true
+  },
+  "ui": {
+    "renderer": "production build; exact desktop CSP; real native API via loopback bridge",
+    "rendererEntry": "index-CgBG7ONf.js",
+    "rendererEntrySha256": "bf35eb5c5984259a39ea7bf74ce2e66855d2822b190d7b4dd5837e3c7b64dd85",
+    "cases": [
+      {
+        "case": "single",
+        "key": "modis_qc",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "paintedRaster": true,
+        "bitFieldsVisible": true,
+        "projectCards": 19,
+        "projectCardHeight": 106
+      },
+      {
+        "case": "mosaic",
+        "key": "modis_state",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "paintedRaster": true,
+        "bitFieldsVisible": true,
+        "projectCards": 27,
+        "projectCardHeight": 106
+      },
+      {
+        "case": "polygon",
+        "key": "modis_qc",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "paintedRaster": true,
+        "bitFieldsVisible": true,
+        "projectCards": 27,
+        "projectCardHeight": 106
+      }
+    ],
+    "actualProcessingActions": [
+      {
+        "case": "single",
+        "key": "modis_qc",
+        "id": "dd99bfe9-7d00-4660-826d-35b1ffa0e02f",
+        "sha256": "d20a793439f6d90f59699d1698e247bbf88f6a7f959f4eb5ff8ecb89ba8cfbbc",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      },
+      {
+        "case": "mosaic",
+        "key": "modis_state",
+        "id": "32c96053-e068-4330-898e-3271bdb3aa84",
+        "sha256": "73077193d4efc9394021b6f49e79dce7ae6c0293476358c062a4487cd7062fba",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      },
+      {
+        "case": "polygon",
+        "key": "modis_qc",
+        "id": "1dedefab-0694-42ce-9c00-0ac6c1a67167",
+        "sha256": "283834e1e8ead5ce83340247e4a4aa38bb45f4ec6844d5cd029d79e25ab1034c",
+        "pinnedSourcesIdentical": true,
+        "outputBytesIdentical": true,
+        "planIdentical": true
+      }
+    ],
+    "remoteRequests": [],
+    "errors": [],
+    "nativeWindowTested": false,
+    "usedUserDesktop": false
+  },
+  "mcp": {
+    "readOnly": true,
+    "modes": [
+      "direct",
+      "loopback adapter"
+    ],
+    "cases": 24,
+    "pixelsCompared": 144,
+    "disconnectedAdapterRejected": true
+  },
+  "regressions": {
+    "nativePassed": 435,
+    "nativeIgnored": 4,
+    "desktopPassed": 4,
+    "nodePassed": 226,
+    "uiPassed": 200,
+    "qualityMosaicTests": 3,
+    "clippyWarningsDenied": true,
+    "cargoFmtCheck": true
+  },
+  "build": {
+    "nativeSha256": "12a0c483cbcbf55a445c4aef43ab08ca49e60668f6ba38b24ad2a1d77dd9ad6b",
+    "desktopSha256": "33ea945b2115e615b35f9e2bfe54b6e67bfebfc85e21fda694cd0a852166b136",
+    "desktopBytes": 79788032,
+    "latestRendererEmbedded": true,
+    "profile": "development; custom-protocol",
+    "installerBuilt": false,
+    "published": false
+  },
+  "limits": [
+    "No automatic cloud/quality mask or quality-priority observations",
+    "Only the reviewed original sinusoidal grid; no general reprojection",
+    "NASA original HDF and other MODIS products are not covered",
+    "Positive Earthdata/Copernicus protected original download awaits a real account",
+    "Headless production renderer verification does not replace native WebView manual acceptance"
+  ],
+  "scripts": [
+    "scripts/verify-modis-quality-processing.mjs",
+    "scripts/verify-modis-quality-processing.py",
+    "scripts/verify-modis-quality-processing-ui.mjs",
+    "scripts/verify-modis-quality-processing-mcp.py"
+  ]
+}

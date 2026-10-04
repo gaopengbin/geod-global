@@ -1,0 +1,130 @@
+{
+  "checkedAt": "2026-10-02T07:28:21Z",
+  "scope": "One actual Planetary Computer Sentinel-1C VV RTC original; original transfer, geometry, sampled pixels, preview and persistent thumbnail only",
+  "jobId": "0b95755d-70cd-4ccd-a90a-cd0eb6fe483a",
+  "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+  "href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/6/30/IW/DV/S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_00622B_A30F/measurement/iw-vv.rtc.tiff",
+  "bytes": 1840806210,
+  "sha256": "e869896b958541b46062f930c300a0554dd9ae7fa9a7feb1fc1d803ede4dcb7d",
+  "raster": {
+    "width": 27195,
+    "height": 20629,
+    "crs": "EPSG:32610",
+    "dataType": "Float32",
+    "bounds": [
+      534370,
+      4087010,
+      806320,
+      4293300
+    ],
+    "pixelSize": [
+      10,
+      10
+    ],
+    "nodata": -32768,
+    "radar": {
+      "product": "sentinel-1-iw-rtc",
+      "polarization": "VV",
+      "quantity": "gamma0",
+      "unit": "linear",
+      "displayUnit": "dB",
+      "displayRange": [
+        -20.539789879308522,
+        -4.8185373999138825
+      ],
+      "sampleCount": 446976,
+      "validSampleCount": 339205,
+      "overview": true
+    }
+  },
+  "pixels": [
+    {
+      "pixel": [
+        0,
+        0
+      ],
+      "originalGamma0": -32768,
+      "decibels": null,
+      "nativeSeconds": 23.203,
+      "exactFloat32Match": true
+    },
+    {
+      "pixel": [
+        13597,
+        10314
+      ],
+      "originalGamma0": 0.0861993357539177,
+      "decibels": -10.644960808054458,
+      "nativeSeconds": 23.203,
+      "exactFloat32Match": true
+    },
+    {
+      "pixel": [
+        9065,
+        10314
+      ],
+      "originalGamma0": 0.005583649501204491,
+      "decibels": -22.530818512141032,
+      "nativeSeconds": 23.203,
+      "exactFloat32Match": true
+    },
+    {
+      "pixel": [
+        27194,
+        20628
+      ],
+      "originalGamma0": -32768,
+      "decibels": null,
+      "nativeSeconds": 23.281,
+      "exactFloat32Match": true
+    }
+  ],
+  "preview": {
+    "independentDecoder": "GDAL/rasterio, tifffile metadata, Pillow/numpy",
+    "overviewIndex": 5,
+    "previewPixelsCompared": 446976,
+    "exactRgbaMatch": true
+  },
+  "inspectSeconds": 24.094,
+  "thumbnail": {
+    "firstSeconds": 0,
+    "cacheSeconds": 0.031,
+    "persistentEntryCount": 1,
+    "identicalCacheHit": true,
+    "restartCacheHitSeconds": 0.031,
+    "cacheContentUnmodifiedAfterRestart": true
+  },
+  "terrainCorrectionAccuracyAssessed": false,
+  "additionalCalibrationApplied": false,
+  "speckleFilteringApplied": false,
+  "otherPolarizationsAcceptedByOriginalTest": false,
+  "usedUserDesktop": false,
+  "frontend": {
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "mode": "Headless frontend through read-only proxy to actual isolated native runtime; no response fixtures for files or pixels",
+        "actualOriginalJobId": "0b95755d-70cd-4ccd-a90a-cd0eb6fe483a",
+        "projectId": "b054a826-9c64-4471-90ce-c252daeff5b5",
+        "thumbnailVisible": true,
+        "nativeRasterCanvasVisible": true,
+        "errors": []
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "mode": "Headless frontend through read-only proxy to actual isolated native runtime; no response fixtures for files or pixels",
+        "actualOriginalJobId": "0b95755d-70cd-4ccd-a90a-cd0eb6fe483a",
+        "projectId": "b054a826-9c64-4471-90ce-c252daeff5b5",
+        "thumbnailVisible": true,
+        "nativeRasterCanvasVisible": true,
+        "errors": []
+      }
+    ]
+  }
+}

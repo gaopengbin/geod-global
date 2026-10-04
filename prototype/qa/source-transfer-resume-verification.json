@@ -1,0 +1,225 @@
+{
+  "schema": "geod-source-transfer-resume-verification/v1",
+  "checkedAt": "2026-10-03T18:11:54.467762+00:00",
+  "scope": "Conditional public-original byte-range recovery; the real full original and polarization processing are not yet accepted",
+  "policy": {
+    "connectTimeoutSeconds": 20,
+    "readInactivitySeconds": 45,
+    "healthyStreamHasTotalDurationDeadline": false,
+    "concurrentTransfers": 2,
+    "eligible": "Reviewed ordinary public original assets with a strong ETag and known full size",
+    "notCovered": [
+      "Protected NASA/CDSE originals",
+      "Custom STAC downloads",
+      "Generated WCS responses",
+      "Independent tile-package acquisitions",
+      "Local processing tasks"
+    ],
+    "resumeOnlyAfterMatching206": true,
+    "rehashDurablePrefixBeforeRequest": true,
+    "authorizationDenialNeverBypassed": true,
+    "explicitCancellationPurgesPartial": true,
+    "fullIntegrityChecksBeforeSuccess": true
+  },
+  "protocolFixtures": {
+    "tests": 12,
+    "privateTcpServer": true,
+    "productionImagery": false,
+    "checks": [
+      "Exact Range / If-Range and whole-file SHA-256",
+      "Shutdown and reopen with an uncheckpointed tail",
+      "Changed version, invalid range, 416 and fallback",
+      "Weak or missing ETag",
+      "Corrupt local prefix",
+      "Explicit cancel and fresh retry",
+      "403 retains candidate without bypass or automatic retries",
+      "Unsolicited 206 rejection",
+      "Strict validators and content ranges",
+      "Job/asset binding, size limits and no plaintext access URL",
+      "Copy to a new inode without changing an existing hard link",
+      "Only canonical managed staging files are removed"
+    ]
+  },
+  "realRecovery": {
+    "checkedAt": "2026-10-03T17:55:52.517Z",
+    "jobId": "42320022-3bc5-4d4a-956a-869aad2fddd3",
+    "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+    "key": "vh",
+    "originalBytes": 1836960069,
+    "verifiedPrefixBytes": 4374528,
+    "prefixSha256": "80692ea83e392fc3bbfcc7af6b1c1986a3431483e7abcfd5412231083b381f39",
+    "etag": "\"0x8DDCEC7B31F46B1\"",
+    "sameJobId": true,
+    "crashCheckpointRestored": true,
+    "rangeAccepted": true,
+    "independentBoundary": {
+      "from": 4341760,
+      "to": 4407295,
+      "bytes": 65536,
+      "sha256": "d6924a178ef65acfdbcdb2d08f8e56d5d4e2aba4a94ecace22e06992540f0d0d",
+      "exactSourceBytes": true
+    }
+  },
+  "observation": {
+    "checkedAt": "2026-10-03T18:11:54.467762+00:00",
+    "status": "running",
+    "bytesDownloaded": 373047296,
+    "totalBytes": 1836960069,
+    "transfer": {
+      "mode": "resumed",
+      "resumedBytes": 4374528
+    }
+  },
+  "checks": {
+    "nativeLibrary": {
+      "passed": 444,
+      "ignored": 4
+    },
+    "cliBinary": {
+      "passed": 4
+    },
+    "desktopCustomProtocol": {
+      "passed": 4
+    },
+    "frontend": {
+      "files": 31,
+      "passed": 201
+    },
+    "frontendDataAndContractUnitTests": {
+      "passed": 226
+    },
+    "runtimeClippyAllTargets": "passed",
+    "rustFormat": "passed",
+    "productionFrontendBuild": "passed",
+    "desktopDevelopmentBuild": "passed",
+    "repositoryIsolationAndContracts": "passed",
+    "diffWhitespace": "passed"
+  },
+  "headlessProductionUi": {
+    "status": "passed",
+    "cases": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "polarizationLabels": [
+          "VH",
+          "HV",
+          "HV",
+          "HH",
+          "HH",
+          "VH"
+        ],
+        "stablePaintVerified": true,
+        "verifiedResumeLabel": true,
+        "detailsDescribeActualSavedBytes": true,
+        "layout": {
+          "width": 1440,
+          "overflow": 0,
+          "cards": [
+            {
+              "height": 105,
+              "right": 628
+            },
+            {
+              "height": 105,
+              "right": 1022
+            },
+            {
+              "height": 105,
+              "right": 1416
+            },
+            {
+              "height": 105,
+              "right": 628
+            },
+            {
+              "height": 105,
+              "right": 1022
+            },
+            {
+              "height": 105,
+              "right": 1416
+            }
+          ]
+        }
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "polarizationLabels": [
+          "VH",
+          "HV",
+          "HV",
+          "HH",
+          "HH",
+          "VH"
+        ],
+        "stablePaintVerified": true,
+        "verifiedResumeLabel": true,
+        "detailsDescribeActualSavedBytes": true,
+        "layout": {
+          "width": 1024,
+          "overflow": 0,
+          "cards": [
+            {
+              "height": 105,
+              "right": 617
+            },
+            {
+              "height": 105,
+              "right": 1000
+            },
+            {
+              "height": 105,
+              "right": 617
+            },
+            {
+              "height": 105,
+              "right": 1000
+            },
+            {
+              "height": 105,
+              "right": 617
+            },
+            {
+              "height": 105,
+              "right": 1000
+            }
+          ]
+        }
+      }
+    ],
+    "exactDesktopCsp": true,
+    "realNativeTasks": true,
+    "screenshotsVisuallyInspected": true,
+    "errors": [],
+    "remoteRequests": [],
+    "nativeWindowTested": false,
+    "usedUserDesktop": false,
+    "accountAuthorizationSubmitted": false
+  },
+  "nativeDevelopmentBinary": {
+    "sha256": "3b0e845ebea363f154644db9e75f0fff1f852b69201eb2bcbae85174523ea03b",
+    "bytes": 49704448
+  },
+  "desktopDevelopmentBinary": {
+    "sha256": "6bfc8464f3e15245c659400bb28b4aeb83ddfe6dec6401163c39b428ccf5b3cb",
+    "bytes": 80008192,
+    "productionAssets": [
+      "assets/chunk-aKtaBQYM.js",
+      "assets/i18n-DFfJ_wCm.js",
+      "assets/i18n-DZ60XG39.css",
+      "assets/index-CnDCJzm4.js",
+      "assets/index-DEswa1dc.css"
+    ],
+    "embeddedAssetsConfirmed": true,
+    "startedOnUserDesktop": false
+  },
+  "originalFileAccepted": false,
+  "allPolarizationsWholeFilesAndProcessingAccepted": false,
+  "nasaCopernicusPositiveAuthorizationAccepted": false,
+  "installerBuilt": false,
+  "published": false
+}

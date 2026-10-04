@@ -1,0 +1,378 @@
+{
+  "checkedAt": "2026-10-01T08:58:31.094Z",
+  "provider": "planetary-computer",
+  "projectId": "96077008-3028-4565-81f3-7eba394b6652",
+  "elapsedSeconds": 37,
+  "outputs": [
+    {
+      "assetKey": "visual",
+      "jobId": "0c52cdd6-4a79-49c5-827a-9795fce1bc14",
+      "itemId": "S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511",
+      "source": "Microsoft Planetary Computer; Copernicus Sentinel-2 L2A",
+      "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2025/06/27/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A004230_20250627T185915/IMG_DATA/R10m/T10SEG_20250627T184941_TCI_10m.tif",
+      "bytes": 274167302,
+      "sha256": "43f07456f4f219d65a21e73ded881b1a904982a5ca646a6463514cb1d4b792a7",
+      "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\provider-live-store\\assets\\0c52cdd6-4a79-49c5-827a-9795fce1bc14.tif",
+      "raster": {
+        "width": 10980,
+        "height": 10980,
+        "bandCount": 3,
+        "dataType": "UInt8",
+        "crs": "EPSG:32610",
+        "bounds": [
+          499980,
+          4090200,
+          609780,
+          4200000
+        ],
+        "pixelSize": [
+          10,
+          10
+        ],
+        "nodata": 0,
+        "previewWidth": 768,
+        "previewHeight": 768,
+        "classes": [],
+        "sha256": "43f07456f4f219d65a21e73ded881b1a904982a5ca646a6463514cb1d4b792a7"
+      },
+      "thumbnail": {
+        "width": 160,
+        "height": 160
+      },
+      "independentCheck": {
+        "decoder": "Rasterio 1.3.9",
+        "checksumMatches": true,
+        "metadataMatches": true,
+        "pixels": [
+          {
+            "column": 1,
+            "row": 1,
+            "values": [
+              255,
+              255,
+              255
+            ],
+            "matchesRuntime": true
+          },
+          {
+            "column": 5490,
+            "row": 5490,
+            "values": [
+              41,
+              71,
+              37
+            ],
+            "matchesRuntime": true
+          },
+          {
+            "column": 7320,
+            "row": 7320,
+            "values": [
+              27,
+              41,
+              21
+            ],
+            "matchesRuntime": true
+          }
+        ]
+      }
+    },
+    {
+      "assetKey": "scl",
+      "jobId": "1a336856-31df-4f8c-8228-2688343e1f39",
+      "itemId": "S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511",
+      "source": "Microsoft Planetary Computer; Copernicus Sentinel-2 L2A",
+      "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2025/06/27/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A004230_20250627T185915/IMG_DATA/R20m/T10SEG_20250627T184941_SCL_20m.tif",
+      "bytes": 2057253,
+      "sha256": "7760e979997c6c8906637373815da0dea318e45431b3b6af3a238ec864f4cef4",
+      "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\provider-live-store\\assets\\1a336856-31df-4f8c-8228-2688343e1f39.tif",
+      "raster": {
+        "width": 5490,
+        "height": 5490,
+        "bandCount": 1,
+        "dataType": "UInt8",
+        "crs": "EPSG:32610",
+        "bounds": [
+          499980,
+          4090200,
+          609780,
+          4200000
+        ],
+        "pixelSize": [
+          20,
+          20
+        ],
+        "nodata": 0,
+        "previewWidth": 768,
+        "previewHeight": 768,
+        "classes": [
+          {
+            "value": 0,
+            "label": "No data",
+            "color": "#000000",
+            "count": 0
+          },
+          {
+            "value": 1,
+            "label": "Saturated or defective",
+            "color": "#ff0000",
+            "count": 0
+          },
+          {
+            "value": 2,
+            "label": "Terrain shadow",
+            "color": "#2f2f2f",
+            "count": 12556
+          },
+          {
+            "value": 3,
+            "label": "Cloud shadow",
+            "color": "#643200",
+            "count": 0
+          },
+          {
+            "value": 4,
+            "label": "Vegetation",
+            "color": "#00a000",
+            "count": 7175882
+          },
+          {
+            "value": 5,
+            "label": "Bare/non-vegetated",
+            "color": "#ffe65a",
+            "count": 6906131
+          },
+          {
+            "value": 6,
+            "label": "Water",
+            "color": "#0000ff",
+            "count": 5368776
+          },
+          {
+            "value": 7,
+            "label": "Unclassified",
+            "color": "#808080",
+            "count": 102290
+          },
+          {
+            "value": 8,
+            "label": "Medium-probability cloud",
+            "color": "#c0c0c0",
+            "count": 850764
+          },
+          {
+            "value": 9,
+            "label": "High-probability cloud",
+            "color": "#ffffff",
+            "count": 9723285
+          },
+          {
+            "value": 10,
+            "label": "Thin cirrus",
+            "color": "#64c8ff",
+            "count": 136
+          },
+          {
+            "value": 11,
+            "label": "Snow or ice",
+            "color": "#ff96ff",
+            "count": 280
+          }
+        ],
+        "sha256": "7760e979997c6c8906637373815da0dea318e45431b3b6af3a238ec864f4cef4"
+      },
+      "thumbnail": {
+        "width": 160,
+        "height": 160
+      },
+      "independentCheck": {
+        "decoder": "Rasterio 1.3.9",
+        "checksumMatches": true,
+        "metadataMatches": true,
+        "pixels": [
+          {
+            "column": 1,
+            "row": 1,
+            "values": [
+              9
+            ],
+            "matchesRuntime": true
+          },
+          {
+            "column": 2745,
+            "row": 2745,
+            "values": [
+              4
+            ],
+            "matchesRuntime": true
+          },
+          {
+            "column": 3660,
+            "row": 3660,
+            "values": [
+              4
+            ],
+            "matchesRuntime": true
+          }
+        ]
+      }
+    }
+  ],
+  "copernicusThumbnail": {
+    "format": "JPEG",
+    "size": [
+      343,
+      343
+    ],
+    "decoderVerified": true
+  },
+  "mapVerification": {
+    "checkedAt": "2026-10-01T09:12:14.658Z",
+    "catalog": "Captured real STAC response replayed to restore a reproducible scene",
+    "raster": "Live signed HTTPS COG range requests",
+    "restoredProject": true,
+    "signedRequests": 5,
+    "statuses": [
+      206
+    ],
+    "savedSourcesUnsigned": true,
+    "noPageErrors": true
+  },
+  "projectProcessing": [
+    {
+      "assetKey": "visual",
+      "jobId": "419f2480-78be-4407-a3de-1e7723d1742f",
+      "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\provider-live-store\\assets\\419f2480-78be-4407-a3de-1e7723d1742f.tif",
+      "width": 2038,
+      "height": 1789,
+      "bands": 3,
+      "crs": "EPSG:32610",
+      "sha256": "79eff01f2d42e454832515a3f6f5913629061ba8aa43d54c44c4e69e2d6be760",
+      "allPixelsMatchOriginalWindow": true
+    },
+    {
+      "assetKey": "scl",
+      "jobId": "e1f6a209-dd0c-4ce5-afd9-7a196e053ab4",
+      "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\provider-live-store\\assets\\e1f6a209-dd0c-4ce5-afd9-7a196e053ab4.tif",
+      "width": 1020,
+      "height": 895,
+      "bands": 1,
+      "crs": "EPSG:32610",
+      "sha256": "bf4600d742a7aecd00ea4a4f5190e65baffb9a105fc403a79df709378cf5bc6b",
+      "allPixelsMatchOriginalWindow": true
+    }
+  ],
+  "restartVerification": {
+    "checkedAt": "2026-10-01T09:18:52.199Z",
+    "projectRestored": true,
+    "sourcesAndOutputsRestored": 4,
+    "completedDownloadsReused": true,
+    "persistedUrlsUnsigned": true
+  },
+  "catalogVerification": {
+    "checkedAt": "2026-10-01T08:58:01.520Z",
+    "results": [
+      {
+        "provider": "earth-search",
+        "search": "passed",
+        "serverCloudFilter": "0-5 percent",
+        "pages": 2,
+        "ids": [
+          "S2B_10SEG_20250622_0_L2A",
+          "S2C_10SEG_20250617_0_L2A"
+        ],
+        "hasNextPage": true
+      },
+      {
+        "provider": "planetary-computer",
+        "search": "passed",
+        "serverCloudFilter": "0-5 percent",
+        "pages": 2,
+        "ids": [
+          "S2B_MSIL2A_20250622T184919_R113_T10SEG_20250622T223120",
+          "S2C_MSIL2A_20250617T184941_R113_T10SEG_20250617T234722"
+        ],
+        "hasNextPage": false
+      },
+      {
+        "provider": "copernicus",
+        "search": "passed",
+        "serverCloudFilter": "0-5 percent",
+        "pages": 2,
+        "ids": [
+          "S2B_MSIL2A_20250622T184919_N0511_R113_T10SEG_20250622T223120",
+          "S2C_MSIL2A_20250617T184941_N0511_R113_T10SEG_20250617T234722"
+        ],
+        "hasNextPage": false
+      }
+    ]
+  },
+  "interfaceVerification": {
+    "catalogAndSigning": "Isolated response fixtures for visual QA; live requests tested separately",
+    "cases": [
+      {
+        "provider": "planetary-computer",
+        "theme": "light",
+        "width": 1440,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "copernicus",
+        "theme": "light",
+        "width": 1440,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "earth-search",
+        "theme": "light",
+        "width": 1440,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "planetary-computer",
+        "theme": "dark",
+        "width": 1440,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "copernicus",
+        "theme": "dark",
+        "width": 1440,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "earth-search",
+        "theme": "dark",
+        "width": 1440,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "planetary-computer",
+        "theme": "light",
+        "width": 1024,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "copernicus",
+        "theme": "light",
+        "width": 1024,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      },
+      {
+        "provider": "earth-search",
+        "theme": "light",
+        "width": 1024,
+        "switchesCorrectly": true,
+        "noOverflow": true
+      }
+    ]
+  }
+}

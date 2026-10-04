@@ -1,0 +1,123 @@
+{
+  "source": {
+    "provider": "OpenStreetMap / Overpass API",
+    "acquisition": "One manual bounded QA request; no public Overpass backend in the application",
+    "query": "(way[highway](52.516,13.375,52.518,13.38);way[building](52.516,13.375,52.518,13.38);relation[building][type=multipolygon](52.516,13.375,52.518,13.38);node[amenity](52.516,13.375,52.518,13.38););out body geom;",
+    "bytes": 197463,
+    "sha256": "69ebac14ff6089c323f604755ca122d3f93d382eadd1d502a576b50aee122a0d",
+    "timestamp": "2026-10-02T08:48:21Z",
+    "license": "ODbL",
+    "attribution": "© OpenStreetMap contributors",
+    "licenseUrl": "https://www.openstreetmap.org/copyright"
+  },
+  "acceptance": {
+    "features": 247,
+    "coordinates": 1309,
+    "geometryCounts": {
+      "LineString": 136,
+      "MultiPolygon": 7,
+      "Point": 90,
+      "Polygon": 14
+    },
+    "bounds": [
+      13.3518837,
+      52.5144535,
+      13.3809127,
+      52.5193998
+    ],
+    "holes": 12,
+    "allIdentitiesAndTagsEqual": true,
+    "allGeometriesEqualIndependentGEOSReference": true,
+    "allExportedGeometriesValid": true,
+    "wayCoordinateOrderAndPrecisionPreserved": true,
+    "referenceAndExplicitManagedCopyByteHashesEqual": true
+  },
+  "limits": {
+    "formats": [
+      "RFC 7946 GeoJSON",
+      "Overpass JSON with complete embedded geometry"
+    ],
+    "maxBytes": 20971520,
+    "maxFeatures": 50000,
+    "maxCoordinates": 500000,
+    "excluded": [
+      "Online OSM service integration",
+      "PBF/XML",
+      "General OSM relation types",
+      "Automatic CRS inference",
+      "General topology repair"
+    ]
+  },
+  "ui": {
+    "checkedAt": "2026-10-02T09:36:26.231Z",
+    "mode": "Headless Chromium through an isolated proxy to actual native files",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "fileId": "6690b6b9-6e34-4908-9a0f-5c062b52e36f",
+        "featureCount": 247,
+        "nativeVectorListAndInspection": true,
+        "actualBrowserContentImportAndUnregisterVerified": true,
+        "allBrowserExportFeaturesEqual": true,
+        "mapCanvasVisible": true,
+        "clickedFeatureId": "node/3806536657",
+        "originalAttributesVisible": true,
+        "detailsResizeVerified": true,
+        "errors": [],
+        "publicOverpassContacted": false
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "fileId": "6690b6b9-6e34-4908-9a0f-5c062b52e36f",
+        "featureCount": 247,
+        "nativeVectorListAndInspection": true,
+        "actualBrowserContentImportAndUnregisterVerified": true,
+        "allBrowserExportFeaturesEqual": true,
+        "mapCanvasVisible": true,
+        "clickedFeatureId": "node/10885617176",
+        "originalAttributesVisible": true,
+        "detailsResizeVerified": true,
+        "errors": [],
+        "publicOverpassContacted": false
+      }
+    ]
+  },
+  "restart": {
+    "nativeProcessesReopenedExclusiveStorage": true,
+    "registeredFiles": 3,
+    "allFeaturesAndPropertiesUnchanged": true,
+    "originalSourceUnmodified": true,
+    "inspections": [
+      {
+        "id": "06bc4851-7276-44a1-ba87-e76f381c6155",
+        "format": "overpass-json",
+        "storageMode": "managed",
+        "sourceSha256": "69ebac14ff6089c323f604755ca122d3f93d382eadd1d502a576b50aee122a0d",
+        "geojsonSha256": "4becf307baec8c0305ed0b38f4db4cad8a77ee38ca3373d6a16a0a6fee0e4bdb",
+        "nativeInspectionAndExportUnchanged": true
+      },
+      {
+        "id": "6690b6b9-6e34-4908-9a0f-5c062b52e36f",
+        "format": "overpass-json",
+        "storageMode": "reference",
+        "sourceSha256": "69ebac14ff6089c323f604755ca122d3f93d382eadd1d502a576b50aee122a0d",
+        "geojsonSha256": "4becf307baec8c0305ed0b38f4db4cad8a77ee38ca3373d6a16a0a6fee0e4bdb",
+        "nativeInspectionAndExportUnchanged": true
+      },
+      {
+        "id": "ee372af1-8470-40c6-b56a-17f2eb0a8a57",
+        "format": "geojson",
+        "storageMode": "reference",
+        "sourceSha256": "4becf307baec8c0305ed0b38f4db4cad8a77ee38ca3373d6a16a0a6fee0e4bdb",
+        "geojsonSha256": "4becf307baec8c0305ed0b38f4db4cad8a77ee38ca3373d6a16a0a6fee0e4bdb",
+        "nativeInspectionAndExportUnchanged": true
+      }
+    ]
+  }
+}

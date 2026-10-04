@@ -1,0 +1,18 @@
+.settings-page { display: grid; gap: 12px; max-width: 1040px; }
+.settings-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: start; gap: 12px; }
+.settings-panel { min-width: 0; padding: 16px; border: 1px solid var(--line); box-shadow: none; }
+.settings-panel h2 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.settings-fields { display: grid; gap: 12px; margin-top: 14px; }
+.settings-fields > label { display: grid; grid-template-columns: 80px minmax(0, 1fr); align-items: center; gap: 6px 12px; font-size: 13px; }
+.settings-fields strong { font-weight: 600; }
+.settings-fields [data-slot=select-wrapper], .settings-fields [data-slot=select-trigger] { width: 100%; }
+.settings-help, .settings-background p { margin: 0; color: var(--ink-2); font-size: 12px; line-height: 18px; }
+.settings-background { display: grid; gap: 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+.settings-background > div { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; }
+.settings-background > .bui-button { justify-self: start; }
+.settings-page > .settings-diagnostics { width: 100%; max-width: none; padding: 0 16px; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); }
+.settings-diagnostics > .bui-disclosure-trigger { min-height: 40px; font-size: 13px; }
+.settings-diagnostics .diagnostics-panel { margin: 0; padding: 16px 0; background: transparent; box-shadow: none; border-top: 1px solid var(--line); border-radius: 0; }
+.settings-diagnostics .diagnostics-panel h2 { margin: 0; font-size: 16px; }
+.settings-diagnostics .diagnostics-panel > p { max-width: 640px; color: var(--ink-2); font-size: 13px; line-height: 20px; }
+@media (max-width: 880px) { .settings-grid { grid-template-columns: minmax(0, 1fr); } }

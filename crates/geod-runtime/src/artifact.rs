@@ -83,13 +83,13 @@ fn verified_bundle(root: &Path, job: &Job, source: &Job) -> Result<(ArtifactPack
         (job.output_path.as_deref(), &tiff_path),
         (job.manifest_path.as_deref(), &metadata_path),
     ] {
-        if Path::new(recorded.ok_or("The artifact file record is missing")?)
-            .canonicalize()
-            .map_err(io_error)?
-            != *expected
-        {
-            return Err("Artifact export is restricted to the exact managed job files".into());
-        }
+        crate::storage::exact_file(
+            expected,
+            Path::new(recorded.ok_or("The artifact file record is missing")?),
+        )
+        .map_err(|error| {
+            format!("Artifact export is restricted to the exact managed job files: {error}")
+        })?;
     }
     let tiff = read_bounded(&tiff_path, MAX_PACKAGE_INPUT)?;
     let output_hash = format!("{:x}", Sha256::digest(&tiff));
@@ -174,6 +174,13 @@ impl JobManager {
     }
 
     pub async fn prepare_artifact(&self, id: &str) -> Result<ArtifactPackage> {
+        if self
+            .get(id)
+            .await
+            .is_some_and(|job| job.kind == "raster_rgb")
+        {
+            return self.scientific_rgb_package(id, false).await;
+        }
         let (job, source) = self.bundle_input(id).await?;
         let root = self.storage_root().to_owned();
         let permit = self
@@ -189,7 +196,7 @@ impl JobManager {
             let exports = managed(&root, "exports")?;
             let target = exports.join(&package.filename);
             if target.exists() {
-                if target.canonicalize().map_err(io_error)? != target
+                if crate::storage::regular_file(&target).is_err()
                     || read_bounded(&target, MAX_PACKAGE_INPUT + 1024 * 1024)? != bytes
                 {
                     return Err(
@@ -203,7 +210,9 @@ impl JobManager {
                 temporary.as_file().sync_all().map_err(io_error)?;
                 temporary.persist_noclobber(&target).map_err(io_error)?;
             }
-            package.path = target.to_string_lossy().into_owned();
+            package.path = crate::storage::regular_file(&target)?
+                .to_string_lossy()
+                .into_owned();
             Ok(package)
         })
         .await
@@ -212,6 +221,20 @@ impl JobManager {
 
     /// GET only reads a previously prepared package, revalidating its exact inputs.
     pub async fn artifact_bytes(&self, id: &str) -> Result<(ArtifactPackage, Vec<u8>)> {
+        if self
+            .get(id)
+            .await
+            .is_some_and(|job| job.kind == "raster_rgb")
+        {
+            let package = self.scientific_rgb_package(id, true).await?;
+            let bytes = tokio::fs::read(&package.path).await.map_err(io_error)?;
+            if bytes.len() as u64 != package.bytes
+                || format!("{:x}", Sha256::digest(&bytes)) != package.sha256
+            {
+                return Err("The RGB delivery package changed during reading".into());
+            }
+            return Ok((package, bytes));
+        }
         let (job, source) = self.bundle_input(id).await?;
         let root = self.storage_root().to_owned();
         let permit = self
@@ -222,13 +245,16 @@ impl JobManager {
             .map_err(|_| "The raster worker is busy; retry the package download shortly")?;
         tokio::task::spawn_blocking(move || {
             let _permit = permit;
-            let (package, expected) = verified_bundle(&root, &job, &source)?;
+            let (mut package, expected) = verified_bundle(&root, &job, &source)?;
             let target = managed(&root, "exports")?.join(&package.filename);
-            if target.canonicalize().map_err(io_error)? != target
+            if crate::storage::regular_file(&target).is_err()
                 || read_bounded(&target, MAX_PACKAGE_INPUT + 1024 * 1024)? != expected
             {
                 return Err("The prepared delivery package has changed".into());
             }
+            package.path = crate::storage::regular_file(&target)?
+                .to_string_lossy()
+                .into_owned();
             Ok((package, expected))
         })
         .await

@@ -1,0 +1,239 @@
+{
+  "provenance": "Synthetic HDF5 fixture validation only; not NASA observations or authenticated access",
+  "summaries": [
+    {
+      "bands": [
+        {
+          "band": "red",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VNP_Grid_1km_L3_2d/Data Fields/SurfReflect_M5",
+          "maximum": 16001,
+          "minimum": -99,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "fb2728af5d93b9b98159a8a0c91e108d83612e7d7470fa74461f25a27e7189dd",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        },
+        {
+          "band": "green",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VNP_Grid_1km_L3_2d/Data Fields/SurfReflect_M4",
+          "maximum": 16001,
+          "minimum": 38,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "9e85d2c972f8d5eed87f01e84f04ae704cddec6fc970e67315537918e4aef2e7",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        },
+        {
+          "band": "blue",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VNP_Grid_1km_L3_2d/Data Fields/SurfReflect_M3",
+          "maximum": 16001,
+          "minimum": 175,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "d2e8b04d6c0bc587c0da17de09aea34e1f0b2ae1dfd4cf40eab6ac0b36d738a2",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        }
+      ],
+      "bounds": [
+        -11119505.197665233,
+        3335851.55929957,
+        -10007554.677898709,
+        4447802.079066093
+      ],
+      "crs": "VIIRS:Sinusoidal",
+      "endDate": "2025-07-03",
+      "gridName": "VNP_Grid_1km_L3_2d",
+      "height": 1200,
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "pixelSize": [
+        926.6254331387704,
+        926.6254331387692
+      ],
+      "qualityMaskApplied": false,
+      "schemaVersion": "geod-viirs-science/v1",
+      "sourceSha256": "be1c96ddd11da556cbc746f03aa2b206b2c331822e6eb9bc5eff88b0f3fa3db3",
+      "startDate": "2025-06-26",
+      "width": 1200
+    },
+    {
+      "bands": [
+        {
+          "band": "red",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VJ1_Grid_1km_L3_2d/Data Fields/SurfReflect_M5",
+          "maximum": 16001,
+          "minimum": -99,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "fb2728af5d93b9b98159a8a0c91e108d83612e7d7470fa74461f25a27e7189dd",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        },
+        {
+          "band": "green",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VJ1_Grid_1km_L3_2d/Data Fields/SurfReflect_M4",
+          "maximum": 16001,
+          "minimum": 38,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "9e85d2c972f8d5eed87f01e84f04ae704cddec6fc970e67315537918e4aef2e7",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        },
+        {
+          "band": "blue",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VJ1_Grid_1km_L3_2d/Data Fields/SurfReflect_M3",
+          "maximum": 16001,
+          "minimum": 175,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "d2e8b04d6c0bc587c0da17de09aea34e1f0b2ae1dfd4cf40eab6ac0b36d738a2",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        }
+      ],
+      "bounds": [
+        -11119505.197665233,
+        3335851.55929957,
+        -10007554.677898709,
+        4447802.079066093
+      ],
+      "crs": "VIIRS:Sinusoidal",
+      "endDate": "2025-07-03",
+      "gridName": "VJ1_Grid_1km_L3_2d",
+      "height": 1200,
+      "itemId": "VJ109A1.A2025177.h08v05.002.2025333224010",
+      "pixelSize": [
+        926.6254331387704,
+        926.6254331387692
+      ],
+      "qualityMaskApplied": false,
+      "schemaVersion": "geod-viirs-science/v1",
+      "sourceSha256": "a25a022a3f78ad5113899cc6c51ee2964fab9fee1c2a3a0c9325dc7fd0160bab",
+      "startDate": "2025-06-26",
+      "width": 1200
+    },
+    {
+      "bands": [
+        {
+          "band": "red",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VJ2_Grid_1km_L3_2d/Data Fields/SurfReflect_M5",
+          "maximum": 16001,
+          "minimum": -99,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "fb2728af5d93b9b98159a8a0c91e108d83612e7d7470fa74461f25a27e7189dd",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        },
+        {
+          "band": "green",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VJ2_Grid_1km_L3_2d/Data Fields/SurfReflect_M4",
+          "maximum": 16001,
+          "minimum": 38,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "9e85d2c972f8d5eed87f01e84f04ae704cddec6fc970e67315537918e4aef2e7",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        },
+        {
+          "band": "blue",
+          "dataType": "Int16",
+          "dataset": "/HDFEOS/GRIDS/VJ2_Grid_1km_L3_2d/Data Fields/SurfReflect_M3",
+          "maximum": 16001,
+          "minimum": 175,
+          "noDataCount": 144,
+          "nodata": -28672,
+          "offset": 0.0,
+          "outsideValidRangeCount": 1,
+          "sampleCount": 1440000,
+          "samplesSha256": "d2e8b04d6c0bc587c0da17de09aea34e1f0b2ae1dfd4cf40eab6ac0b36d738a2",
+          "scale": 0.0001,
+          "validRange": [
+            -100,
+            16000
+          ]
+        }
+      ],
+      "bounds": [
+        -11119505.197665233,
+        3335851.55929957,
+        -10007554.677898709,
+        4447802.079066093
+      ],
+      "crs": "VIIRS:Sinusoidal",
+      "endDate": "2025-07-03",
+      "gridName": "VJ2_Grid_1km_L3_2d",
+      "height": 1200,
+      "itemId": "VJ209A1.A2025177.h08v05.002.2025333224010",
+      "pixelSize": [
+        926.6254331387704,
+        926.6254331387692
+      ],
+      "qualityMaskApplied": false,
+      "schemaVersion": "geod-viirs-science/v1",
+      "sourceSha256": "e17032f65b5c2961b61c38369c6333e920af13810687efd3bdacc9d44b2c9613",
+      "startDate": "2025-06-26",
+      "width": 1200
+    }
+  ]
+}

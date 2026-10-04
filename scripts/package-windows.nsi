@@ -1,4 +1,4 @@
-; GeoD Global evaluation installer. No system-wide changes or application-data removal.
+; GeoD Global installer. No system-wide changes or application-data removal.
 Unicode true
 !include "MUI2.nsh"
 !include "x64.nsh"
@@ -13,20 +13,26 @@ RequestExecutionLevel user
 SetCompressor /SOLID lzma
 VIProductVersion "${APP_NUMERIC_VERSION}"
 VIAddVersionKey "ProductName" "GeoD Global"
-VIAddVersionKey "FileDescription" "GeoD Global unsigned local evaluation installer"
+VIAddVersionKey "FileDescription" "GeoD Global Windows installer"
 VIAddVersionKey "FileVersion" "${APP_VERSION}"
 VIAddVersionKey "LegalCopyright" "GeoD Global contributors"
 !define MUI_ABORTWARNING
-!define MUI_WELCOMEPAGE_TEXT "This unsigned evaluation package installs GeoD Global for the current user.$\r$\n$\r$\nMicrosoft Edge WebView2 must already be installed. This installer does not download or install prerequisites.$\r$\n$\r$\nUninstall removes packaged application files only. Your downloaded rasters, recipes, task history and preferences are retained."
+!define MUI_ICON "${APP_ICON}"
+!define MUI_UNICON "${APP_ICON}"
+!define MUI_WELCOMEPAGE_TEXT "$(WelcomeText)"
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
-!define MUI_UNCONFIRMPAGE_TEXT_TOP "Remove GeoD Global application files? Local rasters, recipes, task history, preferences and any additional files in the installation directory will be retained."
+!define MUI_UNCONFIRMPAGE_TEXT_TOP "$(RemoveText)"
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "SimpChinese"
+LangString WelcomeText ${LANG_ENGLISH} "Install GeoD Global ${APP_VERSION} for the current user.$\r$\n$\r$\nMicrosoft Edge WebView2 is required. Quit GeoD Global from the system tray before upgrading.$\r$\n$\r$\nUninstall retains your downloaded files, task history and preferences. This release candidate is unsigned."
+LangString WelcomeText ${LANG_SIMPCHINESE} "安装 GeoD Global ${APP_VERSION}，仅为当前用户安装。$\r$\n$\r$\n需要 Microsoft Edge WebView2。升级前请从系统托盘退出 GeoD Global。$\r$\n$\r$\n卸载将保留下载文件、任务历史和偏好。本发布候选尚未签名。"
+LangString RemoveText ${LANG_ENGLISH} "Remove GeoD Global application files? Downloaded files, task history, preferences and additional files in the installation directory will be retained."
+LangString RemoveText ${LANG_SIMPCHINESE} "卸载 GeoD Global 应用程序？下载文件、任务历史、偏好和安装目录中的额外文件将保留。"
 
 Function .onInit
   ${IfNot} ${RunningX64}

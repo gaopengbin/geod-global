@@ -127,6 +127,24 @@ test('project rename uses matching native and protected HTTP contracts', async (
   } finally { globalThis.fetch = previousFetch; }
 });
 
+test('SAFE preparation queues the selected raster through matching desktop and protected HTTP contracts', async () => {
+  const calls = [];
+  globalThis.window = { __TAURI__: { core: { invoke: async (command, payload) => calls.push([command, payload]) } } };
+  try {
+    await runtimeRequest('prepareProject', { id: 'project-id', assetKey: 'scl' });
+    assert.deepEqual(calls, [['prepare_project', { id: 'project-id', assetKey: 'scl' }]]);
+  } finally { delete globalThis.window; }
+  const previousFetch = globalThis.fetch;
+  globalThis.fetch = async (url, options) => { calls.push([url, options]); return { ok: true, json: async () => ({}) }; };
+  try {
+    await runtimeRequest('prepareProject', { id: 'project/id', assetKey: 'visual' });
+    assert.equal(calls[1][0], 'http://127.0.0.1:4318/projects/project%2Fid/rasters');
+    assert.equal(calls[1][1].method, 'POST');
+    assert.equal(calls[1][1].body, JSON.stringify({ assetKey: 'visual' }));
+    assert.equal(calls[1][1].headers['X-GeoD-Client'], 'geod-global');
+  } finally { globalThis.fetch = previousFetch; }
+});
+
 test('raster inspection accepts only complete pixel metadata and local PNG previews', () => {
   const fixture = rasterFixture();
   assert.equal(validateRasterInspection(fixture), fixture);
@@ -181,4 +199,28 @@ test('browser raster inspection uses the job resource route and validates its re
     assert.equal(calls[0].options.body, undefined);
     assert.ok(calls[0].options.signal instanceof AbortSignal);
   } finally { globalThis.fetch = previousFetch; }
+});
+
+test('NAIP display transport pins mode in desktop IPC and HTTP and rejects mismatched replies', async()=>{
+ const previousFetch=globalThis.fetch;
+ const bands={rgb:[1,2,3],cir:[4,1,2],nir:[4,4,4]},calls=[];
+ const data=view=>({...rasterFixture(),bandCount:4,dataType:'UInt8',crs:'EPSG:26910',nodata:null,classes:[],aerial:{product:'naip',bands:['red','green','blue','nir'],displayBands:bands[view],pixelInterpretation:'PixelIsArea'}});
+ try {
+  globalThis.window={__TAURI__:{core:{invoke:async(command,payload)=>{calls.push([command,payload]);return data(payload.aerialView||'rgb');}}}};
+  for(const aerialView of Object.keys(bands)) await runtimeRequest('raster',{id:'job/naip',aerialView});
+  assert.deepEqual(calls.map(([command,payload])=>[command,payload.aerialView]),Object.keys(bands).map(view=>['inspect_raster',view]));
+  await assert.rejects(runtimeRequest('raster',{id:'job/naip',aerialView:'ndvi'}),/Unsupported/);
+  assert.equal(calls.length,3);
+  window.__TAURI__.core.invoke=async()=>data('rgb');
+  await assert.rejects(runtimeRequest('raster',{id:'job/naip',aerialView:'cir'}),/requested channels/);
+  window.__TAURI__.core.invoke=async()=>data('cir');
+  await assert.rejects(runtimeRequest('raster',{id:'job/naip'}),/requested channels/);
+  delete globalThis.window;calls.length=0;
+  globalThis.fetch=async(url,options)=>{calls.push([url,options]);return {ok:true,json:async()=>data(new URL(url).searchParams.get('aerialView')||'rgb')};};
+  for(const aerialView of Object.keys(bands)) await runtimeRequest('raster',{id:'job/naip',aerialView});
+  assert.deepEqual(calls.map(([url])=>url),Object.keys(bands).map(view=>'http://127.0.0.1:4318/jobs/job%2Fnaip/raster?aerialView='+view));
+  assert.ok(calls.every(([,options])=>options.method==='GET' && options.body===undefined));
+  await assert.rejects(runtimeRequest('raster',{id:'job/naip',aerialView:null}),/Unsupported/);
+  assert.equal(calls.length,3);
+ } finally {delete globalThis.window;globalThis.fetch=previousFetch;}
 });

@@ -1,0 +1,51 @@
+import React from 'react';
+import {readFileSync} from 'node:fs';
+import {beforeEach,expect,it,vi} from 'vitest';
+import {render,screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {I18nProvider} from './i18n.jsx';
+import {RuntimeContext} from './runtime-context.js';
+import {DownloadAssetButton} from './runtime-ui.jsx';
+import {CatalogFilters} from './catalog-filters.jsx';
+import {ProjectsLibrary} from './projects-ui.jsx';
+import {runtimeRequest} from './runtime-client.js';
+import {normalizeScene} from './catalog.js';
+import {projectRequest} from './projects-client.js';
+vi.mock('./runtime-client.js',async original=>({...await original(),runtimeRequest:vi.fn()}));
+const scene=normalizeScene(JSON.parse(readFileSync('prototype/public/samples/naip-response.json','utf8')).features[0],'planetary-naip');
+const project={...projectRequest({scenes:[scene],bounds:scene.bbox,name:'Aerial test'}),id:'naip-project'};
+const wrap=(children,context={})=>render(<I18nProvider><RuntimeContext.Provider value={{health:{},jobs:[],projects:[project],act:vi.fn(),refresh:vi.fn(),...context}}>{children}</RuntimeContext.Provider></I18nProvider>);
+beforeEach(()=>{vi.resetAllMocks();Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:()=> 'en',setItem:vi.fn()}});});
+it('aerial filtering shows date selection and omits cloud controls',async()=>{
+ const apply=vi.fn(); wrap(<CatalogFilters initialValues={{provider:'planetary-naip',bbox:scene.bbox.join(','),start:'2022-01-01',end:'2022-12-31',cloud:NaN}} onApply={apply} onClose={vi.fn()}/>);
+ expect(screen.getByRole('button',{name:'Search start date'})).toBeTruthy();expect(screen.queryByLabelText('Live maximum cloud cover')).toBeNull();
+ await userEvent.click(screen.getByRole('button',{name:'Search catalog'}));expect(apply).toHaveBeenCalledOnce();
+});
+it('aerial download defaults to one four-band original without requiring an account',async()=>{
+ runtimeRequest.mockImplementation(async operation=>operation==='createProject'?project:{jobs:[{id:'naip-job'}]});
+ wrap(<DownloadAssetButton scene={scene} scenes={[scene]} areaBounds={project.bounds} areaName="NAIP"/>);
+ await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
+ expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('four-band');
+ expect(screen.queryByText('Manage authorization')).toBeNull();
+ await userEvent.click(screen.getByRole('button',{name:'Create project and start download'}));
+ await screen.findByRole('button',{name:'Open project'});
+ expect(runtimeRequest.mock.calls.map(([op])=>op)).toEqual(['createProject','downloadProject']);
+ expect(runtimeRequest.mock.calls[1][1].assetKey).toBe('aerial');
+});
+it('aerial projects require every original before enabling four-channel processing',async()=>{
+ runtimeRequest.mockResolvedValue([project]);wrap(<ProjectsLibrary focusedProjectId={project.id}/>);
+ await screen.findByRole('heading',{name:project.name});expect(screen.getByRole('button',{name:'Download aerial originals'})).toBeTruthy();
+ expect(screen.getByRole('button',{name:'Clip aerial imagery to project area'}).disabled).toBe(true);
+ expect(screen.queryByRole('button',{name:/Mosaic and clip|Clip true-color|Download SCL/})).toBeNull();
+ await userEvent.click(screen.getByRole('button',{name:'Review selected scenes · 1'}));
+ expect(screen.queryByText(/Cloud cover/)).toBeNull();
+});
+it('a ready aerial project submits the native aerial processing key',async()=>{
+ runtimeRequest.mockResolvedValue([project]);
+ const act=vi.fn().mockResolvedValue({id:'processing'});
+ const source={id:'original',kind:'download',status:'succeeded',assetKey:'aerial',itemId:scene.id,href:scene.assets.aerial.href,sha256:'a'.repeat(64)};
+ wrap(<ProjectsLibrary focusedProjectId={project.id}/>,{jobs:[source],act});
+ const button=await screen.findByRole('button',{name:'Clip aerial imagery to project area'});
+ expect(button.disabled).toBe(false);await userEvent.click(button);
+ expect(act).toHaveBeenCalledWith('mosaicProject',{id:project.id,assetKey:'aerial'});
+});

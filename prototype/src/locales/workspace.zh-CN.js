@@ -1,4 +1,9 @@
 export default {
+  'Layer details': '图层详情',
+  'Data attribution': '数据署名',
+  'Source link': '来源链接',
+  'File verification': '文件校验信息',
+  'Task ID': '任务编号',
   'Loading local map…': '正在加载本地地图…',
   'Local raster map workspace': '本地栅格地图工作区',
   'LOCAL RASTER MAP': '本地栅格地图',

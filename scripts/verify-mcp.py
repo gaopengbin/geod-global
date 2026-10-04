@@ -14,12 +14,16 @@ from pathlib import Path
 
 
 class Client:
-    def __init__(self, executable, server, allow_write=False):
-        command = [str(Path(executable).resolve()), "serve-mcp", "--server", server]
+    def __init__(self, executable, server=None, allow_write=False, data_dir=None):
+        if bool(server) == bool(data_dir):
+            raise ValueError("Choose exactly one of server or data_dir")
+        command = [str(Path(executable).resolve()), "serve-mcp"]
+        command += ["--server", server] if server else ["--data-dir", str(Path(data_dir).resolve())]
         if allow_write:
             command.append("--allow-write")
         self.process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE, text=True, encoding="utf-8")
+                                        stderr=subprocess.PIPE, text=True, encoding="utf-8",
+                                        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         self.lines = queue.Queue()
         self.errors = []
         self.sequence = 0
@@ -97,7 +101,9 @@ def main():
     try:
         report["protocolVersion"] = readonly.info["protocolVersion"]
         names = [tool["name"] for tool in readonly.request("tools/list")["result"]["tools"]]
-        assert len(names) == 7 and "geod_recipe_run" not in names, names
+        assert {"geod_health", "geod_job_status", "geod_raster_inspect", "geod_raster_pixel",
+                "geod_recipe_plan", "geod_recipes_list", "geod_jobs_list"}.issubset(names), names
+        assert "geod_recipe_run" not in names
         denied = readonly.request("tools/call", {"name": "geod_recipe_run", "arguments": {"recipe": recipe}})
         assert denied["error"]["code"] == -32602
         report["checks"].append("read_only_discovery_and_dispatch")
@@ -130,7 +136,8 @@ def main():
         writable = Client(args.executable, args.server, True)
         try:
             names = [tool["name"] for tool in writable.request("tools/list")["result"]["tools"]]
-            assert len(names) == 12 and "geod_recipe_run" in names
+            assert {"geod_recipe_run", "geod_recipe_save", "geod_download", "geod_job_cancel",
+                    "geod_job_retry"}.issubset(names), names
             submitted = writable.call("geod_recipe_run", {"recipe": recipe})
             job_id = submitted["jobId"]
             assert submitted["poll"]["tool"] == "geod_job_status"

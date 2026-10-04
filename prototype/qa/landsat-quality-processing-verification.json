@@ -1,0 +1,3618 @@
+{
+  "schema": "geod-landsat-quality-processing-verification/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-04T01:56:19.553Z",
+  "scope": "Real Landsat 8/9 QA_PIXEL / QA_RADSAT single and multi-scene project clipping; complete UInt16 values and independent coverage masks",
+  "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+  "nativeBinary": {
+    "path": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\runtime-459764e59a550786.exe",
+    "sha256": "459764e59a5507869170a116628416b54e749fe110660661829b0ed596c4fc0b",
+    "bytes": 50666496
+  },
+  "evidence": {
+    "native": {
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\native-2b4c8575d5659a080a789e9f4b4a722453fd05cfa183a70a1e59f0ffa939b377.json",
+      "sha256": "2b4c8575d5659a080a789e9f4b4a722453fd05cfa183a70a1e59f0ffa939b377"
+    },
+    "independent": {
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\independent-f87a7b1ce814afbfb1fcb8f63568ab7ae094a5214a153d4f48b8a97df461a180.json",
+      "sha256": "f87a7b1ce814afbfb1fcb8f63568ab7ae094a5214a153d4f48b8a97df461a180"
+    },
+    "mcp": {
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\mcp-c66586fece20328f2114a7ce0c1763083cbe9f72b0b103e1570c15fd3d9e6e98.json",
+      "sha256": "c66586fece20328f2114a7ce0c1763083cbe9f72b0b103e1570c15fd3d9e6e98"
+    },
+    "ui": {
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25.json",
+      "sha256": "2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25"
+    },
+    "cache": {
+      "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\cache-5380cd885e0b10ec44347a51155f99ff50fc2d84f62446d928e25acaaf539056.json",
+      "sha256": "5380cd885e0b10ec44347a51155f99ff50fc2d84f62446d928e25acaaf539056"
+    }
+  },
+  "catalog": {
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+    "method": "POST",
+    "body": {
+      "collections": [
+        "landsat-c2-l2"
+      ],
+      "bbox": [
+        -123.6,
+        37.6,
+        -122.2,
+        38.1
+      ],
+      "datetime": "2025-06-01T00:00:00Z/2025-06-29T23:59:59Z",
+      "limit": 100
+    },
+    "retrievedAt": "2026-10-04T01:56:19.550Z"
+  },
+  "originals": [
+    {
+      "id": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+      "itemId": "LC09_L2SP_044034_20250612_02_T1",
+      "key": "qa_pixel",
+      "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc",
+      "bytes": 1304874,
+      "dimensions": [
+        7671,
+        7791
+      ],
+      "bounds": [
+        462885.0,
+        4030485.0,
+        693015.0,
+        4264215.0
+      ],
+      "pixelInterpretation": "PixelIsPoint"
+    },
+    {
+      "id": "62916b9e-caab-4b5f-b58b-be19b841f578",
+      "itemId": "LC08_L2SP_045034_20250627_02_T1",
+      "key": "qa_pixel",
+      "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28",
+      "bytes": 1333817,
+      "dimensions": [
+        7751,
+        7881
+      ],
+      "bounds": [
+        324885.0,
+        4028985.0,
+        557415.0,
+        4265415.0
+      ],
+      "pixelInterpretation": "PixelIsPoint"
+    },
+    {
+      "id": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "qa_pixel",
+      "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f",
+      "bytes": 986984,
+      "dimensions": [
+        7671,
+        7791
+      ],
+      "bounds": [
+        462285.0,
+        4030485.0,
+        692415.0,
+        4264215.0
+      ],
+      "pixelInterpretation": "PixelIsPoint"
+    },
+    {
+      "id": "b2d80bdc-6e93-415a-b5ef-8334d0a2dedc",
+      "itemId": "LC09_L2SP_044034_20250612_02_T1",
+      "key": "qa_radsat",
+      "sha256": "ea737b96a9aed34407273614e4ee69431a7198ed171c4a89903c055773152c9c",
+      "bytes": 224824,
+      "dimensions": [
+        7671,
+        7791
+      ],
+      "bounds": [
+        462885.0,
+        4030485.0,
+        693015.0,
+        4264215.0
+      ],
+      "pixelInterpretation": "PixelIsPoint"
+    },
+    {
+      "id": "c010f59d-0ad4-4e32-bc60-a24dbcf09808",
+      "itemId": "LC08_L2SP_045034_20250627_02_T1",
+      "key": "qa_radsat",
+      "sha256": "1857c6d1f10b7f727d7c2af6c576e8693cdca21dd7e37226e34837f0f88c43ba",
+      "bytes": 230524,
+      "dimensions": [
+        7751,
+        7881
+      ],
+      "bounds": [
+        324885.0,
+        4028985.0,
+        557415.0,
+        4265415.0
+      ],
+      "pixelInterpretation": "PixelIsPoint"
+    },
+    {
+      "id": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "key": "qa_radsat",
+      "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4",
+      "bytes": 224657,
+      "dimensions": [
+        7671,
+        7791
+      ],
+      "bounds": [
+        462285.0,
+        4030485.0,
+        692415.0,
+        4264215.0
+      ],
+      "pixelInterpretation": "PixelIsPoint"
+    }
+  ],
+  "originalAcquisition": {
+    "files": 6,
+    "newNativeDownloads": 4,
+    "reusedVerifiedOriginals": 2,
+    "reuse": {
+      "sourceReceiptSha256": "b128987902b59234b5706d4a04ca0783ed2faaa558cd5d9aca40098232692734",
+      "sourceNativeBinarySha256": "33abd762af59f7feed544f20b0e1bd0f41d351cd9173f7ac0d0fcb73b644e454",
+      "originals": [
+        {
+          "id": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+          "itemId": "LC09_L2SP_044034_20250628_02_T1",
+          "assetKey": "qa_radsat",
+          "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4",
+          "bytes": 224657
+        },
+        {
+          "id": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+          "itemId": "LC09_L2SP_044034_20250628_02_T1",
+          "assetKey": "qa_pixel",
+          "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f",
+          "bytes": 986984
+        }
+      ],
+      "acquisition": "Earlier real native downloads; copies verified by complete file SHA-256"
+    }
+  },
+  "outputs": [
+    {
+      "case": "single",
+      "key": "qa_pixel",
+      "id": "4a053efe-9d0c-4e72-8b3e-17fb06a54a8c",
+      "bytes": 195522,
+      "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+      "sourcePins": {
+        "projectId": "3d9e3443-ecf8-4fbf-a533-3932ed7f23ad",
+        "assetKey": "qa_pixel",
+        "sources": [
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 3612,
+        "height": 1860,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          462285,
+          4161435,
+          570645,
+          4217235
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 4918724,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_pixel",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_pixel",
+        "layer": "QA_PIXEL",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Pixel quality flags",
+        "sampleCount": 6718320,
+        "validSampleCount": 4918724,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_PIXEL bit 0 marks fill; all other unsigned values are retained",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Fill",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                4918724,
+                1799596
+              ]
+            },
+            {
+              "name": "Dilated cloud",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                6590866,
+                127454
+              ]
+            },
+            {
+              "name": "High-confidence cirrus",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                6718319,
+                1
+              ]
+            },
+            {
+              "name": "High-confidence cloud",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                4424178,
+                2294142
+              ]
+            },
+            {
+              "name": "High-confidence cloud shadow",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                6538078,
+                180242
+              ]
+            },
+            {
+              "name": "High-confidence snow / ice",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                6718320,
+                0
+              ]
+            },
+            {
+              "name": "Clear cloud flag",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                4221192,
+                2497128
+              ]
+            },
+            {
+              "name": "Water",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                5787985,
+                930335
+              ]
+            },
+            {
+              "name": "Cloud confidence",
+              "startBit": 8,
+              "endBit": 9,
+              "counts": [
+                1799596,
+                2620144,
+                4438,
+                2294142
+              ]
+            },
+            {
+              "name": "Cloud shadow confidence",
+              "startBit": 10,
+              "endBit": 11,
+              "counts": [
+                1799596,
+                4738482,
+                0,
+                180242
+              ]
+            },
+            {
+              "name": "Snow / ice confidence",
+              "startBit": 12,
+              "endBit": 13,
+              "counts": [
+                1799596,
+                4918724,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "Cirrus confidence",
+              "startBit": 14,
+              "endBit": 15,
+              "counts": [
+                1799596,
+                4918723,
+                0,
+                1
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 4918724,
+            "uncoveredPixels": 1799596
+          }
+        }
+      },
+      "independent": {
+        "case": "single",
+        "key": "qa_pixel",
+        "jobId": "4a053efe-9d0c-4e72-8b3e-17fb06a54a8c",
+        "outputSha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+        "rawPlaneSha256": "46d87bf32e61465fa05775c83772f27a0b211872252c11c66121b1713e9fbf73",
+        "maskPlaneSha256": "0091c29d5a393e4a3b8763925788896a3e7f17954672475587b847b231508859",
+        "samplesCompared": 6718320,
+        "coverageBitsCompared": 6718320,
+        "coveredPixels": 4918724,
+        "uncoveredPixels": 1799596,
+        "maskedPixels": 0,
+        "fallbackEvents": 0,
+        "overlapEvents": 0,
+        "coveredZeroValues": 0,
+        "uncoveredZeroValues": 0,
+        "classCounts": [
+          0,
+          1499854,
+          127454,
+          2294142,
+          0,
+          105079,
+          0,
+          892195
+        ],
+        "flags": [
+          {
+            "name": "Fill",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              4918724,
+              1799596
+            ]
+          },
+          {
+            "name": "Dilated cloud",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              6590866,
+              127454
+            ]
+          },
+          {
+            "name": "High-confidence cirrus",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              6718319,
+              1
+            ]
+          },
+          {
+            "name": "High-confidence cloud",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              4424178,
+              2294142
+            ]
+          },
+          {
+            "name": "High-confidence cloud shadow",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              6538078,
+              180242
+            ]
+          },
+          {
+            "name": "High-confidence snow / ice",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              6718320,
+              0
+            ]
+          },
+          {
+            "name": "Clear cloud flag",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              4221192,
+              2497128
+            ]
+          },
+          {
+            "name": "Water",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              5787985,
+              930335
+            ]
+          },
+          {
+            "name": "Cloud confidence",
+            "startBit": 8,
+            "endBit": 9,
+            "counts": [
+              1799596,
+              2620144,
+              4438,
+              2294142
+            ]
+          },
+          {
+            "name": "Cloud shadow confidence",
+            "startBit": 10,
+            "endBit": 11,
+            "counts": [
+              1799596,
+              4738482,
+              0,
+              180242
+            ]
+          },
+          {
+            "name": "Snow / ice confidence",
+            "startBit": 12,
+            "endBit": 13,
+            "counts": [
+              1799596,
+              4918724,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Cirrus confidence",
+            "startBit": 14,
+            "endBit": 15,
+            "counts": [
+              1799596,
+              4918723,
+              0,
+              1
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "9c2b553d80de5fa6040a873ba4954c12b4ffbf485fecb66ba08f762e12d25e26",
+          "rgbaSha256": "48c9f7aeef2c5ea6cb998a3566aa0eec6f2cb1859de805c9c182bc16019b4b39"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 13120,
+          "pngSha256": "09450d9eba870225ccb1c23ce238bfb5fc7d620a52fe60ba7bc54352ab8a047d",
+          "rgbaSha256": "63f8df45bb1c222abda75482bd4e7b470caf210a006b2588cf291ab69be74061"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "single",
+      "key": "qa_radsat",
+      "id": "ebe07d25-6a11-4376-938c-e3828d6c6f49",
+      "bytes": 19578,
+      "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+      "sourcePins": {
+        "projectId": "3d9e3443-ecf8-4fbf-a533-3932ed7f23ad",
+        "assetKey": "qa_radsat",
+        "sources": [
+          {
+            "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+            "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+          }
+        ],
+        "coverageSources": [
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 3612,
+        "height": 1860,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          462285,
+          4161435,
+          570645,
+          4217235
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 4918724,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_radsat",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_radsat",
+        "layer": "QA_RADSAT",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Saturation and terrain flags",
+        "sampleCount": 6718320,
+        "validSampleCount": 4918724,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_RADSAT has no fill flag; zero means no saturation or terrain occlusion flags",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Band 1 saturation",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                6718319,
+                1
+              ]
+            },
+            {
+              "name": "Band 2 saturation",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                6718319,
+                1
+              ]
+            },
+            {
+              "name": "Band 3 saturation",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                6718318,
+                2
+              ]
+            },
+            {
+              "name": "Band 4 saturation",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                6718318,
+                2
+              ]
+            },
+            {
+              "name": "Band 5 saturation",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                6718311,
+                9
+              ]
+            },
+            {
+              "name": "Band 6 saturation",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                6718293,
+                27
+              ]
+            },
+            {
+              "name": "Band 7 saturation",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                6718295,
+                25
+              ]
+            },
+            {
+              "name": "Unused bit 7",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                6718320,
+                0
+              ]
+            },
+            {
+              "name": "Band 9 saturation",
+              "startBit": 8,
+              "endBit": 8,
+              "counts": [
+                6718320,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 9",
+              "startBit": 9,
+              "endBit": 9,
+              "counts": [
+                6718320,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 10",
+              "startBit": 10,
+              "endBit": 10,
+              "counts": [
+                6718320,
+                0
+              ]
+            },
+            {
+              "name": "Terrain occlusion",
+              "startBit": 11,
+              "endBit": 11,
+              "counts": [
+                6718320,
+                0
+              ]
+            },
+            {
+              "name": "Unused bits 12–15",
+              "startBit": 12,
+              "endBit": 15,
+              "counts": [
+                6718320,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 4918724,
+            "uncoveredPixels": 1799596
+          }
+        }
+      },
+      "independent": {
+        "case": "single",
+        "key": "qa_radsat",
+        "jobId": "ebe07d25-6a11-4376-938c-e3828d6c6f49",
+        "outputSha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+        "rawPlaneSha256": "e1ced50d909085df579cd0a1bfdd8bd5e6cca7690111395f14b11373af2e52f6",
+        "maskPlaneSha256": "0091c29d5a393e4a3b8763925788896a3e7f17954672475587b847b231508859",
+        "samplesCompared": 6718320,
+        "coverageBitsCompared": 6718320,
+        "coveredPixels": 4918724,
+        "uncoveredPixels": 1799596,
+        "maskedPixels": 0,
+        "fallbackEvents": 0,
+        "overlapEvents": 0,
+        "coveredZeroValues": 4918696,
+        "uncoveredZeroValues": 1799596,
+        "classCounts": [
+          4918696,
+          2,
+          26,
+          0,
+          0
+        ],
+        "flags": [
+          {
+            "name": "Band 1 saturation",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              6718319,
+              1
+            ]
+          },
+          {
+            "name": "Band 2 saturation",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              6718319,
+              1
+            ]
+          },
+          {
+            "name": "Band 3 saturation",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              6718318,
+              2
+            ]
+          },
+          {
+            "name": "Band 4 saturation",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              6718318,
+              2
+            ]
+          },
+          {
+            "name": "Band 5 saturation",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              6718311,
+              9
+            ]
+          },
+          {
+            "name": "Band 6 saturation",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              6718293,
+              27
+            ]
+          },
+          {
+            "name": "Band 7 saturation",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              6718295,
+              25
+            ]
+          },
+          {
+            "name": "Unused bit 7",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              6718320,
+              0
+            ]
+          },
+          {
+            "name": "Band 9 saturation",
+            "startBit": 8,
+            "endBit": 8,
+            "counts": [
+              6718320,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 9",
+            "startBit": 9,
+            "endBit": 9,
+            "counts": [
+              6718320,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 10",
+            "startBit": 10,
+            "endBit": 10,
+            "counts": [
+              6718320,
+              0
+            ]
+          },
+          {
+            "name": "Terrain occlusion",
+            "startBit": 11,
+            "endBit": 11,
+            "counts": [
+              6718320,
+              0
+            ]
+          },
+          {
+            "name": "Unused bits 12–15",
+            "startBit": 12,
+            "endBit": 15,
+            "counts": [
+              6718320,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 303360,
+          "pngSha256": "0393f8d847dd16e869588aa55ee4e322a78c9e6b80b02943cb8eaa6b77d94c5a",
+          "rgbaSha256": "9ed7cf6b59b73bf654271f79aa7b05ac9736cbe4afdf2234e5a09da9b31eb8a7"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 13120,
+          "pngSha256": "e2c3588b4c6883f8bc4756c84892181fdf1cd11678a9fb91ee5a18772309330f",
+          "rgbaSha256": "cab1c1eb940524bc4571de99d9219e4274046511171d3779fb3b782a2109ce8e"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "mosaic",
+      "key": "qa_pixel",
+      "id": "e87dfdce-4845-42e2-bc9c-e4badd10bc6f",
+      "bytes": 395973,
+      "sha256": "b07acaf14e1c7ac8cfea88411479e274f92d919f47b90a6f2bed5cebfe5c82ef",
+      "sourcePins": {
+        "projectId": "3d985bea-6e7b-4c57-bf3d-2a4050924cf1",
+        "assetKey": "qa_pixel",
+        "sources": [
+          {
+            "jobId": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+            "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc"
+          },
+          {
+            "jobId": "62916b9e-caab-4b5f-b58b-be19b841f578",
+            "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28"
+          },
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 4121,
+        "height": 1860,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          447015,
+          4161435,
+          570645,
+          4217235
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 3,
+        "maskedPixels": 0,
+        "coveredPixels": 7665060,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_pixel",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_pixel",
+        "layer": "QA_PIXEL",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Pixel quality flags",
+        "sampleCount": 7665060,
+        "validSampleCount": 7665060,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_PIXEL bit 0 marks fill; all other unsigned values are retained",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Fill",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Dilated cloud",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                7285842,
+                379218
+              ]
+            },
+            {
+              "name": "High-confidence cirrus",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                7665059,
+                1
+              ]
+            },
+            {
+              "name": "High-confidence cloud",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                3372862,
+                4292198
+              ]
+            },
+            {
+              "name": "High-confidence cloud shadow",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                7046459,
+                618601
+              ]
+            },
+            {
+              "name": "High-confidence snow / ice",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Clear cloud flag",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                4671416,
+                2993644
+              ]
+            },
+            {
+              "name": "Water",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                6424804,
+                1240256
+              ]
+            },
+            {
+              "name": "Cloud confidence",
+              "startBit": 8,
+              "endBit": 9,
+              "counts": [
+                0,
+                3262713,
+                110149,
+                4292198
+              ]
+            },
+            {
+              "name": "Cloud shadow confidence",
+              "startBit": 10,
+              "endBit": 11,
+              "counts": [
+                0,
+                7046459,
+                0,
+                618601
+              ]
+            },
+            {
+              "name": "Snow / ice confidence",
+              "startBit": 12,
+              "endBit": 13,
+              "counts": [
+                0,
+                7665060,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "Cirrus confidence",
+              "startBit": 14,
+              "endBit": 15,
+              "counts": [
+                0,
+                7665059,
+                0,
+                1
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 7665060,
+            "uncoveredPixels": 0
+          }
+        }
+      },
+      "independent": {
+        "case": "mosaic",
+        "key": "qa_pixel",
+        "jobId": "e87dfdce-4845-42e2-bc9c-e4badd10bc6f",
+        "outputSha256": "b07acaf14e1c7ac8cfea88411479e274f92d919f47b90a6f2bed5cebfe5c82ef",
+        "rawPlaneSha256": "4899b1a1207d004ae4be8acd0c05e17becca317166cb3509fd006de90c5c85eb",
+        "maskPlaneSha256": "7ecfc36176dc2d721c4c6f1aeae325708f5b70f7badde697a6fe17525374024e",
+        "samplesCompared": 7665060,
+        "coverageBitsCompared": 7665060,
+        "coveredPixels": 7665060,
+        "uncoveredPixels": 0,
+        "maskedPixels": 0,
+        "fallbackEvents": 2440968,
+        "overlapEvents": 8342262,
+        "coveredZeroValues": 0,
+        "uncoveredZeroValues": 0,
+        "classCounts": [
+          0,
+          1499854,
+          379218,
+          4292198,
+          0,
+          339152,
+          0,
+          1154638
+        ],
+        "flags": [
+          {
+            "name": "Fill",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Dilated cloud",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              7285842,
+              379218
+            ]
+          },
+          {
+            "name": "High-confidence cirrus",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              7665059,
+              1
+            ]
+          },
+          {
+            "name": "High-confidence cloud",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              3372862,
+              4292198
+            ]
+          },
+          {
+            "name": "High-confidence cloud shadow",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              7046459,
+              618601
+            ]
+          },
+          {
+            "name": "High-confidence snow / ice",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Clear cloud flag",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              4671416,
+              2993644
+            ]
+          },
+          {
+            "name": "Water",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              6424804,
+              1240256
+            ]
+          },
+          {
+            "name": "Cloud confidence",
+            "startBit": 8,
+            "endBit": 9,
+            "counts": [
+              0,
+              3262713,
+              110149,
+              4292198
+            ]
+          },
+          {
+            "name": "Cloud shadow confidence",
+            "startBit": 10,
+            "endBit": 11,
+            "counts": [
+              0,
+              7046459,
+              0,
+              618601
+            ]
+          },
+          {
+            "name": "Snow / ice confidence",
+            "startBit": 12,
+            "endBit": 13,
+            "counts": [
+              0,
+              7665060,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Cirrus confidence",
+            "startBit": 14,
+            "endBit": 15,
+            "counts": [
+              0,
+              7665059,
+              0,
+              1
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 265728,
+          "pngSha256": "e94c8700d1aca861ae57cbd02dca615f7b7274ea4e2015635b2eabdcf47b5472",
+          "rgbaSha256": "48c5238fa2fb6aa8435689d58d84368ebb8ef821adb8d75642b9f0bac7de3870"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 11520,
+          "pngSha256": "e69982aaf100150e0df98735d13cccc232b80df75be5765fd65b8e82242f7d08",
+          "rgbaSha256": "d9aae8844a35c6b636dbe626bcfc94b60a0928957d80c7abfd657959e8a7a80a"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "mosaic",
+      "key": "qa_radsat",
+      "id": "7549545a-46cf-476d-9c0e-5a2e291ec446",
+      "bytes": 19049,
+      "sha256": "a616556e81650744cba1c8511d228ce24117cf39687ea8fb4ab762e052e6ee54",
+      "sourcePins": {
+        "projectId": "3d985bea-6e7b-4c57-bf3d-2a4050924cf1",
+        "assetKey": "qa_radsat",
+        "sources": [
+          {
+            "jobId": "b2d80bdc-6e93-415a-b5ef-8334d0a2dedc",
+            "sha256": "ea737b96a9aed34407273614e4ee69431a7198ed171c4a89903c055773152c9c"
+          },
+          {
+            "jobId": "c010f59d-0ad4-4e32-bc60-a24dbcf09808",
+            "sha256": "1857c6d1f10b7f727d7c2af6c576e8693cdca21dd7e37226e34837f0f88c43ba"
+          },
+          {
+            "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+            "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+          }
+        ],
+        "coverageSources": [
+          {
+            "jobId": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+            "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc"
+          },
+          {
+            "jobId": "62916b9e-caab-4b5f-b58b-be19b841f578",
+            "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28"
+          },
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 4121,
+        "height": 1860,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          447015,
+          4161435,
+          570645,
+          4217235
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 3,
+        "maskedPixels": 0,
+        "coveredPixels": 7665060,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_radsat",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_radsat",
+        "layer": "QA_RADSAT",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Saturation and terrain flags",
+        "sampleCount": 7665060,
+        "validSampleCount": 7665060,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_RADSAT has no fill flag; zero means no saturation or terrain occlusion flags",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Band 1 saturation",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                7665059,
+                1
+              ]
+            },
+            {
+              "name": "Band 2 saturation",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                7665059,
+                1
+              ]
+            },
+            {
+              "name": "Band 3 saturation",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                7665058,
+                2
+              ]
+            },
+            {
+              "name": "Band 4 saturation",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                7665058,
+                2
+              ]
+            },
+            {
+              "name": "Band 5 saturation",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                7665051,
+                9
+              ]
+            },
+            {
+              "name": "Band 6 saturation",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                7665033,
+                27
+              ]
+            },
+            {
+              "name": "Band 7 saturation",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                7665035,
+                25
+              ]
+            },
+            {
+              "name": "Unused bit 7",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Band 9 saturation",
+              "startBit": 8,
+              "endBit": 8,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 9",
+              "startBit": 9,
+              "endBit": 9,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 10",
+              "startBit": 10,
+              "endBit": 10,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Terrain occlusion",
+              "startBit": 11,
+              "endBit": 11,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Unused bits 12–15",
+              "startBit": 12,
+              "endBit": 15,
+              "counts": [
+                7665060,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 7665060,
+            "uncoveredPixels": 0
+          }
+        }
+      },
+      "independent": {
+        "case": "mosaic",
+        "key": "qa_radsat",
+        "jobId": "7549545a-46cf-476d-9c0e-5a2e291ec446",
+        "outputSha256": "a616556e81650744cba1c8511d228ce24117cf39687ea8fb4ab762e052e6ee54",
+        "rawPlaneSha256": "bb099df1d76ebd1a58644602e9cddbfd5fc2f06943a852e0298149dbfc7b28e0",
+        "maskPlaneSha256": "7ecfc36176dc2d721c4c6f1aeae325708f5b70f7badde697a6fe17525374024e",
+        "samplesCompared": 7665060,
+        "coverageBitsCompared": 7665060,
+        "coveredPixels": 7665060,
+        "uncoveredPixels": 0,
+        "maskedPixels": 0,
+        "fallbackEvents": 2440968,
+        "overlapEvents": 8342262,
+        "coveredZeroValues": 7665032,
+        "uncoveredZeroValues": 0,
+        "classCounts": [
+          7665032,
+          2,
+          26,
+          0,
+          0
+        ],
+        "flags": [
+          {
+            "name": "Band 1 saturation",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              7665059,
+              1
+            ]
+          },
+          {
+            "name": "Band 2 saturation",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              7665059,
+              1
+            ]
+          },
+          {
+            "name": "Band 3 saturation",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              7665058,
+              2
+            ]
+          },
+          {
+            "name": "Band 4 saturation",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              7665058,
+              2
+            ]
+          },
+          {
+            "name": "Band 5 saturation",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              7665051,
+              9
+            ]
+          },
+          {
+            "name": "Band 6 saturation",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              7665033,
+              27
+            ]
+          },
+          {
+            "name": "Band 7 saturation",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              7665035,
+              25
+            ]
+          },
+          {
+            "name": "Unused bit 7",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Band 9 saturation",
+            "startBit": 8,
+            "endBit": 8,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 9",
+            "startBit": 9,
+            "endBit": 9,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 10",
+            "startBit": 10,
+            "endBit": 10,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Terrain occlusion",
+            "startBit": 11,
+            "endBit": 11,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Unused bits 12–15",
+            "startBit": 12,
+            "endBit": 15,
+            "counts": [
+              7665060,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 265728,
+          "pngSha256": "98cba5ca6f42f3df40993091aefb11325315e462377bbb1f079cb823f51ee45a",
+          "rgbaSha256": "691242ccf2bf78cf4cfc9fb8d5236cdfb00ff3f9ce8889e08a83a6850194d925"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 11520,
+          "pngSha256": "19ead3e982b939fb9ac4ce05c9c672aeaddc9c1fb5dbccad9d81e10c4d34d53c",
+          "rgbaSha256": "538eec1e4f63640ebb6e8a31255855f39b7de59e9f99d69afae38d2d7fbc86fb"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "polygon",
+      "key": "qa_pixel",
+      "id": "3477c81d-0ecb-4d95-88df-4dba36ec89e7",
+      "bytes": 391928,
+      "sha256": "e84fae18ec6e8782209371c393c2be49e70de0d7a4e31f122a187ff493b0c8bb",
+      "sourcePins": {
+        "projectId": "bfb02c0f-2260-459d-afcd-d543a8283437",
+        "assetKey": "qa_pixel",
+        "sources": [
+          {
+            "jobId": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+            "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc"
+          },
+          {
+            "jobId": "62916b9e-caab-4b5f-b58b-be19b841f578",
+            "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28"
+          },
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 4121,
+        "height": 1860,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          447015,
+          4161435,
+          570645,
+          4217235
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 3,
+        "maskedPixels": 294454,
+        "coveredPixels": 7370606,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_pixel",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_pixel",
+        "layer": "QA_PIXEL",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Pixel quality flags",
+        "sampleCount": 7665060,
+        "validSampleCount": 7370606,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_PIXEL bit 0 marks fill; all other unsigned values are retained",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Fill",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                7370606,
+                294454
+              ]
+            },
+            {
+              "name": "Dilated cloud",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                7293100,
+                371960
+              ]
+            },
+            {
+              "name": "High-confidence cirrus",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                7665059,
+                1
+              ]
+            },
+            {
+              "name": "High-confidence cloud",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                3600804,
+                4064256
+              ]
+            },
+            {
+              "name": "High-confidence cloud shadow",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                7062496,
+                602564
+              ]
+            },
+            {
+              "name": "High-confidence snow / ice",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Clear cloud flag",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                4730670,
+                2934390
+              ]
+            },
+            {
+              "name": "Water",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                6444681,
+                1220379
+              ]
+            },
+            {
+              "name": "Cloud confidence",
+              "startBit": 8,
+              "endBit": 9,
+              "counts": [
+                294454,
+                3197735,
+                108615,
+                4064256
+              ]
+            },
+            {
+              "name": "Cloud shadow confidence",
+              "startBit": 10,
+              "endBit": 11,
+              "counts": [
+                294454,
+                6768042,
+                0,
+                602564
+              ]
+            },
+            {
+              "name": "Snow / ice confidence",
+              "startBit": 12,
+              "endBit": 13,
+              "counts": [
+                294454,
+                7370606,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "Cirrus confidence",
+              "startBit": 14,
+              "endBit": 15,
+              "counts": [
+                294454,
+                7370605,
+                0,
+                1
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 7370606,
+            "uncoveredPixels": 294454
+          }
+        }
+      },
+      "independent": {
+        "case": "polygon",
+        "key": "qa_pixel",
+        "jobId": "3477c81d-0ecb-4d95-88df-4dba36ec89e7",
+        "outputSha256": "e84fae18ec6e8782209371c393c2be49e70de0d7a4e31f122a187ff493b0c8bb",
+        "rawPlaneSha256": "a5f937df933121716fdb9fb3053bce1a1e015495ed586b58ec9003f4a2aab8eb",
+        "maskPlaneSha256": "e8ee9b00542253865899005d961cfd6079d27677c3831ec25e66355abf4938f6",
+        "samplesCompared": 7665060,
+        "coverageBitsCompared": 7665060,
+        "coveredPixels": 7370606,
+        "uncoveredPixels": 294454,
+        "maskedPixels": 294454,
+        "fallbackEvents": 2440968,
+        "overlapEvents": 8342262,
+        "coveredZeroValues": 0,
+        "uncoveredZeroValues": 0,
+        "classCounts": [
+          0,
+          1469337,
+          371960,
+          4064256,
+          0,
+          328717,
+          0,
+          1136336
+        ],
+        "flags": [
+          {
+            "name": "Fill",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              7370606,
+              294454
+            ]
+          },
+          {
+            "name": "Dilated cloud",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              7293100,
+              371960
+            ]
+          },
+          {
+            "name": "High-confidence cirrus",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              7665059,
+              1
+            ]
+          },
+          {
+            "name": "High-confidence cloud",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              3600804,
+              4064256
+            ]
+          },
+          {
+            "name": "High-confidence cloud shadow",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              7062496,
+              602564
+            ]
+          },
+          {
+            "name": "High-confidence snow / ice",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Clear cloud flag",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              4730670,
+              2934390
+            ]
+          },
+          {
+            "name": "Water",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              6444681,
+              1220379
+            ]
+          },
+          {
+            "name": "Cloud confidence",
+            "startBit": 8,
+            "endBit": 9,
+            "counts": [
+              294454,
+              3197735,
+              108615,
+              4064256
+            ]
+          },
+          {
+            "name": "Cloud shadow confidence",
+            "startBit": 10,
+            "endBit": 11,
+            "counts": [
+              294454,
+              6768042,
+              0,
+              602564
+            ]
+          },
+          {
+            "name": "Snow / ice confidence",
+            "startBit": 12,
+            "endBit": 13,
+            "counts": [
+              294454,
+              7370606,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Cirrus confidence",
+            "startBit": 14,
+            "endBit": 15,
+            "counts": [
+              294454,
+              7370605,
+              0,
+              1
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 265728,
+          "pngSha256": "a686e3f5de4b2c20149bdca7564cdb0adb6b1926650438a8cb090c836643b8b2",
+          "rgbaSha256": "38242abaaf1ac300a96a7d11c6f7ff4a1ec980f534711940ff79537c22a41f0d"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 11520,
+          "pngSha256": "54cacec6c4e37cd2c411aa2ee86277d60eafdc1f7db7b32d7ecc847727569502",
+          "rgbaSha256": "ca5914084049a9b54299f80e3e21d46f779879139702621d6eff0c3bb2898db8"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "polygon",
+      "key": "qa_radsat",
+      "id": "b1c7c38a-e6da-4ed8-a82c-468a93cfeae7",
+      "bytes": 19380,
+      "sha256": "63374819803f04f719b0ae3b7ba38587d01dfcffab62dedc99b52ee5cab07a15",
+      "sourcePins": {
+        "projectId": "bfb02c0f-2260-459d-afcd-d543a8283437",
+        "assetKey": "qa_radsat",
+        "sources": [
+          {
+            "jobId": "b2d80bdc-6e93-415a-b5ef-8334d0a2dedc",
+            "sha256": "ea737b96a9aed34407273614e4ee69431a7198ed171c4a89903c055773152c9c"
+          },
+          {
+            "jobId": "c010f59d-0ad4-4e32-bc60-a24dbcf09808",
+            "sha256": "1857c6d1f10b7f727d7c2af6c576e8693cdca21dd7e37226e34837f0f88c43ba"
+          },
+          {
+            "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+            "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+          }
+        ],
+        "coverageSources": [
+          {
+            "jobId": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+            "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc"
+          },
+          {
+            "jobId": "62916b9e-caab-4b5f-b58b-be19b841f578",
+            "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28"
+          },
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 4121,
+        "height": 1860,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          447015,
+          4161435,
+          570645,
+          4217235
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 3,
+        "maskedPixels": 294454,
+        "coveredPixels": 7370606,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_radsat",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_radsat",
+        "layer": "QA_RADSAT",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Saturation and terrain flags",
+        "sampleCount": 7665060,
+        "validSampleCount": 7370606,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_RADSAT has no fill flag; zero means no saturation or terrain occlusion flags",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Band 1 saturation",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                7665059,
+                1
+              ]
+            },
+            {
+              "name": "Band 2 saturation",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                7665059,
+                1
+              ]
+            },
+            {
+              "name": "Band 3 saturation",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                7665058,
+                2
+              ]
+            },
+            {
+              "name": "Band 4 saturation",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                7665058,
+                2
+              ]
+            },
+            {
+              "name": "Band 5 saturation",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                7665051,
+                9
+              ]
+            },
+            {
+              "name": "Band 6 saturation",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                7665033,
+                27
+              ]
+            },
+            {
+              "name": "Band 7 saturation",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                7665035,
+                25
+              ]
+            },
+            {
+              "name": "Unused bit 7",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Band 9 saturation",
+              "startBit": 8,
+              "endBit": 8,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 9",
+              "startBit": 9,
+              "endBit": 9,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 10",
+              "startBit": 10,
+              "endBit": 10,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Terrain occlusion",
+              "startBit": 11,
+              "endBit": 11,
+              "counts": [
+                7665060,
+                0
+              ]
+            },
+            {
+              "name": "Unused bits 12–15",
+              "startBit": 12,
+              "endBit": 15,
+              "counts": [
+                7665060,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 7370606,
+            "uncoveredPixels": 294454
+          }
+        }
+      },
+      "independent": {
+        "case": "polygon",
+        "key": "qa_radsat",
+        "jobId": "b1c7c38a-e6da-4ed8-a82c-468a93cfeae7",
+        "outputSha256": "63374819803f04f719b0ae3b7ba38587d01dfcffab62dedc99b52ee5cab07a15",
+        "rawPlaneSha256": "bb099df1d76ebd1a58644602e9cddbfd5fc2f06943a852e0298149dbfc7b28e0",
+        "maskPlaneSha256": "e8ee9b00542253865899005d961cfd6079d27677c3831ec25e66355abf4938f6",
+        "samplesCompared": 7665060,
+        "coverageBitsCompared": 7665060,
+        "coveredPixels": 7370606,
+        "uncoveredPixels": 294454,
+        "maskedPixels": 294454,
+        "fallbackEvents": 2440968,
+        "overlapEvents": 8342262,
+        "coveredZeroValues": 7370578,
+        "uncoveredZeroValues": 294454,
+        "classCounts": [
+          7370578,
+          2,
+          26,
+          0,
+          0
+        ],
+        "flags": [
+          {
+            "name": "Band 1 saturation",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              7665059,
+              1
+            ]
+          },
+          {
+            "name": "Band 2 saturation",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              7665059,
+              1
+            ]
+          },
+          {
+            "name": "Band 3 saturation",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              7665058,
+              2
+            ]
+          },
+          {
+            "name": "Band 4 saturation",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              7665058,
+              2
+            ]
+          },
+          {
+            "name": "Band 5 saturation",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              7665051,
+              9
+            ]
+          },
+          {
+            "name": "Band 6 saturation",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              7665033,
+              27
+            ]
+          },
+          {
+            "name": "Band 7 saturation",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              7665035,
+              25
+            ]
+          },
+          {
+            "name": "Unused bit 7",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Band 9 saturation",
+            "startBit": 8,
+            "endBit": 8,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 9",
+            "startBit": 9,
+            "endBit": 9,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 10",
+            "startBit": 10,
+            "endBit": 10,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Terrain occlusion",
+            "startBit": 11,
+            "endBit": 11,
+            "counts": [
+              7665060,
+              0
+            ]
+          },
+          {
+            "name": "Unused bits 12–15",
+            "startBit": 12,
+            "endBit": 15,
+            "counts": [
+              7665060,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 265728,
+          "pngSha256": "45846b3838a20ee55391f6bd5333a74dcd863e2a390632ba8b2893c8dc4280c9",
+          "rgbaSha256": "17d4f2678062c14508bcdb6133627080808567615e8dfefd1264b1840f8a924c"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 11520,
+          "pngSha256": "4dc80ebaf109cdd71135bbacd3e6cdbfbd85fa5f20e7460b8562f509bb31ddaa",
+          "rgbaSha256": "ec7bd89440ff7800c05753aa689a3ebecdccea712e00aa01d007e6dfa1e59ac1"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "large",
+      "key": "qa_pixel",
+      "id": "be481e59-2147-4ea4-9ad4-8d0e8875f949",
+      "bytes": 497049,
+      "sha256": "f055a0ebc3e19e8a923c611496b6666aa993a878ea4259bed6b9c00c40071df1",
+      "sourcePins": {
+        "projectId": "cccfa211-8a3e-4336-a0fc-5b13e62bdf1a",
+        "assetKey": "qa_pixel",
+        "sources": [
+          {
+            "jobId": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+            "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc"
+          },
+          {
+            "jobId": "62916b9e-caab-4b5f-b58b-be19b841f578",
+            "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28"
+          },
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 4126,
+        "height": 2415,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          446955,
+          4150335,
+          570735,
+          4222785
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 3,
+        "maskedPixels": 0,
+        "coveredPixels": 9964290,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_pixel",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_pixel",
+        "layer": "QA_PIXEL",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Pixel quality flags",
+        "sampleCount": 9964290,
+        "validSampleCount": 9964290,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_PIXEL bit 0 marks fill; all other unsigned values are retained",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Fill",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Dilated cloud",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                9498267,
+                466023
+              ]
+            },
+            {
+              "name": "High-confidence cirrus",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                9964289,
+                1
+              ]
+            },
+            {
+              "name": "High-confidence cloud",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                4423883,
+                5540407
+              ]
+            },
+            {
+              "name": "High-confidence cloud shadow",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                9208599,
+                755691
+              ]
+            },
+            {
+              "name": "High-confidence snow / ice",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Clear cloud flag",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                6006430,
+                3957860
+              ]
+            },
+            {
+              "name": "Water",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                8443368,
+                1520922
+              ]
+            },
+            {
+              "name": "Cloud confidence",
+              "startBit": 8,
+              "endBit": 9,
+              "counts": [
+                0,
+                4285463,
+                138420,
+                5540407
+              ]
+            },
+            {
+              "name": "Cloud shadow confidence",
+              "startBit": 10,
+              "endBit": 11,
+              "counts": [
+                0,
+                9208599,
+                0,
+                755691
+              ]
+            },
+            {
+              "name": "Snow / ice confidence",
+              "startBit": 12,
+              "endBit": 13,
+              "counts": [
+                0,
+                9964290,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "Cirrus confidence",
+              "startBit": 14,
+              "endBit": 15,
+              "counts": [
+                0,
+                9964289,
+                0,
+                1
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 9964290,
+            "uncoveredPixels": 0
+          }
+        }
+      },
+      "independent": {
+        "case": "large",
+        "key": "qa_pixel",
+        "jobId": "be481e59-2147-4ea4-9ad4-8d0e8875f949",
+        "outputSha256": "f055a0ebc3e19e8a923c611496b6666aa993a878ea4259bed6b9c00c40071df1",
+        "rawPlaneSha256": "5a1756e0af285d2e969d68aebc410c3f66557947e8a4d428ff2e6df1374063d6",
+        "maskPlaneSha256": "f4be3dc3479cab0ad60ca9dfe34047d65b6e7b744d2e7c254bc4fadef05c2fbf",
+        "samplesCompared": 9964290,
+        "coverageBitsCompared": 9964290,
+        "coveredPixels": 9964290,
+        "uncoveredPixels": 0,
+        "maskedPixels": 0,
+        "fallbackEvents": 3183938,
+        "overlapEvents": 10875247,
+        "coveredZeroValues": 0,
+        "uncoveredZeroValues": 0,
+        "classCounts": [
+          0,
+          2129159,
+          466023,
+          5540407,
+          0,
+          410168,
+          0,
+          1418533
+        ],
+        "flags": [
+          {
+            "name": "Fill",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Dilated cloud",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              9498267,
+              466023
+            ]
+          },
+          {
+            "name": "High-confidence cirrus",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              9964289,
+              1
+            ]
+          },
+          {
+            "name": "High-confidence cloud",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              4423883,
+              5540407
+            ]
+          },
+          {
+            "name": "High-confidence cloud shadow",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              9208599,
+              755691
+            ]
+          },
+          {
+            "name": "High-confidence snow / ice",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Clear cloud flag",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              6006430,
+              3957860
+            ]
+          },
+          {
+            "name": "Water",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              8443368,
+              1520922
+            ]
+          },
+          {
+            "name": "Cloud confidence",
+            "startBit": 8,
+            "endBit": 9,
+            "counts": [
+              0,
+              4285463,
+              138420,
+              5540407
+            ]
+          },
+          {
+            "name": "Cloud shadow confidence",
+            "startBit": 10,
+            "endBit": 11,
+            "counts": [
+              0,
+              9208599,
+              0,
+              755691
+            ]
+          },
+          {
+            "name": "Snow / ice confidence",
+            "startBit": 12,
+            "endBit": 13,
+            "counts": [
+              0,
+              9964290,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Cirrus confidence",
+            "startBit": 14,
+            "endBit": 15,
+            "counts": [
+              0,
+              9964289,
+              0,
+              1
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 344832,
+          "pngSha256": "d34c01bd6d286a9921b0c8da73bf8708a4b8a787b024dd306f55bf1865da256e",
+          "rgbaSha256": "eb32939f6861ada9450712172e286bf6049c2a2cdad1e611bee730f7fa45b9e6"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 14880,
+          "pngSha256": "893adeb2e83c820854f0665277eb0847603f32867e09f725d7f810d9932bc63f",
+          "rgbaSha256": "daf2ca8ca1a605b3cbdc8a1ecd630808152fb3edd677c9f3505331d0b2b998e4"
+        },
+        "rawSamplesCompared": 9
+      }
+    },
+    {
+      "case": "large",
+      "key": "qa_radsat",
+      "id": "e436b1cc-8aa1-4e76-bea6-2df4a49e1a0c",
+      "bytes": 24517,
+      "sha256": "4d62a9f4e3a241972c21d7f190ef64ebf1a5730a131850850f366a6150adef7f",
+      "sourcePins": {
+        "projectId": "cccfa211-8a3e-4336-a0fc-5b13e62bdf1a",
+        "assetKey": "qa_radsat",
+        "sources": [
+          {
+            "jobId": "b2d80bdc-6e93-415a-b5ef-8334d0a2dedc",
+            "sha256": "ea737b96a9aed34407273614e4ee69431a7198ed171c4a89903c055773152c9c"
+          },
+          {
+            "jobId": "c010f59d-0ad4-4e32-bc60-a24dbcf09808",
+            "sha256": "1857c6d1f10b7f727d7c2af6c576e8693cdca21dd7e37226e34837f0f88c43ba"
+          },
+          {
+            "jobId": "7397b688-dd85-4ee2-b163-49a1edef5c09",
+            "sha256": "b2e4ec6b6594effe5ac166c877de41eabd93fdbb028914a8cc788b27bab916f4"
+          }
+        ],
+        "coverageSources": [
+          {
+            "jobId": "8d8141ad-88f1-443d-be1e-8bd2083d352a",
+            "sha256": "2d30f3727bccafbaad3538e4bb998eee880867430c673b0622c0d942d5363fdc"
+          },
+          {
+            "jobId": "62916b9e-caab-4b5f-b58b-be19b841f578",
+            "sha256": "be1fc2d7fc647f214e1521df326f2dcff3035cd0c1dc937045e6f9286cbe1e28"
+          },
+          {
+            "jobId": "b9267819-3eb1-4cf3-83c3-ec5f7acb84d6",
+            "sha256": "c56b8eba5bc5df6442892663eed5b7d3bf84915dde2c009aa6386fb8b7c50f2f"
+          }
+        ]
+      },
+      "plan": {
+        "width": 4126,
+        "height": 2415,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          446955,
+          4150335,
+          570735,
+          4222785
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "sourceCount": 3,
+        "maskedPixels": 0,
+        "coveredPixels": 9964290,
+        "overlapPolicy": "newest scene with QA_PIXEL bit 0 unset wins; complete UInt16 flags retained; filled newer scenes do not erase covered older samples; independent internal mask; no quality ranking or bit merging",
+        "landsatQuality": {
+          "schemaVersion": "geod-landsat-quality-mosaic/v1",
+          "product": "landsat-c2-l2",
+          "band": "qa_radsat",
+          "bits": 16,
+          "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry"
+        }
+      },
+      "quality": {
+        "product": "landsat-c2-l2",
+        "band": "qa_radsat",
+        "layer": "QA_RADSAT",
+        "pixelInterpretation": "PixelIsArea",
+        "displayField": "Saturation and terrain flags",
+        "sampleCount": 9964290,
+        "validSampleCount": 9964290,
+        "countsFullResolution": true,
+        "definition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "flags": {
+          "sourceNoData": null,
+          "fillRule": "QA_RADSAT has no fill flag; zero means no saturation or terrain occlusion flags",
+          "coverage": "Coverage follows the independent internal mask, derived from matching QA_PIXEL bit 0 and the project geometry",
+          "fields": [
+            {
+              "name": "Band 1 saturation",
+              "startBit": 0,
+              "endBit": 0,
+              "counts": [
+                9964289,
+                1
+              ]
+            },
+            {
+              "name": "Band 2 saturation",
+              "startBit": 1,
+              "endBit": 1,
+              "counts": [
+                9964289,
+                1
+              ]
+            },
+            {
+              "name": "Band 3 saturation",
+              "startBit": 2,
+              "endBit": 2,
+              "counts": [
+                9964288,
+                2
+              ]
+            },
+            {
+              "name": "Band 4 saturation",
+              "startBit": 3,
+              "endBit": 3,
+              "counts": [
+                9964288,
+                2
+              ]
+            },
+            {
+              "name": "Band 5 saturation",
+              "startBit": 4,
+              "endBit": 4,
+              "counts": [
+                9964281,
+                9
+              ]
+            },
+            {
+              "name": "Band 6 saturation",
+              "startBit": 5,
+              "endBit": 5,
+              "counts": [
+                9964261,
+                29
+              ]
+            },
+            {
+              "name": "Band 7 saturation",
+              "startBit": 6,
+              "endBit": 6,
+              "counts": [
+                9964265,
+                25
+              ]
+            },
+            {
+              "name": "Unused bit 7",
+              "startBit": 7,
+              "endBit": 7,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Band 9 saturation",
+              "startBit": 8,
+              "endBit": 8,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 9",
+              "startBit": 9,
+              "endBit": 9,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Unused bit 10",
+              "startBit": 10,
+              "endBit": 10,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Terrain occlusion",
+              "startBit": 11,
+              "endBit": 11,
+              "counts": [
+                9964290,
+                0
+              ]
+            },
+            {
+              "name": "Unused bits 12–15",
+              "startBit": 12,
+              "endBit": 15,
+              "counts": [
+                9964290,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "coverageMask": {
+            "kind": "internal-1bit",
+            "coveredPixels": 9964290,
+            "uncoveredPixels": 0
+          }
+        }
+      },
+      "independent": {
+        "case": "large",
+        "key": "qa_radsat",
+        "jobId": "e436b1cc-8aa1-4e76-bea6-2df4a49e1a0c",
+        "outputSha256": "4d62a9f4e3a241972c21d7f190ef64ebf1a5730a131850850f366a6150adef7f",
+        "rawPlaneSha256": "dfda279f2f8e65694f12bd9987ae63b121733e2860fc6a274b6088aaba5af60d",
+        "maskPlaneSha256": "f4be3dc3479cab0ad60ca9dfe34047d65b6e7b744d2e7c254bc4fadef05c2fbf",
+        "samplesCompared": 9964290,
+        "coverageBitsCompared": 9964290,
+        "coveredPixels": 9964290,
+        "uncoveredPixels": 0,
+        "maskedPixels": 0,
+        "fallbackEvents": 3183938,
+        "overlapEvents": 10875247,
+        "coveredZeroValues": 9964260,
+        "uncoveredZeroValues": 0,
+        "classCounts": [
+          9964260,
+          2,
+          28,
+          0,
+          0
+        ],
+        "flags": [
+          {
+            "name": "Band 1 saturation",
+            "startBit": 0,
+            "endBit": 0,
+            "counts": [
+              9964289,
+              1
+            ]
+          },
+          {
+            "name": "Band 2 saturation",
+            "startBit": 1,
+            "endBit": 1,
+            "counts": [
+              9964289,
+              1
+            ]
+          },
+          {
+            "name": "Band 3 saturation",
+            "startBit": 2,
+            "endBit": 2,
+            "counts": [
+              9964288,
+              2
+            ]
+          },
+          {
+            "name": "Band 4 saturation",
+            "startBit": 3,
+            "endBit": 3,
+            "counts": [
+              9964288,
+              2
+            ]
+          },
+          {
+            "name": "Band 5 saturation",
+            "startBit": 4,
+            "endBit": 4,
+            "counts": [
+              9964281,
+              9
+            ]
+          },
+          {
+            "name": "Band 6 saturation",
+            "startBit": 5,
+            "endBit": 5,
+            "counts": [
+              9964261,
+              29
+            ]
+          },
+          {
+            "name": "Band 7 saturation",
+            "startBit": 6,
+            "endBit": 6,
+            "counts": [
+              9964265,
+              25
+            ]
+          },
+          {
+            "name": "Unused bit 7",
+            "startBit": 7,
+            "endBit": 7,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Band 9 saturation",
+            "startBit": 8,
+            "endBit": 8,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 9",
+            "startBit": 9,
+            "endBit": 9,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Unused bit 10",
+            "startBit": 10,
+            "endBit": 10,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Terrain occlusion",
+            "startBit": 11,
+            "endBit": 11,
+            "counts": [
+              9964290,
+              0
+            ]
+          },
+          {
+            "name": "Unused bits 12–15",
+            "startBit": 12,
+            "endBit": 15,
+            "counts": [
+              9964290,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "preview": {
+          "rgbaPixelsCompared": 344832,
+          "pngSha256": "ff8e57d00ac3816371f2edf78a5423828f0293a2b6b1e6525140a12aa196b57d",
+          "rgbaSha256": "853751172b2d73e590fd30ce4b149b2f305d9b19d38e83c23dd12c8639ff2bed"
+        },
+        "thumbnail": {
+          "rgbaPixelsCompared": 14880,
+          "pngSha256": "0ad7a174d803c39df9e9f0442b89e425d036094f6f70db8d60ee4505cee5688b",
+          "rgbaSha256": "eb4c04a233eb557c68486933079c74a858ab891b6c02f1629f48ea8fd3c77eaf"
+        },
+        "rawSamplesCompared": 9
+      }
+    }
+  ],
+  "native": {
+    "outputs": 8,
+    "samplesCompared": 64025460,
+    "coverageBitsCompared": 64025460,
+    "largeOutputPixels": 9964290,
+    "independentDecoder": "Rasterio 1.3.9 / GDAL 3.6.4 / tifffile 2025.12.20",
+    "missingCoverageControl": {
+      "projectId": "e2ab8971-76b3-4d84-9e70-73359062888f",
+      "status": 400,
+      "message": {
+        "error": "Download matching QA_PIXEL files for every scene before processing saturation flags"
+      },
+      "countBefore": 14,
+      "countAfter": 14
+    }
+  },
+  "mcp": {
+    "cases": [
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "single",
+        "key": "qa_pixel",
+        "jobId": "4a053efe-9d0c-4e72-8b3e-17fb06a54a8c",
+        "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+        "rawSamplesCompared": 12,
+        "coverageMask": {
+          "coveredPixels": 4918724,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 1799596
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "single",
+        "key": "qa_radsat",
+        "jobId": "ebe07d25-6a11-4376-938c-e3828d6c6f49",
+        "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+        "rawSamplesCompared": 13,
+        "coverageMask": {
+          "coveredPixels": 4918724,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 1799596
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "mosaic",
+        "key": "qa_pixel",
+        "jobId": "e87dfdce-4845-42e2-bc9c-e4badd10bc6f",
+        "sha256": "b07acaf14e1c7ac8cfea88411479e274f92d919f47b90a6f2bed5cebfe5c82ef",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 7665060,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "mosaic",
+        "key": "qa_radsat",
+        "jobId": "7549545a-46cf-476d-9c0e-5a2e291ec446",
+        "sha256": "a616556e81650744cba1c8511d228ce24117cf39687ea8fb4ab762e052e6ee54",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 7665060,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "polygon",
+        "key": "qa_pixel",
+        "jobId": "3477c81d-0ecb-4d95-88df-4dba36ec89e7",
+        "sha256": "e84fae18ec6e8782209371c393c2be49e70de0d7a4e31f122a187ff493b0c8bb",
+        "rawSamplesCompared": 12,
+        "coverageMask": {
+          "coveredPixels": 7370606,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 294454
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "polygon",
+        "key": "qa_radsat",
+        "jobId": "b1c7c38a-e6da-4ed8-a82c-468a93cfeae7",
+        "sha256": "63374819803f04f719b0ae3b7ba38587d01dfcffab62dedc99b52ee5cab07a15",
+        "rawSamplesCompared": 13,
+        "coverageMask": {
+          "coveredPixels": 7370606,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 294454
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "large",
+        "key": "qa_pixel",
+        "jobId": "be481e59-2147-4ea4-9ad4-8d0e8875f949",
+        "sha256": "f055a0ebc3e19e8a923c611496b6666aa993a878ea4259bed6b9c00c40071df1",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 9964290,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "direct; unreachable upstream proxy",
+        "case": "large",
+        "key": "qa_radsat",
+        "jobId": "e436b1cc-8aa1-4e76-bea6-2df4a49e1a0c",
+        "sha256": "4d62a9f4e3a241972c21d7f190ef64ebf1a5730a131850850f366a6150adef7f",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 9964290,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "single",
+        "key": "qa_pixel",
+        "jobId": "4a053efe-9d0c-4e72-8b3e-17fb06a54a8c",
+        "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+        "rawSamplesCompared": 12,
+        "coverageMask": {
+          "coveredPixels": 4918724,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 1799596
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "single",
+        "key": "qa_radsat",
+        "jobId": "ebe07d25-6a11-4376-938c-e3828d6c6f49",
+        "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+        "rawSamplesCompared": 13,
+        "coverageMask": {
+          "coveredPixels": 4918724,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 1799596
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "mosaic",
+        "key": "qa_pixel",
+        "jobId": "e87dfdce-4845-42e2-bc9c-e4badd10bc6f",
+        "sha256": "b07acaf14e1c7ac8cfea88411479e274f92d919f47b90a6f2bed5cebfe5c82ef",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 7665060,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "mosaic",
+        "key": "qa_radsat",
+        "jobId": "7549545a-46cf-476d-9c0e-5a2e291ec446",
+        "sha256": "a616556e81650744cba1c8511d228ce24117cf39687ea8fb4ab762e052e6ee54",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 7665060,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "polygon",
+        "key": "qa_pixel",
+        "jobId": "3477c81d-0ecb-4d95-88df-4dba36ec89e7",
+        "sha256": "e84fae18ec6e8782209371c393c2be49e70de0d7a4e31f122a187ff493b0c8bb",
+        "rawSamplesCompared": 12,
+        "coverageMask": {
+          "coveredPixels": 7370606,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 294454
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "polygon",
+        "key": "qa_radsat",
+        "jobId": "b1c7c38a-e6da-4ed8-a82c-468a93cfeae7",
+        "sha256": "63374819803f04f719b0ae3b7ba38587d01dfcffab62dedc99b52ee5cab07a15",
+        "rawSamplesCompared": 13,
+        "coverageMask": {
+          "coveredPixels": 7370606,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 294454
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "large",
+        "key": "qa_pixel",
+        "jobId": "be481e59-2147-4ea4-9ad4-8d0e8875f949",
+        "sha256": "f055a0ebc3e19e8a923c611496b6666aa993a878ea4259bed6b9c00c40071df1",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 9964290,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      },
+      {
+        "mode": "loopback adapter; unreachable upstream proxy",
+        "case": "large",
+        "key": "qa_radsat",
+        "jobId": "e436b1cc-8aa1-4e76-bea6-2df4a49e1a0c",
+        "sha256": "4d62a9f4e3a241972c21d7f190ef64ebf1a5730a131850850f366a6150adef7f",
+        "rawSamplesCompared": 11,
+        "coverageMask": {
+          "coveredPixels": 9964290,
+          "kind": "internal-1bit",
+          "uncoveredPixels": 0
+        },
+        "previewOmitted": true
+      }
+    ],
+    "rawSamplesCompared": 188,
+    "disconnectedAdapterRejected": true
+  },
+  "ui": {
+    "cases": [
+      {
+        "case": "single",
+        "jobId": "0047c231-0709-495f-bcc5-88e0c55c1634",
+        "outputSha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+        "key": "qa_pixel",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "rgbaSourcePixelsCompared": 303360,
+        "mapPaintedPixels": 283756,
+        "rawPixelValue": 22280,
+        "decodedFields": 12,
+        "flagCountBinsChecked": 27,
+        "sourceDefinition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "nativeRequests": 27
+      },
+      {
+        "case": "polygon",
+        "jobId": "b1c7c38a-e6da-4ed8-a82c-468a93cfeae7",
+        "outputSha256": "63374819803f04f719b0ae3b7ba38587d01dfcffab62dedc99b52ee5cab07a15",
+        "key": "qa_radsat",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "rgbaSourcePixelsCompared": 265728,
+        "mapPaintedPixels": 88685,
+        "rawPixelValue": 0,
+        "decodedFields": 13,
+        "flagCountBinsChecked": 20,
+        "sourceDefinition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "nativeRequests": 8
+      },
+      {
+        "case": "large",
+        "jobId": "be481e59-2147-4ea4-9ad4-8d0e8875f949",
+        "outputSha256": "f055a0ebc3e19e8a923c611496b6666aa993a878ea4259bed6b9c00c40071df1",
+        "key": "qa_pixel",
+        "width": 900,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "rgbaSourcePixelsCompared": 344832,
+        "mapPaintedPixels": 63304,
+        "rawPixelValue": 22280,
+        "decodedFields": 12,
+        "flagCountBinsChecked": 22,
+        "sourceDefinition": "https://www.usgs.gov/landsat-missions/landsat-collection-2-quality-assessment-bands",
+        "nativeRequests": 8
+      }
+    ],
+    "projectButton": {
+      "operation": "mosaicProject",
+      "projectId": "3d9e3443-ecf8-4fbf-a533-3932ed7f23ad",
+      "key": "qa_pixel",
+      "jobId": "0047c231-0709-495f-bcc5-88e0c55c1634",
+      "outputSha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+      "independentReferenceJobId": "4a053efe-9d0c-4e72-8b3e-17fb06a54a8c",
+      "identicalVerifiedTiff": true
+    },
+    "projectThumbnailsLoaded": 7,
+    "screenshots": {
+      "qa_pixel-flags-1440-en.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\qa_pixel-flags-1440-en-fbd93c9424042ca55cb299b68fdf2b64af3e0238ec489d61190b5a71fe4e8b11.png",
+        "sha256": "fbd93c9424042ca55cb299b68fdf2b64af3e0238ec489d61190b5a71fe4e8b11"
+      },
+      "qa_pixel-flags-900-zh-CN.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\qa_pixel-flags-900-zh-CN-e3caac67887fdeb34d31f876e3d2adec408ff0f9a70cbcf17d68b7ef8750c232.png",
+        "sha256": "e3caac67887fdeb34d31f876e3d2adec408ff0f9a70cbcf17d68b7ef8750c232"
+      },
+      "qa_pixel-pixel-1440-en.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\qa_pixel-pixel-1440-en-b4da16e91632ee5ac7ceb891d43cc2abb97cc1aadcdfab5c0a114c4d1005ee59.png",
+        "sha256": "b4da16e91632ee5ac7ceb891d43cc2abb97cc1aadcdfab5c0a114c4d1005ee59"
+      },
+      "qa_pixel-pixel-900-zh-CN.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\qa_pixel-pixel-900-zh-CN-5a5f840068da027c97f78a1c6ae9847791c9d6fe27f785a213f4525ab48ea363.png",
+        "sha256": "5a5f840068da027c97f78a1c6ae9847791c9d6fe27f785a213f4525ab48ea363"
+      },
+      "qa_radsat-flags-1024-zh-CN.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\qa_radsat-flags-1024-zh-CN-2c7c863f31a1183d17a613adc2c54736e2145eddb642731cf7522fb2110030a0.png",
+        "sha256": "2c7c863f31a1183d17a613adc2c54736e2145eddb642731cf7522fb2110030a0"
+      },
+      "qa_radsat-pixel-1024-zh-CN.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\qa_radsat-pixel-1024-zh-CN-df6f4e1ef7df1cc991d5f89e6c6bcb2aa6b2425dd6c4cf6c8e73baa7611657c0.png",
+        "sha256": "df6f4e1ef7df1cc991d5f89e6c6bcb2aa6b2425dd6c4cf6c8e73baa7611657c0"
+      },
+      "quality-project-1440-en.png": {
+        "snapshot": "G:\\code\\geod-global\\.verification\\landsat-quality-processing-20261004\\accepted-evidence\\ui-2d2785c93b20359d7770cddfa0e2f7f7e1222a519bafdf42493edcf621046f25\\quality-project-1440-en-85c7ea8762407d4776846072618a5d82adf48be1db32c8499c25d82123811a70.png",
+        "sha256": "85c7ea8762407d4776846072618a5d82adf48be1db32c8499c25d82123811a70"
+      }
+    },
+    "resources": {
+      "prototype/dist/index.html": "2554d446ceb9dd64627d1aed75c4dbeb4efaba096a82c68c2d91937cee6a2fa6",
+      "prototype/dist/assets/index-Kux4XbjL.js": "62378164233643ca100290b7586a62164eca797a74ca69eea4f4cd3f4140f2dd",
+      "prototype/dist/assets/chunk-aKtaBQYM.js": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236",
+      "prototype/dist/assets/i18n-C2UJu70Y.js": "eb83fe341df875499bef8db029f11059afa16421fca07ab45cde8082748aa486",
+      "prototype/dist/assets/i18n-DZ60XG39.css": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6",
+      "prototype/dist/assets/index-tfg7QXKt.css": "19eb70dc2a4d1be9670a3d112a500a95e5b654b889f5a88ad7a5d54fa9f71153",
+      "prototype/dist/fonts/inter.woff2": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "prototype/dist/brand/geod-symbol.png": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000",
+      "prototype/dist/assets/workspace-map-CtDyrMIO.js": "977a1373cc0e0a4a9ca1c8891a6a85b47712bbf48ff77d7c2efa3a1162d45ffd",
+      "prototype/dist/assets/rbush-CaohfFwn.js": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7",
+      "prototype/dist/assets/ol-c_1sG1-7.css": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77",
+      "prototype/dist/assets/workspace-map-geometry-Fyu-OIoX.js": "3bbd967fdd161fcdc0a04f7cc44bfc95831742b2b7b20d7a687500e6392a715d",
+      "prototype/dist/assets/ol-BM8XMzgm.js": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304",
+      "prototype/dist/assets/ImageStatic-CJOl8TQ_.js": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540",
+      "prototype/dist/assets/workspace-map-za6H7b8_.css": "69e98ebf56c376e162dc30891fb522b437fe00aa6529968db522123458f9dd9e",
+      "prototype/dist/assets/common-uuK22kLj.js": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+    },
+    "sourceRgbaPixelsCompared": 913920,
+    "nativeWindowTested": false
+  },
+  "cache": {
+    "allParentJobsAndFilesAbsent": true,
+    "network": "unreachable upstream proxy",
+    "cases": [
+      {
+        "case": "single",
+        "key": "qa_pixel",
+        "id": "4a053efe-9d0c-4e72-8b3e-17fb06a54a8c",
+        "sha256": "adaff86973e8323f4ccfa3203e1b02ccdbc36a020adf6f0410965419d36cfb53",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 18.416200065985322
+      },
+      {
+        "case": "single",
+        "key": "qa_radsat",
+        "id": "ebe07d25-6a11-4376-938c-e3828d6c6f49",
+        "sha256": "fad03fb4928287506450dbd1a017736e3b568c058b85b2c7c8c24a27b3ef0545",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 14.832900022156537
+      },
+      {
+        "case": "mosaic",
+        "key": "qa_pixel",
+        "id": "e87dfdce-4845-42e2-bc9c-e4badd10bc6f",
+        "sha256": "b07acaf14e1c7ac8cfea88411479e274f92d919f47b90a6f2bed5cebfe5c82ef",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 16.111899982206523
+      },
+      {
+        "case": "mosaic",
+        "key": "qa_radsat",
+        "id": "7549545a-46cf-476d-9c0e-5a2e291ec446",
+        "sha256": "a616556e81650744cba1c8511d228ce24117cf39687ea8fb4ab762e052e6ee54",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 15.354200033470988
+      },
+      {
+        "case": "polygon",
+        "key": "qa_pixel",
+        "id": "3477c81d-0ecb-4d95-88df-4dba36ec89e7",
+        "sha256": "e84fae18ec6e8782209371c393c2be49e70de0d7a4e31f122a187ff493b0c8bb",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 3.4389999927952886
+      },
+      {
+        "case": "polygon",
+        "key": "qa_radsat",
+        "id": "b1c7c38a-e6da-4ed8-a82c-468a93cfeae7",
+        "sha256": "63374819803f04f719b0ae3b7ba38587d01dfcffab62dedc99b52ee5cab07a15",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 2.821299945935607
+      },
+      {
+        "case": "large",
+        "key": "qa_pixel",
+        "id": "be481e59-2147-4ea4-9ad4-8d0e8875f949",
+        "sha256": "f055a0ebc3e19e8a923c611496b6666aa993a878ea4259bed6b9c00c40071df1",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 25.069099967367947
+      },
+      {
+        "case": "large",
+        "key": "qa_radsat",
+        "id": "e436b1cc-8aa1-4e76-bea6-2df4a49e1a0c",
+        "sha256": "4d62a9f4e3a241972c21d7f190ef64ebf1a5730a131850850f366a6150adef7f",
+        "readWithoutParents": true,
+        "rawSamplesCompared": 9,
+        "cacheBytesFileIdentityCreationUnchanged": true,
+        "warmRestartMilliseconds": 14.559500035829842
+      }
+    ],
+    "controls": [
+      {
+        "name": "Changed output rejected despite existing thumbnail cache",
+        "failures": {
+          "raster": {
+            "status": 400,
+            "reply": {
+              "error": "Reflectance source byte count is invalid or exceeds 512 MiB"
+            }
+          },
+          "thumbnail": {
+            "status": 400,
+            "reply": {
+              "error": "Preview source size no longer matches its completed job"
+            }
+          }
+        }
+      },
+      {
+        "name": "Corrupt thumbnail cache rebuilt",
+        "passed": true
+      }
+    ],
+    "restarted": true,
+    "originalAcceptedStoreUnchanged": true
+  },
+  "acceptedRenderer": {
+    "snapshot": "G:\\code\\geod-global\\.verification\\renderer-landsat-quality-processing-accepted-20261004",
+    "files": 662,
+    "receiptSha256": "d991f231bdec2957f6b5aba68e087cdd59670ffeaf129e369e97a8d027e313fb"
+  },
+  "developmentDesktopBuild": {
+    "path": "G:\\code\\geod-global\\.verification\\renderer-landsat-quality-processing-accepted-20261004\\desktop-1ad862292b3c69ef.exe",
+    "bytes": 80768000,
+    "sha256": "1ad862292b3c69efb0c0fe3b92f3fefac5d22acb402de7a2da20ac247e08d389",
+    "customProtocol": true,
+    "nativeWindowTested": false,
+    "installerBuilt": false
+  },
+  "priorRenderersPreserved": [
+    {
+      "snapshot": "G:\\code\\geod-global\\.verification\\renderer-landsat-quality-20261004",
+      "files": 662,
+      "receiptSha256": "97fc2a2e8f78dadddf6f9df661815a6c896d0d3039224c8e117492b1acb96f7d"
+    },
+    {
+      "snapshot": "G:\\code\\geod-global\\.verification\\renderer-modis-coupled-20261004",
+      "files": 661,
+      "receiptSha256": "9bc60986655e98f7c0173a84f843ea5717228223a5e44b6852f8c5a5ac40d029"
+    }
+  ],
+  "rgbScreeningApplied": false,
+  "boundaries": [
+    "Four new complete native downloads plus two previously downloaded originals; subsequent processing retries reuse checksum-verified originals.",
+    "QA_RADSAT processing requires matching QA_PIXEL from the same scene, processing directory and aligned grid; zero remains a valid raw value.",
+    "This operation retains whole QA samples with a coverage mask; it does not rank cloud quality, merge bits, average values or screen RGB.",
+    "Real snow, terrain-occlusion and unused positive values are not a complete positive matrix; synthetic regressions cover retained high bits and fill fallbacks.",
+    "Only aligned 30 metre Landsat 8/9 C2 L2 project grids; general reprojection, other QA layers and generic mosaic delivery ZIPs remain pending.",
+    "Headless built renderer and exact desktop CSP with a real native bridge; native WebView/window and installer acceptance remain separate.",
+    "NASA/Earthdata and Copernicus software authorization entries are available; successful protected production downloads await user accounts."
+  ]
+}

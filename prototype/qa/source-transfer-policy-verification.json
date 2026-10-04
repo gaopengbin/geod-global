@@ -1,0 +1,57 @@
+{
+  "schema": "geod-source-transfer-policy-verification/v1",
+  "checkedAt": "2026-10-03T17:25:19.167459+00:00",
+  "scope": "Native client inactivity policy and development build only; no new complete original accepted by this receipt",
+  "policy": {
+    "connectTimeoutSeconds": 20,
+    "readInactivitySeconds": 45,
+    "healthyStreamHasTotalDurationDeadline": false,
+    "byteRangeResumeImplemented": false
+  },
+  "localHttpTest": {
+    "method": "Private real TCP HTTP server; accelerated one-second read wait",
+    "bodyContinuesForLongerThanReadWait": "passed",
+    "bodyStallTimesOut": "passed"
+  },
+  "checks": {
+    "nativeLibrary": {
+      "passed": 432,
+      "ignored": 4
+    },
+    "cliBinary": {
+      "passed": 4
+    },
+    "desktopCustomProtocol": {
+      "passed": 4
+    },
+    "targetedProxyAfterTestReaderFix": {
+      "passed": 3
+    },
+    "clippyAllRuntimeTargets": "passed",
+    "rustFormat": "passed",
+    "repositoryContracts": "passed",
+    "diffWhitespace": "passed"
+  },
+  "desktopDevelopmentBinary": {
+    "sha256": "fbd1940c53baadccf369d588be51b2547f0567f48c574b90c45dfe604e3b3b2e",
+    "bytes": 79788544,
+    "productionAssets": [
+      "assets/index-CgBG7ONf.js",
+      "assets/chunk-aKtaBQYM.js",
+      "assets/i18n-oIxsVv5Y.js"
+    ],
+    "embeddedAssetsConfirmed": true,
+    "startedOnUserDesktop": false
+  },
+  "actualLongTransferWithNewPolicyAccepted": false,
+  "installerBuilt": false,
+  "published": false,
+  "nasaCopernicusPositiveAuthorizationAccepted": false,
+  "preparedRealPolarizationVerifiers": [
+    "native whole-file acquisition and project processing",
+    "independent GDAL Float32 / PROJ / GEOS and full PNG checks",
+    "offline MCP direct and loopback reads",
+    "private headless production UI and restart cache identity"
+  ],
+  "preparedVerifiersHaveCompletedAcceptance": false
+}

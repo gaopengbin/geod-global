@@ -1,0 +1,249 @@
+{
+  "checkedAt": "2026-10-01T18:37:18.509171+00:00",
+  "projectId": "66b4aa4e-d7e0-442c-beba-df4fe9245eec",
+  "jobId": "83540fdf-7e47-4548-8c2a-c26c091c7c80",
+  "sources": [
+    {
+      "jobId": "1bd8e110-1bad-4513-8a25-aba3aca10e46",
+      "itemId": "ca_m_3712221_ne_10_060_20220518",
+      "bytes": 409778047,
+      "sha256": "08e52da03c46f3818cde38e13652a3634d08695dc3529d7f779691308fdbe4c6",
+      "outputWindow": [
+        0,
+        0,
+        1329,
+        934
+      ]
+    },
+    {
+      "jobId": "97c87b89-8892-45d8-8735-f83cd92a103a",
+      "itemId": "ca_m_3712221_nw_10_060_20220518",
+      "bytes": 431299986,
+      "sha256": "8fa6571b8464e6715bb707813ebef6a23502637fe06735ba8c806a40b79ff67a",
+      "outputWindow": [
+        0,
+        0,
+        454,
+        934
+      ]
+    }
+  ],
+  "bytes": 1934539,
+  "sha256": "eacd40aab5707942f7078dc33a6e1b1285c56ba4785e4133de646e43680d28ac",
+  "grid": {
+    "width": 1329,
+    "height": 934,
+    "bandCount": 4,
+    "crs": "EPSG:26910",
+    "bounds": [
+      549525.6,
+      4174897.2,
+      550323.0,
+      4175457.6
+    ],
+    "pixelSize": [
+      0.6,
+      0.6
+    ],
+    "sourceCount": 2,
+    "maskedPixels": 657296,
+    "coveredPixels": 583990,
+    "overlapPolicy": "newest ordered scene wins; independent internal coverage mask; zero RGB and NIR are valid",
+    "aerial": {
+      "product": "naip",
+      "bands": [
+        "red",
+        "green",
+        "blue",
+        "nir"
+      ],
+      "displayBands": [
+        1,
+        2,
+        3
+      ],
+      "pixelInterpretation": "PixelIsArea",
+      "coverageMask": "internal-1bit"
+    }
+  },
+  "independentValidation": {
+    "tool": "Rasterio/GDAL + PROJ/pyproj + Shapely + NumPy + Pillow",
+    "polygonRule": "inverse-project each source-grid pixel centre into original WGS84 polygon and holes",
+    "fourChannelSamplesCompared": 4965144,
+    "coveragePixelsCompared": 1241286,
+    "allFourChannelsEqual": true,
+    "internalMaskEqual": true,
+    "polygonAndHoleMaskEqual": true,
+    "nativeRgbAndAlphaPreviewEqual": true,
+    "thumbnailAlphaEqual": true,
+    "nodataTagAbsent": true,
+    "previewSize": [
+      768,
+      539
+    ],
+    "thumbnailSize": [
+      160,
+      112
+    ],
+    "pixelsCompared": [
+      {
+        "pixel": [
+          0,
+          0
+        ],
+        "channels": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "isNoData": true
+      },
+      {
+        "pixel": [
+          837,
+          292
+        ],
+        "channels": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "isNoData": true
+      },
+      {
+        "pixel": [
+          1328,
+          933
+        ],
+        "channels": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "isNoData": true
+      },
+      {
+        "pixel": [
+          1322,
+          0
+        ],
+        "channels": [
+          155,
+          163,
+          170,
+          138
+        ],
+        "isNoData": false
+      },
+      {
+        "pixel": [
+          706,
+          658
+        ],
+        "channels": [
+          131,
+          137,
+          142,
+          108
+        ],
+        "isNoData": false
+      },
+      {
+        "pixel": [
+          90,
+          932
+        ],
+        "channels": [
+          170,
+          180,
+          191,
+          150
+        ],
+        "isNoData": false
+      }
+    ]
+  },
+  "scope": "Two actual downloaded 0.6 m NAIP COGs; native project mosaic/clip, independent internal mask, raw four-channel read-back and shared desktop frontend. No account required. No installer or release.",
+  "desktopFrontend": {
+    "checkedAt": "2026-10-01T18:46:10.392Z",
+    "projectId": "66b4aa4e-d7e0-442c-beba-df4fe9245eec",
+    "jobId": "83540fdf-7e47-4548-8c2a-c26c091c7c80",
+    "views": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "overflow": false,
+        "errors": []
+      }
+    ]
+  },
+  "singleSceneClip": {
+    "checkedAt": "2026-10-01T18:44:03.330111+00:00",
+    "jobId": "5697c29e-c690-4833-ab75-9edf5d256ce1",
+    "projectId": "94b88cd7-5b75-476a-9560-c853fa05f6b8",
+    "sourceJobId": "97c87b89-8892-45d8-8735-f83cd92a103a",
+    "sha256": "2719a7bb9138120160560af15f56af5300f9b51d80230eae84fa15989e2c4807",
+    "bytes": 8988032,
+    "dimensions": [
+      1481,
+      1859
+    ],
+    "channels": 4,
+    "sourceWindow": [
+      7698,
+      4039,
+      1481,
+      1859
+    ],
+    "samplesCompared": 11012716,
+    "allFourChannelsEqual": true,
+    "internalMaskAllCovered": true,
+    "nodataTagAbsent": true,
+    "sourceGridPreserved": true
+  },
+  "restartAndCache": {
+    "checkedAt": "2026-10-01T18:39:19.170229+00:00",
+    "jobRestored": true,
+    "projectRestored": true,
+    "thumbnailIdentical": true,
+    "cacheEntryBytesHashFileIdentityCreationUnchanged": true,
+    "signaturesPersisted": false,
+    "thumbnailRequestMilliseconds": 21.85
+  },
+  "checks": {
+    "nativeLibrary": {
+      "passed": 147,
+      "ignored": 4
+    },
+    "nativeCli": {
+      "passed": 3
+    },
+    "desktop": {
+      "passed": 4
+    },
+    "node": {
+      "passed": 103
+    },
+    "ui": {
+      "passed": 100,
+      "files": 17
+    },
+    "clippyWarningsDenied": true,
+    "classicAndBigTiffFourBandMaskRoundtrip": true
+  }
+}

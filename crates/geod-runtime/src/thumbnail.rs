@@ -2,7 +2,7 @@
 //! RGB previews may use a file's own overview; SCL always samples original classes.
 use crate::{io_error, mosaic::source_raster, raster::PALETTE, Job, JobManager, JobStatus, Result};
 use base64::{engine::general_purpose::STANDARD, Engine};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
     io::{Read, Seek},
@@ -16,8 +16,9 @@ use tiff::{
 use tokio_util::sync::CancellationToken;
 
 const EDGE: u32 = 160;
+mod cache;
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FileThumbnail {
     pub job_id: String,
@@ -31,14 +32,91 @@ impl JobManager {
     pub async fn file_thumbnail(&self, id: &str) -> Result<FileThumbnail> {
         let job = self.get(id).await.ok_or("Unknown job")?;
         if job.status != JobStatus::Succeeded
-            || !matches!(job.asset_key.as_str(), "scl" | "visual")
+            || !matches!(
+                job.asset_key.as_str(),
+                "scl"
+                    | "reflectance_rgb"
+                    | "visual"
+                    | "red"
+                    | "green"
+                    | "blue"
+                    | "ndvi"
+                    | "evi"
+                    | "vi_quality"
+                    | "vi_reliability"
+                    | "vi_doy"
+                    | "vi_red"
+                    | "vi_nir"
+                    | "vi_blue"
+                    | "vi_mir"
+                    | "vi_view_zenith"
+                    | "vi_sun_zenith"
+                    | "vi_relative_azimuth"
+                    | "modis_qc"
+                    | "modis_state"
+                    | "qa_pixel"
+                    | "qa_radsat"
+                    | "elevation"
+                    | "aerial"
+                    | "srtm"
+                    | "vv"
+                    | "vh"
+                    | "hh"
+                    | "hv"
+                    | "stac_asset"
+                    | "wcs_coverage"
+            )
             || uuid::Uuid::parse_str(id)
                 .ok()
                 .map(|value| value.to_string())
                 .as_deref()
                 != Some(id)
         {
-            return Err("Preview requires a completed managed SCL or RGB GeoTIFF".into());
+            return Err("Preview requires a completed managed raster GeoTIFF".into());
+        }
+        if matches!(
+            job.asset_key.as_str(),
+            "red"
+                | "green"
+                | "blue"
+                | "ndvi"
+                | "evi"
+                | "vi_quality"
+                | "vi_reliability"
+                | "vi_doy"
+                | "vi_red"
+                | "vi_nir"
+                | "vi_blue"
+                | "vi_mir"
+                | "vi_view_zenith"
+                | "vi_sun_zenith"
+                | "vi_relative_azimuth"
+        ) {
+            crate::raster::reflectance::profile(&job)?;
+        }
+        if job.asset_key == "elevation" {
+            crate::raster::elevation::validate_job(&job)?;
+        }
+        if crate::providers::radar::KEYS.contains(&job.asset_key.as_str()) {
+            crate::raster::radar::validate_job(&job)?;
+        }
+        if job.asset_key == "srtm" {
+            crate::raster::srtm::validate_job(&job)?;
+        }
+        if job.asset_key == "aerial" {
+            crate::raster::aerial::validate_job(&job)?;
+        }
+        if crate::providers::modis::QUALITY_KEYS.contains(&job.asset_key.as_str()) {
+            crate::raster::quality::validate_job(&job)?;
+        }
+        if crate::raster::landsat_quality::KEYS.contains(&job.asset_key.as_str()) {
+            crate::raster::landsat_quality::validate_job(&job)?;
+        }
+        if job.kind == "raster_prepare" {
+            crate::prepared::validate_stored(&job)?;
+        }
+        if job.kind == "raster_rgb" {
+            crate::raster::reflectance::composite::scientific::validate_stored(&job)?;
         }
         let root = self.inner.root.clone();
         // Independent from interactive pixel/clip workers; one bounded preview at a time.
@@ -50,7 +128,7 @@ impl JobManager {
             .map_err(|_| "Preview worker is busy. Try again shortly.")?;
         tokio::task::spawn_blocking(move || {
             let _permit = permit;
-            thumbnail(&root, &job)
+            cache::get_or_generate(&root, &job, || thumbnail(&root, &job))
         })
         .await
         .map_err(io_error)?
@@ -58,9 +136,110 @@ impl JobManager {
 }
 
 fn thumbnail(root: &Path, job: &Job) -> Result<FileThumbnail> {
+    if crate::raster::landsat_quality::KEYS.contains(&job.asset_key.as_str()) {
+        let raster = crate::raster::landsat_quality::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if crate::providers::modis::QUALITY_KEYS.contains(&job.asset_key.as_str()) {
+        let raster = crate::raster::quality::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if job.kind == "raster_rgb" {
+        let raster =
+            crate::raster::reflectance::composite::scientific::reader::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: job.sha256.clone().ok_or("Missing RGB checksum")?,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if job.stac_source.is_some() || job.wcs_source.is_some() {
+        return crate::stac::raster::thumbnail(root, job);
+    }
+    if crate::providers::radar::KEYS.contains(&job.asset_key.as_str()) {
+        let raster = crate::raster::radar::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if job.asset_key == "srtm" {
+        let raster = crate::raster::srtm::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if job.asset_key == "aerial" {
+        let raster = crate::raster::rgb::inspect_with_edge(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if job.asset_key == "elevation" {
+        let raster = crate::raster::elevation::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
+    if matches!(
+        job.asset_key.as_str(),
+        "red"
+            | "green"
+            | "blue"
+            | "ndvi"
+            | "evi"
+            | "vi_quality"
+            | "vi_reliability"
+            | "vi_doy"
+            | "vi_red"
+            | "vi_nir"
+            | "vi_blue"
+            | "vi_mir"
+            | "vi_view_zenith"
+            | "vi_sun_zenith"
+            | "vi_relative_azimuth"
+    ) {
+        let raster = crate::raster::reflectance::inspect(root, job, EDGE)?;
+        return Ok(FileThumbnail {
+            job_id: job.id.clone(),
+            sha256: raster.sha256,
+            width: raster.preview_width,
+            height: raster.preview_height,
+            data_url: raster.preview_data_url,
+        });
+    }
     let deadline = Instant::now() + Duration::from_secs(60);
     let raster = source_raster(root, job, &job.asset_key, &CancellationToken::new())?;
-    let mut decoder = raster.decoder;
+    let mut decoder = raster.decoder.into_tiff()?;
     let mut width = raster.width;
     let mut height = raster.height;
     if job.asset_key == "visual" {
@@ -92,7 +271,7 @@ fn thumbnail(root: &Path, job: &Job) -> Result<FileThumbnail> {
         width,
         height,
         job.asset_key == "scl",
-        raster.nodata,
+        raster.nodata.map(|value| value as u8),
         deadline,
     )?;
     let mut png_bytes = Vec::new();
@@ -134,8 +313,42 @@ pub(crate) fn sample_preview_with_edge<R: Read + Seek>(
     edge: u32,
     deadline: Instant,
 ) -> Result<(u32, u32, Vec<u8>)> {
+    sample_preview_with_channels(decoder, dimensions, scl, nodata, edge, deadline, [0, 1, 2])
+}
+
+pub(crate) fn sample_preview_with_channels<R: Read + Seek>(
+    decoder: &mut Decoder<R>,
+    dimensions: [u32; 2],
+    scl: bool,
+    nodata: Option<u8>,
+    edge: u32,
+    deadline: Instant,
+    channels: [usize; 3],
+) -> Result<(u32, u32, Vec<u8>)> {
+    let bands = if scl {
+        1
+    } else if decoder
+        .find_tag_unsigned::<u16>(tiff::tags::Tag::SamplesPerPixel)
+        .map_err(io_error)?
+        == Some(4)
+    {
+        // Source semantics were checked before selecting an embedded overview.
+        crate::raster::aerial::validate_layout(decoder)?;
+        4
+    } else {
+        3
+    };
+    if (scl && channels != [0, 1, 2]) || (!scl && channels.iter().any(|channel| *channel >= bands))
+    {
+        return Err("Preview channel selection is unsupported for this raster".into());
+    }
     let [width, height] = dimensions;
-    if width == 0 || height == 0 || width > 20000 || height > 20000 {
+    let max_edge = if bands == 4 {
+        crate::providers::MAX_NAIP_EDGE
+    } else {
+        20000
+    };
+    if width == 0 || height == 0 || width > max_edge || height > max_edge {
         return Err("Preview raster dimensions are unsupported".into());
     }
     let longest = width.max(height);
@@ -153,7 +366,6 @@ pub(crate) fn sample_preview_with_edge<R: Read + Seek>(
     if cols.checked_mul(height.div_ceil(ch)) != Some(count) {
         return Err("Planar preview chunks are unsupported".into());
     }
-    let bands = if scl { 1 } else { 3 };
     let mut samples: BTreeMap<u32, Vec<(usize, u32, u32)>> = BTreeMap::new();
     for y in 0..ph {
         for x in 0..pw {
@@ -173,9 +385,13 @@ pub(crate) fn sample_preview_with_edge<R: Read + Seek>(
             return Err("Local preview exceeded its time limit".into());
         }
         let (actual_w, actual_h) = decoder.chunk_data_dimensions(chunk);
-        let values = match decoder.read_chunk(chunk).map_err(io_error)? {
-            DecodingResult::U8(values) => values,
-            _ => return Err("Preview only supports UInt8 pixels".into()),
+        let values = if bands == 4 {
+            crate::raster::aerial::read_chunk(decoder, chunk)?
+        } else {
+            match decoder.read_chunk(chunk).map_err(io_error)? {
+                DecodingResult::U8(values) => values,
+                _ => return Err("Preview only supports UInt8 pixels".into()),
+            }
         };
         for (target, x, y) in targets {
             if x >= actual_w || y >= actual_h {
@@ -191,7 +407,7 @@ pub(crate) fn sample_preview_with_edge<R: Read + Seek>(
                     .ok_or("Invalid SCL class in preview")?
                     .1
             } else {
-                [sample[0], sample[1], sample[2]]
+                channels.map(|channel| sample[channel])
             };
             rgba[target * 4..target * 4 + 3].copy_from_slice(&color);
             rgba[target * 4 + 3] =

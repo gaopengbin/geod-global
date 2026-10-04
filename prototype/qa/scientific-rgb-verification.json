@@ -1,0 +1,643 @@
+{
+  "schema": "geod-scientific-rgb-verification/v1",
+  "verifiedAt": "2026-10-03",
+  "status": "passed",
+  "scope": "Real public Landsat and MODIS original/processed scientific RGB, ZIP, restart, MCP and built-renderer acceptance. Protected HLS/VIIRS production export and native WebView are not accepted by this receipt.",
+  "native": {
+    "schema": "geod-scientific-rgb-acceptance/v1",
+    "nativeBinarySha256": "c363d7215aa90c5a12525e2861447c4101c30d14b9af8839ff1136f038f40b3d",
+    "offlineProxy": "http://127.0.0.1:9",
+    "cases": [
+      {
+        "label": "landsat-original",
+        "jobId": "7b8929ff-a395-4667-ac8b-ba23fb6c8a6d",
+        "sourceJobs": [
+          {
+            "id": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+            "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+            "itemId": "LC09_L2SP_044034_20250628_02_T1",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF"
+          },
+          {
+            "id": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+            "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+            "itemId": "LC09_L2SP_044034_20250628_02_T1",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF"
+          },
+          {
+            "id": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+            "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+            "itemId": "LC09_L2SP_044034_20250628_02_T1",
+            "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF"
+          }
+        ],
+        "sha256": "19b63e9fdef52bd4507a83ea24b1fa1ffd90673a4303e6c0515e37a5cc7e8db2",
+        "bytes": 223494366,
+        "elapsedSeconds": 124.738,
+        "grid": {
+          "width": 7671,
+          "height": 7791,
+          "crs": "EPSG:32610",
+          "nodata": 0.0,
+          "scales": [
+            2.75e-05,
+            2.75e-05,
+            2.75e-05
+          ],
+          "offsets": [
+            -0.2,
+            -0.2,
+            -0.2
+          ],
+          "dtypes": [
+            "uint16",
+            "uint16",
+            "uint16"
+          ]
+        },
+        "channelsCompared": 179294283,
+        "outputSamples": {
+          "channelValidPixels": [
+            40717365,
+            40717367,
+            40715196
+          ],
+          "commonValidPixels": 40715194,
+          "samplesSha256": [
+            "e80e930778446049105b112153a0af18597f232f3b7d5e1ac7b039a01a324023",
+            "633ea9b00dd8937f0d7c13319ca8ca209335a0452994525071151b702c4da8cb",
+            "6e1fe2fc875c5bc512fc4964bf9575e18064764a9ed4e0c8fcfaf2569804e0f0"
+          ]
+        },
+        "package": {
+          "sha256": "638df49862ee51b80554e2197c49fd801bec02330cf0584db3b16e2a946bc9c9",
+          "bytes": 223545992,
+          "files": [
+            "7b8929ff-a395-4667-ac8b-ba23fb6c8a6d.tif",
+            "7b8929ff-a395-4667-ac8b-ba23fb6c8a6d.metadata.json",
+            "preview.png",
+            "README.txt",
+            "checksums.sha256"
+          ]
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "7b8929ff-a395-4667-ac8b-ba23fb6c8a6d",
+            "sha256": "19b63e9fdef52bd4507a83ea24b1fa1ffd90673a4303e6c0515e37a5cc7e8db2"
+          },
+          "center": [
+            465300.0,
+            4261200.0
+          ],
+          "channelNoData": [
+            true,
+            true,
+            true
+          ],
+          "coordinate": [
+            465300.0,
+            4261200.0
+          ],
+          "crs": "EPSG:32610",
+          "isNoData": true,
+          "pixel": [
+            100,
+            100
+          ],
+          "reflectances": [
+            null,
+            null,
+            null
+          ],
+          "sources": [
+            {
+              "band": "red",
+              "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+              "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546"
+            },
+            {
+              "band": "green",
+              "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+              "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db"
+            },
+            {
+              "band": "blue",
+              "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+              "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1"
+            }
+          ],
+          "values": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "label": "modis-original",
+        "jobId": "b8724927-a99a-46c5-a233-91a8ffe2a812",
+        "sourceJobs": [
+          {
+            "id": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+            "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+            "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+            "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif"
+          },
+          {
+            "id": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+            "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+            "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+            "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b04.tif"
+          },
+          {
+            "id": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+            "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+            "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+            "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b03.tif"
+          }
+        ],
+        "sha256": "6596fdb80f767d8bdaf2a41c9c16a8bb7210da4e3ec20378708473583a648656",
+        "bytes": 23413098,
+        "elapsedSeconds": 12.588,
+        "grid": {
+          "width": 2400,
+          "height": 2400,
+          "crs": "PROJCS[\"unnamed\",GEOGCS[\"Unknown datum based upon the custom spheroid\",DATUM[\"Not specified (based on custom spheroid)\",SPHEROID[\"Custom spheroid\",6371007.181,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Sinusoidal\"],PARAMETER[\"longitude_of_center\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+          "nodata": -28672.0,
+          "scales": [
+            0.0001,
+            0.0001,
+            0.0001
+          ],
+          "offsets": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dtypes": [
+            "int16",
+            "int16",
+            "int16"
+          ]
+        },
+        "channelsCompared": 17280000,
+        "outputSamples": {
+          "channelValidPixels": [
+            5760000,
+            5759997,
+            5760000
+          ],
+          "commonValidPixels": 5759997,
+          "samplesSha256": [
+            "69f1570da98504029c15bfa19b335f556dbf9ab40ef238f27fbea1cfc089515b",
+            "134af44d3667f4ad87801588f3b9876ca6ed7d0bc27230f501f90c26e73bcba6",
+            "db253ca01b8bb907f8d2c3bfb536eae4179d3394845e334155115feb5a28719e"
+          ]
+        },
+        "package": {
+          "sha256": "02a80d6f7150ca2ffae56fa86d79a4150f7eda9708156f069c6548a19954978d",
+          "bytes": 23493530,
+          "files": [
+            "b8724927-a99a-46c5-a233-91a8ffe2a812.tif",
+            "b8724927-a99a-46c5-a233-91a8ffe2a812.metadata.json",
+            "preview.png",
+            "README.txt",
+            "checksums.sha256"
+          ]
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "b8724927-a99a-46c5-a233-91a8ffe2a812",
+            "sha256": "6596fdb80f767d8bdaf2a41c9c16a8bb7210da4e3ec20378708473583a648656"
+          },
+          "center": [
+            -11072942.268655945,
+            4401239.150655944
+          ],
+          "channelNoData": [
+            false,
+            false,
+            false
+          ],
+          "coordinate": [
+            -11072942.268655945,
+            4401239.150655944
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "isNoData": false,
+          "pixel": [
+            100,
+            100
+          ],
+          "reflectances": [
+            0.0623,
+            0.0684,
+            0.08560000000000001
+          ],
+          "sources": [
+            {
+              "band": "red",
+              "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+              "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3"
+            },
+            {
+              "band": "green",
+              "jobId": "93f98b3c-3ac3-4139-b120-3e4fc6a3f0cb",
+              "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229"
+            },
+            {
+              "band": "blue",
+              "jobId": "68aff0eb-e3fb-4650-bb9a-8bd06f75b64f",
+              "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da"
+            }
+          ],
+          "values": [
+            623,
+            684,
+            856
+          ]
+        }
+      },
+      {
+        "label": "modis-project-clip",
+        "jobId": "182a4a1c-c949-4835-a01a-1cf0adc59881",
+        "sourceJobs": [
+          {
+            "id": "086be52f-a321-42eb-bc90-8e9bef63f410",
+            "sha256": "b76811741b81b60e8b92d1f4e6f690a95f19a2f69fabc102431f681dbb6799c4",
+            "itemId": "project:d8650e9c-2f46-4e09-aaa3-3b845a28529e",
+            "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif"
+          },
+          {
+            "id": "6c53d619-c120-4a1d-b670-8517b9aec46d",
+            "sha256": "f3bb808ce7b59c7382878e4a7f11cbcf6fb14c063e6a7d7bb0c60323575f9153",
+            "itemId": "project:d8650e9c-2f46-4e09-aaa3-3b845a28529e",
+            "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b04.tif"
+          },
+          {
+            "id": "51cbc828-0030-48f0-98d5-7338f16d8f9f",
+            "sha256": "1d727f15825241cf90d914111776eace3e638d9b594b47088b58dd0b902735b8",
+            "itemId": "project:d8650e9c-2f46-4e09-aaa3-3b845a28529e",
+            "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b03.tif"
+          }
+        ],
+        "sha256": "49a4ef4dde7a6ab67282e05cf74c7cb68707548a0c019ea8625d295f79566221",
+        "bytes": 15337,
+        "elapsedSeconds": 0.255,
+        "grid": {
+          "width": 95,
+          "height": 39,
+          "crs": "PROJCS[\"unnamed\",GEOGCS[\"unknown\",DATUM[\"unnamed\",SPHEROID[\"unnamed\",6371007.181,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Sinusoidal\"],PARAMETER[\"longitude_of_center\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+          "nodata": -28672.0,
+          "scales": [
+            0.0001,
+            0.0001,
+            0.0001
+          ],
+          "offsets": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dtypes": [
+            "int16",
+            "int16",
+            "int16"
+          ]
+        },
+        "channelsCompared": 11115,
+        "outputSamples": {
+          "channelValidPixels": [
+            3705,
+            3705,
+            3705
+          ],
+          "commonValidPixels": 3705,
+          "samplesSha256": [
+            "f6e0b6af59729dc4978e18af1b43237e0433bf5dacd035cd897bbf8978220ac6",
+            "38acb80f2f9ab1382ecbf6841ceaa3ae3790934dd1f08f4181a62c0dcf8f1451",
+            "fb831b82086912db04be48646813bc61fc6d6ac2867fc903cc2ac3213cd1c1ab"
+          ]
+        },
+        "package": {
+          "sha256": "38ffe4320241799e51495e41ec3dd0a6932a145cfd918604421b6792c6d9d1ad",
+          "bytes": 37359,
+          "files": [
+            "182a4a1c-c949-4835-a01a-1cf0adc59881.tif",
+            "182a4a1c-c949-4835-a01a-1cf0adc59881.metadata.json",
+            "preview.png",
+            "README.txt",
+            "checksums.sha256"
+          ]
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "182a4a1c-c949-4835-a01a-1cf0adc59881",
+            "sha256": "49a4ef4dde7a6ab67282e05cf74c7cb68707548a0c019ea8625d295f79566221"
+          },
+          "center": [
+            -10784761.75897558,
+            4207574.435147274
+          ],
+          "channelNoData": [
+            false,
+            false,
+            false
+          ],
+          "coordinate": [
+            -10784761.75897558,
+            4207574.435147274
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "isNoData": false,
+          "pixel": [
+            0,
+            0
+          ],
+          "reflectances": [
+            0.0043,
+            0.0171,
+            0.0206
+          ],
+          "sources": [
+            {
+              "band": "red",
+              "jobId": "086be52f-a321-42eb-bc90-8e9bef63f410",
+              "sha256": "b76811741b81b60e8b92d1f4e6f690a95f19a2f69fabc102431f681dbb6799c4"
+            },
+            {
+              "band": "green",
+              "jobId": "6c53d619-c120-4a1d-b670-8517b9aec46d",
+              "sha256": "f3bb808ce7b59c7382878e4a7f11cbcf6fb14c063e6a7d7bb0c60323575f9153"
+            },
+            {
+              "band": "blue",
+              "jobId": "51cbc828-0030-48f0-98d5-7338f16d8f9f",
+              "sha256": "1d727f15825241cf90d914111776eace3e638d9b594b47088b58dd0b902735b8"
+            }
+          ],
+          "values": [
+            43,
+            171,
+            206
+          ]
+        }
+      }
+    ],
+    "derivedWorksWithoutParentFiles": true,
+    "originalsUnchanged": true,
+    "reference": "Rasterio 1.3.9 / GDAL 3.6.4",
+    "qaOnly": true,
+    "processedBandChecks": [
+      {
+        "jobId": "086be52f-a321-42eb-bc90-8e9bef63f410",
+        "band": "red",
+        "sha256": "b76811741b81b60e8b92d1f4e6f690a95f19a2f69fabc102431f681dbb6799c4",
+        "originalSha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+        "originalWindow": [
+          722,
+          518,
+          95,
+          39
+        ],
+        "samplesCompared": 3705
+      },
+      {
+        "jobId": "6c53d619-c120-4a1d-b670-8517b9aec46d",
+        "band": "green",
+        "sha256": "f3bb808ce7b59c7382878e4a7f11cbcf6fb14c063e6a7d7bb0c60323575f9153",
+        "originalSha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+        "originalWindow": [
+          722,
+          518,
+          95,
+          39
+        ],
+        "samplesCompared": 3705
+      },
+      {
+        "jobId": "51cbc828-0030-48f0-98d5-7338f16d8f9f",
+        "band": "blue",
+        "sha256": "1d727f15825241cf90d914111776eace3e638d9b594b47088b58dd0b902735b8",
+        "originalSha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+        "originalWindow": [
+          722,
+          518,
+          95,
+          39
+        ],
+        "samplesCompared": 3705
+      }
+    ]
+  },
+  "mcp": {
+    "schema": "geod-scientific-rgb-mcp/v1",
+    "nativeBinarySha256": "c363d7215aa90c5a12525e2861447c4101c30d14b9af8839ff1136f038f40b3d",
+    "cases": [
+      {
+        "mode": "direct-read-only",
+        "tools": [
+          "geod_rgb_inspect",
+          "geod_rgb_pixel",
+          "geod_rgb_plan"
+        ],
+        "savedFileWithoutParents": {
+          "id": "182a4a1c-c949-4835-a01a-1cf0adc59881",
+          "sha256": "49a4ef4dde7a6ab67282e05cf74c7cb68707548a0c019ea8625d295f79566221",
+          "pixel": [
+            1369,
+            1375,
+            1188
+          ],
+          "previewOmitted": true
+        },
+        "wrongOrderRejected": true,
+        "duplicateIdsRejected": true,
+        "writesDenied": true
+      },
+      {
+        "mode": "direct-write",
+        "tools": [
+          "geod_rgb_inspect",
+          "geod_rgb_package",
+          "geod_rgb_pixel",
+          "geod_rgb_plan",
+          "geod_rgb_run"
+        ],
+        "result": {
+          "id": "87b37065-8e18-4e75-ad92-db3c80daee1b",
+          "sha256": "7df08cc71638ad604061554ee89c96da579242374a95ed39c0336c16a98224d7",
+          "pixel": [
+            2090,
+            1699,
+            1113
+          ],
+          "previewOmitted": true
+        },
+        "package": {
+          "sha256": "08eb227c6761c74225c0815885984611425f6df3c54b802455b7ab066c43e34d",
+          "bytes": 23493523,
+          "files": [
+            "87b37065-8e18-4e75-ad92-db3c80daee1b.tif",
+            "87b37065-8e18-4e75-ad92-db3c80daee1b.metadata.json",
+            "preview.png",
+            "README.txt",
+            "checksums.sha256"
+          ]
+        },
+        "settled": true
+      },
+      {
+        "mode": "loopback-write-and-reconnect",
+        "tools": [
+          "geod_rgb_inspect",
+          "geod_rgb_package",
+          "geod_rgb_pixel",
+          "geod_rgb_plan",
+          "geod_rgb_run"
+        ],
+        "result": {
+          "id": "86b1c8c6-33ec-45e9-a36f-3e10595a16a1",
+          "sha256": "f73a7c731df607d78a5e082e06d51509317912ef128e91af9ff2b3dc887b55af",
+          "pixel": [
+            2090,
+            1699,
+            1113
+          ],
+          "previewOmitted": true
+        },
+        "package": {
+          "sha256": "7f214a024d17ac25a699bfc94f9706b42ce3804d84d354e1c7e24c08dcee06eb",
+          "bytes": 23493528,
+          "files": [
+            "86b1c8c6-33ec-45e9-a36f-3e10595a16a1.tif",
+            "86b1c8c6-33ec-45e9-a36f-3e10595a16a1.metadata.json",
+            "preview.png",
+            "README.txt",
+            "checksums.sha256"
+          ]
+        },
+        "disconnectBeforeSettlement": true,
+        "settled": true
+      }
+    ],
+    "qaOnly": true,
+    "directEofReopen": true,
+    "status": "passed",
+    "protocolOnlyStdoutAndCleanEof": true
+  },
+  "ui": {
+    "schema": "geod-scientific-rgb-ui/v1",
+    "renderer": "production built renderer with exact desktop CSP",
+    "nativeWindowTested": false,
+    "cases": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "savedFileOpenedWithoutParents": true,
+        "paintedRaster": true,
+        "pixelRead": true,
+        "deliveryPackaged": true,
+        "cards": 15,
+        "cardHeight": 106
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "savedFileOpenedWithoutParents": true,
+        "paintedRaster": true,
+        "pixelRead": true,
+        "deliveryPackaged": true,
+        "cards": 15,
+        "cardHeight": 106
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "savedFileOpenedWithoutParents": true,
+        "paintedRaster": true,
+        "pixelRead": true,
+        "deliveryPackaged": true,
+        "cards": 15,
+        "cardHeight": 106
+      }
+    ],
+    "remoteRequests": [],
+    "errors": [],
+    "createdByUi": {
+      "id": "eed8aa60-13cd-439f-9b25-b7afe9f40fc8",
+      "sha256": "a72c180d8453396193c76e9dfc516536d4bbeec67becd1cd70fd13b6a6e5e60c",
+      "bytes": 23413098
+    },
+    "status": "passed",
+    "screenshots": [
+      {
+        "name": "library-1024-zh-CN.png",
+        "sha256": "a2c0f0b1378015ec36195527e835a990303f375128af05be696091c48ce67e48"
+      },
+      {
+        "name": "library-1440-en.png",
+        "sha256": "7d537759779d7565d886e4377e79d8adf70f8c13c9f77dd51c87b517988d8c17"
+      },
+      {
+        "name": "library-900-en.png",
+        "sha256": "a5564fadcbc37e0e4d0bc63f92daa4eda09d0503ed3e76ff961ca166a1dbd8c9"
+      },
+      {
+        "name": "rgb-review-dialog.png",
+        "sha256": "b6988e8d84eab4fda73465cfa62189edac71a77778d2d99c67a24c04c444617f"
+      },
+      {
+        "name": "saved-rgb-1024-zh-CN.png",
+        "sha256": "905715f79480cccde1f0b3319411e3450c91a0023a374b0436153e8dc5173f8b"
+      },
+      {
+        "name": "saved-rgb-1440-en.png",
+        "sha256": "31b2c6242bc8366a538554d9bc7d5db896ce3f0ea008848e72347e2b59e915f3"
+      },
+      {
+        "name": "saved-rgb-900-en.png",
+        "sha256": "0d4213564afd2f0076886ec74811d9d9da1beaa3d095bac94ce1f17d214189d7"
+      }
+    ],
+    "rendererFiles": {
+      "index.html": "3064f865dd16c3b49cf897bf3667a8566f50821f0ae8a1887edf8e44d8887801",
+      "assets/workspace-map-D_DsgN0i.css": "0c1af89bd5473ee8990bc0bab9ffe3159cd9909b2c01327193c73f0c7dbeec8d",
+      "assets/workspace-map-geometry-DNvaJX9Q.js": "e1d30822efc433a9dde019500a5d22e5acb274effa2ab018b37ef654f4cbe2ae",
+      "assets/workspace-map-Q9Ksr8Ky.js": "9d41a728bf2d363cd41eeb0258ea525a48219e2be19febada6c74182449a052d"
+    },
+    "nativeBinarySha256": "c363d7215aa90c5a12525e2861447c4101c30d14b9af8839ff1136f038f40b3d",
+    "desktopCsp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' tauri-plugin-decoration: http://tauri-plugin-decoration.localhost https://tauri-plugin-decoration.localhost; font-src 'self'; img-src 'self' https://zipper.creodias.eu https://planetarycomputer.microsoft.com https://datahub.creodias.eu https://catalogue.dataspace.copernicus.eu data: blob: https://sentinel-cogs.s3.us-west-2.amazonaws.com https://data.lpdaac.earthdatacloud.nasa.gov https://d1nklfio7vscoe.cloudfront.net; connect-src 'self' blob: https://planetarycomputer.microsoft.com https://stac.dataspace.copernicus.eu https://sentinel2l2a01.blob.core.windows.net https://landsateuwest.blob.core.windows.net https://sentinel1euwestrtc.blob.core.windows.net https://naipeuwest.blob.core.windows.net ipc: http://ipc.localhost https://earth-search.aws.element84.com https://sentinel-cogs.s3.us-west-2.amazonaws.com https://cmr.earthdata.nasa.gov; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'"
+  },
+  "regression": {
+    "runtimePassed": 427,
+    "runtimeIgnored": 4,
+    "desktopPassed": 4,
+    "logicPassed": 218,
+    "uiPassed": 195,
+    "registeredDesktopCommands": 97,
+    "clippy": "workspace/all-targets -D warnings passed",
+    "repositoryChecks": "isolation, contracts, recipe schema, desktop ACL and CSP passed",
+    "finalChangedUiTestsPassed": 25,
+    "windowsCliFutureBytes": 3888,
+    "jobRecordBytes": 3400
+  },
+  "boundaries": [
+    "No new upstream downloads in this verification; real originals were previously acquired by the application.",
+    "No positive NASA/Copernicus account test.",
+    "Synthetic HLS/VIIRS checks are not production-file acceptance.",
+    "No native desktop window, installer or release test.",
+    "No implicit resampling, reprojection, QA masking or arbitrary band selection.",
+    "Strip Deflate GeoTIFF output is not COG.",
+    "500 MiB uncompressed RGB / 512 MiB output file limits."
+  ],
+  "developmentDesktopBuild": {
+    "profile": "debug/custom-protocol",
+    "sha256": "6dd551d4ac9603a1dd33f0dfda2e94af339b35f0ff67f148a666d1006e4f4763",
+    "installerBuilt": false,
+    "nativeWindowLaunched": false
+  }
+}

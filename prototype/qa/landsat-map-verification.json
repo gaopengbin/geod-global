@@ -1,0 +1,512 @@
+{
+  "checkedAt": "2026-10-01T15:08:00.914651+00:00",
+  "scope": "Landsat original three-band online RGB map; not NASA/CDSE authorized originals",
+  "networkEvidence": {
+    "checkedAt": "2026-10-01T15:05:36.951Z",
+    "catalogueReplay": "LC09_L2SP_044034_20250628_02_T1",
+    "csp": "Actual desktop devCsp enforced by browser meta policy",
+    "metadata": {
+      "liveCatalog": {
+        "status": 200,
+        "firstItem": "LC09_L2SP_044034_20250628_02_T1"
+      },
+      "id": "LC09_L2SP_044034_20250628_02_T1",
+      "state": "ready",
+      "viewExtent": [
+        462285,
+        4030485,
+        692415,
+        4264215
+      ],
+      "sourceExtent": [
+        462300,
+        4030470,
+        692430,
+        4264200
+      ],
+      "transformMatrix": [
+        1,
+        0,
+        0,
+        1,
+        15,
+        -15
+      ],
+      "bandCount": 4,
+      "dataType": "Float32Array",
+      "resolution": 30,
+      "tileCoord": [
+        6,
+        11,
+        10
+      ],
+      "tileSize": [
+        256,
+        256
+      ],
+      "tileExtent": [
+        546780,
+        4179720,
+        554460,
+        4187400
+      ],
+      "samples": [
+        {
+          "row": 2560,
+          "column": 2816,
+          "dn": [
+            8882,
+            9654,
+            8745,
+            255
+          ]
+        },
+        {
+          "row": 2561,
+          "column": 2817,
+          "dn": [
+            8869,
+            9612,
+            8684,
+            255
+          ]
+        },
+        {
+          "row": 2577,
+          "column": 2833,
+          "dn": [
+            8327,
+            9366,
+            8285,
+            255
+          ]
+        },
+        {
+          "row": 2597,
+          "column": 2853,
+          "dn": [
+            9067,
+            9870,
+            8768,
+            255
+          ]
+        },
+        {
+          "row": 2615,
+          "column": 2871,
+          "dn": [
+            13153,
+            13622,
+            12713,
+            255
+          ]
+        },
+        {
+          "row": 2660,
+          "column": 2916,
+          "dn": [
+            10911,
+            11110,
+            10361,
+            255
+          ]
+        },
+        {
+          "row": 2683,
+          "column": 2939,
+          "dn": [
+            12153,
+            12030,
+            11617,
+            255
+          ]
+        },
+        {
+          "row": 2705,
+          "column": 2961,
+          "dn": [
+            11688,
+            11445,
+            10519,
+            255
+          ]
+        },
+        {
+          "row": 2750,
+          "column": 3006,
+          "dn": [
+            11249,
+            10966,
+            10390,
+            255
+          ]
+        },
+        {
+          "row": 2785,
+          "column": 3041,
+          "dn": [
+            16023,
+            15435,
+            14509,
+            255
+          ]
+        },
+        {
+          "row": 2815,
+          "column": 3071,
+          "dn": [
+            8612,
+            9363,
+            8160,
+            255
+          ]
+        }
+      ],
+      "style": {
+        "color": [
+          "color",
+          [
+            "*",
+            255,
+            [
+              "^",
+              [
+                "clamp",
+                [
+                  "/",
+                  [
+                    "+",
+                    [
+                      "*",
+                      [
+                        "band",
+                        1
+                      ],
+                      2.75e-05
+                    ],
+                    -0.2
+                  ],
+                  0.3
+                ],
+                0,
+                1
+              ],
+              0.45454545454545453
+            ]
+          ],
+          [
+            "*",
+            255,
+            [
+              "^",
+              [
+                "clamp",
+                [
+                  "/",
+                  [
+                    "+",
+                    [
+                      "*",
+                      [
+                        "band",
+                        2
+                      ],
+                      2.75e-05
+                    ],
+                    -0.2
+                  ],
+                  0.3
+                ],
+                0,
+                1
+              ],
+              0.45454545454545453
+            ]
+          ],
+          [
+            "*",
+            255,
+            [
+              "^",
+              [
+                "clamp",
+                [
+                  "/",
+                  [
+                    "+",
+                    [
+                      "*",
+                      [
+                        "band",
+                        3
+                      ],
+                      2.75e-05
+                    ],
+                    -0.2
+                  ],
+                  0.3
+                ],
+                0,
+                1
+              ],
+              0.45454545454545453
+            ]
+          ],
+          [
+            "case",
+            [
+              "all",
+              [
+                "!=",
+                [
+                  "band",
+                  1
+                ],
+                0
+              ],
+              [
+                "!=",
+                [
+                  "band",
+                  2
+                ],
+                0
+              ],
+              [
+                "!=",
+                [
+                  "band",
+                  3
+                ],
+                0
+              ]
+            ],
+            1,
+            0
+          ]
+        ]
+      },
+      "invalidGeometry": {
+        "state": "error",
+        "message": "Landsat COG metadata does not match the selected original bands."
+      }
+    },
+    "signatures": 1,
+    "transfers": [
+      {
+        "status": 206,
+        "band": "4",
+        "signed": true,
+        "range": "bytes=0-65535"
+      },
+      {
+        "status": 206,
+        "band": "2",
+        "signed": true,
+        "range": "bytes=0-65535"
+      },
+      {
+        "status": 206,
+        "band": "3",
+        "signed": true,
+        "range": "bytes=0-65535"
+      },
+      {
+        "status": 206,
+        "band": "4",
+        "signed": true,
+        "range": "bytes=45613056-45809663"
+      },
+      {
+        "status": 206,
+        "band": "3",
+        "signed": true,
+        "range": "bytes=44302336-44498943"
+      },
+      {
+        "status": 206,
+        "band": "2",
+        "signed": true,
+        "range": "bytes=43581440-43712511"
+      },
+      {
+        "status": 206,
+        "band": "4",
+        "signed": true,
+        "range": "bytes=0-65535"
+      },
+      {
+        "status": 206,
+        "band": "3",
+        "signed": true,
+        "range": "bytes=0-65535"
+      },
+      {
+        "status": 206,
+        "band": "2",
+        "signed": true,
+        "range": "bytes=0-65535"
+      }
+    ],
+    "errors": [],
+    "independentGdal": {
+      "samplesVerified": 33,
+      "mismatches": 0,
+      "crs": "EPSG:32610",
+      "transform": [
+        30.0,
+        0.0,
+        462285.0,
+        0.0,
+        -30.0,
+        4264215.0
+      ]
+    }
+  },
+  "independentOriginalFiles": [
+    {
+      "band": "red",
+      "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+      "existingOriginalJobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1"
+    },
+    {
+      "band": "green",
+      "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+      "existingOriginalJobId": "9785b8b8-8089-4778-9b63-f964c9af8df0"
+    },
+    {
+      "band": "blue",
+      "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+      "existingOriginalJobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80"
+    }
+  ],
+  "uiEvidence": {
+    "checkedAt": "2026-10-01T14:59:47.366Z",
+    "itemIds": [
+      "LC09_L2SP_044034_20250628_02_T1",
+      "LC09_L2SP_044034_20251205_02_T1"
+    ],
+    "results": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "failureCase": false,
+        "transportFailureInjected": false,
+        "retryRestoredLiveMap": false,
+        "projectContext": "Isolated fixture, not a native saved project",
+        "catalog": "Two actual STAC items replayed",
+        "raster": "Live signed original B4/B3/B2 HTTPS ranges",
+        "mapReady": true,
+        "comparison": true,
+        "signatures": 1,
+        "signingStatuses": [
+          200
+        ],
+        "transfers": 18,
+        "bands": [
+          "4",
+          "3",
+          "2"
+        ],
+        "overflow": false,
+        "pageErrors": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "failureCase": false,
+        "transportFailureInjected": false,
+        "retryRestoredLiveMap": false,
+        "projectContext": "Isolated fixture, not a native saved project",
+        "catalog": "Two actual STAC items replayed",
+        "raster": "Live signed original B4/B3/B2 HTTPS ranges",
+        "mapReady": true,
+        "comparison": true,
+        "signatures": 1,
+        "signingStatuses": [
+          200
+        ],
+        "transfers": 18,
+        "bands": [
+          "4",
+          "3",
+          "2"
+        ],
+        "overflow": false,
+        "pageErrors": []
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "failureCase": false,
+        "transportFailureInjected": false,
+        "retryRestoredLiveMap": false,
+        "projectContext": "Isolated fixture, not a native saved project",
+        "catalog": "Two actual STAC items replayed",
+        "raster": "Live signed original B4/B3/B2 HTTPS ranges",
+        "mapReady": true,
+        "comparison": true,
+        "signatures": 1,
+        "signingStatuses": [
+          200
+        ],
+        "transfers": 18,
+        "bands": [
+          "4",
+          "3",
+          "2"
+        ],
+        "overflow": false,
+        "pageErrors": []
+      },
+      {
+        "theme": "light",
+        "width": 1440,
+        "failureCase": true,
+        "transportFailureInjected": true,
+        "retryRestoredLiveMap": true,
+        "projectContext": "Isolated fixture, not a native saved project",
+        "catalog": "Two actual STAC items replayed",
+        "raster": "Live signed original B4/B3/B2 HTTPS ranges",
+        "mapReady": true,
+        "comparison": true,
+        "signatures": 2,
+        "signingStatuses": [
+          200,
+          200
+        ],
+        "transfers": 24,
+        "bands": [
+          "4",
+          "3",
+          "2"
+        ],
+        "overflow": false,
+        "pageErrors": []
+      }
+    ]
+  },
+  "signaturePolicy": {
+    "endpoint": "https://planetarycomputer.microsoft.com/api/sas/v1/token/landsateuwest/landsat-c2",
+    "memoryOnly": true,
+    "requestsForTwoRgbScenes": 1,
+    "readonlyContainerTokenValidated": true,
+    "previousPerFileSigningObservedHTTP429": true
+  },
+  "automatedChecks": {
+    "nodeTests": 91,
+    "uiTests": 92,
+    "desktopTests": 4,
+    "repositoryContractsAndCsp": "passed",
+    "frontendBuild": "passed with existing large chunk warning"
+  },
+  "limitations": {
+    "secondSceneFullDownload": false,
+    "nativeSavedProjectUsedInThisUiTest": false,
+    "nativeWindowUiOperated": false,
+    "nasaCdseAuthorizedOriginalDownload": false,
+    "localThreeBandRgbExport": false,
+    "installerCreated": false,
+    "publicRelease": false
+  }
+}

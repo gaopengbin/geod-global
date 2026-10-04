@@ -1,0 +1,196 @@
+{
+  "checkedAt": "2026-10-02T05:06:55.998Z",
+  "kind": "public live VIIRS catalogue and browse, native original-product adapter and negative authorization acceptance",
+  "products": [
+    {
+      "provider": "nasa-viirs-noaa21",
+      "product": "VJ209A1",
+      "collection": "VJ209A1_002",
+      "query": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=VJ209A1_002&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=1",
+      "catalogueStatus": 200,
+      "firstItem": "VJ209A1.A2025177.h08v05.002.2025333224010",
+      "nextItem": "VJ209A1.A2025169.h08v05.002.2025332223509",
+      "period": [
+        "2025-06-26T00:00:00.000Z",
+        "2025-07-03T23:59:59Z"
+      ],
+      "unsignedOriginal": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/VJ209A1.A2025177.h08v05.002.2025333224010.h5",
+      "unsignedBrowse": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+      "publicBrowseHeadStatus": 200,
+      "publicBrowseHeadType": "binary/octet-stream",
+      "paginationChecked": true
+    },
+    {
+      "provider": "nasa-viirs-noaa20",
+      "product": "VJ109A1",
+      "collection": "VJ109A1_002",
+      "query": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=VJ109A1_002&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=1",
+      "catalogueStatus": 200,
+      "firstItem": "VJ109A1.A2025177.h08v05.002.2025189193733",
+      "nextItem": "VJ109A1.A2025169.h08v05.002.2025182165331",
+      "period": [
+        "2025-06-26T00:00:00.000Z",
+        "2025-07-03T23:59:59Z"
+      ],
+      "unsignedOriginal": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/VJ109A1.A2025177.h08v05.002.2025189193733.h5",
+      "unsignedBrowse": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+      "publicBrowseHeadStatus": 200,
+      "publicBrowseHeadType": "binary/octet-stream",
+      "paginationChecked": true
+    },
+    {
+      "provider": "nasa-viirs-npp",
+      "product": "VNP09A1",
+      "collection": "VNP09A1_002",
+      "query": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=VNP09A1_002&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=1",
+      "catalogueStatus": 200,
+      "firstItem": "VNP09A1.A2025177.h08v05.002.2025202170202",
+      "nextItem": "VNP09A1.A2025169.h08v05.002.2025177111425",
+      "period": [
+        "2025-06-26T00:00:00.000Z",
+        "2025-07-03T23:59:59Z"
+      ],
+      "unsignedOriginal": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/VNP09A1.A2025177.h08v05.002.2025202170202.h5",
+      "unsignedBrowse": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+      "publicBrowseHeadStatus": 200,
+      "publicBrowseHeadType": "binary/octet-stream",
+      "paginationChecked": true
+    }
+  ],
+  "native": {
+    "projects": 3,
+    "failedWithoutEarthdata": 3,
+    "allTransferredZeroBytes": true,
+    "noOutputOrSha256": true,
+    "accountStatus": "not-connected",
+    "protectedOriginalDownloaded": false,
+    "restart": {
+      "checkedAt": "2026-10-02T04:53:36.352Z",
+      "projectsUnchanged": true,
+      "jobsUnchangedBeforeRetry": true,
+      "platformPeriodAndBrowseRestored": true,
+      "retrySameJobId": true,
+      "retryAttempts": 2,
+      "authorizedOriginalDownloaded": false
+    }
+  },
+  "ui": {
+    "checkedAt": "2026-10-02T05:06:55.998Z",
+    "views": [
+      {
+        "platform": "NOAA-21",
+        "theme": "light",
+        "width": 1440,
+        "locale": "en",
+        "source": "actual CMR query and public browse with actual isolated Rust runtime",
+        "searches": [
+          {
+            "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=VJ209A1_002&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=100",
+            "count": 5
+          },
+          {
+            "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=VJ209A1_002&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&limit=100&sortby=-properties.datetime&cursor=eyJqc29uIjoiWzE3NDgxMzEyMDAwMDAsMzk0MDIyMDUxNV0iLCJ1bW0iOiJbMTc0ODEzMTIwMDAwMCwzOTQwMjIwNTE1XSJ9",
+            "count": 0
+          }
+        ],
+        "decodedPublicBrowse": {
+          "source": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ209A1.002/VJ209A1.A2025177.h08v05.002.2025333224010/BROWSE.VJ209A1.A2025177.h08v05.002.2025333224010.1.jpg",
+          "width": 240,
+          "height": 240,
+          "decoded": true
+        },
+        "projectCompositeRange": "Jun 26, 2025 – Jul 3, 2025",
+        "cloudFilterAbsent": true,
+        "unsupportedPixelProcessingAbsent": true,
+        "unauthorizedSubmitDisabled": true,
+        "authorizationSettingsOpened": true,
+        "projectCountUnchanged": true,
+        "errors": []
+      },
+      {
+        "platform": "NOAA-20",
+        "theme": "dark",
+        "width": 1440,
+        "locale": "zh-CN",
+        "source": "actual CMR query and public browse with actual isolated Rust runtime",
+        "searches": [
+          {
+            "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=VJ109A1_002&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=100",
+            "count": 5
+          },
+          {
+            "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=VJ109A1_002&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&limit=100&sortby=-properties.datetime&cursor=eyJqc29uIjoiWzE3NDgxMzEyMDAwMDAsMzU1OTg5ODAxM10iLCJ1bW0iOiJbMTc0ODEzMTIwMDAwMCwzNTU5ODk4MDEzXSJ9",
+            "count": 0
+          }
+        ],
+        "decodedPublicBrowse": {
+          "source": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VJ109A1.002/VJ109A1.A2025177.h08v05.002.2025189193733/BROWSE.VJ109A1.A2025177.h08v05.002.2025189193733.1.jpg",
+          "width": 240,
+          "height": 240,
+          "decoded": true
+        },
+        "projectCompositeRange": "2025年6月26日 – 2025年7月3日",
+        "cloudFilterAbsent": true,
+        "unsupportedPixelProcessingAbsent": true,
+        "unauthorizedSubmitDisabled": true,
+        "authorizationSettingsOpened": true,
+        "projectCountUnchanged": true,
+        "errors": []
+      },
+      {
+        "platform": "Suomi-NPP",
+        "theme": "light",
+        "width": 1024,
+        "locale": "zh-CN",
+        "source": "actual CMR query and public browse with actual isolated Rust runtime",
+        "searches": [
+          {
+            "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=VNP09A1_002&bbox=-122.55%2C37.68%2C-122.32%2C37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&sortby=-properties.datetime&limit=100",
+            "count": 5
+          },
+          {
+            "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=VNP09A1_002&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59.999Z&limit=100&sortby=-properties.datetime&cursor=eyJqc29uIjoiWzE3NDgxMzEyMDAwMDAsMzU1OTg5NjAwMl0iLCJ1bW0iOiJbMTc0ODEzMTIwMDAwMCwzNTU5ODk2MDAyXSJ9",
+            "count": 0
+          }
+        ],
+        "decodedPublicBrowse": {
+          "source": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/VNP09A1.002/VNP09A1.A2025177.h08v05.002.2025202170202/BROWSE.VNP09A1.A2025177.h08v05.002.2025202170202.1.jpg",
+          "width": 240,
+          "height": 240,
+          "decoded": true
+        },
+        "projectCompositeRange": "2025年6月26日 – 2025年7月3日",
+        "cloudFilterAbsent": true,
+        "unsupportedPixelProcessingAbsent": true,
+        "unauthorizedSubmitDisabled": true,
+        "authorizationSettingsOpened": true,
+        "projectCountUnchanged": true,
+        "errors": []
+      }
+    ],
+    "usedUserDesktop": false
+  },
+  "checks": {
+    "nodeTestsPassed": 116,
+    "uiTestsPassed": 114,
+    "runtimeUnitTestsPassed": 169,
+    "runtimeUnitTestsIgnored": 4,
+    "runtimeCliTestsPassed": 3,
+    "desktopBoundaryTestsPassed": 4,
+    "clippyWarnings": 0,
+    "dependencyIsolationAndContracts": "passed",
+    "frontendBuild": "passed"
+  },
+  "notImplementedOrNotVerified": [
+    "successful production authorization",
+    "production HDF5 download and internal structure",
+    "science and QA dataset decoding",
+    "local georeferenced VIIRS maps and original pixel values",
+    "persistent science thumbnails",
+    "science RGB and export",
+    "project clip and mosaic"
+  ],
+  "usedUserDesktop": false,
+  "installerBuilt": false,
+  "published": false
+}

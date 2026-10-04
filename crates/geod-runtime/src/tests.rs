@@ -9,6 +9,34 @@ use tower::ServiceExt;
 
 const JPEG: &[u8] = b"\xff\xd8\xff\xe0fixture-jpeg-signature-only\xff\xd9";
 
+#[test]
+fn large_naip_originals_have_a_separate_cap_without_raising_ordinary_assets() {
+    let mut job = new_download_job(CreateJobRequest {
+        item_id: "me_m_4506963_se_19_030_20231115_20240103".into(),
+        asset_key: "aerial".into(),
+        href: "https://naipeuwest.blob.core.windows.net/naip/v002/me/2023/me_030cm_2023/45069/m_4506963_se_19_030_20231115_20240103.tif".into(),
+        media_type: "image/tiff".into(),
+        title: None,
+    });
+    assert!(source_transfer_limit(&job) > MAX_ASSET_BYTES);
+    assert!(1_606_809_310 < source_transfer_limit(&job));
+    assert_eq!(source_transfer_limit(&job), 4_294_967_296);
+    for key in [
+        "visual",
+        "scl",
+        "red",
+        "green",
+        "blue",
+        "elevation",
+        "modis_qc",
+    ] {
+        job.asset_key = key.into();
+        assert_eq!(source_transfer_limit(&job), MAX_ASSET_BYTES);
+    }
+    job.asset_key = "srtm".into();
+    assert_eq!(source_transfer_limit(&job), providers::srtm::MAX_ZIP_BYTES);
+}
+
 struct Fixture {
     origin: String,
     task: tokio::task::JoinHandle<()>,
@@ -31,7 +59,16 @@ async fn fixture() -> Fixture {
             let attempts = attempts.clone();
             tokio::spawn(async move {
                 let mut buffer = [0u8; 8192];
-                let read = socket.read(&mut buffer).await.unwrap_or(0);
+                let mut read = 0;
+                while read < buffer.len() && !buffer[..read].windows(4).any(|w| w == b"\r\n\r\n") {
+                    match socket.read(&mut buffer[read..]).await {
+                        Ok(0) | Err(_) => return,
+                        Ok(count) => read += count,
+                    }
+                }
+                if !buffer[..read].windows(4).any(|w| w == b"\r\n\r\n") {
+                    return;
+                }
                 let request = String::from_utf8_lossy(&buffer[..read]);
                 let path = request.split_whitespace().nth(1).unwrap_or("/");
                 match path {
@@ -158,7 +195,12 @@ async fn download_commits_bytes_hash_and_persistent_record() {
         .await
         .unwrap();
     let completed = settled(&manager, &job.id).await;
-    assert_eq!(completed.status, JobStatus::Succeeded);
+    assert_eq!(
+        completed.status,
+        JobStatus::Succeeded,
+        "{:?}",
+        completed.error
+    );
     assert_eq!(completed.bytes_downloaded, JPEG.len() as u64);
     assert_eq!(
         completed.sha256,
@@ -221,8 +263,21 @@ async fn cancel_stops_transfer_and_retry_is_explicit_from_start() {
         .create(request(&server.origin, "/slow"))
         .await
         .unwrap();
-    tokio::time::sleep(Duration::from_millis(300)).await;
-    assert!(manager.get(&job.id).await.unwrap().bytes_downloaded > 0);
+    tokio::time::timeout(Duration::from_secs(8), async {
+        loop {
+            let current = manager.get(&job.id).await.unwrap();
+            assert!(
+                active(&current.status),
+                "slow transfer settled before cancellation"
+            );
+            if current.bytes_downloaded > 0 {
+                break;
+            }
+            tokio::time::sleep(Duration::from_millis(10)).await;
+        }
+    })
+    .await
+    .expect("slow transfer never received bytes");
     assert_eq!(
         manager.cancel(&job.id).await.unwrap().status,
         JobStatus::Cancelled
@@ -241,9 +296,12 @@ async fn cancel_stops_transfer_and_retry_is_explicit_from_start() {
         .unwrap();
     assert_eq!(settled(&manager, &job.id).await.status, JobStatus::Failed);
     manager.retry(&job.id).await.unwrap();
+    let successful_retry = settled(&manager, &job.id).await;
     assert_eq!(
-        settled(&manager, &job.id).await.status,
-        JobStatus::Succeeded
+        successful_retry.status,
+        JobStatus::Succeeded,
+        "{:?}",
+        successful_retry.error
     );
     assert!(manager.retry(&job.id).await.is_err());
 }

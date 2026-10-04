@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "geod-provider-verification/v1",
+  "checkedAt": "2026-10-01T12:01:12.203Z",
+  "scope": "Native protected-original adaptation; not positive real-account acceptance",
+  "officialCopernicusResolution": {
+    "itemId": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511",
+    "href": "https://download.dataspace.copernicus.eu/odata/v1/Products(0d695b42-4b24-4954-ba09-f2a44303fdd8)/$value",
+    "mediaType": "application/zip",
+    "bytes": 1128466167,
+    "httpStatus": 200
+  },
+  "liveNegativeRequests": {
+    "nasa": {
+      "status": 302,
+      "redirectHost": "urs.earthdata.nasa.gov",
+      "bodySaved": false
+    },
+    "copernicus": {
+      "status": 401,
+      "bodySaved": false
+    }
+  },
+  "isolatedNativeWorkerJobs": [
+    {
+      "id": "ab5fcc26-2754-477a-9286-0202a2fa3f34",
+      "assetKey": "red",
+      "status": "failed",
+      "error": "Connect this data source in Settings before downloading protected files.",
+      "source": "NASA LP DAAC; Harmonized Landsat Sentinel-2 L30 v2.0 Surface Reflectance",
+      "outputPath": null,
+      "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.B04.tif"
+    },
+    {
+      "id": "ba2f30fb-88fc-434d-8cd7-d5701897039e",
+      "assetKey": "product",
+      "status": "failed",
+      "error": "Connect this data source in Settings before downloading protected files.",
+      "source": "Copernicus Data Space; ESA Sentinel-2 L2A SAFE original product",
+      "outputPath": null,
+      "href": "https://download.dataspace.copernicus.eu/odata/v1/Products(0d695b42-4b24-4954-ba09-f2a44303fdd8)/$value"
+    }
+  ],
+  "actualAuthorizedDownloads": false,
+  "filesCreated": false,
+  "ui": {
+    "fixtureUI": true,
+    "actualAccountAuthorization": false,
+    "results": [
+      {
+        "provider": "nasa-earthdata",
+        "theme": "light",
+        "width": 1440,
+        "states": [
+          "not-connected",
+          "saved"
+        ],
+        "sourceFormats": [
+          "HLS Int16 B04",
+          "B03",
+          "B02"
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "provider": "copernicus",
+        "theme": "light",
+        "width": 1440,
+        "states": [
+          "not-connected",
+          "saved"
+        ],
+        "sourceFormats": [
+          "SAFE ZIP"
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "provider": "nasa-earthdata",
+        "theme": "dark",
+        "width": 1440,
+        "states": [
+          "not-connected",
+          "saved"
+        ],
+        "sourceFormats": [
+          "HLS Int16 B04",
+          "B03",
+          "B02"
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "provider": "copernicus",
+        "theme": "dark",
+        "width": 1440,
+        "states": [
+          "not-connected",
+          "saved"
+        ],
+        "sourceFormats": [
+          "SAFE ZIP"
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "provider": "nasa-earthdata",
+        "theme": "light",
+        "width": 1024,
+        "states": [
+          "not-connected",
+          "saved"
+        ],
+        "sourceFormats": [
+          "HLS Int16 B04",
+          "B03",
+          "B02"
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "provider": "copernicus",
+        "theme": "light",
+        "width": 1024,
+        "states": [
+          "not-connected",
+          "saved"
+        ],
+        "sourceFormats": [
+          "SAFE ZIP"
+        ],
+        "overflow": false,
+        "errors": []
+      }
+    ]
+  },
+  "implementation": {
+    "nasa": "HLS L30 v2 B04/B03/B02; Int16 scale 0.0001 offset 0 nodata -9999, 30m",
+    "copernicus": "Official OData identity resolution; complete Sentinel-2 L2A SAFE ZIP",
+    "authorization": "Worker-only bearer; vault restore and CDSE refresh, no token in IPC/jobs/projects/errors",
+    "transfers": "2 concurrent; 512 MiB raster, 4 GiB SAFE ZIP; stream, cancellation, clean failure, restart and explicit retry",
+    "safeValidation": "ZIP directory, chosen product root, metadata and TCI/SCL JP2 entries; no extraction, JP2 decode or provider checksum validation"
+  },
+  "automated": {
+    "node": {
+      "passed": 78
+    },
+    "ui": {
+      "passed": 83
+    },
+    "runtimeAndCli": {
+      "passed": 113,
+      "ignored": 1
+    },
+    "desktop": {
+      "passed": 4
+    },
+    "clippy": "passed",
+    "desktopCheck": "passed",
+    "repositoryAndContracts": "passed",
+    "build": "passed"
+  },
+  "limitations": [
+    "No real Earthdata or Copernicus account was supplied; no positive authorized original-file download occurred.",
+    "Landsat/HLS 16-bit local display, inspect, crop and mosaic remain gated.",
+    "SAFE JP2 local display and processing remain unavailable.",
+    "Signed CDN handling is constrained and has protocol tests, but the positive NASA/CDSE redirect paths still require authorized live verification."
+  ],
+  "screenshotsRoot": ".verification/protected-qa",
+  "packaged": false,
+  "published": false,
+  "references": [
+    "https://lpdaac.usgs.gov/documents/1698/HLS_User_Guide_V2.pdf",
+    "https://hls.gsfc.nasa.gov/products-description/l30/",
+    "https://documentation.dataspace.copernicus.eu/APIs/OData.html"
+  ]
+}

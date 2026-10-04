@@ -1,0 +1,468 @@
+{
+  "checkedAt": "2026-10-02T14:12:10.361536+00:00",
+  "scope": "User-configured Overpass endpoints, five actual bounded preset extractions, full source geometry and recursive dependencies",
+  "status": "passed",
+  "fixturesUsedForPublicAcceptance": false,
+  "credentialsUsed": false,
+  "publicEndpointUsedForBoundedManualQA": "https://overpass-api.de/api/interpreter",
+  "applicationDefaultPublicEndpoint": false,
+  "selection": "Overpass bounding-box object selection; full geometries may extend outside bounds; no implicit polygon clip",
+  "presets": [
+    {
+      "preset": "buildings",
+      "assetId": "c9a64b24-385a-444b-a0c4-39454d1965b9",
+      "selectedCounts": {
+        "nodes": 0,
+        "ways": 7,
+        "relations": 2,
+        "total": 9
+      },
+      "dependencyCounts": {
+        "nodes": 140,
+        "ways": 5,
+        "relations": 0,
+        "total": 145
+      },
+      "sourceBytes": 54941,
+      "sourceSha256": "aa905d0a4382836d8a8b0801f67c2e45de2e37a12bfd2962082221122a989fdb",
+      "exportSha256": "67d5b46d0f6d227fefe9419e828be5d831595bc7cc756f5eadedf3f43a7ebe1c",
+      "dataTimestamp": "2026-10-02T14:04:58Z",
+      "requestedBounds": [
+        13.3773,
+        52.5167,
+        13.3783,
+        52.5174
+      ],
+      "actualGeometryBounds": [
+        13.3773786,
+        52.5165722,
+        13.3803895,
+        52.5179807
+      ],
+      "coordinateCount": 196,
+      "geometryCounts": {
+        "Polygon": 7,
+        "MultiPolygon": 2
+      },
+      "holes": 3,
+      "coordinatesOutsideSelection": 116,
+      "status": "passed",
+      "evidenceReport": ".verification/osm-public-buildings/report.json",
+      "allTagsNodeIdsMemberReferencesRolesAndMetadataEqual": true,
+      "allGeometriesValidAndEqualIndependentGeos": true,
+      "rawBytesAndProvenanceVerified": true
+    },
+    {
+      "preset": "roads",
+      "assetId": "a28b22c1-6a1d-4d8b-9e8e-de4a585ceaef",
+      "selectedCounts": {
+        "nodes": 2,
+        "ways": 18,
+        "relations": 0,
+        "total": 20
+      },
+      "dependencyCounts": {
+        "nodes": 73,
+        "ways": 0,
+        "relations": 0,
+        "total": 73
+      },
+      "sourceBytes": 34142,
+      "sourceSha256": "6379a98a5fee9efde476c64137ffd3e0936214eb5098c7ae86676f094da9ed4f",
+      "exportSha256": "ab5a76c3a19b8742c7c1802b80ba3a1d6baed5c6d506ca836bc0d39e85291982",
+      "dataTimestamp": "2026-10-02T14:06:01Z",
+      "requestedBounds": [
+        13.3773,
+        52.5167,
+        13.3783,
+        52.5174
+      ],
+      "actualGeometryBounds": [
+        13.3768924,
+        52.5159592,
+        13.3803543,
+        52.5180014
+      ],
+      "coordinateCount": 91,
+      "geometryCounts": {
+        "Point": 2,
+        "LineString": 18
+      },
+      "holes": 0,
+      "coordinatesOutsideSelection": 39,
+      "status": "passed",
+      "evidenceReport": ".verification/osm-public-roads/report.json",
+      "allTagsNodeIdsMemberReferencesRolesAndMetadataEqual": true,
+      "allGeometriesValidAndEqualIndependentGeos": true,
+      "rawBytesAndProvenanceVerified": true
+    },
+    {
+      "preset": "pois",
+      "assetId": "5adc56d4-2399-4131-a3b6-ef96a8d66be4",
+      "selectedCounts": {
+        "nodes": 7,
+        "ways": 1,
+        "relations": 0,
+        "total": 8
+      },
+      "dependencyCounts": {
+        "nodes": 13,
+        "ways": 0,
+        "relations": 0,
+        "total": 13
+      },
+      "sourceBytes": 8728,
+      "sourceSha256": "dafb1cdb6339cb24f7fbbcbfe99c8da04c5295c2e43fcf83612248d8dae46030",
+      "exportSha256": "aa6e8ed1e826d4b5b8902eac366b9b517741793652e889597df3c177f448a646",
+      "dataTimestamp": "2026-10-02T14:06:01Z",
+      "requestedBounds": [
+        13.3773,
+        52.5167,
+        13.3783,
+        52.5174
+      ],
+      "actualGeometryBounds": [
+        13.3774196,
+        52.5165722,
+        13.3780298,
+        52.5173651
+      ],
+      "coordinateCount": 21,
+      "geometryCounts": {
+        "Point": 7,
+        "Polygon": 1
+      },
+      "holes": 0,
+      "coordinatesOutsideSelection": 7,
+      "status": "passed",
+      "evidenceReport": ".verification/osm-public-pois/report.json",
+      "allTagsNodeIdsMemberReferencesRolesAndMetadataEqual": true,
+      "allGeometriesValidAndEqualIndependentGeos": true,
+      "rawBytesAndProvenanceVerified": true
+    },
+    {
+      "preset": "landuse",
+      "assetId": "f46f05c5-f5da-4a21-b5c0-3ca7fbef198b",
+      "selectedCounts": {
+        "nodes": 0,
+        "ways": 2,
+        "relations": 0,
+        "total": 2
+      },
+      "dependencyCounts": {
+        "nodes": 143,
+        "ways": 0,
+        "relations": 0,
+        "total": 143
+      },
+      "sourceBytes": 39923,
+      "sourceSha256": "b49ffb88671f0dd8f748e3d66f57204027a258d5eba85678bc926a50c28ebe7c",
+      "exportSha256": "249565f000221ee759e987e89823c4177d404582f4007ee10ad743d8f0c2b46b",
+      "dataTimestamp": "2026-10-02T14:07:01Z",
+      "requestedBounds": [
+        13.373,
+        52.515,
+        13.375,
+        52.517
+      ],
+      "actualGeometryBounds": [
+        13.370526,
+        52.5126788,
+        13.376961,
+        52.517551
+      ],
+      "coordinateCount": 145,
+      "geometryCounts": {
+        "Polygon": 2
+      },
+      "holes": 0,
+      "coordinatesOutsideSelection": 131,
+      "status": "passed",
+      "evidenceReport": ".verification/osm-public-landuse/report.json",
+      "allTagsNodeIdsMemberReferencesRolesAndMetadataEqual": true,
+      "allGeometriesValidAndEqualIndependentGeos": true,
+      "rawBytesAndProvenanceVerified": true
+    },
+    {
+      "preset": "water",
+      "assetId": "17daebb6-63f3-4f8b-87b4-c3918e23cac4",
+      "selectedCounts": {
+        "nodes": 0,
+        "ways": 1,
+        "relations": 0,
+        "total": 1
+      },
+      "dependencyCounts": {
+        "nodes": 5,
+        "ways": 0,
+        "relations": 0,
+        "total": 5
+      },
+      "sourceBytes": 2298,
+      "sourceSha256": "25244b61a55f78e59267f3c514e0a9ba0fd5d39e63b1410b0232c0c22d93a9ab",
+      "exportSha256": "afdf6e645dd1b99bc53542bd05a28fefdcbd2744bff014b332968a132364d431",
+      "dataTimestamp": "2026-10-02T14:09:06Z",
+      "requestedBounds": [
+        13.334,
+        52.5088,
+        13.335,
+        52.5094
+      ],
+      "actualGeometryBounds": [
+        13.3349813,
+        52.50935,
+        13.3351521,
+        52.509415
+      ],
+      "coordinateCount": 6,
+      "geometryCounts": {
+        "Polygon": 1
+      },
+      "holes": 0,
+      "coordinatesOutsideSelection": 5,
+      "status": "passed",
+      "evidenceReport": ".verification/osm-public-water-second/report.json",
+      "allTagsNodeIdsMemberReferencesRolesAndMetadataEqual": true,
+      "allGeometriesValidAndEqualIndependentGeos": true,
+      "rawBytesAndProvenanceVerified": true
+    }
+  ],
+  "positivePresets": [
+    "buildings",
+    "roads",
+    "pois",
+    "landuse",
+    "water"
+  ],
+  "totalSelectedFeatures": 40,
+  "totalDependencies": 379,
+  "comparison": "Exact source bytes and hashes; two independent completion counts; selected IDs only; exact tags, node identities, member references/roles and OSM metadata; independent GEOS polygonization plus exact way coordinates and relation edge multisets. Area classification uses pinned declarative OSM rules.",
+  "ui": {
+    "checkedAt": "2026-10-02T14:07:17.875Z",
+    "mode": "Headless Chromium reading actual native persisted OSM extraction; no additional public endpoint queries",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "actualViewportWidth": 1440,
+        "assetId": "c9a64b24-385a-444b-a0c4-39454d1965b9",
+        "sourceUrl": "https://overpass-api.de/api/interpreter",
+        "preset": "buildings",
+        "features": 9,
+        "selected": {
+          "nodes": 0,
+          "ways": 7,
+          "relations": 2,
+          "total": 9
+        },
+        "dependencies": {
+          "nodes": 140,
+          "ways": 5,
+          "relations": 0,
+          "total": 145
+        },
+        "explicitEndpointEmpty": true,
+        "noOverpassDemo": true,
+        "fivePresetsLocalized": true,
+        "allBrowserExportAttributesAndGeometryEqual": true,
+        "clickedActualFeatureId": "relation/3203717",
+        "originalAttributesVisible": true,
+        "rawAndDerivedHashesVisible": true,
+        "noDocumentHorizontalOverflow": true,
+        "noUpstreamQueriesIssuedByUi": true,
+        "errors": []
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "actualViewportWidth": 1024,
+        "assetId": "c9a64b24-385a-444b-a0c4-39454d1965b9",
+        "sourceUrl": "https://overpass-api.de/api/interpreter",
+        "preset": "buildings",
+        "features": 9,
+        "selected": {
+          "nodes": 0,
+          "ways": 7,
+          "relations": 2,
+          "total": 9
+        },
+        "dependencies": {
+          "nodes": 140,
+          "ways": 5,
+          "relations": 0,
+          "total": 145
+        },
+        "explicitEndpointEmpty": true,
+        "noOverpassDemo": true,
+        "fivePresetsLocalized": true,
+        "allBrowserExportAttributesAndGeometryEqual": true,
+        "clickedActualFeatureId": "relation/3203717",
+        "originalAttributesVisible": true,
+        "rawAndDerivedHashesVisible": true,
+        "noDocumentHorizontalOverflow": true,
+        "noUpstreamQueriesIssuedByUi": true,
+        "errors": []
+      }
+    ]
+  },
+  "rateLimit": {
+    "initialWaterAttempt": {
+      "startedAt": "2026-10-02T14:08:19.404479+00:00",
+      "status": "failed",
+      "mode": "Actual native Overpass acquisition; no fixture data",
+      "server": "http://127.0.0.1:4363",
+      "dataDirectory": ".verification/overpass-runtime",
+      "endpoint": "https://overpass-api.de/api/interpreter",
+      "requestedPresets": [
+        "water"
+      ],
+      "bounds": [
+        13.334,
+        52.5088,
+        13.335,
+        52.5094
+      ],
+      "automaticRetries": 0,
+      "desktopWebViewAccepted": false,
+      "receipts": [],
+      "connection": "Reused exact existing Overpass endpoint; no additional public probe",
+      "error": "Runtime HTTP 400: {\"error\":\"Overpass is busy or rate limited; wait before trying again. No automatic retry was started.\"}",
+      "completedAt": "2026-10-02T14:08:30.147111+00:00"
+    },
+    "initialEvidenceReport": ".verification/osm-public-water/report.json",
+    "laterWaterAttempt": {
+      "status": "passed",
+      "startedAt": "2026-10-02T14:10:14.297265+00:00",
+      "completedAt": "2026-10-02T14:10:18.412333+00:00",
+      "evidenceReport": ".verification/osm-public-water-second/report.json"
+    },
+    "automaticRetries": 0,
+    "endpointHostSwitched": false,
+    "resolution": "One delayed manual retry against the same endpoint succeeded; initial rate-limit evidence retained"
+  },
+  "restart": {
+    "status": "passed",
+    "checkedAt": "2026-10-02T14:12:10.361536+00:00",
+    "evidenceReport": ".verification/overpass-restart/report.json",
+    "script": "scripts/verify-overpass-restart.py",
+    "networkRequests": 0,
+    "independentNativeProcessRuns": 12,
+    "serviceRegistryRestoredExactly": true,
+    "registeredFilesUnchanged": true,
+    "receipts": [
+      {
+        "assetId": "c9a64b24-385a-444b-a0c4-39454d1965b9",
+        "preset": "buildings",
+        "featureCount": 9,
+        "dependencyCount": 145,
+        "sourceBytes": 54941,
+        "sourceSha256": "aa905d0a4382836d8a8b0801f67c2e45de2e37a12bfd2962082221122a989fdb",
+        "geojsonSha256": "67d5b46d0f6d227fefe9419e828be5d831595bc7cc756f5eadedf3f43a7ebe1c",
+        "rawBackingPath": ".verification/overpass-runtime/vectors/c9a64b24-385a-444b-a0c4-39454d1965b9.json",
+        "exportFile": "buildings-c9a64b24-385a-444b-a0c4-39454d1965b9.geojson",
+        "originalProviderBytesUnchanged": true,
+        "parsedGeojsonAndAllProvenanceUnchanged": true,
+        "exactExportBytesAndHashUnchanged": true,
+        "selectedIdsAndOrderUnchanged": true,
+        "geometryUnchangedFromIndependentPublicAcceptance": true
+      },
+      {
+        "assetId": "a28b22c1-6a1d-4d8b-9e8e-de4a585ceaef",
+        "preset": "roads",
+        "featureCount": 20,
+        "dependencyCount": 73,
+        "sourceBytes": 34142,
+        "sourceSha256": "6379a98a5fee9efde476c64137ffd3e0936214eb5098c7ae86676f094da9ed4f",
+        "geojsonSha256": "ab5a76c3a19b8742c7c1802b80ba3a1d6baed5c6d506ca836bc0d39e85291982",
+        "rawBackingPath": ".verification/overpass-runtime/vectors/a28b22c1-6a1d-4d8b-9e8e-de4a585ceaef.json",
+        "exportFile": "roads-a28b22c1-6a1d-4d8b-9e8e-de4a585ceaef.geojson",
+        "originalProviderBytesUnchanged": true,
+        "parsedGeojsonAndAllProvenanceUnchanged": true,
+        "exactExportBytesAndHashUnchanged": true,
+        "selectedIdsAndOrderUnchanged": true,
+        "geometryUnchangedFromIndependentPublicAcceptance": true
+      },
+      {
+        "assetId": "5adc56d4-2399-4131-a3b6-ef96a8d66be4",
+        "preset": "pois",
+        "featureCount": 8,
+        "dependencyCount": 13,
+        "sourceBytes": 8728,
+        "sourceSha256": "dafb1cdb6339cb24f7fbbcbfe99c8da04c5295c2e43fcf83612248d8dae46030",
+        "geojsonSha256": "aa6e8ed1e826d4b5b8902eac366b9b517741793652e889597df3c177f448a646",
+        "rawBackingPath": ".verification/overpass-runtime/vectors/5adc56d4-2399-4131-a3b6-ef96a8d66be4.json",
+        "exportFile": "pois-5adc56d4-2399-4131-a3b6-ef96a8d66be4.geojson",
+        "originalProviderBytesUnchanged": true,
+        "parsedGeojsonAndAllProvenanceUnchanged": true,
+        "exactExportBytesAndHashUnchanged": true,
+        "selectedIdsAndOrderUnchanged": true,
+        "geometryUnchangedFromIndependentPublicAcceptance": true
+      },
+      {
+        "assetId": "f46f05c5-f5da-4a21-b5c0-3ca7fbef198b",
+        "preset": "landuse",
+        "featureCount": 2,
+        "dependencyCount": 143,
+        "sourceBytes": 39923,
+        "sourceSha256": "b49ffb88671f0dd8f748e3d66f57204027a258d5eba85678bc926a50c28ebe7c",
+        "geojsonSha256": "249565f000221ee759e987e89823c4177d404582f4007ee10ad743d8f0c2b46b",
+        "rawBackingPath": ".verification/overpass-runtime/vectors/f46f05c5-f5da-4a21-b5c0-3ca7fbef198b.json",
+        "exportFile": "landuse-f46f05c5-f5da-4a21-b5c0-3ca7fbef198b.geojson",
+        "originalProviderBytesUnchanged": true,
+        "parsedGeojsonAndAllProvenanceUnchanged": true,
+        "exactExportBytesAndHashUnchanged": true,
+        "selectedIdsAndOrderUnchanged": true,
+        "geometryUnchangedFromIndependentPublicAcceptance": true
+      },
+      {
+        "assetId": "17daebb6-63f3-4f8b-87b4-c3918e23cac4",
+        "preset": "water",
+        "featureCount": 1,
+        "dependencyCount": 5,
+        "sourceBytes": 2298,
+        "sourceSha256": "25244b61a55f78e59267f3c514e0a9ba0fd5d39e63b1410b0232c0c22d93a9ab",
+        "geojsonSha256": "afdf6e645dd1b99bc53542bd05a28fefdcbd2744bff014b332968a132364d431",
+        "rawBackingPath": ".verification/overpass-runtime/vectors/17daebb6-63f3-4f8b-87b4-c3918e23cac4.json",
+        "exportFile": "water-17daebb6-63f3-4f8b-87b4-c3918e23cac4.geojson",
+        "originalProviderBytesUnchanged": true,
+        "parsedGeojsonAndAllProvenanceUnchanged": true,
+        "exactExportBytesAndHashUnchanged": true,
+        "selectedIdsAndOrderUnchanged": true,
+        "geometryUnchangedFromIndependentPublicAcceptance": true
+      }
+    ]
+  },
+  "desktopWebViewAccepted": false,
+  "limitations": [
+    "No default public backend; users provide an appropriate endpoint.",
+    "Bounded acquisition validates the returned OSM selection, not universal real-world map completeness.",
+    "Headless browser evidence is separate from native desktop WebView manual acceptance."
+  ],
+  "officialSources": {
+    "usage": "https://dev.overpass-api.de/overpass-doc/en/preface/commons.html",
+    "geometry": "https://dev.overpass-api.de/overpass-doc/en/full_data/osm_types.html",
+    "bbox": "https://dev.overpass-api.de/overpass-doc/en/full_data/bbox.html",
+    "license": "https://www.openstreetmap.org/copyright"
+  },
+  "totalCoordinateOccurrences": 459,
+  "totalSourceBytes": 140032,
+  "checks": {
+    "runtimeUnitTestsPassed": 259,
+    "runtimeCliTestsPassed": 3,
+    "desktopTestsPassed": 4,
+    "nodeTestsPassed": 155,
+    "uiTestsPassed": 147,
+    "productionFrontendBuild": "passed",
+    "clippyAllTargets": "passed",
+    "vendoredNoticeChecksums": "passed"
+  },
+  "legacyReopen": {
+    "registeredFiles": 3,
+    "sourceAndExportHashesUnchanged": true,
+    "evidenceReport": ".verification/vector-restart-verification.json"
+  }
+}

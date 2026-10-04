@@ -1,0 +1,630 @@
+{
+  "checkedAt": "2026-10-03T14:33:31.466986+00:00",
+  "status": "Verified explicit 3D asset increment; broader source integration remains active",
+  "implementation": "Rust core shared by seven desktop commands, protected loopback HTTP and CLI; locally bundled Cesium renderer",
+  "usedUserDesktop": false,
+  "installedDesktopWebViewAccepted": false,
+  "nativeFilePickerAccepted": false,
+  "nativeBinarySha256": "612f1d96dd5ef0b85f1ded9e4c64b9636643b1b547150419c3c94deac78c6e90",
+  "publicProductionGeographicDataUsed": false,
+  "upstreamDemonstrationGeometryOnly": true,
+  "supplierLicenseEntitlementCertified": false,
+  "publicCases": [
+    {
+      "verifiedAt": "2026-10-03T14:04:25.246760+00:00",
+      "source": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/tileset.json",
+      "licenseReference": "https://github.com/CesiumGS/3d-tiles-samples-generator/blob/main/README.md",
+      "assetId": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+      "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+      "originalBytes": 51124,
+      "resources": 8,
+      "tiles": 7,
+      "independentMeshTriangles": 600,
+      "exportSha256": "2c01a26e7132152362a23970730b0db4a11cd9080f55d527d63a53aa88c40da2",
+      "allOriginalBytesMatch": true,
+      "localizedMetadataAndTransformsMatch": true,
+      "productionGeographicData": false,
+      "commands": 12,
+      "name": "Cesium nested tiles public demo",
+      "declaredRights": {
+        "attribution": "CesiumGS · generated 3D Tiles demonstration assets",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://github.com/CesiumGS/3d-tiles-samples-generator/blob/main/README.md",
+        "permissionConfirmed": true
+      },
+      "originalResources": [
+        {
+          "id": "0191dd8272a7492dcb0eb44e9180177e764e8f37ce51a1f42f4211470ec30960",
+          "kind": "tileset",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/tileset2.json",
+          "bytes": 1641,
+          "sha256": "c65c746b86d90d628a80acdb8bf3b1e3dc316f5f9d6d90fbe7306047abe8a56b"
+        },
+        {
+          "id": "07e1c4d35fcfbe9b9d3edbd3aa607f1104e5ee86b3be6e640681ed94c7fc24a7",
+          "kind": "b3dm",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/parent.b3dm",
+          "bytes": 9664,
+          "sha256": "57b6fb15a54680be3c286bcacab6e38aaf868702ea14d328d9cca040ad20c42d"
+        },
+        {
+          "id": "2a2e628417c34546b1a9f4708053f5530d80eb2b51c05359bfe65814814ed6c0",
+          "kind": "b3dm",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/tileset3/ll.b3dm",
+          "bytes": 9688,
+          "sha256": "c5ff2db0a34a039a6f1f83ec43ff98751cbb6104136562bdb6d06c028db57cc7"
+        },
+        {
+          "id": "339c53be8aaf56055dc8649db70f07d6de5d2b6ac866b75f9b5ed287efda9c51",
+          "kind": "tileset",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/tileset.json",
+          "bytes": 766,
+          "sha256": "160101f1d167ce6b3ed0c89c09c0df470a7425937433a7517c57cde9df366661"
+        },
+        {
+          "id": "409f48fe9c102d5933c2aa3767647f16f07701fb0e37fe57860ad39785e7e40d",
+          "kind": "b3dm",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/ur.b3dm",
+          "bytes": 9672,
+          "sha256": "020732cc17023a74106e4a5e66c983cbd8e696ffaa852639e39832766951e060"
+        },
+        {
+          "id": "89d5d3deb01fe26d4b4900929640a2dbec814232362e3378f4dc8c2469d1bfac",
+          "kind": "b3dm",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/ul.b3dm",
+          "bytes": 9664,
+          "sha256": "c8157ad0ef0811dd28073a117691fcfa265baa58248db4542f03ad7ab8189f67"
+        },
+        {
+          "id": "a1ba218c76e0d8a3999f293a52fe30f05bd8b2c031c266427a51e18910b48c6c",
+          "kind": "tileset",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/tileset3/tileset3.json",
+          "bytes": 341,
+          "sha256": "5348423ace310bcbb259ea06da7f74a51f4ddf9c58a598da00ea0bdafe1405f7"
+        },
+        {
+          "id": "ea9459ee869cfe8e61453c4edb0ca5b3b1121af40efc77789c4b95bd784840cb",
+          "kind": "b3dm",
+          "locator": "https://raw.githubusercontent.com/CesiumGS/cesium/main/Specs/Data/Cesium3DTiles/Tilesets/TilesetOfTilesets/lr.b3dm",
+          "bytes": 9688,
+          "sha256": "fdc4620fc6afeaded59b363e65a664b3eba0c9b600269f10bdfd57365d27a7e4"
+        }
+      ]
+    },
+    {
+      "verifiedAt": "2026-10-03T14:04:28.542230+00:00",
+      "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoxTextured/glTF/BoxTextured.gltf",
+      "licenseReference": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/BoxTextured/README.md",
+      "assetId": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+      "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+      "originalBytes": 8285,
+      "resources": 3,
+      "tiles": 0,
+      "independentMeshTriangles": 12,
+      "exportSha256": "a03eebfadb5de2a3aabfa6f256a98d9f0e95394a2016d5589d4083162f3957d8",
+      "allOriginalBytesMatch": true,
+      "localizedMetadataAndTransformsMatch": true,
+      "productionGeographicData": false,
+      "commands": 7,
+      "name": "Khronos BoxTextured licensed demo",
+      "declaredRights": {
+        "attribution": "Cesium (2017), glTF Sample Assets demonstration; Cesium logo (2015)",
+        "license": "CC-BY-4.0 + Cesium mark notice",
+        "licenseUrl": "https://github.com/KhronosGroup/glTF-Sample-Assets/blob/main/Models/BoxTextured/README.md",
+        "permissionConfirmed": true
+      },
+      "originalResources": [
+        {
+          "id": "2798be531c53018c9c844bb2e40417b201e5ba068b6649b07b15f5e38d517f0d",
+          "kind": "gltf",
+          "locator": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoxTextured/glTF/BoxTextured.gltf",
+          "bytes": 3695,
+          "sha256": "1e9003a4a2a8822ff60da529357bd8e4dec4a59b1a479017993e7e2ad5fcebef"
+        },
+        {
+          "id": "af0079d7662e40a863745b0784d1a768141390532d785f695438c59f8382fdc0",
+          "kind": "png",
+          "locator": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoxTextured/glTF/CesiumLogoFlat.png",
+          "bytes": 3750,
+          "sha256": "9c22b05c5b136d03c5621a8765e50a8322be6c35b9de53e9fe22685840d7f469"
+        },
+        {
+          "id": "d69f7631c14d615e32b8d50454ef750f60170a1beefe17e341f2f7664805133b",
+          "kind": "buffer",
+          "locator": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoxTextured/glTF/BoxTextured0.bin",
+          "bytes": 840,
+          "sha256": "2e8c0483fa6665c686ec345f89dcbb2a694a587442584d09f8a83a59633327bc"
+        }
+      ]
+    }
+  ],
+  "archiveRoundtrip": {
+    "verifiedAt": "2026-10-03T14:24:46.646414+00:00",
+    "nativeBinarySha256": "612f1d96dd5ef0b85f1ded9e4c64b9636643b1b547150419c3c94deac78c6e90",
+    "demonstrationData": true,
+    "originalBytesAndLocalizedExportViewsUnchanged": true,
+    "archiveCopies": [
+      {
+        "id": "5b9406a7-27f5-489e-9ef0-36733c2941f7",
+        "parent": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "generation": 1,
+        "originalResources": 8,
+        "originalBytes": 51124,
+        "comparedExportMembers": 16,
+        "resourceLocatorsAndOriginalHashesUnchanged": true,
+        "exportSha256": "ebe1206b7fb63d00548b24e90c66eda8c01516adc118ede7594f9a9aaceb5bc0"
+      },
+      {
+        "id": "851ef0ab-eb5c-4f29-8deb-e28fce48e379",
+        "parent": "5b9406a7-27f5-489e-9ef0-36733c2941f7",
+        "generation": 2,
+        "originalResources": 8,
+        "originalBytes": 51124,
+        "comparedExportMembers": 16,
+        "resourceLocatorsAndOriginalHashesUnchanged": true,
+        "exportSha256": "c0a6b288cdd4a1d7ce9fec57229f820460193a42939a8ab6962a3ef5faa6ace2"
+      },
+      {
+        "id": "2508b077-ec12-4b34-b887-7d22689808a5",
+        "parent": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "generation": 1,
+        "originalResources": 3,
+        "originalBytes": 8285,
+        "comparedExportMembers": 6,
+        "resourceLocatorsAndOriginalHashesUnchanged": true,
+        "exportSha256": "b3a2da5b6fe24500c2b20cfc937a3cb248a0dbc276ab8441ef90455b03a9f7c6"
+      },
+      {
+        "id": "b16fb075-6c1b-4321-bbe3-307c96459069",
+        "parent": "2508b077-ec12-4b34-b887-7d22689808a5",
+        "generation": 2,
+        "originalResources": 3,
+        "originalBytes": 8285,
+        "comparedExportMembers": 6,
+        "resourceLocatorsAndOriginalHashesUnchanged": true,
+        "exportSha256": "d3739ab71e6ee1edb35327b6823adf93c3e0c17b442d59f5d1838df724639001"
+      }
+    ],
+    "localInput": {
+      "assetId": "43d7fe03-263e-4b21-becf-54000709e2fa",
+      "resources": 3,
+      "bytes": 8285,
+      "inputRemoved": true,
+      "nativeReadbackStillWorks": true
+    },
+    "commands": 40
+  },
+  "actualUiZipImportExport": {
+    "assetId": "78b7f2d8-32ca-497c-8474-80d0547c2838",
+    "parentId": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+    "parentReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+    "exportSha256": "a03eebfadb5de2a3aabfa6f256a98d9f0e95394a2016d5589d4083162f3957d8",
+    "exactOriginalResourcesRetained": true
+  },
+  "productionBrowserAcceptance": {
+    "verifiedAt": "2026-10-03T14:20:48.525Z",
+    "actualNativeHttp": true,
+    "headlessEdgeSoftwareWebgl": true,
+    "exactProductionDesktopCsp": true,
+    "installedNativeWebViewAccepted": false,
+    "cases": 7,
+    "resourceReads": 36,
+    "remoteBrowserRequests": 0,
+    "consoleErrors": 0,
+    "cardHeightsConsistent": true,
+    "cardsFitViewport": true,
+    "selectedLibraryCategoryVisible": true,
+    "javascriptEvalBlocked": true,
+    "localWasmCompilationAllowed": true,
+    "results": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "asset": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "kind": "tileset",
+        "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+        "resourceReads": 8,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "d24790fd70f11a67dd7d95b8fa98a3b1f1697034f144b21be1f221915b3e131a",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "asset": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "kind": "gltf",
+        "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+        "resourceReads": 3,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "e2bb5bb23f5b153166ba6a7010faa4d2343a739a2f8388215a73bac26c836cad",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "asset": "78b7f2d8-32ca-497c-8474-80d0547c2838",
+        "kind": "gltf",
+        "sourceReceiptSha256": "d7aabce0bcd62b744e49c24e08dce2f06f13466b3a5a80b5e9dfc2ce47498929",
+        "resourceReads": 3,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "eb871409301c5c62887470d715ea9aabdfb4f2d8ff1358e61ed381124cf5945a",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "asset": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "kind": "tileset",
+        "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+        "resourceReads": 8,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "dd6aaacecaf6a233ed110b7efc37c39e002640c70619ee008a81ca2aa89e4fc3",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "asset": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "kind": "gltf",
+        "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+        "resourceReads": 3,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "8295085ef242ffb95e0c908bfc77674015c9a65b951affce9f1dd49b0d86ab28",
+        "disposedCanvas": true
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "asset": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "kind": "tileset",
+        "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+        "resourceReads": 8,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "959e6f877e52df8ceac22b21c7788a8123d4517d1f3fe6516b0f1f895b0fcb0a",
+        "disposedCanvas": true
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "asset": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "kind": "gltf",
+        "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+        "resourceReads": 3,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "3cef182e5f3479782d63fef2e38ec4b2d98a8fc9bcc4b7b084b2786de5ee056d",
+        "disposedCanvas": true
+      }
+    ]
+  },
+  "offlineRestart": {
+    "mode": "offline-restart",
+    "assets": 10,
+    "resources": 45,
+    "originalsUnchanged": true,
+    "registryUnchanged": true,
+    "originalMtimesUnchanged": true,
+    "nativeBinarySha256": "612f1d96dd5ef0b85f1ded9e4c64b9636643b1b547150419c3c94deac78c6e90",
+    "commands": 56,
+    "physicalOriginalAndRegistryFilesCompared": 12,
+    "acquisitionProxy": "custom http://127.0.0.1:9; original isolated QA policy restored afterwards",
+    "actualPublicDiscoveryRejected": true,
+    "hostComputerNetworkDisabled": false,
+    "rendererReadbackBytesRegistryAndMtimesUnchanged": true
+  },
+  "finalOfflineProductionBrowserAcceptance": {
+    "verifiedAt": "2026-10-03T14:32:44.551Z",
+    "actualNativeHttp": true,
+    "headlessEdgeSoftwareWebgl": true,
+    "exactProductionDesktopCsp": true,
+    "installedNativeWebViewAccepted": false,
+    "cases": 9,
+    "resourceReads": 42,
+    "remoteBrowserRequests": 0,
+    "consoleErrors": 0,
+    "cardHeightsConsistent": true,
+    "cardsFitViewport": true,
+    "selectedLibraryCategoryVisible": true,
+    "javascriptEvalBlocked": true,
+    "localWasmCompilationAllowed": true,
+    "results": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "asset": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "origin": "public-https",
+        "kind": "tileset",
+        "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+        "resourceReads": 8,
+        "minimumTextContrast": 5.844513246027015,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "8eed8977ffb9cb284e6b52f9a20fbb27489815e6aec0cddef197d5f888577ab9",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "asset": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "origin": "public-https",
+        "kind": "gltf",
+        "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+        "resourceReads": 3,
+        "minimumTextContrast": 5.844513246027015,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "1246ddd138533c24b5ee2a7298312f1b10ca3d6dd561933e3d2420dce1b10c9e",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "asset": "43d7fe03-263e-4b21-becf-54000709e2fa",
+        "origin": "local-files",
+        "kind": "gltf",
+        "sourceReceiptSha256": "d0c69cceff0ca5aa53b11368c78a0321bcc3527b64c26da85878aaecdadc0d4d",
+        "resourceReads": 3,
+        "minimumTextContrast": 5.844513246027015,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "fe5fe6e10cdfd63687e90b4359899610f1a0738470bc0748be52275b3b9617e3",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "asset": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "origin": "public-https",
+        "kind": "tileset",
+        "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+        "resourceReads": 8,
+        "minimumTextContrast": 6.506737243828137,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "d62118b3d9b7a32c38637b973d57d79c292fb478358995159bc37c18822f3a46",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "asset": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "origin": "public-https",
+        "kind": "gltf",
+        "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+        "resourceReads": 3,
+        "minimumTextContrast": 6.506737243828137,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "90dc27a8e630eabc9d8a12438e9a687f2b67bf348db8e0bedb8b9bacf31e534a",
+        "disposedCanvas": true
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "asset": "43d7fe03-263e-4b21-becf-54000709e2fa",
+        "origin": "local-files",
+        "kind": "gltf",
+        "sourceReceiptSha256": "d0c69cceff0ca5aa53b11368c78a0321bcc3527b64c26da85878aaecdadc0d4d",
+        "resourceReads": 3,
+        "minimumTextContrast": 6.506737243828137,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "ac0d79c65febdcceba42815bc4cbd4cb4371f44214a17a32a7bc289beec7aa59",
+        "disposedCanvas": true
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "asset": "0433e795-59f4-4b04-b909-e3efde99f7f9",
+        "origin": "public-https",
+        "kind": "tileset",
+        "sourceReceiptSha256": "98f360410f08c05b938ac5674f6b63800a93f3aa7478fee307f44444eda6440a",
+        "resourceReads": 8,
+        "minimumTextContrast": 6.506737243828137,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "d649cb3a1ae9d6b26e42aca443b696be702a7d9ce5f660b9e4b5f45e87d7c268",
+        "disposedCanvas": true
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "asset": "83cae207-24bb-4234-a81b-3c9d61e6c52d",
+        "origin": "public-https",
+        "kind": "gltf",
+        "sourceReceiptSha256": "e609abca839ae39f70cf5477ea889f760b992ba84a77fb636644813f150fc7af",
+        "resourceReads": 3,
+        "minimumTextContrast": 6.506737243828137,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "0445036cabc8d282ced679c0ecd5ddb3f65d87e4380dcdc69ced4e577013cbc7",
+        "disposedCanvas": true
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "asset": "43d7fe03-263e-4b21-becf-54000709e2fa",
+        "origin": "local-files",
+        "kind": "gltf",
+        "sourceReceiptSha256": "d0c69cceff0ca5aa53b11368c78a0321bcc3527b64c26da85878aaecdadc0d4d",
+        "resourceReads": 3,
+        "minimumTextContrast": 6.506737243828137,
+        "dragChangesFrame": true,
+        "wheelChangesFrame": true,
+        "resetChangesFrame": true,
+        "canvasSha256": "33ee194ecd491a504c985d10574d2904001bc981f5718a105bd08687152f77df",
+        "disposedCanvas": true
+      }
+    ],
+    "localInputFolderAlreadyRemoved": true,
+    "cardTextMinimumContrastByViewport": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "minimum": 5.844513246027015
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "minimum": 6.506737243828137
+      },
+      {
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "minimum": 6.506737243828137
+      }
+    ],
+    "allCheckedSmallTextContrastAtLeast4_5": true
+  },
+  "bundledRenderer": {
+    "cesiumVersion": "1.146.0",
+    "externalCdnConfigured": false,
+    "ionAccountConfigured": false,
+    "thirdPartyNotices": [
+      {
+        "file": "LICENSE.md",
+        "sha256": "721844bc0cdaa9b1a9a145dbca1f981e2de15a7e200a5d1fd9f5f1eed8e5d030",
+        "bytes": 55679
+      },
+      {
+        "file": "ThirdParty.json",
+        "sha256": "c9b447829d8489798e7bb74624e0308bbb0d0f974b9ff6e369dc21878a1cb45c",
+        "bytes": 3616
+      },
+      {
+        "file": "ThirdParty.extra.json",
+        "sha256": "5fff210f16bcbe0d414a4f634ceb2b0564dad92065733c26ec3ee4aff89a4b10",
+        "bytes": 1532
+      }
+    ],
+    "lazyViewerChunkBytes": 3911962,
+    "lazyViewerChunkSha256": "7f268cf46d93c53c6f70dbca52e51e961db279e842e352eb3c14ed9af997e950",
+    "frontendIndexSha256": "ba624071723e86241792ec21fe086cd5d0d8fe40955ec7f048ede6b9fb0651d2",
+    "largeChunkBuildWarningRetained": true
+  },
+  "checks": {
+    "rustWorkspacePassed": 427,
+    "rustWorkspaceIgnored": 4,
+    "threeDNativeControlsPassed": 14,
+    "desktopFinalCspBuildTestsPassed": 4,
+    "frontendLogicPassed": 216,
+    "frontendUiPassed": 191,
+    "clippy": "passed without warnings",
+    "productionFrontendBuild": "passed",
+    "rustFormatting": "passed",
+    "repositoryAndContractChecks": "passed",
+    "registeredDesktopCommands": 93
+  },
+  "protocolControlOnlyCases": [
+    "Standalone GLB entry; GLB embedded in actual b3dm was independently accepted",
+    "Reviewed extension parser and unsupported format rejection",
+    "Discovery hash pin, bounded graph, credential/private path rejection",
+    "Changed or missing originals/localized archive members, dependency cycles, and receipt depth above eight rejected"
+  ],
+  "limitations": [
+    "Whole explicit source only; no AOI/tile selection, mesh clipping or scientific geometry certification.",
+    "Implicit tiling, i3dm/pnts/cmpt, point clouds, terrain, 3DGS and compression extensions are not supported.",
+    "Cross-origin, signed, authenticated and commercial 3D services remain pending; neither format nor a receipt grants rights.",
+    "Transfer queue/cancel/resume, cache maintenance, 3D thumbnails and full project processing remain pending.",
+    "NASA/Copernicus account entries exist; successful authorization and protected production original-file acceptance still require accounts.",
+    "Headless production browser with a test bridge for loopback HTTP is not installed Tauri WebView or native file-picker acceptance."
+  ],
+  "evidence": [
+    {
+      "path": ".verification/three-d-final/public/report.json",
+      "sha256": "56b2c5d579c145a2e883e4b39825f05fa0b7ae4f719d12a1b201b35463c60034"
+    },
+    {
+      "path": ".verification/three-d-final/public/independent.json",
+      "sha256": "a29298c81113288b42bcb58e42cbd2b00d31eb5565ae5931708366384580d717"
+    },
+    {
+      "path": ".verification/three-d-final/textures/report.json",
+      "sha256": "61a21214940fd8fd0350937f28436adbb5e381038ca93e32dc0c1e0f5db07093"
+    },
+    {
+      "path": ".verification/three-d-final/textures/independent.json",
+      "sha256": "cd955c4cc46819c3c1ce2c9ed2ebabb03fad5e83e9e8514032b162ef0ac5b441"
+    },
+    {
+      "path": ".verification/three-d-final/production-ui/report.json",
+      "sha256": "febdbcb6989dc0dc3859901db905c6f128f49e8479f7c16392fa0207ba78dbd4"
+    },
+    {
+      "path": ".verification/three-d-final/roundtrip/report.json",
+      "sha256": "eb588f7bd3a1d00b349d6186fceed6d45e27509ced23f743fe77eab92f655ae5"
+    },
+    {
+      "path": ".verification/three-d-final/offline/report.json",
+      "sha256": "1f1e698b2fa534ce0927faef9e604dd1112a3ffbdcd7997fd37ed25cbe0b4114"
+    },
+    {
+      "path": ".verification/three-d-final/offline/readonly-storage.json",
+      "sha256": "4a96f65c19d6b1fe5b0c2000e477eb1c211970b8fec98e74d572fe9fb2633aea"
+    },
+    {
+      "path": ".verification/three-d-final/denied-proxy.json",
+      "sha256": "b4f85d1057aaf18142eecf1eaf9feaded36b71337fa54f48f2b983c01d500010"
+    },
+    {
+      "path": ".verification/three-d-final/accessible-ui/report.json",
+      "sha256": "12435a38dd59382b0f49fee5328a2cd2061729f8557c5c059303f9588afce39d"
+    },
+    {
+      "path": ".verification/three-d-final/offline-ui/readonly-storage.json",
+      "sha256": "b09c540cfec0c6300f960667742d7ffa8d7b61ea8da126475bdc8c9c5dbc3c88"
+    },
+    {
+      "path": ".verification/three-d-final/proxy-restored.json",
+      "sha256": "0261c15e8bea8ef359fc45ba7fbdb23de56c72ca72a0b5af7b1ba58e9c4979e6"
+    },
+    {
+      "path": ".verification/three-d-final/accessible-ui/library-900-en.png",
+      "sha256": "8b361312d26fe326d0fce65a5c89ef11f48c8283cc4fb6aef8f347cd1dc8b881"
+    },
+    {
+      "path": ".verification/three-d-final/accessible-ui/viewer-gltf-1024-zh-CN-local.png",
+      "sha256": "1a07090cff3ad0242684c1d27ddba6d3347242497fc832cb0c4e384d4120439d"
+    }
+  ]
+}

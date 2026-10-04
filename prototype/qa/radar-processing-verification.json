@@ -1,0 +1,331 @@
+{
+  "checkedAt": "2026-10-02T08:26:12Z",
+  "scope": "Two actual Sentinel-1 VV RTC originals; rectangular and polygon-with-hole clips plus aligned two-scene mosaic; all output Float32 values checked",
+  "originals": [
+    {
+      "id": "0b95755d-70cd-4ccd-a90a-cd0eb6fe483a",
+      "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+      "href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/6/30/IW/DV/S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_00622B_A30F/measurement/iw-vv.rtc.tiff",
+      "bytesDownloaded": 1840806210,
+      "sha256": "e869896b958541b46062f930c300a0554dd9ae7fa9a7feb1fc1d803ede4dcb7d"
+    },
+    {
+      "id": "a7ed207c-6a64-436b-8160-e714e47184cd",
+      "itemId": "S1A_IW_GRDH_1SDV_20250624T140800_20250624T140825_059789_076CD6_rtc",
+      "href": "https://sentinel1euwestrtc.blob.core.windows.net/sentinel1-grd-rtc/GRD/2025/6/24/IW/DV/S1A_IW_GRDH_1SDV_20250624T140800_20250624T140825_059789_076CD6_A569/measurement/iw-vv.rtc.tiff",
+      "bytesDownloaded": 1838826777,
+      "sha256": "542e0dc93ffeeca616e7d2daab34830152dc229be3b82545878d0ecd226c872d"
+    }
+  ],
+  "results": [
+    {
+      "jobId": "83263205-a790-4e97-a8c0-9160ea5aa16d",
+      "projectId": "735f227b-5f95-473f-967b-077f3419bc68",
+      "projectName": "RTC · 实际矩形裁剪",
+      "bytes": 6290515,
+      "sha256": "fd402e5755faac554974519cc24c6a8bfc2d3406ac7e633f59a5d75375cc239f",
+      "plan": {
+        "width": 1332,
+        "height": 1673,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          539610.0,
+          4167070.0,
+          552930.0,
+          4183800.0
+        ],
+        "pixelSize": [
+          10.0,
+          10.0
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 0,
+        "coveredPixels": 1725181,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "VV",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 2228436,
+      "allFloat32BitsMatch": true,
+      "independentDecoder": "GDAL/rasterio; PROJ/pyproj; GEOS/Shapely WGS84 pixel-centre polygon mask",
+      "acquisitionOrder": [
+        {
+          "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+          "datetime": "2025-06-30T14:07:07.386143Z"
+        }
+      ],
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 0
+      },
+      "pixelChecks": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "exactMatch": true
+        },
+        {
+          "pixel": [
+            666,
+            836
+          ],
+          "gamma0": 0.32976192235946655,
+          "exactMatch": true
+        },
+        {
+          "pixel": [
+            1331,
+            1672
+          ],
+          "gamma0": 1.3469805717468262,
+          "exactMatch": true
+        }
+      ],
+      "nativePreviewVerified": true,
+      "persistentThumbnailVerified": true
+    },
+    {
+      "jobId": "e3e52238-c2fc-408f-8cea-1c0821be1a22",
+      "projectId": "fe0c329c-d9c3-4a97-a14d-c946d54f29be",
+      "projectName": "RTC · 实际孔洞多边形裁剪",
+      "bytes": 5912678,
+      "sha256": "5a00e79f31945c8fa4cd603d15b4b43529872605e0c4b88280c4fbeeeae97ad4",
+      "plan": {
+        "width": 1332,
+        "height": 1673,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          539610.0,
+          4167070.0,
+          552930.0,
+          4183800.0
+        ],
+        "pixelSize": [
+          10.0,
+          10.0
+        ],
+        "sourceCount": 1,
+        "maskedPixels": 116458,
+        "coveredPixels": 1619550,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "VV",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 2228436,
+      "allFloat32BitsMatch": true,
+      "independentDecoder": "GDAL/rasterio; PROJ/pyproj; GEOS/Shapely WGS84 pixel-centre polygon mask",
+      "acquisitionOrder": [
+        {
+          "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+          "datetime": "2025-06-30T14:07:07.386143Z"
+        }
+      ],
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 0,
+        "newerValidReplacesDifferentOlderValue": 0
+      },
+      "pixelChecks": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "exactMatch": true
+        },
+        {
+          "pixel": [
+            666,
+            836
+          ],
+          "gamma0": -32768.0,
+          "exactMatch": true
+        },
+        {
+          "pixel": [
+            1331,
+            1672
+          ],
+          "gamma0": -32768.0,
+          "exactMatch": true
+        }
+      ],
+      "nativePreviewVerified": true,
+      "persistentThumbnailVerified": true
+    },
+    {
+      "jobId": "880568a5-dcd3-47b1-88c9-84d1e31fff09",
+      "projectId": "433ae2fd-8175-4c6c-8881-d1a9652572b8",
+      "projectName": "RTC · 实际双景拼接",
+      "bytes": 6610877,
+      "sha256": "c479ee2ae350332427b34476d9cf8888ade7a682229cb1b8f9347d8c8a910528",
+      "plan": {
+        "width": 1332,
+        "height": 1673,
+        "bandCount": 1,
+        "crs": "EPSG:32610",
+        "bounds": [
+          539610.0,
+          4167070.0,
+          552930.0,
+          4183800.0
+        ],
+        "pixelSize": [
+          10.0,
+          10.0
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 0,
+        "coveredPixels": 1812404,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData",
+        "radar": {
+          "product": "sentinel-1-iw-rtc",
+          "polarization": "VV",
+          "quantity": "gamma0",
+          "unit": "linear"
+        }
+      },
+      "float32ValuesCompared": 2228436,
+      "allFloat32BitsMatch": true,
+      "independentDecoder": "GDAL/rasterio; PROJ/pyproj; GEOS/Shapely WGS84 pixel-centre polygon mask",
+      "acquisitionOrder": [
+        {
+          "itemId": "S1A_IW_GRDH_1SDV_20250624T140800_20250624T140825_059789_076CD6_rtc",
+          "datetime": "2025-06-24T14:08:13.070804Z"
+        },
+        {
+          "itemId": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+          "datetime": "2025-06-30T14:07:07.386143Z"
+        }
+      ],
+      "overlapChecks": {
+        "olderValidUnderNewerNoData": 87223,
+        "newerValidReplacesDifferentOlderValue": 1725181
+      },
+      "pixelChecks": [
+        {
+          "pixel": [
+            0,
+            0
+          ],
+          "gamma0": -32768.0,
+          "exactMatch": true
+        },
+        {
+          "pixel": [
+            666,
+            836
+          ],
+          "gamma0": 0.32976192235946655,
+          "exactMatch": true
+        },
+        {
+          "pixel": [
+            1331,
+            1672
+          ],
+          "gamma0": 1.3469805717468262,
+          "exactMatch": true
+        }
+      ],
+      "nativePreviewVerified": true,
+      "persistentThumbnailVerified": true
+    }
+  ],
+  "usedUserDesktop": false,
+  "otherPolarizationsAccepted": false,
+  "calibrationApplied": false,
+  "speckleFilteringApplied": false,
+  "restart": {
+    "actualNativeServiceRestart": true,
+    "resultCount": 3,
+    "thumbnailContentsIdentical": true,
+    "resultGeometryAndNinePixelsMatch": true,
+    "thumbnails": [
+      {
+        "jobId": "83263205-a790-4e97-a8c0-9160ea5aa16d",
+        "sourceSha256": "fd402e5755faac554974519cc24c6a8bfc2d3406ac7e633f59a5d75375cc239f",
+        "thumbnailDataSha256": "27d9fb355e4a6ca8d32598423db0d79fcbd147b672d3afa296adce39a6e259c8",
+        "seconds": 0.031
+      },
+      {
+        "jobId": "e3e52238-c2fc-408f-8cea-1c0821be1a22",
+        "sourceSha256": "5a00e79f31945c8fa4cd603d15b4b43529872605e0c4b88280c4fbeeeae97ad4",
+        "thumbnailDataSha256": "13c94ceff5f641d8db71032f39f4be594f4c5c55c3f0999f7e59bc340c8519da",
+        "seconds": 0.006
+      },
+      {
+        "jobId": "880568a5-dcd3-47b1-88c9-84d1e31fff09",
+        "sourceSha256": "c479ee2ae350332427b34476d9cf8888ade7a682229cb1b8f9347d8c8a910528",
+        "thumbnailDataSha256": "1724c491087e767d22eba514c0953caceb8ebb8d04018cb32a2a8fcfb11ece7a",
+        "seconds": 0.019
+      }
+    ]
+  },
+  "frontend": {
+    "checkedAt": "2026-10-02T08:24:18.680Z",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "jobId": "83263205-a790-4e97-a8c0-9160ea5aa16d",
+        "projectId": "735f227b-5f95-473f-967b-077f3419bc68",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "mode": "Headless frontend through read-only proxy to actual native RTC results",
+        "actualDerivedOutputOpened": true,
+        "actualDerivedThumbnailVisible": true,
+        "nativeRasterCanvasVisible": true,
+        "errors": []
+      },
+      {
+        "jobId": "e3e52238-c2fc-408f-8cea-1c0821be1a22",
+        "projectId": "fe0c329c-d9c3-4a97-a14d-c946d54f29be",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "mode": "Headless frontend through read-only proxy to actual native RTC results",
+        "actualDerivedOutputOpened": true,
+        "actualDerivedThumbnailVisible": true,
+        "nativeRasterCanvasVisible": true,
+        "errors": []
+      },
+      {
+        "jobId": "880568a5-dcd3-47b1-88c9-84d1e31fff09",
+        "projectId": "433ae2fd-8175-4c6c-8881-d1a9652572b8",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "mode": "Headless frontend through read-only proxy to actual native RTC results",
+        "actualDerivedOutputOpened": true,
+        "actualDerivedThumbnailVisible": true,
+        "nativeRasterCanvasVisible": true,
+        "errors": []
+      }
+    ]
+  },
+  "checks": {
+    "nativeUnitTestsPassed": 188,
+    "nativeCliTestsPassed": 3,
+    "nativeTestsExplicitlyIgnored": 4,
+    "desktopTestsPassed": 4,
+    "frontendNodeTestsPassed": 122,
+    "frontendUiTestsPassed": 121,
+    "runtimeClippyWarnings": 0,
+    "buildPassed": true
+  }
+}

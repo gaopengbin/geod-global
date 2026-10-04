@@ -1,0 +1,189 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "N37W123.SRTMGL1.hgt",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "properties": {
+        "datetime": "2000-02-11T00:00:00.000Z",
+        "storage:schemes": {
+          "aws": {
+            "type": "aws-s3",
+            "platform": "https://{bucket}.s3.{region}.amazonaws.com",
+            "bucket": "lp-prod-protected",
+            "region": "us-west-2"
+          }
+        },
+        "start_datetime": "2000-02-11T00:00:00.000Z",
+        "end_datetime": "2000-02-21T23:59:59.000Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -123.0002778,
+              36.9997222
+            ],
+            [
+              -121.9997222,
+              36.9997222
+            ],
+            [
+              -121.9997222,
+              38.0002778
+            ],
+            [
+              -123.0002778,
+              38.0002778
+            ],
+            [
+              -123.0002778,
+              36.9997222
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -123.0002778,
+        36.9997222,
+        -121.9997222,
+        38.0002778
+      ],
+      "assets": {
+        "browse": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/SRTMGL1.003/N37W123.SRTMGL1.hgt/N37W123.SRTMGL1.2.jpg",
+          "title": "Download N37W123.SRTMGL1.2.jpg",
+          "type": "image/jpeg",
+          "roles": [
+            "browse"
+          ]
+        },
+        "thumbnail_0": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/SRTMGL1.003/N37W123.SRTMGL1.hgt/N37W123.SRTMGL1.2.jpg",
+          "title": "Thumbnail [0]",
+          "description": "Download N37W123.SRTMGL1.2.jpg",
+          "roles": [
+            "thumbnail"
+          ]
+        },
+        "thumbnail_1": {
+          "href": "s3://lp-prod-public/SRTMGL1.003/N37W123.SRTMGL1.hgt/N37W123.SRTMGL1.2.jpg",
+          "title": "Thumbnail [1]",
+          "description": "This link provides direct download access via S3 to the granule",
+          "roles": [
+            "thumbnail"
+          ]
+        },
+        "hgt": {
+          "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/SRTMGL1.003/N37W123.SRTMGL1.hgt/N37W123.SRTMGL1.hgt.zip",
+          "title": "Direct Download",
+          "description": "Download N37W123.SRTMGL1.hgt.zip",
+          "roles": [
+            "data"
+          ]
+        },
+        "s3_hgt": {
+          "href": "s3://lp-prod-protected/SRTMGL1.003/N37W123.SRTMGL1.hgt/N37W123.SRTMGL1.hgt.zip",
+          "title": "S3 Direct Download",
+          "description": "This link provides direct download access via S3 to the granule",
+          "roles": [
+            "data"
+          ],
+          "storage:refs": [
+            "aws"
+          ]
+        },
+        "metadata": {
+          "href": "https://cmr.earthdata.nasa.gov/search/concepts/G2821077396-LPCLOUD.xml",
+          "title": "CMR XML metadata for G2821077396-LPCLOUD",
+          "type": "application/xml",
+          "roles": [
+            "metadata"
+          ]
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/SRTMGL1_003/items/N37W123.SRTMGL1.hgt",
+          "type": "application/geo+json"
+        },
+        {
+          "rel": "parent",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/SRTMGL1_003/",
+          "type": "application/geo+json"
+        },
+        {
+          "rel": "collection",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/SRTMGL1_003/",
+          "type": "application/geo+json"
+        },
+        {
+          "rel": "root",
+          "href": "https://cmr.earthdata.nasa.gov/stac",
+          "type": "application/json"
+        },
+        {
+          "rel": "provider",
+          "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+          "type": "application/json"
+        },
+        {
+          "rel": "via",
+          "href": "https://cmr.earthdata.nasa.gov/search/concepts/G2821077396-LPCLOUD.json",
+          "title": "CMR JSON metadata for item",
+          "type": "application/json"
+        },
+        {
+          "rel": "via",
+          "href": "https://cmr.earthdata.nasa.gov/search/concepts/G2821077396-LPCLOUD.umm_json",
+          "title": "CMR UMM_JSON metadata for item",
+          "type": "application/vnd.nasa.cmr.umm+json"
+        }
+      ],
+      "collection": "SRTMGL1_003"
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search",
+      "type": "application/geo+json",
+      "title": "This search"
+    },
+    {
+      "rel": "root",
+      "href": "https://cmr.earthdata.nasa.gov/stac",
+      "type": "application/json",
+      "title": "Root Catalog"
+    },
+    {
+      "rel": "parent",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+      "type": "application/json",
+      "title": "Provider Catalog"
+    },
+    {
+      "rel": "first",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections%5B0%5D=SRTMGL1_003&bbox%5B0%5D=-122.6&bbox%5B1%5D=37.5&bbox%5B2%5D=-122.3&bbox%5B3%5D=37.8&limit=5",
+      "type": "application/geo+json",
+      "title": "First page of results"
+    },
+    {
+      "rel": "next",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections%5B0%5D=SRTMGL1_003&bbox%5B0%5D=-122.6&bbox%5B1%5D=37.5&bbox%5B2%5D=-122.3&bbox%5B3%5D=37.8&limit=5&cursor=eyJqc29uIjoiW1wibHBjbG91ZFwiLDk1MDIyNzIwMDAwMCwyODIxMDc3Mzk2XSIsInVtbSI6IltcImxwY2xvdWRcIiw5NTAyMjcyMDAwMDAsMjgyMTA3NzM5Nl0ifQ%3D%3D",
+      "type": "application/geo+json",
+      "title": "Next page of results"
+    }
+  ],
+  "context": {
+    "returned": 1,
+    "limit": 5,
+    "matched": 1
+  }
+}

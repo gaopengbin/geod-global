@@ -1,0 +1,33 @@
+{
+  "kind": "explicit complete derived subset of published geographic OSM data; not an unchanged provider original",
+  "parentUrl": "https://api.github.com/repos/sameer/osm-pbf/contents/seatac.osm.pbf?ref=2fcab9a29a8cfcb8e8f263258970930a611e4ff6",
+  "parentSHA256": "c1f8b9d2b25f6dcef2482355d4aaeea48d897a16c1e8e8908725cfccecc23092",
+  "nodes": 263,
+  "wayIds": [
+    23660961,
+    23772636,
+    23772637,
+    52735107,
+    53199551,
+    53199557,
+    53199562,
+    53199583,
+    53199584,
+    53199586
+  ],
+  "writer": "Pyosmium 4.3.1",
+  "license": "ODbL",
+  "copyright": "https://www.openstreetmap.org/copyright",
+  "files": [
+    {
+      "file": "seatac-derived.osm",
+      "bytes": 55437,
+      "sha256": "1f2ad01576862571e64ca2705691451e569f03c84ea7997f24247acd0f9628b3"
+    },
+    {
+      "file": "seatac-derived.osm.pbf",
+      "bytes": 4854,
+      "sha256": "5cce447422313229465da9cfdaa541e52a945fba539a4ea7e05d764bb085262d"
+    }
+  ]
+}

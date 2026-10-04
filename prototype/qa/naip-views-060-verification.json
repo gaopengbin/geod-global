@@ -1,0 +1,349 @@
+{
+  "schema": "geod-naip-views-summary/v1",
+  "checkedAt": "2026-10-03T23:02:53.584692+00:00",
+  "qaOnly": true,
+  "status": "passed",
+  "provider": "planetary-naip",
+  "cohort": "060",
+  "scope": "Actual previously accepted 0.6 m originals and aligned outputs; new RGB/CIR/NIR display acceptance, no new download.",
+  "nativeBinarySha256": "e989c1e453cbf081d11cc09d2b121f157fa7cb216ae84a5a5742b02b54dec5bd",
+  "acquisitionNativeBinarySha256": null,
+  "evidence": {
+    "independentChannelsAndMask": {
+      "file": "views-verification.json",
+      "sha256": "0dbb3200f8ea9fa4874b2d7f55b4d5a8f8d7472dfa9ee3736c2cf5bae63f2c5a",
+      "snapshot": "evidence-snapshots/0dbb3200f8ea9fa4874b2d7f55b4d5a8f8d7472dfa9ee3736c2cf5bae63f2c5a.json"
+    },
+    "productionUi": {
+      "file": "ui/views-verification.json",
+      "sha256": "a748b666a90b03d2cacf55511d047306e602958740c299730e3b3b2120b670b9",
+      "snapshot": "evidence-snapshots/a748b666a90b03d2cacf55511d047306e602958740c299730e3b3b2120b670b9.json"
+    },
+    "acceptedUiSubset": null,
+    "acquisition": {
+      "file": "prototype/qa/naip-native-verification.json",
+      "sha256": "b174c1ce8b640694eb20d73db0c45dfe966e1f077645aacceda7fe8bff11c15d",
+      "snapshot": "evidence-snapshots/b174c1ce8b640694eb20d73db0c45dfe966e1f077645aacceda7fe8bff11c15d.json"
+    },
+    "sourceIndependent": {
+      "file": "prototype/qa/naip-processing-verification.json",
+      "sha256": "9bf400ff23940ee70b7112e1c9090a1d3fb3ad434add94fd84d8a6e4c0a45a7e",
+      "snapshot": "evidence-snapshots/9bf400ff23940ee70b7112e1c9090a1d3fb3ad434add94fd84d8a6e4c0a45a7e.json"
+    }
+  },
+  "displayBands": {
+    "rgb": [
+      1,
+      2,
+      3
+    ],
+    "cir": [
+      4,
+      1,
+      2
+    ],
+    "nir": [
+      4,
+      4,
+      4
+    ]
+  },
+  "filesIndependentlyChecked": 4,
+  "filesCheckedInProductionRenderer": 4,
+  "rgbaPreviewPixelsCompared": 5506560,
+  "rawFullResolutionPointsCompared": 12,
+  "renderedCanvasPixelsCompared": 2240980,
+  "frontendFiles": [
+    {
+      "file": "assets/chunk-aKtaBQYM.js",
+      "sha256": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236"
+    },
+    {
+      "file": "assets/common-uuK22kLj.js",
+      "sha256": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+    },
+    {
+      "file": "assets/i18n-DsE_cCFB.js",
+      "sha256": "d664c9456ec8ad0e83f2ed6e2df812daa197449a30b05125a405816721147491"
+    },
+    {
+      "file": "assets/i18n-DZ60XG39.css",
+      "sha256": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6"
+    },
+    {
+      "file": "assets/ImageStatic-CJOl8TQ_.js",
+      "sha256": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540"
+    },
+    {
+      "file": "assets/index-B4NeBykq.css",
+      "sha256": "e6fc7e1a72006c80cf778bfedced1f1553e65b980a4a7f80bdbf853896feedca"
+    },
+    {
+      "file": "assets/index-WqvjYoLi.js",
+      "sha256": "2b3f8300ec9f43f18264890f258e5c113fb4158a58b570371d1d0b6ccce8f578"
+    },
+    {
+      "file": "assets/ol-BM8XMzgm.js",
+      "sha256": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304"
+    },
+    {
+      "file": "assets/ol-c_1sG1-7.css",
+      "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+    },
+    {
+      "file": "assets/rbush-CaohfFwn.js",
+      "sha256": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7"
+    },
+    {
+      "file": "assets/workspace-map-CeWRej-W.js",
+      "sha256": "73aa0e44a04415758bef98155c20c5e2de123e979697930aab011fb8da060173"
+    },
+    {
+      "file": "assets/workspace-map-geometry-BUZCcjeL.js",
+      "sha256": "a89736ac209c26dd92d7c335e5d12007cc6691f7f09c437526729aac89d4d6b3"
+    },
+    {
+      "file": "assets/workspace-map-R_H2vS8Y.css",
+      "sha256": "ac9fa79a91e500be4dc1e924d0a2e6d4ef02123ed450ac010fd96a6fe4a51fe0"
+    },
+    {
+      "file": "brand/geod-symbol.png",
+      "sha256": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+    },
+    {
+      "file": "fonts/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "file": "index.html",
+      "sha256": "783ac3b7571fc54ea86d22225297754422ab5acd5c838f3aa7293aa77dc1806b"
+    }
+  ],
+  "offlineThumbnailCache": {
+    "offline": true,
+    "filesRestored": 4,
+    "unchangedRgbThumbnails": 4,
+    "unchangedCacheFileIdentityAndBytes": true
+  },
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "entries": [
+    {
+      "jobId": "1bd8e110-1bad-4513-8a25-aba3aca10e46",
+      "sha256": "08e52da03c46f3818cde38e13652a3634d08695dc3529d7f779691308fdbe4c6",
+      "group": "0.6m",
+      "case": "original",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            620,
+            768
+          ],
+          "pngSha256": "c1e10bf902c108666faf52c8d52c2bc8d0167dc6717938115a8e9b02f8886a56",
+          "pixelsCompared": 476160,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            620,
+            768
+          ],
+          "pngSha256": "2e1eee552ab6c9d2a5ef1f1c89190dd7f192ee56ad498d11f75d62a38758bea6",
+          "pixelsCompared": 476160,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            620,
+            768
+          ],
+          "pngSha256": "36d9768b08e471371f177b0817ea0bf288e00c17b8ffcf33e2540bb845635011",
+          "pixelsCompared": 476160,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    },
+    {
+      "jobId": "97c87b89-8892-45d8-8735-f83cd92a103a",
+      "sha256": "8fa6571b8464e6715bb707813ebef6a23502637fe06735ba8c806a40b79ff67a",
+      "group": "0.6m",
+      "case": "original",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            620,
+            768
+          ],
+          "pngSha256": "96150d33fea4bbe6be127a8d482433c284efa24b079b729eed1d170da757c2aa",
+          "pixelsCompared": 476160,
+          "opaqueZeroNirPreviewPixels": 1
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            620,
+            768
+          ],
+          "pngSha256": "ed596ccef02ab2bb18deadcde946a463a90f85d84d17294a7a7d0e9b6c5ddf42",
+          "pixelsCompared": 476160,
+          "opaqueZeroNirPreviewPixels": 1
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            620,
+            768
+          ],
+          "pngSha256": "298277adc8adc8aa439e846beffdfac08b68961f7216963f3462f91551517d6c",
+          "pixelsCompared": 476160,
+          "opaqueZeroNirPreviewPixels": 1
+        }
+      ]
+    },
+    {
+      "jobId": "5697c29e-c690-4833-ab75-9edf5d256ce1",
+      "sha256": "2719a7bb9138120160560af15f56af5300f9b51d80230eae84fa15989e2c4807",
+      "group": "0.6m",
+      "case": "single",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            611,
+            768
+          ],
+          "pngSha256": "560e07f83aa05413a02a12165bd4ad2bdbda0bda2372c07133340e5fa58750aa",
+          "pixelsCompared": 469248,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            611,
+            768
+          ],
+          "pngSha256": "583f71888e256b034b87ee603ca1d93290d27f759b7b39ccc2efbc73b912dc9b",
+          "pixelsCompared": 469248,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            611,
+            768
+          ],
+          "pngSha256": "aaa2b8cec214d6efd3633ad3c6852f57921d99320a3e6de83c2525fb79905b9a",
+          "pixelsCompared": 469248,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    },
+    {
+      "jobId": "83540fdf-7e47-4548-8c2a-c26c091c7c80",
+      "sha256": "eacd40aab5707942f7078dc33a6e1b1285c56ba4785e4133de646e43680d28ac",
+      "group": "0.6m",
+      "case": "polygon",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            768,
+            539
+          ],
+          "pngSha256": "7dd79ceacb9784200ed4513d3730ef3b790aecc413d038c635b6de24ed8615bd",
+          "pixelsCompared": 413952,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            768,
+            539
+          ],
+          "pngSha256": "e7348dcd82f4432dbeee6b65f5b7029dd74cfd3b7a8e12db8634c39e590bafef",
+          "pixelsCompared": 413952,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            768,
+            539
+          ],
+          "pngSha256": "168972614077fb3da0d6b2136b7c39aa87d72752bc0daa2d078faebef8911a27",
+          "pixelsCompared": 413952,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    }
+  ],
+  "remaining": [
+    "Spectral analysis and reflectance calibration",
+    "Other encodings/grids and general reprojection",
+    "Installed native WebView acceptance"
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "provenance": "Synthetic full 1200 x 1200 grids generated independently with h5py 3.15.1; not a real NASA download",
+  "fixtures": [
+    {
+      "file": "synthetic-vnp09a1.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "byteCount": 237828,
+      "sourceSha256": "be1c96ddd11da556cbc746f03aa2b206b2c331822e6eb9bc5eff88b0f3fa3db3",
+      "endian": "<",
+      "compressed": true,
+      "libver": "earliest",
+      "bands": [
+        {
+          "band": "red",
+          "samplesSha256": "fb2728af5d93b9b98159a8a0c91e108d83612e7d7470fa74461f25a27e7189dd",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": -99,
+          "maximum": 16001
+        },
+        {
+          "band": "green",
+          "samplesSha256": "9e85d2c972f8d5eed87f01e84f04ae704cddec6fc970e67315537918e4aef2e7",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": 38,
+          "maximum": 16001
+        },
+        {
+          "band": "blue",
+          "samplesSha256": "d2e8b04d6c0bc587c0da17de09aea34e1f0b2ae1dfd4cf40eab6ac0b36d738a2",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": 175,
+          "maximum": 16001
+        }
+      ]
+    },
+    {
+      "file": "synthetic-vj109a1.h5.gz",
+      "itemId": "VJ109A1.A2025177.h08v05.002.2025333224010",
+      "byteCount": 224514,
+      "sourceSha256": "a25a022a3f78ad5113899cc6c51ee2964fab9fee1c2a3a0c9325dc7fd0160bab",
+      "endian": ">",
+      "compressed": true,
+      "libver": "latest",
+      "bands": [
+        {
+          "band": "red",
+          "samplesSha256": "fb2728af5d93b9b98159a8a0c91e108d83612e7d7470fa74461f25a27e7189dd",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": -99,
+          "maximum": 16001
+        },
+        {
+          "band": "green",
+          "samplesSha256": "9e85d2c972f8d5eed87f01e84f04ae704cddec6fc970e67315537918e4aef2e7",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": 38,
+          "maximum": 16001
+        },
+        {
+          "band": "blue",
+          "samplesSha256": "d2e8b04d6c0bc587c0da17de09aea34e1f0b2ae1dfd4cf40eab6ac0b36d738a2",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": 175,
+          "maximum": 16001
+        }
+      ]
+    },
+    {
+      "file": "synthetic-vj209a1.h5.gz",
+      "itemId": "VJ209A1.A2025177.h08v05.002.2025333224010",
+      "byteCount": 8653456,
+      "sourceSha256": "e17032f65b5c2961b61c38369c6333e920af13810687efd3bdacc9d44b2c9613",
+      "endian": "<",
+      "compressed": false,
+      "libver": "earliest",
+      "bands": [
+        {
+          "band": "red",
+          "samplesSha256": "fb2728af5d93b9b98159a8a0c91e108d83612e7d7470fa74461f25a27e7189dd",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": -99,
+          "maximum": 16001
+        },
+        {
+          "band": "green",
+          "samplesSha256": "9e85d2c972f8d5eed87f01e84f04ae704cddec6fc970e67315537918e4aef2e7",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": 38,
+          "maximum": 16001
+        },
+        {
+          "band": "blue",
+          "samplesSha256": "d2e8b04d6c0bc587c0da17de09aea34e1f0b2ae1dfd4cf40eab6ac0b36d738a2",
+          "noDataCount": 144,
+          "outsideValidRangeCount": 1,
+          "minimum": 175,
+          "maximum": 16001
+        }
+      ]
+    }
+  ],
+  "negatives": [
+    {
+      "file": "negative-wrong-calibration.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "wrong-calibration"
+    },
+    {
+      "file": "negative-wrong-version.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "wrong-version"
+    },
+    {
+      "file": "negative-wrong-grid.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "wrong-grid"
+    },
+    {
+      "file": "negative-wrong-type.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "wrong-type"
+    },
+    {
+      "file": "negative-oversized-shape.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "oversized-shape"
+    },
+    {
+      "file": "negative-external-band.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "external-band"
+    },
+    {
+      "file": "negative-damaged-chunk.h5.gz",
+      "itemId": "VNP09A1.A2025177.h08v05.002.2025333224010",
+      "fault": "damaged-chunk"
+    }
+  ]
+}

@@ -1,0 +1,2944 @@
+{
+  "checkedAt": "2026-10-03T12:00:33.795274+00:00",
+  "scope": "Bounded local SHP companion files and original ZIP import, explicit copy/reference, recorded horizontal conversion, layer/attribute map, exact original export and real offline restart; not completion of all provider integrations",
+  "publicSource": {
+    "name": "Natural Earth 110m Lakes",
+    "version": "5.0.0",
+    "url": "https://naciscdn.org/naturalearth/110m/physical/ne_110m_lakes.zip",
+    "documentation": "https://www.naturalearthdata.com/downloads/110m-physical-vectors/110mlakes-reservoirs/",
+    "license": "Public domain",
+    "terms": "https://www.naturalearthdata.com/about/terms-of-use/",
+    "bytes": 23622,
+    "sourceSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+    "shippedWithApplication": false,
+    "conversion": {
+      "container": "zip",
+      "conversion": 1,
+      "deletedRecords": "retained-with-geodDeleted; excluded-from-map",
+      "files": [
+        {
+          "bytes": 36169,
+          "name": "ne_110m_lakes.README.html",
+          "sha256": "229722a22c582d1861cbdbf3d3dd0704495cdfe702fbbcba208599fa1799e77a"
+        },
+        {
+          "bytes": 7,
+          "name": "ne_110m_lakes.VERSION.txt",
+          "sha256": "30d0ad7c0f48ffeaaf390112b5b95823c7efa1da3ee5abc116eb481989340b58"
+        },
+        {
+          "bytes": 5,
+          "name": "ne_110m_lakes.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 166530,
+          "name": "ne_110m_lakes.dbf",
+          "sha256": "ee65c43bdb14463f9a31eda58f7245e3ae0796ac606a67bea0e8386080878cbf"
+        },
+        {
+          "bytes": 145,
+          "name": "ne_110m_lakes.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 8884,
+          "name": "ne_110m_lakes.shp",
+          "sha256": "e65b633578c284776b452bcea07126747d3d6484a507ca43866097059a389dfd"
+        },
+        {
+          "bytes": 292,
+          "name": "ne_110m_lakes.shx",
+          "sha256": "954c018f338248ba6ec6fde3cfe0f8742a4bdb2f886fe888baf6d7b5433c39ab"
+        }
+      ],
+      "horizontalCrs": "EPSG:4326",
+      "layers": [
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 24,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "scalerank",
+              "width": 10
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "featurecla",
+              "width": 32
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_alt",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "admin",
+              "width": 50
+            },
+            {
+              "decimals": 1,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "min_zoom",
+              "width": 6
+            },
+            {
+              "decimals": 1,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "min_label",
+              "width": 4
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_abb",
+              "width": 25
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "label",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "wikidataid",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_ar",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_bn",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_de",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_en",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_es",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_fr",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_el",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_hi",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_hu",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_id",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_it",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_ja",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_ko",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_nl",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_pl",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_pt",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_ru",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_sv",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_tr",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_vi",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_zh",
+              "width": 254
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "ne_id",
+              "width": 10
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_fa",
+              "width": 80
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_he",
+              "width": 80
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_uk",
+              "width": 80
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_ur",
+              "width": 80
+            },
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name_zht",
+              "width": 80
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 5,
+          "table": "ne_110m_lakes"
+        }
+      ],
+      "measureEncoding": "geodMeasures; source-values; below-minus-1e38-as-null",
+      "numericEncoding": "DBF N/F as exact trimmed decimal strings",
+      "polygonRings": "source-XY orientation-and-containment; no-topology-repair",
+      "verticalConversion": "source-z-retained; no-vertical-transformation"
+    }
+  },
+  "independentControls": {
+    "schemaVersion": "geod-shapefile-fixture/v1",
+    "file": "independent-pyshp.zip",
+    "bytes": 11394,
+    "sha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+    "producer": {
+      "pyshp": "3.1.6",
+      "gdal": "GDAL 3.9.2, released 2024/08/13"
+    },
+    "license": "LicenseRef-Proprietary",
+    "origin": "Own synthetic controls, generated by this script",
+    "notes": [
+      "Original numeric lexeme and DBF deletion flag explicitly patched after PyShp writes.",
+      "Polygon rings intentionally out of order; hole, island and shell remain distinct.",
+      "All 12 supported types; WGS84, ESRI Web Mercator and UTM 33N, Z/M and NoData."
+    ],
+    "layers": {
+      "type_01": {
+        "epsg": 3857,
+        "shapeType": 1,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_03": {
+        "epsg": 4326,
+        "shapeType": 3,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_05": {
+        "epsg": 32633,
+        "shapeType": 5,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_08": {
+        "epsg": 4326,
+        "shapeType": 8,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_11": {
+        "epsg": 4326,
+        "shapeType": 11,
+        "records": 3,
+        "deleted": 1,
+        "encoding": "utf-8"
+      },
+      "type_13": {
+        "epsg": 4326,
+        "shapeType": 13,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_15": {
+        "epsg": 32633,
+        "shapeType": 15,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_18": {
+        "epsg": 4326,
+        "shapeType": 18,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_21": {
+        "epsg": 4326,
+        "shapeType": 21,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "gbk"
+      },
+      "type_23": {
+        "epsg": 4326,
+        "shapeType": 23,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_25": {
+        "epsg": 32633,
+        "shapeType": 25,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      },
+      "type_28": {
+        "epsg": 4326,
+        "shapeType": 28,
+        "records": 1,
+        "deleted": 0,
+        "encoding": "utf-8"
+      }
+    },
+    "fixture": "crates/geod-runtime/fixtures/shapefile/independent-pyshp.zip",
+    "sourceRecord": "crates/geod-runtime/fixtures/shapefile/independent-pyshp.SOURCE.json",
+    "regeneratedExactZIPMatch": true,
+    "conversion": {
+      "container": "zip",
+      "conversion": 1,
+      "deletedRecords": "retained-with-geodDeleted; excluded-from-map",
+      "files": [
+        {
+          "bytes": 63,
+          "name": "README.txt",
+          "sha256": "2d29d18a079ce94f0ef8ec4cc14141615a022e5bf5d410c11a34910794ac1205"
+        },
+        {
+          "bytes": 5,
+          "name": "type_01.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_01.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 425,
+          "name": "type_01.prj",
+          "sha256": "f2e7fb14d55bdd8d6a3bc2c272a48729d8f9d0ad72936e20eae6a9a81c2fccd0"
+        },
+        {
+          "bytes": 128,
+          "name": "type_01.shp",
+          "sha256": "eaa1a5a04f3879f17e0f3af7e0b0422d81161810c766b053b975bc5326583521"
+        },
+        {
+          "bytes": 108,
+          "name": "type_01.shx",
+          "sha256": "1b265fb06ff98a216df39e8b85b28f0419f5708350cf4db3ea84da78aca093bb"
+        },
+        {
+          "bytes": 5,
+          "name": "type_03.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_03.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 145,
+          "name": "type_03.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 240,
+          "name": "type_03.shp",
+          "sha256": "dce678d4216b391070d6bad6b70a2a0b5be0708316c77a1ab9d8a726e37a04dc"
+        },
+        {
+          "bytes": 108,
+          "name": "type_03.shx",
+          "sha256": "cb407ff1bd3f24daede7238c1cca190bda662052ed1a8ea852c016610242bc13"
+        },
+        {
+          "bytes": 5,
+          "name": "type_05.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_05.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 401,
+          "name": "type_05.prj",
+          "sha256": "228d99c48fb48491aa26f6fd3732051c70d4d0cd578fb21a56297b3678d397ad"
+        },
+        {
+          "bytes": 404,
+          "name": "type_05.shp",
+          "sha256": "f032ca8ba674f2583e2e0a7ec9133cb927407cd368d5af66a4e769a071418c88"
+        },
+        {
+          "bytes": 108,
+          "name": "type_05.shx",
+          "sha256": "f5e57ff746630caeca98af20a696fbdce0e7592b80e9b17437dde908cefbe2bc"
+        },
+        {
+          "bytes": 5,
+          "name": "type_08.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_08.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 145,
+          "name": "type_08.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 180,
+          "name": "type_08.shp",
+          "sha256": "927cc96c664ff467f42c998dcceb0b9311fa823c8511c2cc12dcec7c38bbe905"
+        },
+        {
+          "bytes": 108,
+          "name": "type_08.shx",
+          "sha256": "ad51dd76b050428bad68a43c709ca568e7cc424679a4a45f0a38e5c3e4d4d987"
+        },
+        {
+          "bytes": 5,
+          "name": "type_11.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 585,
+          "name": "type_11.dbf",
+          "sha256": "b1a1c79ac88c3a71cccf96d3e507e315794b925d8e5175bc85a50ee8d8090042"
+        },
+        {
+          "bytes": 145,
+          "name": "type_11.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 200,
+          "name": "type_11.shp",
+          "sha256": "368b9a02b8b2d535564e596481d4494739cf110f6a6e302c1238e843ad8727c5"
+        },
+        {
+          "bytes": 124,
+          "name": "type_11.shx",
+          "sha256": "90263bec54fb673c32fe01cd68ac64ab631574a1b1915e4550c1cb0964e05da8"
+        },
+        {
+          "bytes": 5,
+          "name": "type_13.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_13.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 145,
+          "name": "type_13.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 352,
+          "name": "type_13.shp",
+          "sha256": "e70006f136a81d9947d43b138ab3c42e13bdc1c229d73514832da6f947d86ce9"
+        },
+        {
+          "bytes": 108,
+          "name": "type_13.shx",
+          "sha256": "2945ef194d1095b8dee852e6910a11dd7538442dca6f29b8d7a585087e680fe7"
+        },
+        {
+          "bytes": 5,
+          "name": "type_15.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_15.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 401,
+          "name": "type_15.prj",
+          "sha256": "228d99c48fb48491aa26f6fd3732051c70d4d0cd578fb21a56297b3678d397ad"
+        },
+        {
+          "bytes": 772,
+          "name": "type_15.shp",
+          "sha256": "370f390dcd50132566b8b2bcbd65ea300554821e3d3359d457e4669738d15784"
+        },
+        {
+          "bytes": 108,
+          "name": "type_15.shx",
+          "sha256": "5f533a59c172af9dd5579abecfdb2758659d831e41fea29fdfc5bb74a0e6d1a0"
+        },
+        {
+          "bytes": 5,
+          "name": "type_18.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_18.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 145,
+          "name": "type_18.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 244,
+          "name": "type_18.shp",
+          "sha256": "b854900bc0e1f8eb6a5072fb19aa7a728c6930f1faea8900bec97e6fa31fffa1"
+        },
+        {
+          "bytes": 108,
+          "name": "type_18.shx",
+          "sha256": "0068bce1f37cf12a740719c307cb944bea44caa81a0fef8b10e782354cc75dd2"
+        },
+        {
+          "bytes": 3,
+          "name": "type_21.cpg",
+          "sha256": "33251177a22e1f69e95c670a1e82a465b0d42a51bbfcc06ac794d0ffdc816591"
+        },
+        {
+          "bytes": 345,
+          "name": "type_21.dbf",
+          "sha256": "c9fe9341a0ae63f6f42d37f0ad9725c7498543dd50f26dc327cb1196f8fb1d00"
+        },
+        {
+          "bytes": 145,
+          "name": "type_21.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 136,
+          "name": "type_21.shp",
+          "sha256": "9c21339ca9a21986de883cc9d00c180e30c88a92320d95b14c736c11fb2956d4"
+        },
+        {
+          "bytes": 108,
+          "name": "type_21.shx",
+          "sha256": "db7942a3cf837480e646240365e364f06cda6be8a8c54b117c6d6573c1194917"
+        },
+        {
+          "bytes": 5,
+          "name": "type_23.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_23.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 145,
+          "name": "type_23.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 296,
+          "name": "type_23.shp",
+          "sha256": "e6c3336b2ffaeec26c083c4e08c7a6357504b448c3f585c13364ecec1b417c62"
+        },
+        {
+          "bytes": 108,
+          "name": "type_23.shx",
+          "sha256": "9b311c0c4e7f30ad96c516cb7b9ebbc3eed0306bfcaeb1371d6c8c8127791d78"
+        },
+        {
+          "bytes": 5,
+          "name": "type_25.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_25.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 401,
+          "name": "type_25.prj",
+          "sha256": "228d99c48fb48491aa26f6fd3732051c70d4d0cd578fb21a56297b3678d397ad"
+        },
+        {
+          "bytes": 612,
+          "name": "type_25.shp",
+          "sha256": "14fdc6324d942389fd7957282283376407904a08333222664dbf9bf2b2ba6f14"
+        },
+        {
+          "bytes": 108,
+          "name": "type_25.shx",
+          "sha256": "a49168d34a89fba36ac6c7cbbc727d650657d8c407a804f16e8418efc3230008"
+        },
+        {
+          "bytes": 5,
+          "name": "type_28.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 345,
+          "name": "type_28.dbf",
+          "sha256": "fa49287d5f165e3ca174ff30b90062838570958fc41bcb79471d7e9d8f4d14b5"
+        },
+        {
+          "bytes": 145,
+          "name": "type_28.prj",
+          "sha256": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4"
+        },
+        {
+          "bytes": 212,
+          "name": "type_28.shp",
+          "sha256": "3cbe0df4325ec29ae7e100885e83e925790bb26f13405a32a1839ce4f18dbf37"
+        },
+        {
+          "bytes": 108,
+          "name": "type_28.shx",
+          "sha256": "16111dfeffba0ad98870e70e0c1b56cc1cfe63b2e0dbf055d5c764ecf42c2d97"
+        }
+      ],
+      "horizontalCrs": "EPSG:4326",
+      "layers": [
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "PROJCS[\"WGS_1984_Web_Mercator_Auxiliary_Sphere\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Mercator_Auxiliary_Sphere\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",0.0],PARAMETER[\"Standard_Parallel_1\",0.0],PARAMETER[\"Auxiliary_Sphere_Type\",0.0],UNIT[\"Meter\",1.0]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "PROJCS[\"WGS_1984_Web_Mercator_Auxiliary_Sphere\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Mercator_Auxiliary_Sphere\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",0.0],PARAMETER[\"Standard_Parallel_1\",0.0],PARAMETER[\"Auxiliary_Sphere_Type\",0.0],UNIT[\"Meter\",1.0]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 1,
+          "table": "type_01"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 3,
+          "table": "type_03"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "PROJCS[\"WGS_1984_UTM_Zone_33N\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "PROJCS[\"WGS_1984_UTM_Zone_33N\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 5,
+          "table": "type_05"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 8,
+          "table": "type_08"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 1,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 3,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 1,
+          "shapeType": 11,
+          "table": "type_11"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 13,
+          "table": "type_13"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "PROJCS[\"WGS_1984_UTM_Zone_33N\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "PROJCS[\"WGS_1984_UTM_Zone_33N\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 15,
+          "table": "type_15"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 18,
+          "table": "type_18"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "GBK",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "GBK",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 21,
+          "table": "type_21"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 23,
+          "table": "type_23"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "PROJCS[\"WGS_1984_UTM_Zone_33N\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "PROJCS[\"WGS_1984_UTM_Zone_33N\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",15.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 25,
+          "table": "type_25"
+        },
+        {
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationArea": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateOperationId": null,
+          "coordinatesClampedToBounds": 0,
+          "coordinatesOutsideOperationArea": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+          "deletedCount": 0,
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "featureCount": 1,
+          "fields": [
+            {
+              "decimals": 0,
+              "fieldType": "C",
+              "jsonEncoding": "string",
+              "name": "name",
+              "width": 48
+            },
+            {
+              "decimals": 0,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "large",
+              "width": 20
+            },
+            {
+              "decimals": 18,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "precise",
+              "width": 30
+            },
+            {
+              "decimals": 0,
+              "fieldType": "L",
+              "jsonEncoding": "boolean-or-null",
+              "name": "active",
+              "width": 1
+            },
+            {
+              "decimals": 0,
+              "fieldType": "D",
+              "jsonEncoding": "iso-date-or-null",
+              "name": "date",
+              "width": 8
+            },
+            {
+              "decimals": 2,
+              "fieldType": "N",
+              "jsonEncoding": "decimal-string",
+              "name": "empty",
+              "width": 12
+            }
+          ],
+          "languageDriverId": 0,
+          "nullGeometryCount": 0,
+          "shapeType": 28,
+          "table": "type_28"
+        }
+      ],
+      "measureEncoding": "geodMeasures; source-values; below-minus-1e38-as-null",
+      "numericEncoding": "DBF N/F as exact trimmed decimal strings",
+      "polygonRings": "source-XY orientation-and-containment; no-topology-repair",
+      "verticalConversion": "source-z-retained; no-vertical-transformation"
+    }
+  },
+  "independentComparison": {
+    "script": "scripts/verify-shapefile-local.py",
+    "coordinates": "PyShp geometry/record reads plus explicit PROJ source CRS conversion; GDAL independently verifies each active geometry",
+    "attributes": "Raw DBF exact numeric lexemes, declared text encoding, boolean/date/null and deletion flag; every record compared",
+    "originals": "Every original member hash and full original ZIP when a ZIP was opened; SHP assembled ZIP is distinguished from a producer ZIP",
+    "cases": [
+      {
+        "sourceSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+        "originalBundleSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+        "sourceMembers": 7,
+        "sourceMemberBytes": 212032,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 24,
+        "deletedRecords": 0,
+        "attributes": 888,
+        "numericOrdinates": 930,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 24,
+        "gdalGeometryChecks": 24,
+        "layerChecks": [
+          {
+            "layer": "ne_110m_lakes",
+            "shapeType": 5,
+            "records": 24,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "a7dd5ea3-91e0-4b75-b90e-33f3156d8763",
+        "storageMode": "reference",
+        "sourceOrigin": "Natural Earth published lakes"
+      },
+      {
+        "sourceSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+        "originalBundleSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+        "sourceMembers": 7,
+        "sourceMemberBytes": 212032,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 24,
+        "deletedRecords": 0,
+        "attributes": 888,
+        "numericOrdinates": 930,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 24,
+        "gdalGeometryChecks": 24,
+        "layerChecks": [
+          {
+            "layer": "ne_110m_lakes",
+            "shapeType": 5,
+            "records": 24,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "564e1fd1-c566-4b5c-b629-6664951fd148",
+        "storageMode": "managed",
+        "sourceOrigin": "Natural Earth published lakes"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "c2118e73e70ba2da06c99f74d92c66ae02146ccdb7645e7274b30294d484e9f0",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 175856,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 24,
+        "deletedRecords": 0,
+        "attributes": 888,
+        "numericOrdinates": 930,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 24,
+        "gdalGeometryChecks": 24,
+        "layerChecks": [
+          {
+            "layer": "ne_110m_lakes",
+            "shapeType": 5,
+            "records": 24,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "d37f6e8b-29b9-47a0-880c-61b354c16d75",
+        "storageMode": "reference",
+        "sourceOrigin": "Natural Earth published lakes sidecars"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "c2118e73e70ba2da06c99f74d92c66ae02146ccdb7645e7274b30294d484e9f0",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 175856,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 24,
+        "deletedRecords": 0,
+        "attributes": 888,
+        "numericOrdinates": 930,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 24,
+        "gdalGeometryChecks": 24,
+        "layerChecks": [
+          {
+            "layer": "ne_110m_lakes",
+            "shapeType": 5,
+            "records": 24,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "24cf83c8-a66b-4aa5-9d28-eb11bfbb4420",
+        "storageMode": "managed",
+        "sourceOrigin": "Natural Earth published lakes sidecars"
+      },
+      {
+        "sourceSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "originalBundleSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "sourceMembers": 61,
+        "sourceMemberBytes": 12377,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 12,
+        "records": 14,
+        "deletedRecords": 1,
+        "attributes": 84,
+        "numericOrdinates": 225,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 13,
+        "gdalGeometryChecks": 12,
+        "layerChecks": [
+          {
+            "layer": "type_01",
+            "shapeType": 1,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_03",
+            "shapeType": 3,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_08",
+            "shapeType": 8,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_13",
+            "shapeType": 13,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_15",
+            "shapeType": 15,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_18",
+            "shapeType": 18,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_23",
+            "shapeType": 23,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_25",
+            "shapeType": 25,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_28",
+            "shapeType": 28,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "edf6abcd-3e6b-46a0-aac3-898fe954c7c0",
+        "storageMode": "reference",
+        "sourceOrigin": "Independent PyShp controls"
+      },
+      {
+        "sourceSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "originalBundleSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "sourceMembers": 61,
+        "sourceMemberBytes": 12377,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 12,
+        "records": 14,
+        "deletedRecords": 1,
+        "attributes": 84,
+        "numericOrdinates": 225,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 13,
+        "gdalGeometryChecks": 12,
+        "layerChecks": [
+          {
+            "layer": "type_01",
+            "shapeType": 1,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_03",
+            "shapeType": 3,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_08",
+            "shapeType": 8,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_13",
+            "shapeType": 13,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_15",
+            "shapeType": 15,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_18",
+            "shapeType": 18,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_23",
+            "shapeType": 23,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_25",
+            "shapeType": 25,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_28",
+            "shapeType": 28,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "7a8a95bb-d9d1-4e25-9382-c8bdb6fbb62f",
+        "storageMode": "managed",
+        "sourceOrigin": "Independent PyShp controls"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "5de885846f909b57d48c889dbe6222098abb638b05c3e2278cda76945c2841b6",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 1059,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 3,
+        "deletedRecords": 1,
+        "attributes": 18,
+        "numericOrdinates": 7,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 2,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "6d978749-1e2a-4910-b999-802d22cc08b8",
+        "storageMode": "reference",
+        "sourceOrigin": "Independent PyShp controls sidecars"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "5de885846f909b57d48c889dbe6222098abb638b05c3e2278cda76945c2841b6",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 1059,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 3,
+        "deletedRecords": 1,
+        "attributes": 18,
+        "numericOrdinates": 7,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 2,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "6109502e-bf55-4cac-8c2f-1c7d619d442f",
+        "storageMode": "managed",
+        "sourceOrigin": "Independent PyShp controls sidecars"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "d56b7e1cc01ab6b856489afcd6ace9f712a5125ac7ac55986cd59ec8712dce5e",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 1263,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 1,
+        "deletedRecords": 0,
+        "attributes": 6,
+        "numericOrdinates": 30,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 1,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "0467ee50-4a23-446f-a057-b14b8b05b404",
+        "storageMode": "reference",
+        "sourceOrigin": "Independent PyShp controls sidecars"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "d56b7e1cc01ab6b856489afcd6ace9f712a5125ac7ac55986cd59ec8712dce5e",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 1263,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 1,
+        "deletedRecords": 0,
+        "attributes": 6,
+        "numericOrdinates": 30,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 1,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "314dc03b-e136-43db-97e7-f2e71cf7b4f3",
+        "storageMode": "managed",
+        "sourceOrigin": "Independent PyShp controls sidecars"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "7155a9f6dc011cd253f7c9783678176f7d2324ea3ae4a6612e17cb1f7ee18d09",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 737,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 1,
+        "deletedRecords": 0,
+        "attributes": 6,
+        "numericOrdinates": 3,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 1,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "70cc7c61-0a91-4396-8a10-a521a3ad6f88",
+        "storageMode": "reference",
+        "sourceOrigin": "Independent PyShp controls sidecars"
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "7155a9f6dc011cd253f7c9783678176f7d2324ea3ae4a6612e17cb1f7ee18d09",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 737,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 1,
+        "deletedRecords": 0,
+        "attributes": 6,
+        "numericOrdinates": 3,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 1,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "33e83518-61e8-4ed6-8e7f-6fce84d07951",
+        "storageMode": "managed",
+        "sourceOrigin": "Independent PyShp controls sidecars"
+      }
+    ]
+  },
+  "negativePublicSource": {
+    "file": "ne_110m_land.zip",
+    "version": "4.0.0",
+    "url": "https://naciscdn.org/naturalearth/110m/physical/ne_110m_land.zip",
+    "bytes": 69700,
+    "sha256": "1926c621afd6ac67c3f36639bb1236134a48d82226dc675d3e3df53d02d2a3de",
+    "readerVersion": "GDAL 3.9.2, released 2024/08/13",
+    "records": 127,
+    "invalidGeometries": [
+      {
+        "zeroBasedId": 78,
+        "oneBasedRecord": 79
+      }
+    ],
+    "nativeRejected": true,
+    "nativeError": "Shapefile layer ne_110m_land: Shapefile record 79: SHP polygon contains an invalid or intersecting ring; no repair is applied",
+    "repairedOrSubstituted": false
+  },
+  "actualRestart": {
+    "managedCopies": [
+      {
+        "sourceSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "originalBundleSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "sourceMembers": 61,
+        "sourceMemberBytes": 12377,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 12,
+        "records": 14,
+        "deletedRecords": 1,
+        "attributes": 84,
+        "numericOrdinates": 225,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 13,
+        "gdalGeometryChecks": 12,
+        "layerChecks": [
+          {
+            "layer": "type_01",
+            "shapeType": 1,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_03",
+            "shapeType": 3,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_08",
+            "shapeType": 8,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_13",
+            "shapeType": 13,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_15",
+            "shapeType": 15,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_18",
+            "shapeType": 18,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_23",
+            "shapeType": 23,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_25",
+            "shapeType": 25,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_28",
+            "shapeType": 28,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "23d9be7f-e8b0-4ce7-b477-181c130369c6",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "c2118e73e70ba2da06c99f74d92c66ae02146ccdb7645e7274b30294d484e9f0",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 175856,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 24,
+        "deletedRecords": 0,
+        "attributes": 888,
+        "numericOrdinates": 930,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 24,
+        "gdalGeometryChecks": 24,
+        "layerChecks": [
+          {
+            "layer": "ne_110m_lakes",
+            "shapeType": 5,
+            "records": 24,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "24cf83c8-a66b-4aa5-9d28-eb11bfbb4420",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "d56b7e1cc01ab6b856489afcd6ace9f712a5125ac7ac55986cd59ec8712dce5e",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 1263,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 1,
+        "deletedRecords": 0,
+        "attributes": 6,
+        "numericOrdinates": 30,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 1,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "314dc03b-e136-43db-97e7-f2e71cf7b4f3",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "7155a9f6dc011cd253f7c9783678176f7d2324ea3ae4a6612e17cb1f7ee18d09",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 737,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 1,
+        "deletedRecords": 0,
+        "attributes": 6,
+        "numericOrdinates": 3,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 1,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "33e83518-61e8-4ed6-8e7f-6fce84d07951",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+        "originalBundleSha256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+        "sourceMembers": 7,
+        "sourceMemberBytes": 212032,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 24,
+        "deletedRecords": 0,
+        "attributes": 888,
+        "numericOrdinates": 930,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 24,
+        "gdalGeometryChecks": 24,
+        "layerChecks": [
+          {
+            "layer": "ne_110m_lakes",
+            "shapeType": 5,
+            "records": 24,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "564e1fd1-c566-4b5c-b629-6664951fd148",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": null,
+        "originalBundleSha256": "5de885846f909b57d48c889dbe6222098abb638b05c3e2278cda76945c2841b6",
+        "sourceMembers": 5,
+        "sourceMemberBytes": 1059,
+        "originalZIPIdentical": false,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 1,
+        "records": 3,
+        "deletedRecords": 1,
+        "attributes": 18,
+        "numericOrdinates": 7,
+        "maximumCoordinateDifference": 0,
+        "gdalNonDeletedFeatures": 2,
+        "gdalGeometryChecks": 1,
+        "layerChecks": [
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "6109502e-bf55-4cac-8c2f-1c7d619d442f",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "originalBundleSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "sourceMembers": 61,
+        "sourceMemberBytes": 12377,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 12,
+        "records": 14,
+        "deletedRecords": 1,
+        "attributes": 84,
+        "numericOrdinates": 225,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 13,
+        "gdalGeometryChecks": 12,
+        "layerChecks": [
+          {
+            "layer": "type_01",
+            "shapeType": 1,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_03",
+            "shapeType": 3,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_08",
+            "shapeType": 8,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_13",
+            "shapeType": 13,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_15",
+            "shapeType": 15,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_18",
+            "shapeType": 18,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_23",
+            "shapeType": 23,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_25",
+            "shapeType": 25,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_28",
+            "shapeType": 28,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "72df5792-595e-4744-a766-d32dc80b30c4",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "originalBundleSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "sourceMembers": 61,
+        "sourceMemberBytes": 12377,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 12,
+        "records": 14,
+        "deletedRecords": 1,
+        "attributes": 84,
+        "numericOrdinates": 225,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 13,
+        "gdalGeometryChecks": 12,
+        "layerChecks": [
+          {
+            "layer": "type_01",
+            "shapeType": 1,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_03",
+            "shapeType": 3,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_08",
+            "shapeType": 8,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_13",
+            "shapeType": 13,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_15",
+            "shapeType": 15,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_18",
+            "shapeType": 18,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_23",
+            "shapeType": 23,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_25",
+            "shapeType": 25,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_28",
+            "shapeType": 28,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "7a8a95bb-d9d1-4e25-9382-c8bdb6fbb62f",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      },
+      {
+        "sourceSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "originalBundleSha256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+        "sourceMembers": 61,
+        "sourceMemberBytes": 12377,
+        "originalZIPIdentical": true,
+        "allOriginalMembersIdentical": true,
+        "readerVersions": {
+          "pyshp": "3.1.6",
+          "gdal": "GDAL 3.9.2, released 2024/08/13"
+        },
+        "layers": 12,
+        "records": 14,
+        "deletedRecords": 1,
+        "attributes": 84,
+        "numericOrdinates": 225,
+        "maximumCoordinateDifference": 2.6645352591003757e-14,
+        "gdalNonDeletedFeatures": 13,
+        "gdalGeometryChecks": 12,
+        "layerChecks": [
+          {
+            "layer": "type_01",
+            "shapeType": 1,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_03",
+            "shapeType": 3,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_05",
+            "shapeType": 5,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_08",
+            "shapeType": 8,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_11",
+            "shapeType": 11,
+            "records": 3,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_13",
+            "shapeType": 13,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_15",
+            "shapeType": 15,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_18",
+            "shapeType": 18,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_21",
+            "shapeType": 21,
+            "records": 1,
+            "encoding": "GBK",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_23",
+            "shapeType": 23,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_25",
+            "shapeType": 25,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          },
+          {
+            "layer": "type_28",
+            "shapeType": 28,
+            "records": 1,
+            "encoding": "UTF-8",
+            "datumOperation": "Identity"
+          }
+        ],
+        "id": "81b051ae-d414-4842-b93b-72b672e76fc2",
+        "storageMode": "managed",
+        "afterActualRestart": true
+      }
+    ],
+    "missingReferencesRejected": [
+      {
+        "id": "0467ee50-4a23-446f-a057-b14b8b05b404",
+        "status": 400
+      },
+      {
+        "id": "6d978749-1e2a-4910-b999-802d22cc08b8",
+        "status": 400
+      },
+      {
+        "id": "70cc7c61-0a91-4396-8a10-a521a3ad6f88",
+        "status": 400
+      },
+      {
+        "id": "a7dd5ea3-91e0-4b75-b90e-33f3156d8763",
+        "status": 400
+      },
+      {
+        "id": "d37f6e8b-29b9-47a0-880c-61b354c16d75",
+        "status": 400
+      },
+      {
+        "id": "edf6abcd-3e6b-46a0-aac3-898fe954c7c0",
+        "status": 400
+      }
+    ],
+    "proxy": {
+      "mode": "custom",
+      "url": "http://127.0.0.1:9"
+    },
+    "networkRequired": false,
+    "checkedAt": "2026-10-03T11:58:04.077329+00:00"
+  },
+  "browser": {
+    "checkedAt": "2026-10-03T11:40:45.605Z",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "theme": "light",
+        "locale": "en",
+        "checks": [
+          {
+            "id": "72df5792-595e-4744-a766-d32dc80b30c4",
+            "layers": 12,
+            "format": "zip",
+            "allMembersDownloadSHA256": true,
+            "fullConvertedDownload": true,
+            "resizing": true,
+            "sourceDetailsReadable": true
+          },
+          {
+            "id": "6109502e-bf55-4cac-8c2f-1c7d619d442f",
+            "layers": 1,
+            "format": "sidecars",
+            "allMembersDownloadSHA256": true,
+            "fullConvertedDownload": true,
+            "resizing": true,
+            "sourceDetailsReadable": true
+          },
+          {
+            "id": "564e1fd1-c566-4b5c-b629-6664951fd148",
+            "layers": 1,
+            "format": "zip",
+            "allMembersDownloadSHA256": true,
+            "fullConvertedDownload": true,
+            "resizing": true,
+            "sourceDetailsReadable": true
+          }
+        ],
+        "invalidZipRejected": true,
+        "invalidPolygonLocated": true,
+        "selectedProperties": true,
+        "exactNumericFields": true,
+        "gbkDecoded": true,
+        "selectedMeasures": true,
+        "selectionClearedAfterLayerSwitch": true,
+        "deletedRecordsOmittedFromMap": true,
+        "remoteAttempts": [],
+        "pageErrors": [],
+        "importedId": "72df5792-595e-4744-a766-d32dc80b30c4"
+      },
+      {
+        "width": 1024,
+        "theme": "dark",
+        "locale": "zh-CN",
+        "checks": [
+          {
+            "id": "81b051ae-d414-4842-b93b-72b672e76fc2",
+            "layers": 12,
+            "format": "zip",
+            "allMembersDownloadSHA256": true,
+            "fullConvertedDownload": true,
+            "resizing": true,
+            "sourceDetailsReadable": true
+          },
+          {
+            "id": "6109502e-bf55-4cac-8c2f-1c7d619d442f",
+            "layers": 1,
+            "format": "sidecars",
+            "allMembersDownloadSHA256": true,
+            "fullConvertedDownload": true,
+            "resizing": true,
+            "sourceDetailsReadable": true
+          },
+          {
+            "id": "564e1fd1-c566-4b5c-b629-6664951fd148",
+            "layers": 1,
+            "format": "zip",
+            "allMembersDownloadSHA256": true,
+            "fullConvertedDownload": true,
+            "resizing": true,
+            "sourceDetailsReadable": true
+          }
+        ],
+        "invalidZipRejected": true,
+        "invalidPolygonLocated": true,
+        "selectedProperties": true,
+        "exactNumericFields": true,
+        "gbkDecoded": true,
+        "selectedMeasures": true,
+        "selectionClearedAfterLayerSwitch": true,
+        "deletedRecordsOmittedFromMap": true,
+        "remoteAttempts": [],
+        "pageErrors": [],
+        "importedId": "81b051ae-d414-4842-b93b-72b672e76fc2"
+      }
+    ]
+  },
+  "browserAfterActualRestart": {
+    "checkedAt": "2026-10-03T11:59:56.086Z",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "proxy": {
+      "mode": "custom",
+      "url": "http://127.0.0.1:9"
+    },
+    "reports": [
+      {
+        "width": 1440,
+        "theme": "light",
+        "locale": "en",
+        "afterActualRestart": true,
+        "missingReferenceRejected": true,
+        "exactNumericAndChineseProperties": true,
+        "measures": true,
+        "layerSwitch": true,
+        "sourceDetailsReadable": true,
+        "fullExports": [
+          {
+            "id": "23d9be7f-e8b0-4ce7-b477-181c130369c6",
+            "originalSHA256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+            "allFeatures": 14,
+            "allMemberReceipts": true
+          },
+          {
+            "id": "564e1fd1-c566-4b5c-b629-6664951fd148",
+            "originalSHA256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+            "allFeatures": 24,
+            "allMemberReceipts": true
+          }
+        ],
+        "invalidSourceRecordLocated": true,
+        "invalidSourceError": "Shapefile layer ne_110m_land: Shapefile record 79: SHP polygon contains an invalid or intersecting ring; no repair is applied",
+        "remoteAttempts": [],
+        "pageErrors": []
+      },
+      {
+        "width": 1024,
+        "theme": "dark",
+        "locale": "zh-CN",
+        "afterActualRestart": true,
+        "missingReferenceRejected": true,
+        "exactNumericAndChineseProperties": true,
+        "measures": true,
+        "layerSwitch": true,
+        "sourceDetailsReadable": true,
+        "fullExports": [
+          {
+            "id": "23d9be7f-e8b0-4ce7-b477-181c130369c6",
+            "originalSHA256": "bd7cda6db0f916640b17f5de2d0a198bade8d9da7175836d66d30b1b99665019",
+            "allFeatures": 14,
+            "allMemberReceipts": true
+          },
+          {
+            "id": "564e1fd1-c566-4b5c-b629-6664951fd148",
+            "originalSHA256": "f2eed3c738a93010770acb0ba44273ea6a83b053641588bc902d9d6fd1cdafcb",
+            "allFeatures": 24,
+            "allMemberReceipts": true
+          }
+        ],
+        "invalidSourceRecordLocated": true,
+        "invalidSourceError": "Shapefile layer ne_110m_land: Shapefile record 79: SHP polygon contains an invalid or intersecting ring; no repair is applied",
+        "remoteAttempts": [],
+        "pageErrors": []
+      }
+    ]
+  },
+  "checks": {
+    "frontend": {
+      "command": "npm run verify",
+      "logicTests": 202,
+      "interfaceTests": 182,
+      "passed": true,
+      "build": true
+    },
+    "native": {
+      "command": "cargo test --locked --workspace --features geod-global-desktop/custom-protocol",
+      "runtimeLibraryTests": 392,
+      "cliTests": 3,
+      "desktopTests": 4,
+      "passed": 399,
+      "intentionallyIgnored": 4
+    },
+    "lint": {
+      "command": "cargo clippy --locked --workspace --all-targets --features geod-global-desktop/custom-protocol -- -D warnings",
+      "passed": true
+    },
+    "format": "cargo fmt --all -- --check passed",
+    "nativeBinarySHA256": "4f071bc64a98e580ad7a056849732ffb215009f4e4705935f7afcf0a5e5257fd"
+  },
+  "limits": {
+    "compressedBytes": 20971520,
+    "uncompressedBytes": 20971520,
+    "convertedBytes": 20971520,
+    "recordsIncludingDeletedAndNull": 50000,
+    "coordinates": 500000,
+    "layers": 32,
+    "fieldsPerLayer": 128,
+    "zipMembers": 256,
+    "ringsPerPolygon": 4096,
+    "topologyWork": 50000000,
+    "topologyWorkEstimate": "sum of twice the square of vertex count for each polygon, including within-ring checks"
+  },
+  "remaining": [
+    "Original Windows file chooser and desktop WebView manual acceptance",
+    "MultiPatch, entirely Null-header layers, specialized/memo/binary DBF, touching interior rings and topology repair",
+    "GeoJSON right-hand-rule orientation normalization; current source vertex order is retained",
+    "External coordinate grids, automatic regional datum selection, vertical conversion, general reprojection workflows",
+    "Editing, spatial analysis, raster overlays, project vector processing, local vector MCP, PBF/XML and large-file queues"
+  ],
+  "accountAcceptanceBoundary": "NASA Earthdata and Copernicus software authorization entries are implemented; no real test accounts supplied, so positive production original-file authorization/download acceptance is pending."
+}

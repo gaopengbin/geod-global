@@ -362,9 +362,31 @@ def collect_vendored_notices(payload):
     return records
 
 
+def collect_osm_polygon_notice(payload):
+    source = ROOT / 'crates/geod-runtime/src/vector/osm'
+    expected = {
+        'polygon-features.json': 'cf81018ba820557c59c2c27de7ea6b314009abed040cd11249e94ed1a3a10583',
+        'POLYGON-FEATURES-LICENSE': '36ffd9dc085d529a7e60e1276d73ae5a030b020313e6c5408593a6ae2af39673',
+    }
+    for name, checksum in expected.items():
+        if digest(source / name) != checksum:
+            raise RuntimeError(f'OSM polygon classification source checksum differs: {name}')
+    destination = payload / 'THIRD-PARTY' / 'vendored' / 'osm-polygon-features'
+    destination.mkdir(parents=True, exist_ok=True)
+    copied = []
+    for name in ['POLYGON-FEATURES-LICENSE', 'SOURCE.md', 'polygon-features.json']:
+        target = destination / name
+        shutil.copyfile(source / name, target)
+        copied.append({'file': name, 'source': relative(source / name, ROOT), 'sha256': digest(target)})
+    return {'ecosystem': 'vendored', 'name': 'osm-polygon-features', 'version': '0.9.2',
+            'license': 'CC0-1.0', 'repository': 'https://github.com/tyrasd/osm-polygon-features',
+            'directory': relative(destination, payload), 'texts': copied[:1], 'sourceRecords': copied[1:]}
+
+
 def collect_notices(payload):
     notices = payload / 'THIRD-PARTY'
     records, gaps = collect_vendored_notices(payload), []
+    records.append(collect_osm_polygon_notice(payload))
     metadata = json.loads(command('cargo', 'metadata', '--locked', '--format-version', '1', '--filter-platform', TARGET, capture=True))
     for package in metadata['packages']:
         if not package.get('source'):
@@ -456,6 +478,14 @@ def collect_notices(payload):
                 source_records.append({'file': target.name, 'source': f'installed package/{original}', 'sha256': digest(target)})
         if not copied:
             gaps.append(f'NPM {label}: no license text found')
+        if package['name'] == 'cesium':
+            # Cesium's aggregate LICENSE.md includes bundled decoder/assets terms.
+            # Keep its exact third-party version/origin records beside that text.
+            for filename in ['ThirdParty.json', 'ThirdParty.extra.json']:
+                target = destination / filename
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source / filename, target)
+                source_records.append({'file': filename, 'source': f'installed package/{filename}', 'sha256': digest(target)})
         records.append({'ecosystem':'npm', 'name':package['name'], 'version':package['version'],
                         'license':package.get('license', locked.get('license')), 'texts':copied,
                         'standardTermsWithOriginalSource':standard_terms, 'sourceRecords':source_records,
@@ -464,6 +494,10 @@ def collect_notices(payload):
     fonts.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ROOT / 'prototype/public/fonts/LICENSE-Inter.txt', fonts / 'LICENSE-Inter.txt')
     shutil.copyfile(ROOT / 'docs/releases/THIRD-PARTY-ASSETS.md', notices / 'ASSETS.md')
+    brand_notices = notices / 'geod-brand'
+    brand_notices.mkdir(parents=True, exist_ok=True)
+    for filename in ['LICENSE', 'README.md']:
+        shutil.copyfile(ROOT / 'prototype/public/brand' / filename, brand_notices / filename)
     shutil.copyfile(ROOT / 'prototype/public/samples/manifest.json', notices / 'sample-data-provenance.json')
     standard_license('CC-BY-SA-4.0',notices)
     write_json(notices / 'inventory.json', {'scope':'Reviewed vendored UI sources, resolved Rust graph and installed npm graph, including build-time and optional dependencies; not a claim every listed package is linked', 'packages':records, 'missingLicenseTexts':gaps})
@@ -536,6 +570,7 @@ def build_installer(payload, output, version):
     include.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     command(compiler, '/INPUTCHARSET', 'UTF8', '/DPAYLOAD=' + str(payload), '/DOUTPUT=' + str(output),
             '/DAPP_VERSION=' + version, '/DAPP_NUMERIC_VERSION=' + numeric_version,
+            '/DAPP_ICON=' + str(ROOT / 'src-tauri/icons/icon.ico'),
             '/DUNINSTALL_FILES=' + str(include), str(ROOT / 'scripts/package-windows.nsi'))
 
 
@@ -581,11 +616,19 @@ def main():
         copy_verified_binary(original, payload / binary, item)
     shutil.copytree(ROOT / 'examples', payload / 'examples')
     shutil.copytree(ROOT / 'docs/workflows', payload / 'docs/workflows')
-    shutil.copyfile(ROOT / 'docs/mcp.md', payload / 'docs/mcp.md')
+    for document in (ROOT / 'docs').glob('*.md'):
+        shutil.copyfile(document, payload / 'docs' / document.name)
     shutil.copytree(ROOT / 'schemas', payload / 'schemas')
     shutil.copyfile(ROOT / 'crates/geod-runtime/README.md', payload / 'docs/runtime.md')
     shutil.copyfile(ROOT / 'docs/releases/WINDOWS-README.md', payload / 'README.md')
     shutil.copyfile(ROOT / 'docs/releases/FIRST-PARTY-NOTICE.txt', payload / 'FIRST-PARTY-NOTICE.txt')
+    release_notes = ROOT / 'docs/releases' / (config['version'] + '.md')
+    if release_notes.is_file():
+        (payload / 'docs/releases').mkdir()
+        shutil.copyfile(release_notes, payload / 'docs/releases' / release_notes.name)
+        (payload / 'RELEASE-NOTES.md').write_text(release_notes.read_text(encoding='utf-8').replace('](../', '](docs/'), encoding='utf-8')
+    elif '-rc.' in config['version']:
+        raise RuntimeError('Release-candidate notes are required before packaging')
     dependencies = collect_notices(payload)
     if source_identity() != identity:
         raise RuntimeError('Source changed during packaging. Freeze changes and rebuild; these files are not a final release.')
@@ -598,13 +641,13 @@ def main():
     if any(value['status'] != 'NotSigned' for value in signatures.values()):
         raise RuntimeError('This evaluation packager expects unsigned binaries; review signing policy before proceeding')
     manifest = {'schemaVersion':'geod-windows-release/v1', 'product':'GeoD Global', 'version':config['version'],
-                'identifier':config['identifier'], 'channel':'local-evaluation', 'createdAt':stamp,
+                'identifier':config['identifier'], 'channel':'release-candidate' if '-rc.' in config['version'] else 'local-evaluation', 'createdAt':stamp,
                 'target':TARGET, 'profile':args.profile, 'source':identity,
                 'build':{**receipt,'cliHelpSmoke':'passed'},
                 'signatures':signatures, 'nativeDllImports':native_imports, 'thirdPartyPackageCount':dependencies,
                 'runtimeRequirements':['Windows 10/11 x64', 'Microsoft Edge WebView2 Evergreen runtime'],
                 'userDataPolicy':'Retain application-local data when uninstalling or deleting the portable folder',
-                'distributionStatus':'Unsigned local evaluation; no public publication or remote CI result implied',
+                'distributionStatus':'Unsigned local candidate; public publication and remote CI are not asserted',
                 'files':manifest_files(payload)}
     write_json(payload / 'release-manifest.json', manifest)
     portable = destination / (name + '.zip')

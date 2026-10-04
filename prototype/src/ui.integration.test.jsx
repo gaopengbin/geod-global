@@ -2,9 +2,41 @@ import React, { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Info, Layers } from 'lucide-react';
 import { Button, Input, Select, Switch, Modal, Progress, Disclosure, SegmentedControl } from './ui/index.jsx';
 
 describe('Shared UI behavior used by catalog, recipes and workspace', () => {
+  it('explains icon-only links on keyboard focus and dismisses their tooltip with Escape', async () => {
+    const user = userEvent.setup();
+    render(<Button asChild size="icon" tooltip="Open in workspace"><a href="#Workspace?file=source" aria-label="Open in workspace"><Layers aria-hidden="true" /></a></Button>);
+    const link = screen.getByRole('link', { name: 'Open in workspace' });
+    expect(link.textContent).toBe('');
+    expect(link.getAttribute('href')).toBe('#Workspace?file=source');
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    await user.tab();
+    expect(document.activeElement).toBe(link);
+    expect((await screen.findByRole('tooltip')).textContent).toBe('Open in workspace');
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('tooltip')).toBeNull());
+    expect(document.activeElement).toBe(link);
+  });
+
+  it('keeps icon disclosure keyboard activation and expanded state independent of its tooltip', async () => {
+    const user = userEvent.setup();
+    render(<Disclosure summary="File details and provenance" icon={Info}><p>Verified original source</p></Disclosure>);
+    const trigger = screen.getByRole('button', { name: 'File details and provenance' });
+    expect(trigger.textContent).toBe('');
+    await user.tab();
+    expect(await screen.findByRole('tooltip')).toBeTruthy();
+    await user.keyboard('{Enter}');
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(trigger.getAttribute('data-state')).toBe('open');
+    expect(screen.getByText('Verified original source')).toBeTruthy();
+    await user.keyboard(' ');
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+    expect(screen.queryByText('Verified original source')).toBeNull();
+  });
+
   it('associates wrapping field labels with the visible select instead of its hidden form control', async () => {
     const user = userEvent.setup();
     const changes = [];

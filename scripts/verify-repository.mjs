@@ -3,9 +3,12 @@ import { createHash } from 'node:crypto';
 import { readFile, readdir, realpath } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import { gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { verifyDesktopAcl } from './verify-desktop-acl.mjs';
 import { verifyUiSystem } from './verify-ui-system.mjs';
+import { verifyBrand } from './verify-brand.mjs';
+import { verifyDesktopCsp } from './verify-desktop-csp.mjs';
 
 const root = await realpath(fileURLToPath(new URL('../', import.meta.url)));
 const localRequire = createRequire(path.join(root, 'package.json'));
@@ -40,7 +43,64 @@ for (const scene of manifest.scenes) {
   const bytes = await readFile(target);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), scene.sha256, 'Changed sample: ' + scene.id);
 }
+const safeFixtures = path.join(root, 'crates/geod-runtime/fixtures/safe');
+const safeSource = JSON.parse(await readFile(path.join(safeFixtures, 'SOURCE.json'), 'utf8'));
+assert.equal(safeSource.kind, 'synthetic test fixture; not a downloaded Copernicus product');
+assert.match(safeSource.generator, /GDAL JP2OpenJPEG/);
+for (const fixture of [safeSource, safeSource.negativeFixture]) {
+  assert.match(fixture.file, /^[a-z0-9-]+\.(?:zip|jp2)$/);
+  const target = await realpath(path.join(safeFixtures, fixture.file));
+  assert(inside(target), 'SAFE fixture must remain inside this repository');
+  assert.equal(createHash('sha256').update(await readFile(target)).digest('hex'), fixture.sha256,
+    'Changed synthetic SAFE fixture: ' + fixture.file);
+}
 const basemap = path.join(samples, 'basemaps/natural-earth-50m-land.geojson');
+const viirsFixtures = path.join(root, 'crates/geod-runtime/fixtures/viirs');
+const viirsExpected = JSON.parse(await readFile(path.join(viirsFixtures, 'expected.json'), 'utf8'));
+const viirsSummaries = JSON.parse(await readFile(path.join(root, 'prototype/qa/viirs-science-summary-fixtures.json'), 'utf8'));
+assert.match(viirsExpected.provenance, /Synthetic/);
+assert.match(viirsSummaries.provenance, /Synthetic/);
+assert.equal(viirsExpected.fixtures.length, 3);
+assert.equal(viirsSummaries.summaries.length, 3);
+for (const fixture of viirsExpected.fixtures) {
+  assert.match(fixture.file, /^synthetic-(?:vnp09a1|vj109a1|vj209a1)\.h5\.gz$/);
+  const target = await realpath(path.join(viirsFixtures, fixture.file));
+  assert(inside(target), 'VIIRS synthetic fixture must remain inside this repository');
+  const bytes = gunzipSync(await readFile(target), { maxOutputLength: 24 * 1024 * 1024 });
+  assert.equal(bytes.length, fixture.byteCount);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), fixture.sourceSha256);
+  const summary = viirsSummaries.summaries.find(s => s.itemId === fixture.itemId);
+  assert.equal(summary?.sourceSha256, fixture.sourceSha256);
+  assert.equal(summary?.schemaVersion, 'geod-viirs-science/v1');
+  assert.equal(summary?.qualityMaskApplied, false);
+  for (const [index, band] of fixture.bands.entries()) {
+    assert.equal(summary.bands[index].samplesSha256, band.samplesSha256);
+    assert.equal(summary.bands[index].noDataCount, band.noDataCount);
+    assert.equal(summary.bands[index].outsideValidRangeCount, band.outsideValidRangeCount);
+    assert.equal(summary.bands[index].sampleCount, 1440000);
+  }
+}
+assert.equal(viirsExpected.negatives.length, 7);
+const preparedViirs = JSON.parse(await readFile(path.join(root, 'prototype/qa/viirs-prepared-fixture.json'), 'utf8'));
+assert.match(preparedViirs.provenance, /Synthetic/);
+const preparedSummary = viirsSummaries.summaries.find(s => s.itemId === preparedViirs.source.itemId);
+assert.deepEqual(preparedViirs.source.viirsScience, preparedSummary);
+assert.equal(preparedViirs.jobs.length, 3);
+for (const [index, job] of preparedViirs.jobs.entries()) {
+  assert.equal(job.assetKey, ['red','green','blue'][index]);
+  assert.equal(job.viirsPrepare.sourceJobId, preparedViirs.source.id);
+  assert.equal(job.viirsPrepare.sourceSha256, preparedSummary.sourceSha256);
+  assert.deepEqual(job.viirsPrepare.science, preparedSummary);
+  assert.equal(preparedViirs.inspections[index].sha256, job.sha256);
+  assert.equal(preparedViirs.inspections[index].reflectance.product, 'viirs-09a1-v002');
+  assert.equal(preparedViirs.inspections[index].crs, 'VIIRS:Sinusoidal');
+  assert.equal(preparedViirs.thumbnails[index].sha256, job.sha256);
+  assert.equal(preparedViirs.composite.composite.sources[index].sha256, job.sha256);
+}
+for (const fixture of viirsExpected.negatives) {
+  assert.match(fixture.file, /^negative-[a-z-]+\.h5\.gz$/);
+  assert(inside(await realpath(path.join(viirsFixtures, fixture.file))), 'Negative VIIRS fixture escaped this repository');
+}
 assert(inside(await realpath(basemap)), 'AOI reference map must remain inside this repository');
 assert.equal(createHash('sha256').update(await readFile(basemap)).digest('hex'),
   'e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b',
@@ -109,4 +169,6 @@ for (const name of await readdir(path.join(root, 'GeoD-Global-Spec'))) {
 assert.deepEqual(brokenLinks, [], 'Broken specification links');
 const desktopAcl = await verifyDesktopAcl(root);
 const sharedUi = await verifyUiSystem(root);
-console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedAoiBasemap:'passed',verifiedAdministrativeLayers:2,verifiedGlobalAdmin1:{features:admin1FeatureCount,countries:admin1Manifest.countryCount},relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi},null,2));
+const brand = await verifyBrand(root);
+const desktopCsp = await verifyDesktopCsp(root);
+console.log(JSON.stringify({dependencyIsolation:'passed',resolutions,verifiedThumbnails:7,verifiedSyntheticSafeFixtures:2,verifiedAoiBasemap:'passed',verifiedAdministrativeLayers:2,verifiedGlobalAdmin1:{features:admin1FeatureCount,countries:admin1Manifest.countryCount},relativeDocumentationLinks:'passed',...desktopAcl,...sharedUi,...brand,...desktopCsp},null,2));

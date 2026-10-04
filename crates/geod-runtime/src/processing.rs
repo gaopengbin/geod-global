@@ -251,6 +251,15 @@ impl JobManager {
             mosaic: None,
             mosaic_output: None,
             manifest_path: None,
+            safe: None,
+            safe_output: None,
+            viirs_science: None,
+            transfer: None,
+            viirs_prepare: None,
+            stac_source: None,
+            wcs_source: None,
+            rgb_spec: None,
+            rgb_output: None,
             item_id: source.item_id,
             asset_key: "scl".into(),
             href: source.href,
@@ -365,7 +374,11 @@ pub(crate) async fn cleanup_clip(root: &Path, id: &str) {
         while let Ok(Some(entry)) = entries.next_entry().await {
             let name = entry.file_name();
             let name = name.to_string_lossy();
-            if name.starts_with(&format!("{id}.crop-")) && name.ends_with(".part") {
+            if (name.starts_with(&format!("{id}.crop-"))
+                || name.starts_with(&format!("{id}.safe-"))
+                || name.starts_with(&format!("{id}.rgb-")))
+                && (name.ends_with(".part") || name.ends_with(".jp2"))
+            {
                 let _ = tokio::fs::remove_file(entry.path()).await;
             }
         }

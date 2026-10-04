@@ -3,13 +3,13 @@ use super::*;
 use crate::{
     io_error,
     mosaic::{source_raster, SourceRaster},
-    thumbnail::sample_preview_with_edge,
+    thumbnail::sample_preview_with_channels,
 };
 use tiff::decoder::ChunkType;
 
 fn source(root: &Path, job: &Job) -> Result<SourceRaster> {
     if job.status != JobStatus::Succeeded
-        || job.asset_key != "visual"
+        || !matches!(job.asset_key.as_str(), "visual" | "aerial")
         || uuid::Uuid::parse_str(&job.id)
             .ok()
             .map(|id| id.to_string())
@@ -19,46 +19,87 @@ fn source(root: &Path, job: &Job) -> Result<SourceRaster> {
     {
         return Err("RGB inspection requires a completed managed true-color GeoTIFF".into());
     }
-    source_raster(root, job, "visual", &CancellationToken::new())
+    source_raster(root, job, &job.asset_key, &CancellationToken::new())
 }
 
 pub(super) fn inspect(root: &Path, job: &Job) -> Result<RasterInspection> {
+    inspect_with_edge(root, job, PREVIEW_EDGE)
+}
+pub(crate) fn inspect_with_edge(root: &Path, job: &Job, edge: u32) -> Result<RasterInspection> {
+    inspect_with_view(root, job, edge, aerial::AerialView::Rgb)
+}
+
+pub(crate) fn inspect_with_view(
+    root: &Path,
+    job: &Job,
+    edge: u32,
+    view: aerial::AerialView,
+) -> Result<RasterInspection> {
+    if job.asset_key != "aerial" && view != aerial::AerialView::Rgb {
+        return Err("NIR display requires a managed NAIP RGB + NIR raster".into());
+    }
     let deadline = Instant::now() + Duration::from_secs(60);
-    let mut raster = source(root, job)?;
+    let raster = source(root, job)?;
+    let mut decoder = raster.decoder.into_tiff()?;
+    let mut aerial = if job.asset_key == "aerial" {
+        Some(crate::raster::aerial::inspection_display(
+            &mut decoder,
+            job,
+        )?)
+    } else {
+        None
+    };
+    if let Some(info) = aerial.as_mut() {
+        info.display_bands = view.display_bands();
+    }
     let mut dimensions = [raster.width, raster.height];
     // Display may use an embedded overview. Grid metadata and pixel sampling
     // always refer to the original image, never to overview pixel values.
     let mut best = 0;
     let mut best_edge = raster.width.max(raster.height);
     for index in 1..=16 {
-        if !raster.decoder.more_images() {
+        if !decoder.more_images() {
             break;
         }
         check_time(deadline)?;
-        raster.decoder.next_image().map_err(io_error)?;
-        let (width, height) = raster.decoder.dimensions().map_err(io_error)?;
+        decoder.next_image().map_err(io_error)?;
+        let (width, height) = decoder.dimensions().map_err(io_error)?;
         if width > 0
             && height > 0
             && width <= raster.width
             && height <= raster.height
-            && width.max(height) >= PREVIEW_EDGE
+            && width.max(height) >= edge
             && width.max(height) < best_edge
-            && raster.decoder.colortype().map_err(io_error)? == ColorType::RGB(8)
+            && (if job.asset_key == "aerial" {
+                crate::raster::aerial::validate_samples(&mut decoder, job).is_ok()
+            } else {
+                decoder.colortype().map_err(io_error)? == ColorType::RGB(8)
+            })
         {
             best = index;
             best_edge = width.max(height);
             dimensions = [width, height];
         }
     }
-    raster.decoder.seek_to_image(best).map_err(io_error)?;
-    let (preview_width, preview_height, rgba) = sample_preview_with_edge(
-        &mut raster.decoder,
+    decoder.seek_to_image(best).map_err(io_error)?;
+    let (preview_width, preview_height, mut rgba) = sample_preview_with_channels(
+        &mut decoder,
         dimensions,
         false,
-        raster.nodata,
-        PREVIEW_EDGE,
+        raster.nodata.map(|value| value as u8),
+        edge,
         deadline,
+        view.channels(),
     )?;
+    if job.asset_key == "aerial" && job.kind == "raster_mosaic" {
+        crate::raster::aerial::mask::apply_preview(
+            &mut decoder,
+            [raster.width, raster.height],
+            [preview_width, preview_height],
+            &mut rgba,
+            deadline,
+        )?;
+    }
     let mut bytes = Vec::new();
     let mut encoder = png::Encoder::new(&mut bytes, preview_width, preview_height);
     encoder.set_color(png::ColorType::Rgba);
@@ -70,9 +111,13 @@ pub(super) fn inspect(root: &Path, job: &Job) -> Result<RasterInspection> {
         .map_err(io_error)?;
     check_time(deadline)?;
     Ok(RasterInspection {
+        science: None,
+        vegetation: None,
+        quality: None,
+        radar: None,
         width: raster.width,
         height: raster.height,
-        band_count: 3,
+        band_count: raster.bands as u8,
         data_type: "UInt8".into(),
         crs: raster.crs,
         bounds: raster.bounds,
@@ -83,47 +128,75 @@ pub(super) fn inspect(root: &Path, job: &Job) -> Result<RasterInspection> {
         preview_height,
         classes: Vec::new(),
         sha256: job.sha256.clone().ok_or("RGB source has no checksum")?,
+        reflectance: None,
+        elevation: None,
+        aerial,
     })
 }
 
-pub(super) fn sample(root: &Path, job: &Job, x: f64, y: f64) -> Result<RasterPixel> {
-    let mut raster = source(root, job)?;
+pub(crate) fn sample(root: &Path, job: &Job, x: f64, y: f64) -> Result<RasterPixel> {
+    let raster = source(root, job)?;
+    let mut decoder = raster.decoder.into_tiff()?;
     let [left, bottom, right, top] = raster.bounds;
     if !x.is_finite() || !y.is_finite() || x < left || x >= right || y <= bottom || y > top {
         return Err("The coordinate is outside the source raster pixel grid".into());
     }
     let column = ((x - left) / raster.pixel_size[0]).floor() as u32;
     let row = ((top - y) / raster.pixel_size[1]).floor() as u32;
-    let (width, height) = raster.decoder.chunk_dimensions();
+    let (width, height) = decoder.chunk_dimensions();
     if width == 0 || height == 0 {
         return Err("RGB source chunks are invalid".into());
     }
     let columns = raster.width.div_ceil(width);
-    let count = match raster.decoder.get_chunk_type() {
-        ChunkType::Tile => raster.decoder.tile_count().map_err(io_error)?,
-        ChunkType::Strip => raster.decoder.strip_count().map_err(io_error)?,
+    let count = match decoder.get_chunk_type() {
+        ChunkType::Tile => decoder.tile_count().map_err(io_error)?,
+        ChunkType::Strip => decoder.strip_count().map_err(io_error)?,
     };
     if columns.checked_mul(raster.height.div_ceil(height)) != Some(count) {
         return Err("Planar RGB chunks are unsupported".into());
     }
     let chunk = row / height * columns + column / width;
-    let (actual_width, actual_height) = raster.decoder.chunk_data_dimensions(chunk);
+    let (actual_width, actual_height) = decoder.chunk_data_dimensions(chunk);
     let px = column % width;
     let py = row % height;
     if px >= actual_width || py >= actual_height {
         return Err("RGB sample is outside its chunk".into());
     }
-    let data = match raster.decoder.read_chunk(chunk).map_err(io_error)? {
-        DecodingResult::U8(values) => values,
-        _ => return Err("RGB samples are not unsigned 8-bit values".into()),
+    let data = if raster.bands == 4 {
+        crate::raster::aerial::read_chunk(&mut decoder, chunk)?
+    } else {
+        match decoder.read_chunk(chunk).map_err(io_error)? {
+            DecodingResult::U8(values) => values,
+            _ => return Err("RGB samples are not unsigned 8-bit values".into()),
+        }
     };
-    let offset = (py as usize * actual_width as usize + px as usize) * 3;
+    let offset = (py as usize * actual_width as usize + px as usize) * raster.bands;
+    let near_infrared = if raster.bands == 4 {
+        Some(*data.get(offset + 3).ok_or("NIR sample is missing")?)
+    } else {
+        None
+    };
     let values: [u8; 3] = data
         .get(offset..offset + 3)
         .ok_or("RGB chunk has too few samples")?
         .try_into()
         .map_err(io_error)?;
+    let is_no_data = if raster.bands == 4 && job.kind == "raster_mosaic" {
+        !crate::raster::aerial::mask::sample(
+            &mut decoder,
+            [raster.width, raster.height],
+            [column, row],
+        )?
+    } else {
+        raster
+            .nodata
+            .is_some_and(|nodata| values.iter().all(|value| f64::from(*value) == nodata))
+    };
     Ok(RasterPixel {
+        science: None,
+        index_value: None,
+        quality: None,
+        decibels: None,
         job_id: job.id.clone(),
         sha256: job.sha256.clone().ok_or("RGB source has no checksum")?,
         crs: raster.crs,
@@ -133,13 +206,18 @@ pub(super) fn sample(root: &Path, job: &Job, x: f64, y: f64) -> Result<RasterPix
             left + (column as f64 + 0.5) * raster.pixel_size[0],
             top - (row as f64 + 0.5) * raster.pixel_size[1],
         ],
-        value: values[0],
+        value: f64::from(values[0]),
         values: Some(values),
-        label: "RGB".into(),
+        near_infrared,
+        reflectance: None,
+        label: if raster.bands == 4 {
+            "RGB + NIR"
+        } else {
+            "RGB"
+        }
+        .into(),
         color: format!("#{:02x}{:02x}{:02x}", values[0], values[1], values[2]),
-        is_no_data: raster
-            .nodata
-            .is_some_and(|nodata| values.iter().all(|value| *value == nodata)),
+        is_no_data,
     })
 }
 

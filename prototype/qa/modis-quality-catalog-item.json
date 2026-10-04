@@ -1,0 +1,306 @@
+{
+  "id": "MYD09A1.A2025177.h08v05.061.2025189031924",
+  "bbox": [
+    -130.540729,
+    30.0,
+    -103.923048,
+    40.0
+  ],
+  "type": "Feature",
+  "links": [
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-09A1-061"
+    },
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-09A1-061"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+    },
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-09A1-061/items/MYD09A1.A2025177.h08v05.061.2025189031924"
+    },
+    {
+      "rel": "preview",
+      "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=modis-09A1-061&item=MYD09A1.A2025177.h08v05.061.2025189031924",
+      "title": "Map of item",
+      "type": "text/html"
+    }
+  ],
+  "assets": {
+    "sur_refl_b01": {
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "Surface Reflectance Band 1 (620-670 nm)",
+      "eo:bands": [
+        {
+          "name": "sur_refl_b01",
+          "common_name": "red",
+          "center_wavelength": 0.645,
+          "full_width_half_max": 0.5
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0001,
+          "data_type": "int16",
+          "spatial_resolution": 500
+        }
+      ]
+    },
+    "sur_refl_b03": {
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b03.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "Surface Reflectance Band 3 (459-479 nm)",
+      "eo:bands": [
+        {
+          "name": "sur_refl_b03",
+          "common_name": "blue",
+          "center_wavelength": 0.469,
+          "full_width_half_max": 0.2
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0001,
+          "data_type": "int16",
+          "spatial_resolution": 500
+        }
+      ]
+    },
+    "sur_refl_b04": {
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b04.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "Surface Reflectance Band 4 (545-565 nm)",
+      "eo:bands": [
+        {
+          "name": "sur_refl_b04",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.2
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0001,
+          "data_type": "int16",
+          "spatial_resolution": 500
+        }
+      ]
+    },
+    "sur_refl_qc_500m": {
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ],
+      "title": "Surface reflectance 500m band quality control flags",
+      "raster:bands": [
+        {
+          "data_type": "uint32",
+          "spatial_resolution": 500
+        }
+      ]
+    },
+    "sur_refl_state_500m": {
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ],
+      "title": "Surface reflectance 500m state flags",
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "spatial_resolution": 500
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -130.540729,
+          40
+        ],
+        [
+          -129.45712,
+          39.425
+        ],
+        [
+          -128.381622,
+          38.8375
+        ],
+        [
+          -127.337125,
+          38.25
+        ],
+        [
+          -126.308482,
+          37.654167
+        ],
+        [
+          -125.296008,
+          37.05
+        ],
+        [
+          -124.306674,
+          36.441667
+        ],
+        [
+          -123.340159,
+          35.829167
+        ],
+        [
+          -122.383595,
+          35.204167
+        ],
+        [
+          -121.450007,
+          34.575
+        ],
+        [
+          -120.53908,
+          33.941667
+        ],
+        [
+          -119.65051,
+          33.304167
+        ],
+        [
+          -118.772932,
+          32.654167
+        ],
+        [
+          -117.923199,
+          32.004167
+        ],
+        [
+          -117.084941,
+          31.341667
+        ],
+        [
+          -116.268936,
+          30.675
+        ],
+        [
+          -115.470054,
+          30
+        ],
+        [
+          -103.923048,
+          30
+        ],
+        [
+          -104.642042,
+          30.675
+        ],
+        [
+          -105.37178,
+          31.3375
+        ],
+        [
+          -106.126056,
+          32
+        ],
+        [
+          -106.895639,
+          32.654167
+        ],
+        [
+          -107.685459,
+          33.304167
+        ],
+        [
+          -108.485172,
+          33.941667
+        ],
+        [
+          -109.310486,
+          34.579167
+        ],
+        [
+          -110.145236,
+          35.204167
+        ],
+        [
+          -111.006143,
+          35.829167
+        ],
+        [
+          -111.876006,
+          36.441667
+        ],
+        [
+          -112.766407,
+          37.05
+        ],
+        [
+          -113.677634,
+          37.654167
+        ],
+        [
+          -114.609983,
+          38.254167
+        ],
+        [
+          -115.550226,
+          38.841667
+        ],
+        [
+          -116.511408,
+          39.425
+        ],
+        [
+          -117.486656,
+          40
+        ],
+        [
+          -130.540729,
+          40
+        ]
+      ]
+    ]
+  },
+  "collection": "modis-09A1-061",
+  "properties": {
+    "datetime": null,
+    "platform": "aqua",
+    "instruments": [
+      "modis"
+    ],
+    "end_datetime": "2025-07-03T23:59:59Z",
+    "modis:tile-id": "51008005",
+    "eo:cloud_cover": 0,
+    "start_datetime": "2025-06-26T00:00:00Z",
+    "modis:vertical-tile": 5,
+    "modis:horizontal-tile": 8
+  },
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+  ],
+  "stac_version": "1.0.0"
+}

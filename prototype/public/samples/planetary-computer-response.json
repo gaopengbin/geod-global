@@ -1,0 +1,219 @@
+{
+  "type": "FeatureCollection",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-2-l2a"
+    },
+    {
+      "rel": "next",
+      "type": "application/geo+json",
+      "method": "GET",
+      "href": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=sentinel-2-l2a&bbox=-122.55,37.68,-122.32,37.84&datetime=2025-06-01T00%3A00%3A00Z%2F2025-06-30T23%3A59%3A59Z&limit=1&token=next%3Asentinel-2-l2a%3AS2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511"
+    }
+  ],
+  "features": [
+    {
+      "id": "S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511",
+      "bbox": [
+        -123.0002276,
+        36.9514795,
+        -121.7506457,
+        37.9475896
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511"
+        },
+        {
+          "rel": "license",
+          "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=sentinel-2-l2a&item=S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SCL": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2025/06/27/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A004230_20250627T185915/IMG_DATA/R20m/T10SEG_20250627T184941_SCL_20m.tif",
+          "proj:bbox": [
+            499980,
+            4090200,
+            609780,
+            4200000
+          ],
+          "proj:shape": [
+            5490,
+            5490
+          ],
+          "proj:transform": [
+            20,
+            0,
+            499980,
+            0,
+            -20,
+            4200000
+          ],
+          "gsd": 20,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Scene classfication map (SCL)"
+        },
+        "visual": {
+          "href": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/10/S/EG/2025/06/27/S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A004230_20250627T185915/IMG_DATA/R10m/T10SEG_20250627T184941_TCI_10m.tif",
+          "proj:bbox": [
+            499980,
+            4090200,
+            609780,
+            4200000
+          ],
+          "proj:shape": [
+            10980,
+            10980
+          ],
+          "proj:transform": [
+            10,
+            0,
+            499980,
+            0,
+            -10,
+            4200000
+          ],
+          "gsd": 10,
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "True color image",
+          "eo:bands": [
+            {
+              "name": "B04",
+              "common_name": "red",
+              "description": "Band 4 - Red",
+              "center_wavelength": 0.665,
+              "full_width_half_max": 0.038
+            },
+            {
+              "name": "B03",
+              "common_name": "green",
+              "description": "Band 3 - Green",
+              "center_wavelength": 0.56,
+              "full_width_half_max": 0.045
+            },
+            {
+              "name": "B02",
+              "common_name": "blue",
+              "description": "Band 2 - Blue",
+              "center_wavelength": 0.49,
+              "full_width_half_max": 0.098
+            }
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=sentinel-2-l2a&item=S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511&assets=visual&asset_bidx=visual%7C1,2,3&nodata=0&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -123.0002276,
+              37.9475896
+            ],
+            [
+              -121.7506457,
+              37.9409562
+            ],
+            [
+              -121.7669948,
+              36.9514795
+            ],
+            [
+              -123.0002247,
+              36.9578811
+            ],
+            [
+              -123.0002276,
+              37.9475896
+            ]
+          ]
+        ]
+      },
+      "collection": "sentinel-2-l2a",
+      "properties": {
+        "datetime": "2025-06-27T18:49:41.024000Z",
+        "platform": "Sentinel-2C",
+        "proj:epsg": 32610,
+        "instruments": [
+          "msi"
+        ],
+        "s2:mgrs_tile": "10SEG",
+        "constellation": "Sentinel 2",
+        "s2:granule_id": "S2C_OPER_MSI_L2A_TL_2CPS_20250627T234511_A004230_T10SEG_N05.11",
+        "eo:cloud_cover": 35.083443,
+        "s2:datatake_id": "GS2C_20250627T184941_004230_N05.11",
+        "s2:product_uri": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE",
+        "s2:datastrip_id": "S2C_OPER_MSI_L2A_DS_2CPS_20250627T234511_S20250627T185915_N05.11",
+        "s2:product_type": "S2MSI2A",
+        "sat:orbit_state": "descending",
+        "s2:datatake_type": "INS-NOBS",
+        "s2:generation_time": "2025-06-27T23:45:11.000000Z",
+        "sat:relative_orbit": 113,
+        "s2:water_percentage": 17.812735,
+        "s2:mean_solar_zenith": 20.3615720827903,
+        "s2:mean_solar_azimuth": 129.261471512566,
+        "s2:processing_baseline": "05.11",
+        "s2:snow_ice_percentage": 0.000929,
+        "s2:vegetation_percentage": 23.808421,
+        "s2:thin_cirrus_percentage": 0.000451,
+        "s2:cloud_shadow_percentage": 0,
+        "s2:nodata_pixel_percentage": 0,
+        "s2:unclassified_percentage": 0.339382,
+        "s2:not_vegetated_percentage": 22.913431,
+        "s2:degraded_msi_data_percentage": 0.0216,
+        "s2:high_proba_clouds_percentage": 32.260296,
+        "s2:reflectance_conversion_factor": 0.96792727233522,
+        "s2:medium_proba_clouds_percentage": 2.822698,
+        "s2:saturated_defective_pixel_percentage": 0
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  ],
+  "numberReturned": 1
+}

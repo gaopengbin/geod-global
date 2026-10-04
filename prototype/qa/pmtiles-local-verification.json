@@ -1,0 +1,179 @@
+{
+  "checkedAt": "2026-10-03T09:13:11.561820+00:00",
+  "scope": "PMTiles v3 MVT local complete-archive managed import, local map attributes, export and offline restart",
+  "inputOrigin": "Two real public regional archives previously independently verified; not full global-archive downloads",
+  "uniqueInputArchives": 2,
+  "distinctSourceTiles": 7,
+  "referenceVersions": {
+    "pmtiles": "3.8.1",
+    "mapbox-vector-tile": "2.2.0"
+  },
+  "nativeAndUiPackagesIndependentlyVerified": [
+    {
+      "id": "bcba5a50-9fa1-49f2-b778-e115fea93fbc",
+      "fileName": "旧金山 OSM.PMTILES",
+      "bytes": 193343,
+      "sha256": "a063c10a20b9e2a60e77edfaeedd666524a51f84d94944349e84c4a6717b513b",
+      "tiles": 3,
+      "featureRecordsAcrossLevels": 2100,
+      "exactOriginalArchive": true,
+      "exactLocalTiles": true,
+      "independentMvtDecode": true,
+      "exportVerified": true
+    },
+    {
+      "id": "86d94a6d-90ae-40d3-b7b6-836de999fa9e",
+      "fileName": "邮政区.pmtiles",
+      "bytes": 550666,
+      "sha256": "e443032316abbb83553ecc539502ee0d42cf4f5584192dd323f96c96b16f4a3f",
+      "tiles": 4,
+      "featureRecordsAcrossLevels": 5601,
+      "exactOriginalArchive": true,
+      "exactLocalTiles": true,
+      "independentMvtDecode": true,
+      "exportVerified": true
+    },
+    {
+      "id": "422d366c-aa9d-463a-a4f7-1823c92f7e2b",
+      "fileName": "界面验收 OSM 1440.pmtiles",
+      "bytes": 193343,
+      "sha256": "a063c10a20b9e2a60e77edfaeedd666524a51f84d94944349e84c4a6717b513b",
+      "tiles": 3,
+      "featureRecordsAcrossLevels": 2100,
+      "exactOriginalArchive": true,
+      "exactLocalTiles": true,
+      "independentMvtDecode": true,
+      "exportVerified": true
+    },
+    {
+      "id": "dcdedd12-7a62-4be5-a0e7-e516e074f8d9",
+      "fileName": "界面验收 OSM 1024.pmtiles",
+      "bytes": 193343,
+      "sha256": "a063c10a20b9e2a60e77edfaeedd666524a51f84d94944349e84c4a6717b513b",
+      "tiles": 3,
+      "featureRecordsAcrossLevels": 2100,
+      "exactOriginalArchive": true,
+      "exactLocalTiles": true,
+      "independentMvtDecode": true,
+      "exportVerified": true
+    }
+  ],
+  "originalVerificationInputCopiesRemoved": true,
+  "managedCopiesReadableAfterOriginalRemovalAndRestart": true,
+  "exportsUnchangedAfterRestart": true,
+  "duplicateImport": {
+    "sameNameAndContentReusedSameId": true,
+    "reverifiedStoredCopy": true,
+    "noDuplicateRegistryOrFileRecord": true
+  },
+  "rejectingSourceProxy": "http://127.0.0.1:9",
+  "ui": [
+    {
+      "width": 1440,
+      "theme": "light",
+      "locale": "en",
+      "invalidImportRejected": true,
+      "localSourceShown": true,
+      "roadAttributes": true,
+      "noHorizontalOverflow": true,
+      "remoteAttempts": [],
+      "pageErrors": [],
+      "packageId": "422d366c-aa9d-463a-a4f7-1823c92f7e2b"
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "locale": "zh-CN",
+      "invalidImportRejected": true,
+      "localSourceShown": true,
+      "roadAttributes": true,
+      "noHorizontalOverflow": true,
+      "remoteAttempts": [],
+      "pageErrors": [],
+      "packageId": "dcdedd12-7a62-4be5-a0e7-e516e074f8d9"
+    }
+  ],
+  "restartedUi": [
+    {
+      "width": 1440,
+      "theme": "light",
+      "locale": "en",
+      "id": "422d366c-aa9d-463a-a4f7-1823c92f7e2b",
+      "restartedMap": true,
+      "localRoadAttributes": true,
+      "localSourceChecksum": true,
+      "remoteAttempts": [],
+      "pageErrors": []
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "locale": "zh-CN",
+      "id": "dcdedd12-7a62-4be5-a0e7-e516e074f8d9",
+      "restartedMap": true,
+      "localRoadAttributes": true,
+      "localSourceChecksum": true,
+      "remoteAttempts": [],
+      "pageErrors": []
+    }
+  ],
+  "loopbackBoundary": {
+    "mutationHeaderRequired": true,
+    "foreignOriginRejected": true,
+    "browserNativePathRejected": true,
+    "invalidRequestsPublishNothing": true,
+    "rejectingSourceProxy": "http://127.0.0.1:9",
+    "newNetworkDiscoveryRejected": true
+  },
+  "syntheticProtocolAndUnitCoverage": [
+    "sparse tiles",
+    "RLE duplicate content",
+    "leaf directories",
+    "unknown zero counts",
+    "invalid metadata and count rejection",
+    "Hilbert inverse including zoom boundaries",
+    "bounded 3 MiB import upload body",
+    "same file name and content reuse"
+  ],
+  "limits": {
+    "archiveBytes": 134217728,
+    "addressedTiles": 512,
+    "maximumZoom": 24,
+    "tileType": "MVT",
+    "compression": [
+      "none",
+      "gzip"
+    ]
+  },
+  "compatibility": {
+    "oldRemoteSources": 2,
+    "oldRemotePackages": 7,
+    "oldWholeZipAndOriginalTileReadback": "passed"
+  },
+  "regression": {
+    "frontendLogicTestsPassed": 192,
+    "uiTestsPassed": 180,
+    "coreTestsPassed": 364,
+    "coreTestsExplicitlyIgnored": 4,
+    "cliTestsPassed": 3,
+    "desktopTestsPassed": 4,
+    "desktopAclCommands": 86,
+    "productionBuild": "passed",
+    "strictWorkspaceClippy": "passed"
+  },
+  "usedUserDesktop": false,
+  "installedDesktopWebViewManualAcceptance": false,
+  "nativeFileDialogManualAcceptance": false,
+  "remaining": [
+    "MBTiles",
+    "raster PMTiles",
+    "Brotli / Zstd",
+    "large archives",
+    "durable acquisition tasks / resume",
+    "source styles / sprites / fonts",
+    "exact polygon clipping",
+    "project composition",
+    "MCP tile tools",
+    "installed desktop manual acceptance"
+  ]
+}

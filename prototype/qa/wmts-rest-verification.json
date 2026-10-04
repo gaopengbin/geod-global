@@ -1,0 +1,879 @@
+{
+  "checkedAt": "2026-10-03T07:37:45.342470+00:00",
+  "mode": "Actual NASA advertised WMTS REST, independent complete pixel and coordinate checks, actual headless UI and process restart",
+  "runtimeBinarySha256": "c1067fbae94ac6ef9e912eb8db3d79d765ba2062c36c577c1259ae14411c35e0",
+  "publicAcquisitions": {
+    "checkedAt": "2026-10-03T07:25:59.427677300+00:00",
+    "mode": "Actual public NASA GIBS advertised WMTS REST through isolated native runtime",
+    "publicSource": "https://nasa-gibs.github.io/gibs-api-docs/access-basics/",
+    "receipts": [
+      {
+        "serviceId": "31975247-5c4f-42fe-a811-6a17bf2fb370",
+        "compatibleLayers": 1187,
+        "asset": {
+          "id": "785fc73f-29ba-4fd4-a6cd-00e177e14d8f",
+          "name": "Corrected Reflectance (True Color, MODIS, Terra) · WMTS",
+          "width": 456,
+          "height": 575,
+          "bounds": [
+            -125.00244140625007,
+            34.99400375757585,
+            -119.99267578125009,
+            40.00237193587655
+          ],
+          "bytes": 384138,
+          "sha256": "005968f904f8f456635211446fbd110c797ce58f374a6e6422ac374bb3300636",
+          "crs": "EPSG:3857",
+          "source": {
+            "serviceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/1.0.0/WMTSCapabilities.xml",
+            "serviceName": "NASA GIBS 3857",
+            "serviceTitle": "NASA Global Imagery Browse Services for EOSDIS",
+            "version": "1.0.0",
+            "mapEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi",
+            "capabilitiesSha256": "1b95936294e9697ffa587ecde86f34541726dd54e90e18c7c6feeaabaeba3362",
+            "layerName": "MODIS_Terra_CorrectedReflectance_TrueColor",
+            "layerTitle": "Corrected Reflectance (True Color, MODIS, Terra)",
+            "style": "default",
+            "time": "2025-06-27",
+            "requestCrs": "EPSG:3857",
+            "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/48/19.jpeg",
+            "requestedAt": "2026-10-03T07:25:07.517484400+00:00",
+            "accessConstraints": "none",
+            "attribution": null,
+            "areaGeometry": null,
+            "selection": "pixel-window-rendered-tiles",
+            "wmts": {
+              "resourceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpeg",
+              "matrixSet": "GoogleMapsCompatible_Level9",
+              "declaredCrs": "urn:ogc:def:crs:EPSG:6.18:3:3857",
+              "matrix": {
+                "id": "7",
+                "scaleDenominator": 4367830.187724357,
+                "topLeft": [
+                  -20037508.34278925,
+                  20037508.34278925
+                ],
+                "tileWidth": 256,
+                "tileHeight": 256,
+                "matrixWidth": 128,
+                "matrixHeight": 128
+              },
+              "format": "image/jpeg",
+              "timeIdentifier": "Time",
+              "requestedBounds": [
+                -125.0,
+                35.0,
+                -120.0,
+                40.0
+              ],
+              "pixelWindow": [
+                5006,
+                12405,
+                456,
+                575
+              ],
+              "tiles": [
+                {
+                  "row": 48,
+                  "col": 19,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/48/19.jpeg",
+                  "bytes": 8800,
+                  "sha256": "7713af1f510dcb6bb09b99e8d5324301640c1421650785da6d74c7f61fc1b1d2"
+                },
+                {
+                  "row": 48,
+                  "col": 20,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/48/20.jpeg",
+                  "bytes": 13798,
+                  "sha256": "26831b472c6a2b2900ca7376ff5ee38152361c2322d013513bb9c5aaa5b6d7aa"
+                },
+                {
+                  "row": 48,
+                  "col": 21,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/48/21.jpeg",
+                  "bytes": 11925,
+                  "sha256": "fc762eeb85ae8bdf556a2364eeb1108abd83459dd5ccd8d666c02768e6395b51"
+                },
+                {
+                  "row": 49,
+                  "col": 19,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/49/19.jpeg",
+                  "bytes": 7535,
+                  "sha256": "b5dfd019f097a084aab80a0761bb94443ec622426f6bf854b8fb188f5c187567"
+                },
+                {
+                  "row": 49,
+                  "col": 20,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/49/20.jpeg",
+                  "bytes": 12380,
+                  "sha256": "869546ace2e9a12c0f54d381be42845200d11d53dcf735bc36580270fa1b258c"
+                },
+                {
+                  "row": 49,
+                  "col": 21,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/49/21.jpeg",
+                  "bytes": 15550,
+                  "sha256": "00b4292f9a1d1576000d18eeffc892956137748b0a0dff3a396b9440b63ce363"
+                },
+                {
+                  "row": 50,
+                  "col": 19,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/50/19.jpeg",
+                  "bytes": 5958,
+                  "sha256": "01566ba0200bdf36075b05754ce3a000d811328e4029e1c2dd1409060fe6ccef"
+                },
+                {
+                  "row": 50,
+                  "col": 20,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/50/20.jpeg",
+                  "bytes": 9970,
+                  "sha256": "b14137df49045bc2977b0118b5307514f52f2979c8df7caec4ebe468d27e31d1"
+                },
+                {
+                  "row": 50,
+                  "col": 21,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-06-27/GoogleMapsCompatible_Level9/7/50/21.jpeg",
+                  "bytes": 13370,
+                  "sha256": "9bbc8c6961670202bcd46de6ca7b5f1fe5d8b9a3b48316ff97e9d7da0c01c1f3"
+                }
+              ],
+              "archiveSha256": "5f7759d1dad6259cffbef0983d262ca49c1c67e007665fd4850d4413df5d5330",
+              "archiveBytes": 100154
+            }
+          },
+          "imageExtent": [
+            -13915208.125259776,
+            4163066.3085238505,
+            -13357523.56689113,
+            4866286.9687474705
+          ]
+        },
+        "tileReceipts": [
+          {
+            "row": 48,
+            "col": 19,
+            "sha256": "7713af1f510dcb6bb09b99e8d5324301640c1421650785da6d74c7f61fc1b1d2",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 48,
+            "col": 20,
+            "sha256": "26831b472c6a2b2900ca7376ff5ee38152361c2322d013513bb9c5aaa5b6d7aa",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 48,
+            "col": 21,
+            "sha256": "fc762eeb85ae8bdf556a2364eeb1108abd83459dd5ccd8d666c02768e6395b51",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 49,
+            "col": 19,
+            "sha256": "b5dfd019f097a084aab80a0761bb94443ec622426f6bf854b8fb188f5c187567",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 49,
+            "col": 20,
+            "sha256": "869546ace2e9a12c0f54d381be42845200d11d53dcf735bc36580270fa1b258c",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 49,
+            "col": 21,
+            "sha256": "00b4292f9a1d1576000d18eeffc892956137748b0a0dff3a396b9440b63ce363",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 50,
+            "col": 19,
+            "sha256": "01566ba0200bdf36075b05754ce3a000d811328e4029e1c2dd1409060fe6ccef",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 50,
+            "col": 20,
+            "sha256": "b14137df49045bc2977b0118b5307514f52f2979c8df7caec4ebe468d27e31d1",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 50,
+            "col": 21,
+            "sha256": "9bbc8c6961670202bcd46de6ca7b5f1fe5d8b9a3b48316ff97e9d7da0c01c1f3",
+            "independentPublicBytesEqual": true
+          }
+        ],
+        "checkedChannels": 1048800,
+        "independentCapabilitiesSha256": "6f3324a18d16cda7820f9c98c2c0362d31a480201a6d2f4e67e01c94dea5f24b",
+        "independentCapabilitiesBytesEqual": false,
+        "independentlyDeclaredTemplateAndGridEqual": true,
+        "independentPngChannelsExact": false,
+        "jpegMaximumChannelDelta": 4,
+        "jpegMeanChannelDelta": 0.12661962878210017,
+        "independentGdalGridAndPixels": true,
+        "exportHashesAndOriginalTileBytes": true
+      },
+      {
+        "serviceId": "31975247-5c4f-42fe-a811-6a17bf2fb370",
+        "compatibleLayers": 1187,
+        "asset": {
+          "id": "03dd829d-bad9-4c76-bc81-610b2e89df37",
+          "name": "Land Surface Temperature (Day, MODIS, Terra) · WMTS",
+          "width": 456,
+          "height": 575,
+          "bounds": [
+            -125.00244140625007,
+            34.99400375757585,
+            -119.99267578125009,
+            40.00237193587655
+          ],
+          "bytes": 71849,
+          "sha256": "096f216066bfc6da0a3362b3de5c15d2c0655daf26dc8b34505bb6959f0751cf",
+          "crs": "EPSG:3857",
+          "source": {
+            "serviceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/1.0.0/WMTSCapabilities.xml",
+            "serviceName": "NASA GIBS 3857",
+            "serviceTitle": "NASA Global Imagery Browse Services for EOSDIS",
+            "version": "1.0.0",
+            "mapEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi",
+            "capabilitiesSha256": "1b95936294e9697ffa587ecde86f34541726dd54e90e18c7c6feeaabaeba3362",
+            "layerName": "MODIS_Terra_Land_Surface_Temp_Day",
+            "layerTitle": "Land Surface Temperature (Day, MODIS, Terra)",
+            "style": "default",
+            "time": "2025-06-27",
+            "requestCrs": "EPSG:3857",
+            "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/48/19.png",
+            "requestedAt": "2026-10-03T07:25:34.012230800+00:00",
+            "accessConstraints": "none",
+            "attribution": null,
+            "areaGeometry": null,
+            "selection": "pixel-window-rendered-tiles",
+            "wmts": {
+              "resourceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+              "matrixSet": "GoogleMapsCompatible_Level7",
+              "declaredCrs": "urn:ogc:def:crs:EPSG:6.18:3:3857",
+              "matrix": {
+                "id": "7",
+                "scaleDenominator": 4367830.187724357,
+                "topLeft": [
+                  -20037508.34278925,
+                  20037508.34278925
+                ],
+                "tileWidth": 256,
+                "tileHeight": 256,
+                "matrixWidth": 128,
+                "matrixHeight": 128
+              },
+              "format": "image/png",
+              "timeIdentifier": "Time",
+              "requestedBounds": [
+                -125.0,
+                35.0,
+                -120.0,
+                40.0
+              ],
+              "pixelWindow": [
+                5006,
+                12405,
+                456,
+                575
+              ],
+              "tiles": [
+                {
+                  "row": 48,
+                  "col": 19,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/48/19.png",
+                  "bytes": 3565,
+                  "sha256": "b90c5ebfcb1ebb6c58e80beecaea60020e4351bd728f60f18909a6e9d4c4fb83"
+                },
+                {
+                  "row": 48,
+                  "col": 20,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/48/20.png",
+                  "bytes": 26439,
+                  "sha256": "4c0934bda74aa69c457390d28d58e536cd35164dd1bdfff100f6f8d8b86d1d45"
+                },
+                {
+                  "row": 48,
+                  "col": 21,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/48/21.png",
+                  "bytes": 31137,
+                  "sha256": "dedd8b5907e513bd5918dd311b3ec7d3c0079b6e091ce09640120c958d9700a0"
+                },
+                {
+                  "row": 49,
+                  "col": 19,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/49/19.png",
+                  "bytes": 1189,
+                  "sha256": "d406fe1ff8f400788ddee8f27e56efdc0856a877271eac5031cd90d512a6bd4c"
+                },
+                {
+                  "row": 49,
+                  "col": 20,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/49/20.png",
+                  "bytes": 19550,
+                  "sha256": "a87b75a444ff27c3586220f53415a7d12e5a5266671685797b5c29e13efd1ccf"
+                },
+                {
+                  "row": 49,
+                  "col": 21,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/49/21.png",
+                  "bytes": 34024,
+                  "sha256": "1dac4a7e3ab66080bfb191cbd957262b057a7f4cafa3887349c783f87f911b8f"
+                },
+                {
+                  "row": 50,
+                  "col": 19,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/50/19.png",
+                  "bytes": 1189,
+                  "sha256": "d406fe1ff8f400788ddee8f27e56efdc0856a877271eac5031cd90d512a6bd4c"
+                },
+                {
+                  "row": 50,
+                  "col": 20,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/50/20.png",
+                  "bytes": 5743,
+                  "sha256": "ee8deadd6c13ff4bd8f9fd6f99da6350bf5790a5b8b5331d4db434cdb4ed8cad"
+                },
+                {
+                  "row": 50,
+                  "col": 21,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2025-06-27/GoogleMapsCompatible_Level7/7/50/21.png",
+                  "bytes": 32856,
+                  "sha256": "ad36c2cac280addfe4aeb28c77dd8967c85f737d8f3b9cad9950b4c058c7f6f2"
+                }
+              ],
+              "archiveSha256": "cd1fbd0aafc18408205ef1611a7700ac9f2b1972d7e699cb46ed0f8b815a250a",
+              "archiveBytes": 156560
+            }
+          },
+          "imageExtent": [
+            -13915208.125259776,
+            4163066.3085238505,
+            -13357523.56689113,
+            4866286.9687474705
+          ]
+        },
+        "tileReceipts": [
+          {
+            "row": 48,
+            "col": 19,
+            "sha256": "b90c5ebfcb1ebb6c58e80beecaea60020e4351bd728f60f18909a6e9d4c4fb83",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 48,
+            "col": 20,
+            "sha256": "4c0934bda74aa69c457390d28d58e536cd35164dd1bdfff100f6f8d8b86d1d45",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 48,
+            "col": 21,
+            "sha256": "dedd8b5907e513bd5918dd311b3ec7d3c0079b6e091ce09640120c958d9700a0",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 49,
+            "col": 19,
+            "sha256": "d406fe1ff8f400788ddee8f27e56efdc0856a877271eac5031cd90d512a6bd4c",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 49,
+            "col": 20,
+            "sha256": "a87b75a444ff27c3586220f53415a7d12e5a5266671685797b5c29e13efd1ccf",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 49,
+            "col": 21,
+            "sha256": "1dac4a7e3ab66080bfb191cbd957262b057a7f4cafa3887349c783f87f911b8f",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 50,
+            "col": 19,
+            "sha256": "d406fe1ff8f400788ddee8f27e56efdc0856a877271eac5031cd90d512a6bd4c",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 50,
+            "col": 20,
+            "sha256": "ee8deadd6c13ff4bd8f9fd6f99da6350bf5790a5b8b5331d4db434cdb4ed8cad",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 50,
+            "col": 21,
+            "sha256": "ad36c2cac280addfe4aeb28c77dd8967c85f737d8f3b9cad9950b4c058c7f6f2",
+            "independentPublicBytesEqual": true
+          }
+        ],
+        "checkedChannels": 1048800,
+        "independentCapabilitiesSha256": "fe6374e8ef32c4c12a12e2ba4d08453cd26f922835e9030617d045cb57c2f500",
+        "independentCapabilitiesBytesEqual": false,
+        "independentlyDeclaredTemplateAndGridEqual": true,
+        "independentPngChannelsExact": true,
+        "jpegMaximumChannelDelta": 0,
+        "jpegMeanChannelDelta": 0.0,
+        "independentGdalGridAndPixels": true,
+        "exportHashesAndOriginalTileBytes": true
+      },
+      {
+        "serviceId": "e5977426-ab89-4da0-9c90-bbbae400583b",
+        "compatibleLayers": 1196,
+        "asset": {
+          "id": "2ffad9f6-3b8c-4b3b-b75d-156cba1b0d80",
+          "name": "Dark Target Aerosol Optical Depth (Land and Ocean, MODIS, Terra) · WMTS",
+          "width": 286,
+          "height": 285,
+          "bounds": [
+            -125.015625,
+            34.998046875,
+            -119.98828125,
+            40.0078125
+          ],
+          "bytes": 3784,
+          "sha256": "2cfdba65e26ab2fe96dd889b5e007c7e5254b0132309dbffc5e4443a308eea35",
+          "crs": "EPSG:4326",
+          "source": {
+            "serviceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/1.0.0/WMTSCapabilities.xml",
+            "serviceName": "NASA GIBS 4326",
+            "serviceTitle": "NASA Global Imagery Browse Services for EOSDIS",
+            "version": "1.0.0",
+            "mapEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi",
+            "capabilitiesSha256": "b714aba25e1c53a0a7ea0463d8635c2651b6bb53ec2a5de701201e4699bc69c9",
+            "layerName": "MODIS_Terra_Aerosol",
+            "layerTitle": "Dark Target Aerosol Optical Depth (Land and Ocean, MODIS, Terra)",
+            "style": "default",
+            "time": "2025-06-27",
+            "requestCrs": "EPSG:4326",
+            "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_Aerosol/default/2025-06-27/2km/5/5/6.png",
+            "requestedAt": "2026-10-03T07:25:59.427677300+00:00",
+            "accessConstraints": "none",
+            "attribution": null,
+            "areaGeometry": null,
+            "selection": "pixel-window-rendered-tiles",
+            "wmts": {
+              "resourceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_Aerosol/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+              "matrixSet": "2km",
+              "declaredCrs": "urn:ogc:def:crs:OGC:1.3:CRS84",
+              "matrix": {
+                "id": "5",
+                "scaleDenominator": 6988528.300358973,
+                "topLeft": [
+                  -180.0,
+                  90.0
+                ],
+                "tileWidth": 512,
+                "tileHeight": 512,
+                "matrixWidth": 40,
+                "matrixHeight": 20
+              },
+              "format": "image/png",
+              "timeIdentifier": "Time",
+              "requestedBounds": [
+                -125.0,
+                35.0,
+                -120.0,
+                40.0
+              ],
+              "pixelWindow": [
+                3128,
+                2844,
+                286,
+                285
+              ],
+              "tiles": [
+                {
+                  "row": 5,
+                  "col": 6,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_Aerosol/default/2025-06-27/2km/5/5/6.png",
+                  "bytes": 6252,
+                  "sha256": "c474d92031af6c866754ab477cce89b34ab147f644d3f9c285fae99ad9717ff3"
+                },
+                {
+                  "row": 6,
+                  "col": 6,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_Aerosol/default/2025-06-27/2km/5/6/6.png",
+                  "bytes": 2918,
+                  "sha256": "e869b0b7bc13b717b051c618a561e733626673300d43c40b38faf41bc1c1f935"
+                }
+              ],
+              "archiveSha256": "8392f1723b11e074aa08e25340505ea12649c17a85005fd026bc34746374b0a1",
+              "archiveBytes": 9372
+            }
+          },
+          "imageExtent": [
+            -125.015625,
+            34.998046875,
+            -119.98828125,
+            40.0078125
+          ]
+        },
+        "tileReceipts": [
+          {
+            "row": 5,
+            "col": 6,
+            "sha256": "c474d92031af6c866754ab477cce89b34ab147f644d3f9c285fae99ad9717ff3",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 6,
+            "col": 6,
+            "sha256": "e869b0b7bc13b717b051c618a561e733626673300d43c40b38faf41bc1c1f935",
+            "independentPublicBytesEqual": true
+          }
+        ],
+        "checkedChannels": 326040,
+        "independentCapabilitiesSha256": "0fd14488d23937c1d0caf73332c118d11788d0797b1c959e0cab0a86ebfb7173",
+        "independentCapabilitiesBytesEqual": false,
+        "independentlyDeclaredTemplateAndGridEqual": true,
+        "independentPngChannelsExact": true,
+        "jpegMaximumChannelDelta": 0,
+        "jpegMeanChannelDelta": 0.0,
+        "independentGdalGridAndPixels": true,
+        "exportHashesAndOriginalTileBytes": true
+      }
+    ],
+    "fixturesUsed": false,
+    "scientificOriginalBands": false,
+    "desktopWebViewAccepted": false,
+    "totalPixels": 605910,
+    "totalSourceTiles": 20,
+    "passed": true
+  },
+  "uiAcceptance": {
+    "checkedAt": "2026-10-03T07:28:14.951Z",
+    "mode": "Headless Chromium + isolated native runtime + real NASA GIBS advertised WMTS REST and desktop dev CSP",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "assetId": "efe5756b-8a7a-4ecb-b666-85d0d5881676",
+        "actualNativeWmtsRestQuery": true,
+        "documentConnectionAndRefresh": true,
+        "sourceTemplateDisplayed": true,
+        "projection": "EPSG:4326",
+        "grid": "250m",
+        "level": "5",
+        "sourceTileCount": 4,
+        "bounds": [
+          -125.015625,
+          29.98828125,
+          -109.986328125,
+          43.013671875
+        ],
+        "requestedTime": "2025-06-27",
+        "sharedCalendarUsed": true,
+        "equalCardHeights": true,
+        "sourceModalVerified": true,
+        "exportBytesEqual": true,
+        "actualColorImageOnGeographicCanvas": true,
+        "exclusionsVerified": false,
+        "pageErrors": []
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "assetId": "26f13189-3ff6-4530-b68e-5ec33f15913d",
+        "actualNativeWmtsRestQuery": true,
+        "documentConnectionAndRefresh": true,
+        "sourceTemplateDisplayed": true,
+        "projection": "EPSG:3857",
+        "grid": "GoogleMapsCompatible_Level7",
+        "level": "6",
+        "sourceTileCount": 16,
+        "bounds": [
+          -125.00244140625006,
+          29.993002284551128,
+          -109.99511718750007,
+          43.004647127794485
+        ],
+        "requestedTime": "2025-06-27",
+        "sharedCalendarUsed": true,
+        "equalCardHeights": true,
+        "sourceModalVerified": true,
+        "exportBytesEqual": true,
+        "actualColorImageOnGeographicCanvas": true,
+        "exclusionsVerified": true,
+        "pageErrors": []
+      }
+    ]
+  },
+  "uiIndependentFileChecks": {
+    "passed": true,
+    "cases": [
+      {
+        "assetId": "efe5756b-8a7a-4ecb-b666-85d0d5881676",
+        "pixels": 633555,
+        "sourceTiles": 4,
+        "allChannelsCompared": true,
+        "independentPngExact": false,
+        "maximumChannelDelta": 4,
+        "meanChannelDelta": 0.14275477267167017,
+        "originalTileHttpBytesExact": true,
+        "independentGdalGridAndPixels": true,
+        "declaredTemplateAndMatrixChecked": true
+      },
+      {
+        "assetId": "26f13189-3ff6-4530-b68e-5ec33f15913d",
+        "pixels": 505420,
+        "sourceTiles": 16,
+        "allChannelsCompared": true,
+        "independentPngExact": true,
+        "maximumChannelDelta": 0,
+        "meanChannelDelta": 0.0,
+        "originalTileHttpBytesExact": true,
+        "independentGdalGridAndPixels": true,
+        "declaredTemplateAndMatrixChecked": true
+      }
+    ]
+  },
+  "actualRestartUnderRejectingProxy": {
+    "passed": true,
+    "checkedAt": "2026-10-03T07:33:01.916313+00:00",
+    "mode": "Actual native process restart; rejecting outbound proxy; local inspect/export only",
+    "servicesRestored": 2,
+    "images": [
+      {
+        "assetId": "785fc73f-29ba-4fd4-a6cd-00e177e14d8f",
+        "sameMetadata": true,
+        "exactImageBytes": true,
+        "exactExportBytes": true
+      },
+      {
+        "assetId": "03dd829d-bad9-4c76-bc81-610b2e89df37",
+        "sameMetadata": true,
+        "exactImageBytes": true,
+        "exactExportBytes": true
+      },
+      {
+        "assetId": "2ffad9f6-3b8c-4b3b-b75d-156cba1b0d80",
+        "sameMetadata": true,
+        "exactImageBytes": true,
+        "exactExportBytes": true
+      },
+      {
+        "assetId": "efe5756b-8a7a-4ecb-b666-85d0d5881676",
+        "sameMetadata": true,
+        "exactImageBytes": true,
+        "exactExportBytes": true
+      },
+      {
+        "assetId": "26f13189-3ff6-4530-b68e-5ec33f15913d",
+        "sameMetadata": true,
+        "exactImageBytes": true,
+        "exactExportBytes": true
+      }
+    ],
+    "remoteOperationsInvoked": [],
+    "networkNeededForRead": false,
+    "usedUserDesktop": false
+  },
+  "legacyRealStorageReopen": {
+    "checkedAt": "2026-10-03T07:29:24.122152+00:00",
+    "mode": "Separate native CLI processes reopen existing real-public stores",
+    "liveServerStopped": true,
+    "networkOperationsInvoked": [],
+    "separateProcessesOpenedExclusiveStorage": true,
+    "stores": [
+      {
+        "protocol": "WMTS",
+        "servicesRestored": 2,
+        "imagesRestored": 6,
+        "assets": [
+          {
+            "assetId": "565d2714-b490-4373-9c69-7a83877764d1",
+            "sha256": "b1254172f70c55ef569a29aa168f2785e3b60f9ed55b180ba0c47e42e7a4768a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 16,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "861bd2aa-d07d-4670-aef9-eefc7957fc71",
+            "sha256": "b1254172f70c55ef569a29aa168f2785e3b60f9ed55b180ba0c47e42e7a4768a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 16,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "8fafa56f-0bbc-482f-9697-a5303d701e51",
+            "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "926986c5-270b-4458-92be-c40293fbc881",
+            "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "a66e01cd-f97a-4275-b119-0bd37ed522e4",
+            "sha256": "9d456ae706d91891c95480965545c5967fa881f401164a1585a8d5f343903b6f",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "ed99eb39-33a4-4996-ae16-0a6c441ef04f",
+            "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          }
+        ]
+      },
+      {
+        "protocol": "WMS",
+        "servicesRestored": 1,
+        "imagesRestored": 6,
+        "assets": [
+          {
+            "assetId": "3676ba76-63b4-40f5-907d-dac3ce0b8169",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "725deaaa-1835-40eb-ba70-e167c8640500",
+            "sha256": "21247fc9236eb0c8d156dbe5b72a4a065b86cf8fee49c09de1f25e005f782a63",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "89d423bc-c0af-4457-967a-7c72466c1572",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "e48caa2c-1398-49e0-8437-07cd7fc3487f",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "e9ca75de-cd73-4c25-8230-d6f0006bfb89",
+            "sha256": "21247fc9236eb0c8d156dbe5b72a4a065b86cf8fee49c09de1f25e005f782a63",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "f7bde202-c74d-4449-b51f-066f258f032d",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          }
+        ]
+      },
+      {
+        "protocol": "XYZ",
+        "servicesRestored": 2,
+        "imagesRestored": 3,
+        "assets": [
+          {
+            "assetId": "eba5bf96-7628-4a38-90c9-55becfa5ebdf",
+            "sha256": "1f972411b880578938ceca0fdb37bdd35f7e3620ee7c60bd879d9216df1e2057",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "ed7f971a-f844-4503-b3e3-00367df06897",
+            "sha256": "146a9be8bdaae48b65817fbb079eaf26e33d8c93042be09de6ef2b523f1e6d59",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "f4637f50-7057-4180-90c2-8cb29cb96513",
+            "sha256": "005968f904f8f456635211446fbd110c797ce58f374a6e6422ac374bb3300636",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 9,
+            "exportAfterReopen": true
+          }
+        ]
+      }
+    ]
+  },
+  "totals": {
+    "outputs": 5,
+    "sourceTileRecords": 40,
+    "outputPixels": 1744885,
+    "overlappingSourceTilesMayRepeat": true
+  },
+  "regression": {
+    "nativeCorePassed": 352,
+    "nativeCliPassed": 3,
+    "desktopPassed": 4,
+    "explicitNativeTestsIgnored": 4,
+    "frontendLogicPassed": 184,
+    "frontendUiPassed": 174,
+    "frontendBuild": "passed",
+    "dependencyIsolation": "passed",
+    "contractsAndRecipeSchema": "passed",
+    "cargoFmt": "passed",
+    "strictClippy": "passed",
+    "nativeRuntimeBuild": "passed"
+  },
+  "scope": {
+    "realPublicNasaRestAcquisition": true,
+    "restOnlyServiceRealAcquisition": false,
+    "restOnlyAndOpaqueTemplateTests": "synthetic protocol and exact offline roundtrip",
+    "protectedOriginalProductDownloadAccepted": false,
+    "scientificOriginalBands": false,
+    "allCompatibleLayersAcquired": false,
+    "sharedTileCacheImplemented": false,
+    "queuedLargeDownloadsImplemented": false,
+    "desktopWebViewManuallyAccepted": false,
+    "usedUserDesktop": false,
+    "softwarePublished": false
+  },
+  "passed": true
+}

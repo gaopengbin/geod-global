@@ -3,11 +3,13 @@
  * Radix owns interactive state, focus, keyboard and form integration.
  */
 import React, { forwardRef, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { cva } from 'class-variance-authority';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Slot } from '@radix-ui/react-slot';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+export { DatePicker } from './date-picker.jsx';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
@@ -16,9 +18,12 @@ import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { Check, ChevronDown, CircleAlert, Clock3, LoaderCircle, X } from 'lucide-react';
 import './styles.css';
 import './motion.css';
+
+export { ResizableGroup, ResizablePanel, ResizeHandle } from './resizable.jsx';
 
 export const cn = (...inputs) => twMerge(clsx(inputs));
 
@@ -48,12 +53,17 @@ export const buttonVariants = cva(
   }, defaultVariants: { variant: 'secondary', size: 'md' } },
 );
 
-export const Button = forwardRef(function Button({ variant, size, primary, selected, icon: Icon, className = '', asChild = false, children, type, ...props }, ref) {
+export function Tooltip({ content, children }) {
+  return <TooltipPrimitive.Provider delayDuration={350}><TooltipPrimitive.Root><TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger><TooltipPrimitive.Portal><TooltipPrimitive.Content data-slot="tooltip" className="bui-tooltip" sideOffset={6} collisionPadding={12}>{content}</TooltipPrimitive.Content></TooltipPrimitive.Portal></TooltipPrimitive.Root></TooltipPrimitive.Provider>;
+}
+
+export const Button = forwardRef(function Button({ variant, size, primary, selected, icon: Icon, tooltip, className = '', asChild = false, children, type, ...props }, ref) {
   const legacy = className.split(/\s+/);
   const resolvedVariant = variant || (primary || legacy.includes('primary') ? 'primary' : legacy.some(x => ['icon-btn', 'nav-item'].includes(x)) ? 'quiet' : legacy.includes('text-link') ? 'link' : 'secondary');
   const resolvedSize = size || (legacy.includes('icon-btn') ? 'icon' : 'md');
   const Comp = asChild ? Slot : 'button';
-  return <Comp ref={ref} type={asChild ? undefined : type || 'button'} data-slot="button" data-size={resolvedSize} data-variant={resolvedVariant} data-selected={selected || undefined} aria-pressed={selected === undefined ? undefined : selected} className={cn('bui-button', buttonVariants({ variant: resolvedVariant, size: resolvedSize }), className)} {...props}>{asChild ? children : <>{Icon && <Icon size={16} aria-hidden="true" />}{children}</>}</Comp>;
+  const control = <Comp ref={ref} type={asChild ? undefined : type || 'button'} data-slot="button" data-size={resolvedSize} data-variant={resolvedVariant} data-selected={selected || undefined} aria-pressed={selected === undefined ? undefined : selected} className={cn('bui-button', buttonVariants({ variant: resolvedVariant, size: resolvedSize }), className)} {...props}>{asChild ? children : <>{Icon && <Icon size={16} aria-hidden="true" />}{children}</>}</Comp>;
+  return tooltip ? <Tooltip content={tooltip}>{control}</Tooltip> : control;
 });
 
 // Badge/input/textarea/native select/table structure follows the pinned shadcn
@@ -166,10 +176,19 @@ export function TR({ className, ...props }) { return <tr data-slot="table-row" c
 export function TH({ className, ...props }) { return <th data-slot="table-head" className={cn('bui-table-th', className)} {...props} />; }
 export function TD({ className, ...props }) { return <td data-slot="table-cell" className={cn('bui-table-td', className)} {...props} />; }
 
-export function Disclosure({ summary, children, open, defaultOpen, onOpenChange, onToggle, className, ...props }) {
-  return <CollapsiblePrimitive.Root data-slot="disclosure" open={open} defaultOpen={defaultOpen} onOpenChange={next => { onOpenChange?.(next); onToggle?.({ target: { open: next }, currentTarget: { open: next } }); }} className={cn('bui-disclosure', className)} {...props}><CollapsiblePrimitive.Trigger data-slot="disclosure-trigger" className="bui-disclosure-trigger"><ChevronDown size={15} aria-hidden="true" /><span>{summary}</span></CollapsiblePrimitive.Trigger><CollapsiblePrimitive.Content data-slot="disclosure-content" className="bui-disclosure-content">{children}</CollapsiblePrimitive.Content></CollapsiblePrimitive.Root>;
+export function Disclosure({ summary, icon: Icon, children, contentContainer, open, defaultOpen, onOpenChange, onToggle, className, ...props }) {
+  // The animated shell must reach zero. Keep spacing and child margins inside
+  // it so Radix can hide the content without a second layout jump.
+  const content = <CollapsiblePrimitive.Content data-slot="disclosure-content" className="bui-disclosure-content"><div className="bui-disclosure-body">{children}</div></CollapsiblePrimitive.Content>;
+  return <CollapsiblePrimitive.Root data-slot="disclosure" open={open} defaultOpen={defaultOpen} onOpenChange={next => { onOpenChange?.(next); onToggle?.({ target: { open: next }, currentTarget: { open: next } }); }} className={cn('bui-disclosure', className)} {...props}>
+    {Icon ? <CollapsiblePrimitive.Trigger asChild><Button size="icon" variant="secondary" className="bui-disclosure-trigger" data-icon-only aria-label={summary} tooltip={summary}><Icon size={16} aria-hidden="true" /></Button></CollapsiblePrimitive.Trigger> : <CollapsiblePrimitive.Trigger data-slot="disclosure-trigger" className="bui-disclosure-trigger"><ChevronDown size={15} aria-hidden="true" /><span>{summary}</span></CollapsiblePrimitive.Trigger>}
+    {contentContainer ? createPortal(content, contentContainer) : content}
+  </CollapsiblePrimitive.Root>;
 }
 export function Surface({ as: Comp = 'section', variant = 'card', className, ...props }) { return <Comp data-slot="surface" data-variant={variant} className={cn('bui-surface', className)} {...props} />; }
+export function PageHeader({ title, description, status, actions, className }) {
+  return <header data-slot="page-header" className={cn('bui-page-header', className)}><div className="bui-page-header-title"><h1>{title}</h1>{status}</div>{description && <p>{description}</p>}{actions && <div className="bui-page-header-actions">{actions}</div>}</header>;
+}
 export function EmptyState({ icon: Icon, title, description, children, action, className, ...props }) {
   return <section data-slot="empty-state" className={cn('bui-empty-state', className)} {...props}>{Icon && <span className="bui-empty-icon">{React.isValidElement(Icon) ? Icon : <Icon size={24} aria-hidden="true" />}</span>}{title && <h3>{title}</h3>}{description && <p>{description}</p>}{children}{action && <div className="bui-empty-action">{action}</div>}</section>;
 }
@@ -196,18 +215,31 @@ export function SidebarNav({ items = [], footerItems = [], brand, footer, ariaLa
 // Adapted from Beautiful UI TaskRows. Removed useTick, all demo records and
 // staged status transitions. Status/progress/actions are controlled inputs.
 export function TaskRows({ items = [], className, ariaLabel, layout = 'tasks' }) {
-  return <div data-slot="task-rows" data-layout={layout} role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} />)}</div>;
+  return <div data-slot="task-rows" data-layout={layout} role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} layout={layout} />)}</div>;
 }
-function TaskRow({ item }) {
+function TaskRow({ item, layout }) {
   const { title, description, meta, status, statusLabel, statusTone, progress, progressLabel, details, actions, preview, icon: Icon } = item;
+  const compact = layout === 'tasks';
+  const [detailContainer, setDetailContainer] = useState(null);
+  // Details occupy a separate full-width region so expanding them cannot
+  // stretch the thumbnail or move the summary's action strip.
+  const cardDetails = React.isValidElement(details) && details.type === Disclosure ? React.cloneElement(details, { contentContainer: detailContainer }) : details;
   const StatusIcon = Icon || (status === 'succeeded' ? Check : ['failed', 'interrupted'].includes(status) ? CircleAlert : status === 'cancelled' ? X : Clock3);
-  const tone = ['succeeded', 'running'].includes(status) ? 'blue' : ['failed', 'interrupted'].includes(status) ? 'red' : 'neutral';
+  const tone = ['succeeded', 'running'].includes(status) ? 'blue' : status === 'failed' ? 'red' : 'neutral';
+  const badge = statusLabel && <Badge tone={statusTone || tone}>{statusLabel}</Badge>;
   return <article data-slot="task-row" role="listitem" data-status={status} data-preview={preview ? true : undefined} className="bui-task-row">
+    <div className="bui-task-summary">
     <div className="bui-task-main">
       {preview || <span className="bui-task-icon" data-tone={tone}>{status === 'running' ? <Spinner /> : <StatusIcon size={16} aria-hidden="true" />}</span>}
-      <div className="bui-task-copy"><strong>{title}</strong><div className="bui-task-info">{description && <p>{description}</p>}{meta && <span className="bui-task-meta">{meta}</span>}{statusLabel && <Badge tone={statusTone || tone}>{statusLabel}</Badge>}</div></div>
+      <div className="bui-task-copy">
+        <strong title={!compact && typeof title === 'string' ? title : undefined}>{title}</strong>
+        <div className="bui-task-info">{compact && badge}{description && <p title={!compact && typeof description === 'string' ? description : undefined}>{description}</p>}{meta && <span className="bui-task-meta">{meta}</span>}{!compact && badge}</div>
+        {compact && ['queued', 'running'].includes(status) && <div className="bui-task-progress" aria-hidden={status === 'queued' ? true : undefined}>{status === 'running' && <Progress value={progress} aria-label={progressLabel} />}</div>}
+      </div>
     </div>
-    {status === 'running' && <Progress value={progress} aria-label={progressLabel} />}
-    {(details || actions) && <div className="bui-task-footer">{actions && <div className="bui-task-actions">{actions}</div>}{details && <div className="bui-task-details">{details}</div>}</div>}
+    {!compact && status === 'running' && <Progress value={progress} aria-label={progressLabel} />}
+    {(details || actions) && <div className="bui-task-footer">{actions && <div className="bui-task-actions">{actions}</div>}{details && <div className="bui-task-details">{cardDetails}</div>}</div>}
+    </div>
+    {details && <div className="bui-task-expanded" ref={setDetailContainer}/>}
   </article>;
 }

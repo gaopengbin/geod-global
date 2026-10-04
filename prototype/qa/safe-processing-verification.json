@@ -1,0 +1,668 @@
+{
+  "schemaVersion": "geod-safe-processing-verification/v1",
+  "checkedAt": "2026-10-01T14:17:03.425303+00:00",
+  "scope": "Local SAFE ZIP to full-resolution TCI/SCL GeoTIFF, native workspace inspection and same-grid project clipping. All positive SAFE files in this report are synthetic fixtures.",
+  "actualCopernicusOriginalDownloaded": false,
+  "actualNasaOriginalDownloaded": false,
+  "fixture": {
+    "provenance": "../../crates/geod-runtime/fixtures/safe/SOURCE.json",
+    "kind": "synthetic; locally generated with independent GDAL JP2OpenJPEG; not a downloaded satellite product",
+    "originalJobId": "51bf35d7-58b6-4729-bd14-f5b63aa1fa9a",
+    "sha256": "20d30697f780f73f0ad7b493de73c837fa42d356fa1550fdb42c5221dc522a48",
+    "bytes": 17188,
+    "projectId": "aefd2296-b8c5-4e4f-8750-62550512894f",
+    "prepared": [
+      {
+        "assetKey": "visual",
+        "preparedJobId": "b0b20fff-8297-4c49-b735-f034ad0efbad",
+        "source": {
+          "sourceJobId": "51bf35d7-58b6-4729-bd14-f5b63aa1fa9a",
+          "sourceSha256": "20d30697f780f73f0ad7b493de73c837fa42d356fa1550fdb42c5221dc522a48"
+        },
+        "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d",
+        "bytes": 4861,
+        "grid": {
+          "entry": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A000001_20250627T184941/IMG_DATA/R10m/T10SEG_20250627T184941_TCI_10m.jp2",
+          "metadataEntry": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A000001_20250627T184941/MTD_TL.xml",
+          "width": 64,
+          "height": 520,
+          "bandCount": 3,
+          "crs": "EPSG:32610",
+          "bounds": [
+            500000,
+            4194800,
+            500640,
+            4200000
+          ],
+          "pixelSize": [
+            10,
+            10
+          ]
+        },
+        "inspection": {
+          "width": 64,
+          "height": 520,
+          "bandCount": 3,
+          "dataType": "UInt8",
+          "crs": "EPSG:32610",
+          "bounds": [
+            500000,
+            4194800,
+            500640,
+            4200000
+          ],
+          "pixelSize": [
+            10,
+            10
+          ],
+          "nodata": 0,
+          "previewWidth": 64,
+          "previewHeight": 520,
+          "classes": [],
+          "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d"
+        },
+        "pixel": {
+          "jobId": "b0b20fff-8297-4c49-b735-f034ad0efbad",
+          "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            500010,
+            4199990
+          ],
+          "pixel": [
+            1,
+            1
+          ],
+          "center": [
+            500015,
+            4199985
+          ],
+          "value": 10,
+          "values": [
+            10,
+            41,
+            72
+          ],
+          "label": "RGB",
+          "color": "#0a2948",
+          "isNoData": false
+        },
+        "thumbnail": {
+          "jobId": "b0b20fff-8297-4c49-b735-f034ad0efbad",
+          "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d",
+          "width": 19,
+          "height": 160
+        },
+        "projectClip": {
+          "jobId": "0eeae17c-f945-4c41-b9b0-0ae692047db1",
+          "sha256": "7bf1170aa1b599e844fdfad10b512fcf043384d428b00789d21af41a1e129aba",
+          "bytes": 2201,
+          "grid": {
+            "width": 36,
+            "height": 223,
+            "bandCount": 3,
+            "crs": "EPSG:32610",
+            "bounds": [
+              500080,
+              4196930,
+              500440,
+              4199160
+            ],
+            "pixelSize": [
+              10,
+              10
+            ],
+            "sourceCount": 1,
+            "maskedPixels": 0,
+            "coveredPixels": 8028,
+            "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData"
+          }
+        }
+      },
+      {
+        "assetKey": "scl",
+        "preparedJobId": "900667f3-c9b5-4d6e-a060-aee65e8a8656",
+        "source": {
+          "sourceJobId": "51bf35d7-58b6-4729-bd14-f5b63aa1fa9a",
+          "sourceSha256": "20d30697f780f73f0ad7b493de73c837fa42d356fa1550fdb42c5221dc522a48"
+        },
+        "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d",
+        "bytes": 490,
+        "grid": {
+          "entry": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A000001_20250627T184941/IMG_DATA/R20m/T10SEG_20250627T184941_SCL_20m.jp2",
+          "metadataEntry": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511.SAFE/GRANULE/L2A_T10SEG_A000001_20250627T184941/MTD_TL.xml",
+          "width": 32,
+          "height": 260,
+          "bandCount": 1,
+          "crs": "EPSG:32610",
+          "bounds": [
+            500000,
+            4194800,
+            500640,
+            4200000
+          ],
+          "pixelSize": [
+            20,
+            20
+          ]
+        },
+        "inspection": {
+          "width": 32,
+          "height": 260,
+          "bandCount": 1,
+          "dataType": "UInt8",
+          "crs": "EPSG:32610",
+          "bounds": [
+            500000,
+            4194800,
+            500640,
+            4200000
+          ],
+          "pixelSize": [
+            20,
+            20
+          ],
+          "nodata": 0,
+          "previewWidth": 32,
+          "previewHeight": 260,
+          "classes": [
+            {
+              "value": 0,
+              "label": "No data",
+              "color": "#000000",
+              "count": 692
+            },
+            {
+              "value": 1,
+              "label": "Saturated or defective",
+              "color": "#ff0000",
+              "count": 692
+            },
+            {
+              "value": 2,
+              "label": "Terrain shadow",
+              "color": "#2f2f2f",
+              "count": 692
+            },
+            {
+              "value": 3,
+              "label": "Cloud shadow",
+              "color": "#643200",
+              "count": 692
+            },
+            {
+              "value": 4,
+              "label": "Vegetation",
+              "color": "#00a000",
+              "count": 693
+            },
+            {
+              "value": 5,
+              "label": "Bare/non-vegetated",
+              "color": "#ffe65a",
+              "count": 694
+            },
+            {
+              "value": 6,
+              "label": "Water",
+              "color": "#0000ff",
+              "count": 695
+            },
+            {
+              "value": 7,
+              "label": "Unclassified",
+              "color": "#808080",
+              "count": 696
+            },
+            {
+              "value": 8,
+              "label": "Medium-probability cloud",
+              "color": "#c0c0c0",
+              "count": 695
+            },
+            {
+              "value": 9,
+              "label": "High-probability cloud",
+              "color": "#ffffff",
+              "count": 694
+            },
+            {
+              "value": 10,
+              "label": "Thin cirrus",
+              "color": "#64c8ff",
+              "count": 693
+            },
+            {
+              "value": 11,
+              "label": "Snow or ice",
+              "color": "#ff96ff",
+              "count": 692
+            }
+          ],
+          "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d"
+        },
+        "pixel": {
+          "jobId": "900667f3-c9b5-4d6e-a060-aee65e8a8656",
+          "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            500010,
+            4199990
+          ],
+          "pixel": [
+            0,
+            0
+          ],
+          "center": [
+            500010,
+            4199990
+          ],
+          "value": 0,
+          "label": "No data",
+          "color": "#000000",
+          "isNoData": true
+        },
+        "thumbnail": {
+          "jobId": "900667f3-c9b5-4d6e-a060-aee65e8a8656",
+          "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d",
+          "width": 19,
+          "height": 160
+        },
+        "projectClip": {
+          "jobId": "3fd74a98-3c0d-440e-8d15-cf6ff289fd39",
+          "sha256": "5033d7128355e45dee7d01030dd1fb5c319c8d95d7556b6b3e8d3337f5b99343",
+          "bytes": 389,
+          "grid": {
+            "width": 18,
+            "height": 112,
+            "bandCount": 1,
+            "crs": "EPSG:32610",
+            "bounds": [
+              500080,
+              4196920,
+              500440,
+              4199160
+            ],
+            "pixelSize": [
+              20,
+              20
+            ],
+            "sourceCount": 1,
+            "maskedPixels": 0,
+            "coveredPixels": 1847,
+            "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData"
+          }
+        }
+      }
+    ]
+  },
+  "independentComparison": {
+    "fixtureOnly": true,
+    "decoder": "Independent Rasterio 1.3.9 / GDAL JP2OpenJPEG",
+    "files": [
+      {
+        "assetKey": "visual",
+        "preparedSamples": 99840,
+        "allPreparedSamplesMatch": true,
+        "clippedSamples": 24084,
+        "allClippedSamplesMatch": true,
+        "sourceWindow": [
+          8,
+          84,
+          36,
+          223
+        ],
+        "crs": "EPSG:32610",
+        "resolution": [
+          10.0,
+          10.0
+        ],
+        "dataType": [
+          "uint8",
+          "uint8",
+          "uint8"
+        ],
+        "nodata": 0.0
+      },
+      {
+        "assetKey": "scl",
+        "preparedSamples": 8320,
+        "allPreparedSamplesMatch": true,
+        "clippedSamples": 2016,
+        "allClippedSamplesMatch": true,
+        "sourceWindow": [
+          4,
+          42,
+          18,
+          112
+        ],
+        "crs": "EPSG:32610",
+        "resolution": [
+          20.0,
+          20.0
+        ],
+        "dataType": [
+          "uint8"
+        ],
+        "nodata": 0.0
+      }
+    ],
+    "comparedPreparedSamples": 108160,
+    "comparedClippedSamples": 26100,
+    "changedSamples": 0
+  },
+  "persistentState": {
+    "actualRuntimeProcessRestart": true,
+    "preparedJobIdsAndSha256Unchanged": true,
+    "repeatPreparationReusedCompletedJobs": true,
+    "inspectionPixelsAndThumbnailsAvailableAfterRestart": true,
+    "scope": "Isolated fixture data directory; restart verified by stopping the owned runtime and launching a new process against that directory. No user projects mutated."
+  },
+  "interface": {
+    "mode": "Headless renderer with actual isolated native loopback responses; desktop command/ACL contracts tested separately",
+    "cases": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "fixtureOnly": true,
+        "nativeRuntimeResponses": true,
+        "preparedAndClipButtons": true,
+        "fourNativeThumbnails": true,
+        "pixels": [
+          {
+            "jobId": "b0b20fff-8297-4c49-b735-f034ad0efbad",
+            "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d",
+            "crs": "EPSG:32610",
+            "coordinate": [
+              500320,
+              4197400
+            ],
+            "pixel": [
+              32,
+              260
+            ],
+            "center": [
+              500325,
+              4197395
+            ],
+            "value": 236,
+            "values": [
+              236,
+              11,
+              42
+            ],
+            "label": "RGB",
+            "color": "#ec0b2a",
+            "isNoData": false
+          },
+          {
+            "jobId": "900667f3-c9b5-4d6e-a060-aee65e8a8656",
+            "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d",
+            "crs": "EPSG:32610",
+            "coordinate": [
+              500320,
+              4197400
+            ],
+            "pixel": [
+              16,
+              130
+            ],
+            "center": [
+              500330,
+              4197390
+            ],
+            "value": 2,
+            "label": "Terrain shadow",
+            "color": "#2f2f2f",
+            "isNoData": false
+          }
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "fixtureOnly": true,
+        "nativeRuntimeResponses": true,
+        "preparedAndClipButtons": true,
+        "fourNativeThumbnails": true,
+        "pixels": [
+          {
+            "jobId": "b0b20fff-8297-4c49-b735-f034ad0efbad",
+            "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d",
+            "crs": "EPSG:32610",
+            "coordinate": [
+              500320,
+              4197400
+            ],
+            "pixel": [
+              32,
+              260
+            ],
+            "center": [
+              500325,
+              4197395
+            ],
+            "value": 236,
+            "values": [
+              236,
+              11,
+              42
+            ],
+            "label": "RGB",
+            "color": "#ec0b2a",
+            "isNoData": false
+          },
+          {
+            "jobId": "900667f3-c9b5-4d6e-a060-aee65e8a8656",
+            "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d",
+            "crs": "EPSG:32610",
+            "coordinate": [
+              500320,
+              4197400
+            ],
+            "pixel": [
+              16,
+              130
+            ],
+            "center": [
+              500330,
+              4197390
+            ],
+            "value": 2,
+            "label": "Terrain shadow",
+            "color": "#2f2f2f",
+            "isNoData": false
+          }
+        ],
+        "overflow": false,
+        "errors": []
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "fixtureOnly": true,
+        "nativeRuntimeResponses": true,
+        "preparedAndClipButtons": true,
+        "fourNativeThumbnails": true,
+        "pixels": [
+          {
+            "jobId": "b0b20fff-8297-4c49-b735-f034ad0efbad",
+            "sha256": "6d33279f9a779258b5f8688e73a504df152a1692beb6f6e5dbf325bee3d9c77d",
+            "crs": "EPSG:32610",
+            "coordinate": [
+              500320,
+              4197400
+            ],
+            "pixel": [
+              32,
+              260
+            ],
+            "center": [
+              500325,
+              4197395
+            ],
+            "value": 236,
+            "values": [
+              236,
+              11,
+              42
+            ],
+            "label": "RGB",
+            "color": "#ec0b2a",
+            "isNoData": false
+          },
+          {
+            "jobId": "900667f3-c9b5-4d6e-a060-aee65e8a8656",
+            "sha256": "33b756eca1d39750f05c6aa6668d1e9d2ed214bea95da529771ee17879a9065d",
+            "crs": "EPSG:32610",
+            "coordinate": [
+              500320,
+              4197400
+            ],
+            "pixel": [
+              16,
+              130
+            ],
+            "center": [
+              500330,
+              4197390
+            ],
+            "value": 2,
+            "label": "Terrain shadow",
+            "color": "#2f2f2f",
+            "isNoData": false
+          }
+        ],
+        "overflow": false,
+        "errors": []
+      }
+    ],
+    "independentPixelChecks": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "assetKey": "visual",
+        "pixel": [
+          32,
+          260
+        ],
+        "values": [
+          236,
+          11,
+          42
+        ],
+        "matched": true
+      },
+      {
+        "theme": "light",
+        "width": 1440,
+        "assetKey": "scl",
+        "pixel": [
+          16,
+          130
+        ],
+        "values": [
+          2
+        ],
+        "matched": true
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "assetKey": "visual",
+        "pixel": [
+          32,
+          260
+        ],
+        "values": [
+          236,
+          11,
+          42
+        ],
+        "matched": true
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "assetKey": "scl",
+        "pixel": [
+          16,
+          130
+        ],
+        "values": [
+          2
+        ],
+        "matched": true
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "assetKey": "visual",
+        "pixel": [
+          32,
+          260
+        ],
+        "values": [
+          236,
+          11,
+          42
+        ],
+        "matched": true
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "assetKey": "scl",
+        "pixel": [
+          16,
+          130
+        ],
+        "values": [
+          2
+        ],
+        "matched": true
+      }
+    ],
+    "nativeDesktopWindowInteractionTested": false
+  },
+  "negativeTests": [
+    "changed source hash and cancelled conversion leave no committed file",
+    "wrong product, CRS and MGRS tile rejected",
+    "XML DTD rejected",
+    "unsupported JP2 precision, mismatched dimensions and truncated stream rejected",
+    "SCL class 12 rejected",
+    "ZIP entry CRC mismatch rejected even when archive SHA-256 matches",
+    "interrupted preparation restores without orphan output and retries",
+    "changed source provenance refuses project processing"
+  ],
+  "limitations": [
+    "No real authorized Copernicus positive ZIP download or complete production SAFE decode was performed",
+    "No real authorized NASA HLS positive original download was performed",
+    "Standard compact single-tile Sentinel-2 L2A TCI RGB UInt8 and SCL Gray UInt8 only",
+    "No arbitrary SAFE multigranule, palette/alpha/variable-precision JP2 or Sentinel-2 reflectance band preparation",
+    "Complete production-scene memory and decode duration still require measurement",
+    "Cancellation is observed between input chunks and decode areas"
+  ],
+  "distribution": {
+    "installerCreated": false,
+    "published": false
+  },
+  "validation": {
+    "nodeTestsPassed": 86,
+    "uiTestsPassed": 88,
+    "nativeTestsPassed": 131,
+    "nativeTestsIgnored": 1,
+    "safeTestsPassed": 8,
+    "desktopTestsPassed": 4,
+    "desktopCommandsChecked": 38,
+    "runtimeClippy": "passed",
+    "desktopClippy": "passed",
+    "rustfmt": "passed",
+    "diffWhitespace": "passed",
+    "isolationAndContracts": "passed",
+    "safeFixtureSha256Checks": 2,
+    "viteBuild": "passed; existing large chunk warning"
+  }
+}

@@ -1,0 +1,6 @@
+.desktop-session-summary { display: flex; align-items: center; gap: 8px; min-height: 24px; color: var(--ink); font-size: 14px; }
+.desktop-session-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.desktop-session-error { display: grid; gap: 8px; margin-top: 12px; }
+.desktop-session-error p { color: var(--orange); font-size: 14px; }
+.desktop-session-error small { overflow-wrap: anywhere; color: var(--ink-2); font-size: 12px; }
+.desktop-session-error .bui-button { justify-self: start; }

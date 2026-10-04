@@ -1,0 +1,24 @@
+/* Shared Beautiful UI tokens; rendered imagery remains a domain component. */
+.wms-options {display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+.wms-tile-config {display:grid;gap:12px;padding:14px;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--inset);}
+.wms-grid-heading {display:grid;gap:4px;font-size:13px;}
+.wms-grid-heading span {font-size:12px;color:var(--ink-2);}
+.wms-layer-note {font-size:12px;line-height:1.7;color:var(--ink-2);overflow-wrap:anywhere;max-height:200px;overflow:auto;}
+.wms-layer-note p {margin:8px 0;}
+.wms-compatibility {font-size:12px;}
+.wms-compatibility-list {list-style:none;margin:8px 0;padding:0;display:grid;gap:8px;}
+.wms-compatibility-list li {display:grid;gap:3px;padding:8px 0;border-top:1px solid var(--line);overflow-wrap:anywhere;}
+.wms-compatibility-list strong {font-size:12px;font-weight:500;color:var(--ink);}
+.wms-compatibility-list span {line-height:1.5;color:var(--ink-2);}
+.wms-file-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr));gap:12px;align-items:start;}
+.wms-file {background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-card);min-width:0;}
+.wms-file-main {display:grid;grid-template-columns:104px minmax(0,1fr);min-height:128px;}
+.wms-thumbnail {min-height:128px;position:relative;background:var(--inset);border-right:1px solid var(--line);display:grid;place-items:center;overflow:hidden;border-radius:var(--radius-card) 0 0 var(--radius-card);color:var(--ink-2);}
+.wms-thumbnail img {position:absolute;width:100%;height:100%;object-fit:cover;}
+.wms-file-copy {padding:12px;min-width:0;}
+.wms-file-copy>strong {font-size:13px;line-height:1.4;font-weight:600;height:36px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
+.wms-file-copy>p {font-size:11px;line-height:1.6;color:var(--ink-2);margin:5px 0 9px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+.wms-file-actions {display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap;}
+.wms-file-actions>.bui-disclosure {display:contents;}
+.wms-file-actions .bui-disclosure-content {flex-basis:100%;width:100%;}
+.wms-map-attribution {position:absolute;bottom:8px;right:8px;max-width:calc(100% - 16px);padding:4px 8px;font-size:10px;background:var(--surface);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius-control);pointer-events:none;}

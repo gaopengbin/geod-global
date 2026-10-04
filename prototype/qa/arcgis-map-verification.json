@@ -1,0 +1,186 @@
+{
+  "checkedAt": "2026-10-03T06:04:35.600793+00:00",
+  "mode": "Actual public ArcGIS REST rendered PNGs through native runtime; separate synthetic contract tests",
+  "runtimeBinarySha256": "b248f5fad36d100c96a4fc2c8d23eb4260dcb4617d2fa786c2ecdbbca9d32176",
+  "publicNativeAcquisitions": {
+    "type": "live-public-ArcGIS-rendered-images",
+    "cases": [
+      {
+        "kind": "map",
+        "serviceId": "72201391-e67b-4942-809f-9df556cd80d4",
+        "imageId": "5307b48d-2917-453d-940c-161923f78c63",
+        "bytes": 2320,
+        "sha256": "9f158636c7aabfa678974ce41c73a661e7d573b24ebaad3e8369bbb22c106635",
+        "size": [
+          512,
+          256
+        ],
+        "requestedBounds": [
+          -123.0,
+          37.0,
+          -122.0,
+          38.0
+        ],
+        "actualBounds": [
+          -123.5,
+          37.0,
+          -121.5,
+          38.0
+        ],
+        "rgbaChannels": 524288,
+        "exactReturnedHrefBytes": true,
+        "packageReceiptsExact": true,
+        "worldfileActualExtent": true,
+        "independentGdalCrsExtentAndAllDecodedPixels": true,
+        "exportSha256": "1bb57e7b760e3c2db6615bc73afc46b9dd38cf328b86a71c422b5358a14a2ae3"
+      },
+      {
+        "kind": "image",
+        "serviceId": "40d13e80-a818-4fd5-8ab1-79896af20d1d",
+        "imageId": "bd2baa36-6c34-45c0-a150-dbaf0e63767d",
+        "bytes": 160739,
+        "sha256": "98159250aca8ef5b67167e45c58f86ba583cb16d6025ad58a2c1ae1055650786",
+        "size": [
+          256,
+          256
+        ],
+        "requestedBounds": [
+          -122.52,
+          37.72,
+          -122.4,
+          37.8
+        ],
+        "actualBounds": [
+          -122.52000000000001,
+          37.7,
+          -122.40000000000002,
+          37.81999999999999
+        ],
+        "rgbaChannels": 262144,
+        "exactReturnedHrefBytes": true,
+        "packageReceiptsExact": true,
+        "worldfileActualExtent": true,
+        "independentGdalCrsExtentAndAllDecodedPixels": true,
+        "exportSha256": "45e8d35705924f44492c44e9bf8e92a2aff82d1de176076bd7ff5edb5fa47a76"
+      }
+    ],
+    "rejectedConnections": [
+      "Use a public HTTPS data service without credentials or fragments",
+      "Enter a public ArcGIS REST MapServer or ImageServer root URL"
+    ],
+    "pixelCount": 196608
+  },
+  "uiNativeAcquisition": {
+    "passed": true,
+    "imageId": "cb63c0cb-c804-4508-8966-1b44053aa63c",
+    "size": [
+      512,
+      356
+    ],
+    "sha256": "195b16bf705868c65defc2e871d80b8c21225d68539e7c8af825d2659ea7d7e9",
+    "bytes": 409122,
+    "reference": {
+      "passed": true,
+      "imageId": "cb63c0cb-c804-4508-8966-1b44053aa63c",
+      "pixels": 182272,
+      "rgbaChannels": 729088,
+      "exactReturnedHrefBytes": true,
+      "independentGdalCrsExtentAndAllDecodedPixels": true,
+      "requestedBounds": [
+        -122.55,
+        37.68,
+        -122.32,
+        37.84
+      ],
+      "actualBounds": [
+        -122.55005617977528,
+        37.68,
+        -122.31994382022472,
+        37.84
+      ]
+    }
+  },
+  "totalDecodedPixels": 378880,
+  "totalRgbaChannelValues": 1515520,
+  "persistentReadAfterActualRestart": {
+    "passed": true,
+    "mode": "Actual process restart; offline inspection/export from managed files",
+    "networkNeededForOfflineRead": false,
+    "rejectingProxyOfflineReadPassed": true,
+    "images": [
+      {
+        "imageId": "5307b48d-2917-453d-940c-161923f78c63",
+        "metadataExact": true,
+        "pngExact": true,
+        "exportExact": true
+      },
+      {
+        "imageId": "bd2baa36-6c34-45c0-a150-dbaf0e63767d",
+        "metadataExact": true,
+        "pngExact": true,
+        "exportExact": true
+      },
+      {
+        "imageId": "cb63c0cb-c804-4508-8966-1b44053aa63c",
+        "metadataExact": true,
+        "pngExact": true
+      }
+    ]
+  },
+  "ui": {
+    "passed": true,
+    "usedUserDesktop": false,
+    "views": [
+      {
+        "width": 1440,
+        "locale": "zh-CN",
+        "theme": "light",
+        "actualLocalPngThumbnails": 2,
+        "connectionLayerSelection": true,
+        "workspaceImages": [
+          "5307b48d-2917-453d-940c-161923f78c63",
+          "bd2baa36-6c34-45c0-a150-dbaf0e63767d"
+        ],
+        "actualAndRequestedExtentVisible": true,
+        "noHorizontalOverflow": true,
+        "errors": []
+      },
+      {
+        "width": 1024,
+        "locale": "en",
+        "theme": "dark",
+        "actualLocalPngThumbnails": 2,
+        "connectionLayerSelection": true,
+        "workspaceImages": [
+          "5307b48d-2917-453d-940c-161923f78c63",
+          "bd2baa36-6c34-45c0-a150-dbaf0e63767d"
+        ],
+        "actualAndRequestedExtentVisible": true,
+        "noHorizontalOverflow": true,
+        "errors": []
+      }
+    ]
+  },
+  "regressions": {
+    "frontendNodeTests": 177,
+    "frontendUiTests": 171,
+    "frontendBuild": true,
+    "nativeWorkspaceTestsPassed": 346,
+    "nativeIgnoredTests": 4,
+    "targetedFinalArcgisTests": 7,
+    "desktopCommandAcl": 77,
+    "clippyWarningsDenied": true,
+    "rustFormatChecked": true,
+    "dependencyAndDocumentationIsolation": true
+  },
+  "originalScientificBandClaim": false,
+  "protectedNasaOrCdsePositiveDownloadsAccepted": false,
+  "manualInstalledWebViewAccepted": false,
+  "limits": {
+    "outputEdgePixels": 2048,
+    "pngBytes": 16777216,
+    "metadataResponseBytes": 2097152,
+    "exportResponseBytes": 65536,
+    "registryBytes": 33554432
+  }
+}

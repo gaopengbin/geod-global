@@ -49,6 +49,8 @@ export function RecipeEditorDialog({ sourceJob, initialRecipe, initialMetadata, 
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [edited, setEdited] = useState(false);
+  const [reuseOpen, setReuseOpen] = useState(false);
+  const [savedVersion, setSavedVersion] = useState(0);
   const source = initialRecipe?.source || { jobId: sourceJob?.id, sha256: sourceJob?.sha256 };
   const mutating = busy === 'save' || busy === 'run';
   useEffect(() => {
@@ -88,7 +90,7 @@ export function RecipeEditorDialog({ sourceJob, initialRecipe, initialMetadata, 
       const result = await processingRequest(operation, draft.recipe, request.current.signal);
       if (!mounted.current || currentVersion !== version.current) return;
       if (operation === 'plan') setReview(result);
-      if (operation === 'save') { setMessage('Clip plan saved locally. Find it under My Data > Saved clip plans.'); onSaved?.(); }
+      if (operation === 'save') { setMessage('Clip settings saved. Reuse them from this file’s clipping window.'); setSavedVersion(value => value + 1); onSaved?.(); }
       if (operation === 'run') { await refresh(); if (mounted.current) { onClose(); location.hash = 'Tasks'; } }
     } catch (e) {
       if (mounted.current && currentVersion === version.current && e.name !== 'AbortError') {
@@ -101,6 +103,9 @@ export function RecipeEditorDialog({ sourceJob, initialRecipe, initialMetadata, 
     <div className="runtime-dialog-body">
       <Surface as="div" variant="inset" className="processing-source"><strong>{t('Pinned source file')}</strong><span className="mono runtime-wrap">{sourceJob?.itemId || source.jobId}</span><small className="mono runtime-wrap">SHA-256 · {source.sha256}</small></Surface>
       {loading ? <p role="status" className="processing-loading"><Spinner size={18}/>{t('Reading source geometry…')}</p> : <>
+        <Disclosure className="processing-reuse-settings" summary={t('Reuse clipping settings')} open={reuseOpen} onOpenChange={setReuseOpen}>
+          {reuseOpen && <SavedClipSettings source={source} disabled={Boolean(busy)} reloadKey={savedVersion} onApply={recipe => update({ name: recipe.name, crs: recipe.operation.crs, bounds: recipe.operation.bounds.map(String), geometry: recipe.operation.geometry || null })}/>}
+        </Disclosure>
         <label className="runtime-field">{t('Clip name')}<Input value={form.name} disabled={mutating} onChange={event => update({ name: event.target.value })}/></label>
         <div className="processing-coordinate-heading"><label className="runtime-field">{t('Input coordinates')}<Select value={form.crs} disabled={mutating} onChange={event => changeMode(event.target.value)}><option value="source">{t('Source CRS · metres')}{metadata ? ` · ${metadata.crs}` : ''}</option><option value="EPSG:4326">{t('WGS84 · longitude / latitude')}</option></Select></label>{Array.isArray(areaBounds) && areaBounds.length === 4 && <Button className="processing-area-button" disabled={mutating} onClick={() => update({ crs: 'EPSG:4326', geometry: null, bounds: areaBounds.map(String) })}>{t('Use workspace rectangle')}</Button>}{areaPolygon && <Button className="processing-area-button" disabled={mutating} onClick={() => update({ crs: 'EPSG:4326', geometry: areaPolygon.geometry, bounds: areaPolygon.bounds.map(String) })}>{t('Use {name} polygon', { name: areaPolygon.place?.name || t('region') })}</Button>}</div>
         <p className="processing-hint">{t(form.crs === 'source' ? 'Order: minimum X, minimum Y, maximum X, maximum Y in the source projection.' : 'Order: west longitude, south latitude, east longitude, north latitude in degrees.')}</p>
@@ -109,7 +114,7 @@ export function RecipeEditorDialog({ sourceJob, initialRecipe, initialMetadata, 
         <Surface as="div" variant="inset" className="runtime-notice"><Crop size={17}/><span>{t(form.geometry ? 'The administrative boundary masks this local SCL raster in its original UTM grid. Outside pixels become nodata. You can narrow these bounds while keeping the polygon. Polygon jobs are limited to 8 million output pixels and require source nodata.' : 'The request is intersected with source coverage and aligned to whole pixels. WGS84 bounds produce an enclosing rectangle in the source projection; rectangular clips are not polygon-masked.')}</span></Surface>
         {edited && draft.error && <p className="runtime-error" role="alert">{t(draft.error)}</p>}
         <Button variant="primary" className="processing-preview-button" disabled={!draft.recipe || Boolean(busy)} onClick={() => execute('plan')}>{busy === 'plan' ? <Spinner size={15}/> : <Crop size={15}/>} {t(busy === 'plan' ? 'Checking plan…' : 'Check processing plan')}</Button>
-        {ready ? <><PlanDetails review={review} metadata={metadata}/><Disclosure className="processing-reuse" summary={t('Save this clip for reuse · advanced')}><p>{t('Save these checked settings if you need to repeat the same clip later. Saving does not start a task.')}</p><Button disabled={Boolean(busy)} onClick={() => execute('save')}><Save size={15}/>{t(busy === 'save' ? 'Saving…' : 'Save clip plan')}</Button></Disclosure></> : <p className="processing-hint">{t('Check these exact settings before running. Editing them requires a new check.')}</p>}
+        {ready ? <><PlanDetails review={review} metadata={metadata}/><Disclosure className="processing-reuse" summary={t('Save clipping settings')}><p>{t('Save these checked settings if you need to repeat the same clip later. Saving does not start a task.')}</p><div className="row-actions"><Button disabled={Boolean(busy)} onClick={() => execute('save')}><Save size={15}/>{t(busy === 'save' ? 'Saving…' : 'Save clipping settings')}</Button><Button size="icon" disabled={Boolean(busy)} aria-label={t('Export clipping settings JSON')} tooltip={t('Export clipping settings JSON')} onClick={() => exportClipSettings(draft.recipe)}><FileJson size={16}/></Button></div></Disclosure></> : <p className="processing-hint">{t('Check these exact settings before running. Editing them requires a new check.')}</p>}
       </>}
       {error && <><Failure error={error}/>{!metadata && !initialRecipe && <Button disabled={loading} onClick={() => setLoadAttempt(value => value + 1)}><RefreshCw size={15}/>{t('Retry reading source')}</Button>}</>}
       {message && <p className="processing-success" role="status"><CheckCircle2 size={16}/>{t(message)}</p>}
@@ -117,44 +122,65 @@ export function RecipeEditorDialog({ sourceJob, initialRecipe, initialMetadata, 
   </Modal>;
 }
 
-function ImportRecipeDialog({ onClose, onReview }) {
+function matchesSource(recipe, source) {
+  return Boolean(source?.jobId && source?.sha256 && recipe.source.jobId === source.jobId.toLowerCase() && recipe.source.sha256 === source.sha256.toLowerCase());
+}
+
+function exportClipSettings(recipe) {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(recipe, null, 2)], { type: 'application/json' }));
+  const link = document.createElement('a');
+  link.href = url; link.download = 'geod-raster-recipe.json'; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function ImportRecipeDialog({ source, onClose, onReview }) {
   const { t } = useI18n();
   const [text, setText] = useState('');
   const [recipe, setRecipe] = useState(null);
   const [error, setError] = useState('');
-  const validate = () => { try { setRecipe(parseRecipeJSON(text)); setError(''); } catch (e) { setRecipe(null); setError(e.message); } };
+  const validate = () => {
+    try {
+      const value = parseRecipeJSON(text);
+      if (!matchesSource(value, source)) throw new Error('These settings belong to a different source file. Open that file to reuse them.');
+      setRecipe(value); setError('');
+    } catch (e) { setRecipe(null); setError(e.message); }
+  };
   return <Modal title={t('Import clip plan JSON')} wide onClose={onClose} closeLabel={t('Close clip plan import')}>
     <div className="runtime-dialog-body"><p>{t('Paste a geod-raster-recipe/v1 rectangle or v2 polygon document. Importing does not save a clip plan or start a task. The pinned source file must exist on this device.')}</p><label className="runtime-field">{t('Clip plan JSON')}<Textarea className="processing-json-input mono" rows={12} value={text} spellCheck={false} onChange={event => { setText(event.target.value); setRecipe(null); setError(''); }}/></label><Button onClick={validate} disabled={!text.trim()}><FileJson size={15}/>{t('Validate JSON')}</Button>{error && <p className="runtime-error" role="alert">{t(error)}</p>}{recipe && <section className="processing-import-preview"><h3>{t('Validated clip plan preview')}</h3><Surface as="pre" variant="inset">{JSON.stringify(recipe, null, 2)}</Surface><p>{t('Next, check the actual source geometry and processing plan before saving or running.')}</p></section>}</div><footer className="runtime-dialog-actions"><Button onClick={onClose}>{t('Close')}</Button><Button variant="primary" disabled={!recipe} onClick={() => onReview(recipe)}>{t('Review processing plan')}</Button></footer>
   </Modal>;
 }
 
-export function ExecutableRecipes({ onReviewJSON, areaBounds, areaPolygon }) {
-  const { t, date, number } = useI18n();
-  const { jobs } = useRuntime();
+function SavedClipSettings({ source, disabled, reloadKey, onApply }) {
+  const { t } = useI18n();
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [reload, setReload] = useState(0);
   const [importing, setImporting] = useState(false);
-  const [selected, setSelected] = useState(null);
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
     setLoading(true); setError('');
     processingRequest('list', undefined, controller.signal).then(records => {
       if (!Array.isArray(records)) throw new Error('The service returned an invalid recipe list.');
-      const checked = records.map(record => ({ ...record, recipe: validateRecipe(record.recipe) }));
+      const checked = records.map(record => ({ ...record, recipe: validateRecipe(record.recipe) })).filter(record => matchesSource(record.recipe, source));
       if (active) setRecipes(checked);
     }).catch(e => { if (active && e.name !== 'AbortError') setError(e.message); }).finally(() => { if (active) setLoading(false); });
     return () => { active = false; controller.abort(); };
-  }, [reload]);
-  return <section className="processing-recipes" aria-label={t('Saved clip plans')}><div className="processing-section-heading"><div><h2>{t('Saved clip plans')} <Badge>{number(recipes.length)}</Badge></h2><p>{t('Checked SCL clipping settings saved for later reuse.')}</p></div><div className="row-actions"><Button disabled={loading} onClick={() => setReload(value => value + 1)}><RefreshCw size={15}/>{t('Refresh saved plans')}</Button><Button onClick={() => setImporting(true)}><Upload size={15}/>{t('Import JSON')}</Button></div></div>
+  }, [reload, reloadKey, source.jobId, source.sha256]);
+  return <section className="processing-saved-settings" aria-label={t('Reuse clipping settings')}>
+    <div className="processing-settings-controls">
+      <Select aria-label={t('Saved settings for this file')} value="" disabled={disabled || loading || Boolean(error) || !recipes.length} onChange={event => {
+        const saved = recipes.find(record => record.id === event.target.value);
+        if (saved) onApply(saved.recipe);
+      }}><option value="" disabled>{t('Choose saved settings')}</option>{recipes.map(saved => <option value={saved.id} key={saved.id}>{saved.recipe.name}</option>)}</Select>
+      <Button size="icon" disabled={disabled || loading} aria-label={t('Refresh saved plans')} tooltip={t('Refresh saved plans')} onClick={() => setReload(value => value + 1)}><RefreshCw size={16}/></Button>
+      <Button size="icon" disabled={disabled} aria-label={t('Import clip plan JSON')} tooltip={t('Import clip plan JSON')} onClick={() => setImporting(true)}><Upload size={16}/></Button>
+    </div>
     {loading && <p className="processing-loading" role="status"><Spinner size={16}/>{t('Loading saved clip plans…')}</p>}
     {error && <Failure error={error}/>}
-    {!loading && !error && !recipes.length && <Surface variant="inset" className="runtime-empty"><p>{t('No saved clip plans. Clip a downloaded SCL file and expand Save for reuse after checking the plan.')}</p></Surface>}
-    <div className="processing-recipe-list">{recipes.map(saved => <Surface as="article" className="processing-recipe-card" key={saved.id}><div><h3>{saved.recipe.name}</h3><p>{t(saved.recipe.operation.geometry ? 'Polygon clip' : 'Rectangular clip')} · {saved.recipe.operation.crs === 'source' ? t('Source CRS') : 'EPSG:4326'} · GeoTIFF</p><small>{t('Saved {date}', { date: date(saved.updatedAt) })}</small><p className="mono runtime-wrap">{saved.recipe.source.jobId}</p></div><div className="row-actions"><Button onClick={() => onReviewJSON('geod-raster-recipe.json', saved.recipe)}><FileJson size={15}/>{t('Review / export JSON')}</Button><Button variant="primary" onClick={() => setSelected(saved.recipe)}><Play size={15}/>{t('Review and run')}</Button></div></Surface>)}</div>
-    {importing && <ImportRecipeDialog onClose={() => setImporting(false)} onReview={recipe => { setImporting(false); setSelected(recipe); }}/>}
-    {selected && <RecipeEditorDialog initialRecipe={selected} sourceJob={jobs.find(job => job.id === selected.source.jobId)} areaBounds={areaBounds} areaPolygon={areaPolygon} onSaved={() => setReload(value => value + 1)} onClose={() => setSelected(null)}/>}
+    {!loading && !error && <p className="processing-hint">{t(recipes.length ? 'Only settings saved for this source file are shown. Check the plan again before running.' : 'No saved settings for this file. Check a clip, then save its settings here.')}</p>}
+    {importing && <ImportRecipeDialog source={source} onClose={() => setImporting(false)} onReview={recipe => { setImporting(false); onApply(recipe); }}/>}
   </section>;
 }
 

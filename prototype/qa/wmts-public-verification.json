@@ -1,0 +1,839 @@
+{
+  "public": {
+    "checkedAt": "2026-10-02T12:46:10.759806300+00:00",
+    "mode": "Actual public NASA GIBS WMTS through isolated native runtime",
+    "publicSource": "https://nasa-gibs.github.io/gibs-api-docs/access-basics/",
+    "receipts": [
+      {
+        "serviceId": "18b41564-a1bd-492e-a459-6400ed2c6050",
+        "compatibleLayers": 1196,
+        "asset": {
+          "id": "926986c5-270b-4458-92be-c40293fbc881",
+          "name": "Corrected Reflectance (True Color, MODIS, Terra) · WMTS",
+          "width": 855,
+          "height": 741,
+          "bounds": [
+            -125.015625,
+            29.98828125,
+            -109.986328125,
+            43.013671875
+          ],
+          "bytes": 1034221,
+          "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+          "crs": "EPSG:4326",
+          "source": {
+            "serviceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi",
+            "serviceName": "NASA GIBS 4326",
+            "serviceTitle": "NASA Global Imagery Browse Services for EOSDIS",
+            "version": "1.0.0",
+            "mapEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi",
+            "capabilitiesSha256": "8021837b6bd43cf5a32de8d29cd9a47ac228e957a6d7f50e41b5b5339b306346",
+            "layerName": "MODIS_Terra_CorrectedReflectance_TrueColor",
+            "layerTitle": "Corrected Reflectance (True Color, MODIS, Terra)",
+            "style": "default",
+            "time": "2025-06-27",
+            "requestCrs": "EPSG:4326",
+            "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=250m&TILEMATRIX=5&TILEROW=5&TILECOL=6&Time=2025-06-27",
+            "requestedAt": "2026-10-02T12:45:07.770679100+00:00",
+            "accessConstraints": "none",
+            "attribution": null,
+            "areaGeometry": null,
+            "selection": "pixel-window-rendered-tiles",
+            "wmts": {
+              "matrixSet": "250m",
+              "declaredCrs": "urn:ogc:def:crs:OGC:1.3:CRS84",
+              "matrix": {
+                "id": "5",
+                "scaleDenominator": 6988528.300358973,
+                "topLeft": [
+                  -180.0,
+                  90.0
+                ],
+                "tileWidth": 512,
+                "tileHeight": 512,
+                "matrixWidth": 40,
+                "matrixHeight": 20
+              },
+              "format": "image/jpeg",
+              "timeIdentifier": "Time",
+              "requestedBounds": [
+                -125.0,
+                30.0,
+                -110.0,
+                43.0
+              ],
+              "pixelWindow": [
+                3128,
+                2673,
+                855,
+                741
+              ],
+              "tiles": [
+                {
+                  "row": 5,
+                  "col": 6,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=250m&TILEMATRIX=5&TILEROW=5&TILECOL=6&Time=2025-06-27",
+                  "bytes": 54475,
+                  "sha256": "7c49b87ff462cb6226341320f0fcdb911692e5743c2d10edcedfff17ee310d1b"
+                },
+                {
+                  "row": 5,
+                  "col": 7,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=250m&TILEMATRIX=5&TILEROW=5&TILECOL=7&Time=2025-06-27",
+                  "bytes": 62358,
+                  "sha256": "ff8421c3d8adbeb96217d51088d836fcd2e70843e47c24fda118be53d1ec41c4"
+                },
+                {
+                  "row": 6,
+                  "col": 6,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=250m&TILEMATRIX=5&TILEROW=6&TILECOL=6&Time=2025-06-27",
+                  "bytes": 64211,
+                  "sha256": "df6b459c7f9533993b6a6844636ad893e8dbaf5256ce1467650337fc99aa39b4"
+                },
+                {
+                  "row": 6,
+                  "col": 7,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=250m&TILEMATRIX=5&TILEROW=6&TILECOL=7&Time=2025-06-27",
+                  "bytes": 57346,
+                  "sha256": "368b53e1efca51d52e13b05c8fc90f8fca864d0ab4e49bc10df125c0b4574b4f"
+                }
+              ],
+              "archiveSha256": "f4f0ea85c10b4fb37c54828e7325eb8e559e460c5f6b2faacddc56b76ae3260c",
+              "archiveBytes": 238772
+            }
+          },
+          "imageExtent": [
+            -125.015625,
+            29.98828125,
+            -109.986328125,
+            43.013671875
+          ]
+        },
+        "tileReceipts": [
+          {
+            "row": 5,
+            "col": 6,
+            "sha256": "7c49b87ff462cb6226341320f0fcdb911692e5743c2d10edcedfff17ee310d1b",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 5,
+            "col": 7,
+            "sha256": "ff8421c3d8adbeb96217d51088d836fcd2e70843e47c24fda118be53d1ec41c4",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 6,
+            "col": 6,
+            "sha256": "df6b459c7f9533993b6a6844636ad893e8dbaf5256ce1467650337fc99aa39b4",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 6,
+            "col": 7,
+            "sha256": "368b53e1efca51d52e13b05c8fc90f8fca864d0ab4e49bc10df125c0b4574b4f",
+            "independentPublicBytesEqual": true
+          }
+        ],
+        "checkedChannels": 2534220,
+        "independentPngChannelsExact": false,
+        "jpegMaximumChannelDelta": 4,
+        "jpegMeanChannelDelta": 0.14275477267167017,
+        "independentGdalGridAndPixels": true,
+        "exportHashesAndOriginalTileBytes": true
+      },
+      {
+        "serviceId": "d3954875-453a-4d5b-8781-a5e986246280",
+        "compatibleLayers": 1187,
+        "asset": {
+          "id": "861bd2aa-d07d-4670-aef9-eefc7957fc71",
+          "name": "Corrected Reflectance (True Color, MODIS, Terra) · WMTS",
+          "width": 683,
+          "height": 740,
+          "bounds": [
+            -125.00244140625006,
+            29.993002284551128,
+            -109.99511718750007,
+            43.004647127794485
+          ],
+          "bytes": 835631,
+          "sha256": "b1254172f70c55ef569a29aa168f2785e3b60f9ed55b180ba0c47e42e7a4768a",
+          "crs": "EPSG:3857",
+          "source": {
+            "serviceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi",
+            "serviceName": "NASA GIBS 3857",
+            "serviceTitle": "NASA Global Imagery Browse Services for EOSDIS",
+            "version": "1.0.0",
+            "mapEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi",
+            "capabilitiesSha256": "6bf060d943e2afc85ecfb889bd6c8f9fb426130c39695839279afc83c94b6f81",
+            "layerName": "MODIS_Terra_CorrectedReflectance_TrueColor",
+            "layerTitle": "Corrected Reflectance (True Color, MODIS, Terra)",
+            "style": "default",
+            "time": "2025-06-27",
+            "requestCrs": "EPSG:3857",
+            "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=23&TILECOL=9&Time=2025-06-27",
+            "requestedAt": "2026-10-02T12:45:27.540713800+00:00",
+            "accessConstraints": "none",
+            "attribution": null,
+            "areaGeometry": null,
+            "selection": "pixel-window-rendered-tiles",
+            "wmts": {
+              "matrixSet": "GoogleMapsCompatible_Level9",
+              "declaredCrs": "urn:ogc:def:crs:EPSG:6.18:3:3857",
+              "matrix": {
+                "id": "6",
+                "scaleDenominator": 8735660.375448715,
+                "topLeft": [
+                  -20037508.34278925,
+                  20037508.34278925
+                ],
+                "tileWidth": 256,
+                "tileHeight": 256,
+                "matrixWidth": 64,
+                "matrixHeight": 64
+              },
+              "format": "image/jpeg",
+              "timeIdentifier": "Time",
+              "requestedBounds": [
+                -125.0,
+                30.0,
+                -110.0,
+                43.0
+              ],
+              "pixelWindow": [
+                2503,
+                6020,
+                683,
+                740
+              ],
+              "tiles": [
+                {
+                  "row": 23,
+                  "col": 9,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=23&TILECOL=9&Time=2025-06-27",
+                  "bytes": 14680,
+                  "sha256": "2e768ee35c90f9d6b7ff6d6a868d1ccddb11f242930e39883f92fe1fc2143c57"
+                },
+                {
+                  "row": 23,
+                  "col": 10,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=23&TILECOL=10&Time=2025-06-27",
+                  "bytes": 15453,
+                  "sha256": "31b7a82f071a90f0a3ee52cedeb6ac60700770df917056c91c4f8e05759a50aa"
+                },
+                {
+                  "row": 23,
+                  "col": 11,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=23&TILECOL=11&Time=2025-06-27",
+                  "bytes": 16581,
+                  "sha256": "9851c49019c4cd45bfd26ba3738eb694a4fafeb3c769202a483fe3e6c5fb768e"
+                },
+                {
+                  "row": 23,
+                  "col": 12,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=23&TILECOL=12&Time=2025-06-27",
+                  "bytes": 17654,
+                  "sha256": "e64bd57a1542fc08b0e4e585a8039fbb838286d8bbbc3e1944be5f519b86b92c"
+                },
+                {
+                  "row": 24,
+                  "col": 9,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=24&TILECOL=9&Time=2025-06-27",
+                  "bytes": 13631,
+                  "sha256": "33411bbec379575e06a217c613b33764d3c079892f44d83fc052b943ef5af756"
+                },
+                {
+                  "row": 24,
+                  "col": 10,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=24&TILECOL=10&Time=2025-06-27",
+                  "bytes": 14549,
+                  "sha256": "d3a4599def5c5e7f0ab909abbf52c984ff5130209ba8063cf761f6f3ca5f762d"
+                },
+                {
+                  "row": 24,
+                  "col": 11,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=24&TILECOL=11&Time=2025-06-27",
+                  "bytes": 13699,
+                  "sha256": "8562eadd73498fa34f7285e49d0f4f1aca56c2162e159acebc1afb9e65a39eaf"
+                },
+                {
+                  "row": 24,
+                  "col": 12,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=24&TILECOL=12&Time=2025-06-27",
+                  "bytes": 15334,
+                  "sha256": "289cd77a68b7b8f6c9384e1d90bf6f3c44546ded051f52aada82a7df01b4958c"
+                },
+                {
+                  "row": 25,
+                  "col": 9,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=25&TILECOL=9&Time=2025-06-27",
+                  "bytes": 11763,
+                  "sha256": "b09b46754005aca13dc5c7514ddf8ca534467e562b4bc70638d1a17d89e46064"
+                },
+                {
+                  "row": 25,
+                  "col": 10,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=25&TILECOL=10&Time=2025-06-27",
+                  "bytes": 14113,
+                  "sha256": "eb79ad72217b829e16c7a2bd2ede835e43d881f568f0f7219d5c5bdee2e7f5e4"
+                },
+                {
+                  "row": 25,
+                  "col": 11,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=25&TILECOL=11&Time=2025-06-27",
+                  "bytes": 12653,
+                  "sha256": "0518733a3e6521f04ea1be863c8f3e5b1f6b68e6e3608a8196009f350c866e19"
+                },
+                {
+                  "row": 25,
+                  "col": 12,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=25&TILECOL=12&Time=2025-06-27",
+                  "bytes": 13053,
+                  "sha256": "dc24adf4a2a385321d3456594947851a6c2b2b62914a06df0fc811ded006c425"
+                },
+                {
+                  "row": 26,
+                  "col": 9,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=26&TILECOL=9&Time=2025-06-27",
+                  "bytes": 21908,
+                  "sha256": "e81ace4171593870b94e4ceef49ff1488d19b1f883701667b39ce352fb4c2fec"
+                },
+                {
+                  "row": 26,
+                  "col": 10,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=26&TILECOL=10&Time=2025-06-27",
+                  "bytes": 15326,
+                  "sha256": "40dbee05963ed2234e7264f569eb4a420c2aeedd349a3fdac4a5f05c3ed859f2"
+                },
+                {
+                  "row": 26,
+                  "col": 11,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=26&TILECOL=11&Time=2025-06-27",
+                  "bytes": 12730,
+                  "sha256": "d0cbc29ed4294d051f590c36ff2cdb81578a178a327817b364868091b5328b0b"
+                },
+                {
+                  "row": 26,
+                  "col": 12,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_CorrectedReflectance_TrueColor&STYLE=default&FORMAT=image%2Fjpeg&TILEMATRIXSET=GoogleMapsCompatible_Level9&TILEMATRIX=6&TILEROW=26&TILECOL=12&Time=2025-06-27",
+                  "bytes": 16081,
+                  "sha256": "ddd701f6562e39d2508d8ae3cc12dff11c619c1ec0bfa5aaef3b8a0a7d4c9383"
+                }
+              ],
+              "archiveSha256": "6da28c9a8239a8c75c8703a7f4061b1f135634d98e1518ba13f2e57c7a0c8b1e",
+              "archiveBytes": 240726
+            }
+          },
+          "imageExtent": [
+            -13915208.125259774,
+            3502650.3841399234,
+            -12244600.435058963,
+            5312679.213932898
+          ]
+        },
+        "tileReceipts": [
+          {
+            "row": 23,
+            "col": 9,
+            "sha256": "2e768ee35c90f9d6b7ff6d6a868d1ccddb11f242930e39883f92fe1fc2143c57",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 23,
+            "col": 10,
+            "sha256": "31b7a82f071a90f0a3ee52cedeb6ac60700770df917056c91c4f8e05759a50aa",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 23,
+            "col": 11,
+            "sha256": "9851c49019c4cd45bfd26ba3738eb694a4fafeb3c769202a483fe3e6c5fb768e",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 23,
+            "col": 12,
+            "sha256": "e64bd57a1542fc08b0e4e585a8039fbb838286d8bbbc3e1944be5f519b86b92c",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 24,
+            "col": 9,
+            "sha256": "33411bbec379575e06a217c613b33764d3c079892f44d83fc052b943ef5af756",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 24,
+            "col": 10,
+            "sha256": "d3a4599def5c5e7f0ab909abbf52c984ff5130209ba8063cf761f6f3ca5f762d",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 24,
+            "col": 11,
+            "sha256": "8562eadd73498fa34f7285e49d0f4f1aca56c2162e159acebc1afb9e65a39eaf",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 24,
+            "col": 12,
+            "sha256": "289cd77a68b7b8f6c9384e1d90bf6f3c44546ded051f52aada82a7df01b4958c",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 25,
+            "col": 9,
+            "sha256": "b09b46754005aca13dc5c7514ddf8ca534467e562b4bc70638d1a17d89e46064",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 25,
+            "col": 10,
+            "sha256": "eb79ad72217b829e16c7a2bd2ede835e43d881f568f0f7219d5c5bdee2e7f5e4",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 25,
+            "col": 11,
+            "sha256": "0518733a3e6521f04ea1be863c8f3e5b1f6b68e6e3608a8196009f350c866e19",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 25,
+            "col": 12,
+            "sha256": "dc24adf4a2a385321d3456594947851a6c2b2b62914a06df0fc811ded006c425",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 26,
+            "col": 9,
+            "sha256": "e81ace4171593870b94e4ceef49ff1488d19b1f883701667b39ce352fb4c2fec",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 26,
+            "col": 10,
+            "sha256": "40dbee05963ed2234e7264f569eb4a420c2aeedd349a3fdac4a5f05c3ed859f2",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 26,
+            "col": 11,
+            "sha256": "d0cbc29ed4294d051f590c36ff2cdb81578a178a327817b364868091b5328b0b",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 26,
+            "col": 12,
+            "sha256": "ddd701f6562e39d2508d8ae3cc12dff11c619c1ec0bfa5aaef3b8a0a7d4c9383",
+            "independentPublicBytesEqual": true
+          }
+        ],
+        "checkedChannels": 2021680,
+        "independentPngChannelsExact": false,
+        "jpegMaximumChannelDelta": 4,
+        "jpegMeanChannelDelta": 0.13330497408096237,
+        "independentGdalGridAndPixels": true,
+        "exportHashesAndOriginalTileBytes": true
+      },
+      {
+        "serviceId": "18b41564-a1bd-492e-a459-6400ed2c6050",
+        "compatibleLayers": 1196,
+        "asset": {
+          "id": "a66e01cd-f97a-4275-b119-0bd37ed522e4",
+          "name": "Dark Target Aerosol Optical Depth (Land and Ocean, MODIS, Terra) · WMTS",
+          "width": 855,
+          "height": 741,
+          "bounds": [
+            -125.015625,
+            29.98828125,
+            -109.986328125,
+            43.013671875
+          ],
+          "bytes": 31625,
+          "sha256": "9d456ae706d91891c95480965545c5967fa881f401164a1585a8d5f343903b6f",
+          "crs": "EPSG:4326",
+          "source": {
+            "serviceUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi",
+            "serviceName": "NASA GIBS 4326",
+            "serviceTitle": "NASA Global Imagery Browse Services for EOSDIS",
+            "version": "1.0.0",
+            "mapEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi",
+            "capabilitiesSha256": "0a9b7b5e5569c7e566c3fe64be99c691d9752760807ba9cecddb3b11425ed508",
+            "layerName": "MODIS_Terra_Aerosol",
+            "layerTitle": "Dark Target Aerosol Optical Depth (Land and Ocean, MODIS, Terra)",
+            "style": "default",
+            "time": "2025-06-27",
+            "requestCrs": "EPSG:4326",
+            "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_Aerosol&STYLE=default&FORMAT=image%2Fpng&TILEMATRIXSET=2km&TILEMATRIX=5&TILEROW=5&TILECOL=6&Time=2025-06-27",
+            "requestedAt": "2026-10-02T12:46:10.759806300+00:00",
+            "accessConstraints": "none",
+            "attribution": null,
+            "areaGeometry": null,
+            "selection": "pixel-window-rendered-tiles",
+            "wmts": {
+              "matrixSet": "2km",
+              "declaredCrs": "urn:ogc:def:crs:OGC:1.3:CRS84",
+              "matrix": {
+                "id": "5",
+                "scaleDenominator": 6988528.300358973,
+                "topLeft": [
+                  -180.0,
+                  90.0
+                ],
+                "tileWidth": 512,
+                "tileHeight": 512,
+                "matrixWidth": 40,
+                "matrixHeight": 20
+              },
+              "format": "image/png",
+              "timeIdentifier": "Time",
+              "requestedBounds": [
+                -125.0,
+                30.0,
+                -110.0,
+                43.0
+              ],
+              "pixelWindow": [
+                3128,
+                2673,
+                855,
+                741
+              ],
+              "tiles": [
+                {
+                  "row": 5,
+                  "col": 6,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_Aerosol&STYLE=default&FORMAT=image%2Fpng&TILEMATRIXSET=2km&TILEMATRIX=5&TILEROW=5&TILECOL=6&Time=2025-06-27",
+                  "bytes": 6252,
+                  "sha256": "c474d92031af6c866754ab477cce89b34ab147f644d3f9c285fae99ad9717ff3"
+                },
+                {
+                  "row": 5,
+                  "col": 7,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_Aerosol&STYLE=default&FORMAT=image%2Fpng&TILEMATRIXSET=2km&TILEMATRIX=5&TILEROW=5&TILECOL=7&Time=2025-06-27",
+                  "bytes": 9696,
+                  "sha256": "1aac51d29d4703f678f25cecc05d7992cb8692016366caf50395a7fb99f25945"
+                },
+                {
+                  "row": 6,
+                  "col": 6,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_Aerosol&STYLE=default&FORMAT=image%2Fpng&TILEMATRIXSET=2km&TILEMATRIX=5&TILEROW=6&TILECOL=6&Time=2025-06-27",
+                  "bytes": 2918,
+                  "sha256": "e869b0b7bc13b717b051c618a561e733626673300d43c40b38faf41bc1c1f935"
+                },
+                {
+                  "row": 6,
+                  "col": 7,
+                  "requestUrl": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=MODIS_Terra_Aerosol&STYLE=default&FORMAT=image%2Fpng&TILEMATRIXSET=2km&TILEMATRIX=5&TILEROW=6&TILECOL=7&Time=2025-06-27",
+                  "bytes": 6647,
+                  "sha256": "699c8defa5d1f523dce1b438fe6872db50198719dbd592545ae471afd089734c"
+                }
+              ],
+              "archiveSha256": "2e3c4e1014cdf9cc7cb68f89bcaa7c76c67a8791e4b40c426d17a6a3998102c7",
+              "archiveBytes": 25895
+            }
+          },
+          "imageExtent": [
+            -125.015625,
+            29.98828125,
+            -109.986328125,
+            43.013671875
+          ]
+        },
+        "tileReceipts": [
+          {
+            "row": 5,
+            "col": 6,
+            "sha256": "c474d92031af6c866754ab477cce89b34ab147f644d3f9c285fae99ad9717ff3",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 5,
+            "col": 7,
+            "sha256": "1aac51d29d4703f678f25cecc05d7992cb8692016366caf50395a7fb99f25945",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 6,
+            "col": 6,
+            "sha256": "e869b0b7bc13b717b051c618a561e733626673300d43c40b38faf41bc1c1f935",
+            "independentPublicBytesEqual": true
+          },
+          {
+            "row": 6,
+            "col": 7,
+            "sha256": "699c8defa5d1f523dce1b438fe6872db50198719dbd592545ae471afd089734c",
+            "independentPublicBytesEqual": true
+          }
+        ],
+        "checkedChannels": 2534220,
+        "independentPngChannelsExact": true,
+        "jpegMaximumChannelDelta": 0,
+        "jpegMeanChannelDelta": 0.0,
+        "independentGdalGridAndPixels": true,
+        "exportHashesAndOriginalTileBytes": true
+      }
+    ],
+    "fixturesUsed": false,
+    "scientificOriginalBands": false,
+    "desktopWebViewAccepted": false
+  },
+  "interface": {
+    "checkedAt": "2026-10-02T12:52:21.519Z",
+    "mode": "Headless Chromium + isolated native runtime + real NASA GIBS WMTS",
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "reports": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "assetId": "8fafa56f-0bbc-482f-9697-a5303d701e51",
+        "actualNativeWmtsQuery": true,
+        "projection": "EPSG:4326",
+        "grid": "250m",
+        "level": "5",
+        "sourceTileCount": 4,
+        "bounds": [
+          -125.015625,
+          29.98828125,
+          -109.986328125,
+          43.013671875
+        ],
+        "requestedTime": "2025-06-27",
+        "sharedCalendarUsed": true,
+        "equalCardHeights": true,
+        "sourceModalVerified": true,
+        "exportBytesEqual": true,
+        "actualColorImageOnGeographicCanvas": true,
+        "exclusionsVerified": false,
+        "pageErrors": []
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "assetId": "565d2714-b490-4373-9c69-7a83877764d1",
+        "actualNativeWmtsQuery": true,
+        "projection": "EPSG:3857",
+        "grid": "GoogleMapsCompatible_Level9",
+        "level": "6",
+        "sourceTileCount": 16,
+        "bounds": [
+          -125.00244140625006,
+          29.993002284551128,
+          -109.99511718750007,
+          43.004647127794485
+        ],
+        "requestedTime": "2025-06-27",
+        "sharedCalendarUsed": true,
+        "equalCardHeights": true,
+        "sourceModalVerified": true,
+        "exportBytesEqual": true,
+        "actualColorImageOnGeographicCanvas": true,
+        "exclusionsVerified": true,
+        "pageErrors": []
+      }
+    ]
+  },
+  "restartAndLegacyWmsCompatibility": {
+    "checkedAt": "2026-10-02T12:58:22.423934+00:00",
+    "mode": "Separate native CLI processes reopen existing real-public stores",
+    "liveServerStopped": true,
+    "networkOperationsInvoked": [],
+    "separateProcessesOpenedExclusiveStorage": true,
+    "stores": [
+      {
+        "protocol": "WMTS",
+        "servicesRestored": 2,
+        "imagesRestored": 6,
+        "assets": [
+          {
+            "assetId": "565d2714-b490-4373-9c69-7a83877764d1",
+            "sha256": "b1254172f70c55ef569a29aa168f2785e3b60f9ed55b180ba0c47e42e7a4768a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 16,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "861bd2aa-d07d-4670-aef9-eefc7957fc71",
+            "sha256": "b1254172f70c55ef569a29aa168f2785e3b60f9ed55b180ba0c47e42e7a4768a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 16,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "8fafa56f-0bbc-482f-9697-a5303d701e51",
+            "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "926986c5-270b-4458-92be-c40293fbc881",
+            "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "a66e01cd-f97a-4275-b119-0bd37ed522e4",
+            "sha256": "9d456ae706d91891c95480965545c5967fa881f401164a1585a8d5f343903b6f",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "ed99eb39-33a4-4996-ae16-0a6c441ef04f",
+            "sha256": "215334397c1109dfedeea6ed8ed5a0d244890165e14823edd04dac9f3d30619a",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 4,
+            "exportAfterReopen": true
+          }
+        ]
+      },
+      {
+        "protocol": "WMS",
+        "servicesRestored": 1,
+        "imagesRestored": 6,
+        "assets": [
+          {
+            "assetId": "3676ba76-63b4-40f5-907d-dac3ce0b8169",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "725deaaa-1835-40eb-ba70-e167c8640500",
+            "sha256": "21247fc9236eb0c8d156dbe5b72a4a065b86cf8fee49c09de1f25e005f782a63",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "89d423bc-c0af-4457-967a-7c72466c1572",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "e48caa2c-1398-49e0-8437-07cd7fc3487f",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "e9ca75de-cd73-4c25-8230-d6f0006bfb89",
+            "sha256": "21247fc9236eb0c8d156dbe5b72a4a065b86cf8fee49c09de1f25e005f782a63",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          },
+          {
+            "assetId": "f7bde202-c74d-4449-b51f-066f258f032d",
+            "sha256": "7e9c7d07aac155c45e40e59c3daa08f3a09754563bed217309d9bc2327804c81",
+            "sameMetadata": true,
+            "exactImageBytes": true,
+            "allExportChecksums": true,
+            "sourceTilesRestored": 0,
+            "exportAfterReopen": true
+          }
+        ]
+      }
+    ]
+  },
+  "discovery": [
+    {
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi",
+      "compatibleLayers": 1196,
+      "excludedLayers": []
+    },
+    {
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/wmts.cgi",
+      "compatibleLayers": 1187,
+      "excludedLayers": [
+        {
+          "name": "GOES-West_ABI_Air_Mass",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "Himawari_AHI_Air_Mass",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "GOES-West_ABI_Band13_Clean_Infrared",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "Himawari_AHI_Band13_Clean_Infrared",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "GOES-West_ABI_Dust",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "GOES-West_ABI_FireTemp",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "GOES-West_ABI_GeoColor",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "GOES-West_ABI_Band2_Red_Visible_1km",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        },
+        {
+          "name": "Himawari_AHI_Band3_Red_Visible_1km",
+          "reason": "Declared tile limits exceed every compatible matrix set"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "runtimeUnitTestsPassed": 223,
+    "runtimeCliTestsPassed": 3,
+    "runtimeOptInTestsNotRun": 4,
+    "desktopUnitTestsPassed": 4,
+    "frontendNodeTestsPassed": 141,
+    "frontendUiTestsPassed": 134,
+    "dependencyIsolationContractsRecipesAndBuild": "passed",
+    "strictRuntimeAndDesktopClippyAllTargets": "passed"
+  },
+  "limits": [
+    "Public HTTPS WMTS 1.0 KVP GetTile, EPSG:4326/CRS:84 and EPSG:3857, PNG or JPEG.",
+    "Rendered map imagery; no original scientific-band or quantitative aerosol-value claim.",
+    "A saved result is an outward-rounded original-grid pixel window, not resampled or polygon-masked.",
+    "Maximum 16 tiles and 2048 pixels per output edge; no large-download queue or resume.",
+    "Original response bytes match independent public requests exactly. PNG decoded channels match exactly; JPEG decoders differ by up to four intensity levels in this test.",
+    "Headless Chromium used the actual native runtime. Native WebView and native save dialogs were not manually tested; no user desktop control.",
+    "Authenticated services, REST-only WMTS, other CRS/dimensions, antimeridian-spanning requests and precise polygon masking remain unimplemented."
+  ]
+}

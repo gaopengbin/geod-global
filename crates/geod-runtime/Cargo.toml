@@ -1,6 +1,6 @@
 [package]
 name = "geod-runtime"
-version = "0.1.0"
+version = "0.1.0-rc.1"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
@@ -12,10 +12,21 @@ base64 = "=0.22.1"
 chrono = { version = "0.4", features = ["serde"] }
 fs2 = "0.4"
 futures-util = "0.3"
+encoding_rs = "=0.8.35"
+geo = { version = "=0.33.1", default-features = false }
+flate2 = "=1.1.10"
+hdf5-reader = { version = "=0.9.1", default-features = false }
+jpeg2k = { version = "=0.10.1", default-features = false, features = ["openjp2", "strict-mode", "file-io"] }
+roxmltree = "=0.21.1"
 png = "=0.18.1"
+zune-jpeg = "=0.5.15"
+zune-core = "=0.5.3"
 proj4rs = { version = "=0.2.0", default-features = false }
+proj-core = "=0.11.0"
+proj-wkt = "=0.11.0"
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream", "system-proxy", "socks"] }
 rmcp = { version = "=3.4.0", default-features = false, features = ["server", "transport-io"] }
+rusqlite = { version = "=0.40.2", features = ["bundled", "serialize", "hooks", "limits"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 sha2 = "0.10"
@@ -25,7 +36,11 @@ tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "rt-multi
 tokio-util = { version = "0.7", features = ["rt"] }
 url = "2"
 uuid = { version = "1", features = ["v4", "serde"] }
-zip = { version = "=8.6.0", default-features = false }
+zip = { version = "=8.6.0", default-features = false, features = ["deflate"] }
+zeroize = { version = "=1.9.0", features = ["serde"] }
+
+[target.'cfg(windows)'.dependencies]
+keyring = { version = "=3.6.3", default-features = false, features = ["windows-native"] }
 
 [dev-dependencies]
 tempfile = "3"

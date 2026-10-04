@@ -23,8 +23,8 @@ impl JobManager {
             "schemaVersion":"geod-support-diagnostics/v1",
             "runtime":"geod-runtime", "version":env!("CARGO_PKG_VERSION"),
             "platform":std::env::consts::OS,"architecture":std::env::consts::ARCH,
-            "capabilities":["sentinel-public-download","scl-inspection","scl-pixel-query","scl-rectangle-clip","pinned-local-recipes","verified-artifact-package"],
-            "limits":{"downloadBytes":crate::MAX_ASSET_BYTES,"rasterFileBytes":128*1024*1024,"rasterPixels":64*1024*1024,"rasterWorkers":1,"downloadWorkers":2,"queuedJobs":64,"deliveryInputBytes":32*1024*1024},
+            "capabilities":["sentinel-public-download","scl-inspection","scl-pixel-query","scl-rectangle-clip","pinned-local-recipes","verified-artifact-package","naip-original-download","naip-rgb-inspection","naip-nir-pixel-query","persistent-thumbnail-cache"],
+            "limits":{"downloadBytes":crate::MAX_ASSET_BYTES,"aerialDownloadBytes":crate::providers::MAX_NAIP_BYTES,"rasterLimitScope":"single-band-scl","rasterFileBytes":128*1024*1024,"rasterPixels":64*1024*1024,"rasterWorkers":1,"downloadWorkers":2,"queuedJobs":64,"deliveryInputBytes":32*1024*1024},
             "jobCounts":counts,"savedRecipeCount":self.list_recipes().await.len(),
             "privacy":{"includesPaths":false,"includesCoordinates":false,"includesSourceUrls":false,"includesUserText":false,"uploaded":false},
         })

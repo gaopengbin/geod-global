@@ -1,0 +1,498 @@
+{
+  "checkedAt": "2026-10-02T04:26:17.516Z",
+  "scope": "Native per-band project mosaic and rectangle / polygon clipping for MOD/MYD09A1 v061 converted COG",
+  "distribution": "Microsoft Planetary Computer converted COG; not NASA original HDF",
+  "catalogueQuery": "https://planetarycomputer.microsoft.com/api/stac/v1/search?collections=modis-09A1-061&bbox=-111%2C33.8%2C-108.8%2C37.2&datetime=2025-06-26T00%3A00%3A00Z%2F2025-07-03T23%3A59%3A59.999Z&sortby=-properties.start_datetime&limit=100",
+  "realSourceFiles": [
+    {
+      "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+      "sha256": "1ae15397e9589668824bbe5426327d7fbe8417ae2e20fbb89a6bf5552304b812",
+      "bytes": 11563085,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_b01.tif"
+    },
+    {
+      "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+      "bytes": 11417054,
+      "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif"
+    }
+  ],
+  "realSourceBand": "red / sur_refl_b01",
+  "realCompositePeriodUtc": [
+    "2025-06-26T00:00:00Z",
+    "2025-07-03T23:59:59Z"
+  ],
+  "cases": [
+    {
+      "case": "rectangle",
+      "projectBoundsWgs84": [
+        -111,
+        33.8,
+        -108.8,
+        37.2
+      ],
+      "projectGeometryWgs84": null,
+      "dimensions": [
+        1340,
+        817
+      ],
+      "pixelsCompared": 1094780,
+      "allOriginalDnMatch": true,
+      "maskedPixels": 0,
+      "coveredPixels": 1094780,
+      "previewPixelsCompared": 359424,
+      "thumbnailPixelsCompared": 15520,
+      "sha256": "e8f0c1c32be4306aa9387c31dea6d2aad63d272e438ca92f1cde166270004d3a",
+      "bytes": 1679064,
+      "scale": 0.0001,
+      "nodata": -28672.0,
+      "strips": 2,
+      "crs": "MODIS:Sinusoidal",
+      "outputBounds": [
+        -10256816.91849202,
+        3758392.75647346,
+        -9635977.87834461,
+        4136919.2458767677
+      ],
+      "pixelSizeMetres": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "rasterType": "PixelIsArea",
+      "sampleType": "Int16",
+      "offset": 0,
+      "centerPixel": {
+        "jobId": "10709194-b192-4a27-b0de-6b93d149382f",
+        "sha256": "e8f0c1c32be4306aa9387c31dea6d2aad63d272e438ca92f1cde166270004d3a",
+        "crs": "MODIS:Sinusoidal",
+        "coordinate": [
+          -9946397.398418315,
+          3947656.001175114
+        ],
+        "pixel": [
+          669,
+          408
+        ],
+        "center": [
+          -9946629.05477658,
+          3947656.001175114
+        ],
+        "value": 2336,
+        "reflectance": 0.2336,
+        "label": "red reflectance band",
+        "color": "#3c3c3c",
+        "isNoData": false
+      },
+      "sourceManifest": [
+        {
+          "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+          "compositePeriod": {
+            "end": "2025-07-03T23:59:59Z",
+            "start": "2025-06-26T00:00:00Z"
+          },
+          "compositeStart": "2025-06-26T00:00:00.000Z",
+          "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif",
+          "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3"
+        },
+        {
+          "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+          "compositePeriod": {
+            "end": "2025-07-03T23:59:59Z",
+            "start": "2025-06-26T00:00:00Z"
+          },
+          "compositeStart": "2025-06-26T00:00:00.000Z",
+          "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_b01.tif",
+          "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+          "jobId": "312eb277-1fd4-4a40-8cd2-4a05de5ed8a9",
+          "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+          "sha256": "1ae15397e9589668824bbe5426327d7fbe8417ae2e20fbb89a6bf5552304b812"
+        }
+      ]
+    },
+    {
+      "case": "polygon",
+      "projectBoundsWgs84": [
+        -111,
+        33.8,
+        -108.8,
+        37.2
+      ],
+      "projectGeometryWgs84": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -111,
+              33.8
+            ],
+            [
+              -108.8,
+              33.8
+            ],
+            [
+              -109,
+              37.2
+            ],
+            [
+              -110.8,
+              37.2
+            ],
+            [
+              -111,
+              33.8
+            ]
+          ],
+          [
+            [
+              -110.2,
+              35
+            ],
+            [
+              -110.2,
+              35.6
+            ],
+            [
+              -109.6,
+              35.6
+            ],
+            [
+              -109.6,
+              35
+            ],
+            [
+              -110.2,
+              35
+            ]
+          ]
+        ]
+      },
+      "dimensions": [
+        1340,
+        817
+      ],
+      "pixelsCompared": 1094780,
+      "allOriginalDnMatch": true,
+      "maskedPixels": 792662,
+      "coveredPixels": 302118,
+      "previewPixelsCompared": 359424,
+      "thumbnailPixelsCompared": 15520,
+      "sha256": "978cee1096273a6504552046249739dd46a343d7943fb1455576df6f08c29e5d",
+      "bytes": 487281,
+      "scale": 0.0001,
+      "nodata": -28672.0,
+      "strips": 2,
+      "crs": "MODIS:Sinusoidal",
+      "outputBounds": [
+        -10256816.91849202,
+        3758392.75647346,
+        -9635977.87834461,
+        4136919.2458767677
+      ],
+      "pixelSizeMetres": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "rasterType": "PixelIsArea",
+      "sampleType": "Int16",
+      "offset": 0,
+      "centerPixel": {
+        "jobId": "75efdfba-240c-45f8-b336-32936f73262b",
+        "sha256": "978cee1096273a6504552046249739dd46a343d7943fb1455576df6f08c29e5d",
+        "crs": "MODIS:Sinusoidal",
+        "coordinate": [
+          -9946397.398418315,
+          3947656.001175114
+        ],
+        "pixel": [
+          669,
+          408
+        ],
+        "center": [
+          -9946629.05477658,
+          3947656.001175114
+        ],
+        "value": -28672,
+        "label": "red reflectance band",
+        "color": "#000000",
+        "isNoData": true
+      },
+      "sourceManifest": [
+        {
+          "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+          "compositePeriod": {
+            "end": "2025-07-03T23:59:59Z",
+            "start": "2025-06-26T00:00:00Z"
+          },
+          "compositeStart": "2025-06-26T00:00:00.000Z",
+          "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif",
+          "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3"
+        },
+        {
+          "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+          "compositePeriod": {
+            "end": "2025-07-03T23:59:59Z",
+            "start": "2025-06-26T00:00:00Z"
+          },
+          "compositeStart": "2025-06-26T00:00:00.000Z",
+          "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/09/05/2025177/MYD09A1.A2025177.h09v05.061.2025189031843_sur_refl_b01.tif",
+          "itemId": "MYD09A1.A2025177.h09v05.061.2025189031843",
+          "jobId": "312eb277-1fd4-4a40-8cd2-4a05de5ed8a9",
+          "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+          "sha256": "1ae15397e9589668824bbe5426327d7fbe8417ae2e20fbb89a6bf5552304b812"
+        }
+      ]
+    },
+    {
+      "case": "single",
+      "projectBoundsWgs84": [
+        -122.55,
+        37.68,
+        -122.32,
+        37.84
+      ],
+      "projectGeometryWgs84": null,
+      "dimensions": [
+        95,
+        39
+      ],
+      "pixelsCompared": 3705,
+      "allOriginalDnMatch": true,
+      "maskedPixels": 0,
+      "coveredPixels": 3705,
+      "previewPixelsCompared": 3705,
+      "thumbnailPixelsCompared": 3705,
+      "sha256": "b76811741b81b60e8b92d1f4e6f690a95f19a2f69fabc102431f681dbb6799c4",
+      "bytes": 6162,
+      "scale": 0.0001,
+      "nodata": -28672.0,
+      "strips": 1,
+      "crs": "MODIS:Sinusoidal",
+      "outputBounds": [
+        -10784993.415333845,
+        4189736.89556095,
+        -10740978.707263693,
+        4207806.091505539
+      ],
+      "pixelSizeMetres": [
+        463.31271652791725,
+        463.3127165279167
+      ],
+      "rasterType": "PixelIsArea",
+      "sampleType": "Int16",
+      "offset": 0,
+      "centerPixel": {
+        "jobId": "0910c4eb-7d5f-47fd-adb7-afb5e43f734e",
+        "sha256": "b76811741b81b60e8b92d1f4e6f690a95f19a2f69fabc102431f681dbb6799c4",
+        "crs": "MODIS:Sinusoidal",
+        "coordinate": [
+          -10762986.061298769,
+          4198771.493533244
+        ],
+        "pixel": [
+          47,
+          19
+        ],
+        "center": [
+          -10762986.061298769,
+          4198771.493533244
+        ],
+        "value": 1369,
+        "reflectance": 0.1369,
+        "label": "red reflectance band",
+        "color": "#232323",
+        "isNoData": false
+      },
+      "sourceManifest": [
+        {
+          "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+          "compositePeriod": {
+            "end": "2025-07-03T23:59:59Z",
+            "start": "2025-06-26T00:00:00Z"
+          },
+          "compositeStart": "2025-06-26T00:00:00.000Z",
+          "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_b01.tif",
+          "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+          "jobId": "7042cea4-5cf2-47d1-8cc4-c388bd030daa",
+          "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+          "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3"
+        }
+      ]
+    }
+  ],
+  "independentChecker": "independent Rasterio/GDAL, pyproj, NumPy, Shapely and Pillow",
+  "outputPixelsCompared": 2193265,
+  "allOutputDnMatch": true,
+  "allPreviewRgbaPixelsCompared": 722553,
+  "allThumbnailRgbaPixelsCompared": 34745,
+  "originalHashesUnchanged": true,
+  "outputGeoTiffReadback": {
+    "sphericalSinusoidalRadiusMetres": 6371007.181,
+    "pixelIsArea": true,
+    "nodata": -28672,
+    "scale": 0.0001,
+    "offset": 0,
+    "gdalCalibrationTagsVerified": true
+  },
+  "nativeRestart": {
+    "checkedAt": "2026-10-02T04:26:17.516Z",
+    "nativeServiceActuallyRestarted": true,
+    "originalAndDerivedJobsChecked": 8,
+    "projectsChecked": 3,
+    "projectPeriodsIdentical": true,
+    "sourceAndOutputHashesIdentical": true,
+    "derivedPreviewAndPixelResponsesIdentical": true,
+    "originalRgbIdentical": true,
+    "thumbnailResponsesIdentical": true,
+    "cacheEntryContentsIdentical": true,
+    "cacheEntries": 9
+  },
+  "headlessUi": {
+    "checkedAt": "2026-10-02T04:23:14.177Z",
+    "views": [
+      {
+        "case": "rectangle",
+        "theme": "light",
+        "width": 1440,
+        "locale": "zh-CN",
+        "pixel": {
+          "jobId": "eab8dc36-8ff0-403c-acaa-d93ceb9bc2a8",
+          "sha256": "e8f0c1c32be4306aa9387c31dea6d2aad63d272e438ca92f1cde166270004d3a",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -9946397.398418315,
+            3947656.001175114
+          ],
+          "pixel": [
+            669,
+            408
+          ],
+          "center": [
+            -9946629.05477658,
+            3947656.001175114
+          ],
+          "value": 2336,
+          "reflectance": 0.2336,
+          "label": "red reflectance band",
+          "color": "#3c3c3c",
+          "isNoData": false
+        },
+        "errors": [],
+        "overflow": false,
+        "fileToDerivedMap": true,
+        "actualUiQueuedMosaicSucceeded": true,
+        "uiOutputSha256MatchesIndependentResult": true
+      },
+      {
+        "case": "polygon",
+        "theme": "dark",
+        "width": 1440,
+        "locale": "en",
+        "pixel": {
+          "jobId": "75efdfba-240c-45f8-b336-32936f73262b",
+          "sha256": "978cee1096273a6504552046249739dd46a343d7943fb1455576df6f08c29e5d",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -9946397.398418315,
+            3947656.001175114
+          ],
+          "pixel": [
+            669,
+            408
+          ],
+          "center": [
+            -9946629.05477658,
+            3947656.001175114
+          ],
+          "value": -28672,
+          "label": "red reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        "errors": [],
+        "overflow": false,
+        "fileToDerivedMap": true
+      },
+      {
+        "case": "single",
+        "theme": "light",
+        "width": 1024,
+        "locale": "zh-CN",
+        "pixel": {
+          "jobId": "0910c4eb-7d5f-47fd-adb7-afb5e43f734e",
+          "sha256": "b76811741b81b60e8b92d1f4e6f690a95f19a2f69fabc102431f681dbb6799c4",
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10762986.061298769,
+            4198771.493533244
+          ],
+          "pixel": [
+            47,
+            19
+          ],
+          "center": [
+            -10762986.061298769,
+            4198771.493533244
+          ],
+          "value": 1369,
+          "reflectance": 0.1369,
+          "label": "red reflectance band",
+          "color": "#232323",
+          "isNoData": false
+        },
+        "errors": [],
+        "overflow": false,
+        "fileToDerivedMap": true
+      }
+    ],
+    "actualRasterCanvasPainted": true,
+    "visibleThumbnailsLoaded": true,
+    "userDesktopOperated": false
+  },
+  "syntheticCoverage": [
+    "newer valid DN replaces older DN, newer NoData retains older valid DN",
+    "negative and zero DN are valid",
+    "unaligned original grid rejected",
+    "derived plan and calibration tampering rejected",
+    "equator envelope extrema, poles and physical spherical domain"
+  ],
+  "verification": {
+    "npmVerifyPassed": true,
+    "nodeTests": 115,
+    "uiTests": 111,
+    "latestFrontendBuildPassed": true,
+    "runtimeUnitTests": 167,
+    "runtimeIgnoredTests": 4,
+    "cliTests": 3,
+    "desktopCustomProtocolTests": 4,
+    "cargoFmtCheckPassed": true,
+    "cargoClippyWarningsDeniedPassed": true
+  },
+  "pending": [
+    "green and blue actual project output verification",
+    "derived band RGB combination",
+    "scientific RGB GeoTIFF export",
+    "quality bands and masks",
+    "NASA original HDF",
+    "other MODIS products",
+    "VIIRS",
+    "reprojection"
+  ],
+  "officialReferences": [
+    "https://modis-land.gsfc.nasa.gov/GCTP.html",
+    "https://docs.ogc.org/is/19-008r4/19-008r4.html",
+    "https://lpdaac.usgs.gov/data/data-citation-and-policies/"
+  ],
+  "installerBuilt": false,
+  "publiclyPublished": false
+}

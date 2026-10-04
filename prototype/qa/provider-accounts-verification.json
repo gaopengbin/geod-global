@@ -1,0 +1,124 @@
+{
+  "verifiedAt": "2026-10-01T11:24:35.080Z",
+  "scope": "Provider authorization entry and secure persistence; not original-product delivery",
+  "providers": [
+    "nasa-earthdata",
+    "copernicus"
+  ],
+  "nativeCredentials": {
+    "platform": "Windows Credential Manager",
+    "library": "keyring 3.6.3",
+    "syntheticEntryRoundtrip": "passed",
+    "newInstanceRead": "passed",
+    "isolatedProviderAndWorkspace": "passed",
+    "testCredentialRemoved": true,
+    "realUserCredentialsUsed": false
+  },
+  "authorization": {
+    "nasa": {
+      "method": "User bearer token entered in native UI",
+      "verification": "Official CMR authenticated query; JWT expiry alone does not authorize",
+      "liveInvalidTokenStatus": 401,
+      "positiveRealAccountTest": false
+    },
+    "copernicus": {
+      "method": "cdse-public password exchange with optional TOTP, verified by userinfo",
+      "oidcDiscovery": "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/.well-known/openid-configuration",
+      "liveDiscoveryChecked": true,
+      "refreshTokenOnlyPersisted": true,
+      "positiveRealAccountTest": false
+    }
+  },
+  "boundary": {
+    "nativeMainWindowAclOnly": true,
+    "browserCredentialMutationRoutes": false,
+    "sanitizedAccountStatusGetOnly": true,
+    "jobAndProjectCredentials": false,
+    "credentialLocalStorage": false,
+    "automaticAuthRedirects": false
+  },
+  "protocolTests": {
+    "fixtureIdentityServer": true,
+    "serverRejectionDoesNotSave": true,
+    "failedNewConnectionPreservesPreviousCredential": true,
+    "cdseIdentityAndRefreshRotation": true,
+    "passwordAndTotpNotPersisted": true,
+    "credentialRedirectRefused": true,
+    "browserMutationRoutesAbsent": true
+  },
+  "checks": {
+    "nodeTests": 76,
+    "uiTests": 76,
+    "runtimeTests": 100,
+    "runtimeCliTests": 3,
+    "desktopTests": 4,
+    "clippy": "passed",
+    "build": "passed",
+    "desktopAclCommands": 36,
+    "contractsAndIsolation": "passed"
+  },
+  "browserUi": {
+    "fixtureUI": true,
+    "actualAccountAuthorization": false,
+    "results": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "states": [
+          "not-connected",
+          "verification-rejected"
+        ],
+        "dialogs": [
+          "nasa",
+          "copernicus"
+        ],
+        "passwordAndTokenMasked": true,
+        "secretsClearedAfterSubmission": true,
+        "credentialLocalStorage": false,
+        "pageErrors": [],
+        "overflow": false
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "states": [
+          "not-connected",
+          "verification-rejected"
+        ],
+        "dialogs": [
+          "nasa",
+          "copernicus"
+        ],
+        "passwordAndTokenMasked": true,
+        "secretsClearedAfterSubmission": true,
+        "credentialLocalStorage": false,
+        "pageErrors": [],
+        "overflow": false
+      },
+      {
+        "theme": "light",
+        "width": 1024,
+        "states": [
+          "not-connected",
+          "verification-rejected"
+        ],
+        "dialogs": [
+          "nasa",
+          "copernicus"
+        ],
+        "passwordAndTokenMasked": true,
+        "secretsClearedAfterSubmission": true,
+        "credentialLocalStorage": false,
+        "pageErrors": [],
+        "overflow": false
+      }
+    ]
+  },
+  "remaining": [
+    "NASA protected original-file download adapter and real authorized delivery verification",
+    "Copernicus original-product download adapter and real authorized delivery verification",
+    "Landsat UInt16 local display, inspection, crop and mosaic"
+  ],
+  "releasePublished": false,
+  "installerGenerated": false
+}

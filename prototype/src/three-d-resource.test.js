@@ -1,0 +1,4 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {OfflineThreeDResource} from './three-d-resource.js';
+test('offline Cesium resources preserve source versions while stripping only blob cache keys',()=>{const root='blob:https://local.example.com/root',child='blob:https://local.example.com/child',allowed=new Set([root,child]);const r=new OfflineThreeDResource(root,allowed);r.setQueryParameters({v:'1.2.3'});const c=r.getDerivedResource({url:child});assert.equal(c.url,child);assert.ok(c instanceof OfflineThreeDResource);assert.equal(r.queryParameters.v,'1.2.3');assert.equal(r.clone().url,root);assert.throws(()=>r.getDerivedResource({url:'https://external.example.com/model.glb'}),/Unknown/);assert.throws(()=>new OfflineThreeDResource(child+'?token=x',allowed),/Unknown/);assert.throws(()=>new OfflineThreeDResource('blob:https://local.example.com/unregistered',allowed),/Unknown/);});

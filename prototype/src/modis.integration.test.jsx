@@ -1,0 +1,43 @@
+import React from 'react';
+import { readFileSync } from 'node:fs';
+import { beforeEach, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { I18nProvider } from './i18n.jsx';
+import { RuntimeContext } from './runtime-context.js';
+import { DownloadAssetButton, RuntimeJobRows } from './runtime-ui.jsx';
+import { CatalogFilters } from './catalog-filters.jsx';
+import { ProjectsLibrary } from './projects-ui.jsx';
+import { normalizeScene } from './catalog.js';
+import { projectRequest } from './projects-client.js';
+import { runtimeRequest } from './runtime-client.js';
+vi.mock('./runtime-client.js',async original=>({...await original(),runtimeRequest:vi.fn()}));
+const scene=normalizeScene(JSON.parse(readFileSync('prototype/qa/modis-catalog-item.json','utf8')),'planetary-modis');
+const project={...projectRequest({name:'MODIS 8-day',bounds:[-122.55,37.68,-122.32,37.84],scenes:[scene]}),id:'modis-project'};
+const jobs=['red','green','blue'].map((key,i)=>({id:`modis-${i}`,kind:'download',status:'succeeded',itemId:scene.id,assetKey:key,href:scene.assets[key].href,mediaType:scene.assets[key].type,sha256:String(i+1).repeat(64),bytesDownloaded:1000}));
+const act=vi.fn();
+const wrap=children=>render(<I18nProvider><RuntimeContext.Provider value={{health:{},jobs,projects:[project],refresh:vi.fn(),act}}>{children}</RuntimeContext.Provider></I18nProvider>);
+beforeEach(()=>{vi.resetAllMocks();delete window.__TAURI__;Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:()=> 'en',setItem:vi.fn()}});});
+it('MODIS filters expose period dates without a misleading cloud selector',()=>{
+  wrap(<CatalogFilters initialValues={{provider:'planetary-modis',bbox:project.bounds,start:'2025-06-01',end:'2025-06-30'}} onClose={vi.fn()} onApply={vi.fn()}/>);
+  expect(screen.getByRole('button',{name:'Search start date'})).toBeTruthy();
+  expect(screen.queryByLabelText('Minimum cloud cover')).toBeNull();
+});
+it('MODIS download uses Int16 500m COGs without account or SAFE requirements',async()=>{
+  wrap(<DownloadAssetButton scene={scene} areaBounds={project.bounds} areaName="MODIS"/>);
+  await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
+  expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('8-day · 500 m · Int16');
+  expect(screen.getByText(/not the original HDF product/)).toBeTruthy();
+  expect(screen.queryByText('Manage authorization')).toBeNull();
+});
+it('MODIS restored project offers band processing while retaining sinusoidal and quality limits',async()=>{
+  runtimeRequest.mockResolvedValue([project]);
+  wrap(<ProjectsLibrary focusedProjectId={project.id}/>);
+  await screen.findByRole('heading',{name:project.name});
+  expect(screen.getAllByRole('button',{name:'Clip band to project area'})).toHaveLength(3);
+  expect(screen.getAllByRole('link',{name:'Open local RGB'})).toHaveLength(3);
+  expect(screen.getByText(/original sinusoidal grid/)).toBeTruthy();
+  expect(screen.getByText(/quality masks are not applied/)).toBeTruthy();
+  await userEvent.click(screen.getAllByRole('button',{name:'Clip band to project area'})[0]);
+  expect(act).toHaveBeenCalledWith('mosaicProject',{id:project.id,assetKey:'red'});
+});

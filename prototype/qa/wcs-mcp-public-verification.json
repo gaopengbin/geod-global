@@ -1,0 +1,233 @@
+{
+  "schema": "geod-wcs-mcp-public-receipt/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-03T20:04:49.405666+00:00",
+  "scope": "Fresh bounded public WCS subset acquired through actual loopback stdio MCP, then recovered in standalone and loopback offline sessions.",
+  "nativeBinarySha256": "79de5d617d89ade220390db78798f22d8aff1d12a8398d52e7181e2cead87e97",
+  "evidenceReports": [
+    {
+      "file": "evidence/report.json",
+      "sha256": "513c7bafeb4c2a2e7a2a2532ddb93723ff8509fa33ede5485ad58600b49f4978"
+    },
+    {
+      "file": "evidence/offline-mcp-verification.json",
+      "sha256": "535e191984364da5a67804e57535b1be1dcc349cd984a7752a784fb156e58c5d"
+    },
+    {
+      "file": "evidence/job.json",
+      "sha256": "73404a3f64d5eb8da27697295bb5b5d13057b6e4552d080d54023cb893ceea2a"
+    },
+    {
+      "file": "evidence/project.json",
+      "sha256": "974d5b1cdd70a463c0e9960e2b25f46aaee988a2b506788f31f792b498762b40"
+    },
+    {
+      "file": "evidence/plan.json",
+      "sha256": "2de96772b97a5611807094e2fd5b452fed270c34568cce4f7296cac02edc922e"
+    },
+    {
+      "file": "evidence/rasterio-reference.json",
+      "sha256": "c8e7ad1c48e084d1cd1a130c60f42a473623b80150ef4267964d4d28262c64ee"
+    },
+    {
+      "file": "evidence/mcp-pixels.json",
+      "sha256": "90d0521eb10241254875917b3a5640884091bef5b960d321bd3ddb107b78a749"
+    },
+    {
+      "file": "evidence/mcp-connection-summary.json",
+      "sha256": "c62c50da89117c0f186711dc8c539d17dcacee44e2e26460ca62b75a0ce0696a"
+    },
+    {
+      "file": "evidence/mcp-catalog-pages.json",
+      "sha256": "2a34b5b34799b06e7c835a6946253140145879f1d89844511bfa411ef6b14097"
+    }
+  ],
+  "endpoint": "https://ows.emodnet-bathymetry.eu/wcs",
+  "coverageId": "emodnet__mean",
+  "requestedBounds": [
+    2.0,
+    53.0,
+    2.05,
+    53.05
+  ],
+  "jobId": "1f44edb5-d19c-4d0d-8b21-58c8feb47ff2",
+  "projectId": "7176a4d5-1ffa-4843-98ba-8cb15f3a33a1",
+  "planId": "8a6d0e6ef86749bf87ce4363ebc497d55499a541e2a7f5f8a84d733a0cc42ed2",
+  "freshStoreBeforeConnect": true,
+  "publicMetadataAndGetCoverageViaMcp": true,
+  "catalogPages": 1,
+  "coveragesComparedToSourceXml": 8,
+  "metadata": [
+    {
+      "file": "metadata/capabilities-6409bd7c9216ef5b3508807d8e530a31272404da26518e29e15fa08d8fa5e0a9.xml",
+      "sha256": "6409bd7c9216ef5b3508807d8e530a31272404da26518e29e15fa08d8fa5e0a9",
+      "bytes": 15688,
+      "kind": "capabilities"
+    },
+    {
+      "file": "metadata/coverage-a74ca89d43fc991b550257f8227319c0adc9b6faa46422488d5b470be1bcb2d9.xml",
+      "sha256": "a74ca89d43fc991b550257f8227319c0adc9b6faa46422488d5b470be1bcb2d9",
+      "bytes": 3693,
+      "kind": "coverage"
+    },
+    {
+      "file": "metadata/description-53f1179e4f4fc07ec4db9a5a298b5514196d9a0fa76bd5449fe784086c9cbcb5.json",
+      "sha256": "53f1179e4f4fc07ec4db9a5a298b5514196d9a0fa76bd5449fe784086c9cbcb5",
+      "bytes": 2987,
+      "kind": "description"
+    },
+    {
+      "file": "metadata/plan-8a6d0e6ef86749bf87ce4363ebc497d55499a541e2a7f5f8a84d733a0cc42ed2.json",
+      "sha256": "8a6d0e6ef86749bf87ce4363ebc497d55499a541e2a7f5f8a84d733a0cc42ed2",
+      "bytes": 127,
+      "kind": "plan"
+    }
+  ],
+  "output": {
+    "kind": "server-generated coverage subset",
+    "bytes": 9600,
+    "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+    "width": 48,
+    "height": 48,
+    "crs": "EPSG:4326",
+    "bands": [
+      {
+        "index": 1,
+        "dataType": "float32",
+        "nodata": null,
+        "samples": 2304,
+        "validSamples": 2304,
+        "maskSha256": "adea5e0a9361c2700525b2452f81230a0f5c1fb310669e1a5b1d779143b9e297",
+        "sampleSha256": "6f8dc9ce83ef8b2054163c79525af79e95db17bd089110c132c88a9f6c78d90b",
+        "sampleHashEncoding": "row-major little-endian unscaled native sample dtype",
+        "minimum": -42.689998626708984,
+        "maximum": -27.3799991607666,
+        "scale": 1.0,
+        "offset": 0.0,
+        "unit": null,
+        "colorInterpretation": "gray",
+        "overviews": [],
+        "blockShape": [
+          48,
+          48
+        ]
+      }
+    ]
+  },
+  "independent": {
+    "publicHttpPayloadIdentical": true,
+    "samplesCompared": 2304,
+    "gridComparedToOriginalXml": true,
+    "onlineMcpPixelsCompared": 5
+  },
+  "offline": {
+    "sessions": [
+      {
+        "mode": "direct",
+        "writes": false,
+        "protocolVersion": "2025-11-25",
+        "discoveredTools": 18,
+        "catalogEntries": 8,
+        "jobStatus": "succeeded",
+        "settled": true,
+        "bytes": 9600,
+        "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "mode": "direct",
+        "writes": true,
+        "protocolVersion": "2025-11-25",
+        "discoveredTools": 31,
+        "catalogEntries": 8,
+        "jobStatus": "succeeded",
+        "settled": true,
+        "bytes": 9600,
+        "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "mode": "loopback",
+        "writes": false,
+        "protocolVersion": "2025-11-25",
+        "discoveredTools": 18,
+        "catalogEntries": 8,
+        "jobStatus": "succeeded",
+        "settled": true,
+        "bytes": 9600,
+        "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "mode": "loopback",
+        "writes": true,
+        "protocolVersion": "2025-11-25",
+        "discoveredTools": 31,
+        "catalogEntries": 8,
+        "jobStatus": "succeeded",
+        "settled": true,
+        "bytes": 9600,
+        "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "mode": "direct",
+        "writes": false,
+        "protocolVersion": "2025-11-25",
+        "discoveredTools": 18,
+        "catalogEntries": 8,
+        "jobStatus": "succeeded",
+        "settled": true,
+        "bytes": 9600,
+        "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+        "width": 48,
+        "height": 48
+      }
+    ],
+    "pixelChecks": 25,
+    "registryBytesUnchanged": true,
+    "blockedProxyAttempts": [],
+    "checks": [
+      "read_only_discovery_and_dispatch",
+      "saved_catalog_full_pagination",
+      "exact_pinned_description_plan_project",
+      "native_original_file_inspection",
+      "independent_original_pixel_samples",
+      "local_plan_prepare",
+      "idempotent_project_append",
+      "checksum_verified_download_reuse_and_settlement",
+      "private_source_rejection",
+      "direct_and_loopback_stdio",
+      "protocol_only_stdout_clean_eof",
+      "reconnect_registry_and_file_recovery",
+      "no_external_requests_through_rejecting_proxy"
+    ]
+  },
+  "declaredFields": [
+    {
+      "name": "Depth",
+      "description": "Depth",
+      "unit": "W.m-2.Sr-1",
+      "nilValues": [
+        {
+          "value": "NaN",
+          "reason": "http://www.opengis.net/def/nil/OGC/0/unknown"
+        }
+      ]
+    }
+  ],
+  "automaticRetries": 0,
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "syntheticData": false,
+  "limitations": [
+    "This is a coverage subset, not an original survey archive.",
+    "The Depth field declares W.m-2.Sr-1; the TIFF has no unit tag. No guessed unit or scientific calibration.",
+    "Linked source license metadata was not fetched or verified.",
+    "No installed WebView manual acceptance or other WCS versions, dimensions, formats or authentication."
+  ]
+}

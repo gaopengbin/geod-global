@@ -20,7 +20,8 @@ export function verifyDesktopAclSources(main, build, capability, config) {
   assert.equal(manifests.length, 1, 'Expected one explicit Tauri app command manifest');
   const generated = [...manifests[0][1].matchAll(/"([a-z_][a-z_0-9]*)"/g)].map(match => match[1]);
   assert.deepEqual(unique(generated, 'App ACL manifest'), unique(registered, 'Desktop command handlers'), 'App ACL manifest must cover exactly the registered desktop commands');
-  const expected = registered.map(command => 'allow-' + command.replaceAll('_', '-'));
+  const expected = [...registered.map(command => 'allow-' + command.replaceAll('_', '-')),
+    'decoration:default', 'core:window:allow-start-dragging', 'core:window:allow-internal-toggle-maximize'];
   assert.deepEqual(unique(capability.permissions, 'Main-window permissions'), unique(expected, 'Expected permissions'), 'Main-window permissions must cover exactly the registered desktop commands');
   assert.equal(capability.identifier, 'main-window');
   assert.deepEqual(capability.windows, ['main'], 'Desktop commands must remain scoped to the main window');

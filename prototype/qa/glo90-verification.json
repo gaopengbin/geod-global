@@ -1,0 +1,440 @@
+{
+  "checkedAt": "2026-10-03T05:20:46.266957+00:00",
+  "product": "cop-dem-glo-90",
+  "provider": "copernicus-dem-90",
+  "runtimeBinarySha256": "f7cb4d2094a98a735fe55ec90fc35f8608997e6eeee65b046568963b7c68f807",
+  "catalog": {
+    "url": "https://earth-search.aws.element84.com/v1/search?collections=cop-dem-glo-90&bbox=-0.1,51.5,0.1,51.6&limit=10",
+    "capturedResponse": "prototype/public/samples/cop-dem-90-response.json",
+    "sha256": "77cb9044ff06a754523fb075c3791bc8c31b6b28c02f23dba165fc70affaf21c",
+    "items": 2,
+    "nominalResolutionMetres": 90,
+    "collectionAssetResolutionDeclarationMetres": 30,
+    "capturedItemAssetResolutionDeclarationsMetres": [
+      90,
+      90
+    ],
+    "originalDeclarationsPreserved": true,
+    "catalogDateMeaning": "2021 public release reference, not tile acquisition date"
+  },
+  "actualNativeOriginalDownloads": [
+    {
+      "itemId": "Copernicus_DSM_COG_30_N51_00_W001_00_DEM",
+      "sha256": "72470c74b05959e68098cc0c694ee267f1d7abd9a285f62fbe9b7de4495ff494",
+      "bytes": 3859873,
+      "dimensions": [
+        800,
+        1200
+      ],
+      "pixelSize": [
+        0.00125,
+        0.0008333333333333334
+      ],
+      "crs": "EPSG:4326",
+      "dataType": "Float32",
+      "pixelInterpretation": "PixelIsPoint",
+      "nodata": null,
+      "comparedNativePixelProbes": 5,
+      "minimum": -4.830776214599609,
+      "maximum": 298.66607666015625,
+      "zeroPixels": 0,
+      "negativePixels": 8
+    },
+    {
+      "itemId": "Copernicus_DSM_COG_30_N51_00_E000_00_DEM",
+      "sha256": "f36b160c27cd2183b259331a782cd78bff5b203713e469d4a4fad874d9b3061f",
+      "bytes": 3657002,
+      "dimensions": [
+        800,
+        1200
+      ],
+      "pixelSize": [
+        0.00125,
+        0.0008333333333333334
+      ],
+      "crs": "EPSG:4326",
+      "dataType": "Float32",
+      "pixelInterpretation": "PixelIsPoint",
+      "nodata": null,
+      "comparedNativePixelProbes": 5,
+      "minimum": -4.9795637130737305,
+      "maximum": 282.4898376464844,
+      "zeroPixels": 82170,
+      "negativePixels": 1201
+    },
+    {
+      "itemId": "Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+      "sha256": "977e99bc16ecdc9d65e0d2bc0920ffe483f554ee4c8659d95b4189e377924787",
+      "bytes": 2432905,
+      "dimensions": [
+        1200,
+        1200
+      ],
+      "pixelSize": [
+        0.0008333333333333334,
+        0.0008333333333333334
+      ],
+      "crs": "EPSG:4326",
+      "dataType": "Float32",
+      "pixelInterpretation": "PixelIsPoint",
+      "nodata": null,
+      "comparedNativePixelProbes": 5,
+      "minimum": -72.9031982421875,
+      "maximum": 998.1942749023438,
+      "zeroPixels": 880748,
+      "negativePixels": 1719
+    }
+  ],
+  "totalOriginalBytes": 9949780,
+  "actualNativeProcessing": [
+    {
+      "label": "seam-mosaic",
+      "sha256": "6b668acc9635e423e4463042516527799e60a639c34d42ed649c09d7eedd2a0b",
+      "bytes": 66773,
+      "dimensions": [
+        161,
+        121
+      ],
+      "comparedPixels": 19481,
+      "validPixels": 19481,
+      "maskedPixels": 0,
+      "allOriginalFloat32BitsMatch": true,
+      "horizontalCrs": "EPSG:4326",
+      "verticalReference": "EPSG:3855",
+      "heightUnit": "metre",
+      "pixelInterpretation": "PixelIsPoint",
+      "nodata": "NaN"
+    },
+    {
+      "label": "single-tile-clip",
+      "sha256": "9d4b28388922feedf5cf5bfeeb91b380faa1c9cf8b7f8a23a59f7bf73285ad14",
+      "bytes": 3359,
+      "dimensions": [
+        25,
+        37
+      ],
+      "comparedPixels": 925,
+      "validPixels": 925,
+      "maskedPixels": 0,
+      "allOriginalFloat32BitsMatch": true,
+      "horizontalCrs": "EPSG:4326",
+      "verticalReference": "EPSG:3855",
+      "heightUnit": "metre",
+      "pixelInterpretation": "PixelIsPoint",
+      "nodata": "NaN"
+    },
+    {
+      "label": "polygon-mask",
+      "sha256": "da3715263b7ec58a21e885bb852f6d144638012883e9937610e7aea2c4ca5af2",
+      "bytes": 22206,
+      "dimensions": [
+        161,
+        121
+      ],
+      "comparedPixels": 19481,
+      "validPixels": 5999,
+      "maskedPixels": 13482,
+      "allOriginalFloat32BitsMatch": true,
+      "horizontalCrs": "EPSG:4326",
+      "verticalReference": "EPSG:3855",
+      "heightUnit": "metre",
+      "pixelInterpretation": "PixelIsPoint",
+      "nodata": "NaN"
+    }
+  ],
+  "comparedOutputPixels": 39887,
+  "independentVerificationLibraries": [
+    "Rasterio/GDAL",
+    "NumPy",
+    "tifffile"
+  ],
+  "headlessUi": {
+    "usedUserDesktop": false,
+    "actualNativeRuntimeAndFiles": true,
+    "catalogueReplayedFromActualPublicResponse": true,
+    "views": [
+      {
+        "width": 1440,
+        "locale": "zh-CN",
+        "theme": "light",
+        "sourceRestored": "copernicus-dem-90",
+        "projectId": "c3f5479b-a80a-4886-b4bd-b0ac057fff03",
+        "reusedDownloadJobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+        "clickedMapSamples": [
+          {
+            "jobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+            "sha256": "72470c74b05959e68098cc0c694ee267f1d7abd9a285f62fbe9b7de4495ff494",
+            "pixel": {
+              "jobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+              "sha256": "72470c74b05959e68098cc0c694ee267f1d7abd9a285f62fbe9b7de4495ff494",
+              "crs": "EPSG:4326",
+              "coordinate": [
+                -0.5006250000000001,
+                51.500416666666666
+              ],
+              "pixel": [
+                400,
+                600
+              ],
+              "center": [
+                -0.5000000000000001,
+                51.5
+              ],
+              "value": 24.168642044067383,
+              "label": "Elevation",
+              "color": "#808080",
+              "isNoData": false
+            },
+            "visibleMetreUnit": true
+          },
+          {
+            "jobId": "6fb72a24-1868-468e-8e70-e7bfb41e9539",
+            "sha256": "6b668acc9635e423e4463042516527799e60a639c34d42ed649c09d7eedd2a0b",
+            "pixel": {
+              "jobId": "6fb72a24-1868-468e-8e70-e7bfb41e9539",
+              "sha256": "6b668acc9635e423e4463042516527799e60a639c34d42ed649c09d7eedd2a0b",
+              "crs": "EPSG:4326",
+              "coordinate": [
+                0,
+                51.55
+              ],
+              "pixel": [
+                80,
+                60
+              ],
+              "center": [
+                0,
+                51.550000000000004
+              ],
+              "value": 11.785958290100098,
+              "label": "Elevation",
+              "color": "#808080",
+              "isNoData": false
+            },
+            "visibleMetreUnit": true
+          },
+          {
+            "jobId": "c6cb2266-75c1-4d18-b9b4-c82f2f1fc361",
+            "sha256": "da3715263b7ec58a21e885bb852f6d144638012883e9937610e7aea2c4ca5af2",
+            "pixel": {
+              "jobId": "c6cb2266-75c1-4d18-b9b4-c82f2f1fc361",
+              "sha256": "da3715263b7ec58a21e885bb852f6d144638012883e9937610e7aea2c4ca5af2",
+              "crs": "EPSG:4326",
+              "coordinate": [
+                0,
+                51.55
+              ],
+              "pixel": [
+                80,
+                60
+              ],
+              "center": [
+                0,
+                51.550000000000004
+              ],
+              "value": 11.785958290100098,
+              "label": "Elevation",
+              "color": "#808080",
+              "isNoData": false
+            },
+            "visibleMetreUnit": true
+          }
+        ],
+        "noHorizontalOverflow": true,
+        "errors": []
+      },
+      {
+        "width": 1024,
+        "locale": "en",
+        "theme": "dark",
+        "sourceRestored": "copernicus-dem-90",
+        "projectId": "c3f5479b-a80a-4886-b4bd-b0ac057fff03",
+        "reusedDownloadJobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+        "clickedMapSamples": [
+          {
+            "jobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+            "sha256": "72470c74b05959e68098cc0c694ee267f1d7abd9a285f62fbe9b7de4495ff494",
+            "pixel": {
+              "jobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+              "sha256": "72470c74b05959e68098cc0c694ee267f1d7abd9a285f62fbe9b7de4495ff494",
+              "crs": "EPSG:4326",
+              "coordinate": [
+                -0.5006250000000001,
+                51.500416666666666
+              ],
+              "pixel": [
+                400,
+                600
+              ],
+              "center": [
+                -0.5000000000000001,
+                51.5
+              ],
+              "value": 24.168642044067383,
+              "label": "Elevation",
+              "color": "#808080",
+              "isNoData": false
+            },
+            "visibleMetreUnit": true
+          },
+          {
+            "jobId": "6fb72a24-1868-468e-8e70-e7bfb41e9539",
+            "sha256": "6b668acc9635e423e4463042516527799e60a639c34d42ed649c09d7eedd2a0b",
+            "pixel": {
+              "jobId": "6fb72a24-1868-468e-8e70-e7bfb41e9539",
+              "sha256": "6b668acc9635e423e4463042516527799e60a639c34d42ed649c09d7eedd2a0b",
+              "crs": "EPSG:4326",
+              "coordinate": [
+                0,
+                51.55
+              ],
+              "pixel": [
+                80,
+                60
+              ],
+              "center": [
+                0,
+                51.550000000000004
+              ],
+              "value": 11.785958290100098,
+              "label": "Elevation",
+              "color": "#808080",
+              "isNoData": false
+            },
+            "visibleMetreUnit": true
+          },
+          {
+            "jobId": "c6cb2266-75c1-4d18-b9b4-c82f2f1fc361",
+            "sha256": "da3715263b7ec58a21e885bb852f6d144638012883e9937610e7aea2c4ca5af2",
+            "pixel": {
+              "jobId": "c6cb2266-75c1-4d18-b9b4-c82f2f1fc361",
+              "sha256": "da3715263b7ec58a21e885bb852f6d144638012883e9937610e7aea2c4ca5af2",
+              "crs": "EPSG:4326",
+              "coordinate": [
+                0,
+                51.55
+              ],
+              "pixel": [
+                80,
+                60
+              ],
+              "center": [
+                0,
+                51.550000000000004
+              ],
+              "value": 11.785958290100098,
+              "label": "Elevation",
+              "color": "#808080",
+              "isNoData": false
+            },
+            "visibleMetreUnit": true
+          }
+        ],
+        "noHorizontalOverflow": true,
+        "errors": []
+      }
+    ],
+    "allClickedMapSamplesIndependentlyMatchRasterio": true
+  },
+  "actualRestart": {
+    "passed": true,
+    "checkedAt": "2026-10-03T05:17:55.629Z",
+    "jobs": [
+      {
+        "jobId": "5295f551-0d0f-49d7-8b3b-b6cd31ce3618",
+        "itemId": "Copernicus_DSM_COG_30_N51_00_W001_00_DEM",
+        "sha256": "72470c74b05959e68098cc0c694ee267f1d7abd9a285f62fbe9b7de4495ff494",
+        "bytes": 3859873,
+        "product": "cop-dem-glo-90",
+        "thumbnailIdentical": true,
+        "thumbnailSha256": "bca33bf47e56097cf8018ee1d0b3ed98dd516879ed9f338581fc2ae8ae513343",
+        "metadataIdentical": true,
+        "recheckedOriginalPixels": 5
+      },
+      {
+        "jobId": "a93c20de-d5d2-4a81-921b-9f60af6b8f51",
+        "itemId": "Copernicus_DSM_COG_30_N51_00_E000_00_DEM",
+        "sha256": "f36b160c27cd2183b259331a782cd78bff5b203713e469d4a4fad874d9b3061f",
+        "bytes": 3657002,
+        "product": "cop-dem-glo-90",
+        "thumbnailIdentical": true,
+        "thumbnailSha256": "9db791bdc84b000f3deeed146a26491f7a30f98622d4fbaba8e8f5049a1b4222",
+        "metadataIdentical": true,
+        "recheckedOriginalPixels": 5
+      },
+      {
+        "jobId": "f5100211-16dc-40d4-91df-a0f52e2ef854",
+        "itemId": "Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+        "sha256": "977e99bc16ecdc9d65e0d2bc0920ffe483f554ee4c8659d95b4189e377924787",
+        "bytes": 2432905,
+        "product": "cop-dem-glo-90",
+        "thumbnailIdentical": true,
+        "thumbnailSha256": "8f2e5490c84cff5da621bbe83490ba096cbf0733822820485014dcd1c84bc9f6",
+        "metadataIdentical": true,
+        "recheckedOriginalPixels": 5
+      },
+      {
+        "jobId": "6fb72a24-1868-468e-8e70-e7bfb41e9539",
+        "itemId": "project:c3f5479b-a80a-4886-b4bd-b0ac057fff03",
+        "sha256": "6b668acc9635e423e4463042516527799e60a639c34d42ed649c09d7eedd2a0b",
+        "bytes": 66773,
+        "product": "cop-dem-glo-90",
+        "thumbnailIdentical": true,
+        "thumbnailSha256": "9977b29898074eb7b6270e6bb253b996dd32cb963c37234188b95e470d0ba043",
+        "metadataIdentical": true,
+        "recheckedOriginalPixels": 0
+      },
+      {
+        "jobId": "43e70c7a-3276-44c9-adea-32ece9c1d661",
+        "itemId": "project:6afbf608-d5b1-4922-a16c-ac2c35a3a9ea",
+        "sha256": "9d4b28388922feedf5cf5bfeeb91b380faa1c9cf8b7f8a23a59f7bf73285ad14",
+        "bytes": 3359,
+        "product": "cop-dem-glo-90",
+        "thumbnailIdentical": true,
+        "thumbnailSha256": "f8ffe49c1152525594fc2bde2c18c5e72004bad099d6bf18de3b103515650773",
+        "metadataIdentical": true,
+        "recheckedOriginalPixels": 0
+      },
+      {
+        "jobId": "c6cb2266-75c1-4d18-b9b4-c82f2f1fc361",
+        "itemId": "project:af76cdde-34e7-46b1-bc70-b05683b69b69",
+        "sha256": "da3715263b7ec58a21e885bb852f6d144638012883e9937610e7aea2c4ca5af2",
+        "bytes": 22206,
+        "product": "cop-dem-glo-90",
+        "thumbnailIdentical": true,
+        "thumbnailSha256": "ff092c4c2a710b9b1d7bbc1d5ba4d05a0df3ce082d9ba2970855bf717030e221",
+        "metadataIdentical": true,
+        "recheckedOriginalPixels": 0
+      }
+    ],
+    "sourceAndOutputBytesUnchanged": true,
+    "projectRestored": true,
+    "noNewJobs": true
+  },
+  "automatedRegression": {
+    "frontendUnitTests": 174,
+    "frontendUiTests": 170,
+    "runtimeLibraryTests": 332,
+    "runtimeIgnoredLiveTests": 4,
+    "runtimeCliTests": 3,
+    "desktopTests": 4,
+    "desktopCustomProtocolTests": 4,
+    "workspaceClippyWarningsDenied": "passed",
+    "frontendProductionBuild": "passed",
+    "newCoverage": [
+      "GLO-90 bucket and product substitutions",
+      "1200-row geometry and exact Float32 values",
+      "conflicting vertical tags",
+      "GLO-90 seam and mixed-product rejection",
+      "preserved raw catalogue claims",
+      "project restore and unsigned original download"
+    ]
+  },
+  "boundaries": [
+    "AWS public 2021 DSM distribution; no NASA/CDSE protected-product entitlement implied",
+    "Same-product aligned grids only; no resampling/reprojection or terrain analysis",
+    "Original vertical reference comes from fixed product; optional file declarations must not conflict",
+    "Headless browser bridge is separate from installed Windows WebView acceptance",
+    "Small actual areas and three originals do not verify every global geocell or DEM product"
+  ]
+}

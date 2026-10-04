@@ -1,0 +1,5 @@
+.wcs-source-dialog {width:min(780px,calc(100vw - 40px));}
+.wcs-description,.wcs-plan {padding:16px;display:grid;gap:12px;min-width:0;}.wcs-description>strong,.wcs-plan-heading>strong {font-size:14px;overflow-wrap:anywhere;}
+.wcs-plan-heading {display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;}.wcs-grid-summary {font-size:15px;line-height:1.5;margin:0;font-variant-numeric:tabular-nums;}
+.wcs-fields {list-style:none;margin:0;padding:0;display:grid;gap:12px;}.wcs-fields li {font-size:12px;line-height:1.6;overflow-wrap:anywhere;}.wcs-fields p {color:var(--ink-2);margin:5px 0;}.wcs-nil {display:block;overflow-wrap:anywhere;}
+@media(max-width:650px){.wcs-source-dialog{width:calc(100vw - 24px);}}

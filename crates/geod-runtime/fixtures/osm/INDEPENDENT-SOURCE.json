@@ -1,0 +1,17 @@
+{
+  "kind": "own synthetic independent control; not public provider imagery",
+  "writer": "Pyosmium 4.3.1",
+  "sourceScript": "scripts/generate-osm-control.py",
+  "files": [
+    {
+      "file": "independent.osm",
+      "bytes": 2222,
+      "sha256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59"
+    },
+    {
+      "file": "independent.osm.pbf",
+      "bytes": 540,
+      "sha256": "19ecfdfbc4e0b87b743a13a45c168a19dc41f4edcace4cb55aafbd4578e3849e"
+    }
+  ]
+}

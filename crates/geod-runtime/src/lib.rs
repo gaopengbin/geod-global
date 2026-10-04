@@ -1,21 +1,47 @@
 //! Local, persistent asset downloads. Validation checks signatures, size and SHA-256;
 //! it does not establish GeoTIFF scientific correctness or source authenticity.
 
+pub mod accounts;
 pub mod artifact;
 pub mod crop;
 pub mod diagnostics;
+pub mod features;
 pub mod mcp;
 pub mod mosaic;
+mod prepared;
 pub mod processing;
 pub mod projects;
+pub mod providers;
 pub mod proxy;
 pub mod raster;
+pub mod safe;
 pub mod service;
+pub mod stac;
+pub mod stac_projects;
+mod storage;
+pub mod three_d;
 pub mod thumbnail;
+pub mod tiles;
+mod transfer;
+pub mod vector;
+pub mod wcs;
+pub mod wcs_projects;
+pub mod wms;
+pub use accounts::{AccountProvider, AccountStatus, ConnectAccountRequest};
 pub use processing::{RasterRecipe, RecipePlan, SavedRecipe};
 pub use projects::{AddProjectScenesRequest, CreateProjectRequest, Project, ProjectDownloads};
 pub use proxy::{ProxySettings, ProxyTest};
+pub use raster::reflectance::composite::scientific::{
+    LandsatMaskPolicy, LandsatMaskRequest, LandsatMaskSpec, ModisCoupledResult, ModisCoupledScene,
+    ModisCoupledSpec, ModisMaskPolicy, ModisMaskRequest, ModisMaskResult, ModisMaskSpec,
+    QualityMaskRequest, QualityMaskSpec, RgbOutput, RgbPlan, RgbRequest, RgbSpec,
+};
+pub use raster::reflectance::composite::{
+    CompositeInspection, CompositePixel, CompositePixelRequest, CompositeRequest,
+};
 pub use raster::{RasterClass, RasterInspection, RasterPixel};
+pub use storage::verified_output_path;
+pub use transfer::{TransferInfo, TransferMode};
 
 use chrono::Utc;
 use fs2::FileExt;
@@ -80,6 +106,22 @@ pub struct Job {
     pub mosaic_output: Option<mosaic::MosaicPlan>,
     #[serde(default)]
     pub manifest_path: Option<String>,
+    #[serde(default)]
+    pub safe: Option<safe::SafeSpec>,
+    #[serde(default)]
+    pub safe_output: Option<safe::SafeOutput>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub viirs_science: Option<providers::viirs::hdf::ScienceSummary>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub viirs_prepare: Option<providers::viirs::prepare::ViirsSpec>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rgb_spec: Option<Box<RgbSpec>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rgb_output: Option<RgbOutput>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub stac_source: Option<stac::SourcePin>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wcs_source: Option<wcs::SourcePin>,
     pub item_id: String,
     pub asset_key: String,
     pub href: String,
@@ -96,6 +138,8 @@ pub struct Job {
     pub source: String,
     pub validation: String,
     pub attempts: u32,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub transfer: Option<TransferInfo>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -106,6 +150,7 @@ pub struct RuntimeHealth {
     pub version: &'static str,
     pub storage_root: String,
     pub max_asset_bytes: u64,
+    pub max_aerial_asset_bytes: u64,
     pub validation: &'static str,
 }
 
@@ -131,7 +176,17 @@ struct Inner {
     store: Mutex<Store>,
     recipes: Mutex<BTreeMap<String, SavedRecipe>>,
     projects: Mutex<BTreeMap<String, Project>>,
+    vectors: Mutex<BTreeMap<String, vector::Record>>,
+    tiles: Mutex<tiles::Registry>,
+    three_d: Mutex<three_d::Registry>,
+    feature_services: Mutex<BTreeMap<String, features::FeatureService>>,
+    map_services: Mutex<BTreeMap<String, wms::MapService>>,
+    map_images: Mutex<BTreeMap<String, wms::MapImage>>,
+    stac: Mutex<stac::Registry>,
+    wcs: Mutex<wcs::Registry>,
     proxy_settings: Mutex<ProxySettings>,
+    accounts: Mutex<accounts::Accounts>,
+    planetary_access: providers::AccessCache,
     permits: Semaphore,
     raster_permits: Arc<Semaphore>,
     thumbnail_permits: Arc<Semaphore>,
@@ -161,6 +216,8 @@ fn default_job_kind() -> String {
 
 fn new_download_job(request: CreateJobRequest) -> Job {
     let timestamp = now();
+    let source = providers::source_name(&request.href).to_string();
+    let title = request.title.unwrap_or_else(|| request.item_id.clone());
     Job {
         id: Uuid::new_v4().to_string(),
         kind: default_job_kind(),
@@ -170,11 +227,19 @@ fn new_download_job(request: CreateJobRequest) -> Job {
         mosaic: None,
         mosaic_output: None,
         manifest_path: None,
+        safe: None,
+        safe_output: None,
+        viirs_science: None,
+        viirs_prepare: None,
+        stac_source: None,
+        wcs_source: None,
+        rgb_spec: None,
+        rgb_output: None,
         item_id: request.item_id,
         asset_key: request.asset_key,
         href: request.href,
         media_type: request.media_type,
-        title: request.title.unwrap_or_else(|| "Sentinel-2 asset".into()),
+        title,
         status: JobStatus::Queued,
         bytes_downloaded: 0,
         total_bytes: None,
@@ -183,9 +248,10 @@ fn new_download_job(request: CreateJobRequest) -> Job {
         error: None,
         created_at: timestamp.clone(),
         updated_at: timestamp,
-        source: "Earth Search / Element 84; Copernicus Sentinel-2 L2A".into(),
+        source,
         validation: "Pending file signature, byte count and SHA-256 checks".into(),
         attempts: 1,
+        transfer: None,
     }
 }
 
@@ -200,28 +266,47 @@ fn extension(media_type: &str) -> Result<&'static str> {
     {
         "image/tiff" | "image/geotiff" => Ok("tif"),
         "image/jpeg" => Ok("jpg"),
-        _ => Err("Only TIFF and JPEG assets are supported".into()),
+        "application/zip" => Ok("zip"),
+        "application/x-hdf5" => Ok("h5"),
+        _ => Err("Only TIFF, JPEG and reviewed original ZIP or HDF5 assets are supported".into()),
     }
+}
+
+fn source_transfer_limit(job: &Job) -> u64 {
+    if job.asset_key == "srtm" {
+        providers::srtm::MAX_ZIP_BYTES
+    } else if job.asset_key == "product" && extension(&job.media_type) == Ok("zip") {
+        providers::copernicus::MAX_PRODUCT_BYTES
+    } else if providers::radar::KEYS.contains(&job.asset_key.as_str()) {
+        providers::radar::MAX_BYTES
+    } else if job.asset_key == "aerial" {
+        providers::MAX_NAIP_BYTES
+    } else {
+        MAX_ASSET_BYTES
+    }
+}
+
+// Protected and server-generated adapters have their own response contracts.
+// Until those contracts accept conditional ranges, their retry is a fresh GET.
+fn supports_partial_transfer(job: &Job) -> bool {
+    job.stac_source.is_none()
+        && job.wcs_source.is_none()
+        && Url::parse(&job.href).is_ok_and(|url| {
+            !matches!(
+                url.host_str(),
+                Some(providers::nasa::HOST | providers::copernicus::HOST)
+            )
+        })
 }
 
 pub fn validate_asset_url(href: &str) -> Result<Url> {
-    let url = Url::parse(href).map_err(|_| "Invalid asset URL")?;
-    if url.scheme() != "https"
-        || url.host_str() != Some(SOURCE_HOST)
-        || url.port_or_known_default() != Some(443)
-        || !url.username().is_empty()
-        || url.password().is_some()
-        || url.query().is_some()
-        || url.fragment().is_some()
-        || !url.path().starts_with("/sentinel-s2-l2a-cogs/")
-        || url.path().contains('%')
-    {
-        return Err("Asset URL must be an unsigned HTTPS Sentinel COG URL on the approved Earth Search bucket".into());
-    }
-    Ok(url)
+    providers::asset_url(href)
 }
 
 fn validate_request(request: &CreateJobRequest, fixture_origin: Option<&str>) -> Result<()> {
+    if matches!(request.asset_key.as_str(), "stac_asset" | "wcs_coverage") {
+        return Err("Custom raster downloads require a saved source selection".into());
+    }
     for (value, limit) in [(&request.item_id, 200), (&request.asset_key, 80)] {
         if value.is_empty()
             || value.len() > limit
@@ -254,14 +339,29 @@ fn validate_request(request: &CreateJobRequest, fixture_origin: Option<&str>) ->
             return Err(error);
         }
     };
-    if !url
-        .path_segments()
-        .is_some_and(|mut parts| parts.any(|part| part == request.item_id))
-    {
+    if !providers::matches_item(&url, &request.item_id, &request.asset_key) {
         return Err("The asset URL does not match itemId".into());
     }
     let path = url.path().to_ascii_lowercase();
-    if !(path.ends_with(&format!(".{ext}")) || (ext == "jpg" && path.ends_with(".jpeg"))) {
+    if (request.asset_key == "viirs") != (ext == "h5") {
+        return Err("VIIRS original products require HDF5 mediaType".into());
+    }
+    if request.asset_key == "srtm" && ext != "zip" {
+        return Err("SRTMGL1 original files require ZIP mediaType".into());
+    }
+    if url.host_str() == Some(providers::copernicus::HOST) {
+        return if ext == "zip" {
+            Ok(())
+        } else {
+            Err("Copernicus original products require ZIP mediaType".into())
+        };
+    }
+    if !(path.ends_with(&format!(".{ext}"))
+        || (ext == "jpg" && path.ends_with(".jpeg"))
+        || (ext == "tif"
+            && url.host_str() == Some(providers::radar::HOST)
+            && path.ends_with(".rtc.tiff")))
+    {
         return Err("Asset URL extension does not match mediaType".into());
     }
     Ok(())
@@ -310,8 +410,19 @@ impl JobManager {
             if Uuid::parse_str(id).is_err() || id != &job.id {
                 return Err("Stored job has an invalid identifier".into());
             }
+            if let Some(info) = &job.transfer {
+                info.validate(job)?;
+            }
+            if job.stac_source.is_some() {
+                stac::validate_job(&root, job)?;
+            } else if job.wcs_source.is_some() {
+                wcs::validate_job(&root, job)?;
+            } else if matches!(job.asset_key.as_str(), "stac_asset" | "wcs_coverage") {
+                return Err("Custom raster job has no saved source metadata".into());
+            }
             match job.kind.as_str() {
                 "download" => {}
+                "raster_prepare" => prepared::validate_stored(job)?,
                 "raster_clip" => {
                     let recipe = job.recipe.as_ref().ok_or("Stored clip job has no recipe")?;
                     recipe.validate()?;
@@ -322,19 +433,46 @@ impl JobManager {
                 "raster_mosaic" => {
                     mosaic::validate_stored_mosaic(job)?;
                 }
+                "raster_rgb" => raster::reflectance::composite::scientific::validate_stored(job)?,
                 _ => return Err("Stored job has an unsupported kind".into()),
+            }
+            if (job.rgb_spec.is_some() || job.rgb_output.is_some()) && job.kind != "raster_rgb" {
+                return Err("Stored RGB specification belongs to a different operation".into());
+            }
+            if job.viirs_prepare.is_some() && job.kind != "raster_prepare" {
+                return Err("Stored VIIRS preparation pin belongs to a different operation".into());
+            }
+            if let Some(science) = &job.viirs_science {
+                if job.kind != "download"
+                    || job.asset_key != "viirs"
+                    || job.status != JobStatus::Succeeded
+                {
+                    return Err(
+                        "Stored VIIRS science summary belongs to an incomplete or different job"
+                            .into(),
+                    );
+                }
+                science.validate(&job.item_id, job.sha256.as_deref().unwrap_or(""))?;
             }
             if active(&job.status) {
                 job.status = JobStatus::Interrupted;
                 job.updated_at = now();
-                job.error = Some("The runtime stopped before this operation completed. Retry restarts the operation.".into());
+                job.error = Some(if job.kind == "download" {
+                    "The runtime stopped before this download completed. Retry checks saved bytes and resumes when supported."
+                } else { "The runtime stopped before this operation completed. Retry restarts the operation." }.into());
                 job.output_path = None;
                 job.sha256 = None;
-                if job.kind == "raster_clip" || job.kind == "raster_mosaic" {
+                job.viirs_science = None;
+                if matches!(
+                    job.kind.as_str(),
+                    "raster_clip" | "raster_mosaic" | "raster_prepare" | "raster_rgb"
+                ) {
                     // A crash after the engine's file commit but before the job commit is not success.
                     job.crop = None;
                     job.manifest_path = None;
                     job.mosaic_output = None;
+                    job.safe_output = None;
+                    job.rgb_output = None;
                 }
             }
             if job.status == JobStatus::Succeeded {
@@ -343,8 +481,10 @@ impl JobManager {
                         .join(format!("{}.{}", job.id, extension(&job.media_type)?));
                 let manifest = root.join("assets").join(format!("{id}.metadata.json"));
                 if !expected.is_file()
-                    || ((job.kind == "raster_clip" || job.kind == "raster_mosaic")
-                        && !manifest.is_file())
+                    || ((matches!(
+                        job.kind.as_str(),
+                        "raster_clip" | "raster_mosaic" | "raster_prepare" | "raster_rgb"
+                    )) && !manifest.is_file())
                 {
                     job.status = JobStatus::Failed;
                     job.error = Some(
@@ -352,33 +492,67 @@ impl JobManager {
                     );
                     job.output_path = None;
                     job.sha256 = None;
+                    job.viirs_science = None;
                 } else {
                     job.output_path = Some(expected.to_string_lossy().into_owned());
-                    if job.kind == "raster_clip" || job.kind == "raster_mosaic" {
+                    if matches!(
+                        job.kind.as_str(),
+                        "raster_clip" | "raster_mosaic" | "raster_prepare" | "raster_rgb"
+                    ) {
                         job.manifest_path = Some(manifest.to_string_lossy().into_owned());
                     }
                 }
             }
-            if (job.kind == "raster_clip" || job.kind == "raster_mosaic")
-                && job.status != JobStatus::Succeeded
+            if (matches!(
+                job.kind.as_str(),
+                "raster_clip" | "raster_mosaic" | "raster_prepare" | "raster_rgb"
+            )) && job.status != JobStatus::Succeeded
             {
                 processing::cleanup_clip(&root, id).await;
                 job.crop = None;
                 job.manifest_path = None;
                 job.mosaic_output = None;
+                job.safe_output = None;
+                job.rgb_output = None;
             }
-            if job.kind == "download" && job.status != JobStatus::Succeeded {
-                // A forcibly terminated transfer must not leave an orphaned partial.
-                let _ =
-                    tokio::fs::remove_file(root.join("assets").join(format!("{id}.part"))).await;
+            if job.kind == "download"
+                && job.status != JobStatus::Succeeded
+                && (job.status == JobStatus::Cancelled
+                    || !supports_partial_transfer(job)
+                    || !transfer::candidate(&root, job, source_transfer_limit(job)))
+            {
+                transfer::discard(&root, id).await?;
             }
         }
+        transfer::cleanup_staging(&root).await?;
+        mosaic::cleanup_staged_hgt(&root).await?;
         let recipes = processing::load_recipes(&root).await?;
         let projects = projects::load_projects(&root, fixture_origin.as_deref()).await?;
+        let vectors = vector::load(&root).await?;
+        let tiles = tiles::load(&root).await?;
+        let three_d = three_d::load(&root).await?;
+        let feature_services = features::load(&root).await?;
+        let (map_services, map_images) = wms::load(&root).await?;
+        let stac = stac::load(&root).await?;
+        let wcs = wcs::load(&root).await?;
         let proxy_settings = proxy::load(&root).await?;
+        // Mock download servers must remain local even when the developer's
+        // workstation has a system proxy. Production defaults remain System.
+        #[cfg(test)]
+        let proxy_settings =
+            if fixture_origin.is_some() && proxy_settings == ProxySettings::default() {
+                ProxySettings {
+                    mode: proxy::ProxyMode::Direct,
+                    url: None,
+                }
+            } else {
+                proxy_settings
+            };
         proxy::download_client(&proxy_settings)?;
         let manager = Self {
             inner: Arc::new(Inner {
+                accounts: Mutex::new(accounts::Accounts::new(&root)),
+                planetary_access: providers::AccessCache::default(),
                 root,
                 store: Mutex::new(Store {
                     jobs,
@@ -387,6 +561,14 @@ impl JobManager {
                 }),
                 recipes: Mutex::new(recipes),
                 projects: Mutex::new(projects),
+                vectors: Mutex::new(vectors),
+                tiles: Mutex::new(tiles),
+                three_d: Mutex::new(three_d),
+                feature_services: Mutex::new(feature_services),
+                map_services: Mutex::new(map_services),
+                map_images: Mutex::new(map_images),
+                stac: Mutex::new(stac),
+                wcs: Mutex::new(wcs),
                 proxy_settings: Mutex::new(proxy_settings),
                 permits: Semaphore::new(2),
                 raster_permits: Arc::new(Semaphore::new(1)),
@@ -414,6 +596,7 @@ impl JobManager {
             version: env!("CARGO_PKG_VERSION"),
             storage_root: self.inner.root.to_string_lossy().into_owned(),
             max_asset_bytes: MAX_ASSET_BYTES,
+            max_aerial_asset_bytes: providers::MAX_NAIP_BYTES,
             validation:
                 "File signature, byte count and SHA-256 only; no scientific raster validation",
         }
@@ -442,7 +625,10 @@ impl JobManager {
         let root = self.inner.root.clone();
         tokio::task::spawn_blocking(move || {
             if job.status != JobStatus::Succeeded
-                || !matches!(job.kind.as_str(), "raster_clip" | "raster_mosaic")
+                || !matches!(
+                    job.kind.as_str(),
+                    "raster_clip" | "raster_mosaic" | "raster_prepare" | "raster_rgb"
+                )
             {
                 return Err("Only completed derived GeoTIFF files can be exported".into());
             }
@@ -463,7 +649,15 @@ impl JobManager {
             }
             let file = std::fs::File::open(output).map_err(io_error)?;
             let size = file.metadata().map_err(io_error)?.len();
-            if size == 0 || size > 128 * 1024 * 1024 || size != job.bytes_downloaded {
+            if size == 0
+                || size
+                    > if job.kind == "raster_rgb" {
+                        MAX_ASSET_BYTES
+                    } else {
+                        128 * 1024 * 1024
+                    }
+                || size != job.bytes_downloaded
+            {
                 return Err("Derived file byte count is invalid".into());
             }
             let mut bytes = Vec::with_capacity(size as usize);
@@ -547,6 +741,14 @@ impl JobManager {
                     .and_then(|value| value.as_str())
                     != job.sha256.as_deref()
                 || manifest.get("plan") != Some(&serde_json::to_value(plan).map_err(io_error)?)
+                || manifest.get("viSelection")
+                    != spec
+                        .vi_selection
+                        .as_ref()
+                        .map(serde_json::to_value)
+                        .transpose()
+                        .map_err(io_error)?
+                        .as_ref()
             {
                 return Err("Mosaic metadata no longer matches its completed result".into());
             }
@@ -647,8 +849,36 @@ impl JobManager {
             let recipe = old.recipe.as_ref().ok_or("The clip job has no recipe")?;
             recipe.validate()?;
             processing::validate_source(recipe, store.jobs.get(&recipe.source.job_id))?;
+        } else if old.kind == "raster_prepare" {
+            prepared::validate_source(&old, &store.jobs)?;
         } else if old.kind == "raster_mosaic" {
             mosaic::validate_mosaic_sources(&old, &store.jobs)?;
+        } else if old.kind == "raster_rgb" {
+            raster::reflectance::composite::scientific::validate_sources(&old, &store.jobs)?;
+        } else if old.stac_source.is_some() {
+            stac::validate_job(&self.inner.root, &old)?;
+            if store.jobs.values().any(|job| {
+                job.id != old.id
+                    && job.stac_source == old.stac_source
+                    && matches!(
+                        job.status,
+                        JobStatus::Queued | JobStatus::Running | JobStatus::Succeeded
+                    )
+            }) {
+                return Err("This source already has a queued, running or completed task; use that task or download it from its project".into());
+            }
+        } else if old.wcs_source.is_some() {
+            wcs::validate_job(&self.inner.root, &old)?;
+            if store.jobs.values().any(|job| {
+                job.id != old.id
+                    && job.wcs_source == old.wcs_source
+                    && matches!(
+                        job.status,
+                        JobStatus::Queued | JobStatus::Running | JobStatus::Succeeded
+                    )
+            }) {
+                return Err("This coverage request already has a queued, running or completed task; use that task or download it from its project".into());
+            }
         } else {
             self.validate(&CreateJobRequest {
                 item_id: old.item_id.clone(),
@@ -660,6 +890,7 @@ impl JobManager {
         }
         let mut job = old.clone();
         job.status = JobStatus::Queued;
+        job.transfer = None;
         job.bytes_downloaded = 0;
         job.total_bytes = None;
         job.sha256 = None;
@@ -667,10 +898,22 @@ impl JobManager {
         job.error = None;
         job.crop = None;
         job.mosaic_output = None;
+        job.safe_output = None;
+        job.rgb_output = None;
+        job.viirs_science = None;
         job.manifest_path = None;
         job.updated_at = now();
         job.validation = if job.kind == "raster_clip" {
             "Pending pinned source validation and exact pixel-window clip".into()
+        } else if job.kind == "raster_prepare" {
+            if job.viirs_prepare.is_some() {
+                "Pending pinned VIIRS HDF5, original Int16 samples and GeoTIFF grid validation"
+                    .into()
+            } else {
+                "Pending original SAFE checksum, XML geometry and JP2 pixel validation".into()
+            }
+        } else if job.kind == "raster_rgb" {
+            "Pending original RGB sample, calibration and grid validation".into()
         } else if job.kind == "raster_mosaic" {
             "Pending source checksum validation and pixel-aligned mosaic/clip".into()
         } else {
@@ -706,8 +949,20 @@ impl JobManager {
         let manager = self.clone();
         tokio::spawn(async move {
             let result = match manager.get(&id).await.as_ref().map(|job| job.kind.as_str()) {
+                Some("raster_rgb") => manager.process_scientific_rgb(&id, &token).await,
                 Some("raster_clip") => manager.process_clip(&id, &token).await,
                 Some("raster_mosaic") => manager.process_mosaic(&id, &token).await,
+                Some("raster_prepare") => {
+                    if manager
+                        .get(&id)
+                        .await
+                        .is_some_and(|j| j.viirs_prepare.is_some())
+                    {
+                        manager.process_viirs(&id, &token).await
+                    } else {
+                        manager.process_safe(&id, &token).await
+                    }
+                }
                 Some("download") => manager.download(&id, &token).await,
                 _ => Err("Unknown job kind".into()),
             };
@@ -723,15 +978,26 @@ impl JobManager {
                     job.sha256 = None;
                     job.crop = None;
                     job.mosaic_output = None;
+                    job.safe_output = None;
+                    job.rgb_output = None;
+                    job.viirs_science = None;
                     job.manifest_path = None;
-                    if job.kind == "raster_clip" || job.kind == "raster_mosaic" {
+                    if matches!(
+                        job.kind.as_str(),
+                        "raster_clip" | "raster_mosaic" | "raster_prepare" | "raster_rgb"
+                    ) {
                         processing::cleanup_clip(&manager.inner.root, &id).await;
                     }
                 }
-                let _ = tokio::fs::remove_file(
-                    manager.inner.root.join("assets").join(format!("{id}.part")),
-                )
-                .await;
+                let retain = store.jobs.get(&id).is_some_and(|job| {
+                    job.kind == "download"
+                        && job.status != JobStatus::Cancelled
+                        && supports_partial_transfer(job)
+                        && transfer::candidate(&manager.inner.root, job, source_transfer_limit(job))
+                });
+                if !retain {
+                    let _ = transfer::discard(&manager.inner.root, &id).await;
+                }
                 if let Err(error) = manager.persist(&store.jobs).await {
                     eprintln!("Cannot persist failed job: {error}");
                 }
@@ -764,7 +1030,9 @@ impl JobManager {
             for job in store.jobs.values_mut() {
                 if active(&job.status) {
                     job.status = JobStatus::Interrupted;
-                    job.error = Some("The application exited before this operation completed. Retry restarts the operation.".into());
+                    job.error = Some(if job.kind == "download" {
+                        "The application exited before this download completed. Retry checks saved bytes and resumes when supported."
+                    } else { "The application exited before this operation completed. Retry restarts the operation." }.into());
                     job.updated_at = now();
                 }
             }
@@ -797,6 +1065,59 @@ impl JobManager {
         self.persist(&store.jobs).await
     }
 
+    async fn transfer_progress(
+        &self,
+        id: &str,
+        bytes: u64,
+        total: Option<u64>,
+        info: TransferInfo,
+    ) -> Result<()> {
+        let mut store = self.inner.store.lock().await;
+        let job = store.jobs.get_mut(id).ok_or("Unknown job")?;
+        if !active(&job.status) {
+            return Err("Transfer cancelled".into());
+        }
+        job.status = JobStatus::Running;
+        job.bytes_downloaded = bytes;
+        job.total_bytes = total;
+        info.validate(job)?;
+        job.transfer = Some(info);
+        job.updated_at = now();
+        self.persist(&store.jobs).await
+    }
+
+    async fn download_response(
+        &self,
+        client: &reqwest::Client,
+        settings: &ProxySettings,
+        job: &Job,
+        checkpoint: Option<&transfer::Checkpoint>,
+    ) -> Result<reqwest::Response> {
+        if job.stac_source.is_some() {
+            stac::asset_response(settings, job, &self.inner.root).await
+        } else if job.wcs_source.is_some() {
+            wcs::asset_response(settings, job, &self.inner.root).await
+        } else if Url::parse(&job.href)
+            .is_ok_and(|url| url.host_str() == Some(providers::nasa::HOST))
+        {
+            self.nasa_response(client, job).await
+        } else if Url::parse(&job.href)
+            .is_ok_and(|url| url.host_str() == Some(providers::copernicus::HOST))
+        {
+            self.copernicus_response(client, job).await
+        } else {
+            let href = self
+                .inner
+                .planetary_access
+                .resolve(client, &job.href, &job.item_id, &job.asset_key)
+                .await?;
+            transfer::request(client.get(href), checkpoint)
+                .send()
+                .await
+                .map_err(|error| error.without_url().to_string())
+        }
+    }
+
     async fn download(&self, id: &str, token: &CancellationToken) -> Result<()> {
         let _permit = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
@@ -804,39 +1125,134 @@ impl JobManager {
         };
         self.progress(id, 0, None).await?;
         let job = self.get(id).await.ok_or("Unknown job")?;
+        let limit = source_transfer_limit(&job);
+        let resumable = supports_partial_transfer(&job);
+        let mut prepared = if resumable {
+            transfer::prepare(&self.inner.root, &job, limit, token).await?
+        } else {
+            transfer::discard(&self.inner.root, id).await?;
+            transfer::prepare(&self.inner.root, &job, limit, token).await?
+        };
         let proxy_settings = self.proxy_settings().await;
         let client = proxy::download_client(&proxy_settings)?;
-        let response = tokio::select! {
+        let mut response = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
-            response = client.get(&job.href).send() => response.map_err(io_error)?,
+            response = self.download_response(&client, &proxy_settings, &job, prepared.checkpoint.as_ref()) => response?,
         };
+        if prepared
+            .checkpoint
+            .as_ref()
+            .is_some_and(|pin| !transfer::accepts(&response, pin))
+        {
+            // If-Range can legitimately return a new complete representation.
+            // Invalid ranges and 412/416 get one fresh request, never appended.
+            match response.status() {
+                reqwest::StatusCode::OK
+                | reqwest::StatusCode::PARTIAL_CONTENT
+                | reqwest::StatusCode::PRECONDITION_FAILED
+                | reqwest::StatusCode::RANGE_NOT_SATISFIABLE => {}
+                status => {
+                    return Err(format!(
+                        "Asset server returned HTTP {status}; partial download was retained"
+                    ))
+                }
+            }
+            drop(prepared.file.take());
+            transfer::discard(&self.inner.root, id).await?;
+            prepared = transfer::prepare(&self.inner.root, &job, limit, token).await?;
+            prepared.restarted = true;
+            if response.status() != reqwest::StatusCode::OK {
+                drop(response);
+                response = tokio::select! {
+                    _ = token.cancelled() => return Err("Transfer cancelled".into()),
+                    response = self.download_response(&client, &proxy_settings, &job, None) => response?,
+                };
+            }
+        }
         if !response.status().is_success() {
             return Err(format!(
                 "Asset server returned HTTP {}; redirects are not followed",
                 response.status()
             ));
         }
-        if response.status() == reqwest::StatusCode::PARTIAL_CONTENT {
+        if prepared.checkpoint.is_none()
+            && (response.status() != reqwest::StatusCode::OK
+                || response
+                    .headers()
+                    .contains_key(reqwest::header::CONTENT_RANGE))
+        {
             return Err("Unexpected partial HTTP response".into());
         }
-        let total = response.content_length();
-        if total.is_some_and(|size| size > MAX_ASSET_BYTES) {
-            return Err("Asset exceeds the 512 MiB local transfer limit".into());
+        let total = prepared
+            .checkpoint
+            .as_ref()
+            .map(|pin| pin.total)
+            .or_else(|| response.content_length());
+        let validator = prepared
+            .checkpoint
+            .as_ref()
+            .map(|pin| (pin.etag.clone(), pin.total))
+            .or_else(|| transfer::validator(&response, resumable));
+        let archive = job.asset_key == "product" && extension(&job.media_type)? == "zip";
+        let srtm = job.asset_key == "srtm";
+        let radar = providers::radar::KEYS.contains(&job.asset_key.as_str());
+        let limit_error = if srtm {
+            "SRTM ZIP exceeds the 64 MiB local transfer limit"
+        } else if archive {
+            "Product exceeds the 4 GiB local transfer limit"
+        } else if radar {
+            "Radar COG exceeds the 4 GiB local transfer limit"
+        } else if job.asset_key == "aerial" {
+            "NAIP COG exceeds the 4 GiB local transfer limit"
+        } else {
+            "Asset exceeds the 512 MiB local transfer limit"
+        };
+        if total.is_some_and(|size| size > limit) {
+            return Err(limit_error.into());
         }
-        self.progress(id, 0, total).await?;
+        let needed = total
+            .unwrap_or(limit)
+            .saturating_sub(prepared.bytes)
+            .saturating_add(64 * 1024 * 1024);
+        if fs2::available_space(&self.inner.root).map_err(io_error)? < needed {
+            return Err("Insufficient workspace disk space for this source download".into());
+        }
+        let info = TransferInfo {
+            mode: if prepared.bytes > 0 {
+                TransferMode::Resumed
+            } else if prepared.restarted {
+                TransferMode::Restarted
+            } else {
+                TransferMode::Fresh
+            },
+            resumed_bytes: prepared.bytes,
+        };
+        self.transfer_progress(id, prepared.bytes, total, info)
+            .await?;
         let partial = self.inner.root.join("assets").join(format!("{id}.part"));
         let final_path =
             self.inner
                 .root
                 .join("assets")
                 .join(format!("{}.{}", id, extension(&job.media_type)?));
-        let mut file = tokio::fs::File::create(&partial).await.map_err(io_error)?;
+        let mut file = match prepared.file.take() {
+            Some(file) => file,
+            None => tokio::fs::OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(&partial)
+                .await
+                .map_err(io_error)?,
+        };
         let mut stream = response.bytes_stream();
-        let mut hasher = Sha256::new();
-        let mut bytes = 0u64;
-        let mut header = Vec::new();
+        let mut hasher = prepared.hasher;
+        let mut bytes = prepared.bytes;
+        let mut header = prepared.header;
         let mut last_progress = std::time::Instant::now();
-        loop {
+        let mut last_checkpoint = std::time::Instant::now();
+        let mut saved_bytes = bytes;
+        let mut invalid_body = false;
+        let transfer_result: Result<()> = async { loop {
             let chunk = tokio::select! {
                 _ = token.cancelled() => return Err("Transfer cancelled".into()),
                 chunk = tokio::time::timeout(Duration::from_secs(45), stream.next()) => chunk.map_err(|_| "Asset server stopped sending data for 45 seconds")?,
@@ -844,26 +1260,116 @@ impl JobManager {
             let Some(chunk) = chunk else {
                 break;
             };
-            let chunk = chunk.map_err(io_error)?;
+            let chunk = chunk.map_err(|error| error.without_url().to_string())?;
             bytes += chunk.len() as u64;
-            if bytes > MAX_ASSET_BYTES {
-                return Err("Asset exceeds the 512 MiB local transfer limit".into());
+            if bytes > limit || total.is_some_and(|size| bytes > size) {
+                invalid_body = true;
+                return Err(if bytes > limit { limit_error } else { "Asset transfer exceeded its declared byte count" }.into());
             }
             header.extend(chunk.iter().take(16usize.saturating_sub(header.len())));
             file.write_all(&chunk).await.map_err(io_error)?;
             hasher.update(&chunk);
+            if last_checkpoint.elapsed() >= Duration::from_secs(5) || bytes.saturating_sub(saved_bytes) >= 32 * 1024 * 1024 {
+                transfer::checkpoint(&self.inner.root, &job, &file, validator.as_ref(), bytes, &hasher, &header).await?;
+                saved_bytes = bytes;
+                last_checkpoint = std::time::Instant::now();
+            }
             if last_progress.elapsed() >= Duration::from_millis(200) {
                 self.progress(id, bytes, total).await?;
                 last_progress = std::time::Instant::now();
             }
+        } Ok(()) }.await;
+        if let Err(error) = transfer_result {
+            if invalid_body {
+                transfer::discard_checkpoint(&self.inner.root, id).await?;
+            } else {
+                transfer::checkpoint(
+                    &self.inner.root,
+                    &job,
+                    &file,
+                    validator.as_ref(),
+                    bytes,
+                    &hasher,
+                    &header,
+                )
+                .await?;
+                let _ = self.progress(id, bytes, total).await;
+            }
+            return Err(error);
         }
         if bytes == 0 || total.is_some_and(|expected| expected != bytes) {
+            transfer::checkpoint(
+                &self.inner.root,
+                &job,
+                &file,
+                validator.as_ref(),
+                bytes,
+                &hasher,
+                &header,
+            )
+            .await?;
             return Err("Asset transfer was empty or truncated".into());
         }
+        // Full-file validation failures must not become resumable candidates.
+        transfer::discard_checkpoint(&self.inner.root, id).await?;
         verify_signature(&header, &job.media_type)?;
         file.sync_all().await.map_err(io_error)?;
         drop(file);
+        if archive {
+            let path = partial.clone();
+            let item = job.item_id.clone();
+            tokio::task::spawn_blocking(move || providers::copernicus::verify_safe(&path, &item))
+                .await
+                .map_err(io_error)??;
+        }
+        if srtm {
+            let path = partial.clone();
+            let item = job.item_id.clone();
+            tokio::task::spawn_blocking(move || providers::srtm::verify_hgt(&path, &item))
+                .await
+                .map_err(io_error)??;
+        }
         let sha256 = format!("{:x}", hasher.finalize());
+        if job.stac_source.is_some() {
+            stac::verify_transfer(&self.inner.root, &job, bytes, &sha256)?;
+        }
+        if job.wcs_source.is_some() {
+            let root = self.inner.root.clone();
+            let check = job.clone();
+            let path = partial.clone();
+            let hash = sha256.clone();
+            let cancellation = token.clone();
+            let permit = tokio::select! {
+                _ = token.cancelled() => return Err("Transfer cancelled".into()),
+                permit = self.inner.raster_permits.clone().acquire_owned() => permit.map_err(io_error)?,
+            };
+            tokio::task::spawn_blocking(move || {
+                let _permit = permit;
+                wcs::verify_download(&root, &check, &path, bytes, &hash, &cancellation)
+            })
+            .await
+            .map_err(io_error)??;
+        }
+        let viirs_science = if job.asset_key == "viirs" {
+            let path = partial.clone();
+            let item = job.item_id.clone();
+            let hash = sha256.clone();
+            let cancellation = token.clone();
+            let permit = tokio::select! {
+                _ = token.cancelled() => return Err("Transfer cancelled".into()),
+                permit = self.inner.raster_permits.clone().acquire_owned() => permit.map_err(io_error)?,
+            };
+            Some(
+                tokio::task::spawn_blocking(move || {
+                    let _permit = permit;
+                    providers::viirs::hdf::verify(&path, &item, bytes, &hash, &cancellation)
+                })
+                .await
+                .map_err(io_error)??,
+            )
+        } else {
+            None
+        };
         let mut store = self.inner.store.lock().await;
         let record = store.jobs.get_mut(id).ok_or("Unknown job")?;
         if token.is_cancelled() || !active(&record.status) {
@@ -877,12 +1383,19 @@ impl JobManager {
         record.bytes_downloaded = bytes;
         record.total_bytes = total.or(Some(bytes));
         record.sha256 = Some(sha256);
+        record.viirs_science = viirs_science;
         record.output_path = Some(final_path.to_string_lossy().into_owned());
         record.updated_at = now();
         record.error = None;
-        record.validation =
-            "Passed file signature, byte count and SHA-256 checks; no scientific raster validation"
-                .into();
+        record.validation = if job.wcs_source.is_some() {
+            "Passed coverage response byte count, SHA-256, declared grid and raster layout checks; retained server-generated subset without scientific calibration"
+        } else if srtm {
+            "Passed official SRTMGL1 identity, ZIP member CRC, 3601 × 3601 Int16 HGT byte count and SHA-256 checks; terrain accuracy was not assessed"
+        } else if job.asset_key == "viirs" {
+            "Passed VIIRS v002 embedded identity, period, sinusoidal tile geometry and calibration; all M5/M4/M3 Int16 samples decoded and checksummed; QA masks and other science layers were not decoded"
+        } else if archive {
+            "Passed official product identity, SAFE ZIP directory, byte count and SHA-256 checks; JP2 pixels were not decoded"
+        } else { "Passed file signature, byte count and SHA-256 checks; no scientific raster validation" }.into();
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.insert(id.to_owned(), before_commit);
             let _ = tokio::fs::remove_file(&final_path).await;
@@ -901,12 +1414,14 @@ fn verify_signature(header: &[u8], media_type: &str) -> Result<()> {
                 || header.starts_with(b"II\x2b\0\x08\0\0\0")
                 || header.starts_with(b"MM\0\x2b\0\x08\0\0")
         }
+        "zip" => header.starts_with(b"PK\x03\x04"),
+        "h5" => header.starts_with(b"\x89HDF\r\n\x1a\n"),
         _ => false,
     };
     if valid {
         Ok(())
     } else {
-        Err("File signature does not match the requested TIFF/JPEG media type".into())
+        Err("File signature does not match the requested media type".into())
     }
 }
 

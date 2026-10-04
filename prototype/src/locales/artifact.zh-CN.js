@@ -19,6 +19,7 @@ export default {
   'All files': '全部文件',
   'Derived outputs': '派生成果',
   'Downloaded sources': '下载的源文件',
+  'Source files': '源文件',
   'No local files match these filters.': '没有符合当前筛选条件的本地文件。',
   '{shown} of {total} files': '{shown} / {total} 个文件',
 };

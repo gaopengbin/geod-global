@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-02T05:46:00Z",
+  "scope": "VIIRS 09A1 v002 native HDF5 science validation and metadata UI; synthetic fixtures only",
+  "authenticatedProductionAccess": false,
+  "productionHdf5StructureAcceptance": false,
+  "usedUserDesktop": false,
+  "reader": {
+    "implementation": "hdf5-reader 0.9.1, pure Rust, read-only, default features disabled",
+    "externalFilesAndLinksEnabled": false,
+    "runtimePythonOrGdalRequired": false,
+    "managedSourceSha256Checked": true,
+    "immutableSnapshot": true,
+    "embeddedProductPeriodAndTileChecked": true,
+    "embeddedSinusoidalGridChecked": true,
+    "bands": ["M5/red", "M4/green", "M3/blue"],
+    "dataType": "Int16",
+    "gridSize": [1200, 1200],
+    "nodata": -28672,
+    "scale": 0.0001,
+    "offset": 0,
+    "qualityMaskApplied": false,
+    "otherScienceAndQaLayersDecoded": false
+  },
+  "independentEvidence": {
+    "source": "h5py 3.15.1 and NumPy generated explicitly synthetic HDF5 files",
+    "positiveFixtures": 3,
+    "originalDnComparedByCanonicalSha256": 12960000,
+    "storageVariants": ["little endian", "big endian", "earliest/latest superblocks", "contiguous", "irregular chunks", "gzip", "shuffle", "Fletcher32"],
+    "negativeFixturesRejected": 7,
+    "negativeVariants": ["wrong calibration", "wrong version", "wrong grid", "unsigned type", "oversized shape", "external link", "damaged chunk"],
+    "managedTestHttpDownloadCommitCleanupAndRestart": "passed; synthetic local server, not Earthdata access",
+    "expectedValues": "../../crates/geod-runtime/fixtures/viirs/expected.json",
+    "rustSummaries": "viirs-science-summary-fixtures.json"
+  },
+  "ui": {
+    "source": "headless UI replay using Rust-decoded synthetic fixture summary",
+    "viewports": [{"width":1440,"locale":"en","theme":"light"},{"width":1024,"locale":"zh-CN","theme":"dark"}],
+    "visuallyInspected": true,
+    "metadataVisible": true,
+    "unsupportedMapActionsAbsent": true,
+    "legacyJobsDoNotClaimScienceValidation": true,
+    "failedViirsJobLinksToEarthdataSettings": true,
+    "pageErrors": 0,
+    "horizontalOverflow": false
+  },
+  "checks": {
+    "frontendIsolationContractsAndRecipeSchema": "passed",
+    "nodeTestsPassed": 117,
+    "uiTestsPassed": 116,
+    "runtimeUnitTestsPassed": 175,
+    "runtimeUnitTestsIgnored": 4,
+    "runtimeCliTestsPassed": 3,
+    "desktopBoundaryTestsPassed": 4,
+    "clippyAllTargetsWarningsDenied": "passed",
+    "frontendBuild": "passed",
+    "runtimeAndDevelopmentDesktopBuild": "passed"
+  },
+  "pending": ["real authorized production HDF5 acceptance", "native GeoTIFF band preparation", "workspace scientific map and pixel queries", "persistent scientific thumbnails", "local scientific RGB", "other science and QA layer decoding", "project processing and export"],
+  "packagedOrPublished": false
+}

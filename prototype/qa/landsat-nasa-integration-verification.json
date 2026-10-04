@@ -1,0 +1,287 @@
+{
+  "checkedAt": "2026-10-01T10:34:08.206397+00:00",
+  "projectId": "126ac898-2cf8-4658-872a-7994dac60360",
+  "catalogue": {
+    "checkedAt": "2026-10-01T10:45:32.594Z",
+    "results": [
+      {
+        "provider": "planetary-landsat",
+        "pages": 2,
+        "cloudMax": 60,
+        "ids": [
+          "LC09_L2SP_044034_20250628_02_T1",
+          "LC08_L2SP_044034_20250620_02_T1"
+        ],
+        "cloud": [
+          33.6,
+          2.79
+        ],
+        "boundedCloud": {
+          "min": 10,
+          "max": 40,
+          "values": [
+            33.6,
+            35.64
+          ]
+        }
+      },
+      {
+        "provider": "nasa-earthdata",
+        "pages": 2,
+        "cloudMax": 60,
+        "ids": [
+          "HLS.L30.T10SEG.2025179T184546.v2.0",
+          "HLS.L30.T10SEG.2025178T185200.v2.0"
+        ],
+        "cloud": [
+          47,
+          29
+        ],
+        "boundedCloud": {
+          "min": 10,
+          "max": 40,
+          "values": [
+            29
+          ]
+        }
+      }
+    ]
+  },
+  "originalLandsatFiles": [
+    {
+      "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+      "assetKey": "red",
+      "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+      "bytes": 95591695,
+      "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+      "width": 7671,
+      "height": 7791,
+      "bands": 1,
+      "dataType": "uint16",
+      "crs": "EPSG:32610",
+      "pixelSize": [
+        30,
+        30
+      ],
+      "nodata": 0,
+      "transform": [
+        30,
+        0,
+        462285,
+        0,
+        -30,
+        4264215
+      ],
+      "sampleCell": [
+        4008,
+        4008
+      ],
+      "sampleDN": 9065,
+      "sampleReflectance": 0.049287499999999984,
+      "scale": 2.75e-05,
+      "offset": -0.2
+    },
+    {
+      "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+      "assetKey": "green",
+      "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+      "bytes": 93388645,
+      "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+      "width": 7671,
+      "height": 7791,
+      "bands": 1,
+      "dataType": "uint16",
+      "crs": "EPSG:32610",
+      "pixelSize": [
+        30,
+        30
+      ],
+      "nodata": 0,
+      "transform": [
+        30,
+        0,
+        462285,
+        0,
+        -30,
+        4264215
+      ],
+      "sampleCell": [
+        4008,
+        4008
+      ],
+      "sampleDN": 10102,
+      "sampleReflectance": 0.07780500000000001,
+      "scale": 2.75e-05,
+      "offset": -0.2
+    },
+    {
+      "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+      "assetKey": "blue",
+      "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+      "bytes": 92080083,
+      "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+      "width": 7671,
+      "height": 7791,
+      "bands": 1,
+      "dataType": "uint16",
+      "crs": "EPSG:32610",
+      "pixelSize": [
+        30,
+        30
+      ],
+      "nodata": 0,
+      "transform": [
+        30,
+        0,
+        462285,
+        0,
+        -30,
+        4264215
+      ],
+      "sampleCell": [
+        4008,
+        4008
+      ],
+      "sampleDN": 8496,
+      "sampleReflectance": 0.03364,
+      "scale": 2.75e-05,
+      "offset": -0.2
+    }
+  ],
+  "nasaPublicThumbnail": {
+    "format": "JPEG",
+    "size": [
+      1000,
+      1000
+    ],
+    "source": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.jpg",
+    "originalDownloadVerified": false
+  },
+  "localLandsatDisplayAndProcessing": false,
+  "persistedUnsignedLinks": true,
+  "restartedProjectAndDownloads": {
+    "projectId": "126ac898-2cf8-4658-872a-7994dac60360",
+    "restored": true,
+    "reusedJobIds": [
+      "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+      "9785b8b8-8089-4778-9b63-f964c9af8df0",
+      "6adb1062-e5c5-438d-80ca-a7f7f129ae80"
+    ],
+    "duplicateTransfers": 0,
+    "conversionMetadataPreserved": true
+  },
+  "liveBrowser": {
+    "checkedAt": "2026-10-01T10:51:08.572Z",
+    "liveBrowserCatalogs": [
+      {
+        "provider": "planetary-landsat",
+        "status": 200,
+        "type": "FeatureCollection",
+        "id": "LC09_L2SP_044034_20250628_02_T1",
+        "cloud": 33.6
+      },
+      {
+        "provider": "nasa-earthdata",
+        "status": 200,
+        "type": "FeatureCollection",
+        "id": "HLS.L30.T10SEG.2025179T184546.v2.0",
+        "cloud": 47
+      }
+    ],
+    "nasaClientCloudFilter": {
+      "min": 10,
+      "max": 40,
+      "values": [
+        29
+      ],
+      "hasNext": true
+    },
+    "nasaLiveBrowserThumbnail": {
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "csp": "reviewed desktop img-src policy",
+      "source": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/HLSL30.020/HLS.L30.T10SEG.2025179T184546.v2.0/HLS.L30.T10SEG.2025179T184546.v2.0.jpg"
+    },
+    "landsatLiveProviderPreview": {
+      "dimensions": [
+        1009,
+        1024
+      ],
+      "source": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=landsat-c2-l2&item=LC09_L2SP_044034_20250628_02_T1&assets=red&assets=green&assets=blue&color_formula=gamma%20RGB%202.7,%20saturation%201.5,%20sigmoidal%20RGB%2015%200.55&format=png"
+    }
+  },
+  "interfaceChecks": {
+    "fixtureUI": true,
+    "realOriginalFiles": true,
+    "results": [
+      {
+        "kind": "landsat",
+        "theme": "light",
+        "width": 1440,
+        "overflow": false
+      },
+      {
+        "kind": "nasa",
+        "theme": "light",
+        "width": 1440,
+        "overflow": false
+      },
+      {
+        "kind": "project-restore",
+        "theme": "light",
+        "width": 1440,
+        "errors": []
+      },
+      {
+        "kind": "landsat",
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false
+      },
+      {
+        "kind": "nasa",
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false
+      },
+      {
+        "kind": "project-restore",
+        "theme": "dark",
+        "width": 1440,
+        "errors": []
+      },
+      {
+        "kind": "landsat",
+        "theme": "light",
+        "width": 1024,
+        "overflow": false
+      },
+      {
+        "kind": "nasa",
+        "theme": "light",
+        "width": 1024,
+        "overflow": false
+      },
+      {
+        "kind": "project-restore",
+        "theme": "light",
+        "width": 1024,
+        "errors": []
+      }
+    ]
+  },
+  "automatedChecks": {
+    "nodeTests": 72,
+    "uiTests": 70,
+    "runtimeTests": 93,
+    "cliTests": 3,
+    "desktopTests": 4,
+    "clippy": "passed",
+    "repositoryContractsAndCsp": "passed",
+    "frontendBuild": "passed"
+  },
+  "verificationRuntimeStopped": true,
+  "developmentDesktopResponding": true
+}

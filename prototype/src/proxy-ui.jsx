@@ -51,10 +51,10 @@ export function ProxySettingsPanel() {
   };
 
   return <Surface as="section" className="proxy-settings" aria-label={t('Source download proxy')}>
-    <div className="proxy-heading"><div><h2>{t('Source download proxy')}</h2><p>{t('Choose how GeoD downloads original Sentinel files.')}</p></div>{connected && !loading && <Badge>{t(saved.mode === 'system' ? 'Follow system' : saved.mode === 'direct' ? 'Direct' : 'Custom proxy')}</Badge>}</div>
+    <div className="proxy-heading"><div className="proxy-title"><h2>{t('Source download proxy')}</h2>{connected && !loading && <Badge>{t(saved.mode === 'system' ? 'Follow system' : saved.mode === 'direct' ? 'Direct' : 'Custom proxy')}</Badge>}</div><p>{t('Choose how GeoD connects to original files and account services.')}</p></div>
     {!connected ? <p className="proxy-note">{t('Connect the local task service to change proxy settings.')}</p> : loading ? <p className="proxy-note" role="status"><Spinner size={15}/>{t('Loading proxy settings…')}</p> : <>
       <div className="proxy-fields">
-        <label>{t('Connection mode')}<Select value={draft.mode} onChange={event => { setDraft(previous => ({ ...previous, mode: event.target.value })); setMessage(null); }}>
+        <label>{t('Connection mode')}<Select aria-label={t('Connection mode')} value={draft.mode} onChange={event => { setDraft(previous => ({ ...previous, mode: event.target.value })); setMessage(null); }}>
           <option value="system">{t('Follow system')}</option>
           <option value="direct">{t('Direct')}</option>
           <option value="custom">{t('Custom proxy')}</option>

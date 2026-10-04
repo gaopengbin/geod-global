@@ -73,10 +73,24 @@ impl ProxySettings {
 }
 
 pub(crate) fn download_client(settings: &ProxySettings) -> Result<reqwest::Client> {
+    download_builder(settings)?.build().map_err(io_error)
+}
+
+pub(crate) fn download_builder(settings: &ProxySettings) -> Result<reqwest::ClientBuilder> {
+    download_builder_with_read_timeout(settings, Duration::from_secs(45))
+}
+
+fn download_builder_with_read_timeout(
+    settings: &ProxySettings,
+    read_timeout: Duration,
+) -> Result<reqwest::ClientBuilder> {
     let mut builder = reqwest::Client::builder()
         .redirect(reqwest::redirect::Policy::none())
         .connect_timeout(Duration::from_secs(20))
-        .timeout(Duration::from_secs(30 * 60))
+        // A healthy multi-gigabyte transfer may take hours. Bound inactivity,
+        // not elapsed transfer time; catalogue/account requests have their own
+        // shorter total deadlines and the download worker bounds every chunk.
+        .read_timeout(read_timeout)
         .user_agent(concat!("GeoD-Global/", env!("CARGO_PKG_VERSION")));
     builder = match settings.mode {
         ProxyMode::System => builder,
@@ -86,7 +100,7 @@ pub(crate) fn download_client(settings: &ProxySettings) -> Result<reqwest::Clien
                 .map_err(io_error)?,
         ),
     };
-    builder.build().map_err(io_error)
+    Ok(builder)
 }
 
 pub(crate) async fn load(root: &std::path::Path) -> Result<ProxySettings> {
@@ -152,6 +166,65 @@ impl JobManager {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[tokio::test]
+    async fn streaming_read_deadline_resets_when_data_arrives_and_rejects_a_stall() {
+        use tokio::io::AsyncReadExt;
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server = tokio::spawn(async move {
+            for stalled in [false, true] {
+                let (mut socket, _) = listener.accept().await.unwrap();
+                let mut request = [0; 4096];
+                let mut headers = Vec::new();
+                while !headers.ends_with(b"\r\n\r\n") {
+                    let count = socket.read(&mut request).await.unwrap();
+                    assert!(count > 0);
+                    headers.extend_from_slice(&request[..count]);
+                    assert!(headers.len() <= 4096);
+                }
+                socket
+                    .write_all(
+                        b"HTTP/1.1 200 OK\r\nContent-Length: 7\r\nConnection: close\r\n\r\na",
+                    )
+                    .await
+                    .unwrap();
+                if stalled {
+                    tokio::time::sleep(Duration::from_millis(1500)).await;
+                } else {
+                    for _ in 0..6 {
+                        tokio::time::sleep(Duration::from_millis(250)).await;
+                        socket.write_all(b"a").await.unwrap();
+                    }
+                }
+            }
+        });
+        let client = download_builder_with_read_timeout(
+            &ProxySettings {
+                mode: ProxyMode::Direct,
+                url: None,
+            },
+            Duration::from_secs(1),
+        )
+        .unwrap()
+        .build()
+        .unwrap();
+        let start = std::time::Instant::now();
+        let response = client
+            .get(format!("http://{address}/progressing"))
+            .send()
+            .await
+            .unwrap();
+        assert_eq!(response.bytes().await.unwrap(), "aaaaaaa");
+        assert!(start.elapsed() > Duration::from_secs(1));
+        let response = client
+            .get(format!("http://{address}/stalled"))
+            .send()
+            .await
+            .unwrap();
+        assert!(response.bytes().await.unwrap_err().is_timeout());
+        server.await.unwrap();
+    }
 
     #[test]
     fn custom_proxy_requires_plain_host_and_port_without_secrets() {

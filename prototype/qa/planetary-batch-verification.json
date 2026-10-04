@@ -1,0 +1,87 @@
+{
+  "verifiedAt": "2026-10-01T15:45:49.349310+00:00",
+  "scope": "Native Planetary Computer batch access; no credentials or SAS strings retained",
+  "fixtureCases": [
+    "read-only container and expiry validation with the actual msft:expiry response field",
+    "concurrent requests coalesce; Sentinel and Landsat containers remain separate",
+    "near-expiry token refresh and stale catalogue rejection",
+    "exact original product processing date and band binding",
+    "shared HTTP 429 cooldown and recovery",
+    "caller cancellation releases the in-flight lock",
+    "bounded catalogue snapshots"
+  ],
+  "landsat": {
+    "itemId": "LC09_L2SP_044034_20250628_02_T1",
+    "actualFullOriginalDownloads": [
+      {
+        "band": "red",
+        "status": "succeeded",
+        "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+        "bytes": 95591695,
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "independentHashMatches": true
+      },
+      {
+        "band": "green",
+        "status": "succeeded",
+        "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+        "bytes": 93388645,
+        "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+        "independentHashMatches": true
+      },
+      {
+        "band": "blue",
+        "status": "succeeded",
+        "source": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+        "bytes": 92080083,
+        "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+        "independentHashMatches": true
+      }
+    ],
+    "totalBytes": 281060423,
+    "catalogueRequests": 1,
+    "containerSasRequests": 1,
+    "restartRestoresCompletedJobs": true,
+    "persistedSas": false
+  },
+  "sentinel": {
+    "itemId": "S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511",
+    "assets": [
+      "visual",
+      "SCL"
+    ],
+    "actualRangeResponses": [
+      {
+        "status": 206,
+        "bytes": 4096
+      },
+      {
+        "status": 206,
+        "bytes": 4096
+      }
+    ],
+    "catalogueRequests": 1,
+    "containerSasRequests": 1,
+    "fullFilesDownloadedThisVerification": false
+  },
+  "checks": {
+    "nodeTestsPassed": 91,
+    "uiTestsPassed": 92,
+    "nativeTestsPassed": 137,
+    "nativeTestsIgnoredByDefault": 3,
+    "desktopTestsPassed": 4,
+    "dependencyIsolation": "passed",
+    "contracts": "passed",
+    "recipeSchema": "passed",
+    "productionFrontendBuild": "passed"
+  },
+  "accounts": {
+    "NASA": {
+      "positiveAuthorizedOriginalDownload": "not verified"
+    },
+    "CopernicusDataSpace": {
+      "positiveAuthorizedOriginalDownload": "not verified"
+    }
+  },
+  "reference": "https://github.com/microsoft/planetary-computer-sdk-for-python/blob/main/planetary_computer/sas.py"
+}

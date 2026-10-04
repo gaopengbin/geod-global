@@ -46,12 +46,12 @@ fn startup_requires_one_owner_and_never_expands_remote_access() {
 
 #[test]
 fn read_only_discovery_and_dispatch_both_deny_writes() {
-    assert_eq!(tools(false).len(), 7);
-    assert_eq!(tools(true).len(), 12);
+    assert_eq!(tools(false).len(), READ_TOOLS.len());
+    assert_eq!(tools(true).len(), READ_TOOLS.len() + WRITE_TOOLS.len());
     for tool in tools(false) {
         assert_eq!(tool.annotations.unwrap().read_only_hint, Some(true));
     }
-    for tool in WRITE_TOOLS {
+    for &tool in WRITE_TOOLS {
         assert!(parse_operation(tool, json!({}), false).is_err());
         assert!(!tools(false).iter().any(|entry| entry.name == tool));
     }
@@ -184,7 +184,9 @@ async fn exclusive_shutdown_cancels_active_download_and_waits_for_cleanup() {
         })
         .await
         .unwrap();
-    begun.notified().await;
+    tokio::time::timeout(Duration::from_secs(8), begun.notified())
+        .await
+        .expect("mock download server was not reached");
     Backend::Direct(manager.clone()).shutdown().await.unwrap();
     let (job, settled) = manager.get_with_settled(&job.id).await.unwrap();
     assert_eq!(job.status, JobStatus::Cancelled);
@@ -199,7 +201,7 @@ async fn exclusive_shutdown_cancels_active_download_and_waits_for_cleanup() {
     server.abort();
 }
 
-async fn fake_backend(app: axum::Router) -> (Backend, tokio::task::JoinHandle<()>) {
+pub(super) async fn fake_backend(app: axum::Router) -> (Backend, tokio::task::JoinHandle<()>) {
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let backend = Backend::Server {
         base: format!("http://{}", listener.local_addr().unwrap()),
@@ -330,7 +332,10 @@ async fn sdk_protocol_initializes_lists_calls_and_returns_meaningful_errors() {
     )
     .await;
     let listed = rpc_read(&mut read).await;
-    assert_eq!(listed["result"]["tools"].as_array().unwrap().len(), 7);
+    assert_eq!(
+        listed["result"]["tools"].as_array().unwrap().len(),
+        READ_TOOLS.len()
+    );
     rpc_send(&mut write, json!({"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"geod_health","arguments":{}}})).await;
     let health = rpc_read(&mut read).await;
     assert_eq!(health["result"]["isError"], false);

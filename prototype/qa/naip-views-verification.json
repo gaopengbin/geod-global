@@ -1,0 +1,575 @@
+{
+  "schema": "geod-naip-views-summary/v1",
+  "checkedAt": "2026-10-03T23:03:55.417109+00:00",
+  "qaOnly": true,
+  "status": "passed",
+  "provider": "planetary-naip",
+  "cohort": "030-100",
+  "scope": "Actual 0.3 m and 1 m accepted originals and aligned outputs; RGB/CIR/NIR display, not spectral analysis or a release.",
+  "nativeBinarySha256": "e989c1e453cbf081d11cc09d2b121f157fa7cb216ae84a5a5742b02b54dec5bd",
+  "acquisitionNativeBinarySha256": "6c5e6a81dbb8485d41afac501782942d1f6bd1331fb24110eb4a199706d346f3",
+  "evidence": {
+    "independentChannelsAndMask": {
+      "file": "views-verification.json",
+      "sha256": "cbad894f63097e51a2b536bae5d4d1b762ef189412fee0135e10cba260c8d8fc",
+      "snapshot": "evidence-snapshots/cbad894f63097e51a2b536bae5d4d1b762ef189412fee0135e10cba260c8d8fc.json"
+    },
+    "productionUi": {
+      "file": "ui/views-verification.json",
+      "sha256": "dcca00212093d3690512713057944058c7325141541fdc67a475f6156a02959e",
+      "snapshot": "evidence-snapshots/dcca00212093d3690512713057944058c7325141541fdc67a475f6156a02959e.json"
+    },
+    "acceptedUiSubset": {
+      "file": "ui-six-accepted-cases.json",
+      "sha256": "4047e54925b3a009f88390f9a2c203032c4f67e2c8a3d52d4e2c5790c1b47b9c",
+      "snapshot": "evidence-snapshots/4047e54925b3a009f88390f9a2c203032c4f67e2c8a3d52d4e2c5790c1b47b9c.json"
+    },
+    "acquisition": {
+      "file": ".verification/naip-resolutions-20261004/native-resolution-verification.json",
+      "sha256": "1dd751a608fdcce2f0eef63474d00ef46ba3e3ee11cf418dae503bfb839a4754",
+      "snapshot": "evidence-snapshots/1dd751a608fdcce2f0eef63474d00ef46ba3e3ee11cf418dae503bfb839a4754.json"
+    },
+    "sourceIndependent": {
+      "file": ".verification/naip-resolutions-20261004/independent-resolution-verification.json",
+      "sha256": "f566d240b4fddb0af47914d8531b4d2ae1d75ad6616f0a2cb5eda74da5c34ba8",
+      "snapshot": "evidence-snapshots/f566d240b4fddb0af47914d8531b4d2ae1d75ad6616f0a2cb5eda74da5c34ba8.json"
+    },
+    "separateCohorts": [
+      {
+        "file": "prototype/qa/naip-views-060-verification.json",
+        "sha256": "0acc6ab600b3adaa93b8908bd3e1d1a35f7b0825aa21ebb5c1e1b920e5131684",
+        "snapshot": "evidence-snapshots/0acc6ab600b3adaa93b8908bd3e1d1a35f7b0825aa21ebb5c1e1b920e5131684.json",
+        "cohort": "060",
+        "filesIndependentlyChecked": 4,
+        "filesCheckedInProductionRenderer": 4
+      }
+    ]
+  },
+  "displayBands": {
+    "rgb": [
+      1,
+      2,
+      3
+    ],
+    "cir": [
+      4,
+      1,
+      2
+    ],
+    "nir": [
+      4,
+      4,
+      4
+    ]
+  },
+  "filesIndependentlyChecked": 8,
+  "filesCheckedInProductionRenderer": 8,
+  "rgbaPreviewPixelsCompared": 12174336,
+  "rawFullResolutionPointsCompared": 24,
+  "renderedCanvasPixelsCompared": 4145416,
+  "frontendFiles": [
+    {
+      "file": "assets/chunk-aKtaBQYM.js",
+      "sha256": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236"
+    },
+    {
+      "file": "assets/common-uuK22kLj.js",
+      "sha256": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+    },
+    {
+      "file": "assets/i18n-DsE_cCFB.js",
+      "sha256": "d664c9456ec8ad0e83f2ed6e2df812daa197449a30b05125a405816721147491"
+    },
+    {
+      "file": "assets/i18n-DZ60XG39.css",
+      "sha256": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6"
+    },
+    {
+      "file": "assets/ImageStatic-CJOl8TQ_.js",
+      "sha256": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540"
+    },
+    {
+      "file": "assets/index-B4NeBykq.css",
+      "sha256": "e6fc7e1a72006c80cf778bfedced1f1553e65b980a4a7f80bdbf853896feedca"
+    },
+    {
+      "file": "assets/index-WqvjYoLi.js",
+      "sha256": "2b3f8300ec9f43f18264890f258e5c113fb4158a58b570371d1d0b6ccce8f578"
+    },
+    {
+      "file": "assets/ol-BM8XMzgm.js",
+      "sha256": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304"
+    },
+    {
+      "file": "assets/ol-c_1sG1-7.css",
+      "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+    },
+    {
+      "file": "assets/rbush-CaohfFwn.js",
+      "sha256": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7"
+    },
+    {
+      "file": "assets/workspace-map-CeWRej-W.js",
+      "sha256": "73aa0e44a04415758bef98155c20c5e2de123e979697930aab011fb8da060173"
+    },
+    {
+      "file": "assets/workspace-map-geometry-BUZCcjeL.js",
+      "sha256": "a89736ac209c26dd92d7c335e5d12007cc6691f7f09c437526729aac89d4d6b3"
+    },
+    {
+      "file": "assets/workspace-map-R_H2vS8Y.css",
+      "sha256": "ac9fa79a91e500be4dc1e924d0a2e6d4ef02123ed450ac010fd96a6fe4a51fe0"
+    },
+    {
+      "file": "brand/geod-symbol.png",
+      "sha256": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+    },
+    {
+      "file": "fonts/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "file": "index.html",
+      "sha256": "783ac3b7571fc54ea86d22225297754422ab5acd5c838f3aa7293aa77dc1806b"
+    }
+  ],
+  "offlineThumbnailCache": {
+    "offline": true,
+    "filesRestored": 8,
+    "unchangedRgbThumbnails": 8,
+    "unchangedCacheFileIdentityAndBytes": true
+  },
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "entries": [
+    {
+      "jobId": "642f98e3-65b4-49e2-9252-92a038aab1bb",
+      "sha256": "8ec9793cfeb003d577479c02c5fa2c7dc456336dd082d2b3844e547192e9ef6f",
+      "group": "1m",
+      "case": "original",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            689,
+            768
+          ],
+          "pngSha256": "0620df0c04c80eae3da2cbbb8083c97346c9a77d193a279d78c8dc51539a86a0",
+          "pixelsCompared": 529152,
+          "opaqueZeroNirPreviewPixels": 25
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            689,
+            768
+          ],
+          "pngSha256": "2dd84df114e6faf145946520ad36bc594764541b16bea01fec4d98d8f2ba8806",
+          "pixelsCompared": 529152,
+          "opaqueZeroNirPreviewPixels": 25
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            689,
+            768
+          ],
+          "pngSha256": "0bdbcf2341cb1bebac7786ba62c31e01218699a1feb347293c53c08cc23ceda8",
+          "pixelsCompared": 529152,
+          "opaqueZeroNirPreviewPixels": 25
+        }
+      ]
+    },
+    {
+      "jobId": "94e56f7d-6a43-44e9-b1f7-de28f698f748",
+      "sha256": "732aa9662412428eeadad9d2532f6330200e00f50ed8fdba1bab5f59ae344afb",
+      "group": "1m",
+      "case": "original",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            689,
+            768
+          ],
+          "pngSha256": "81c538062c2008217a3ad3d4cb2013af64c935d117d64d573e8c2576dbc0281e",
+          "pixelsCompared": 529152,
+          "opaqueZeroNirPreviewPixels": 1093
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            689,
+            768
+          ],
+          "pngSha256": "288b05f58047f18530c743cbf4c505d810fbebda0b77d63106f51f56b6aec662",
+          "pixelsCompared": 529152,
+          "opaqueZeroNirPreviewPixels": 1093
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            689,
+            768
+          ],
+          "pngSha256": "9978f7ea818ff61f2a169604d875c60cf7f85a95fa493ec80dc3a7cd5cc585d5",
+          "pixelsCompared": 529152,
+          "opaqueZeroNirPreviewPixels": 1093
+        }
+      ]
+    },
+    {
+      "jobId": "1523bf8f-9d52-48cc-8bd3-ab0ea48d7ea1",
+      "sha256": "2e98ba7065003b4dbc8abe3fe990afe3d91d8e27087a43359f6923268267fa13",
+      "group": "0.3m",
+      "case": "original",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            557,
+            768
+          ],
+          "pngSha256": "ff3d83e69283b3e9754c250a02a8da21eee097c36ba8681b05419b24d7aa8d8d",
+          "pixelsCompared": 427776,
+          "opaqueZeroNirPreviewPixels": 209
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            557,
+            768
+          ],
+          "pngSha256": "8d178761e3b254a7389c2fb72ab53c8989af7e236cc1a87f5e767968accad3b2",
+          "pixelsCompared": 427776,
+          "opaqueZeroNirPreviewPixels": 209
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            557,
+            768
+          ],
+          "pngSha256": "070d0735a16a75ce3ce97a7dabcd611c11a050fb1194791ecc6330159181a418",
+          "pixelsCompared": 427776,
+          "opaqueZeroNirPreviewPixels": 209
+        }
+      ]
+    },
+    {
+      "jobId": "11e533c6-088c-4bda-a0fe-17240e5e703f",
+      "sha256": "041daf4002d51fc29c787f6a215153ea1737f96472d5de90327c0a480d909839",
+      "group": "1m",
+      "case": "single",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            768,
+            759
+          ],
+          "pngSha256": "824817d54b36f9854562853351ab23ece55d7c1c9a490a71b3e1b6561fde4c95",
+          "pixelsCompared": 582912,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            768,
+            759
+          ],
+          "pngSha256": "ace1caec4690c58c5a1f133f7992de7d4a5bd75e1c72bd5eea30108828bfd166",
+          "pixelsCompared": 582912,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            768,
+            759
+          ],
+          "pngSha256": "2c376e840cf182ccfdc06ad00e0fe62911539fa7e95f1e13ead00c28a1b112bc",
+          "pixelsCompared": 582912,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    },
+    {
+      "jobId": "635765a9-031c-422c-89ab-b88d76dae732",
+      "sha256": "755a387fe8b1bc9985fcd805f98a81f412828efdf312367ad2fda32f88b6cbb7",
+      "group": "1m",
+      "case": "mosaic",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            569,
+            768
+          ],
+          "pngSha256": "be0fcb350824a000061affef49029c7f9b6b3ac532ab166b494a433e106f60ab",
+          "pixelsCompared": 436992,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            569,
+            768
+          ],
+          "pngSha256": "ad1bb991c2282389bafac219c1cc2a38242694717f9422dd5bf44d9fd12ef3ce",
+          "pixelsCompared": 436992,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            569,
+            768
+          ],
+          "pngSha256": "76deb0cf2c3fd011cc961259f5da5847b337765de3c57f15f06153402a851220",
+          "pixelsCompared": 436992,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    },
+    {
+      "jobId": "3494434e-258a-4fe5-936d-8d14d07079ef",
+      "sha256": "e8f6aa71ed3ec813adf33c1c8ea443aaa0e3f39eb9e15c365ad1c896b518e861",
+      "group": "1m",
+      "case": "polygon",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            569,
+            768
+          ],
+          "pngSha256": "880e2221b74cc2461314438ede4ac4f68701f24a2da2ebfb596612de7b7406b0",
+          "pixelsCompared": 436992,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            569,
+            768
+          ],
+          "pngSha256": "677207de738bc01e484ebd30d306b37938da247d8079084d5781fd1bb324f483",
+          "pixelsCompared": 436992,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            569,
+            768
+          ],
+          "pngSha256": "5d3eced59d28acd6422a66e8c4ec7d2a37ea419cfd348b0c85984228203e2bde",
+          "pixelsCompared": 436992,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    },
+    {
+      "jobId": "e99c9eab-d9f2-4fa3-aed5-d05751af5374",
+      "sha256": "d8e1affc8c2a1f2dbac9eeef19d5a60e57aea0a2ec405976146027adf2d7116a",
+      "group": "0.3m",
+      "case": "single",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            726,
+            768
+          ],
+          "pngSha256": "a661916e1d84ff749673d047a5f4c8504bd03014351662ff5dd0f100b93d970c",
+          "pixelsCompared": 557568,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            726,
+            768
+          ],
+          "pngSha256": "240f326f47555fc5149bd720ee66f945d1c89396a26d06844c73519ab3317a22",
+          "pixelsCompared": 557568,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            726,
+            768
+          ],
+          "pngSha256": "d1439c6b79a5b42d56fa337d8e73c47024c68a0dda9a64d14008f172238a9278",
+          "pixelsCompared": 557568,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    },
+    {
+      "jobId": "4bdc7666-370a-4ed6-a7d5-86296c1ee11b",
+      "sha256": "e55527fdd22878b8954bb328ab6728370830efe42ce3309a348d33e646e20a7f",
+      "group": "0.3m",
+      "case": "polygon",
+      "views": [
+        {
+          "view": "rgb",
+          "displayBands": [
+            1,
+            2,
+            3
+          ],
+          "dimensions": [
+            726,
+            768
+          ],
+          "pngSha256": "a60698296d4d92a1f9fa803864c57e2a562c64821201675ab3207798a406e824",
+          "pixelsCompared": 557568,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "cir",
+          "displayBands": [
+            4,
+            1,
+            2
+          ],
+          "dimensions": [
+            726,
+            768
+          ],
+          "pngSha256": "3ee147bf66b29c5f4d972e951bf5f469891d546bcad2f99d2047b8f5fd29ca7d",
+          "pixelsCompared": 557568,
+          "opaqueZeroNirPreviewPixels": 0
+        },
+        {
+          "view": "nir",
+          "displayBands": [
+            4,
+            4,
+            4
+          ],
+          "dimensions": [
+            726,
+            768
+          ],
+          "pngSha256": "29153e7909812e0a314c8f3502757d3b6411755cfd3bb5244e2d1cd3f0e023f5",
+          "pixelsCompared": 557568,
+          "opaqueZeroNirPreviewPixels": 0
+        }
+      ]
+    }
+  ],
+  "remaining": [
+    "Spectral analysis and reflectance calibration",
+    "Other encodings/grids and general reprojection",
+    "Installed native WebView acceptance"
+  ]
+}

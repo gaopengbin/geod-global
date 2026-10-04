@@ -1,0 +1,1237 @@
+{
+  "checkedAt": "2026-10-03T12:33:39.318265+00:00",
+  "status": "bounded local original-file workflow verified; entire data-domain integration remains incomplete",
+  "nativeSHA256": "199ec97c9d2d1610dd7c023108ec670b28a8341f19250e488ade390f50c6df94",
+  "scope": [
+    "OSM XML 0.6",
+    "raw/zlib OSM PBF",
+    "dense/non-dense and LocationsOnWays",
+    "reference/explicit managed copy",
+    "identity/tag/member/edit metadata",
+    "actual map and object filter",
+    "original bytes and complete converted GeoJSON",
+    "offline registry recovery"
+  ],
+  "independentControls": {
+    "repository": "https://github.com/b-r-u/osmpbf",
+    "commit": "4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+    "license": "MIT (maintainer also offers Apache-2.0)",
+    "files": [
+      {
+        "file": "test.osm",
+        "url": "https://raw.githubusercontent.com/b-r-u/osmpbf/4bc5ce41eedbbeb263c2fb7091dc48d28134df56/tests/test.osm",
+        "acquisitionUrl": "https://api.github.com/repos/b-r-u/osmpbf/contents/tests/test.osm?ref=4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+        "bytes": 998,
+        "sha256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "kind": "upstream synthetic parser control; not a live provider extract"
+      },
+      {
+        "file": "test.osm.pbf",
+        "url": "https://raw.githubusercontent.com/b-r-u/osmpbf/4bc5ce41eedbbeb263c2fb7091dc48d28134df56/tests/test.osm.pbf",
+        "acquisitionUrl": "https://api.github.com/repos/b-r-u/osmpbf/contents/tests/test.osm.pbf?ref=4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+        "bytes": 302,
+        "sha256": "81936a87eb67e96ac68c548ebfa751c646cfa71746a9b3552b89c80d2dfc2a34",
+        "kind": "upstream synthetic parser control; not a live provider extract"
+      },
+      {
+        "file": "test_nozlib.osm.pbf",
+        "url": "https://raw.githubusercontent.com/b-r-u/osmpbf/4bc5ce41eedbbeb263c2fb7091dc48d28134df56/tests/test_nozlib.osm.pbf",
+        "acquisitionUrl": "https://api.github.com/repos/b-r-u/osmpbf/contents/tests/test_nozlib.osm.pbf?ref=4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+        "bytes": 303,
+        "sha256": "1446a4f394f422bf82aa46b617cd145f76ac23c6583effc863e74e8e5205b063",
+        "kind": "upstream synthetic parser control; not a live provider extract"
+      },
+      {
+        "file": "test_nozlib_nodense.osm.pbf",
+        "url": "https://raw.githubusercontent.com/b-r-u/osmpbf/4bc5ce41eedbbeb263c2fb7091dc48d28134df56/tests/test_nozlib_nodense.osm.pbf",
+        "acquisitionUrl": "https://api.github.com/repos/b-r-u/osmpbf/contents/tests/test_nozlib_nodense.osm.pbf?ref=4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+        "bytes": 324,
+        "sha256": "e1fe78eaa22b4c0b3f05e8fa19ba1d23cc15e971b6e304b7a5b55631906d39f6",
+        "kind": "upstream synthetic parser control; not a live provider extract"
+      },
+      {
+        "file": "loc_on_ways.osm.pbf",
+        "url": "https://raw.githubusercontent.com/b-r-u/osmpbf/4bc5ce41eedbbeb263c2fb7091dc48d28134df56/tests/loc_on_ways.osm.pbf",
+        "acquisitionUrl": "https://api.github.com/repos/b-r-u/osmpbf/contents/tests/loc_on_ways.osm.pbf?ref=4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+        "bytes": 334,
+        "sha256": "7b5178296683278d8ff6e9598f784eac3601a5935b7182802466205503a4b110",
+        "kind": "upstream synthetic parser control; not a live provider extract"
+      },
+      {
+        "file": "deleted_nodes.osh.pbf",
+        "url": "https://raw.githubusercontent.com/b-r-u/osmpbf/4bc5ce41eedbbeb263c2fb7091dc48d28134df56/tests/deleted_nodes.osh.pbf",
+        "acquisitionUrl": "https://api.github.com/repos/b-r-u/osmpbf/contents/tests/deleted_nodes.osh.pbf?ref=4bc5ce41eedbbeb263c2fb7091dc48d28134df56",
+        "bytes": 189,
+        "sha256": "0e525b7319a58b23896799f8d6cbe9ce89f3ac4d0c349b345d4eb773498d3fd6",
+        "kind": "upstream synthetic parser control; not a live provider extract"
+      }
+    ]
+  },
+  "ownIndependentControl": {
+    "kind": "own synthetic independent control; not public provider imagery",
+    "writer": "Pyosmium 4.3.1",
+    "sourceScript": "scripts/generate-osm-control.py",
+    "files": [
+      {
+        "file": "independent.osm",
+        "bytes": 2222,
+        "sha256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59"
+      },
+      {
+        "file": "independent.osm.pbf",
+        "bytes": 540,
+        "sha256": "19ecfdfbc4e0b87b743a13a45c168a19dc41f4edcace4cb55aafbd4578e3849e"
+      }
+    ]
+  },
+  "geographicDerivedSubset": {
+    "kind": "explicit complete derived subset of published geographic OSM data; not an unchanged provider original",
+    "parentUrl": "https://api.github.com/repos/sameer/osm-pbf/contents/seatac.osm.pbf?ref=2fcab9a29a8cfcb8e8f263258970930a611e4ff6",
+    "parentSHA256": "c1f8b9d2b25f6dcef2482355d4aaeea48d897a16c1e8e8908725cfccecc23092",
+    "nodes": 263,
+    "wayIds": [
+      23660961,
+      23772636,
+      23772637,
+      52735107,
+      53199551,
+      53199557,
+      53199562,
+      53199583,
+      53199584,
+      53199586
+    ],
+    "writer": "Pyosmium 4.3.1",
+    "license": "ODbL",
+    "copyright": "https://www.openstreetmap.org/copyright",
+    "files": [
+      {
+        "file": "seatac-derived.osm",
+        "bytes": 55437,
+        "sha256": "1f2ad01576862571e64ca2705691451e569f03c84ea7997f24247acd0f9628b3"
+      },
+      {
+        "file": "seatac-derived.osm.pbf",
+        "bytes": 4854,
+        "sha256": "5cce447422313229465da9cfdaa541e52a945fba539a4ea7e05d764bb085262d"
+      }
+    ]
+  },
+  "native": {
+    "verifiedCases": 18,
+    "cases": [
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "b31957f9-8fef-4951-bb51-58e8f22dd7cc",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "e6108b6f-fb26-47d1-828a-4b74764ca4bd",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "1f2ad01576862571e64ca2705691451e569f03c84ea7997f24247acd0f9628b3",
+        "originalBytes": 55437,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "b9420de9-c6f4-4b60-ad1d-77df447d8650",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "1f2ad01576862571e64ca2705691451e569f03c84ea7997f24247acd0f9628b3",
+        "originalBytes": 55437,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "ee0190e2-c6c1-4b59-b467-592c9fc872fe",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "originalBytes": 998,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 4.3840003627337865e-08,
+        "id": "cccbc06e-bb64-454d-8ce8-ddc920b817d1",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "originalBytes": 998,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 4.3840003627337865e-08,
+        "id": "b48bf97e-75db-4fd7-b28f-4424295c96f5",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "19ecfdfbc4e0b87b743a13a45c168a19dc41f4edcace4cb55aafbd4578e3849e",
+        "originalBytes": 540,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "3e4ca697-f23d-4d2b-ae83-92cb6fd19b06",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "19ecfdfbc4e0b87b743a13a45c168a19dc41f4edcace4cb55aafbd4578e3849e",
+        "originalBytes": 540,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "6c09f2a2-9072-4bc2-a428-994f6b50c2c2",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "7b5178296683278d8ff6e9598f784eac3601a5935b7182802466205503a4b110",
+        "originalBytes": 334,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 0,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 18,
+        "nonPolygonOrdinatesCompared": 8,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "cce38ae3-419a-426f-926b-c4e885150b6c",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "7b5178296683278d8ff6e9598f784eac3601a5935b7182802466205503a4b110",
+        "originalBytes": 334,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 0,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 18,
+        "nonPolygonOrdinatesCompared": 8,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "897c7d5b-b9e9-4fb2-a45f-72204f53653b",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "5cce447422313229465da9cfdaa541e52a945fba539a4ea7e05d764bb085262d",
+        "originalBytes": 4854,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 1.4210854715202004e-14,
+        "id": "64313df0-2efe-4a15-b4c6-74601d4751c6",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "5cce447422313229465da9cfdaa541e52a945fba539a4ea7e05d764bb085262d",
+        "originalBytes": 4854,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 1.4210854715202004e-14,
+        "id": "8f313155-9799-4f04-823a-9a5c3781d1ea",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "81936a87eb67e96ac68c548ebfa751c646cfa71746a9b3552b89c80d2dfc2a34",
+        "originalBytes": 302,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "3576c755-c09a-45d4-a258-ab7bece1a5be",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "81936a87eb67e96ac68c548ebfa751c646cfa71746a9b3552b89c80d2dfc2a34",
+        "originalBytes": 302,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "34f33947-ba1c-4a27-8213-97cf354aea68",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "1446a4f394f422bf82aa46b617cd145f76ac23c6583effc863e74e8e5205b063",
+        "originalBytes": 303,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "5da5aa99-a08b-4cbb-b284-b39b04a6f6dd",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "1446a4f394f422bf82aa46b617cd145f76ac23c6583effc863e74e8e5205b063",
+        "originalBytes": 303,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "aacfc97e-1593-4f4f-9f4f-d03b39901bfc",
+        "mode": "managed"
+      },
+      {
+        "sourceSHA256": "e1fe78eaa22b4c0b3f05e8fa19ba1d23cc15e971b6e304b7a5b55631906d39f6",
+        "originalBytes": 324,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "0462c730-a661-4bc5-b849-1cc9730f0c85",
+        "mode": "reference"
+      },
+      {
+        "sourceSHA256": "e1fe78eaa22b4c0b3f05e8fa19ba1d23cc15e971b6e304b7a5b55631906d39f6",
+        "originalBytes": 324,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "83e73cc6-056f-4b75-98da-99e4b436d3c1",
+        "mode": "managed"
+      }
+    ]
+  },
+  "negativePublishedOriginals": {
+    "sources": [
+      {
+        "url": "https://api.github.com/repos/openstreetmap/OSM-binary/contents/resources/sample.pbf?ref=9f01ad3ece9737503a059d58749e02c9008d5699",
+        "commit": "9f01ad3ece9737503a059d58749e02c9008d5699",
+        "bytes": 9653,
+        "sha256": "40a25059d31a82521dcf49e3f1c9df385f1759b574d9bb1ca4ea37db91416992",
+        "kind": "unmodified upstream published parser sample; original geographic provenance pending inspection"
+      },
+      {
+        "url": "https://api.github.com/repos/sameer/osm-pbf/contents/seatac.osm.pbf?ref=2fcab9a29a8cfcb8e8f263258970930a611e4ff6",
+        "commit": "2fcab9a29a8cfcb8e8f263258970930a611e4ff6",
+        "bytes": 181036,
+        "sha256": "c1f8b9d2b25f6dcef2482355d4aaeea48d897a16c1e8e8908725cfccecc23092",
+        "kind": "unmodified upstream published parser sample; original geographic provenance pending inspection"
+      }
+    ],
+    "nativeErrors": [
+      {
+        "file": "deleted_nodes.osh.pbf",
+        "mode": "reference",
+        "error": "Unsupported required OSM PBF feature: HistoricalInformation"
+      },
+      {
+        "file": "deleted_nodes.osh.pbf",
+        "mode": "managed",
+        "error": "Unsupported required OSM PBF feature: HistoricalInformation"
+      },
+      {
+        "file": "osm-binary-sample.pbf",
+        "mode": "reference",
+        "error": "OSM relation/21855 has missing way/156255507; import a complete extract"
+      },
+      {
+        "file": "osm-binary-sample.pbf",
+        "mode": "managed",
+        "error": "OSM relation/21855 has missing way/156255507; import a complete extract"
+      },
+      {
+        "file": "seatac.osm.pbf",
+        "mode": "reference",
+        "error": "OSM relation/2317217 exceeds 1,024 members"
+      },
+      {
+        "file": "seatac.osm.pbf",
+        "mode": "managed",
+        "error": "OSM relation/2317217 exceeds 1,024 members"
+      }
+    ],
+    "independentRead": [
+      {
+        "source": "osm-binary-sample.pbf",
+        "reader": "Pyosmium 4.3.1",
+        "nodeCount": 290,
+        "wayCount": 44,
+        "relationCount": 5,
+        "missingWayReferences": 232,
+        "firstMissingWayReferences": [
+          [
+            21855,
+            156255507
+          ],
+          [
+            31640,
+            24541150
+          ],
+          [
+            31640,
+            25896432
+          ],
+          [
+            31640,
+            25896435
+          ],
+          [
+            31640,
+            136990875
+          ],
+          [
+            31640,
+            25896366
+          ],
+          [
+            31640,
+            25896438
+          ],
+          [
+            31640,
+            136990877
+          ],
+          [
+            31640,
+            22329168
+          ],
+          [
+            31640,
+            136990870
+          ]
+        ],
+        "largestRelation": [
+          234,
+          31640
+        ],
+        "nativeRejectedRelationCheck": true
+      },
+      {
+        "source": "seatac.osm.pbf",
+        "reader": "Pyosmium 4.3.1",
+        "nodeCount": 13217,
+        "wayCount": 1938,
+        "relationCount": 77,
+        "missingWayReferences": 5676,
+        "firstMissingWayReferences": [
+          [
+            2317217,
+            214811141
+          ],
+          [
+            2317217,
+            52328314
+          ],
+          [
+            2317217,
+            163116338
+          ],
+          [
+            2317217,
+            163116339
+          ],
+          [
+            2317217,
+            815232324
+          ],
+          [
+            2317217,
+            160270971
+          ],
+          [
+            2317217,
+            1084602183
+          ],
+          [
+            2317217,
+            163860130
+          ],
+          [
+            2317217,
+            778159683
+          ],
+          [
+            2317217,
+            5868568
+          ]
+        ],
+        "largestRelation": [
+          1813,
+          2859142
+        ],
+        "nativeRejectedRelationCheck": true
+      }
+    ]
+  },
+  "liveNetworkNotAccepted": [
+    {
+      "file": "monaco.osm.pbf",
+      "url": "https://download.geofabrik.de/europe/monaco-latest.osm.pbf",
+      "error": "<urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>"
+    },
+    {
+      "file": "way-full.osm",
+      "url": "https://api.openstreetmap.org/api/0.6/way/5013364/full",
+      "error": "<urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>"
+    }
+  ],
+  "afterActualRestart": {
+    "managedCopiesVerified": 30,
+    "missingReferencesRejected": 24,
+    "proxy": {
+      "mode": "custom",
+      "url": "http://127.0.0.1:9"
+    },
+    "networkRequired": false,
+    "copies": [
+      {
+        "sourceSHA256": "7b5178296683278d8ff6e9598f784eac3601a5935b7182802466205503a4b110",
+        "originalBytes": 334,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 0,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 18,
+        "nonPolygonOrdinatesCompared": 8,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "05a1beab-2459-4a98-b615-8c41c8a0c82d",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "e1fe78eaa22b4c0b3f05e8fa19ba1d23cc15e971b6e304b7a5b55631906d39f6",
+        "originalBytes": 324,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "12a618fc-4614-49f1-bb59-84650087c87e",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "2c8727ca-463f-4f2c-9f91-2e61262d97c7",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "81936a87eb67e96ac68c548ebfa751c646cfa71746a9b3552b89c80d2dfc2a34",
+        "originalBytes": 302,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "34f33947-ba1c-4a27-8213-97cf354aea68",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "originalBytes": 998,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 4.3840003627337865e-08,
+        "id": "6043ffcb-47c3-459a-9da3-ba09fff8b498",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "65764c03-d646-44ce-9f95-1ab7ed5585f4",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "688fc130-cc79-482b-ba13-2036a15ce077",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "19ecfdfbc4e0b87b743a13a45c168a19dc41f4edcace4cb55aafbd4578e3849e",
+        "originalBytes": 540,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "6c09f2a2-9072-4bc2-a428-994f6b50c2c2",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "e1fe78eaa22b4c0b3f05e8fa19ba1d23cc15e971b6e304b7a5b55631906d39f6",
+        "originalBytes": 324,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "83e73cc6-056f-4b75-98da-99e4b436d3c1",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "7b5178296683278d8ff6e9598f784eac3601a5935b7182802466205503a4b110",
+        "originalBytes": 334,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 0,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 18,
+        "nonPolygonOrdinatesCompared": 8,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "897c7d5b-b9e9-4fb2-a45f-72204f53653b",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "8dd80aaf-4224-4c42-9688-f0ee7f1206e4",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "5cce447422313229465da9cfdaa541e52a945fba539a4ea7e05d764bb085262d",
+        "originalBytes": 4854,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 1.4210854715202004e-14,
+        "id": "8f313155-9799-4f04-823a-9a5c3781d1ea",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "1446a4f394f422bf82aa46b617cd145f76ac23c6583effc863e74e8e5205b063",
+        "originalBytes": 303,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "9fc2393c-d1ba-42b6-93c1-9b45c4b782e1",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "81936a87eb67e96ac68c548ebfa751c646cfa71746a9b3552b89c80d2dfc2a34",
+        "originalBytes": 302,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "a3399900-545b-4895-84d2-c5c441aeb9e5",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "1446a4f394f422bf82aa46b617cd145f76ac23c6583effc863e74e8e5205b063",
+        "originalBytes": 303,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "a7c7d84b-ee11-4be0-8bfc-48e29c11ad7a",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "1446a4f394f422bf82aa46b617cd145f76ac23c6583effc863e74e8e5205b063",
+        "originalBytes": 303,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "aacfc97e-1593-4f4f-9f4f-d03b39901bfc",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "ae2b999c-927c-4d5f-a806-18c6e6a80ff0",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "e1fe78eaa22b4c0b3f05e8fa19ba1d23cc15e971b6e304b7a5b55631906d39f6",
+        "originalBytes": 324,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "b254c7e5-3cb2-45aa-90df-0dc49933375e",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "originalBytes": 998,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 4.3840003627337865e-08,
+        "id": "b48bf97e-75db-4fd7-b28f-4424295c96f5",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "1f2ad01576862571e64ca2705691451e569f03c84ea7997f24247acd0f9628b3",
+        "originalBytes": 55437,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "bb46aad7-08ad-4ff5-8123-ec61d95c629e",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "c3b5c7ef-ab1a-40ee-a3a1-9c1e4b06c5dd",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "originalBytes": 998,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 4.3840003627337865e-08,
+        "id": "d244292e-bcab-46a2-85b5-08f7b70709c1",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "5cce447422313229465da9cfdaa541e52a945fba539a4ea7e05d764bb085262d",
+        "originalBytes": 4854,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 1.4210854715202004e-14,
+        "id": "dc1ed557-b486-41f4-884c-9c620fe0690c",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "ddada4ea-a3f1-45e5-856e-0abfe1247222",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "81936a87eb67e96ac68c548ebfa751c646cfa71746a9b3552b89c80d2dfc2a34",
+        "originalBytes": 302,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "df092ec0-d24f-41ab-b07d-07ab9ca5964c",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "e6108b6f-fb26-47d1-828a-4b74764ca4bd",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "322340c2661d26994af8dfa3ce2889c2dc4bf2d7a08ab1214c04765beb7d85e5",
+        "originalBytes": 998,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 3,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 33,
+        "nonPolygonOrdinatesCompared": 14,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 4.3840003627337865e-08,
+        "id": "eab7c8c5-5a0f-4cf5-b310-ee02c0b15927",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "7b5178296683278d8ff6e9598f784eac3601a5935b7182802466205503a4b110",
+        "originalBytes": 334,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 0,
+          "way": 1,
+          "relation": 1
+        },
+        "attributesAndReferencesCompared": 18,
+        "nonPolygonOrdinatesCompared": 8,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 1,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 7.105427357601002e-15,
+        "id": "ed545361-bed5-451a-9135-cf75844eea02",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "1f2ad01576862571e64ca2705691451e569f03c84ea7997f24247acd0f9628b3",
+        "originalBytes": 55437,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 263,
+          "way": 10,
+          "relation": 0
+        },
+        "attributesAndReferencesCompared": 1855,
+        "nonPolygonOrdinatesCompared": 526,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 10,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "ee0190e2-c6c1-4b59-b467-592c9fc872fe",
+        "actualRestart": true
+      },
+      {
+        "sourceSHA256": "a89134d4794c24b33a8975b9db5eea848d4fa2dead5ddfd3bd40c50bf2dd1b59",
+        "originalBytes": 2222,
+        "originalExportIdentical": true,
+        "independentReader": "Pyosmium 4.3.1",
+        "objects": {
+          "node": 8,
+          "way": 3,
+          "relation": 2
+        },
+        "attributesAndReferencesCompared": 86,
+        "nonPolygonOrdinatesCompared": 40,
+        "polygonTopologyAndAllRoundedOrdinatesCompared": 2,
+        "coordinateToleranceDegrees": 1e-07,
+        "maximumNonPolygonDifferenceDegrees": 0.0,
+        "id": "f865211d-b99b-456e-a165-5fe5b626e5fe",
+        "actualRestart": true
+      }
+    ]
+  },
+  "browserAfterActualRestart": {
+    "usedUserDesktop": false,
+    "nativeWebViewAccepted": false,
+    "checkedAt": "2026-10-03T12:32:49.410Z",
+    "reports": [
+      {
+        "width": 1440,
+        "theme": "light",
+        "locale": "en",
+        "sourceMetadata": true,
+        "unicodeAttributes": true,
+        "objectTypeFilter": true,
+        "actualMap": true,
+        "originalAndAllGeoJsonExports": true,
+        "xmlUpload": true,
+        "historicalFileRejected": true,
+        "pageErrors": [],
+        "remoteAttempts": []
+      },
+      {
+        "width": 1024,
+        "theme": "dark",
+        "locale": "zh-CN",
+        "sourceMetadata": true,
+        "unicodeAttributes": true,
+        "objectTypeFilter": true,
+        "actualMap": true,
+        "originalAndAllGeoJsonExports": true,
+        "xmlUpload": true,
+        "historicalFileRejected": true,
+        "pageErrors": [],
+        "remoteAttempts": []
+      }
+    ]
+  },
+  "checks": {
+    "native": {
+      "passed": 404,
+      "ignored": 4,
+      "runtimeLibraryTests": 397,
+      "cliTests": 3,
+      "desktopTests": 4
+    },
+    "frontend": {
+      "logicTests": 205,
+      "uiTests": 183,
+      "productionBuild": true
+    },
+    "fmt": true,
+    "clippyWarnings": 0,
+    "usedUserDesktop": false,
+    "installerPackaged": false
+  },
+  "remaining": [
+    "current OSM API/Geofabrik successful original acquisition",
+    "large or incomplete regional extracts",
+    "history/change/deletion merge",
+    "other compression and editor XML",
+    "complex OSM route/network semantics",
+    "project vector processing and raster overlay",
+    "native WebView manual acceptance",
+    "other integration domains in docs/provider-integration-status.md"
+  ]
+}

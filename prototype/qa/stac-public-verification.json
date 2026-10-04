@@ -1,0 +1,428 @@
+{
+  "checkedAt": "2026-10-02T15:35:09.500588+00:00",
+  "status": "Verified public STAC/COG increment, final-binary transfer and offline restart; broader source goal remains active",
+  "implementation": "Native Rust core exposed through HTTP, CLI and desktop commands",
+  "syntheticSourcesUsedForPublicAcceptance": false,
+  "usedUserDesktop": false,
+  "desktopWebViewAccepted": false,
+  "evidenceDirectory": ".verification/stac-runtime",
+  "verificationMethod": {
+    "metadata": "Compare immutable source-document bytes and SHA-256 with native snapshots; preserve original properties, geometry, asset metadata and source identity",
+    "originalFiles": "Compare exact managed TIFF bytes, file length and SHA-256 with locally retained original copies",
+    "raster": "Independent rasterio 1.3.9 / GDAL 3.6.4 full native-resolution decode, complete sample and mask hashes, CRS, affine transform, bounds, data types and declared nodata",
+    "nativePixelComparison": "11 sampled positions matched raw native values and nodata flags across two files; this is not an all-pixel native comparison",
+    "fullNativePixelEqualityClaimed": false,
+    "scientificCalibrationOrClassificationPaletteClaimed": false,
+    "cogConformanceClaimed": false,
+    "browserOriginalExportClaimed": false
+  },
+  "publicCases": [
+    {
+      "case": "api-sentinel-scl",
+      "status": "passed",
+      "finalBinaryValidation": "passed: immutable source snapshot and saved originals reopened without network",
+      "endpoint": "https://earth-search.aws.element84.com/v1/",
+      "kind": "api",
+      "collectionId": "sentinel-2-l2a",
+      "itemId": "S2A_32UQD_20240108_0_L2A",
+      "assetKey": "scl",
+      "sourceHref": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/32/U/QD/2024/1/S2A_32UQD_20240108_0_L2A/SCL.tif",
+      "bounds": [
+        13.4,
+        52.5,
+        13.41,
+        52.51
+      ],
+      "datetime": "2024-01-01T00:00:00Z/2024-01-10T23:59:59Z",
+      "connectionId": "d5972c0a-99ff-4b29-8ec6-10a40dce4926",
+      "projectId": "b94e1697-8f2d-4b34-aae0-8fa8da4471c2",
+      "snapshotId": "5f4526f8cb3471ef040a9425dab90ae5c0ad599f02fa3648162da70ea75d6e53",
+      "jobId": "c76394c0-fbd1-4101-ba6e-dda283972d2e",
+      "search": {
+        "pageSize": 4,
+        "returnedPerPage": [
+          4,
+          4,
+          0
+        ],
+        "matched": 8,
+        "items": 8,
+        "complete": true,
+        "limitReached": false,
+        "terminalEmptyPageRetained": true
+      },
+      "bytes": 2312147,
+      "sha256": "dca16b50bd2612ce593a28f5dc9f1f51d993b21fc0dfb469559e07fb37abdc86",
+      "width": 5490,
+      "height": 5490,
+      "bands": 1,
+      "dataType": "uint8",
+      "crs": "EPSG:32632",
+      "transform": [
+        20,
+        0,
+        699960,
+        0,
+        -20,
+        5900040
+      ],
+      "rasterBounds": [
+        699960,
+        5790240,
+        809760,
+        5900040
+      ],
+      "pixelInterpretation": "Area",
+      "nodata": 0,
+      "independentDecodedSamples": 30140100,
+      "independentValidSamples": 19005074,
+      "sampleSha256": "d1ce813abde01a8e8b4c122082d47f52669127e2b0282259671677d709284459",
+      "nativePixelProbeCount": 6,
+      "sourceDeclaredAssetRoles": [
+        "data",
+        "reflectance"
+      ],
+      "presentation": "Raw first-band grayscale; source roles retained without interpreting classification values as calibrated reflectance",
+      "evidence": ".verification/stac-public-api/report.json"
+    },
+    {
+      "case": "standalone-sentinel-item",
+      "status": "passed",
+      "finalBinaryValidation": "passed: immutable source snapshot and saved originals reopened without network",
+      "kind": "item",
+      "metadataOnly": true,
+      "endpoint": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2A_32UQD_20240108_0_L2A",
+      "collectionId": "sentinel-2-l2a",
+      "itemId": "S2A_32UQD_20240108_0_L2A",
+      "assetKey": "scl",
+      "snapshotId": "0e1512e42695479cb21200883789616ce7a6bc5faf0240436d42a143c966ee38",
+      "connectionId": "5a573dfb-9ee6-4c3f-9965-f04feee9c33a",
+      "projectId": "5475e641-b0cb-47a3-a407-a18b86f71cf8",
+      "identityComparison": {
+        "sameItemId": true,
+        "sameCollectionId": true,
+        "sameProperties": true,
+        "sameGeometry": true,
+        "sameAssetMetadata": true,
+        "distinctSnapshotId": true
+      },
+      "originalRasterDownloaded": false,
+      "evidence": ".verification/stac-public-item/report.json",
+      "comparisonEvidence": ".verification/stac-public-item/identity-comparison.json"
+    },
+    {
+      "case": "direct-copernicus-dem",
+      "status": "passed",
+      "finalBinaryValidation": "passed: immutable source snapshot and saved originals reopened without network",
+      "kind": "raster",
+      "endpoint": "https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_30_N52_00_E013_00_DEM/Copernicus_DSM_COG_30_N52_00_E013_00_DEM.tif",
+      "assetKey": "raster",
+      "connectionId": "8d297a0e-a760-4ea8-91bb-2e23b06c0cd7",
+      "projectId": "5bb6afaf-9153-49c2-9432-758fe32faf0a",
+      "snapshotId": "f00083d1fac342e4576d656402a8eb5b2b1992300407462224a2bbf66e0ab127",
+      "jobId": "976505f3-83f1-4ac3-92fc-687b38c93ac3",
+      "bytes": 3765647,
+      "sha256": "2de6ed83b2a7978c3874b97e5395b8ecb0cc6ea5cf899b2d4785479e631f1d88",
+      "width": 800,
+      "height": 1200,
+      "bands": 1,
+      "dataType": "float32",
+      "crs": "EPSG:4326",
+      "transform": [
+        0.00125,
+        0,
+        12.999375,
+        0,
+        -0.0008333333333333334,
+        53.000416666666666
+      ],
+      "rasterBounds": [
+        12.999375,
+        52.000416666666666,
+        13.999375,
+        53.000416666666666
+      ],
+      "pixelInterpretation": "Point",
+      "nodata": null,
+      "nodataInterpretation": "No nodata declaration; zero is not assumed invalid",
+      "independentDecodedSamples": 960000,
+      "independentValidSamples": 960000,
+      "sampleSha256": "604b26bcb59e89b8ada265a1f0d96a2719ce8967781c357f5dfd9b6f38bbb26b",
+      "nativePixelProbeCount": 5,
+      "acquisitionTime": null,
+      "sourceTemporalStatus": "missing",
+      "evidence": ".verification/stac-public-cog/report.json"
+    }
+  ],
+  "failedBoundaryCases": [
+    {
+      "case": "undated-official-item-cross-origin-collection",
+      "status": "rejected-under-current-policy",
+      "endpoint": "https://copernicus-dem-90m-stac.s3.amazonaws.com/items/Copernicus_DSM_COG_30_N52_00_E013_00.json",
+      "kind": "item",
+      "metadataOnly": true,
+      "runtimeHttpStatus": 400,
+      "error": "STAC metadata pagination must stay on the connected origin",
+      "cause": "The standalone Item advertises a collection URL on the regional S3 hostname; current metadata-link origin policy rejects that cross-origin link",
+      "declaredCollectionHref": "https://copernicus-dem-90m-stac.s3.eu-central-1.amazonaws.com/dem_cop_90.json",
+      "sourceDatetime": null,
+      "sourceIntervalAbsent": true,
+      "applicationUndatedItemAcceptance": false,
+      "connectionRegistryUnchanged": true,
+      "originalRasterDownloaded": false,
+      "automaticRetry": false,
+      "hostSwitchAfterFailure": false,
+      "evidence": ".verification/stac-public-undated/report.json",
+      "registryEvidence": ".verification/stac-public-undated/registry-check.json",
+      "researchItemHttpStatus": 200
+    }
+  ],
+  "totalsAtThisCheckpoint": {
+    "successfulDiscoveryCases": 3,
+    "failedBoundaryCases": 1,
+    "completeFileTransfers": 3,
+    "distinctOriginalFiles": 2,
+    "downloadedBytesAcrossTransfers": 8389941,
+    "distinctOriginalBytes": 6077794,
+    "independentlyDecodedSamplesAcrossTransfers": 61240200,
+    "independentlyDecodedSamplesDistinctRasters": 31100100,
+    "nativePixelProbesAcrossTransfers": 17
+  },
+  "finalBinaryTransfer": {
+    "status": "passed",
+    "case": "standalone Sentinel SCL after pre-transfer metadata revalidation",
+    "binarySha256": "6a1c54b70757c791470785c552c146c44233100e4da7bbbb6fdca956ff173a43",
+    "reusedConnectionId": "5a573dfb-9ee6-4c3f-9965-f04feee9c33a",
+    "snapshotId": "0e1512e42695479cb21200883789616ce7a6bc5faf0240436d42a143c966ee38",
+    "projectId": "e0d64b0c-400f-4c23-8ce0-d650b347d2d3",
+    "job": {
+      "jobId": "ec596404-ba0b-4180-9d30-fc7d2dc7afb0",
+      "bytes": 2312147,
+      "sha256": "dca16b50bd2612ce593a28f5dc9f1f51d993b21fc0dfb469559e07fb37abdc86",
+      "originalFile": "original.tif",
+      "managedPath": "\\\\?\\G:\\code\\geod-global\\.verification\\stac-runtime\\assets\\ec596404-ba0b-4180-9d30-fc7d2dc7afb0.tif",
+      "sampleCount": 30140100,
+      "pixelProbeCount": 6,
+      "fullIndependentDecode": true,
+      "width": 5490,
+      "height": 5490,
+      "crs": "EPSG:32632"
+    },
+    "matchedFirstDownloadSha256": true,
+    "evidence": ".verification/stac-public-item-final/report.json"
+  },
+  "offlineRestart": {
+    "status": "passed",
+    "binarySha256": "6a1c54b70757c791470785c552c146c44233100e4da7bbbb6fdca956ff173a43",
+    "nativeCliRuns": 18,
+    "snapshots": 10,
+    "projects": 4,
+    "jobs": 3,
+    "connections": 3,
+    "networkRequests": 0,
+    "registryBytesUnchanged": true,
+    "allRetainedSourceAndRasterBytesUnchanged": true,
+    "evidence": ".verification/stac-restart-final/report.json",
+    "script": "scripts/verify-stac-restart.py"
+  },
+  "browserUi": {
+    "status": "passed",
+    "surface": "Headless Chromium browser using actual local native runtime",
+    "desktopWebViewAccepted": false,
+    "usedUserDesktop": false,
+    "cases": [
+      {
+        "case": "sentinel-scl",
+        "viewportWidth": 1440,
+        "locale": "en",
+        "theme": "light",
+        "projectId": "b94e1697-8f2d-4b34-aae0-8fa8da4471c2",
+        "jobId": "c76394c0-fbd1-4101-ba6e-dda283972d2e",
+        "noHorizontalOverflow": true,
+        "cachedThumbnailAndGeoreferencedPreview": true,
+        "originalSourceHashVisible": true,
+        "rawClickedPixel": {
+          "jobId": "c76394c0-fbd1-4101-ba6e-dda283972d2e",
+          "sha256": "dca16b50bd2612ce593a28f5dc9f1f51d993b21fc0dfb469559e07fb37abdc86",
+          "column": 2776,
+          "row": 2756,
+          "values": [
+            5
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "clickedPixelIndependentlyMatchedWithRasterio": true,
+        "savedAndReusedCompletedAssets": false,
+        "noPublicRequests": true,
+        "errors": [],
+        "evidence": ".verification/stac-ui/b94e1697-8f2d-4b34-aae0-8fa8da4471c2/report.json"
+      },
+      {
+        "case": "sentinel-scl",
+        "viewportWidth": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "projectId": "b94e1697-8f2d-4b34-aae0-8fa8da4471c2",
+        "jobId": "c76394c0-fbd1-4101-ba6e-dda283972d2e",
+        "noHorizontalOverflow": true,
+        "cachedThumbnailAndGeoreferencedPreview": true,
+        "originalSourceHashVisible": true,
+        "rawClickedPixel": {
+          "jobId": "c76394c0-fbd1-4101-ba6e-dda283972d2e",
+          "sha256": "dca16b50bd2612ce593a28f5dc9f1f51d993b21fc0dfb469559e07fb37abdc86",
+          "column": 2776,
+          "row": 2756,
+          "values": [
+            5
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "clickedPixelIndependentlyMatchedWithRasterio": true,
+        "savedAndReusedCompletedAssets": false,
+        "noPublicRequests": true,
+        "errors": [],
+        "evidence": ".verification/stac-ui/b94e1697-8f2d-4b34-aae0-8fa8da4471c2/report.json"
+      },
+      {
+        "case": "direct-dem",
+        "viewportWidth": 1440,
+        "locale": "en",
+        "theme": "light",
+        "projectId": "5bb6afaf-9153-49c2-9432-758fe32faf0a",
+        "jobId": "976505f3-83f1-4ac3-92fc-687b38c93ac3",
+        "noHorizontalOverflow": true,
+        "cachedThumbnailAndGeoreferencedPreview": true,
+        "originalSourceHashVisible": true,
+        "rawClickedPixel": {
+          "jobId": "976505f3-83f1-4ac3-92fc-687b38c93ac3",
+          "sha256": "2de6ed83b2a7978c3874b97e5395b8ecb0cc6ea5cf899b2d4785479e631f1d88",
+          "column": 400,
+          "row": 600,
+          "values": [
+            43.81059265136719
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "clickedPixelIndependentlyMatchedWithRasterio": true,
+        "savedAndReusedCompletedAssets": true,
+        "noPublicRequests": true,
+        "errors": [],
+        "evidence": ".verification/stac-ui/5bb6afaf-9153-49c2-9432-758fe32faf0a/report.json"
+      },
+      {
+        "case": "direct-dem",
+        "viewportWidth": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "projectId": "5bb6afaf-9153-49c2-9432-758fe32faf0a",
+        "jobId": "976505f3-83f1-4ac3-92fc-687b38c93ac3",
+        "noHorizontalOverflow": true,
+        "cachedThumbnailAndGeoreferencedPreview": true,
+        "originalSourceHashVisible": true,
+        "rawClickedPixel": {
+          "jobId": "976505f3-83f1-4ac3-92fc-687b38c93ac3",
+          "sha256": "2de6ed83b2a7978c3874b97e5395b8ecb0cc6ea5cf899b2d4785479e631f1d88",
+          "column": 400,
+          "row": 600,
+          "values": [
+            43.81059265136719
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "clickedPixelIndependentlyMatchedWithRasterio": true,
+        "savedAndReusedCompletedAssets": true,
+        "noPublicRequests": true,
+        "errors": [],
+        "evidence": ".verification/stac-ui/5bb6afaf-9153-49c2-9432-758fe32faf0a/report.json"
+      }
+    ],
+    "independentClickChecks": "Four observed clicks at two distinct file coordinates checked against original local TIFF with rasterio",
+    "screenshotsIndependentlyReviewed": [
+      ".verification/stac-ui/b94e1697-8f2d-4b34-aae0-8fa8da4471c2/1440-c76394c0-fbd1-4101-ba6e-dda283972d2e-map.png",
+      ".verification/stac-ui/5bb6afaf-9153-49c2-9432-758fe32faf0a/1024-976505f3-83f1-4ac3-92fc-687b38c93ac3-map.png"
+    ]
+  },
+  "officialReferences": [
+    "https://github.com/radiantearth/stac-spec/tree/v1.1.0",
+    "https://github.com/radiantearth/stac-api-spec/blob/release/v1.0.0/item-search/README.md",
+    "https://docs.ogc.org/is/21-026/21-026.html",
+    "https://element84.com/earth-search",
+    "https://registry.opendata.aws/sentinel-2-l2a-cogs/",
+    "https://registry.opendata.aws/copernicus-dem/",
+    "https://copernicus-dem-30m.s3.amazonaws.com/readme.html"
+  ],
+  "boundaries": [
+    "This record covers STAC API GET Item Search, one standalone Item and direct TIFF acquisition; WCS is not accepted by this record.",
+    "Byte-preserved originals and full independent raster decoding are separate from native pixel sampling and rendered preview checks.",
+    "Successful public HTTP access does not replace the original producer's license and attribution declarations.",
+    "Raster metadata does not prove formal COG conformance, scientific calibration, image quality or desktop WebView behavior."
+  ],
+  "initialOfflineRestart": {
+    "status": "passed",
+    "stage": "Intermediate 314-test native build; final recovery patches were still in progress",
+    "binarySha256": "3e0aa88fc71159d89b88ee7e6de19fdd83c13615a6a892c5dcb15460c991118b",
+    "nativeCliRuns": 16,
+    "snapshots": 10,
+    "projects": 3,
+    "jobs": 2,
+    "networkRequests": 0,
+    "registryBytesUnchanged": true,
+    "evidence": ".verification/stac-restart-initial/report.json"
+  },
+  "completedOriginalReuse": {
+    "status": "passed",
+    "binarySha256": "6a1c54b70757c791470785c552c146c44233100e4da7bbbb6fdca956ff173a43",
+    "cases": [
+      {
+        "case": "api",
+        "projectId": "b94e1697-8f2d-4b34-aae0-8fa8da4471c2",
+        "jobId": "c76394c0-fbd1-4101-ba6e-dda283972d2e",
+        "sha256": "dca16b50bd2612ce593a28f5dc9f1f51d993b21fc0dfb469559e07fb37abdc86",
+        "bytes": 2312147,
+        "sameCompletedJob": true,
+        "attemptsUnchanged": true,
+        "originalBytesAndModificationTimeUnchanged": true
+      },
+      {
+        "case": "cog",
+        "projectId": "5bb6afaf-9153-49c2-9432-758fe32faf0a",
+        "jobId": "976505f3-83f1-4ac3-92fc-687b38c93ac3",
+        "sha256": "2de6ed83b2a7978c3874b97e5395b8ecb0cc6ea5cf899b2d4785479e631f1d88",
+        "bytes": 3765647,
+        "sameCompletedJob": true,
+        "attemptsUnchanged": true,
+        "originalBytesAndModificationTimeUnchanged": true
+      }
+    ],
+    "jobRegistryUnchanged": true,
+    "newJobsObserved": 0,
+    "upstreamTrafficInstrumented": false,
+    "evidence": ".verification/stac-public-reuse/report.json"
+  },
+  "validationReportedByCoordinator": {
+    "nativeTests": {
+      "passed": 316,
+      "ignored": 4
+    },
+    "nodeTests": {
+      "passed": 167
+    },
+    "fullBrowserTestsBeforeRecoveryPatch": {
+      "passed": 159
+    },
+    "targetedStacBrowserTestsAfterRecoveryPatch": {
+      "passed": 9
+    },
+    "clippyWarningsDenied": "passed",
+    "finalNativeBuild": "passed",
+    "source": "Parent agent tool-run results; public-source and restart evidence independently executed by this harness"
+  }
+}

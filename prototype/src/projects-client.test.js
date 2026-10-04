@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProjectAndQueue, jobsForProject, MAX_PROJECT_SCENES, projectRequest, scenesForDownload } from './projects-client.js';
+import { createProjectAndQueue, jobsForProject, MAX_PROJECT_SCENES, projectRequest, projectSourceJobs, scenesForDownload } from './projects-client.js';
 
 const source = 'https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/S/EG/2025/6/S2C_TEST/';
 const scene = (id = 'S2C_TEST') => ({
@@ -67,7 +67,7 @@ test('partial download failure preserves the saved project and already queued jo
     assert.equal(error.downloads[0].jobs[0].id, 'visual-job');
     return error.message === 'Queue unavailable';
   });
-  await assert.rejects(createProjectAndQueue({}, ['thumbnail'], () => { throw new Error('must not create'); }), /Choose SCL/);
+  await assert.rejects(createProjectAndQueue({}, ['thumbnail'], () => { throw new Error('must not create'); }), /Choose supported/);
 });
 
 test('project files include exact sources, mosaics and recursive clips but exclude unrelated files', () => {
@@ -82,4 +82,24 @@ test('project files include exact sources, mosaics and recursive clips but exclu
     { id: 'outside-project-clip', parentId: 'source' },
   ];
   assert.deepEqual(jobsForProject(project, jobs).map(job => job.id), ['clip2', 'source', 'clip1', 'mosaic']);
+});
+
+test('prepared SAFE project sources remain bound to the completed original and its checksum', () => {
+  const project = { id: 'p', scenes: [{ itemId: 'safe-scene', assets: { product: { href: 'safe-href' } } }] };
+  const original = { id: 'original', kind: 'download', status: 'succeeded', itemId: 'safe-scene', assetKey: 'product', href: 'safe-href', sha256: 'a'.repeat(64) };
+  const prepared = { id: 'prepared', kind: 'raster_prepare', status: 'succeeded', parentId: original.id,
+    itemId: original.itemId, assetKey: 'scl', href: original.href, updatedAt: '2026-10-01',
+    safe: { sourceJobId: original.id, sourceSha256: original.sha256 } };
+  assert.deepEqual(projectSourceJobs(project, [original, prepared], 'scl'), [prepared]);
+  assert.deepEqual(jobsForProject(project, [prepared, original]).map(job => job.id), ['prepared', 'original']);
+  for (const altered of [
+    { ...prepared, href: 'other-product' },
+    { ...prepared, parentId: 'other-original' },
+    { ...prepared, safe: { ...prepared.safe, sourceJobId: 'other-original' } },
+    { ...prepared, safe: { ...prepared.safe, sourceSha256: 'b'.repeat(64) } },
+  ]) {
+    assert.deepEqual(projectSourceJobs(project, [original, altered], 'scl'), []);
+    assert.deepEqual(jobsForProject(project, [altered, original]).map(job => job.id), ['original']);
+  }
+  assert.deepEqual(projectSourceJobs(project, [{ ...original, status: 'failed' }, prepared], 'scl'), []);
 });

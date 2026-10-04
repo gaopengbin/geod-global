@@ -1,0 +1,643 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+      "bbox": [
+        -130.540729,
+        30,
+        -103.923048,
+        40
+      ],
+      "type": "Feature",
+      "links": [],
+      "assets": {
+        "250m_16_days_EVI": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/08/05/2025177/MOD13Q1.A2025177.h08v05.061.2025195142416_250m_16_days_EVI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "16 day EVI",
+          "raster:bands": [
+            {
+              "unit": "EVI",
+              "scale": 0.0001,
+              "data_type": "int16",
+              "spatial_resolution": 250
+            }
+          ]
+        },
+        "250m_16_days_NDVI": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/08/05/2025177/MOD13Q1.A2025177.h08v05.061.2025195142416_250m_16_days_NDVI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "16 day NDVI",
+          "raster:bands": [
+            {
+              "unit": "NDVI",
+              "scale": 0.0001,
+              "data_type": "int16",
+              "spatial_resolution": 250
+            }
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -130.540729,
+              40
+            ],
+            [
+              -129.45325,
+              39.422917
+            ],
+            [
+              -128.381622,
+              38.8375
+            ],
+            [
+              -127.333475,
+              38.247917
+            ],
+            [
+              -126.308482,
+              37.654167
+            ],
+            [
+              -125.292569,
+              37.047917
+            ],
+            [
+              -124.306674,
+              36.441667
+            ],
+            [
+              -123.340159,
+              35.829167
+            ],
+            [
+              -122.383595,
+              35.204167
+            ],
+            [
+              -121.450007,
+              34.575
+            ],
+            [
+              -120.53908,
+              33.941667
+            ],
+            [
+              -119.65051,
+              33.304167
+            ],
+            [
+              -118.772932,
+              32.654167
+            ],
+            [
+              -117.923199,
+              32.004167
+            ],
+            [
+              -117.084941,
+              31.341667
+            ],
+            [
+              -116.266428,
+              30.672917
+            ],
+            [
+              -115.470054,
+              30
+            ],
+            [
+              -103.923048,
+              30
+            ],
+            [
+              -104.642042,
+              30.675
+            ],
+            [
+              -105.37178,
+              31.3375
+            ],
+            [
+              -106.123645,
+              31.997917
+            ],
+            [
+              -106.895639,
+              32.654167
+            ],
+            [
+              -107.685459,
+              33.304167
+            ],
+            [
+              -108.485172,
+              33.941667
+            ],
+            [
+              -109.310486,
+              34.579167
+            ],
+            [
+              -110.145236,
+              35.204167
+            ],
+            [
+              -111.006143,
+              35.829167
+            ],
+            [
+              -111.876006,
+              36.441667
+            ],
+            [
+              -112.766407,
+              37.05
+            ],
+            [
+              -113.677634,
+              37.654167
+            ],
+            [
+              -114.600127,
+              38.247917
+            ],
+            [
+              -115.550226,
+              38.841667
+            ],
+            [
+              -116.507925,
+              39.422917
+            ],
+            [
+              -117.486656,
+              40
+            ],
+            [
+              -130.540729,
+              40
+            ]
+          ]
+        ]
+      },
+      "collection": "modis-13Q1-061",
+      "properties": {
+        "datetime": null,
+        "platform": "terra",
+        "instruments": [
+          "modis"
+        ],
+        "end_datetime": "2025-07-11T23:59:59Z",
+        "modis:tile-id": "51008005",
+        "eo:cloud_cover": 0,
+        "start_datetime": "2025-06-26T00:00:00Z",
+        "modis:vertical-tile": 5,
+        "modis:horizontal-tile": 8
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    },
+    {
+      "id": "MYD13Q1.A2025169.h08v05.061.2025189102903",
+      "bbox": [
+        -130.540729,
+        30,
+        -103.923048,
+        40
+      ],
+      "type": "Feature",
+      "links": [],
+      "assets": {
+        "250m_16_days_EVI": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD13Q1/08/05/2025169/MYD13Q1.A2025169.h08v05.061.2025189102903_250m_16_days_EVI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "16 day EVI",
+          "raster:bands": [
+            {
+              "unit": "EVI",
+              "scale": 0.0001,
+              "data_type": "int16",
+              "spatial_resolution": 250
+            }
+          ]
+        },
+        "250m_16_days_NDVI": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD13Q1/08/05/2025169/MYD13Q1.A2025169.h08v05.061.2025189102903_250m_16_days_NDVI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "16 day NDVI",
+          "raster:bands": [
+            {
+              "unit": "NDVI",
+              "scale": 0.0001,
+              "data_type": "int16",
+              "spatial_resolution": 250
+            }
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -130.540729,
+              40
+            ],
+            [
+              -129.45325,
+              39.422917
+            ],
+            [
+              -128.381622,
+              38.8375
+            ],
+            [
+              -127.333475,
+              38.247917
+            ],
+            [
+              -126.308482,
+              37.654167
+            ],
+            [
+              -125.292569,
+              37.047917
+            ],
+            [
+              -124.306674,
+              36.441667
+            ],
+            [
+              -123.340159,
+              35.829167
+            ],
+            [
+              -122.383595,
+              35.204167
+            ],
+            [
+              -121.450007,
+              34.575
+            ],
+            [
+              -120.53908,
+              33.941667
+            ],
+            [
+              -119.65051,
+              33.304167
+            ],
+            [
+              -118.772932,
+              32.654167
+            ],
+            [
+              -117.923199,
+              32.004167
+            ],
+            [
+              -117.084941,
+              31.341667
+            ],
+            [
+              -116.266428,
+              30.672917
+            ],
+            [
+              -115.470054,
+              30
+            ],
+            [
+              -103.923048,
+              30
+            ],
+            [
+              -104.642042,
+              30.675
+            ],
+            [
+              -105.37178,
+              31.3375
+            ],
+            [
+              -106.123645,
+              31.997917
+            ],
+            [
+              -106.895639,
+              32.654167
+            ],
+            [
+              -107.685459,
+              33.304167
+            ],
+            [
+              -108.485172,
+              33.941667
+            ],
+            [
+              -109.310486,
+              34.579167
+            ],
+            [
+              -110.145236,
+              35.204167
+            ],
+            [
+              -111.006143,
+              35.829167
+            ],
+            [
+              -111.876006,
+              36.441667
+            ],
+            [
+              -112.766407,
+              37.05
+            ],
+            [
+              -113.677634,
+              37.654167
+            ],
+            [
+              -114.600127,
+              38.247917
+            ],
+            [
+              -115.550226,
+              38.841667
+            ],
+            [
+              -116.507925,
+              39.422917
+            ],
+            [
+              -117.486656,
+              40
+            ],
+            [
+              -130.540729,
+              40
+            ]
+          ]
+        ]
+      },
+      "collection": "modis-13Q1-061",
+      "properties": {
+        "datetime": null,
+        "platform": "aqua",
+        "instruments": [
+          "modis"
+        ],
+        "end_datetime": "2025-07-03T23:59:59Z",
+        "modis:tile-id": "51008005",
+        "eo:cloud_cover": 0,
+        "start_datetime": "2025-06-18T00:00:00Z",
+        "modis:vertical-tile": 5,
+        "modis:horizontal-tile": 8
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    },
+    {
+      "id": "MOD13Q1.A2025177.h09v05.061.2025195134522",
+      "bbox": [
+        -117.486656,
+        30,
+        -92.376043,
+        40
+      ],
+      "type": "Feature",
+      "links": [],
+      "assets": {
+        "250m_16_days_EVI": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/09/05/2025177/MOD13Q1.A2025177.h09v05.061.2025195134522_250m_16_days_EVI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "16 day EVI",
+          "raster:bands": [
+            {
+              "unit": "EVI",
+              "scale": 0.0001,
+              "data_type": "int16",
+              "spatial_resolution": 250
+            }
+          ]
+        },
+        "250m_16_days_NDVI": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/09/05/2025177/MOD13Q1.A2025177.h09v05.061.2025195134522_250m_16_days_NDVI.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "16 day NDVI",
+          "raster:bands": [
+            {
+              "unit": "NDVI",
+              "scale": 0.0001,
+              "data_type": "int16",
+              "spatial_resolution": 250
+            }
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -117.486656,
+              40
+            ],
+            [
+              -116.507925,
+              39.422917
+            ],
+            [
+              -115.550226,
+              38.841667
+            ],
+            [
+              -114.600127,
+              38.247917
+            ],
+            [
+              -113.677634,
+              37.654167
+            ],
+            [
+              -112.766407,
+              37.05
+            ],
+            [
+              -111.876006,
+              36.441667
+            ],
+            [
+              -111.006143,
+              35.829167
+            ],
+            [
+              -110.145236,
+              35.204167
+            ],
+            [
+              -109.310486,
+              34.579167
+            ],
+            [
+              -108.485172,
+              33.941667
+            ],
+            [
+              -107.685459,
+              33.304167
+            ],
+            [
+              -106.895639,
+              32.654167
+            ],
+            [
+              -106.123645,
+              31.997917
+            ],
+            [
+              -105.37178,
+              31.3375
+            ],
+            [
+              -104.642042,
+              30.675
+            ],
+            [
+              -103.923048,
+              30
+            ],
+            [
+              -92.376043,
+              30
+            ],
+            [
+              -93.013143,
+              30.672917
+            ],
+            [
+              -93.667953,
+              31.341667
+            ],
+            [
+              -94.338559,
+              32.004167
+            ],
+            [
+              -95.018346,
+              32.654167
+            ],
+            [
+              -95.720408,
+              33.304167
+            ],
+            [
+              -96.431264,
+              33.941667
+            ],
+            [
+              -97.164876,
+              34.579167
+            ],
+            [
+              -97.906876,
+              35.204167
+            ],
+            [
+              -98.672127,
+              35.829167
+            ],
+            [
+              -99.445339,
+              36.441667
+            ],
+            [
+              -100.234055,
+              37.047917
+            ],
+            [
+              -101.046786,
+              37.654167
+            ],
+            [
+              -101.86678,
+              38.247917
+            ],
+            [
+              -102.702291,
+              38.835417
+            ],
+            [
+              -103.5626,
+              39.422917
+            ],
+            [
+              -104.432583,
+              40
+            ],
+            [
+              -117.486656,
+              40
+            ]
+          ]
+        ]
+      },
+      "collection": "modis-13Q1-061",
+      "properties": {
+        "datetime": null,
+        "platform": "terra",
+        "instruments": [
+          "modis"
+        ],
+        "end_datetime": "2025-07-11T23:59:59Z",
+        "modis:tile-id": "51009005",
+        "eo:cloud_cover": 0,
+        "start_datetime": "2025-06-26T00:00:00Z",
+        "modis:vertical-tile": 5,
+        "modis:horizontal-tile": 9
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/classification/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  ],
+  "links": [],
+  "geod:fixture": "Captured public catalogue fields for protocol/UI regression; this file is not a download or processing receipt."
+}

@@ -321,17 +321,18 @@ Google Photorealistic 3D Tiles 不作为默认可离线导出的示例。官方 
 
 | Provider/来源 | 数据域 | 接入策略 | 认证/计费重点 | 状态与证据 |
 |---|---|---|---|---|
-| Earth Search | Sentinel、Landsat、DEM、NAIP 等 | STAC 检索；按资产属性选择 HTTP/S3 | 目录免费不代表所有底层资产路径相同 | 官方能力已核对；GeoD 待联调 [S01] |
+| Planetary Computer MOD13Q1 / MYD13Q1 v061 | NDVI / EVI 植被指数 | 公开 STAC 与转换 COG；正弦投影原值、工程处理及缓存 | 公开转换 COG 访问不代替完整 NASA HDF 权限或来源许可 | 2026-10-04 六份完整真实 COG、八份处理成果全部 DN、真实较旧景补齐、四组界面、两种 MCP 及离线缓存已验收，只覆盖十二层中的 NDVI / EVI；剩余科学 / QA 层、完整 HDF、重投影与原生窗口待接入 / 验收，见[植被指数记录](../docs/modis-vegetation-indices.md) |
+| Earth Search | Sentinel、Landsat、DEM、NAIP 等 | STAC 检索；按资产属性选择 HTTP/S3 | 目录免费不代表所有底层资产路径相同 | 2026-10-01 Sentinel-2 L2A 已接入并用真实原文件验收；其他集合逐项适配，见[完整进度](../docs/provider-integration-status.md) [S01] |
 | AWS Sentinel-2 COG | 光学遥感 | 读取 STAC 指向的 COG；支持 Range 和窗口读取 | 官方列有无需 AWS 账号的公开桶 | 官方已核对；不得泛化到所有 AWS 数据 [S02] |
-| Copernicus Data Space | Sentinel 及其他数据 | STAC/OData/产品下载；可选处理 API | 查询、下载、处理的认证与额度分别确认 | API 类别已核对；逐条能力验收 [S04] |
+| Copernicus Data Space | Sentinel 及其他数据 | STAC/OData/产品下载；可选处理 API | 查询、下载、处理的认证与额度分别确认 | 2026-10-01 Sentinel-2 L2A 公开目录、授权入口与 SAFE 下载适配已接入；本地 JP2 准备与处理已验证合成文件，真实授权原产品仍待验收，见[来源验收](../docs/providers.md) |
 | USGS Landsat | Landsat 产品 | 官方目录/下载与云资产适配 | AWS 的 `usgs-landsat` 为 Requester Pays；另有官方免费获取途径 | 路径级费用区别已核对 [S03] |
-| Microsoft Planetary Computer | 开放目录候选 | STAC + 相应资产访问适配 | 签名、过期、配额按官方最新接口联调 | 候选；本次没有完整读取其动态文档，不写死配额 |
-| NASA Earthdata | MODIS/VIIRS 等候选 | CMR/产品访问 adapter | Earthdata 登录、产品格式和权限逐项确认 | 候选，本次未逐一验证集合 |
-| Copernicus DEM / SRTM | 高程 | 沿已验证目录/资产路径接入 | 分辨率、垂直参考、许可逐产品保留 | 现有 DEM 基础需回归 [R01] |
+| Microsoft Planetary Computer | 开放目录候选 | STAC + 相应资产访问适配 | 签名、过期、配额按官方最新接口联调 | 2026-10-02 Sentinel-2 L2A 与 Landsat 8/9 C2 L2 的目录、签名地图、支持的原文件及工程处理已接入；NAIP 四通道下载、在线 / 本地 RGB 显示、原始 NIR 取值、同网格工程裁剪 / 拼接和持久化缩略图已用真实文件验收；原生共享 SAS 已实测，见[来源验收](../docs/providers.md) |
+| NASA Earthdata | HLS、MODIS/VIIRS 等 | CMR/产品访问 adapter | Earthdata 登录、产品格式和权限逐项确认 | 2026-10-02 HLS L30 v2.0 公开目录、账号入口和受保护波段下载代码已接入；Int16 处理已验证夹具，真实授权下载仍待验收；VIIRS 三个平台 09A1 v002 实时目录、浏览图、合成时段、工程恢复及原始 HDF5 下载适配已接入，科学层和实际授权原文件待验收 / 实现，见[VIIRS 边界](../docs/viirs-integration.md)；PC MODIS 09A1 v061 转换 COG 另见[MODIS 处理](../docs/modis-processing.md) |
+| Copernicus DEM / SRTM | 高程 | 沿已验证目录/资产路径接入 | 分辨率、垂直参考、许可逐产品保留 | 2026-10-02 GLO-30 Public 目录、工程下载、Float32 显示 / 原值、持久化缩略图、同网格裁剪与拼接已用真实文件验收，见[高程读取](../docs/elevation-inspection.md)；SRTMGL1 v003 实时 CMR 目录、公开浏览预览、Earthdata 入口、HGT ZIP 下载适配及 Int16 / EGM96 本地读取和缓存已接入，读取用合成 HGT 验证，真实授权原包待验收，后续工程处理进度见同一说明，见[SRTM 说明](../docs/srtm-inspection.md)。2026-10-03 GLO-90 独立目录、原文件工程下载、Float32 / EGM2008 读取、实际单瓦片裁剪 / 跨瓦片拼接 / 多边形掩膜与重启缓存已验收，见[GLO-90 记录](../docs/glo90-inspection.md)。SRTM 工程处理已用合成原包实现并独立验证，生产文件仍待授权验收。高程重投影与地形分析仍待实现。国内基础 [R01] 为参考，不是海外版运行能力 |
 | OSM / Protomaps / 用户自有瓦片 | 矢量、离线地图 | 要素抽取与 PMTiles 两条链路 | 原始数据许可、底图服务政策分开 | OSM 公共标准瓦片禁止批量离线 [S11][S13] |
 | Wayback / 用户授权影像服务 | 历史及连续影像 | 版本与瓦片服务 adapter | 核对下载、缓存、展示条款 | 现有模块基础；授权独立审核 [R01] |
 | 吉林一号/其他商业厂商 | 商业影像 | 在线地图、目录、订单交付分别建能力 | BYO 账号不等于取得导出/再分发权 | 候选；未签合作、不写免费额度或确定价格 |
-| 自定义 STAC/COG/WMS/WMTS/WCS | 用户提供数据 | Capability detection + manifest | 自签证书、代理、鉴权、访问范围 | 目标协议支持，不承诺任意服务自动兼容 |
+| 自定义 STAC/COG/WMS/WMTS/WCS | 用户提供数据 | Capability detection + manifest | 自签证书、代理、鉴权、访问范围 | 各协议的公开有界路径逐项接入，真实验收与剩余范围见[完整进度](../docs/provider-integration-status.md)；不承诺任意服务自动兼容 |
 | 自有或授权 3D Tiles | 三维 | tileset 与依赖读取 | 资产级许可；完整性和范围语义 | 复用现有基础并验证 [R01] |
 
 NAIP 在信息架构中归 **Aerial imagery**，不当作卫星型号。Provider 条目显示真实地域覆盖，不能将美国地方数据标成全球。

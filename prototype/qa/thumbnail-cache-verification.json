@@ -1,0 +1,43 @@
+{
+  "realLocalFiles": true,
+  "desktopStoreNotModifiedByQa": true,
+  "sourceFilesUnchanged": true,
+  "noRedownload": true,
+  "isolatedStore": "C:\\Users\\Administrator\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\xyz.laogao.geod.global\\qa\\thumbnail-cache-20261001-1427",
+  "cacheEntries": 3,
+  "cacheBytes": 147074,
+  "samePngAfterRestart": true,
+  "previews": [
+    {
+      "jobId": "dfe1b957-e5c0-49fd-a35b-d1a22b3d9695",
+      "assetKey": "scl",
+      "kind": "download",
+      "sourceSha256": "daa47daf77a60ae3b75d133ef4c5e2b131fb5924d0b4d53e0f55fe17d35aef5d",
+      "coldSeconds": 0.453,
+      "pngSha256": "d29b5bc60603f20a9d199b0027fe594d396bfae3f3e4e589b3eeb020f63d69f2",
+      "warmSeconds": 0.016,
+      "afterRestartSeconds": 0.016
+    },
+    {
+      "jobId": "bbc6c54c-4412-4030-9b76-e06082938185",
+      "assetKey": "visual",
+      "kind": "download",
+      "sourceSha256": "da8f06713fe426dc0492a675d34d0c4cdd9541f31dae21b3f17045e6e743a9b3",
+      "coldSeconds": 3.484,
+      "pngSha256": "af04f67a1cbc635b50235a5f7c9138788aff054af5080eaccd2c376de0f8d89f",
+      "warmSeconds": 0.0,
+      "afterRestartSeconds": 0.047
+    },
+    {
+      "jobId": "b896cc0f-698f-4c3b-ad6d-ad257305329a",
+      "assetKey": "visual",
+      "kind": "raster_mosaic",
+      "sourceSha256": "df02b90d1e7c762b7ce3e1383510d0f2ecd79c052173e8c96b6f0225265ff651",
+      "coldSeconds": 15.625,
+      "pngSha256": "437434bca8dab24c3cfb13a8d5f518388f74f0459f8b46ffcca70820c618f46e",
+      "warmSeconds": 0.031,
+      "afterRestartSeconds": 0.015
+    }
+  ],
+  "runtimeBinarySha256": "ba82b8e4b0cfa30318ff1005676adcc95ed0a65e686aaf2ca50ebde8bea2a618"
+}

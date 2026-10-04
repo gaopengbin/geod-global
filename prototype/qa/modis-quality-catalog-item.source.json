@@ -1,0 +1,13 @@
+{
+  "source": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-09A1-061/items/MYD09A1.A2025177.h08v05.061.2025189031924",
+  "retrievedAt": "2026-10-03T16:12:33.986Z",
+  "sha256": "6a42bfdfa48a1ede2a50e1525e2d05bbb22296408416d9b0978dcae30d25e0b8",
+  "subsetAssets": [
+    "sur_refl_b01",
+    "sur_refl_b03",
+    "sur_refl_b04",
+    "sur_refl_qc_500m",
+    "sur_refl_state_500m"
+  ],
+  "description": "Unmodified real public item fields with only the five supported unsigned asset declarations retained. Original file evidence is separate in modis-quality-verification.json."
+}

@@ -1,0 +1,51 @@
+{
+  "verifiedAt": "2026-10-02T10:19:04.360231200+00:00",
+  "source": "OGC API Features / pygeoapi public demonstration service / Natural Earth Large Lakes",
+  "serviceUrl": "https://demo.pygeoapi.io/stable",
+  "requestBounds": [-180, -90, 180, 90],
+  "supportedCollectionMetadata": 13,
+  "individuallyVerifiedCollection": "lakes",
+  "pages": 13,
+  "features": 25,
+  "geometryCounts": {"Polygon": 25},
+  "sourceSha256": "9c10b5890d6f96c02ffadc810a4200ac53e494ba2c136569262c50715abe7811",
+  "geojsonSha256": "9c10b5890d6f96c02ffadc810a4200ac53e494ba2c136569262c50715abe7811",
+  "independentOriginalFeaturesAndAttributes": "Exact equality against independently refetched public source pages",
+  "independentGeometryValidation": "Shapely / GEOS: geometry validity, bbox intersection and aggregate bounds",
+  "nativeProvenanceMatchesGeoJSON": true,
+  "restart": {
+    "serviceRegistryRecovered": true,
+    "unchangedManagedSnapshots": 3,
+    "completeProvenanceRecovered": true,
+    "allNativeExportsEqual": true,
+    "networkRequiredForReopen": false
+  },
+  "regression": {"runtimeUnitTests": 202, "runtimeCliTests": 3, "desktopTests": 4, "nodeTests": 132, "uiTests": 127, "ignoredRuntimeTests": 4, "strictClippy": "passed", "repositoryIsolationAndAcl": "passed", "productionFrontendBuild": "passed"},
+  "ui": {
+    "mode": "Headless Chromium forwarding only application requests to an isolated native runtime; OGC queries reached the actual public service",
+    "unrelatedRasterCatalogSuppressed": true,
+    "usedUserDesktop": false,
+    "desktopWebViewAccepted": false,
+    "views": [
+      {"width": 1440, "locale": "en", "theme": "light", "features": 13, "pages": 2, "clickedOriginalFeatureId": "23", "sourceAttributesVerified": true},
+      {"width": 1024, "locale": "zh-CN", "theme": "dark", "features": 13, "pages": 2, "clickedOriginalFeatureId": "20", "sourceAttributesVerified": true}
+    ],
+    "requestBounds": [-130, 20, -60, 65],
+    "actualCollectionRefresh": true,
+    "actualNativePublicServiceQuery": true,
+    "allBrowserExportAttributesAndGeometryEqual": true,
+    "provenanceVisible": true,
+    "pageErrors": []
+  },
+  "limits": {"pages": 25, "features": 50000, "responseBytes": 20971520, "networkDeadlineSeconds": 120},
+  "datasetLicenseLinks": [],
+  "limitations": [
+    "Developer demonstration service availability is not guaranteed",
+    "Full feature geometry retained; not implicitly clipped",
+    "Completeness applies to the matching bbox query, not the whole dataset",
+    "Requested time is not an observation date",
+    "Source receipt hashes pin received bytes; refetched response timestamps may differ",
+    "Other discovered collections require individual data acceptance",
+    "NASA / Copernicus positive credential and original-product acceptance remains pending user accounts"
+  ]
+}

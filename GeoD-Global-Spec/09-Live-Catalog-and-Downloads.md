@@ -4,6 +4,10 @@
 
 后续进展：同日新增的中英文界面、原生SCL读取和真实像元预览见[附件10](10-Languages-and-Raster-Inspection.md)。下文保留本次下载链路交付时的验收记录。
 
+2026-10-01 多数据源进展见[国际公开影像数据源](../docs/providers.md)：新增 Planetary Computer 的 Sentinel-2 真彩色/SCL 文件链路，以及 Copernicus Data Space 的公开目录与缩略图。下文中 Earth Search 单源和早期运行时能力描述为历史验收范围，当前能力以 README 和各专题验收为准。
+
+2026-10-02：探索页已扩展到九个具体产品入口，新增 GLO-30 Public、NAIP、NASA SRTMGL1 v003 与 MODIS 09A1 v061 COG；MODIS 的实际三波段下载、原值与本地 RGB / 缓存已验收，正弦投影不套用 UTM，详见[MODIS 验收](../docs/modis-inspection.md)。GLO-30 / NAIP 已有实际原文件处理证据；SRTM 的目录、公开预览、授权入口、HGT 本地读取和缓存已接入，工程裁剪 / 拼接的合成输入已由真实运行时和独立 GDAL 验证，真实授权下载与生产原包处理仍待验收，见[SRTM 证据边界](../docs/srtm-inspection.md)。完整公开来源计划仍未全部接入，见[当前接入状态](../docs/provider-integration-status.md)。
+
 ## 实现范围
 
 独立仓库新增 `crates/geod-runtime` 和 `src-tauri`。桌面命令和浏览器的loopback调试服务复用同一个Rust JobManager；没有引用、迁移或修改国内版源码。桌面应用ID为 `xyz.laogao.geod.global`，配置与下载记录独立。
@@ -63,3 +67,8 @@ Rust核心支持两个并发下载、最多64个活动/排队任务、每文件5
 下一步应以下载后的真实GeoTIFF为输入，建立原生栅格读取/区域裁剪和对应验证器，然后接入成果预览与可执行Recipe。不能用模拟任务或缩略图代替这些验收。
 
 技术参考：[Earth Search API](https://earth-search.aws.element84.com/v1/) · [STAC排序扩展](https://github.com/stac-api-extensions/sort) · [Tauri命令](https://v2.tauri.app/develop/calling-rust/) · [Tauri配置](https://v2.tauri.app/reference/config/)。
+
+
+## 原始波段本地 RGB 组合 · 2026-10-02
+
+Landsat C2 L2 和 HLS L30 v2.0 同一景三个原始波段完成后，可在工作空间组合显示。原生入口固定 red / green / blue 的托管任务 ID，核对完整 SHA-256、产品目录及完全一致的 30 米网格，逐通道保留 DN、NoData 和版本固定的转换参数。组合只生成显示预览，不伪造科学成果文件或合成文件校验值；RGB GeoTIFF 导出仍待接入。真实 Landsat 原文件的全部组合预览、科学取值、文件入口与原生重启已验收；HLS 仅合成输入验证，实际授权原文件仍待账号。详见[本地 RGB 验收](../docs/local-rgb.md)。

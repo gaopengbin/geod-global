@@ -1,0 +1,1323 @@
+{
+  "schema": "geod-modis-rgb-mask-verification/v1",
+  "status": "passed",
+  "verifiedAt": "2026-10-04T00:10:35.483618+00:00",
+  "scope": "MOD/MYD09A1 v061 same-scene scientific RGB quality screening; original, rectangular clip and polygon-with-hole clip",
+  "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+  "nativeBinary": {
+    "path": "G:\\code\\geod-global\\.verification\\modis-rgb-mask-final-20261004\\runtime-990f75c3bcfac3ca.exe",
+    "sha256": "990f75c3bcfac3cae3d9a981764a079e9290ffa74e34b94cece7cbb96d339205"
+  },
+  "receipts": {
+    "native": {
+      "path": ".verification/modis-rgb-mask-final-20261004/native-verification.json",
+      "sha256": "16bc55783ea4cfecf5d4b53a5379a1beed998252fccd7e695bce127ca90c46a7",
+      "snapshot": ".verification/modis-rgb-mask-evidence-20261004/native-16bc55783ea4cfecf5d4b53a5379a1beed998252fccd7e695bce127ca90c46a7.json"
+    },
+    "mcp": {
+      "path": ".verification/modis-rgb-mask-final-20261004/mcp-verification.json",
+      "sha256": "07da014b31f12764ab5d0b18c30b9aeec411a9640495b1eeae3f3d3bb02e352d",
+      "snapshot": ".verification/modis-rgb-mask-evidence-20261004/mcp-07da014b31f12764ab5d0b18c30b9aeec411a9640495b1eeae3f3d3bb02e352d.json"
+    },
+    "ui": {
+      "path": ".verification/modis-rgb-mask-final-20261004/ui-verification.json",
+      "sha256": "06ee523544ca611d16221522f4f243e0899a88bdd0a036ead6b270ae35498f85",
+      "snapshot": ".verification/modis-rgb-mask-evidence-20261004/ui-06ee523544ca611d16221522f4f243e0899a88bdd0a036ead6b270ae35498f85.json"
+    },
+    "cache": {
+      "path": ".verification/modis-rgb-mask-offline-20261004/cache-verification.json",
+      "sha256": "3f7fa1811bc2fb3e10aa364da3a0e893606d0acf97294c08c7b6cbd9298ac1cf",
+      "snapshot": ".verification/modis-rgb-mask-evidence-20261004/cache-3f7fa1811bc2fb3e10aa364da3a0e893606d0acf97294c08c7b6cbd9298ac1cf.json"
+    }
+  },
+  "native": {
+    "outputs": 12,
+    "allDnCompared": 69146880,
+    "previewRgbaPixelsCompared": 2368256,
+    "pixelsCompared": 60,
+    "cases": [
+      {
+        "kind": "original",
+        "policy": null,
+        "excludeSnow": false,
+        "id": "5b9dc6d2-162b-488d-b18c-53437a41f84c",
+        "sha256": "dc52d40f46fe144e390b5245488cd97186f6a904f48d487820909471c72a1d97",
+        "bytes": 23413098,
+        "grid": {
+          "bounds": [
+            -11119505.196667,
+            3335851.559,
+            -10007554.677,
+            4447802.078667
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 2400,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 2400
+        },
+        "counts": null,
+        "preview": {
+          "width": 768,
+          "height": 768,
+          "rgbaPixelsCompared": 589824,
+          "pngSha256": "66d4118d1185a307fd8717f72366d677332dfd0b93a8e67867d9bdd1e5513a81"
+        },
+        "packageSha256": "d51dc6f9075cfbdca1a9b8c1c4516e14ba39a3e4d2ba2ab1762c976fea7458da"
+      },
+      {
+        "kind": "original",
+        "policy": "clear",
+        "excludeSnow": false,
+        "id": "d2de2098-5dae-4d3e-8020-872c8824214d",
+        "sha256": "1dbcca238efd299d2512a3d9dc660be58f87a0948add3171884bc7e30b774ca4",
+        "bytes": 19045740,
+        "grid": {
+          "bounds": [
+            -11119505.196667,
+            3335851.559,
+            -10007554.677,
+            4447802.078667
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 2400,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 2400
+        },
+        "counts": {
+          "examinedPixels": 5760000,
+          "rejectedPixels": 1088856,
+          "inputCommonValidPixels": 5759997,
+          "removedValidPixels": 1088853
+        },
+        "preview": {
+          "width": 768,
+          "height": 768,
+          "rgbaPixelsCompared": 589824,
+          "pngSha256": "7ff377db2a138f0b2ba3474511f112168362f599af92bfb7cf8089f3be5ad077"
+        },
+        "packageSha256": "7596b99557c9ddbd7012a40c018fe0130c08f966b4255d2a9c7bfddb9cd68e46"
+      },
+      {
+        "kind": "original",
+        "policy": "clear_best",
+        "excludeSnow": false,
+        "id": "bb233340-f249-4273-9c11-a9a142acf148",
+        "sha256": "e669381d9b20f8cdf7ffca98b5d956d7890d5dc232d3fd81c23f93f69d155f50",
+        "bytes": 17619571,
+        "grid": {
+          "bounds": [
+            -11119505.196667,
+            3335851.559,
+            -10007554.677,
+            4447802.078667
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 2400,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 2400
+        },
+        "counts": {
+          "examinedPixels": 5760000,
+          "rejectedPixels": 1578422,
+          "inputCommonValidPixels": 5759997,
+          "removedValidPixels": 1578419
+        },
+        "preview": {
+          "width": 768,
+          "height": 768,
+          "rgbaPixelsCompared": 589824,
+          "pngSha256": "a7eb4a26be596627d2b351ada242a196697a0efa51392067bc6755e8ad7ea55d"
+        },
+        "packageSha256": "1a0372d96342853d80c8f594b0951a9af02f437910fd981a0086517966da84d3"
+      },
+      {
+        "kind": "original",
+        "policy": "clear_best",
+        "excludeSnow": true,
+        "id": "f9bd254c-da21-4156-b1fb-97c78556465f",
+        "sha256": "e17d4157ee1e48ebdfca22b0ce8331a96833104130356464e634a11ba9fea78e",
+        "bytes": 17619571,
+        "grid": {
+          "bounds": [
+            -11119505.196667,
+            3335851.559,
+            -10007554.677,
+            4447802.078667
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 2400,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 2400
+        },
+        "counts": {
+          "examinedPixels": 5760000,
+          "rejectedPixels": 1578422,
+          "inputCommonValidPixels": 5759997,
+          "removedValidPixels": 1578419
+        },
+        "preview": {
+          "width": 768,
+          "height": 768,
+          "rgbaPixelsCompared": 589824,
+          "pngSha256": "a7eb4a26be596627d2b351ada242a196697a0efa51392067bc6755e8ad7ea55d"
+        },
+        "packageSha256": "6bc543a36df138a04d789187f4bb4553771b9d949242eaf9365c67b81a7a0736"
+      },
+      {
+        "kind": "single",
+        "policy": null,
+        "excludeSnow": false,
+        "id": "26769c0c-6fad-42e2-a42e-0c184bc7700a",
+        "sha256": "a76035f1d62379b319049cc9894502133db7c4ccd6d30c5787cc43c563b7c299",
+        "bytes": 5991,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": null,
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "aa593dfdcee043a7615103eec9b951b9f678b6f5185392d5b7531fbc1528dbc8"
+        },
+        "packageSha256": "b47c6707c0c14101daf46c9248d9171f406a9dc36f8f65eecde24516be105821"
+      },
+      {
+        "kind": "single",
+        "policy": "clear",
+        "excludeSnow": false,
+        "id": "0ae83f02-a735-4a2f-95e8-ca0f4375f336",
+        "sha256": "e849f7586789fac529394ce80963e5f58aaf67db39055f40978dada10cbbaa8d",
+        "bytes": 6036,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "rejectedPixels": 0,
+          "inputCommonValidPixels": 1120,
+          "removedValidPixels": 0
+        },
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "aa593dfdcee043a7615103eec9b951b9f678b6f5185392d5b7531fbc1528dbc8"
+        },
+        "packageSha256": "3d117dfd010143faf05830366e2fce272a50e0e75c66867710146622ce072e1a"
+      },
+      {
+        "kind": "single",
+        "policy": "clear_best",
+        "excludeSnow": false,
+        "id": "74bcc356-ee1d-4b61-a920-4dae9dc96171",
+        "sha256": "876350a1b218fb951c96e0bc4bfc9858a263fe5cbd7315a3165ac3acfe42407d",
+        "bytes": 6036,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "rejectedPixels": 0,
+          "inputCommonValidPixels": 1120,
+          "removedValidPixels": 0
+        },
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "aa593dfdcee043a7615103eec9b951b9f678b6f5185392d5b7531fbc1528dbc8"
+        },
+        "packageSha256": "193c3cc75351acaffffa1ed846945789c15c56f9c6da8e49fae4217bbb19247a"
+      },
+      {
+        "kind": "single",
+        "policy": "clear_best",
+        "excludeSnow": true,
+        "id": "17729bfc-f3d6-45af-8832-98d9e8585bcc",
+        "sha256": "131dd47b5a85f1f3c61f261f1736f80ac9447c784bcd8dd6bb227c7d72016ae4",
+        "bytes": 6036,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "rejectedPixels": 0,
+          "inputCommonValidPixels": 1120,
+          "removedValidPixels": 0
+        },
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "aa593dfdcee043a7615103eec9b951b9f678b6f5185392d5b7531fbc1528dbc8"
+        },
+        "packageSha256": "be203ca0bdecd02eed90b25fbbb7fccea679c11c72f57d852cf847be767bbe17"
+      },
+      {
+        "kind": "polygon",
+        "policy": null,
+        "excludeSnow": false,
+        "id": "7153390a-6462-474b-b5ac-d8a439dee8d0",
+        "sha256": "482467d7f9f7dea439b6560d84908ea08dd0ad277db4b74c6156d4c59598e39d",
+        "bytes": 5131,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": null,
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "0ecdae8bda566025e1946f1ebb91b1a6ec44df6aa21bd5e8137835b42afb1a19"
+        },
+        "packageSha256": "c2bb574c6524b3440471f0d6e3857478def6ea6c736d3e457e3093e3f0fcf999"
+      },
+      {
+        "kind": "polygon",
+        "policy": "clear",
+        "excludeSnow": false,
+        "id": "92606b78-fdaa-44c6-98cb-9c7d93b30f73",
+        "sha256": "a834c6843ca75416d4181c97dd6e1479ad9dcfe482721c507889aed6383b3977",
+        "bytes": 5176,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "rejectedPixels": 230,
+          "inputCommonValidPixels": 890,
+          "removedValidPixels": 0
+        },
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "0ecdae8bda566025e1946f1ebb91b1a6ec44df6aa21bd5e8137835b42afb1a19"
+        },
+        "packageSha256": "b1918d9e9c85156bf9fea60547ce01f3f2c2a8f15811aeae0df067c1e389281d"
+      },
+      {
+        "kind": "polygon",
+        "policy": "clear_best",
+        "excludeSnow": false,
+        "id": "0f83b337-0b25-45e0-86ff-eee753647254",
+        "sha256": "c5115236fc40cf4e352c3e2e267084f0f01cd4f04c3fc5b75e5ac5b9ecf8904a",
+        "bytes": 5176,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "rejectedPixels": 230,
+          "inputCommonValidPixels": 890,
+          "removedValidPixels": 0
+        },
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "0ecdae8bda566025e1946f1ebb91b1a6ec44df6aa21bd5e8137835b42afb1a19"
+        },
+        "packageSha256": "e9bc77a55209548a123663c5d15e569d5b2af97dc37f90627af300a831be9ef4"
+      },
+      {
+        "kind": "polygon",
+        "policy": "clear_best",
+        "excludeSnow": true,
+        "id": "522a9591-1777-4aea-ac7e-ed98ca446a8a",
+        "sha256": "0fbc7f4502f0de65f00e4daa9053c7cf9d957ec24e735fbdc6dda64a403df036",
+        "bytes": 5176,
+        "grid": {
+          "bounds": [
+            -10033500.189125562,
+            3887193.691668221,
+            -10007554.677,
+            3896459.945998779
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "height": 20,
+          "pixelInterpretation": "PixelIsArea",
+          "pixelSize": [
+            463.31271652791725,
+            463.3127165279167
+          ],
+          "width": 56
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "rejectedPixels": 230,
+          "inputCommonValidPixels": 890,
+          "removedValidPixels": 0
+        },
+        "preview": {
+          "width": 56,
+          "height": 20,
+          "rgbaPixelsCompared": 1120,
+          "pngSha256": "0ecdae8bda566025e1946f1ebb91b1a6ec44df6aa21bd5e8137835b42afb1a19"
+        },
+        "packageSha256": "84abba28658dd940911eac3f54675ca88d294a634a3c0d752e8cfbf8c005bb7b"
+      }
+    ],
+    "controls": [
+      {
+        "name": "independent multi-scene QA rejected",
+        "message": "{\"error\":\"HTTP 400 Bad Request: \\\"MODIS quality screening requires same-scene RGB; independently mosaicked sources need coupled quality-aware processing\\\"\"}"
+      },
+      {
+        "name": "wrong-period QC",
+        "message": "{\"error\":\"HTTP 400 Bad Request: \\\"MODIS QC and state must match the pinned RGB scene, processing area and source selection\\\"\"}"
+      },
+      {
+        "name": "duplicate quality IDs",
+        "message": "{\"error\":\"HTTP 400 Bad Request: \\\"MODIS QC and state order differs\\\"\"}"
+      }
+    ],
+    "sourceFilesUnchanged": true,
+    "restarted": true
+  },
+  "mcp": {
+    "modes": [
+      "direct",
+      "loopback"
+    ],
+    "outputs": 2,
+    "allDnCompared": 6720,
+    "pixelsCompared": 6,
+    "writesDeniedInReadOnlyMode": true,
+    "invalidPolicyAndDuplicateFlagsRejected": true,
+    "loopbackDisconnectReconnectPassed": true
+  },
+  "ui": {
+    "cases": [
+      {
+        "kind": "original",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "id": "b785eb7d-41f5-4178-ac12-d16b6abd6647",
+        "sha256": "98fa069deddfb898bfb3ff11a630dd1ba02a19e398d2b5b7018d9c523b064d75",
+        "mask": {
+          "schemaVersion": "geod-modis-rgb-mask/v1",
+          "policy": "clear_best",
+          "excludeSnow": true,
+          "sources": [
+            {
+              "jobId": "75753673-1755-45bb-a999-e95725dce97c",
+              "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7",
+              "band": "modis_qc",
+              "kind": "download",
+              "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+              "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+              "bytes": 7013560,
+              "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF"
+            },
+            {
+              "jobId": "2f7ae869-27af-4c6e-bd80-f1aaee8b05db",
+              "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2",
+              "band": "modis_state",
+              "kind": "download",
+              "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+              "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+              "bytes": 1800792,
+              "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF"
+            }
+          ],
+          "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf"
+        },
+        "counts": {
+          "examinedPixels": 5760000,
+          "rejectedPixels": 1578422,
+          "inputCommonValidPixels": 5759997,
+          "removedValidPixels": 1578419
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "b785eb7d-41f5-4178-ac12-d16b6abd6647",
+            "sha256": "98fa069deddfb898bfb3ff11a630dd1ba02a19e398d2b5b7018d9c523b064d75"
+          },
+          "sources": [
+            {
+              "jobId": "cbd64797-d4ae-476a-9bc4-d58fc97aaa86",
+              "sha256": "09373ed0cc2e1c312947061620d86dea065277138e3922be820458ed77668dc3",
+              "band": "red"
+            },
+            {
+              "jobId": "8a66a440-2121-4753-9a23-4cb8f361ea8c",
+              "sha256": "37e64cb2e0f3a092d176ebe24642ee9b044b6d06c24bf5785f9556d4e35df229",
+              "band": "green"
+            },
+            {
+              "jobId": "f2aa9ab7-1851-4c14-83c2-ab3970cb0ec0",
+              "sha256": "d535688c0ba752e52919f990339f33a0da412b4eaa8b9322b61310810ec412da",
+              "band": "blue"
+            }
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10563529.9368335,
+            3891826.8188335
+          ],
+          "pixel": [
+            1199,
+            1199
+          ],
+          "center": [
+            -10563761.593191763,
+            3892058.4751917636
+          ],
+          "values": [
+            2090,
+            1699,
+            1113
+          ],
+          "reflectances": [
+            0.20900000000000002,
+            0.1699,
+            0.11130000000000001
+          ],
+          "channelNoData": [
+            false,
+            false,
+            false
+          ],
+          "isNoData": false
+        },
+        "canvases": [
+          {
+            "width": 932,
+            "height": 809,
+            "painted": 412758
+          }
+        ],
+        "actualDraw": {
+          "width": 768,
+          "height": 768,
+          "sourceKind": "ImageBitmap",
+          "painted": 403139,
+          "allSourceRgbaIdentical": true
+        },
+        "drawnPreviewSha256": "a7eb4a26be596627d2b351ada242a196697a0efa51392067bc6755e8ad7ea55d",
+        "screenshot": "masked-original-1440-en.png",
+        "horizontalOverflow": false
+      },
+      {
+        "kind": "single",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "id": "17729bfc-f3d6-45af-8832-98d9e8585bcc",
+        "sha256": "131dd47b5a85f1f3c61f261f1736f80ac9447c784bcd8dd6bb227c7d72016ae4",
+        "mask": {
+          "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+          "excludeSnow": true,
+          "policy": "clear_best",
+          "schemaVersion": "geod-modis-rgb-mask/v1",
+          "sources": [
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "modis_qc",
+              "bytes": 1057,
+              "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+              "itemId": "project:8cf5dfd4-e109-4a65-8f42-6c10e10393cb",
+              "jobId": "425fba2f-f72e-444e-aee0-8509f8df13fe",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "modis_qc",
+                "createdAt": "2026-10-03T16:48:39.093750+00:00",
+                "output": {
+                  "bytes": 1057,
+                  "file": "425fba2f-f72e-444e-aee0-8509f8df13fe.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "d20a793439f6d90f59699d1698e247bbf88f6a7f959f4eb5ff8ecb89ba8cfbbc"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    -10033500.189125562,
+                    3887193.691668221,
+                    -10007554.677,
+                    3896459.945998779
+                  ],
+                  "coveredPixels": 1120,
+                  "crs": "MODIS:Sinusoidal",
+                  "height": 20,
+                  "maskedPixels": 0,
+                  "overlapPolicy": "newest non-fill composite wins; whole unsigned bit field retained; zero and highest bit are valid; gaps and polygon masks retain product fill; no quality ranking or bit merging",
+                  "pixelSize": [
+                    463.31271652791725,
+                    463.3127165279167
+                  ],
+                  "quality": {
+                    "band": "modis_qc",
+                    "bits": 32,
+                    "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+                    "layer": "sur_refl_qc_500m",
+                    "nodata": 4294967295,
+                    "pixelInterpretation": "PixelIsArea",
+                    "product": "modis-09a1-v061"
+                  },
+                  "sourceCount": 1,
+                  "width": 56
+                },
+                "project": {
+                  "bounds": [
+                    -110.1,
+                    34.96,
+                    -109.7,
+                    35.04
+                  ],
+                  "geometry": null,
+                  "id": "8cf5dfd4-e109-4a65-8f42-6c10e10393cb",
+                  "name": "QA · MODIS five layers · single clip"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+                    "compositePeriod": {
+                      "end": "2025-07-03T23:59:59Z",
+                      "start": "2025-06-26T00:00:00Z"
+                    },
+                    "compositeStart": "2025-06-26T00:00:00.000Z",
+                    "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+                    "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+                    "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+                    "jobId": "75753673-1755-45bb-a999-e95725dce97c",
+                    "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+                    "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7"
+                  }
+                ]
+              },
+              "sha256": "d20a793439f6d90f59699d1698e247bbf88f6a7f959f4eb5ff8ecb89ba8cfbbc"
+            },
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "modis_state",
+              "bytes": 886,
+              "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+              "itemId": "project:8cf5dfd4-e109-4a65-8f42-6c10e10393cb",
+              "jobId": "4305cf61-5471-439a-9fc7-e0c6c9c01ab8",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "modis_state",
+                "createdAt": "2026-10-03T16:48:39.877609800+00:00",
+                "output": {
+                  "bytes": 886,
+                  "file": "4305cf61-5471-439a-9fc7-e0c6c9c01ab8.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "bbd5e63932cb809c26b1d216c26e209768b8c70e5a57cf5b05268dfdce62ff50"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    -10033500.189125562,
+                    3887193.691668221,
+                    -10007554.677,
+                    3896459.945998779
+                  ],
+                  "coveredPixels": 1120,
+                  "crs": "MODIS:Sinusoidal",
+                  "height": 20,
+                  "maskedPixels": 0,
+                  "overlapPolicy": "newest non-fill composite wins; whole unsigned bit field retained; zero and highest bit are valid; gaps and polygon masks retain product fill; no quality ranking or bit merging",
+                  "pixelSize": [
+                    463.31271652791725,
+                    463.3127165279167
+                  ],
+                  "quality": {
+                    "band": "modis_state",
+                    "bits": 16,
+                    "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+                    "layer": "sur_refl_state_500m",
+                    "nodata": 65535,
+                    "pixelInterpretation": "PixelIsArea",
+                    "product": "modis-09a1-v061"
+                  },
+                  "sourceCount": 1,
+                  "width": 56
+                },
+                "project": {
+                  "bounds": [
+                    -110.1,
+                    34.96,
+                    -109.7,
+                    35.04
+                  ],
+                  "geometry": null,
+                  "id": "8cf5dfd4-e109-4a65-8f42-6c10e10393cb",
+                  "name": "QA · MODIS five layers · single clip"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+                    "compositePeriod": {
+                      "end": "2025-07-03T23:59:59Z",
+                      "start": "2025-06-26T00:00:00Z"
+                    },
+                    "compositeStart": "2025-06-26T00:00:00.000Z",
+                    "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+                    "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+                    "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+                    "jobId": "2f7ae869-27af-4c6e-bd80-f1aaee8b05db",
+                    "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+                    "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2"
+                  }
+                ]
+              },
+              "sha256": "bbd5e63932cb809c26b1d216c26e209768b8c70e5a57cf5b05268dfdce62ff50"
+            }
+          ]
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "inputCommonValidPixels": 1120,
+          "rejectedPixels": 0,
+          "removedValidPixels": 0
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "17729bfc-f3d6-45af-8832-98d9e8585bcc",
+            "sha256": "131dd47b5a85f1f3c61f261f1736f80ac9447c784bcd8dd6bb227c7d72016ae4"
+          },
+          "sources": [
+            {
+              "jobId": "b9546917-b9a6-4f80-849f-e826fad53314",
+              "sha256": "67c322d814c0e4091c7913b5d41874b9b975c1b755fd03def45164ae35258fe1",
+              "band": "red"
+            },
+            {
+              "jobId": "a0e4f259-5f80-42a4-b631-ed8a8700fde1",
+              "sha256": "87788a7c3ba440a43b95617f3f447ebad4e6f331a9d0cf924eb3c602aea108fc",
+              "band": "green"
+            },
+            {
+              "jobId": "1a3b709d-a421-4eb3-b1f0-64780f67890d",
+              "sha256": "e85547e4ed0ee21318ac7c02eda04f7419763f4a6063ec3bb4d7252118bcf0cf",
+              "band": "blue"
+            }
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10020527.43306278,
+            3891826.8188335
+          ],
+          "pixel": [
+            27,
+            9
+          ],
+          "center": [
+            -10020759.089421045,
+            3892058.4751917636
+          ],
+          "values": [
+            2100,
+            1400,
+            949
+          ],
+          "reflectances": [
+            0.21000000000000002,
+            0.14,
+            0.0949
+          ],
+          "channelNoData": [
+            false,
+            false,
+            false
+          ],
+          "isNoData": false
+        },
+        "canvases": [
+          {
+            "width": 516,
+            "height": 809,
+            "painted": 75236
+          }
+        ],
+        "actualDraw": {
+          "width": 56,
+          "height": 20,
+          "sourceKind": "ImageBitmap",
+          "painted": 73676,
+          "allSourceRgbaIdentical": true
+        },
+        "drawnPreviewSha256": "aa593dfdcee043a7615103eec9b951b9f678b6f5185392d5b7531fbc1528dbc8",
+        "screenshot": "masked-single-1024-zh-CN.png",
+        "horizontalOverflow": false
+      },
+      {
+        "kind": "polygon",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "id": "522a9591-1777-4aea-ac7e-ed98ca446a8a",
+        "sha256": "0fbc7f4502f0de65f00e4daa9053c7cf9d957ec24e735fbdc6dda64a403df036",
+        "mask": {
+          "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+          "excludeSnow": true,
+          "policy": "clear_best",
+          "schemaVersion": "geod-modis-rgb-mask/v1",
+          "sources": [
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "modis_qc",
+              "bytes": 1075,
+              "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+              "itemId": "project:e3e03296-5d98-4aa2-95e1-78bd05fe208e",
+              "jobId": "8c43b839-7a4b-47f1-9b25-d5eed35f5e92",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "modis_qc",
+                "createdAt": "2026-10-03T23:38:09.320512+00:00",
+                "output": {
+                  "bytes": 1075,
+                  "file": "8c43b839-7a4b-47f1-9b25-d5eed35f5e92.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "cb9f29791673fb564bb7e40422bf0848b9c33f7296c7930223568ab7271baaeb"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    -10033500.189125562,
+                    3887193.691668221,
+                    -10007554.677,
+                    3896459.945998779
+                  ],
+                  "coveredPixels": 890,
+                  "crs": "MODIS:Sinusoidal",
+                  "height": 20,
+                  "maskedPixels": 230,
+                  "overlapPolicy": "newest non-fill composite wins; whole unsigned bit field retained; zero and highest bit are valid; gaps and polygon masks retain product fill; no quality ranking or bit merging",
+                  "pixelSize": [
+                    463.31271652791725,
+                    463.3127165279167
+                  ],
+                  "quality": {
+                    "band": "modis_qc",
+                    "bits": 32,
+                    "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+                    "layer": "sur_refl_qc_500m",
+                    "nodata": 4294967295,
+                    "pixelInterpretation": "PixelIsArea",
+                    "product": "modis-09a1-v061"
+                  },
+                  "sourceCount": 1,
+                  "width": 56
+                },
+                "project": {
+                  "bounds": [
+                    -110.1,
+                    34.96,
+                    -109.7,
+                    35.04
+                  ],
+                  "geometry": {
+                    "coordinates": [
+                      [
+                        [
+                          -110.1,
+                          34.96
+                        ],
+                        [
+                          -109.7,
+                          34.96
+                        ],
+                        [
+                          -109.7,
+                          35.04
+                        ],
+                        [
+                          -110.1,
+                          35.04
+                        ],
+                        [
+                          -110.1,
+                          34.96
+                        ]
+                      ],
+                      [
+                        [
+                          -110.01,
+                          34.99
+                        ],
+                        [
+                          -110.01,
+                          35.01
+                        ],
+                        [
+                          -109.99,
+                          35.01
+                        ],
+                        [
+                          -109.99,
+                          34.99
+                        ],
+                        [
+                          -110.01,
+                          34.99
+                        ]
+                      ]
+                    ],
+                    "type": "Polygon"
+                  },
+                  "id": "e3e03296-5d98-4aa2-95e1-78bd05fe208e",
+                  "name": "QA · same-scene quality mask · polygon with hole"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+                    "compositePeriod": {
+                      "end": "2025-07-03T23:59:59Z",
+                      "start": "2025-06-26T00:00:00Z"
+                    },
+                    "compositeStart": "2025-06-26T00:00:00.000Z",
+                    "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+                    "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_qc_500m.tif",
+                    "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+                    "jobId": "75753673-1755-45bb-a999-e95725dce97c",
+                    "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+                    "sha256": "e735aa1b520ff09f4fd9a65c08f49dedac2c6a75e39bc49bf982152849a6f7a7"
+                  }
+                ]
+              },
+              "sha256": "cb9f29791673fb564bb7e40422bf0848b9c33f7296c7930223568ab7271baaeb"
+            },
+            {
+              "attribution": "Project source rasters / pinned original products",
+              "band": "modis_state",
+              "bytes": 922,
+              "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+              "itemId": "project:e3e03296-5d98-4aa2-95e1-78bd05fe208e",
+              "jobId": "ea0b3c9e-bc72-4d9e-8cef-1aca37dbcff3",
+              "kind": "raster_mosaic",
+              "provenance": {
+                "assetKey": "modis_state",
+                "createdAt": "2026-10-03T23:38:09.496427200+00:00",
+                "output": {
+                  "bytes": 922,
+                  "file": "ea0b3c9e-bc72-4d9e-8cef-1aca37dbcff3.tif",
+                  "format": "GeoTIFF",
+                  "sha256": "73c51a768cab80f884e575848730a14c25a1314c81e4ff2d2c49824fbc3e0192"
+                },
+                "plan": {
+                  "bandCount": 1,
+                  "bounds": [
+                    -10033500.189125562,
+                    3887193.691668221,
+                    -10007554.677,
+                    3896459.945998779
+                  ],
+                  "coveredPixels": 890,
+                  "crs": "MODIS:Sinusoidal",
+                  "height": 20,
+                  "maskedPixels": 230,
+                  "overlapPolicy": "newest non-fill composite wins; whole unsigned bit field retained; zero and highest bit are valid; gaps and polygon masks retain product fill; no quality ranking or bit merging",
+                  "pixelSize": [
+                    463.31271652791725,
+                    463.3127165279167
+                  ],
+                  "quality": {
+                    "band": "modis_state",
+                    "bits": 16,
+                    "definition": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/MOD09_User_Guide_V61.pdf",
+                    "layer": "sur_refl_state_500m",
+                    "nodata": 65535,
+                    "pixelInterpretation": "PixelIsArea",
+                    "product": "modis-09a1-v061"
+                  },
+                  "sourceCount": 1,
+                  "width": 56
+                },
+                "project": {
+                  "bounds": [
+                    -110.1,
+                    34.96,
+                    -109.7,
+                    35.04
+                  ],
+                  "geometry": {
+                    "coordinates": [
+                      [
+                        [
+                          -110.1,
+                          34.96
+                        ],
+                        [
+                          -109.7,
+                          34.96
+                        ],
+                        [
+                          -109.7,
+                          35.04
+                        ],
+                        [
+                          -110.1,
+                          35.04
+                        ],
+                        [
+                          -110.1,
+                          34.96
+                        ]
+                      ],
+                      [
+                        [
+                          -110.01,
+                          34.99
+                        ],
+                        [
+                          -110.01,
+                          35.01
+                        ],
+                        [
+                          -109.99,
+                          35.01
+                        ],
+                        [
+                          -109.99,
+                          34.99
+                        ],
+                        [
+                          -110.01,
+                          34.99
+                        ]
+                      ]
+                    ],
+                    "type": "Polygon"
+                  },
+                  "id": "e3e03296-5d98-4aa2-95e1-78bd05fe208e",
+                  "name": "QA · same-scene quality mask · polygon with hole"
+                },
+                "schemaVersion": "geod-project-mosaic/v1",
+                "sources": [
+                  {
+                    "attribution": "NASA MODIS Terra/Aqua MOD/MYD09A1 v061 8-day 500 m surface reflectance; Microsoft Planetary Computer converted COG, not original NASA HDF",
+                    "compositePeriod": {
+                      "end": "2025-07-03T23:59:59Z",
+                      "start": "2025-06-26T00:00:00Z"
+                    },
+                    "compositeStart": "2025-06-26T00:00:00.000Z",
+                    "distribution": "Planetary Computer converted MOD/MYD09A1 v061 COG; not NASA original HDF",
+                    "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD09A1/08/05/2025177/MYD09A1.A2025177.h08v05.061.2025189031924_sur_refl_state_500m.tif",
+                    "itemId": "MYD09A1.A2025177.h08v05.061.2025189031924",
+                    "jobId": "2f7ae869-27af-4c6e-bd80-f1aaee8b05db",
+                    "licence": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+                    "sha256": "b5fb227c174b205802c176b20d429870cfea5eeb1aca256b871ec047c924ffa2"
+                  }
+                ]
+              },
+              "sha256": "73c51a768cab80f884e575848730a14c25a1314c81e4ff2d2c49824fbc3e0192"
+            }
+          ]
+        },
+        "counts": {
+          "examinedPixels": 1120,
+          "inputCommonValidPixels": 890,
+          "rejectedPixels": 230,
+          "removedValidPixels": 0
+        },
+        "pixel": {
+          "artifact": {
+            "jobId": "522a9591-1777-4aea-ac7e-ed98ca446a8a",
+            "sha256": "0fbc7f4502f0de65f00e4daa9053c7cf9d957ec24e735fbdc6dda64a403df036"
+          },
+          "sources": [
+            {
+              "jobId": "a097bb22-fef0-431e-891b-3c83b6846677",
+              "sha256": "fd83c34cb93e8dd82954aeebceeed07cee56d7a2363db4e9ae4cb536b5faff07",
+              "band": "red"
+            },
+            {
+              "jobId": "6b0ddb04-beb0-46d6-935d-30c500fe8299",
+              "sha256": "a068b3c3c539a9ab4f7d2c3296cfffb8b1750b15d40701bebf9e53bba684ae9b",
+              "band": "green"
+            },
+            {
+              "jobId": "27c96c94-b000-4689-b40d-9be85733e1b9",
+              "sha256": "ef3afdc4e9707b0213b62c10998247f7b3b0fc77fe55d7569947704c5d30c0e7",
+              "band": "blue"
+            }
+          ],
+          "crs": "MODIS:Sinusoidal",
+          "coordinate": [
+            -10020527.43306278,
+            3891826.8188335
+          ],
+          "pixel": [
+            27,
+            9
+          ],
+          "center": [
+            -10020759.089421045,
+            3892058.4751917636
+          ],
+          "values": [
+            2100,
+            1400,
+            949
+          ],
+          "reflectances": [
+            0.21000000000000002,
+            0.14,
+            0.0949
+          ],
+          "channelNoData": [
+            false,
+            false,
+            false
+          ],
+          "isNoData": false
+        },
+        "canvases": [
+          {
+            "width": 392,
+            "height": 805,
+            "painted": 32735
+          }
+        ],
+        "actualDraw": {
+          "width": 56,
+          "height": 20,
+          "sourceKind": "ImageBitmap",
+          "painted": 31048,
+          "allSourceRgbaIdentical": true
+        },
+        "drawnPreviewSha256": "0ecdae8bda566025e1946f1ebb91b1a6ec44df6aa21bd5e8137835b42afb1a19",
+        "screenshot": "masked-polygon-900-en.png",
+        "horizontalOverflow": false
+      }
+    ],
+    "createdByUi": {
+      "id": "b785eb7d-41f5-4178-ac12-d16b6abd6647",
+      "sha256": "98fa069deddfb898bfb3ff11a630dd1ba02a19e398d2b5b7018d9c523b064d75"
+    },
+    "drawnSourceRgbaPixelsCompared": 592064,
+    "resources": {
+      "prototype/dist/index.html": "cfeef9b329ba471ea0a27442d30c17c71628cebb59eec26640acf41e0eee68dd",
+      "prototype/dist/assets/index-DGkohx0H.js": "e83aaaaeedd703ac6c5c9a0cfdb4e9d2db943a40645ae8a20dae532211a82401",
+      "prototype/dist/assets/chunk-aKtaBQYM.js": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236",
+      "prototype/dist/assets/i18n-DZ60XG39.css": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6",
+      "prototype/dist/assets/index-B4NeBykq.css": "e6fc7e1a72006c80cf778bfedced1f1553e65b980a4a7f80bdbf853896feedca",
+      "prototype/dist/assets/i18n-DT5sA-cO.js": "84dce46f7855fe3aad6a71e5e30f943fcfaf91c0b808926a640609e033dbc5cc",
+      "prototype/dist/assets/rbush-CaohfFwn.js": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7",
+      "prototype/dist/assets/workspace-map-DMpUzIy9.js": "efcf9d6d0cd9131f27ca45773cc07a3249d2aa0b69e24b101463f670579843f4",
+      "prototype/dist/assets/workspace-map-geometry-DC-toHRV.js": "951eb93853a0bb0d2f667829ab1ee19458745150ba4214ff1ea50ab452b6cef5",
+      "prototype/dist/assets/ol-BM8XMzgm.js": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304",
+      "prototype/dist/assets/workspace-map-za6H7b8_.css": "69e98ebf56c376e162dc30891fb522b437fe00aa6529968db522123458f9dd9e",
+      "prototype/dist/assets/ol-c_1sG1-7.css": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77",
+      "prototype/dist/fonts/inter.woff2": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "prototype/dist/assets/ImageStatic-CJOl8TQ_.js": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540",
+      "prototype/dist/assets/common-uuK22kLj.js": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e",
+      "prototype/dist/brand/geod-symbol.png": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+    },
+    "renderer": "built renderer and exact desktop CSP, real native HTTP bridge",
+    "nativeWindowTested": false,
+    "errors": [],
+    "remoteRequests": [],
+    "spatialCanvasAllPixelsCompared": false
+  },
+  "cache": {
+    "filesRestored": 12,
+    "missingParentJobs": 15,
+    "thumbnailRgbaPixelsCompared": 111360,
+    "cacheEntriesReused": 12,
+    "sourceDownloadsRestarted": false,
+    "controls": [
+      {
+        "name": "changed output refused with existing cache",
+        "failures": {
+          "rgb": {
+            "statusCode": 400,
+            "body": {
+              "error": "Reflectance source byte count is invalid or exceeds 512 MiB"
+            }
+          },
+          "thumbnail": {
+            "statusCode": 400,
+            "body": {
+              "error": "Preview source size no longer matches its completed job"
+            }
+          },
+          "package": {
+            "statusCode": 400,
+            "body": {
+              "error": "Reflectance source byte count is invalid or exceeds 512 MiB"
+            }
+          }
+        }
+      },
+      {
+        "name": "corrupt cache rebuilt from unchanged TIFF",
+        "passed": true
+      },
+      {
+        "name": "changed rule manifest refused for delivery",
+        "failure": {
+          "statusCode": 400,
+          "body": {
+            "error": "Scientific RGB metadata differs from its committed specification and samples"
+          }
+        }
+      }
+    ]
+  },
+  "developmentDesktopBuild": {
+    "path": "G:\\code\\geod-global\\.verification\\naip-native-target\\debug\\geod-global-desktop.exe",
+    "bytes": 80215040,
+    "sha256": "8de32b13815f80c2ab0f83cf7000e09e9968c05cb68b6ea383d9c17aff687c4f",
+    "customProtocol": true,
+    "nativeWindowTested": false,
+    "installerBuilt": false
+  },
+  "previousRendererPreserved": {
+    "receipt": ".verification/renderer-before-modis-mask-20261004/receipt.json",
+    "sha256": "26963196c60c04b4d6d2070c5391ffe4fadf9fe5aabd703d2a2b27c9bc74ecdd",
+    "files": 661,
+    "allFileHashesVerified": true
+  },
+  "firstAcceptedMaskRendererPreserved": {
+    "receipt": ".verification/renderer-modis-mask-first-accepted-20261004/receipt.json",
+    "sha256": "97a463eb6832233d0f5a2df808ddec6a6ed886b2b00a5ab810b3cb9983f73d1b",
+    "files": 661,
+    "allFileHashesVerified": true
+  },
+  "regression": {
+    "scientificRgbRust": {
+      "passed": 6
+    },
+    "qualityRust": {
+      "passed": 9
+    },
+    "actualWindowsCliChild": {
+      "passed": 1,
+      "paths": [
+        "direct directory",
+        "closed loopback service"
+      ]
+    },
+    "focusedNode": {
+      "passed": 16
+    },
+    "focusedReact": {
+      "passed": 14
+    },
+    "cargoFmt": "passed",
+    "strictClippy": "passed"
+  },
+  "boundaries": [
+    "No new provider download in this cohort; uses previously downloaded real public COGs.",
+    "Independently mosaicked RGB and QA rasters are rejected; coupled quality-aware multi-scene processing remains pending.",
+    "The real clips added no new cloud/snow removals; real snow exclusion is not claimed. Individual flags and fill values have synthetic regression evidence.",
+    "No additional atmospheric-accuracy guarantee, reprojection, resampling, arbitrary bands or other-product QA rules.",
+    "Headless built-renderer/native-bridge evidence does not replace native WebView/window acceptance.",
+    "Earthdata/Copernicus successful account authorization and protected production originals remain pending; software authorization entries are available."
+  ]
+}

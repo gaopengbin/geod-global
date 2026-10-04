@@ -1,0 +1,542 @@
+{
+  "schema": "geod-tms-public-receipt/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-03T20:14:36.835045+00:00",
+  "scope": "Two bounded actual public DLR TMS rendered map images; bottom-origin requests, all pixels, native grid, export and offline recovery.",
+  "nativeBinarySha256": "6b7de9cd70f92585f1b851f6b777ab7b18ce48d7e926089c790d52e5f4947823",
+  "evidenceReports": [
+    {
+      "file": "evidence/report.json",
+      "sha256": "a1a8ef7d7c26f57c1dcf191855ea3703fbcc086f4a02094b1a37bd1c2ecb406b"
+    },
+    {
+      "file": "ui/ui-verification.json",
+      "sha256": "daa69e1d31123304f396f53d2e59389ca52269555915f6a6e2f3dfd84a11bd99"
+    },
+    {
+      "file": "evidence/case-0/asset.json",
+      "sha256": "f5f6a11a6781bdf221548b39f1863b9ae2e29ebde6c31b856480fa8e382263f6"
+    },
+    {
+      "file": "evidence/case-1/asset.json",
+      "sha256": "b28cae65e533bd38955498a0b0200b68f78b33309668a757a70a732399c94ccd"
+    }
+  ],
+  "tileMapUrl": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png",
+  "attribution": "Data © OpenStreetMap contributors and others; rendering © DLR/EOC",
+  "sourcePolicyUrl": "https://geoservice.dlr.de/web/about",
+  "declaredGrid": {
+    "sha256": "693808afeb43629230a95911ecb63c3d125520b9539828197d2e4c11e818412a",
+    "bytes": 3103,
+    "srs": "EPSG:3857",
+    "origin": {
+      "x": "-2.003750834E7",
+      "y": "-2.003750834E7"
+    },
+    "boundingBox": {
+      "minx": "-2.003750834E7",
+      "miny": "-2.003750834E7",
+      "maxx": "2.003750834E7",
+      "maxy": "2.003750834E7"
+    },
+    "levels": {
+      "0": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/0",
+        "units-per-pixel": "156543.03390625",
+        "order": "0"
+      },
+      "1": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/1",
+        "units-per-pixel": "78271.516953125",
+        "order": "1"
+      },
+      "2": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/2",
+        "units-per-pixel": "39135.7584765625",
+        "order": "2"
+      },
+      "3": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/3",
+        "units-per-pixel": "19567.87923828125",
+        "order": "3"
+      },
+      "4": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/4",
+        "units-per-pixel": "9783.939619140625",
+        "order": "4"
+      },
+      "5": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/5",
+        "units-per-pixel": "4891.9698095703125",
+        "order": "5"
+      },
+      "6": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/6",
+        "units-per-pixel": "2445.9849047851562",
+        "order": "6"
+      },
+      "7": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/7",
+        "units-per-pixel": "1222.9924523925781",
+        "order": "7"
+      },
+      "8": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/8",
+        "units-per-pixel": "611.4962261962891",
+        "order": "8"
+      },
+      "9": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/9",
+        "units-per-pixel": "305.74811309814453",
+        "order": "9"
+      },
+      "10": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/10",
+        "units-per-pixel": "152.87405654907226",
+        "order": "10"
+      },
+      "11": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/11",
+        "units-per-pixel": "76.43702827453613",
+        "order": "11"
+      },
+      "12": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/12",
+        "units-per-pixel": "38.218514137268066",
+        "order": "12"
+      },
+      "13": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/13",
+        "units-per-pixel": "19.109257068634033",
+        "order": "13"
+      },
+      "14": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/14",
+        "units-per-pixel": "9.554628534317017",
+        "order": "14"
+      },
+      "15": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/15",
+        "units-per-pixel": "4.777314267158508",
+        "order": "15"
+      },
+      "16": {
+        "href": "https://tiles.geoservice.dlr.de/service/tms/1.0.0/eoc%3Abasemap@EPSG%3A3857@png/16",
+        "units-per-pixel": "2.388657133579254",
+        "order": "16"
+      }
+    },
+    "format": {
+      "width": "256",
+      "height": "256",
+      "mime-type": "image/png",
+      "extension": "png"
+    }
+  },
+  "automaticCapabilitiesDiscovery": false,
+  "scientificOriginalClaimed": false,
+  "images": [
+    {
+      "imageId": "249d1d4f-e779-4dfa-be6f-3b583045527e",
+      "serviceId": "94853422-c4a5-4231-ba59-2ef4c810455b",
+      "zoom": 6,
+      "bounds": [
+        10.0,
+        47.0,
+        13.0,
+        50.0
+      ],
+      "width": 137,
+      "height": 207,
+      "pixels": 28359,
+      "sha256": "ae1a73fc91a96c4aebb7ddd491cb3451afc64a2a1cf85c070484191029222498",
+      "imageExtent": [
+        1112923.1318321675,
+        5941297.33455018,
+        1448023.0638343804,
+        6447616.209911188
+      ],
+      "tiles": [
+        {
+          "logicalRow": 21,
+          "column": 33,
+          "serverBottomRow": 42,
+          "bytes": 49955,
+          "sha256": "34ca21fe94b66447116436eb6b9306437eb271ac931fec1f36687107e58b9483",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 21,
+          "column": 34,
+          "serverBottomRow": 42,
+          "bytes": 41311,
+          "sha256": "75a26d54f047898b101a1fdb27f050ae2dff3ca583d5830cee5006b64ae0a9ef",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 22,
+          "column": 33,
+          "serverBottomRow": 41,
+          "bytes": 51333,
+          "sha256": "a7db5d0080024d49c2295b217d569dead258923a71d91baa6b72cb38a0d64706",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 22,
+          "column": 34,
+          "serverBottomRow": 41,
+          "bytes": 42061,
+          "sha256": "7374648ff423dd345f34e2aafc8d089659ab92d0acedb8e39b00b0392123f240",
+          "httpPayloadIdentical": true
+        }
+      ],
+      "allRgbaChannelsIdentical": true,
+      "independentGdalCrsGridAndPixels": true,
+      "packageHashesValid": true,
+      "pngBytes": 21875,
+      "exportBytes": 213142,
+      "exportSha256": "c1db2aa5ecbe10a5b167db2219f479723c3cf4f9794719dd4ee5a8ed1c18207a",
+      "originalTileArchiveBytes": 185058,
+      "originalTileArchiveSha256": "897250882dcd4d0a4fcc6c410553a38e7fbfe150ee2db6998e3cb69a0fb45bac"
+    },
+    {
+      "imageId": "73889edb-0400-4dac-adc5-90aeb8427265",
+      "serviceId": "94853422-c4a5-4231-ba59-2ef4c810455b",
+      "zoom": 7,
+      "bounds": [
+        10.0,
+        47.0,
+        13.0,
+        50.0
+      ],
+      "width": 274,
+      "height": 413,
+      "pixels": 113162,
+      "sha256": "46b945e39f3c966fe870aae5d9362cce493f6e79512fcdcdb7b00f28df49de93",
+      "imageExtent": [
+        1112923.1318321675,
+        5941297.33455018,
+        1448023.0638343804,
+        6446393.217458624
+      ],
+      "tiles": [
+        {
+          "logicalRow": 43,
+          "column": 67,
+          "serverBottomRow": 84,
+          "bytes": 27244,
+          "sha256": "6f525af6a23a31f34ce91b50ab15991666ea6d1df7617f89659d0aa5777f6d7d",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 43,
+          "column": 68,
+          "serverBottomRow": 84,
+          "bytes": 28443,
+          "sha256": "ab3d0545eb86cd89cb84a10a05dc020144c46097fd4426eb0c20d82f3a39a49b",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 44,
+          "column": 67,
+          "serverBottomRow": 83,
+          "bytes": 30796,
+          "sha256": "3f4c068f0458fee1fc518a222457a5c2099165f0ff111278b337e60c376ba349",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 44,
+          "column": 68,
+          "serverBottomRow": 83,
+          "bytes": 27868,
+          "sha256": "cac8a29d7861d6361ddd0abe54ff2161a0cb9bc1f05801a47f807bc761b4a792",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 45,
+          "column": 67,
+          "serverBottomRow": 82,
+          "bytes": 41091,
+          "sha256": "9f0ab6f1a7109f4581fdddb79e306fd80010fa9ef5532c6bc290dffa5630f9df",
+          "httpPayloadIdentical": true
+        },
+        {
+          "logicalRow": 45,
+          "column": 68,
+          "serverBottomRow": 82,
+          "bytes": 32387,
+          "sha256": "b5fa84c3ba328ac7d15e6da4aed5fa6372947576a82101ff61fa4224c22c7960",
+          "httpPayloadIdentical": true
+        }
+      ],
+      "allRgbaChannelsIdentical": true,
+      "independentGdalCrsGridAndPixels": true,
+      "packageHashesValid": true,
+      "pngBytes": 55101,
+      "exportBytes": 250320,
+      "exportSha256": "9a76fbde320e49ff69b7d71e2cdf4e9346ecd737c6bb3f94f66fdc3a420bc1f3",
+      "originalTileArchiveBytes": 188415,
+      "originalTileArchiveSha256": "9234aa5ba18cf4d655f2310869110b1396502d5685cfd4c93d2f43bb2136e674"
+    }
+  ],
+  "independent": {
+    "publicHttpTilePayloadsIdentical": true,
+    "originalTilesCompared": 10,
+    "rgbaPixelsCompared": 141521,
+    "nativeGridAndGdalPixelsCompared": true
+  },
+  "restart": {
+    "actualProcessRestart": true,
+    "rejectingProxyAttempts": [],
+    "cases": [
+      {
+        "imageId": "249d1d4f-e779-4dfa-be6f-3b583045527e",
+        "metadataPngAndExportIdentical": true
+      },
+      {
+        "imageId": "73889edb-0400-4dac-adc5-90aeb8427265",
+        "metadataPngAndExportIdentical": true
+      }
+    ]
+  },
+  "desktopFrontend": {
+    "renderer": "production build and exact desktop CSP; actual native API via loopback bridge",
+    "readOnly": true,
+    "nativeWindowTested": false,
+    "cases": [
+      {
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "actualLocalThumbnails": 2,
+        "officialEncodedTemplateAccepted": true,
+        "verifiedTmsPresetOnlyFillsDraft": true,
+        "configuredGridVisible": true,
+        "noHorizontalOverflow": true,
+        "workspaceImages": [
+          {
+            "imageId": "249d1d4f-e779-4dfa-be6f-3b583045527e",
+            "sha256": "ae1a73fc91a96c4aebb7ddd491cb3451afc64a2a1cf85c070484191029222498",
+            "paintedRaster": true,
+            "sourceBottomOriginVisible": true
+          },
+          {
+            "imageId": "73889edb-0400-4dac-adc5-90aeb8427265",
+            "sha256": "46b945e39f3c966fe870aae5d9362cce493f6e79512fcdcdb7b00f28df49de93",
+            "paintedRaster": true,
+            "sourceBottomOriginVisible": true
+          }
+        ],
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/map-images"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/73889edb-0400-4dac-adc5-90aeb8427265"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/249d1d4f-e779-4dfa-be6f-3b583045527e"
+          },
+          {
+            "method": "GET",
+            "path": "/map-services"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/249d1d4f-e779-4dfa-be6f-3b583045527e"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/73889edb-0400-4dac-adc5-90aeb8427265"
+          }
+        ]
+      },
+      {
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "actualLocalThumbnails": 2,
+        "officialEncodedTemplateAccepted": true,
+        "verifiedTmsPresetOnlyFillsDraft": true,
+        "configuredGridVisible": true,
+        "noHorizontalOverflow": true,
+        "workspaceImages": [
+          {
+            "imageId": "249d1d4f-e779-4dfa-be6f-3b583045527e",
+            "sha256": "ae1a73fc91a96c4aebb7ddd491cb3451afc64a2a1cf85c070484191029222498",
+            "paintedRaster": true,
+            "sourceBottomOriginVisible": true
+          },
+          {
+            "imageId": "73889edb-0400-4dac-adc5-90aeb8427265",
+            "sha256": "46b945e39f3c966fe870aae5d9362cce493f6e79512fcdcdb7b00f28df49de93",
+            "paintedRaster": true,
+            "sourceBottomOriginVisible": true
+          }
+        ],
+        "calls": [
+          {
+            "method": "GET",
+            "path": "/map-images"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/249d1d4f-e779-4dfa-be6f-3b583045527e"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/73889edb-0400-4dac-adc5-90aeb8427265"
+          },
+          {
+            "method": "GET",
+            "path": "/map-services"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/249d1d4f-e779-4dfa-be6f-3b583045527e"
+          },
+          {
+            "method": "GET",
+            "path": "/health"
+          },
+          {
+            "method": "GET",
+            "path": "/jobs"
+          },
+          {
+            "method": "GET",
+            "path": "/projects"
+          },
+          {
+            "method": "GET",
+            "path": "/map-images/73889edb-0400-4dac-adc5-90aeb8427265"
+          }
+        ]
+      }
+    ],
+    "frontendFiles": [
+      {
+        "file": "assets/chunk-aKtaBQYM.js",
+        "sha256": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236"
+      },
+      {
+        "file": "assets/common-uuK22kLj.js",
+        "sha256": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+      },
+      {
+        "file": "assets/GeoJSON-DgGZhlM5.js",
+        "sha256": "0771f23db7c464ca0cc3d79e18edb132452dacdd2d69347ce6e0e143d9485328"
+      },
+      {
+        "file": "assets/i18n-DUzKTs4Y.js",
+        "sha256": "58fac6c12b9df0fa10656db159b8856609fa97c23fd77dfa6ae825789a5ab45d"
+      },
+      {
+        "file": "assets/i18n-DZ60XG39.css",
+        "sha256": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6"
+      },
+      {
+        "file": "assets/ImageStatic-CJOl8TQ_.js",
+        "sha256": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540"
+      },
+      {
+        "file": "assets/index-B4NeBykq.css",
+        "sha256": "e6fc7e1a72006c80cf778bfedced1f1553e65b980a4a7f80bdbf853896feedca"
+      },
+      {
+        "file": "assets/index-Dz8L0quO.js",
+        "sha256": "8606b7a7ccefa34c9d7aa0749693c729c11d01db1e76726dd6006ca270fad471"
+      },
+      {
+        "file": "assets/ol-BM8XMzgm.js",
+        "sha256": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304"
+      },
+      {
+        "file": "assets/ol-c_1sG1-7.css",
+        "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+      },
+      {
+        "file": "assets/rbush-CaohfFwn.js",
+        "sha256": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7"
+      },
+      {
+        "file": "assets/wms-map-2-oHQfQJ.js",
+        "sha256": "9bf2a4e8724ee21bcf89a6b250ed4d3db37edfacadad123945ee03504f2ad1ba"
+      },
+      {
+        "file": "basemaps/natural-earth-50m-land.geojson",
+        "sha256": "e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b"
+      },
+      {
+        "file": "brand/geod-symbol.png",
+        "sha256": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+      },
+      {
+        "file": "fonts/inter.woff2",
+        "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+      },
+      {
+        "file": "index.html",
+        "sha256": "f5611c4acf8ca5b4ec961ec0e6e533956ed72aca5b6b5b0d942223a5e77ddaee"
+      }
+    ],
+    "errors": [],
+    "remoteRequests": []
+  },
+  "usedUserDesktop": false,
+  "syntheticData": false,
+  "limitations": [
+    "Rendered basemap colours are not scientific original bands.",
+    "TileMap XML was independently read for acceptance; the product still uses an explicit template and grid.",
+    "Only a global EPSG:3857 grid, 256-pixel PNG and zero zoom offset were acquired from this provider.",
+    "512-pixel tiles and nonzero zoom offsets retain separate synthetic protocol tests.",
+    "No installed WebView manual acceptance or UI remote acquisition was performed in these read-only UI cases."
+  ]
+}

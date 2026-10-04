@@ -1,0 +1,3497 @@
+{
+  "schema": "geod-modis-vi-quality-verification/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-04T07:53:41.145877+00:00",
+  "scope": "MOD13Q1/MYD13Q1 v061 Planetary Computer same-scene NDVI/EVI/QA/reliability selection",
+  "definition": "https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf",
+  "evidence": {
+    "native": {
+      "path": "G:\\code\\geod-global\\.verification\\modis-vi-quality-closeout-20261004\\evidence\\native-2797aa79347347b72d95529ff8450ff8ab2cf4a1bbbca45497a88e3d108d4ad5.json",
+      "sha256": "2797aa79347347b72d95529ff8450ff8ab2cf4a1bbbca45497a88e3d108d4ad5"
+    },
+    "mcp": {
+      "path": "G:\\code\\geod-global\\.verification\\modis-vi-quality-closeout-20261004\\evidence\\mcp-f0c8d64115516ef902a2eaff27d214b233110629458811731c2854fc929e4579.json",
+      "sha256": "f0c8d64115516ef902a2eaff27d214b233110629458811731c2854fc929e4579"
+    },
+    "cache": {
+      "path": "G:\\code\\geod-global\\.verification\\modis-vi-quality-closeout-20261004\\evidence\\cache-54663af0b376a3825f77ea3d73314631013f7f45af780b1afa5644e22b4295a1.json",
+      "sha256": "54663af0b376a3825f77ea3d73314631013f7f45af780b1afa5644e22b4295a1"
+    },
+    "ui": {
+      "path": "G:\\code\\geod-global\\.verification\\modis-vi-quality-closeout-20261004\\evidence\\ui-cf8d882c02bc731e3cdad86a6b2974e6f0a80f73b73794704733cfb7dfb2410e.json",
+      "sha256": "cf8d882c02bc731e3cdad86a6b2974e6f0a80f73b73794704733cfb7dfb2410e"
+    },
+    "compatibility": {
+      "path": "G:\\code\\geod-global\\.verification\\modis-vi-quality-closeout-20261004\\evidence\\compatibility-4c225ffa82af52d184a921d461d6b2c867a41db46e094d01f2fbee5903d25234.json",
+      "sha256": "4c225ffa82af52d184a921d461d6b2c867a41db46e094d01f2fbee5903d25234"
+    }
+  },
+  "nativeBinary": {
+    "path": "G:\\code\\geod-global\\.verification\\modis-vi-quality-native-r4-20261004\\runtime-3eb936257a73c283.exe",
+    "sha256": "3eb936257a73c2836a7597151af0002cfe4caf2971d62a0f25ef662643466a97"
+  },
+  "sources": {
+    "previouslyDownloadedOriginalsReused": 12,
+    "newDownloads": 0,
+    "bytes": 258974338,
+    "downloadReceipts": [
+      {
+        "path": "G:\\code\\geod-global\\.verification\\modis-vegetation-native-20261004\\source-verification.json",
+        "sha256": "55c67f40a1ebdff1fffb1c5d88cb22c891357ffa3f86063e4c6d56f15830dc4f"
+      },
+      {
+        "path": "G:\\code\\geod-global\\.verification\\modis-science-native-r4-20261004\\source-verification.json",
+        "sha256": "daaada100b9d47efc9cfce1988e1aa45f7ece2aff7693bbbc517e2ad875ee05f"
+      }
+    ],
+    "originals": [
+      {
+        "id": "78d02b5e-3972-443d-be24-a3b5cf159184",
+        "itemId": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+        "assetKey": "ndvi",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/08/05/2025177/MOD13Q1.A2025177.h08v05.061.2025195142416_250m_16_days_NDVI.tif",
+        "sha256": "97e4b77bcc19767f2757c24d2610407d75ed65efcbb926dacd3127cb214f4299",
+        "bytesDownloaded": 38631423
+      },
+      {
+        "id": "1f33dd0e-1d3f-42d4-a88d-472f53085e4f",
+        "itemId": "MYD13Q1.A2025169.h08v05.061.2025189102903",
+        "assetKey": "ndvi",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD13Q1/08/05/2025169/MYD13Q1.A2025169.h08v05.061.2025189102903_250m_16_days_NDVI.tif",
+        "sha256": "77fc705871175873e864fa1095c14beba84ba8a70a0caef5671bd70af3daa35e",
+        "bytesDownloaded": 37870698
+      },
+      {
+        "id": "3907eb69-19e2-4909-b76f-5ab15915a9bf",
+        "itemId": "MOD13Q1.A2025177.h09v05.061.2025195134522",
+        "assetKey": "ndvi",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/09/05/2025177/MOD13Q1.A2025177.h09v05.061.2025195134522_250m_16_days_NDVI.tif",
+        "sha256": "1f63dd5fed88183a1d3b47069a6eb80a887ce5479372124bd4b235d715ee63d4",
+        "bytesDownloaded": 50813548
+      },
+      {
+        "id": "b0373a6a-8dc6-4048-80d7-69d73921f611",
+        "itemId": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+        "assetKey": "evi",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/08/05/2025177/MOD13Q1.A2025177.h08v05.061.2025195142416_250m_16_days_EVI.tif",
+        "sha256": "7db84c7e21dcbb1fbfce838761d0eaf0a8dd560f0b4c91d18269f4ecc9b12a44",
+        "bytesDownloaded": 37382400
+      },
+      {
+        "id": "92eb06e3-f055-4e29-b3d4-ba6bb396d29e",
+        "itemId": "MYD13Q1.A2025169.h08v05.061.2025189102903",
+        "assetKey": "evi",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD13Q1/08/05/2025169/MYD13Q1.A2025169.h08v05.061.2025189102903_250m_16_days_EVI.tif",
+        "sha256": "083245b403b477ccd14a51cbe05f9cdb158ac457dad651e547bdb192aa480207",
+        "bytesDownloaded": 36925527
+      },
+      {
+        "id": "c69b680c-d548-4f90-a2ca-b3d059758fd3",
+        "itemId": "MOD13Q1.A2025177.h09v05.061.2025195134522",
+        "assetKey": "evi",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/09/05/2025177/MOD13Q1.A2025177.h09v05.061.2025195134522_250m_16_days_EVI.tif",
+        "sha256": "9a7f2ce308be6eaee56f19e57944d2befc86fafe3b7b37aa19403edcf1d15454",
+        "bytesDownloaded": 49636049
+      },
+      {
+        "id": "47acb510-6311-44c4-b7b2-afef05cbfd0e",
+        "itemId": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+        "assetKey": "vi_quality",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/08/05/2025177/MOD13Q1.A2025177.h08v05.061.2025195142416_250m_16_days_VI_Quality.tif",
+        "sha256": "f3d8ec112d7b9aad43e80875f1cf5b614c60d85beff60e5e333deb1501c4e63d",
+        "bytesDownloaded": 2005480
+      },
+      {
+        "id": "a2fb3da5-bebf-47ae-99f6-d35a57d5a040",
+        "itemId": "MYD13Q1.A2025169.h08v05.061.2025189102903",
+        "assetKey": "vi_quality",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD13Q1/08/05/2025169/MYD13Q1.A2025169.h08v05.061.2025189102903_250m_16_days_VI_Quality.tif",
+        "sha256": "6340de09f2ae416a2a5321d2549f55bb6362618d8890ad2e77746629add0e43b",
+        "bytesDownloaded": 2343729
+      },
+      {
+        "id": "fc336df8-76f6-43a9-a002-b7034f6aa48c",
+        "itemId": "MOD13Q1.A2025177.h09v05.061.2025195134522",
+        "assetKey": "vi_quality",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/09/05/2025177/MOD13Q1.A2025177.h09v05.061.2025195134522_250m_16_days_VI_Quality.tif",
+        "sha256": "8bed0117fbdac50f852731a7626c2c9bde26e96a68fef793aacd100ec951ec87",
+        "bytesDownloaded": 2205610
+      },
+      {
+        "id": "2ed85320-8c8f-46f3-bc5b-1075c97e13ac",
+        "itemId": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+        "assetKey": "vi_reliability",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/08/05/2025177/MOD13Q1.A2025177.h08v05.061.2025195142416_250m_16_days_pixel_reliability.tif",
+        "sha256": "743cb739eabb27d812e676da9ccc1f60c327abd995d0d94680b9a89c148defb5",
+        "bytesDownloaded": 364493
+      },
+      {
+        "id": "063fa742-cdf2-4a45-8f3a-f3b813b99635",
+        "itemId": "MYD13Q1.A2025169.h08v05.061.2025189102903",
+        "assetKey": "vi_reliability",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MYD13Q1/08/05/2025169/MYD13Q1.A2025169.h08v05.061.2025189102903_250m_16_days_pixel_reliability.tif",
+        "sha256": "5a16c2c94ad0c79ccc685da0a7a1144eb2d8050b78f6244b915ccd13df6a8a41",
+        "bytesDownloaded": 430565
+      },
+      {
+        "id": "63c00e84-ae21-4ae1-b1c7-8e70262d5de2",
+        "itemId": "MOD13Q1.A2025177.h09v05.061.2025195134522",
+        "assetKey": "vi_reliability",
+        "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MOD13Q1/09/05/2025177/MOD13Q1.A2025177.h09v05.061.2025195134522_250m_16_days_pixel_reliability.tif",
+        "sha256": "85a5d534282e0aaf6ceba1b9d30e551fa65d9f11416d6017f8a030fa22113895",
+        "bytesDownloaded": 364816
+      }
+    ]
+  },
+  "native": {
+    "originalDnRead": 276480000,
+    "outputDnCompared": 3038664,
+    "previewAndThumbnailRgbaPixelsCompared": 1698248,
+    "independentRawPointsCompared": 108,
+    "pairedSelectionAndIndexDigestsIdentical": true,
+    "restart": {
+      "rastersChecked": 32,
+      "cacheEntriesUnchanged": 32
+    },
+    "outputs": [
+      {
+        "id": "e907ae01-8ae3-402e-a97a-f47b0433b331",
+        "case": "single",
+        "policy": "good",
+        "assetKey": "ndvi",
+        "sha256": "941db8f4d3463e38b15cba2b377aef36abcbc4cbaa1abd0056e95460e6c5d107",
+        "allDnCompared": 14742,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "9cf764114552ab620918635944f603d4974ad3c9b779bbe18a4dbdc219995311",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 5225,
+          "removedValidPixels": 4884,
+          "rejectedPixels": 14401,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            341
+          ],
+          "indicesSha256": [
+            "c461904f5b35e7a7942ba8f56f0c890d9e74f28aa5cac8e9927aaa0cf874c120",
+            "705c8ff13875311b8b2f7714b3195fdc5cce0372d651f400fd9f2c6f7fc7a0ba"
+          ],
+          "selectionSha256": "c538e009d0619dac2b63434a6169f61f4e6f5b9c03d3e5ce2555987c6497000b"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "a6cc2b9d-a2f0-4df0-9e38-c3d7a95bd2d5",
+        "case": "single",
+        "policy": "good",
+        "assetKey": "evi",
+        "sha256": "cf00ac9ca24f10996a3d3f507ed3b2d8f6d974c01cec7a1f07d29b042498978f",
+        "allDnCompared": 14742,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "9cf764114552ab620918635944f603d4974ad3c9b779bbe18a4dbdc219995311",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 5225,
+          "removedValidPixels": 4884,
+          "rejectedPixels": 14401,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            341
+          ],
+          "indicesSha256": [
+            "c461904f5b35e7a7942ba8f56f0c890d9e74f28aa5cac8e9927aaa0cf874c120",
+            "705c8ff13875311b8b2f7714b3195fdc5cce0372d651f400fd9f2c6f7fc7a0ba"
+          ],
+          "selectionSha256": "c538e009d0619dac2b63434a6169f61f4e6f5b9c03d3e5ce2555987c6497000b"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "bf335a03-4feb-4dd8-8834-f70b581fa28f",
+        "case": "single",
+        "policy": "usable",
+        "assetKey": "ndvi",
+        "sha256": "ead8449016adcb7139378782d47622ac2983a8f1c9619c02b347267e85871159",
+        "allDnCompared": 14742,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "610373175c05b9d29c36429b0b12ae9b2ccaec43db1d99e98ce83d4217100a76",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 5225,
+          "removedValidPixels": 4821,
+          "rejectedPixels": 14338,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            404
+          ],
+          "indicesSha256": [
+            "56976fc983377f4a2cc7d5084b7d0f108234c8fec1ff4bffda18ca36c83c6d38",
+            "a6a1d5d8742503a6ae02da2f7194e08caea22a9fc93725181b97c2c13409a92b"
+          ],
+          "selectionSha256": "9aa25a2608c887f4539e8ac31c467e804ec980d721dbe90eb41efd9971fe7542"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "de005ae8-9e8f-4def-9780-79ec126e03b9",
+        "case": "single",
+        "policy": "usable",
+        "assetKey": "evi",
+        "sha256": "a2f8d85c520c02c80a0619b63499401fe2e7960e21dec2a485ff29f332d3ce9e",
+        "allDnCompared": 14742,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "610373175c05b9d29c36429b0b12ae9b2ccaec43db1d99e98ce83d4217100a76",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 5225,
+          "removedValidPixels": 4821,
+          "rejectedPixels": 14338,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            404
+          ],
+          "indicesSha256": [
+            "56976fc983377f4a2cc7d5084b7d0f108234c8fec1ff4bffda18ca36c83c6d38",
+            "a6a1d5d8742503a6ae02da2f7194e08caea22a9fc93725181b97c2c13409a92b"
+          ],
+          "selectionSha256": "9aa25a2608c887f4539e8ac31c467e804ec980d721dbe90eb41efd9971fe7542"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "f6288d52-d3df-4691-98bf-0b3c1ef4d920",
+        "case": "temporal",
+        "policy": "good",
+        "assetKey": "ndvi",
+        "sha256": "57e2e93e72cc1b08613507b8cbb14d1f4a07173c36dfbaddfbd69a30835dbc34",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "db79912901aa52c33ca787f5b287471f02c31072d4e5e5bebeb7022a23807664",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 354872,
+          "removedValidPixels": 71829,
+          "rejectedPixels": 71837,
+          "fallbackPixels": 13822,
+          "sceneValidPixels": [
+            13823,
+            269220
+          ],
+          "indicesSha256": [
+            "abc9f9d6f4362b71940c65413dda47dc426462de679fccba4b87d04d5d00ab02",
+            "9f60a9ede851643e65cec500ca8633036597b2c918b3a35bf247d38adce8c47d"
+          ],
+          "selectionSha256": "65bfcd82690a5efa4eff9e872e4643f41837199ca96bf69224f08894b59c0526"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "9f964eff-03d2-43f8-a595-df26f6f26223",
+        "case": "temporal",
+        "policy": "good",
+        "assetKey": "evi",
+        "sha256": "26ed91a3460c97995b14f9d4c6c5fdf8e9583ddc4e4310638c6373b909482ca0",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "db79912901aa52c33ca787f5b287471f02c31072d4e5e5bebeb7022a23807664",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 354872,
+          "removedValidPixels": 71829,
+          "rejectedPixels": 71837,
+          "fallbackPixels": 13822,
+          "sceneValidPixels": [
+            13823,
+            269220
+          ],
+          "indicesSha256": [
+            "abc9f9d6f4362b71940c65413dda47dc426462de679fccba4b87d04d5d00ab02",
+            "9f60a9ede851643e65cec500ca8633036597b2c918b3a35bf247d38adce8c47d"
+          ],
+          "selectionSha256": "65bfcd82690a5efa4eff9e872e4643f41837199ca96bf69224f08894b59c0526"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "43a810a9-9198-4d13-b141-9becf5fa30e3",
+        "case": "temporal",
+        "policy": "usable",
+        "assetKey": "ndvi",
+        "sha256": "e27f72430b3203f2f70624d52d4ab50a1b9267bd2de5d9b0fde862b3f3b4cc26",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "ae5e4bacd5da1a320fe3386baac0e9637b84c4f74cd82c5d58d066e4602caee9",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 354872,
+          "removedValidPixels": 45976,
+          "rejectedPixels": 45984,
+          "fallbackPixels": 12100,
+          "sceneValidPixels": [
+            12107,
+            296789
+          ],
+          "indicesSha256": [
+            "5e53a7e86a1d7f39b51e1c8b25d309422e125011cf725725d701b4d105ee5983",
+            "ed1878f710e3754f7b0f4d6955076ec6a218ab9dc108c9b3768148fb7502dba3"
+          ],
+          "selectionSha256": "cfddc829f3c0394f00393c342a03f97983aee8d08a804394ce0af5f10ab50b59"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "48c6dd6f-8d61-4280-a12b-6307235bf842",
+        "case": "temporal",
+        "policy": "usable",
+        "assetKey": "evi",
+        "sha256": "e7080d2a9acb54bf5b9fcb1cc1bae9ebbba9f0340f0767d11cfb100cd4b1f218",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "ae5e4bacd5da1a320fe3386baac0e9637b84c4f74cd82c5d58d066e4602caee9",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 354872,
+          "removedValidPixels": 45976,
+          "rejectedPixels": 45984,
+          "fallbackPixels": 12100,
+          "sceneValidPixels": [
+            12107,
+            296789
+          ],
+          "indicesSha256": [
+            "5e53a7e86a1d7f39b51e1c8b25d309422e125011cf725725d701b4d105ee5983",
+            "ed1878f710e3754f7b0f4d6955076ec6a218ab9dc108c9b3768148fb7502dba3"
+          ],
+          "selectionSha256": "cfddc829f3c0394f00393c342a03f97983aee8d08a804394ce0af5f10ab50b59"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "01da13f8-0850-468e-80d9-847f8fc171ce",
+        "case": "polygon",
+        "policy": "good",
+        "assetKey": "ndvi",
+        "sha256": "2593e3d8af752e5416fc5d58f16411f7842d5c760de4a1961bb7028546940abd",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "cfe0de102aa6431e8afc54f9895ca14fd538e0e970acacd26f6d0ba55ed6ece0",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 205483,
+          "removedValidPixels": 32017,
+          "rejectedPixels": 181414,
+          "fallbackPixels": 9901,
+          "sceneValidPixels": [
+            9902,
+            163564
+          ],
+          "indicesSha256": [
+            "4cbe20f60acaf961253982ae5e2012d4a3119f7472d26b1e93b1acfb6408ce60",
+            "3442c0dd2ffb5b14c76ea29b968e242494365959863262bd6ffcd5cd15827b0b"
+          ],
+          "selectionSha256": "e8de309f712838688a7a1e3b3d629e62b19c9a114b8ba95da0238418d82910ed"
+        },
+        "maskedPixels": 149389
+      },
+      {
+        "id": "fbbd95a9-96d3-42d4-b984-e5046b24906b",
+        "case": "polygon",
+        "policy": "good",
+        "assetKey": "evi",
+        "sha256": "19afdd8e885df78b48db6ed2c715c745d3e71732ab00230892a34cd8f8b9d018",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "cfe0de102aa6431e8afc54f9895ca14fd538e0e970acacd26f6d0ba55ed6ece0",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 205483,
+          "removedValidPixels": 32017,
+          "rejectedPixels": 181414,
+          "fallbackPixels": 9901,
+          "sceneValidPixels": [
+            9902,
+            163564
+          ],
+          "indicesSha256": [
+            "4cbe20f60acaf961253982ae5e2012d4a3119f7472d26b1e93b1acfb6408ce60",
+            "3442c0dd2ffb5b14c76ea29b968e242494365959863262bd6ffcd5cd15827b0b"
+          ],
+          "selectionSha256": "e8de309f712838688a7a1e3b3d629e62b19c9a114b8ba95da0238418d82910ed"
+        },
+        "maskedPixels": 149389
+      },
+      {
+        "id": "fe44ab7b-fe96-4574-8cc5-2795ae64d63f",
+        "case": "polygon",
+        "policy": "usable",
+        "assetKey": "ndvi",
+        "sha256": "30eec2c848c36cd8a403242c2e5aff44ac4fb688a4d2d2dd351163ba583d5c37",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "1772a3d0b23618d6ce48a78cf975678afa823744e5fb64c1d6dae103e404230b",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 205483,
+          "removedValidPixels": 21501,
+          "rejectedPixels": 170898,
+          "fallbackPixels": 6462,
+          "sceneValidPixels": [
+            6469,
+            177513
+          ],
+          "indicesSha256": [
+            "0550be12384071f7c2eb2cbdb43ced6406f717d1ae264fa016a665857358aef7",
+            "065a3a86649f2931b773cec2601b538992c80075fb79eea8fc41aee4d2059093"
+          ],
+          "selectionSha256": "17634c9191f52494fc3bb0afb1d58d03552b120f3083e90c436844280b5fb786"
+        },
+        "maskedPixels": 149389
+      },
+      {
+        "id": "e20cc9ac-a241-4811-9d40-1328cc48af78",
+        "case": "polygon",
+        "policy": "usable",
+        "assetKey": "evi",
+        "sha256": "0fe88932c509cd1534d8f594ed564180421359418366570d464c811a5d4f0468",
+        "allDnCompared": 354880,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "1772a3d0b23618d6ce48a78cf975678afa823744e5fb64c1d6dae103e404230b",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 205483,
+          "removedValidPixels": 21501,
+          "rejectedPixels": 170898,
+          "fallbackPixels": 6462,
+          "sceneValidPixels": [
+            6469,
+            177513
+          ],
+          "indicesSha256": [
+            "0550be12384071f7c2eb2cbdb43ced6406f717d1ae264fa016a665857358aef7",
+            "065a3a86649f2931b773cec2601b538992c80075fb79eea8fc41aee4d2059093"
+          ],
+          "selectionSha256": "17634c9191f52494fc3bb0afb1d58d03552b120f3083e90c436844280b5fb786"
+        },
+        "maskedPixels": 149389
+      },
+      {
+        "id": "ef0f9a5c-a62b-4292-8019-e994b8f92d55",
+        "case": "adjacent",
+        "policy": "good",
+        "assetKey": "ndvi",
+        "sha256": "a063d86d9c88c2bd28777ad1cd4d63f031c2d7633db30501485a4402660b3c9c",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "88bc5dc7fd1fd491c99238ed865307a7c8e2b17615d0a767cff9e2199d51e2dc",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 17582,
+          "removedValidPixels": 211,
+          "rejectedPixels": 211,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            5133,
+            12238
+          ],
+          "indicesSha256": [
+            "ca7afccc2baced3c99c9f3ab5c30b15f4cc76fd194c7bb4272b137e7186a075d",
+            "3626c3eb23327b7fb30b651987c58a132b4be21ab758a27bce2be84535215dae"
+          ],
+          "selectionSha256": "b13cdc83f83c294d1645f87fabe61e3deb4e64eab5111258d322f98a961fcae8"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "199593af-477f-4da4-b2ad-a033931ee450",
+        "case": "adjacent",
+        "policy": "good",
+        "assetKey": "evi",
+        "sha256": "024263e427783a26fbe17eb840dab35bd41c43ce25a140114c8a68211e664593",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "88bc5dc7fd1fd491c99238ed865307a7c8e2b17615d0a767cff9e2199d51e2dc",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 17582,
+          "removedValidPixels": 211,
+          "rejectedPixels": 211,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            5133,
+            12238
+          ],
+          "indicesSha256": [
+            "ca7afccc2baced3c99c9f3ab5c30b15f4cc76fd194c7bb4272b137e7186a075d",
+            "3626c3eb23327b7fb30b651987c58a132b4be21ab758a27bce2be84535215dae"
+          ],
+          "selectionSha256": "b13cdc83f83c294d1645f87fabe61e3deb4e64eab5111258d322f98a961fcae8"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "c5e8f21f-bf41-47c4-a03e-a431710999cf",
+        "case": "adjacent",
+        "policy": "usable",
+        "assetKey": "ndvi",
+        "sha256": "09350097ed99a184fd1cb93f4cc3d21c07ee32371d8f76d3c64e68cd92fd9fb0",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "75d09414d2938be3c43c67d5797c0a26f3b683872545603f1874aff2cbc55a8f",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 17582,
+          "removedValidPixels": 111,
+          "rejectedPixels": 111,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            5133,
+            12338
+          ],
+          "indicesSha256": [
+            "0300592f4071693d3536a4f8f4c050aee2c6e40066d0e4a5047885409e6c357c",
+            "973091581ce6de363821265c610963e49198772b65f0839ff88a0fd04f07d531"
+          ],
+          "selectionSha256": "83b1ebf8769430503ad0d5dfb1ba9dae256ee3e3540b2fd1f3d544ee1a21d280"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "9b838505-36aa-4c86-b356-0a6f71223d31",
+        "case": "adjacent",
+        "policy": "usable",
+        "assetKey": "evi",
+        "sha256": "1ace030894a818f1fe1267964ea8bd2c698f9f5b787c49ee293ce9e764ed7b0d",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "75d09414d2938be3c43c67d5797c0a26f3b683872545603f1874aff2cbc55a8f",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 17582,
+          "removedValidPixels": 111,
+          "rejectedPixels": 111,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            5133,
+            12338
+          ],
+          "indicesSha256": [
+            "0300592f4071693d3536a4f8f4c050aee2c6e40066d0e4a5047885409e6c357c",
+            "973091581ce6de363821265c610963e49198772b65f0839ff88a0fd04f07d531"
+          ],
+          "selectionSha256": "83b1ebf8769430503ad0d5dfb1ba9dae256ee3e3540b2fd1f3d544ee1a21d280"
+        },
+        "maskedPixels": 0
+      },
+      {
+        "id": "4784571f-19ff-4bad-90b5-932df5add596",
+        "case": "three_scene_polygon",
+        "policy": "good",
+        "assetKey": "ndvi",
+        "sha256": "4f11f6af2fa75b57fd9754a0799cbe854ff38c8109e5e100246b06c3b3e6a4d6",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "ebef5fe07b7cdb8711beb892f940fbdbadb2e5f9454a85ea07bc7dfad8204a3c",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 11752,
+          "removedValidPixels": 177,
+          "rejectedPixels": 6007,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            0,
+            3017,
+            8558
+          ],
+          "indicesSha256": [
+            "fc4f78b49a71114c09768cd748b4e86560f831c6ce568d1d05b04401cf46ad39",
+            "c6594d7e1f6c4d5e9940d27a4b8f7ae195ee627cee797e6080565f6f8725f4dd"
+          ],
+          "selectionSha256": "318a0e7f6797b69a82d0e0d81c7233af233893c54a4e6c51f6486080fa577706"
+        },
+        "maskedPixels": 5830
+      },
+      {
+        "id": "9329264f-3551-48b0-964b-6f78380ecfa1",
+        "case": "three_scene_polygon",
+        "policy": "good",
+        "assetKey": "evi",
+        "sha256": "456753699ef1d05afdaafda2536183d91d1211efe43c2790c041c228267cbfd2",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "good",
+          "specSha256": "ebef5fe07b7cdb8711beb892f940fbdbadb2e5f9454a85ea07bc7dfad8204a3c",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 11752,
+          "removedValidPixels": 177,
+          "rejectedPixels": 6007,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            0,
+            3017,
+            8558
+          ],
+          "indicesSha256": [
+            "fc4f78b49a71114c09768cd748b4e86560f831c6ce568d1d05b04401cf46ad39",
+            "c6594d7e1f6c4d5e9940d27a4b8f7ae195ee627cee797e6080565f6f8725f4dd"
+          ],
+          "selectionSha256": "318a0e7f6797b69a82d0e0d81c7233af233893c54a4e6c51f6486080fa577706"
+        },
+        "maskedPixels": 5830
+      },
+      {
+        "id": "17594813-f469-4905-8b70-a76d69f584c3",
+        "case": "three_scene_polygon",
+        "policy": "usable",
+        "assetKey": "ndvi",
+        "sha256": "3267720a71c46a532733c0cf6b475fbb7e206f0db0e2bdabd5c846bf8f4e5dd1",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "c73ca7851ca0f292f63c5d7e94c94239438fbb8d06840b499a3bd403dba6e3f9",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 11752,
+          "removedValidPixels": 85,
+          "rejectedPixels": 5915,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            0,
+            3017,
+            8650
+          ],
+          "indicesSha256": [
+            "140044346336c0207b89589d2430639175b5002a564edadd55434e10a2e3930b",
+            "288b1cca83f736d4c9ddafcd73252fd5e2505601c9cb7f353278f9e8a7227a0f"
+          ],
+          "selectionSha256": "1e2b6686cba70bced889e5e20cc77a219106c43bb5f89be44322e2efd4cb4477"
+        },
+        "maskedPixels": 5830
+      },
+      {
+        "id": "53d23521-6d75-418d-a503-260495de49db",
+        "case": "three_scene_polygon",
+        "policy": "usable",
+        "assetKey": "evi",
+        "sha256": "3c198ef37a3b550c64d82106df160e4d758bef99c98420ead5bb18107f7c6e51",
+        "allDnCompared": 17582,
+        "fullResolutionSelection": {
+          "schemaVersion": "geod-modis-vi-selection/v1",
+          "policy": "usable",
+          "specSha256": "c73ca7851ca0f292f63c5d7e94c94239438fbb8d06840b499a3bd403dba6e3f9",
+          "countsFullResolution": true,
+          "inputCommonValidPixels": 11752,
+          "removedValidPixels": 85,
+          "rejectedPixels": 5915,
+          "fallbackPixels": 0,
+          "sceneValidPixels": [
+            0,
+            3017,
+            8650
+          ],
+          "indicesSha256": [
+            "140044346336c0207b89589d2430639175b5002a564edadd55434e10a2e3930b",
+            "288b1cca83f736d4c9ddafcd73252fd5e2505601c9cb7f353278f9e8a7227a0f"
+          ],
+          "selectionSha256": "1e2b6686cba70bced889e5e20cc77a219106c43bb5f89be44322e2efd4cb4477"
+        },
+        "maskedPixels": 5830
+      }
+    ],
+    "negativeControls": [
+      "invalid request",
+      "invalid request",
+      "invalid request",
+      "invalid request",
+      "missing same-scene QA refused before enqueue",
+      "changed original QA refused; restored pinned source retry identical",
+      "native cancellation leaves no partial output",
+      "restored original QA refreshes stale source fingerprint with identical preview"
+    ]
+  },
+  "mcp": {
+    "modes": [
+      "direct",
+      "loopback adapter"
+    ],
+    "rawPointsCompared": 216,
+    "writeDenied": true,
+    "disconnectedAdapterRejected": true
+  },
+  "cache": {
+    "schema": "geod-modis-vi-quality-cache/v1",
+    "nativeBinarySha256": "3eb936257a73c2836a7597151af0002cfe4caf2971d62a0f25ef662643466a97",
+    "nativeReceiptSha256": "2797aa79347347b72d95529ff8450ff8ab2cf4a1bbbca45497a88e3d108d4ad5",
+    "upstreamBlocked": true,
+    "usedUserDesktop": false,
+    "nativeWindowTested": false,
+    "status": "passed",
+    "negativeControls": [
+      "ndvi: corrupt cache rebuilt without parents",
+      "ndvi: changed result refuses cached preview",
+      "evi: corrupt cache rebuilt without parents",
+      "evi: changed result refuses cached preview",
+      "changed contribution counts refuse raster, cached thumbnail and provenance"
+    ],
+    "originalRecordsAndFilesAbsent": 12,
+    "projectsAbsent": true,
+    "derivedFilesRestored": 20,
+    "persistentEntriesNotRegenerated": 20,
+    "pixelsCompared": 216
+  },
+  "ui": {
+    "actualNativeProcessingButtons": 6,
+    "cases": [
+      {
+        "case": "temporal",
+        "policy": "good",
+        "width": 1440,
+        "locale": "en",
+        "theme": "light",
+        "pairedSelectionsIdentical": true,
+        "fullResolutionStatisticsVisible": true,
+        "allSceneOriginalLinks": 8,
+        "uniformCardHeight": 106,
+        "fullHeightThumbnails": true,
+        "paintedRaster": true,
+        "pixelInteraction": "actual interior map click"
+      },
+      {
+        "case": "polygon",
+        "policy": "usable",
+        "width": 1024,
+        "locale": "zh-CN",
+        "theme": "dark",
+        "pairedSelectionsIdentical": true,
+        "fullResolutionStatisticsVisible": true,
+        "allSceneOriginalLinks": 8,
+        "uniformCardHeight": 106,
+        "fullHeightThumbnails": true,
+        "paintedRaster": true,
+        "pixelInteraction": "actual interior map click"
+      },
+      {
+        "case": "adjacent",
+        "policy": "good",
+        "width": 900,
+        "locale": "en",
+        "theme": "dark",
+        "pairedSelectionsIdentical": true,
+        "fullResolutionStatisticsVisible": true,
+        "allSceneOriginalLinks": 8,
+        "uniformCardHeight": 106,
+        "fullHeightThumbnails": true,
+        "paintedRaster": true,
+        "pixelInteraction": "actual interior map click"
+      }
+    ],
+    "nativeWindowTested": false,
+    "usedUserDesktop": false
+  },
+  "rendererSnapshot": {
+    "root": "G:\\code\\geod-global\\.verification\\renderer-modis-vi-quality-accepted-20261004",
+    "files": [
+      {
+        "path": "assets/GeoJSON-DgGZhlM5.js",
+        "sha256": "0771f23db7c464ca0cc3d79e18edb132452dacdd2d69347ce6e0e143d9485328"
+      },
+      {
+        "path": "assets/ImageStatic-CJOl8TQ_.js",
+        "sha256": "05d1e27ef64bf3ff7b9e9ecd4702b95e393e66992f82eb2a20e43e8d22686540"
+      },
+      {
+        "path": "assets/TileEventType-CYPqkrY0.js",
+        "sha256": "c7fccabfbc56aad1b8d261224a1deaffe7bfa0b173f5cb9401cd2018c053faa0"
+      },
+      {
+        "path": "assets/area-picker-CU5VwcjO.js",
+        "sha256": "591ebb2b7c61567db86fe56a1737097407486f789d4c11199ffc06d49ebcee20"
+      },
+      {
+        "path": "assets/area-picker-kigvIfVk.css",
+        "sha256": "bfab9edbaf5876a7974b3ce871639c076156529da07988b03a149291eb7138cd"
+      },
+      {
+        "path": "assets/basedecoder-BuG7fe0q.js",
+        "sha256": "75e9fcda3d7bba0fee379de7aaa82db388b3633bf632ce3acd081395f81a5c0b"
+      },
+      {
+        "path": "assets/chunk-aKtaBQYM.js",
+        "sha256": "cb2fb01f2064eb36487466778d2ffc4c97ad86af89be1635209de18f0b5b2236"
+      },
+      {
+        "path": "assets/common-uuK22kLj.js",
+        "sha256": "5a459e85c7517661892d10ab02dafce708043328dfe7839cc0dc7cb71335916e"
+      },
+      {
+        "path": "assets/deflate-MNq7sM0x.js",
+        "sha256": "12cfd94f8dcf6c2d328ff1ad9b160e4cecdf243e540e3a1fe04fa45b94c474e1"
+      },
+      {
+        "path": "assets/explore-map-B4wUI6a9.css",
+        "sha256": "52daa5b51c468a61b62e729ef48e9154f943c43ab73ef9cbe8c83b9dfba468a9"
+      },
+      {
+        "path": "assets/explore-map-DuT81BJ0.js",
+        "sha256": "16232cd7963a7b91f1985f940e767b5b7cdd91abdee6cc9866ee66ef696e7dad"
+      },
+      {
+        "path": "assets/globals-Bg5xiAy0.js",
+        "sha256": "47c17d7246fd7c35eac1c138e939b23180817aa7792469d6b8bc4bae1e50a783"
+      },
+      {
+        "path": "assets/i18n-CZxQgoTh.js",
+        "sha256": "6162ad35aed7fcacc0da56c783b992f55d9c302d89de14232b8d80d65adcbe4a"
+      },
+      {
+        "path": "assets/i18n-DZ60XG39.css",
+        "sha256": "792a93ba5426e70c499b5251495de74f49160f3f60068cbb37557a10473657a6"
+      },
+      {
+        "path": "assets/index-BGXToMTm.js",
+        "sha256": "14d1abf6dda05aa5264e34738d86533c153add635555a8f697af91a73b555b98"
+      },
+      {
+        "path": "assets/index-CGDO3YLc.css",
+        "sha256": "8457337f3306cdc852709b1d123e9a31815c7e170e38d11c10744fce37d04241"
+      },
+      {
+        "path": "assets/jpeg-Cth_bn84.js",
+        "sha256": "39b7d59cf5f7809c2ac83e9ceade2839132eba5bd45ac25c6303355baa8ce5a8"
+      },
+      {
+        "path": "assets/lerc-DF34KnyL.js",
+        "sha256": "a30143889ed1c6b5ad419e5651a2ad98799d167f035f81b1862079166c0d9249"
+      },
+      {
+        "path": "assets/lzw-D2FslT4L.js",
+        "sha256": "f4d18dd479e3914b6ede31544289bd88cc1f82551ea8dcbfd2e299bc16b787de"
+      },
+      {
+        "path": "assets/ol-BM8XMzgm.js",
+        "sha256": "7a90dff95b67a7628a1ff4d06a1a0dcaa0f1c389bc08acac8141bc59f01b9304"
+      },
+      {
+        "path": "assets/ol-c_1sG1-7.css",
+        "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+      },
+      {
+        "path": "assets/packbits-DCimUQ1T.js",
+        "sha256": "820940add27265cac2befc5627fefbfdd1b1f1ec3d53f7613457649d2fa5b131"
+      },
+      {
+        "path": "assets/pako.esm-DSnfqx17.js",
+        "sha256": "7221f22bc5cae49d9a19b9aa0981a4cb677f3f85123f8e0d0bba7369f206a0f8"
+      },
+      {
+        "path": "assets/raw-A-vJRPpa.js",
+        "sha256": "e44d3f26ae64a4ad2db183730d3bb074307db80200cda79831f234f1e35cdbd5"
+      },
+      {
+        "path": "assets/rbush-CaohfFwn.js",
+        "sha256": "04eb34ac5f12b25bdb9cbced7cfd9e0f2e31a494b343b4dcad642cbfbc56e0f7"
+      },
+      {
+        "path": "assets/stac-map-4estLiDd.js",
+        "sha256": "1d58260b61dc6cf27817c29f0652d6b3bf8df5a9870a9e96b70504bc55d83953"
+      },
+      {
+        "path": "assets/three-d-viewer-B9DDZdqH.css",
+        "sha256": "d27da7dcfc6bdcd1a166fa11a775fddc97cc06fbd2160c7a2e721c5044210a16"
+      },
+      {
+        "path": "assets/three-d-viewer-BeNIAZcF.js",
+        "sha256": "823488370a819f2f813d9eedf094df9d80386d77a5d3f906dd7e5a46c790cea8"
+      },
+      {
+        "path": "assets/tiles-map-C1TLeG3N.js",
+        "sha256": "2e75c29648e3670e15f0e5f45d5e838297b5aa2e1ee7c7260ef9bb5b15ef2673"
+      },
+      {
+        "path": "assets/vector-map-DcumeUbg.js",
+        "sha256": "4fe6a24a75377d90a6f27da090031c9f691578bd4fb0ffec904c9ef36e62009a"
+      },
+      {
+        "path": "assets/webimage-CCNzeXNW.js",
+        "sha256": "917bfc4d1d56d55ab06f26cd9a85f957549eafb19496888821983edabd5f9b24"
+      },
+      {
+        "path": "assets/wms-map-DDVsj0xp.js",
+        "sha256": "04c2cfe98d54488eeb2a6a315c74c0b84caacd41d4aa336722203fe12406df66"
+      },
+      {
+        "path": "assets/workspace-map-Dn4JGeIH.js",
+        "sha256": "0f021092680ff08ffa58dc5d8a8dae3862fd0ef8d8aa5a7dddc4911e70ec7fa0"
+      },
+      {
+        "path": "assets/workspace-map-geometry-Dg-l7MZz.js",
+        "sha256": "69bcae2f09acb8047365c5a82d73c6cf82131e558775bd399f631178f851678a"
+      },
+      {
+        "path": "assets/workspace-map-za6H7b8_.css",
+        "sha256": "69e98ebf56c376e162dc30891fb522b437fe00aa6529968db522123458f9dd9e"
+      },
+      {
+        "path": "assets/zstd-i4Jwubnx.js",
+        "sha256": "5c6276c4367b135b1e9a494a802c84af948e17e9a59e41084b9e98f266cb84e7"
+      },
+      {
+        "path": "basemaps/SOURCE.md",
+        "sha256": "323ba782b6ff1a0fe2d397fda61e60afbb036d17282d6d9a401c007080e593ab"
+      },
+      {
+        "path": "basemaps/admin1-10m/ABW.geojson",
+        "sha256": "b28d3647877b5fec6554686fa95931f4f605971b29af9cff9daa7b3534b7b504"
+      },
+      {
+        "path": "basemaps/admin1-10m/AFG.geojson",
+        "sha256": "6c25fe81d5791b3da45fbc25c39eb7c2966827ef962feb2338584874ca0d0e0d"
+      },
+      {
+        "path": "basemaps/admin1-10m/AGO.geojson",
+        "sha256": "d95ebf654bde754cf28b228cc86e37fa81c094af769ab2267ae59c343793f88b"
+      },
+      {
+        "path": "basemaps/admin1-10m/AIA.geojson",
+        "sha256": "fafb284633126a99ba7cdd8a4e3201f580fd488a2e098f2729691dc03a11b274"
+      },
+      {
+        "path": "basemaps/admin1-10m/ALB.geojson",
+        "sha256": "1fb3ce1634a814a8e670b21d2ee5b417cedc4226a49a7f10e9df140ef89bcd28"
+      },
+      {
+        "path": "basemaps/admin1-10m/ALD.geojson",
+        "sha256": "d428ee9dc4fe7630e5096ef6d45351b362f875cbecf3926c82bd18ac0f07c9b8"
+      },
+      {
+        "path": "basemaps/admin1-10m/AND.geojson",
+        "sha256": "691aec64898ffeecebe15805fd2514543463810a0b47896b3da3696c5d8353cf"
+      },
+      {
+        "path": "basemaps/admin1-10m/ARE.geojson",
+        "sha256": "56c59508f4beb9f2f08ff823a7dc3128933b51b372b2ad4d17bf3fa89ddfff4a"
+      },
+      {
+        "path": "basemaps/admin1-10m/ARG.geojson",
+        "sha256": "41247e77aad4999873eb5ce5ad704d05ccf6615510404774bfad439f7480c512"
+      },
+      {
+        "path": "basemaps/admin1-10m/ARM.geojson",
+        "sha256": "a3cd91af94369f8116519ebcb2816f384c5d9ac9dd3b67f91a4dcdb4e32f7a86"
+      },
+      {
+        "path": "basemaps/admin1-10m/ASM.geojson",
+        "sha256": "9d6526c02bf16b2e0c1dba6f07e85317a87256f652055596b7e5ca8969048da8"
+      },
+      {
+        "path": "basemaps/admin1-10m/ATA.geojson",
+        "sha256": "6ca862327918428e350815c6434e5e70462372de711b92b0b1cc5b8a2a13b905"
+      },
+      {
+        "path": "basemaps/admin1-10m/ATC.geojson",
+        "sha256": "bdd705e67775f6b92311265632d2f15c0c403aaaeaed06f2c4bc0c8b2ef4d527"
+      },
+      {
+        "path": "basemaps/admin1-10m/ATF.geojson",
+        "sha256": "6de7beb7dd3e0f79a9aa65fa8b4a34c75ac208d76bf04b6cb277504b8830c234"
+      },
+      {
+        "path": "basemaps/admin1-10m/ATG.geojson",
+        "sha256": "6eb049ae3924badd29b0fb476dba368802deb5011ea3720b14b97fc0a739f258"
+      },
+      {
+        "path": "basemaps/admin1-10m/AUS.geojson",
+        "sha256": "ccd9d9b5129af5f344eb32fe0c2502b80a831d6da8bd6b5472a6f13876afb5e5"
+      },
+      {
+        "path": "basemaps/admin1-10m/AUT.geojson",
+        "sha256": "006d898bde8ac95f42b07509bd18d7f400934652fe9f1a6852c6b62129a5b307"
+      },
+      {
+        "path": "basemaps/admin1-10m/AZE.geojson",
+        "sha256": "89cd6ad972218e03a21a2435e30191a6f928022532d559dc432cbdb5beacbf61"
+      },
+      {
+        "path": "basemaps/admin1-10m/BDI.geojson",
+        "sha256": "7a144176117f0c1d9026ebf6d4d100d543d9cfda575fb9e88b7fee1bbdd2211a"
+      },
+      {
+        "path": "basemaps/admin1-10m/BEL.geojson",
+        "sha256": "a46bf2f44b41dc9d11a7991b9c7587540d0ecb1284e92c1571ddc9ab09eca623"
+      },
+      {
+        "path": "basemaps/admin1-10m/BEN.geojson",
+        "sha256": "4e8497e2064e520b24f80b1405dd4075eaa7d84b3171035dc563080f3ac8266f"
+      },
+      {
+        "path": "basemaps/admin1-10m/BFA.geojson",
+        "sha256": "b1220a3fe9e919556d766c1a6b1eb6d5b97aa3310b13169fa5ad60b71f9c54eb"
+      },
+      {
+        "path": "basemaps/admin1-10m/BGD.geojson",
+        "sha256": "099b90459cd8cc74270bb2e08ad6736ff4760ee9db58f6e912e34a6ba309908c"
+      },
+      {
+        "path": "basemaps/admin1-10m/BGR.geojson",
+        "sha256": "40ca9b0d8167f7c93c382a24a92c0826ff2da02c6603792db7747b639e0d7fe5"
+      },
+      {
+        "path": "basemaps/admin1-10m/BHR.geojson",
+        "sha256": "63a59dbce6af82d1d605a846247622308170fb6de4e9207f6baa53671c83c46e"
+      },
+      {
+        "path": "basemaps/admin1-10m/BHS.geojson",
+        "sha256": "1aa7a980f2f30ffaad7a3f7e03a5c39564d97713d8d7605b6da22e4f0f3ccd3f"
+      },
+      {
+        "path": "basemaps/admin1-10m/BIH.geojson",
+        "sha256": "7e88bea7264853d80cc6e4f65be292d66b29359bdd7780481595e6d85607272c"
+      },
+      {
+        "path": "basemaps/admin1-10m/BLM.geojson",
+        "sha256": "c04d332a16d47e77572e87f8a455e613e67d3af0e76836e8e75ebadef2f8cdbd"
+      },
+      {
+        "path": "basemaps/admin1-10m/BLR.geojson",
+        "sha256": "de128139a8fc22bb3ac62f09fa2b8c5acb58096f9165cb5518f3ae23322272ad"
+      },
+      {
+        "path": "basemaps/admin1-10m/BLZ.geojson",
+        "sha256": "5b9f043e303152fa93843805ee094a85e2434bdbf712106c254e90d6d10e832e"
+      },
+      {
+        "path": "basemaps/admin1-10m/BMU.geojson",
+        "sha256": "a77e7f4c091e24a457c35b4184c1521e9ef104ae118cd17a13be753b724e3410"
+      },
+      {
+        "path": "basemaps/admin1-10m/BOL.geojson",
+        "sha256": "63052ca5b3a708b3ab31034f47d57d997818582abe40e38a959754cd632fffb7"
+      },
+      {
+        "path": "basemaps/admin1-10m/BRA.geojson",
+        "sha256": "916a00c94aa7804bf9de48bd215c2b7418811458e3c4c4fefb9f4d2b14e4728e"
+      },
+      {
+        "path": "basemaps/admin1-10m/BRB.geojson",
+        "sha256": "bf40ab775112e0021c27c2e62c0b5018cf4941509398f723da9fd086f1c7cc8b"
+      },
+      {
+        "path": "basemaps/admin1-10m/BRN.geojson",
+        "sha256": "3fd80cd47168e38c87390938ce6f13f97156f24326b0fde6d5780d6b0476e9f0"
+      },
+      {
+        "path": "basemaps/admin1-10m/BTN.geojson",
+        "sha256": "0db408468191136cf1e286b3d0dcd2b90178ccc80c8ca19f3cd42440f7d05441"
+      },
+      {
+        "path": "basemaps/admin1-10m/BWA.geojson",
+        "sha256": "50f7ec20153979f0f57c93496e71ae26705318c7a7df869b5c98d555415f42d5"
+      },
+      {
+        "path": "basemaps/admin1-10m/CAF.geojson",
+        "sha256": "e565aeafc47b156609834f38431b161c13ac43480c186814ef23038d7fe3e436"
+      },
+      {
+        "path": "basemaps/admin1-10m/CAN.geojson",
+        "sha256": "994ace8ea41bb4ac355b9e693fe1617a9e079e852060beef2e5a2a358d25b40a"
+      },
+      {
+        "path": "basemaps/admin1-10m/CHE.geojson",
+        "sha256": "94df31825dd1a71c2cd53220055a56ae518ac2d362a8640aadc6f4df4504f50a"
+      },
+      {
+        "path": "basemaps/admin1-10m/CHL.geojson",
+        "sha256": "fe6296cc37ea11c4c9100903be7063a0a48fa07e72f8872d212159922f2af1f0"
+      },
+      {
+        "path": "basemaps/admin1-10m/CHN.geojson",
+        "sha256": "bfb79664579bf8c7b024a185fbd723cb7509f2622fadf6fd158256f5b1d3d6eb"
+      },
+      {
+        "path": "basemaps/admin1-10m/CIV.geojson",
+        "sha256": "4c82db96f3e63b4b5508c60f61ecd0a7106bb354eef700391900a14c6aef044c"
+      },
+      {
+        "path": "basemaps/admin1-10m/CLP.geojson",
+        "sha256": "951c72fb46a81b843f2cd7a8e209dbaa31755b3f2ab6879b86bb41c35148331c"
+      },
+      {
+        "path": "basemaps/admin1-10m/CMR.geojson",
+        "sha256": "94ea1e9765134020f18197f570cf1123b9c275e99ac9662e55b49154b4a6032d"
+      },
+      {
+        "path": "basemaps/admin1-10m/COD.geojson",
+        "sha256": "809603d2fb476143452febed81650420e03faa322665f7bea7513324bc21f3ed"
+      },
+      {
+        "path": "basemaps/admin1-10m/COG.geojson",
+        "sha256": "f1c3e314324ddca0eeb52d2476cf86f02a49c76ff3a02c51cb97f9c7385121c9"
+      },
+      {
+        "path": "basemaps/admin1-10m/COK.geojson",
+        "sha256": "10626d4c27795670851827a2438e511928dd850c59546ed28928cfcb52c7c2f5"
+      },
+      {
+        "path": "basemaps/admin1-10m/COL.geojson",
+        "sha256": "023b6fb6445b38b24479350008e41812b32ac58b74c0879a8d4417afbd72f9d6"
+      },
+      {
+        "path": "basemaps/admin1-10m/COM.geojson",
+        "sha256": "ac8d981900e80d990f66167d4f5722c7bc4d5ca8a9a58f9a53f8cd625e7811e5"
+      },
+      {
+        "path": "basemaps/admin1-10m/CPV.geojson",
+        "sha256": "22c45b8e37fa273ecedb73c7690663ef9b22b3f3084f5c27239f3c805a89afd1"
+      },
+      {
+        "path": "basemaps/admin1-10m/CRI.geojson",
+        "sha256": "7950ee91deb65b30226cafb4bb7ddaa614e0606f5e6633c280bda91e1753ed0e"
+      },
+      {
+        "path": "basemaps/admin1-10m/CSI.geojson",
+        "sha256": "4aae213af34b36fb5ce5bcad1284c8f3feab7656c94dbee6277ebbbb2edc91e8"
+      },
+      {
+        "path": "basemaps/admin1-10m/CUB.geojson",
+        "sha256": "46d14ab098ea4830c0e04d51ed27c7a548967e7a4be8424082f83d7f2ce3265d"
+      },
+      {
+        "path": "basemaps/admin1-10m/CUW.geojson",
+        "sha256": "dc7b1477abba1f8baeabe5e35be7d0016ae52aba775edf708b24e4b0fa80ee1b"
+      },
+      {
+        "path": "basemaps/admin1-10m/CYM.geojson",
+        "sha256": "752ac8f2448bff73bd35d8e3fc8387bd096564fc18330a339a85efb34dff3fa9"
+      },
+      {
+        "path": "basemaps/admin1-10m/CYN.geojson",
+        "sha256": "44fd91e3917f375d0f7dd980985c5654a0aebe6b4a7ac00f3a0eb2836aa886fa"
+      },
+      {
+        "path": "basemaps/admin1-10m/CYP.geojson",
+        "sha256": "09fa9d8f8c147ffcd99f83cab397216d9dc08f304d100041cd4aa6b2f865d8c1"
+      },
+      {
+        "path": "basemaps/admin1-10m/CZE.geojson",
+        "sha256": "f8083cbabcb9aa52611b5f68cc975cca886046d5f68e13df2923deb9a5764e4a"
+      },
+      {
+        "path": "basemaps/admin1-10m/DEU.geojson",
+        "sha256": "5a0e7d98de056a1b9253dba358ce5fb08b80fae4e8d0a095963a4e3c94970f08"
+      },
+      {
+        "path": "basemaps/admin1-10m/DJI.geojson",
+        "sha256": "7eafc66d23d45b653cadc5ae58be3889c11a2f5ba9c95583f5137e195b8f4e3e"
+      },
+      {
+        "path": "basemaps/admin1-10m/DMA.geojson",
+        "sha256": "1f73d42eb0242906749a3014513230bc293149517dfad3e417005ed9ba420dbf"
+      },
+      {
+        "path": "basemaps/admin1-10m/DNK.geojson",
+        "sha256": "4c35e6e97d08b99f216d4ebf93bb902e04795482fb27fbc7b35e5ba9d5fdc3f9"
+      },
+      {
+        "path": "basemaps/admin1-10m/DOM.geojson",
+        "sha256": "99f9c1e1d43000b71836a0ea9aadad3ada7d53b88388dbf451178e0e637f0ebf"
+      },
+      {
+        "path": "basemaps/admin1-10m/DZA.geojson",
+        "sha256": "9dd093543ef69a606dff1bb14448b1f61d37a89db0c9ba845addfc806c239f36"
+      },
+      {
+        "path": "basemaps/admin1-10m/ECU.geojson",
+        "sha256": "3bcdd5f3ce25f1aa2a4ada51450bae004ac2bf7499689dd408c8d554b2e5ce9d"
+      },
+      {
+        "path": "basemaps/admin1-10m/EGY.geojson",
+        "sha256": "4f8c62ab63ecb64d6e76ad2e9392aa844ff7de9580a3104773126117f9e29141"
+      },
+      {
+        "path": "basemaps/admin1-10m/ERI.geojson",
+        "sha256": "7478693d971a3a459b007ac559f10f0bf4eb6a035cf1b9e04be2e8a64b76ecc7"
+      },
+      {
+        "path": "basemaps/admin1-10m/ESB.geojson",
+        "sha256": "974f08220e91592f889061d8e251880d393e3526cc35be2da95b38cf7d65f07d"
+      },
+      {
+        "path": "basemaps/admin1-10m/ESP.geojson",
+        "sha256": "b59ca349e271a1d443c40422da94ed831a00d14edc8173bae3870f886b8c11b2"
+      },
+      {
+        "path": "basemaps/admin1-10m/EST.geojson",
+        "sha256": "d3f4a0819d00a7585ce5694fedee91f865e347a3e6b98ffe1c93a49849f908ed"
+      },
+      {
+        "path": "basemaps/admin1-10m/ETH.geojson",
+        "sha256": "87e83496befc309fdc78129c4e1b07c077ff224b2707797ed81b93d165add731"
+      },
+      {
+        "path": "basemaps/admin1-10m/FIN.geojson",
+        "sha256": "6e289638b9b5f33c403f45b2e78e5651505237e4e49d345c06014d4f70996360"
+      },
+      {
+        "path": "basemaps/admin1-10m/FJI.geojson",
+        "sha256": "aab9c4c2fb76a97fbee9c04a797c105cfc0757ce622dca42c88204fea0b105a1"
+      },
+      {
+        "path": "basemaps/admin1-10m/FLK.geojson",
+        "sha256": "1496b2fd748f2d1dbded5d7148550ca9c59319a634731f593704d55460c8d184"
+      },
+      {
+        "path": "basemaps/admin1-10m/FRA.geojson",
+        "sha256": "40d68edd0b77b6fbecf9cc96c1c9e16531a786ce5ad058eccde1f0cc555960e7"
+      },
+      {
+        "path": "basemaps/admin1-10m/FRO.geojson",
+        "sha256": "c4d55050d7e9cb0ddf6d520af917a4ef6ef583cd6874503c3c45c0557493361f"
+      },
+      {
+        "path": "basemaps/admin1-10m/FSM.geojson",
+        "sha256": "a6accbf873a3906c3a6a66b1bffa4037a94558a60f9bf61c139b18912d27de64"
+      },
+      {
+        "path": "basemaps/admin1-10m/GAB.geojson",
+        "sha256": "c5e3c0daa77b73e4ca0754b4865574eaf9b41371355760c243371a21ef2b476d"
+      },
+      {
+        "path": "basemaps/admin1-10m/GBR.geojson",
+        "sha256": "29f264e3f089111a70ad8852210310ffb8f3ceaa1ec9b5f002790c01f35d3d47"
+      },
+      {
+        "path": "basemaps/admin1-10m/GEO.geojson",
+        "sha256": "360cb458db97cb2f0f315b151caa7f1733b62e4c0a474783c86830d30aa1db7a"
+      },
+      {
+        "path": "basemaps/admin1-10m/GGY.geojson",
+        "sha256": "00e0de1c1aab148ff48705db88607aa3337e58c9d1ddfc6178862cbad3f48cdf"
+      },
+      {
+        "path": "basemaps/admin1-10m/GHA.geojson",
+        "sha256": "b069e3edb95e0bcf3baa329913d865d1d120f1d476629e956b650306b89d8ec4"
+      },
+      {
+        "path": "basemaps/admin1-10m/GIB.geojson",
+        "sha256": "ce7ccf10e11221ff5c3cd64fc1e9bde1b943a498495f26e38b48eb1e0807823b"
+      },
+      {
+        "path": "basemaps/admin1-10m/GIN.geojson",
+        "sha256": "5c8b79e97fc1cd3b0144ee57ef21a88a60ab084126bcf0951c7c5bbc59a21c55"
+      },
+      {
+        "path": "basemaps/admin1-10m/GMB.geojson",
+        "sha256": "d4eddb362193a0e314d4eebc1ebd160b273ca7a105efaf5549e67c7e98253992"
+      },
+      {
+        "path": "basemaps/admin1-10m/GNB.geojson",
+        "sha256": "44489977807fab5ef24f48c6870340f3b5f67e37ba1a66f9675a35c2a4f628a0"
+      },
+      {
+        "path": "basemaps/admin1-10m/GNQ.geojson",
+        "sha256": "f0c98c0bddf5b676c13e3e067d75a11ed26ff65fece157be72bf12822f7f7b38"
+      },
+      {
+        "path": "basemaps/admin1-10m/GRC.geojson",
+        "sha256": "e278c527fa41fcaea78dcf617b7f6af4ef9ae74f1d69737700ccef4036fd7f5e"
+      },
+      {
+        "path": "basemaps/admin1-10m/GRD.geojson",
+        "sha256": "7a58c994491ec476e8fe27a15e77e9d8948634f7349583605b7694ad9ce39af6"
+      },
+      {
+        "path": "basemaps/admin1-10m/GRL.geojson",
+        "sha256": "9868d227e530382acde91770da35035958576b6744fd92b81ac478cd87170172"
+      },
+      {
+        "path": "basemaps/admin1-10m/GTM.geojson",
+        "sha256": "7304e018b5cb88e384bb07af121983bda70f4e5bc6a40a6cf4e01376bb90ef62"
+      },
+      {
+        "path": "basemaps/admin1-10m/GUM.geojson",
+        "sha256": "2e72f61e855db62301edb1903c222ece084ce9cd9d1c6e70a5fbebb4ecc1a8c7"
+      },
+      {
+        "path": "basemaps/admin1-10m/GUY.geojson",
+        "sha256": "0e2f5d94d5589ce544159e383e7bb1c77e21803d3f73f624277e71c7ef0e4c1d"
+      },
+      {
+        "path": "basemaps/admin1-10m/HKG.geojson",
+        "sha256": "ab436eb9e2cd3aed05b794fc473dbad1450a73b9bae344ff376daa204ebfb77b"
+      },
+      {
+        "path": "basemaps/admin1-10m/HMD.geojson",
+        "sha256": "cf2918b5265a48a634b568e2b402f9cd43fb324c3b7a40ace7898eafce418565"
+      },
+      {
+        "path": "basemaps/admin1-10m/HND.geojson",
+        "sha256": "8223c0561483ac4d5f83f56f0c42a1f8816a4f1880a43f79eb4b2ce4fe577c08"
+      },
+      {
+        "path": "basemaps/admin1-10m/HRV.geojson",
+        "sha256": "e7fb6143526e503306477e48c5626aafb2ca659f25e80fc525a4d498ecd02cd8"
+      },
+      {
+        "path": "basemaps/admin1-10m/HTI.geojson",
+        "sha256": "ab1d67cf3d43e537fac53f008133f4aee7110a7de72f10a276915f9cfd486b91"
+      },
+      {
+        "path": "basemaps/admin1-10m/HUN.geojson",
+        "sha256": "40318b66bbeaaefdadecb589298f6dd50bd5cd5b5063037e17dc6b198678aa72"
+      },
+      {
+        "path": "basemaps/admin1-10m/IDN.geojson",
+        "sha256": "7e292900cd0456ee836b32c77b317b61e621bfa9079fa11c1810da3274d30f39"
+      },
+      {
+        "path": "basemaps/admin1-10m/IMN.geojson",
+        "sha256": "8af38f0b8ed745ca0f8271a4abe756f743281e6fcc23de927465ad91963b5dd3"
+      },
+      {
+        "path": "basemaps/admin1-10m/IND.geojson",
+        "sha256": "fc8a8b559c485109393ced90825bed3acad24f5b44e2bd9481e77e440c120349"
+      },
+      {
+        "path": "basemaps/admin1-10m/IOA.geojson",
+        "sha256": "9198b5e04dfb3a27faf08e041fcf5dc162e5ed98c85bc3faab827986768a4a84"
+      },
+      {
+        "path": "basemaps/admin1-10m/IOT.geojson",
+        "sha256": "522ccac3fa6b392c8edb04a68a6f113df619e1916b50598d1b60971e6c2899c9"
+      },
+      {
+        "path": "basemaps/admin1-10m/IRL.geojson",
+        "sha256": "a683e3ecf49f00bc5f57b3c045ab55b423b9633e5f156e16c5860dcdecc9b9f3"
+      },
+      {
+        "path": "basemaps/admin1-10m/IRN.geojson",
+        "sha256": "0737df2b83995b3f53ab167d5199af4118c06b3fa370b4031279279d10eb5caf"
+      },
+      {
+        "path": "basemaps/admin1-10m/IRQ.geojson",
+        "sha256": "1a4957592f1e0015713d03fb682d0f105784958c5da779230a2220b4fbfbb6ed"
+      },
+      {
+        "path": "basemaps/admin1-10m/ISL.geojson",
+        "sha256": "ddfd76359c5515505db0ea72248dbaabab106ad4d327cc25208ead1140900191"
+      },
+      {
+        "path": "basemaps/admin1-10m/ISR.geojson",
+        "sha256": "ea57f9ac7332ca19781bb408af53e56c561cc4f5309ba94cd9c89cfb1e0b27a7"
+      },
+      {
+        "path": "basemaps/admin1-10m/ITA.geojson",
+        "sha256": "b6116923346f9e03d1e206ce0c310aacdb280669240ce326773634bfaa9f6b4c"
+      },
+      {
+        "path": "basemaps/admin1-10m/JAM.geojson",
+        "sha256": "57c98a677994f881e0dcd03c4243b66c54202c408ba7886a1e850b139929b096"
+      },
+      {
+        "path": "basemaps/admin1-10m/JEY.geojson",
+        "sha256": "acaf03152d69f61f714cdb8f60f624ae5fef89324ff79e575e0968fe569cf3cd"
+      },
+      {
+        "path": "basemaps/admin1-10m/JOR.geojson",
+        "sha256": "7e759648c0739b5578cec3035db2194ff1045e855c475f89d38622fb93b8cdde"
+      },
+      {
+        "path": "basemaps/admin1-10m/JPN.geojson",
+        "sha256": "8d6d384113c40dcdf1cecada3ab2f1dd6c4a410d13064f2373c1bae40b815dbc"
+      },
+      {
+        "path": "basemaps/admin1-10m/KAB.geojson",
+        "sha256": "1c46685ea76612fe7a3c8c3efd587e1851a0727963ce794ba0047face185e3fb"
+      },
+      {
+        "path": "basemaps/admin1-10m/KAS.geojson",
+        "sha256": "0053d4aa12a5c4df52f928129ba0137836abf272c3a8cdaad66e8a4c2a5e427a"
+      },
+      {
+        "path": "basemaps/admin1-10m/KAZ.geojson",
+        "sha256": "4a65ee9a5a8849976de3a36a8becc45a0a6edb46de086e63a9cceec60fec9b0b"
+      },
+      {
+        "path": "basemaps/admin1-10m/KEN.geojson",
+        "sha256": "6709f60119e2cde9b32e53249c82b4abbba83fbe1fd3ede7d6b4fe1ad39a3105"
+      },
+      {
+        "path": "basemaps/admin1-10m/KGZ.geojson",
+        "sha256": "8abc442d1bc5719af499cdeaacc9572d840afdcbd0147e93bf6763acc3c4fa2e"
+      },
+      {
+        "path": "basemaps/admin1-10m/KHM.geojson",
+        "sha256": "e1ce22d76725a3a5ec7e85c483a996f97b243d095499eb831a79ce7333a8b58b"
+      },
+      {
+        "path": "basemaps/admin1-10m/KIR.geojson",
+        "sha256": "7c236a121d46f38dbe69ca5727d3143618b1fefd1b96b8f70df3c9e3831b9bd4"
+      },
+      {
+        "path": "basemaps/admin1-10m/KNA.geojson",
+        "sha256": "1676b2009b42bca91b432b5ca24ec88f5beb0f88f9ac80331b9c2670f5245780"
+      },
+      {
+        "path": "basemaps/admin1-10m/KOR.geojson",
+        "sha256": "f6cdaa326a7bc22d104b26b4d959bd5fa4b8ded6abdb34e04c7e2028d37aa5cf"
+      },
+      {
+        "path": "basemaps/admin1-10m/KOS.geojson",
+        "sha256": "eab5cc01642be4a85859aff4da26fb5e7ccf786d266b112a62b4dea0371c0e75"
+      },
+      {
+        "path": "basemaps/admin1-10m/KWT.geojson",
+        "sha256": "d3613936ee0a49a0c156508e17150b4f9e64aa96c072279a154553bfa82a74b0"
+      },
+      {
+        "path": "basemaps/admin1-10m/LAO.geojson",
+        "sha256": "51ac715db097963eab8015de46ddc8548ef6f1e30a7f21fccc0896133987993d"
+      },
+      {
+        "path": "basemaps/admin1-10m/LBN.geojson",
+        "sha256": "4f16a13dc3f001e408eef12911e2b5570329f0c0017cbef2130d3b0298e1b9fb"
+      },
+      {
+        "path": "basemaps/admin1-10m/LBR.geojson",
+        "sha256": "98402d60c51587e270d30314d60444500a5e396a52cbb9b4b2ae64dcacd82793"
+      },
+      {
+        "path": "basemaps/admin1-10m/LBY.geojson",
+        "sha256": "20c29f40161c2d9e1034d4d21922d52d502a99bfef81c447f885a1c21a2e9958"
+      },
+      {
+        "path": "basemaps/admin1-10m/LCA.geojson",
+        "sha256": "363e639d5365c7814a8cf0d363bad3096751f970aedd51f3d2276500093621bd"
+      },
+      {
+        "path": "basemaps/admin1-10m/LIE.geojson",
+        "sha256": "a80510dae276418bb7ad2f34a1c2462e0542c8bbfa52fd62bb2b4dca46f8e721"
+      },
+      {
+        "path": "basemaps/admin1-10m/LKA.geojson",
+        "sha256": "9be0ee3539e82da71c612882485fcee1b9963b6e63164aa65ee674ed77c13def"
+      },
+      {
+        "path": "basemaps/admin1-10m/LSO.geojson",
+        "sha256": "5bc24b05987562201fed3fa6af89c1257cd08d6be85167949575996dc04538e5"
+      },
+      {
+        "path": "basemaps/admin1-10m/LTU.geojson",
+        "sha256": "c995742f72e31df2b314355cf2429e389fe9664aaf1ac2e103ecf742e86e61ab"
+      },
+      {
+        "path": "basemaps/admin1-10m/LUX.geojson",
+        "sha256": "4d1ab072c6705ee67513dd0fe1bb813abd44801f074c130303885e265faba917"
+      },
+      {
+        "path": "basemaps/admin1-10m/LVA.geojson",
+        "sha256": "49f19566fdc6808d49c7ef54c1aa9206a8a646a2bfc2a8e9e1a9ee3ecf1c5026"
+      },
+      {
+        "path": "basemaps/admin1-10m/MAC.geojson",
+        "sha256": "a94e46ac07aa18c3050feba127b48f34cdd882692ea62309ee534a831ebc55ba"
+      },
+      {
+        "path": "basemaps/admin1-10m/MAF.geojson",
+        "sha256": "869cd6e0ca31a32cce4947e755494664adfaeb1f2c352b976971ba9b35a8ab28"
+      },
+      {
+        "path": "basemaps/admin1-10m/MAR.geojson",
+        "sha256": "75e93167973c8cfaeef4292094959aa11c0bc29d510e2db39e414fe47d651920"
+      },
+      {
+        "path": "basemaps/admin1-10m/MCO.geojson",
+        "sha256": "327703c3e4faadbb3a28a7f346baf9a610edac58a99447517fdf06f1ccc407bc"
+      },
+      {
+        "path": "basemaps/admin1-10m/MDA.geojson",
+        "sha256": "3d42869932cf47a9e06bc4318ddb7c32a8fe90a2b1bda896a191e7b52cdc128d"
+      },
+      {
+        "path": "basemaps/admin1-10m/MDG.geojson",
+        "sha256": "b50c36fa2dcf101f97cfad9a66e070d76d42b5e0041fd11bf7093f5f273e11fc"
+      },
+      {
+        "path": "basemaps/admin1-10m/MDV.geojson",
+        "sha256": "ade27bb6ca2410f6222e34074e2f3ea0fbbbbc805db4dcef3db25e4320ee68d7"
+      },
+      {
+        "path": "basemaps/admin1-10m/MEX.geojson",
+        "sha256": "11d7c2cca4b5887b02e9199c397cacc4f6b576b685ffe4e7edd9970e5926c420"
+      },
+      {
+        "path": "basemaps/admin1-10m/MHL.geojson",
+        "sha256": "6ffa53fdcd6ba065e4a787141447e482fc92a2e08d9fd761802d1b30fce23a83"
+      },
+      {
+        "path": "basemaps/admin1-10m/MKD.geojson",
+        "sha256": "bb5fe3819a9db0496342bd70e2ce6af95a69b06a5370d81f205d5e531c614cdd"
+      },
+      {
+        "path": "basemaps/admin1-10m/MLI.geojson",
+        "sha256": "61cc81518087c6085115f9d65644cbddefb76a46ff418f84c6ae26e40899e5a6"
+      },
+      {
+        "path": "basemaps/admin1-10m/MLT.geojson",
+        "sha256": "0e9463466c41214b9da3f6675395d8d6788ce996097a15ad640f4f3c02ece47f"
+      },
+      {
+        "path": "basemaps/admin1-10m/MMR.geojson",
+        "sha256": "41acca57dbb9d8877458233ba02cbf662ffcddd7fd5c02880d027f143a133f4c"
+      },
+      {
+        "path": "basemaps/admin1-10m/MNE.geojson",
+        "sha256": "544469313f7d86cabf47af525b7e06e0782439d611e3bd747d0a1611b06a8db2"
+      },
+      {
+        "path": "basemaps/admin1-10m/MNG.geojson",
+        "sha256": "2847c50010b60c379975fe95823686dcc43cbaa2e89117855441ec859edcf98c"
+      },
+      {
+        "path": "basemaps/admin1-10m/MNP.geojson",
+        "sha256": "81634558e61525cae08bef7e0d213e726320dc76c2c18da5bcbda8f81148a3ba"
+      },
+      {
+        "path": "basemaps/admin1-10m/MOZ.geojson",
+        "sha256": "67228fcd13ccf386ce226b0df2d1d27d9a383a27d2c5252349afd8942cacc5f1"
+      },
+      {
+        "path": "basemaps/admin1-10m/MRT.geojson",
+        "sha256": "2774b9402910bb49f8f4c601e81fa2db866c2eb5643ba131f91e3afc5237b744"
+      },
+      {
+        "path": "basemaps/admin1-10m/MSR.geojson",
+        "sha256": "c66bdf744cfb160beb1bbb2fb279e2d21f8c32ef9337cda5794646ad0fb5f024"
+      },
+      {
+        "path": "basemaps/admin1-10m/MUS.geojson",
+        "sha256": "25e597f595d1193b46b9a8541c1ea8e67f49c5473e9629f6fd0e94d56c578a9f"
+      },
+      {
+        "path": "basemaps/admin1-10m/MWI.geojson",
+        "sha256": "066485d518d83c97b8309c683a6cb61058c373ccfd4777b347a0f906d445de16"
+      },
+      {
+        "path": "basemaps/admin1-10m/MYS.geojson",
+        "sha256": "d3e795e70e359b86a4ed90b3c201abaaec5dd554c7adc050a6ffed5fe816cee0"
+      },
+      {
+        "path": "basemaps/admin1-10m/NAM.geojson",
+        "sha256": "29e242965e9e307280dcf3c399be041874ffc0c2b0cbf0214b53ecda2cff4469"
+      },
+      {
+        "path": "basemaps/admin1-10m/NCL.geojson",
+        "sha256": "e23114d49226c8165575ca2f11f40740eb58f405f9d187709b196035add6b827"
+      },
+      {
+        "path": "basemaps/admin1-10m/NER.geojson",
+        "sha256": "d0b504f0c8f0c2491e3b686dc62a2601a5ebac97caa24f3763359d32ed5f78d8"
+      },
+      {
+        "path": "basemaps/admin1-10m/NFK.geojson",
+        "sha256": "46add1c2774158b703301fb07762c60c3c177f6b057bec2d66a78ec3eed37403"
+      },
+      {
+        "path": "basemaps/admin1-10m/NGA.geojson",
+        "sha256": "cc4d58084fa70b2f6151a0bdd70d84d40ebe8dd39d6a55f4f438952580c6088e"
+      },
+      {
+        "path": "basemaps/admin1-10m/NIC.geojson",
+        "sha256": "1b888965b22a0759fbe50ef69665cea8b1db74d851371cea1864367ceb46d98e"
+      },
+      {
+        "path": "basemaps/admin1-10m/NIU.geojson",
+        "sha256": "45752336f03bb19554fd02eaa31718b9d909d6e00635af56cd522326b44c0f17"
+      },
+      {
+        "path": "basemaps/admin1-10m/NLD.geojson",
+        "sha256": "a27d5afdc73111ceda0e02c7b32eff4001efd03ad185e08cd372b1850d51de7e"
+      },
+      {
+        "path": "basemaps/admin1-10m/NOR.geojson",
+        "sha256": "0e9d7929a37fe4cf43bac11507f06d184606b41708ff00c3462f592787cbe00d"
+      },
+      {
+        "path": "basemaps/admin1-10m/NPL.geojson",
+        "sha256": "9ca4b67b35ed98dcef8792e7285547c47975bb6a80600dab1d96ce5c5eb55c19"
+      },
+      {
+        "path": "basemaps/admin1-10m/NRU.geojson",
+        "sha256": "b8186afa7018eae45e97402da6d3ecd2f06bccd4ead16aebf96442e849a4fae5"
+      },
+      {
+        "path": "basemaps/admin1-10m/NZL.geojson",
+        "sha256": "35a8d1edbc5240d8f039ea76c68431f4bafb82e41b2aeb688bd80473f7ccaa0d"
+      },
+      {
+        "path": "basemaps/admin1-10m/OMN.geojson",
+        "sha256": "7d9f4daee107c7f73eba9e514ca2ca3ae2bc9aee567c42eed41918289c8d88b2"
+      },
+      {
+        "path": "basemaps/admin1-10m/PAK.geojson",
+        "sha256": "1a0feae936d0bcbe342bfdec63d806317c549e49437b2f7f8d91af9c4e3864ca"
+      },
+      {
+        "path": "basemaps/admin1-10m/PAN.geojson",
+        "sha256": "ae80bbb3c8a653c57d3c30d4b6e93c82f4045efc5a90567828b53f4ab60ab0db"
+      },
+      {
+        "path": "basemaps/admin1-10m/PCN.geojson",
+        "sha256": "ec50f4440849f448f40c8ad3a595f20660d205ff572c7aceb846e9b953d41e5a"
+      },
+      {
+        "path": "basemaps/admin1-10m/PER.geojson",
+        "sha256": "b452b0a0121aeed64735b220dfc193cb6ac5b4b5e17e467c8dd84369d000b143"
+      },
+      {
+        "path": "basemaps/admin1-10m/PGA.geojson",
+        "sha256": "9c6c68f00feb8676afa77249e18ceb977e3095a8b56123500cd6328d750b9e02"
+      },
+      {
+        "path": "basemaps/admin1-10m/PHL.geojson",
+        "sha256": "cfb67f59c861597e77d6ee5c2fc20267a4f143d69b4244e004e7a68bbe6306bf"
+      },
+      {
+        "path": "basemaps/admin1-10m/PLW.geojson",
+        "sha256": "8717161631d09a455f243e808c02a3e5ba6e757eb57c6eabb9bdf61064d5364e"
+      },
+      {
+        "path": "basemaps/admin1-10m/PNG.geojson",
+        "sha256": "966cff111c23df47f7917fafc76f63f5a6eda9374b1807ce2e4b5b2840e9f8ad"
+      },
+      {
+        "path": "basemaps/admin1-10m/POL.geojson",
+        "sha256": "351ac8a57954e1fe8f342c59874cde4c8e908b319210c9e719aa86d77af64815"
+      },
+      {
+        "path": "basemaps/admin1-10m/PRI.geojson",
+        "sha256": "fa17506b921cb1aa57beab6ac5e7c470d1a52b26773c48a7172d81004358f4a5"
+      },
+      {
+        "path": "basemaps/admin1-10m/PRK.geojson",
+        "sha256": "d5daa48e5f0d1fd3dc60ce6df0aefe94bbc747f7cda6da54de2609a99ad70d7f"
+      },
+      {
+        "path": "basemaps/admin1-10m/PRT.geojson",
+        "sha256": "cd50b7f0672c4728b359d7009cceb4b91965738df88b449ac36c4b949849f455"
+      },
+      {
+        "path": "basemaps/admin1-10m/PRY.geojson",
+        "sha256": "9d10e79731fc5cb96632ce83afd36d23dbcb60ff585a73a3c90c8ae54df22a6a"
+      },
+      {
+        "path": "basemaps/admin1-10m/PSX.geojson",
+        "sha256": "2e5aa69385bcfb4cba1dccc4a3ded5c9beb20a300e01e433442eb8971bc0f2f4"
+      },
+      {
+        "path": "basemaps/admin1-10m/PYF.geojson",
+        "sha256": "481ae8b8fea39808706438a32829848ec62328f7ca34670b58cf7d9e58ce952f"
+      },
+      {
+        "path": "basemaps/admin1-10m/QAT.geojson",
+        "sha256": "ecfa7bed58a285a1d81e658b2816e28be230e1f1dc6cf4296fdcba9c6be2848e"
+      },
+      {
+        "path": "basemaps/admin1-10m/ROU.geojson",
+        "sha256": "167e1a7ca7e74992816749c9fd1809fb1ec06f46d23608e420edf917ab684372"
+      },
+      {
+        "path": "basemaps/admin1-10m/RUS.geojson",
+        "sha256": "a7e3f68c1898cd15ddec1523820233bedaca633091192c33261c239c23256768"
+      },
+      {
+        "path": "basemaps/admin1-10m/RWA.geojson",
+        "sha256": "acb8f0c27ad18745f75d7b304c915fe804a543e6a37bd19c73cafb0e4fde24c8"
+      },
+      {
+        "path": "basemaps/admin1-10m/SAH.geojson",
+        "sha256": "287a624053c60dc33c306ee48c1ef48b578d05b2599fc7689a4dab017ee9e875"
+      },
+      {
+        "path": "basemaps/admin1-10m/SAU.geojson",
+        "sha256": "acbd2a193f7805ae0b5650727a3c7e4345b05316d726ffeffaa02e71fcfbc882"
+      },
+      {
+        "path": "basemaps/admin1-10m/SDN.geojson",
+        "sha256": "5a08a3daf9e0e2c3c9ba687b30aa6a88b3c2c46dd1dd9530f726dc518180a25a"
+      },
+      {
+        "path": "basemaps/admin1-10m/SDS.geojson",
+        "sha256": "221adbb474ab13f8b221b258f3b293c9614de9b865db665c11d3d9fb7b38ebe1"
+      },
+      {
+        "path": "basemaps/admin1-10m/SEN.geojson",
+        "sha256": "181e3b0e9c5baa515604d72e5dbd92d5abe9fa619c23b4635a97eee41b348991"
+      },
+      {
+        "path": "basemaps/admin1-10m/SGP.geojson",
+        "sha256": "dcc7fe371129f3037a72765923332cbfabe3bb907fe7af3b3420e61baa6fbcc8"
+      },
+      {
+        "path": "basemaps/admin1-10m/SGS.geojson",
+        "sha256": "9f8f5b6a915ce9119e0df7a69422f06f49b5afa049bff1605cb2b4f1b38857e4"
+      },
+      {
+        "path": "basemaps/admin1-10m/SHN.geojson",
+        "sha256": "e31f37c681734ca1cc7c1a89fe6c809fc082633e91359a5798da19ed1aa81624"
+      },
+      {
+        "path": "basemaps/admin1-10m/SLB.geojson",
+        "sha256": "1fad5f2b60fa655d8df7eb02cf60130b0c870b1ab532ad2338493a8010546ef4"
+      },
+      {
+        "path": "basemaps/admin1-10m/SLE.geojson",
+        "sha256": "83f897e0478325928bc5157049694ac986972299b02bae595ed6e7b1cdb4d62c"
+      },
+      {
+        "path": "basemaps/admin1-10m/SLV.geojson",
+        "sha256": "04bf984c603e3bfb8d81c449d6581e98d8bbda3e05d4460ecf27600cd400c4ac"
+      },
+      {
+        "path": "basemaps/admin1-10m/SMR.geojson",
+        "sha256": "c4b1b8e6fdaadcf8e7c652d950b722d50306458204a8f84fc012a4afb19db84f"
+      },
+      {
+        "path": "basemaps/admin1-10m/SOL.geojson",
+        "sha256": "0f6f3cccdcc13b272671731fc7e25698858e76a60c897264a74311764fa256c9"
+      },
+      {
+        "path": "basemaps/admin1-10m/SOM.geojson",
+        "sha256": "97d13d906eed897fdcec3160f24439077bc0bca6e7dce5ddccdc269d12b5f362"
+      },
+      {
+        "path": "basemaps/admin1-10m/SPM.geojson",
+        "sha256": "2e05e816851ad5867865bb102058d7b1abffb01d63563c58c763ab069923c71c"
+      },
+      {
+        "path": "basemaps/admin1-10m/SRB.geojson",
+        "sha256": "82ca14c69f506d4daa3f48ab54f0359b0ce855abb0fd231c450fb8d5bbbb3c16"
+      },
+      {
+        "path": "basemaps/admin1-10m/STP.geojson",
+        "sha256": "2fc78210f0683ba99e694e542ef3ab20aa6890088d569c206ca912545421254e"
+      },
+      {
+        "path": "basemaps/admin1-10m/SUR.geojson",
+        "sha256": "e44ef7e1c9bd96790f652da014a023530a58426c16b84947e098d3457a4b461e"
+      },
+      {
+        "path": "basemaps/admin1-10m/SVK.geojson",
+        "sha256": "cb96e80c40eb1bba7ffffe6323777e6c3920bf76c80986131bb6248e813e8289"
+      },
+      {
+        "path": "basemaps/admin1-10m/SVN.geojson",
+        "sha256": "2a527a6e64279234d02790672d9f51240d3f91c46d52df446eb18986b80fff77"
+      },
+      {
+        "path": "basemaps/admin1-10m/SWE.geojson",
+        "sha256": "829b81d9ed0cb3adea4159468c81dd8e0c48494c073734e8c86ff9b20ac85963"
+      },
+      {
+        "path": "basemaps/admin1-10m/SWZ.geojson",
+        "sha256": "0b1139d263fb8612b18410cedd57caf5782b8b7be4e471d74e0b1352619f8537"
+      },
+      {
+        "path": "basemaps/admin1-10m/SXM.geojson",
+        "sha256": "d2f52a3abd76fe72d02c7a10e73efd6eb174e639b82c4ae7cc8aca551c4f5749"
+      },
+      {
+        "path": "basemaps/admin1-10m/SYC.geojson",
+        "sha256": "b27b18de939bcb3656fcf2e5b50dd112d728d47c18112acce2b5192fad16fb9b"
+      },
+      {
+        "path": "basemaps/admin1-10m/SYR.geojson",
+        "sha256": "4695bb36083f7099cb5f3d90eb8119814530348390994205c7820ab1202da047"
+      },
+      {
+        "path": "basemaps/admin1-10m/TCA.geojson",
+        "sha256": "e35cc2dd4e54f297af6099383ba7148ce39ee2d44a3d6709082a153ca0a462a7"
+      },
+      {
+        "path": "basemaps/admin1-10m/TCD.geojson",
+        "sha256": "9a558c4381a828c74417eb04d6af02ef1f073b8ec193ef85361454f8a8c8b446"
+      },
+      {
+        "path": "basemaps/admin1-10m/TGO.geojson",
+        "sha256": "4b808f41fa878118f062cadd6b40f5de52499326067280d46ede4e001fc74c96"
+      },
+      {
+        "path": "basemaps/admin1-10m/THA.geojson",
+        "sha256": "b3b1da4bc0e387037a000386be5b3452caf2402c3d83e91645e19bb4f82e0fd1"
+      },
+      {
+        "path": "basemaps/admin1-10m/TJK.geojson",
+        "sha256": "8412f918fb352f30ef2add8847c18f291797ea62ac3bd0f0a246dc9556fb5b12"
+      },
+      {
+        "path": "basemaps/admin1-10m/TKM.geojson",
+        "sha256": "47fe9b1a4c92fa704445b5a24759ce333c57af79ac21b0bf77625ff8d7ef98b8"
+      },
+      {
+        "path": "basemaps/admin1-10m/TLS.geojson",
+        "sha256": "6944efa9ee070ee1f9166c6cdda968f13e550808dba128fbdd30132fa7e68db8"
+      },
+      {
+        "path": "basemaps/admin1-10m/TON.geojson",
+        "sha256": "97de60582aa21f359e9785b695ba2ceda7c1fec79a84d495004719e8d6585c6f"
+      },
+      {
+        "path": "basemaps/admin1-10m/TTO.geojson",
+        "sha256": "949802e4a4afab8857c10bfd54db2e07d5d729bbffa725d9a625e7bed0cdcf6b"
+      },
+      {
+        "path": "basemaps/admin1-10m/TUN.geojson",
+        "sha256": "9a85d2daffed0918c90712607127f049f4ca1b1e940084323663b60b5544c204"
+      },
+      {
+        "path": "basemaps/admin1-10m/TUR.geojson",
+        "sha256": "8bd247d378c3c83262fbf9550e13fe62b88d478e3ede084610536db687a9a87d"
+      },
+      {
+        "path": "basemaps/admin1-10m/TUV.geojson",
+        "sha256": "da61100178b28764d4d7f58333e99fb2aed2f8b735fb7af979101c5c38018037"
+      },
+      {
+        "path": "basemaps/admin1-10m/TWN.geojson",
+        "sha256": "6157d8b678b9e0e50f0c0eada18b6538898af1e503cf02bcc72ad69f43c92580"
+      },
+      {
+        "path": "basemaps/admin1-10m/TZA.geojson",
+        "sha256": "6b485afac98ffc36731cfed9e2dc76df98be1204d82e061bd7fee6f7a49a274c"
+      },
+      {
+        "path": "basemaps/admin1-10m/UGA.geojson",
+        "sha256": "c968fa41e2f5895236ea0a1f85bffcc91cd69b12ed2f1214d5cd6db0c2e7c41b"
+      },
+      {
+        "path": "basemaps/admin1-10m/UKR.geojson",
+        "sha256": "e4abe4f9c4c492f3843ac71e74a901b870ecf4df15b4ff6b58f44e4340f439da"
+      },
+      {
+        "path": "basemaps/admin1-10m/UMI.geojson",
+        "sha256": "b499af36e2b7129a1365635617de5ecb6ba7160aa9f05d30e89b8a1a5dec3eeb"
+      },
+      {
+        "path": "basemaps/admin1-10m/URY.geojson",
+        "sha256": "b98e61ab683763d52903db574bd8688764f7213cc4870749f6ca72e1b1b8a76f"
+      },
+      {
+        "path": "basemaps/admin1-10m/USA.geojson",
+        "sha256": "7b99fe8d20e1c5ea0fc85e7c70006c3484fbd97e50f316dd17fd423be3a33ab3"
+      },
+      {
+        "path": "basemaps/admin1-10m/USG.geojson",
+        "sha256": "0c7eabe932eaf1778f3e640729b33b4b2471eed513028a14c18806904fd1cdb3"
+      },
+      {
+        "path": "basemaps/admin1-10m/UZB.geojson",
+        "sha256": "3a0b0ae515ace80d2e0f88001e3f9edadf1ac8e61bb42d09a6f974e98e3bc4a1"
+      },
+      {
+        "path": "basemaps/admin1-10m/VAT.geojson",
+        "sha256": "bfb1cdb8cd7e96887e7a2d26fa47098118c0d1fae46c9d1f23dd3a2e66110c64"
+      },
+      {
+        "path": "basemaps/admin1-10m/VCT.geojson",
+        "sha256": "86ee493089cb38a07a913a42ba1561459141d2a8994adb9bb435b764cbdc9a9c"
+      },
+      {
+        "path": "basemaps/admin1-10m/VEN.geojson",
+        "sha256": "78bd76172e3d8296390d216fc9107ba5d47312b40634d7daa6babb8eca6600bd"
+      },
+      {
+        "path": "basemaps/admin1-10m/VGB.geojson",
+        "sha256": "8681d555cded2401940bee623bb3b2ce4394eb24010a13fdcf86c9deba0cc5a9"
+      },
+      {
+        "path": "basemaps/admin1-10m/VIR.geojson",
+        "sha256": "e734458527cceec61e021ac2ecc0265f075bd26607608eceefcfcef5efdec8d5"
+      },
+      {
+        "path": "basemaps/admin1-10m/VNM.geojson",
+        "sha256": "2f8734da24307af51964321e0053495989137ac1c5699b949f97b266c16d6ff7"
+      },
+      {
+        "path": "basemaps/admin1-10m/VUT.geojson",
+        "sha256": "f6356162312eb395a02c02dc73bb5d5dd8b3682d1044144e8f137240b98970a2"
+      },
+      {
+        "path": "basemaps/admin1-10m/WLF.geojson",
+        "sha256": "4c2868921824c7cad02ecf0b16e400f2c4463c47f050a2c1debfb86e45191992"
+      },
+      {
+        "path": "basemaps/admin1-10m/WSB.geojson",
+        "sha256": "7bdcfa3d1e0e55ce12f61d2c5d081f9d19fdee7d84a9bf1fd4da18544d546e71"
+      },
+      {
+        "path": "basemaps/admin1-10m/WSM.geojson",
+        "sha256": "f9052148120043017f9bace8af79901715f0e45cb5b4b8cc2edc5553ba4dcecc"
+      },
+      {
+        "path": "basemaps/admin1-10m/YEM.geojson",
+        "sha256": "47278164fb0bcf46850dc02cb1d15afd0099ce52ca36b3173a1a7c204cdfe7a8"
+      },
+      {
+        "path": "basemaps/admin1-10m/ZAF.geojson",
+        "sha256": "ac61a5a75a13953378bef2a7f9a33fffee9628fede214d510d4a4b5ad9783bc1"
+      },
+      {
+        "path": "basemaps/admin1-10m/ZMB.geojson",
+        "sha256": "96ef5fb2715d5c8ac7a265f6deb3c45f9b7582ab2fb6fbc36bfba07f35cf6a26"
+      },
+      {
+        "path": "basemaps/admin1-10m/ZWE.geojson",
+        "sha256": "5d0b4cb153ecca5aa153fa5268a8284434f7bbc0c8237a344b14f75279fb1416"
+      },
+      {
+        "path": "basemaps/admin1-10m/index.json",
+        "sha256": "425ff16b5df1ef13e5f81d856e07373b8e265da04754558758310f7a4f2d2e27"
+      },
+      {
+        "path": "basemaps/admin1-10m/manifest.json",
+        "sha256": "d718d2cd4468201248d3d7df6cd059cb5ead35650da4ebb634533156029c2526"
+      },
+      {
+        "path": "basemaps/natural-earth-50m-admin-0-countries.geojson",
+        "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb"
+      },
+      {
+        "path": "basemaps/natural-earth-50m-admin-1-states-provinces.geojson",
+        "sha256": "69a0e06e640b2d505858ae1cb63034e4677f3000b35a98e16312932b98c426b9"
+      },
+      {
+        "path": "basemaps/natural-earth-50m-land.geojson",
+        "sha256": "e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b"
+      },
+      {
+        "path": "brand/LICENSE",
+        "sha256": "f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191"
+      },
+      {
+        "path": "brand/README.md",
+        "sha256": "596f84b7cbdf1d2c28ed1675ae13d340d14b305dc5977645b2d914d8a95fb866"
+      },
+      {
+        "path": "brand/geod-symbol.png",
+        "sha256": "ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_0.json",
+        "sha256": "eacde1b661c07ae81779214f2ee1c840dd24ea56cdba38735d9f63bb51d3f534"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_1.json",
+        "sha256": "687cb449340f43ed67ccdb59e009c76642ec4a7dda63504c537f6c8b03371632"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_10.json",
+        "sha256": "3337da09252e812c2609fe17966824d9387600b16b5faeca3b279121ce951a55"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_11.json",
+        "sha256": "1213a76851024f19bedb1f1177099cc867876c9477214ce25c4aca5922ae0c59"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_12.json",
+        "sha256": "ecea15bed860ca0dd962e427ddc929c356c8de4f5ea0599dd4a4d117c9ba5fdc"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_13.json",
+        "sha256": "a7f459cda58803d906bb3e63d98f250c9211c16e99a964b39cab1af20c3c54a7"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_14.json",
+        "sha256": "051627ca694ce9a0585eea402b11a7e74b70c4a941863ee731e1537da77354b8"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_15.json",
+        "sha256": "ef41a0fb36667716e1aac3ed84c1e92fc0b80697a11434a08dfec80c10fa3b38"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_16.json",
+        "sha256": "17c2ec764a2b2d4a93558009e1eb02912757999f3dedea775c961d689bec6155"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_17.json",
+        "sha256": "95bbcd68070cff4725867054f6da18e6d79d1e7876efd116f046f6d99b6ffec7"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_18.json",
+        "sha256": "19ec8e50b7a8604bcd93bf20850f033e153242663107f372e3af09194f903497"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_19.json",
+        "sha256": "9d33b633af09f381d2aeabf1c08a80b327fea00105145310f706a7a2f3f3b395"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_2.json",
+        "sha256": "79e5007d0f7d284035286ff31e7959f1d8c5654261ffb5a01ec298fc7ecfdaf2"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_20.json",
+        "sha256": "d4a6ee787228e9ca38799199a6d69aaaf1a2401d0bad5f9b3ff30c30a6e35685"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_21.json",
+        "sha256": "deab5998d0e85929227c82fd4267f179940b77ac9fe3d9da51ee222745658773"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_22.json",
+        "sha256": "cbc988d6f44052aae9bea4d437b74f97a9a11d1370137cf3944d7a3dfdb00c28"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_23.json",
+        "sha256": "fe1cbcb3177839ba821ae202184f4862a17321525556c06e3c000ab02d449645"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_24.json",
+        "sha256": "336a61b2b5c63a31b169f19c95dfa4607874f2a2cdca3f5f6b995a2526e8090f"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_25.json",
+        "sha256": "7b9d89953db4bb5d4d51b287cbf01b2c1c0a4d1d2fcf3696b4682f77cb9a12c5"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_26.json",
+        "sha256": "03c47eff883b79a9863011ba286dea815320f274049ec9f71649c9a45b52db95"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_27.json",
+        "sha256": "d9d755dd689d6af3d117c82e5e07c2f9986e43fe966cd3520d4a8e28201d7c6e"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_3.json",
+        "sha256": "2c9ad7c9ca22e45f93354a078be51e63579cc67d960df3fb9cddd237a0fa7d05"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_4.json",
+        "sha256": "2019a8459a5795b4203d58cedc5ab54e0ab17c66084198106da4755ccd89321e"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_5.json",
+        "sha256": "b5cd2ed128bb530e920633cee2f9131687dc46673116fa482a59916945ab5e5e"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_6.json",
+        "sha256": "775adc76b9497c0abfb6a71ec77149abf1f160aeb6dd1380056391916dc9d3c6"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_7.json",
+        "sha256": "f3e330690aad3c977a66f3bb98952bcedd3c73886502e9477df9fe27855dd0cd"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_8.json",
+        "sha256": "5da58dafb2a105234978e29f659dbb75ca716222cdf35dae975a9f380fa97fb6"
+      },
+      {
+        "path": "cesium/Assets/IAU2006_XYS/IAU2006_XYS_9.json",
+        "sha256": "36dc6631c6018fc9cd3df3f649b74308bb5c6a3303ac7b59067c4b4fe1e564c0"
+      },
+      {
+        "path": "cesium/Assets/Images/bing_maps_credit.png",
+        "sha256": "e5c3467a2532a0986ca0f90189e9bdae3222d3f1580d2e8c0261fb2bc2b4417f"
+      },
+      {
+        "path": "cesium/Assets/Images/cesium_credit.png",
+        "sha256": "20dadec44d030ec7de6193b0ee98329a896c4dcb4ed8f7a26d4781127b6fa989"
+      },
+      {
+        "path": "cesium/Assets/Images/google_earth_credit.png",
+        "sha256": "d4c3719a707ca487d847d7c8ea8ffc590f1297f987e95d1acf88d433b92c1c3f"
+      },
+      {
+        "path": "cesium/Assets/Images/ion-credit.png",
+        "sha256": "721870c1417e20d25e2d1b834e80c66908418e459dcf76c95bf2997dc0733289"
+      },
+      {
+        "path": "cesium/Assets/Textures/LensFlare/DirtMask.jpg",
+        "sha256": "3d06a15d04154f027e0b2b110c7c9952329b385682c327cdeb71e0e3c720f3d4"
+      },
+      {
+        "path": "cesium/Assets/Textures/LensFlare/StarBurst.jpg",
+        "sha256": "c42ecef9345e34549fb9528e25cac8f38c9f8c43f73d812c2ccaf5909ab249a5"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/0/0/0.jpg",
+        "sha256": "919864197d2f27a165420331d47458614a056c36dcdf306ce89ed2248bd0041d"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/0/1/0.jpg",
+        "sha256": "f336509772ab57ee14e15c72579dd9fb0297c779c853d4c65db04bef78305b48"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/0/0.jpg",
+        "sha256": "3f40b94a0adb4efe212899374d3dd2bc7abe0491ce3a30d89f4392f498a328cf"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/0/1.jpg",
+        "sha256": "76393f9322c791564a9dc9529822637fdcc8b63418be502f4ef0ab9ca2708664"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/1/0.jpg",
+        "sha256": "cec03089c65ac612ef0655739fd1c66e068a98739aec325ba8743aca7338e6f1"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/1/1.jpg",
+        "sha256": "b1b860b99fd3fdc1a91eb09576563efd5cc91d95f4e869fb436a35c4ff8994c6"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/2/0.jpg",
+        "sha256": "7c59ff20319379afea17d029fca11ea497fd16a4f9da574137948b0631c71c63"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/2/1.jpg",
+        "sha256": "ed0209ef589d9cc34a26663f8c9ecdd63de705482692290328cfd2fff984451d"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/3/0.jpg",
+        "sha256": "d7fa5cd581a7b1d004d6dfcf329a09cd51859dd503f864a85756a35a456a0030"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/1/3/1.jpg",
+        "sha256": "8637acf2981f7209ec449a5812c855650a7eeeca5bd8a9d328310bb2a5295b39"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/0/0.jpg",
+        "sha256": "d12e2e52ae4d2e0c23ec15de8a1e006ccae0d3142b286578670cb4a8fd3f2311"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/0/1.jpg",
+        "sha256": "87a7ea00d62fe0517680cb58953e46faf9b325b9ce8e982c5a68b7e6c6c46822"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/0/2.jpg",
+        "sha256": "eecc7078cc54ec05f96cdf472519d5f159797015afaad23c2e56bed2fb79b481"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/0/3.jpg",
+        "sha256": "3d4dc525adaed0c3ddf5e5047bd1b348f2df473449c50b6b8175d5d073e7d88b"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/1/0.jpg",
+        "sha256": "e586e2884f6fe3a78291776b5bd4b190ffa0c9129c146ef78c7918e570e40e07"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/1/1.jpg",
+        "sha256": "bd0b39a8e734b137e8017cb02f1bae541452bea034be5bc7e2bf8a6cb8a220ae"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/1/2.jpg",
+        "sha256": "af8eb0a43423d28c7cb3a92553967205d9e3ced5738bd75f773d653fa5849c90"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/1/3.jpg",
+        "sha256": "48450e09b99e3283945bda85be1513a5ed28a4b1e58cd0b299c295d16c25935c"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/2/0.jpg",
+        "sha256": "4615813c56a8ee304d78d3768c489a4e00a5c4542f2d937b6be7db7c12b42b28"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/2/1.jpg",
+        "sha256": "66df8171de54015866691a00fd03ad8c5c11dc75466a70d11a43b2020eb63dba"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/2/2.jpg",
+        "sha256": "669649edf6e1e0e66ee03224a792d5fb09e8aef7a7a187697a3c10f9a7904c5c"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/2/3.jpg",
+        "sha256": "21585c5a2551120948ec5d0f04a533805b2ba63b7a5b961ad722fca25cf6299f"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/3/0.jpg",
+        "sha256": "640f7fd8fd3e5923ef1b021476f13c1e6919f339b17e539b9e20fe6bc16240f7"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/3/1.jpg",
+        "sha256": "e418706ca6c844a67aa71e448ef97e703d5c3a9e3791db255366dad49b4adeb9"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/3/2.jpg",
+        "sha256": "79d04283b385d193bbf5bd84d40744c8f5bc8d6f52dfab8d965b647fdb61d72f"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/3/3.jpg",
+        "sha256": "4e693d36407dab81266071edbca5915872284532498dfa29472cc71b2810482d"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/4/0.jpg",
+        "sha256": "46e6a0608fc8261bbeaad8fffa995ee3c85fddebb3b463f3e391634ea8a2a9ec"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/4/1.jpg",
+        "sha256": "0f341c2ace1b0b1803aa22c09c2ab8fde4c3a1a7cb013a963e750997deb6b1c2"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/4/2.jpg",
+        "sha256": "13a22c18a223ba4d8c2689793a5dff83e4e50b3790ddcb2a32ac5a97b8e1e0c8"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/4/3.jpg",
+        "sha256": "93c5f45d481111b4cd2d38792cfb049e5176be566b622028e0704151c0c23aaf"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/5/0.jpg",
+        "sha256": "7fbb096ff03dd162ae965a6c7e1c47e29599e7f3f1031ce59fb07ff669ca3995"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/5/1.jpg",
+        "sha256": "70b04e7e362cb4c80d8c7cce1a9401ef9c7606bb2c4b9de011dea58d79b8b4e6"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/5/2.jpg",
+        "sha256": "8d03e07689c97fff91497250f1cbeb19fbe5331f38bd91b38a44bb69745bb29b"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/5/3.jpg",
+        "sha256": "17b46ab558da6e9fa715a8ab365109bd808d897c53a9f5401da55dd6b9566a7a"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/6/0.jpg",
+        "sha256": "e25e95c8a6dcb21f6668541c925ee670c42fdc0c0d409c520bf29542a2b3fc52"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/6/1.jpg",
+        "sha256": "0a57813b25a70cf86a09bb251018e488b87e795cd2dbcaee7f8a9e80e7c449bf"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/6/2.jpg",
+        "sha256": "f0e9d28b216838c7c30375bb50a7c285203d4bad20eb581c2ee0b2468da20f8a"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/6/3.jpg",
+        "sha256": "c2a663dcf812d9a7034d48707a33a2f341d22a99aa277f69b0e06f064de26fab"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/7/0.jpg",
+        "sha256": "65c1f1b10a04387f2f64b3c4bc111803ddbf32dd2708f02eabca048e88e8edf3"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/7/1.jpg",
+        "sha256": "11ac8ae6af861b966d25ed660549d2a9ce164cb9e327a247655e949f967fbc2b"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/7/2.jpg",
+        "sha256": "59ca5b5264df0421c42cc9d3e6369d91ff9f5f387fc8fd578c25b113cae52b78"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/2/7/3.jpg",
+        "sha256": "7064a9817de3f19fbfc66c36d575fdd10a8d976a93f655b7b1bee591b07314b7"
+      },
+      {
+        "path": "cesium/Assets/Textures/NaturalEarthII/tilemapresource.xml",
+        "sha256": "23f2983b716914e8fb3f011c62d975e67b3ad72c17c92657cd956315d6694529"
+      },
+      {
+        "path": "cesium/Assets/Textures/SkyBox/tycho2t3_80_mx.jpg",
+        "sha256": "7eb5dfe95bebe58aaeff1a29f1e435e2e9985c7007d32397f63f1aa798062435"
+      },
+      {
+        "path": "cesium/Assets/Textures/SkyBox/tycho2t3_80_my.jpg",
+        "sha256": "ee944d55d7abe7799f54768f59d6a3da6b802fabd50d20d3ceb898e888b6ca7a"
+      },
+      {
+        "path": "cesium/Assets/Textures/SkyBox/tycho2t3_80_mz.jpg",
+        "sha256": "958b3d7779bf39e93dbb3373379a696c1b1d5660535d2ff963ab3c7f86d8042e"
+      },
+      {
+        "path": "cesium/Assets/Textures/SkyBox/tycho2t3_80_px.jpg",
+        "sha256": "075509b5c76a3db76baf219c71d1156c90bd87a201e4402e80d4fb1f16b526da"
+      },
+      {
+        "path": "cesium/Assets/Textures/SkyBox/tycho2t3_80_py.jpg",
+        "sha256": "62404c604baff09b6293e79d83a6c851428452a07568aca2f4b69cfd67c8a25a"
+      },
+      {
+        "path": "cesium/Assets/Textures/SkyBox/tycho2t3_80_pz.jpg",
+        "sha256": "8a367b21469de9c3d41dec0a9b1aaf80472b5945e7f6827fb3a403707333e13b"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/airfield.png",
+        "sha256": "9607228765a05a29c5feb0ded034ee7f2aa2e9641faf512fb122fba03e443b29"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/airport.png",
+        "sha256": "fbdde1b757753fbf54811a7733e78d43af43ffee204fa8169b295a3610e889fa"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/alcohol-shop.png",
+        "sha256": "920cc1449428757a73aee044d07e72a9c5e17535feb5754cfc43b4a1e6652cf6"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/america-football.png",
+        "sha256": "ed7a66dc97a71fb689cb1b5c1f5d2832644152668be8d011aee23310e34bbd3b"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/art-gallery.png",
+        "sha256": "b57e75127fe217af9fc0b9cfc67f53b3db7aa72b06b30ce443be89c0764b2b4a"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/bakery.png",
+        "sha256": "7f8fa5241c76569cee88f34bd21afc54d1cdcbffe8a1633fe91df23b28a3486a"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/bank.png",
+        "sha256": "fcb114b2229e1c2b01a21032958c49f405ef04e106b27cf91512852944b610d4"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/bar.png",
+        "sha256": "be2709f48516f1b4203d3f10a9a24159e7761d91fe8f2276f860259d0ea73851"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/baseball.png",
+        "sha256": "24db293dfeabe9e77c3e1cd2f5ca26b61b8919961cf3415880d017be1aa0d3b3"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/basketball.png",
+        "sha256": "96bae0a41bccd20ccd8b496376df9415364dfc008b8eb6aaddff68371b5d0e96"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/beer.png",
+        "sha256": "8ad8f0c1414f5574103cb7e0d14c136292e847583ef06154c27f7765b6208474"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/bicycle.png",
+        "sha256": "d998b6e08bbcaa658ae6679e7197349518cf4cfd610ec1f69c8643a4f007186d"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/building.png",
+        "sha256": "d4375df9fc15b0eeb0b54680e27423a2d6d60ad17f515f99236510dbc246c6af"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/bus.png",
+        "sha256": "834a867a10afd8078f3ddee6d4231bf136b46c603afe31f6c089dfb55e47a9de"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/cafe.png",
+        "sha256": "07ff7a0dd1da1496aeff569291ae3add49ede31dd35674858bf5fcf9d21d5728"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/camera.png",
+        "sha256": "c6dfe806ebed73bd168fbace390d6402a64c54bb7cdccd17ba5813d4469f90d6"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/campsite.png",
+        "sha256": "e3ed13ecf426166fded98e86057423ca2333ce3c3795a0efa5f8c3b8063475cb"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/car.png",
+        "sha256": "189c871c1ed9a60000276fcc375b368f06d0a72b2c1de1032ba1caddbc04f8f6"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/cemetery.png",
+        "sha256": "d066f21dea8cb8e667326b5c7399bc55c293881cc8b731acdc621b804a508d79"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/cesium.png",
+        "sha256": "d5857cc955c248b95c0c12f2c533629e9c83f324b89eb56aa1b12a68a1f64256"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/chemist.png",
+        "sha256": "d4852a72e3baaa9efd61293963db89a72d4d0c910aec0419e92af630a1cd6390"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/cinema.png",
+        "sha256": "eba78ccef08d317d931b796b5630db396a4c6647f8d4b57764357e5e24d2599b"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/circle-stroked.png",
+        "sha256": "4a609e3399a2fad31b9e75bfdd17c4cc95e5b2f260f1d902aa1cb5b040c66523"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/circle.png",
+        "sha256": "05b7a313a6d4e47d7e13591f06dae1c4fc706146632fc7d9758d59f687d84ea9"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/city.png",
+        "sha256": "92539b16e075cb79b26daffffbff2bafaf1f09c91d5cda5b6a9ef8cbb4327341"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/clothing-store.png",
+        "sha256": "34a527cd4f0d4ae5759e98921dbfe23699b4708288985f85b64ff75353b3ca97"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/college.png",
+        "sha256": "26a9bd248ba058414c36f7d140ff148c513b72170432b892c3ec5ce0f12bd146"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/commercial.png",
+        "sha256": "0deb24e319298a2d2890e76b44c4120c29ec89f6daf73cc2151bf28dbd960946"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/cricket.png",
+        "sha256": "07cc9f8540e7574d426cdd05fdab1bb71cdbe3b22c59f88ce6c9f20929d8ecaf"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/cross.png",
+        "sha256": "fb878dd32c44ca83370a944d766b0e992ee5a01accb54d81b19867beef03a2d0"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/dam.png",
+        "sha256": "2ab3ed160681f8894b76e6640de3c103caedb65f14e4565dcf123ed413502345"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/danger.png",
+        "sha256": "c268ee6d675c9db3562f44aaa7b46bca2815124f520365d3f517ccf3430e9e43"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/disability.png",
+        "sha256": "b2293d6411ae95ed7113bb6b7de19b5863164a697212d9642ddddef23634da45"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/dog-park.png",
+        "sha256": "6b3b662c50623e31e69e44b6ab80aad116a9cbe406814acc60920e7bb8b46c31"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/embassy.png",
+        "sha256": "83c902b90a4f5de175631f7b91ec2b1c3f461e0395f34507cb007572e1550137"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/emergency-telephone.png",
+        "sha256": "2b374c00679109719202b61c5f1ca4b108ba859318e4a12d27d9d65081491b5c"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/entrance.png",
+        "sha256": "ee93d08539b460126b32691e71781e26585003390dbab05ff9037d2b41722edc"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/farm.png",
+        "sha256": "a1ea51ae83cb6db984bda6f451de81b232cf1c193176142cb44f0664692f0772"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/fast-food.png",
+        "sha256": "24d42a6409ff1f518c776997ef7b07ecb76c4cf446248551f22814d8bbf4e99b"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/ferry.png",
+        "sha256": "97fcf2915ffe3ef62e8ee5a05672ae6dbdabd24d6aa1b4cb709302487ee06b2a"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/fire-station.png",
+        "sha256": "9e17c8f458a6e7a525eace12875c4f16acd4e6750a19271448bd0e926da860b2"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/fuel.png",
+        "sha256": "9e59bcba3f758998a6a55bf15174727e779207abf5a4f324c2cf5593fbac983a"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/garden.png",
+        "sha256": "9c860cde4e54fbec8709b243052f37700e0d64fb9aa61f33818b0fe838b7a8ae"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/gift.png",
+        "sha256": "4814551df01639c36c1333de3a99fb9b5a9d758dab186fc7132579d984ebcf96"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/golf.png",
+        "sha256": "9e447b620baddad979776dc4fa4634f6cc96c0e00682282e008f2041c6f98e57"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/grocery.png",
+        "sha256": "6970b52af4509ab118d1d898a959bf631ae21e457803214fa9fab337770e8ca5"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/hairdresser.png",
+        "sha256": "ea92df398c4ced256fa144958d3a8b7d60ece46c226dcb8832868ffb1df7f7d5"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/harbor.png",
+        "sha256": "506545526fcfa6655206d840da1392b14d8a53ed63bb40ba907c1e503834fd90"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/heart.png",
+        "sha256": "f648f8d38ae47696c6596c106c6ef4b3984cfbbab2a83a82b911f5be7621067f"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/heliport.png",
+        "sha256": "4c5ec82bae0ef3ed3b38bd8089ce0ae64b4a9a2de6202855b22c736281f65440"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/hospital.png",
+        "sha256": "0ba68595b4d670a16c953894b2c1a0c342c072a2003cec4dbe630aa10efa1568"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/ice-cream.png",
+        "sha256": "9ee2b16f1ae408f624d79cdbde704284579238c9daadda5938382abe1c4d543e"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/industrial.png",
+        "sha256": "4bc573a1d392c228c94d8a397a830cbb7093cb969469eda44019634e3885d5a1"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/land-use.png",
+        "sha256": "261d7de6098521628cc6c6bfa02a47d17931fe521cc8e47dc56bc5d83aa28443"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/laundry.png",
+        "sha256": "303c0bd8319b88b139997cabfba201eccb5afd1f7d5401eabd90c2c66ca2a43b"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/library.png",
+        "sha256": "511b7f8d3b1a2ea2205d8466b5d5129855a12af6cf1f5baba2f4b8a4dd5e562c"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/lighthouse.png",
+        "sha256": "dbccce865f1789f5326566145401366fa94913b6462672c5f252be803014c714"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/lodging.png",
+        "sha256": "02c1d81ef957255d27cb5fce70ef4f3bee79f4f8ec3b222f559f4375ef7ea6ac"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/logging.png",
+        "sha256": "056e8893c58ba30f5a0d9905194b0e60e4f31d9c1a59b5711d53647e4749528c"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/london-underground.png",
+        "sha256": "f8a41f09994d53d27335bbc70aab29a3d042583bb6b4520afaaffd0dd3f8e2fa"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/marker-stroked.png",
+        "sha256": "e21d955606f5911a981e4674ba1a491b68bdf37c7ed698be2bc210d7e86c9bc1"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/marker.png",
+        "sha256": "f8fcf45e3b3355ed9fba1050a26380927732300b54d8bb00b80fecf7bdcfc7d7"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/minefield.png",
+        "sha256": "aa1634ca37adee2849fba655285fed160763f53b7c5163f2753609c506312d64"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/mobilephone.png",
+        "sha256": "07e26f366da18b3fdeb53b6f29ff5bacdab5513758bbd6217ac41ebe5fdc104e"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/monument.png",
+        "sha256": "707a32e0c3b943941c396b18d6caa08fb0620a0ed07d84496ffad42cdb2d57e6"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/museum.png",
+        "sha256": "384ccd2fe0977c7b7a51635c6a16e81f6c906a355635ccda2ff33d897c16bd93"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/music.png",
+        "sha256": "c6bd30e02b950aeb2f5da711011d9b0bd5dbec687adc39a2f8f27025c8fb8508"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/oil-well.png",
+        "sha256": "f0c99b3662e9f1abe63a387c1da5cadd5336b155650d3daf678a8f18401c2fd5"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/park.png",
+        "sha256": "b5ee53a16dd03e32630218a2453065f3f6435ec9246028fa08785eb1d52ef54a"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/park2.png",
+        "sha256": "7fd262afad32b6d2aabeb0839b746468671e131b234a6265b40cb284a4003c4f"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/parking-garage.png",
+        "sha256": "251d73325620f24a16357f542967dc0112dce10679b27db3e7f489fd05ab9ded"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/parking.png",
+        "sha256": "3e62ecf1573c7b13d7be9cc28ffe9576e6e30963fb5d1df6dace01acd72dd447"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/pharmacy.png",
+        "sha256": "d382d9b8a06ac3a089b35a8137848c74fd41bf465b5d4b1a975ecebe4a992163"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/pitch.png",
+        "sha256": "abe872e09e244eab94237c254926b866dc1685a999833d95f443ac013fc976f3"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/place-of-worship.png",
+        "sha256": "03755fe12b0b412835dc807fde64973e6316df623d6a6e81ca052d750d85d344"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/playground.png",
+        "sha256": "0fac0aa78869da09e39e88632af82177d98723dd38141e81ab6b09a29129a7d8"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/police.png",
+        "sha256": "51592091904f75f4a25e37f87b326dc576bfacac9317aa6dfae2d0e0a8f117ba"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/polling-place.png",
+        "sha256": "0c4c8a5d1bbc1cc0f137cc1a357d418a442ad0bd3074a32819e9704fcbb265be"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/post.png",
+        "sha256": "cff1c2c20e77dece1eecf3dfb0fe10f139309ac78a2523bc9f01b4279e98e291"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/prison.png",
+        "sha256": "64636c8abe45f5cb8c3dc9ab73111683c4aa345691a5f17c327f909c774c0a0e"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/rail-above.png",
+        "sha256": "1b4555bb2169307c5ee1bc8afbd9ad97cfb36121e87e6413ae6ae137fb501109"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/rail-light.png",
+        "sha256": "e989ebe529a979dd7600f5a6c8039c32972bf424b70558baf134f779901f1703"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/rail-metro.png",
+        "sha256": "b89c202b5fdea739ce812932a22a3a15ab921a1aa2ceb0d801d4913f763095a5"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/rail-underground.png",
+        "sha256": "2be6c183a1b8604551a8c88d6437e826680da8b5fc75237b5e7108f38f347e11"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/rail.png",
+        "sha256": "4965beb812449d4abc1cdb9e30a3d1a5f7c18999571794e38eb92c8ad98cb048"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/religious-christian.png",
+        "sha256": "a74c5e18bacf1469c22e6ff84736a63187b0c21048799885acabd5fac25d5cc0"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/religious-jewish.png",
+        "sha256": "fe5d53b2f1cc5e80a2e2fb6b9163ca27748c2a031ea2df4d0c614ffd338adba1"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/religious-muslim.png",
+        "sha256": "5b06c277d3638ee79172fb4ff89d84f1e475a1b25434953f19cb343e2b7c9fd1"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/restaurant.png",
+        "sha256": "85031df6b2174e72ec76dc0de6f4e54ab348426c7f738b11d8b7eb22bb72722e"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/roadblock.png",
+        "sha256": "d455530701e372698538f32a4d71029897e297e6124fb68550e5f323fee40bb0"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/rocket.png",
+        "sha256": "a167e92802b80e5bc5f78bea77d051007524782979a1b89eab9288d1e80ff5db"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/school.png",
+        "sha256": "1cc6087b652577de5e60525b5daa20c07cc126b526fd461f04381ae586a7025d"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/scooter.png",
+        "sha256": "4aa704ae97edb9bc514c0fc0ebe7adf2aa3f515ba3a15c6c17c25e17c8c1b8d6"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/shop.png",
+        "sha256": "1742dceb33d3ecd6dc66e5f5f1e637c65da7f4d92b066a2379dcb7e7e642ffc0"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/skiing.png",
+        "sha256": "576d29be1492b2973ffbaf688c7e8b8044f350c29317ad29060e3db29c3dc751"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/slaughterhouse.png",
+        "sha256": "69a20fc6dff36897cf3152a525d36752799d5805bf5f01ae5bcdeaa55abdd84c"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/soccer.png",
+        "sha256": "34308b14fe61df1608ddae5a8cd42e246487f11368f91867cb80e43590bfd4a0"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/square-stroked.png",
+        "sha256": "2b48882145df7a64dcfa5f94789875a3818eb5976494198a72dcfbd2ecc2984c"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/square.png",
+        "sha256": "68ba096d343037fed0dd1271ef8cc0bad600a134ec6082ff613f1a340f3c0ed8"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/star-stroked.png",
+        "sha256": "41f15812c35881118eee7b8eb3487538f2617ef8523f22ca738e2901e5752469"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/star.png",
+        "sha256": "58e516f3e338a1784198a5d3c05a486d41b55dca4122bf5c40986a9e0528460a"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/suitcase.png",
+        "sha256": "066e75d3303b4edf97086acd70e6e9aebf1165faf9c40adbf58f6585bc04552c"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/swimming.png",
+        "sha256": "3e7e12dc1197399ee43900a77444e7d8cfeba04732a7547f5b13d0e99fe70b63"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/telephone.png",
+        "sha256": "3d6da688ab5735a1137207e041fb0023dbb1d6d40e328c63664c8a2c737c5391"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/tennis.png",
+        "sha256": "7138863b8e10b5e78f5f0a02cf78b5f1f8912a97da433fe2df2c60f3b18ed556"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/theatre.png",
+        "sha256": "cb45d9d94385e3d164fddceb40c00cd6f3654de4fd44df0fa9d539ce1f68fecd"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/toilets.png",
+        "sha256": "e08a3ff947299d4f110fd7fd4ff30719d433d95cd52337341915f0e06c2f2f74"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/town-hall.png",
+        "sha256": "33b7f1bcd10f771f821de464367d785c20545075142bf341b250e5822124795e"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/town.png",
+        "sha256": "1402be94a92ac7884d0e0b0344db84f1b74170ed7012b7d95982e072b38eab59"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/triangle-stroked.png",
+        "sha256": "880ea63998f0cbe79730df17e22d2b6f87941a535408b06d5ef62df4b3d6fdba"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/triangle.png",
+        "sha256": "6ccfb06da43d5969424510d418e75b18c9c06fbbac2c6531105ccee98d26c551"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/village.png",
+        "sha256": "3e73ebd0f5c2bfa83764a1fd74a4e4de855e43a38acc9b75aaf423a8a63342d2"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/warehouse.png",
+        "sha256": "90fe8a1799906e59ed8fe7e0b35ca2ec66a39a592c3a8e5c8fe8f93a06eef387"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/waste-basket.png",
+        "sha256": "5ef33ea09aaf66f1f429efb735cd0b2fcc7b8372305f9acdc2d27f621b8fb889"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/water.png",
+        "sha256": "a1b40fc3d50e119865ed8b98fccee6b0d2d1da2133731074d3df8f1f5f5b38c9"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/wetland.png",
+        "sha256": "bdbb392ad5fd31edcc9973f72e1ebc03911204d98c2e786b07bb4adae65ca7b2"
+      },
+      {
+        "path": "cesium/Assets/Textures/maki/zoo.png",
+        "sha256": "3c8d46e2412476547805180fb62d0c5fc23d7cbd65c71a6738ecb668effbcdcb"
+      },
+      {
+        "path": "cesium/Assets/Textures/moonSmall.jpg",
+        "sha256": "380fa69424e1cd2268816e346dc56393bd1c809b8e0cb078e705ec469a5847db"
+      },
+      {
+        "path": "cesium/Assets/Textures/pin.svg",
+        "sha256": "0d80bf787ae3b97d010f50195605d541501c08740994fb0b403f76449c007019"
+      },
+      {
+        "path": "cesium/Assets/Textures/waterNormals.jpg",
+        "sha256": "9ab17625d9a2b0541c14a1b24ae8e3e192b40882cc77729c46b5de5648a991a8"
+      },
+      {
+        "path": "cesium/Assets/Textures/waterNormalsSmall.jpg",
+        "sha256": "ef35a21e3cbff36032d118ff1df951ad88c023c39562c44f5b2d46f308e98858"
+      },
+      {
+        "path": "cesium/Assets/approximateTerrainHeights.json",
+        "sha256": "36466e2dc84f6c173b609ffc704bc021cd9fdb33c287570bf57e4f566b58e6a6"
+      },
+      {
+        "path": "cesium/ThirdParty/Workers/package.json",
+        "sha256": "fa6944a20ca5e6fbaf98fd202eb8c7004d5b4ab786e36b9ed02ee31dbe196c9f"
+      },
+      {
+        "path": "cesium/ThirdParty/Workers/zip-web-worker.js",
+        "sha256": "7a3d1908dd32dde8be0902f9729b45f73ebb7de5f4e367ed04f4de7596390d69"
+      },
+      {
+        "path": "cesium/ThirdParty/basis_transcoder.wasm",
+        "sha256": "96849a2719b431008533806199ad4e513ef5a5f632b87e452fb1eea961d5730e"
+      },
+      {
+        "path": "cesium/ThirdParty/draco_decoder.wasm",
+        "sha256": "2516a4e43526d71787bf2f678f951329f7f858f8f15f42d4bc9e370b31a0da3a"
+      },
+      {
+        "path": "cesium/ThirdParty/google-earth-dbroot-parser.js",
+        "sha256": "cced3e7fdc467edf0722347e7913fdb9680a9e4f32d52b622c01a9970e9a0fc8"
+      },
+      {
+        "path": "cesium/ThirdParty/wasm_splats_bg.wasm",
+        "sha256": "530cb068ddd94b7267db1e1690ebdfcd94c552b2886d79398438841c42a1a14d"
+      },
+      {
+        "path": "cesium/ThirdParty/zip-module.wasm",
+        "sha256": "1ebaf6e62f247a005189493097f460bc9050f248755c55ecba34fd54257a6bb2"
+      },
+      {
+        "path": "cesium/Widgets/Animation/Animation.css",
+        "sha256": "ef37c1157734f55c8ebf932359f43dc233e3334d38cc722045fdf2c89aa914da"
+      },
+      {
+        "path": "cesium/Widgets/Animation/lighter.css",
+        "sha256": "93d0422a375d1740515bc74e36b7148c0a7ea2cab2b57a4c72d33e9470c2e655"
+      },
+      {
+        "path": "cesium/Widgets/BaseLayerPicker/BaseLayerPicker.css",
+        "sha256": "4589a67b8423b2e2a34bbd4cdaf7c7bca63159d702679556ce948cc9cedcd94f"
+      },
+      {
+        "path": "cesium/Widgets/BaseLayerPicker/lighter.css",
+        "sha256": "2483870def48e6db019c97e6f82d0ec6fe60c63facbe2c161cfe2c1579ebef67"
+      },
+      {
+        "path": "cesium/Widgets/Cesium3DTilesInspector/Cesium3DTilesInspector.css",
+        "sha256": "03e6368d1177e4fc0f7c7faab9c6f660867b0e5f01d2d23001b3811eef67d891"
+      },
+      {
+        "path": "cesium/Widgets/CesiumInspector/CesiumInspector.css",
+        "sha256": "53202d9e53ef40afe580925c62ba4e9c1a149a1bae001cb6256ed3084def1171"
+      },
+      {
+        "path": "cesium/Widgets/CesiumWidget/CesiumWidget.css",
+        "sha256": "d177d8ab518dda483c404ece734142a51ba2389f2114d259f207b177c0840234"
+      },
+      {
+        "path": "cesium/Widgets/CesiumWidget/lighter.css",
+        "sha256": "e5cae7e3497064bc3cd16c11a65e259fc55bbdcbce344f76f978e6b0e0b78190"
+      },
+      {
+        "path": "cesium/Widgets/FullscreenButton/FullscreenButton.css",
+        "sha256": "c952978d84ab0cd9077e0f6f8ebe3a31dc52231a6ceb61169b08e5c58b1253b7"
+      },
+      {
+        "path": "cesium/Widgets/Geocoder/Geocoder.css",
+        "sha256": "9290b14bf7159dbd4e09de16ae8057682d580969063b2d1cfd683dd4e6efc5b8"
+      },
+      {
+        "path": "cesium/Widgets/Geocoder/lighter.css",
+        "sha256": "126bdceac44eae6871200ee0a931ca95c4a4825f405907c21c0e917aa8361576"
+      },
+      {
+        "path": "cesium/Widgets/I3SBuildingSceneLayerExplorer/I3SBuildingSceneLayerExplorer.css",
+        "sha256": "4be131ecc81a6932a7ccad93621b91f8a26f67fc5d71f9f2c96b42580014d058"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/ArcGisMapServiceWorldHillshade.png",
+        "sha256": "bd005647a69b59b30660e6e6f1a8e6cf4bf5ad0f3a1148a705aa325d8427fd97"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/ArcGisMapServiceWorldImagery.png",
+        "sha256": "7abc9ebc21e94f9e4e86649d62661580193a70e3e54637e01253bee98269b7de"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/ArcGisMapServiceWorldOcean.png",
+        "sha256": "81cbcc167040b451cf2b2dd86bb2467079bae7bfe044fda69d1a751f72d0a662"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/azureAerial.png",
+        "sha256": "53e2e0108d57ab985fa594516df532265e1663ab31732179d6173f4fb32b4f3f"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/azureRoads.png",
+        "sha256": "d4033f8ef9eb55728815eb33e6e69ba1dc848f259e9a9be9e6c04cf7c0be0e3a"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/bingAerial.png",
+        "sha256": "705be480540ee78bc2c719864537d4867bd278a46283c5b293777d63139a75f3"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/bingAerialLabels.png",
+        "sha256": "6c6bd8344cbc5eb5c2d10ae281e1ae948ce584366a36214ed2754c40d787f808"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/bingRoads.png",
+        "sha256": "8bca72a4659d797752494f2d772f7cb1f78db376b23907c9161a7e3660e6a4de"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/blueMarble.png",
+        "sha256": "3da5f427b2355c1b80befb0ce02856fa250bdb8e30721397a7953095fbd30c97"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/earthAtNight.png",
+        "sha256": "9bd366dabede661b775d2be55e4bb70625362bc8fd9a296ca6988f075744c2f5"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/googleContour.png",
+        "sha256": "0a0a741ad84c0c0911f3f251bb6954e579e583e6bcc601812b5f759d0a6edb48"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/googleRoadmap.png",
+        "sha256": "3fb5cd008d06f26c8f3a0b43316b08bbfea6af3c240ad024be8b4af1fea4b20f"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/googleSatellite.png",
+        "sha256": "d1b9582fb3edf9d81d5a9c083d0e6c68fd48a4a28cabb3893e66f78e3378781b"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/googleSatelliteLabels.png",
+        "sha256": "bedac990018f0be2223eb303b43db2a55bad3556eb9d9790ae7cf9f2632789bc"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/mapQuestOpenStreetMap.png",
+        "sha256": "b751906c7ff4122f52c0688aec4ea496de65e1788053a0d6b958e0393fc8ace3"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/mapboxSatellite.png",
+        "sha256": "4eed6627af0abf1e3f466e92c3cf32f9fe81e0d2eda16fd252f64c06aa496291"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/mapboxStreets.png",
+        "sha256": "a74b31a51560751e3ccccb68ef3dfd01eafe9c6db42fb732a42d0972397fe9ad"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/mapboxTerrain.png",
+        "sha256": "19b7b62ae23dc3c8f3548e1c594670d052d10d2048954b50f30a1f81a3c5b7a0"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/naturalEarthII.png",
+        "sha256": "f31016adfcb20341ccf6a7cecd8c2351ec820bcb769ad62520e676ff883bf347"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/openStreetMap.png",
+        "sha256": "403ec35912440a3f5d01b2caca318dc7cc6efbf1c73bbfe040e0fc45422c349a"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/sentinel-2.png",
+        "sha256": "e8270fcacc9ac6829c8f3a8978bab7697b0679c951290a1d7ffb854747c4658c"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/stadiaAlidadeSmooth.png",
+        "sha256": "7130b53ea9712f3e6669f276fc0bf6ac75cefde9faf44365ec1bdcfaec2dd2fe"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/stadiaAlidadeSmoothDark.png",
+        "sha256": "161373153d350946dd396cb27c6cd7ea6374a89c8d4a4b80eaeb1740b7983748"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/stamenToner.png",
+        "sha256": "8de09648729219d7bbc611474efc7f6d6173b868e104f2d2cddbfea1298a5a94"
+      },
+      {
+        "path": "cesium/Widgets/Images/ImageryProviders/stamenWatercolor.png",
+        "sha256": "6663e5ccbe5af16f1933069ca3f3b298f469b5cd8b6a9ea914240c1a7e8f7232"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/Mouse.svg",
+        "sha256": "8633a7dadb468dcea41869b624f7b809ceb314a5f0b7e55a30a8eeb7cdf23fb9"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/MouseLeft.svg",
+        "sha256": "4051709cc4059cd740617a34ebc56b2e9ce378675203cbf6281eae4f04f5ec58"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/MouseMiddle.svg",
+        "sha256": "bd7f72a62457527af6cd94eb3460dd58dd2d8105080db5619bd9a440fe1f069a"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/MouseRight.svg",
+        "sha256": "8780853b6eea524c36fa2ae759c00d811bb0fb6274b8c7953705a8b0ea318ba4"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/Touch.svg",
+        "sha256": "c574d42a0250d9f48e7b4c71185b4a1a1a4b4301ea03ddbf22f940638995f1f6"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/TouchDrag.svg",
+        "sha256": "8964f930f74b060a490b033005a1da10983cf6c8ee93c93caf84525126374992"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/TouchRotate.svg",
+        "sha256": "5722d19812c315a334034364c1eef2e2df75a975bdbe8de96d47e258e807029d"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/TouchTilt.svg",
+        "sha256": "c2fb3e9f406a08e64360d8f1b2d289c61f6200167d14e2b3b461434f1aec4069"
+      },
+      {
+        "path": "cesium/Widgets/Images/NavigationHelp/TouchZoom.svg",
+        "sha256": "7a05cc6f1fffb80f88ee8d47f16d51fba00f432583943ff2baa8564196e4a616"
+      },
+      {
+        "path": "cesium/Widgets/Images/TerrainProviders/CesiumWorldTerrain.png",
+        "sha256": "714355373dcbede4d4ad850be207fe2ed6830c4d171a7c5158794d19351a2a72"
+      },
+      {
+        "path": "cesium/Widgets/Images/TerrainProviders/Ellipsoid.png",
+        "sha256": "1bf31e09a782be7fdfe1b611e4dcb5d1e59fcf3eef59509a11627dd8e7567b54"
+      },
+      {
+        "path": "cesium/Widgets/Images/TimelineIcons.png",
+        "sha256": "526c03c04d87bd2250f67b6cbcec9c045437168dca76506e50297388046d5059"
+      },
+      {
+        "path": "cesium/Widgets/Images/info-loading.gif",
+        "sha256": "28239b6aa67c3491f7893dfac9d84a2e2768ac450dc7d51c23548de33a7e3c05"
+      },
+      {
+        "path": "cesium/Widgets/InfoBox/InfoBox.css",
+        "sha256": "dbf1e88f02890085a1fa9357d49880c8e93e0184c4e63faf136b2f272db040e6"
+      },
+      {
+        "path": "cesium/Widgets/InfoBox/InfoBoxDescription.css",
+        "sha256": "a392409fdd193076707b06c9a07bb9440863ca968079fe48d2ccbe1573b1b8db"
+      },
+      {
+        "path": "cesium/Widgets/NavigationHelpButton/NavigationHelpButton.css",
+        "sha256": "7d257f03a4fdc5c4b2a5c5f257b000889aa71e13b5b18327af78c278e9e82ec4"
+      },
+      {
+        "path": "cesium/Widgets/NavigationHelpButton/lighter.css",
+        "sha256": "60385a98dde35c997d0d6af3ec87463bb3dac320dd724273154a26ecfad72b82"
+      },
+      {
+        "path": "cesium/Widgets/PerformanceWatchdog/PerformanceWatchdog.css",
+        "sha256": "31214dc54f28b507b1c7baad35ad0352e9fda9fd1b24f915811f58b82ce6da77"
+      },
+      {
+        "path": "cesium/Widgets/ProjectionPicker/ProjectionPicker.css",
+        "sha256": "760c4a01553151d57a614f5e13ff854c0df45f87fc3fe193e8f59bc91a1d010b"
+      },
+      {
+        "path": "cesium/Widgets/SceneModePicker/SceneModePicker.css",
+        "sha256": "3dc94f4b216d9c9821f9cf7c4bee9357d6f458d4743dea328639f167ef5bb5ec"
+      },
+      {
+        "path": "cesium/Widgets/SelectionIndicator/SelectionIndicator.css",
+        "sha256": "797c9e1e2970a688bdff10f544268ede6c47bc449ee7af63e7d4e3abe83190d8"
+      },
+      {
+        "path": "cesium/Widgets/Timeline/Timeline.css",
+        "sha256": "d2f1655e59137ddefa05e8bdf8f68160f8247cdefcba51de55440a178a01e99e"
+      },
+      {
+        "path": "cesium/Widgets/Timeline/lighter.css",
+        "sha256": "454d14e1ad03bb6cef04b7250c159922815b1607363d965a11e9869b0ef8a3c1"
+      },
+      {
+        "path": "cesium/Widgets/VRButton/VRButton.css",
+        "sha256": "f220a4e72d2a49d72ac003651ac9b504b1326bfd513e2380d566eb9ed0fb0cd6"
+      },
+      {
+        "path": "cesium/Widgets/Viewer/Viewer.css",
+        "sha256": "495a778aff711560c57511cf13b5a943d7cea5fa47d3e87a133952e2330af2f8"
+      },
+      {
+        "path": "cesium/Widgets/VoxelInspector/VoxelInspector.css",
+        "sha256": "58bb321e5b2ce6d134033c4aae77539c26f4b5b8078944fff180bd5e1ab122b5"
+      },
+      {
+        "path": "cesium/Widgets/lighter.css",
+        "sha256": "92e9b28deeb10aa256c7227c85bf79946a6ce1def3cbc0ffd04cb47dee506d03"
+      },
+      {
+        "path": "cesium/Widgets/lighterShared.css",
+        "sha256": "13652fc7eedf3f3a6816e8c90f2f5fa35a1c8951f387b35a5299c74371df2646"
+      },
+      {
+        "path": "cesium/Widgets/shared.css",
+        "sha256": "d4d877c863037a80916101b8e983e99f69d7a6cc580e3ee7f03f16ddcf19a909"
+      },
+      {
+        "path": "cesium/Widgets/widgets.css",
+        "sha256": "702c5adf3d16ec7f1c03cc5fb7ecb823af6c59fa192789fb2c859ac7a11f4a0c"
+      },
+      {
+        "path": "cesium/Workers/chunk-6FYG4X2F.js",
+        "sha256": "82ed8efcdec5f6652fafc2d11d90c50738d97a5e06d6a6e9b148d7162091f721"
+      },
+      {
+        "path": "cesium/Workers/chunk-GWE2HRAQ.js",
+        "sha256": "7c0c80b3575ee21ffc9f9fc9c01d139c2e046dc17336bafcccf290e67433204e"
+      },
+      {
+        "path": "cesium/Workers/chunk-HNL5VMHB.js",
+        "sha256": "475ab759ecb0c16b83ab47bcca900eb9e63657c44af20bf46a8a5484c559b39d"
+      },
+      {
+        "path": "cesium/Workers/chunk-IGOYCRIJ.js",
+        "sha256": "ee4321ce312ddcbf5d2a822bbc95061fe89e15adbd8ab490fde31accd5e3e69b"
+      },
+      {
+        "path": "cesium/Workers/chunk-J6FR5PFB.js",
+        "sha256": "a329c6e3d8fd8fbef82cee66fd993473ea542bf47dc07513109f6f62c31651cd"
+      },
+      {
+        "path": "cesium/Workers/chunk-LOEQS4D5.js",
+        "sha256": "82f0a6b6be50cd4768e62f63ee605dc62118a0c40d45c1a27e8eb75a304fc55d"
+      },
+      {
+        "path": "cesium/Workers/chunk-MXXXHGW3.js",
+        "sha256": "9a6421166c6a40d27ca5e03d918f2dd39a2f35f74f657bcfb43e68f7a2222363"
+      },
+      {
+        "path": "cesium/Workers/chunk-QVYSL4VL.js",
+        "sha256": "ffe4122633d32161a29d0aec9832307ac2617b991fa82c810e0d1368c3a373c2"
+      },
+      {
+        "path": "cesium/Workers/chunk-VF77DAIX.js",
+        "sha256": "e71b43b58716487682994b691ed7a2bb1c658acb18392be4fb66fa8a601cd239"
+      },
+      {
+        "path": "cesium/Workers/chunk-YYTML7GF.js",
+        "sha256": "8be26ae8cb47c0e250ed9dafc71c3307b75bcb7445f0bb4eefe32c865db03b68"
+      },
+      {
+        "path": "cesium/Workers/combineGeometry.js",
+        "sha256": "e62a7854b7b29341b73618d1ecba44546c1589488e7c0cbdd3d1cdd7a2fbb1af"
+      },
+      {
+        "path": "cesium/Workers/createBoxGeometry.js",
+        "sha256": "f034d2a2d403a165585b96ddbb6b820237667a980ffcff2c7ba0e1e24e9a90ec"
+      },
+      {
+        "path": "cesium/Workers/createBoxOutlineGeometry.js",
+        "sha256": "c1900713d734a07b57ac9ae7556dfed309db58f7105ed16eb716c96f46f7f73d"
+      },
+      {
+        "path": "cesium/Workers/createCircleGeometry.js",
+        "sha256": "58468a01015ea1882e50f993cfc51fd226dae872f9751e46169377722cdded0a"
+      },
+      {
+        "path": "cesium/Workers/createCircleOutlineGeometry.js",
+        "sha256": "2177df01e3e885d445baf77658c46b88e347aaf14d5856cce6468e21b36e814c"
+      },
+      {
+        "path": "cesium/Workers/createCoplanarPolygonGeometry.js",
+        "sha256": "db4a5d3376b11f0486af57e866bf2493202fbdd35e168ef73eac6c391a243f8c"
+      },
+      {
+        "path": "cesium/Workers/createCoplanarPolygonOutlineGeometry.js",
+        "sha256": "7e626e34b8841178004b0e069a0436c836f4fdb15bdf5e4b8e8bf05711a0bc4e"
+      },
+      {
+        "path": "cesium/Workers/createCorridorGeometry.js",
+        "sha256": "0f01e6a2c94a905bb5489cd27246a9a7da9d025449c163c8c2f059d2506afdbe"
+      },
+      {
+        "path": "cesium/Workers/createCorridorOutlineGeometry.js",
+        "sha256": "ad5bfdff154f089512a410b2dd865a4097d65703e785c09cfc429902c35659b6"
+      },
+      {
+        "path": "cesium/Workers/createCylinderGeometry.js",
+        "sha256": "ea29a28742e67ccf93d19a262ddb636ea9e068dbd8c9af048ba6c8a36305c9d9"
+      },
+      {
+        "path": "cesium/Workers/createCylinderOutlineGeometry.js",
+        "sha256": "46fdb72203cbc421f5be06768eab458fe55346a23f4e072c22ced5319055beb4"
+      },
+      {
+        "path": "cesium/Workers/createEllipseGeometry.js",
+        "sha256": "1cec0de29363ba44d9afc1ba19bb7aab51437f1e2610bd5d71eb724a3b3fc860"
+      },
+      {
+        "path": "cesium/Workers/createEllipseOutlineGeometry.js",
+        "sha256": "c9312ebb2e183bcebe60e705d14c970591a6d2d6309291e97bc5d97cb46f45fe"
+      },
+      {
+        "path": "cesium/Workers/createEllipsoidGeometry.js",
+        "sha256": "833edd5c6f75a57baa0341d4afaea725ab1d3087f40b3e48f110b5d7db6151d4"
+      },
+      {
+        "path": "cesium/Workers/createEllipsoidOutlineGeometry.js",
+        "sha256": "1cdce2ebf931e873f7afee5f51b8faf0c60e358fca49092e1f0bb47abc3f7af9"
+      },
+      {
+        "path": "cesium/Workers/createFrustumGeometry.js",
+        "sha256": "9a4ba6085d75c4344ce0ccb1e908b21659cc590099391e47921cff179ba3eada"
+      },
+      {
+        "path": "cesium/Workers/createFrustumOutlineGeometry.js",
+        "sha256": "ec5a03ecabf0f62d142da6c0380925f0cdb5f136849c4804652f79b1bebf0781"
+      },
+      {
+        "path": "cesium/Workers/createGeometry.js",
+        "sha256": "39d52d5d79d346ae342b791a887722e71f6681d74dea0fc206c4d4fc4ac5fbb6"
+      },
+      {
+        "path": "cesium/Workers/createGroundPolylineGeometry.js",
+        "sha256": "49eaa0eb62a9c9b8c5f67c603ed097c80d40b592d085a8c6e15b7f4371bdf72b"
+      },
+      {
+        "path": "cesium/Workers/createPlaneGeometry.js",
+        "sha256": "dcc20663ce6554965a9aebd3d8a3c1b3c0a62da7436b46cd646b4aa0c5ac9692"
+      },
+      {
+        "path": "cesium/Workers/createPlaneOutlineGeometry.js",
+        "sha256": "ad0cbd658a87156f9a3e51625e8dd890bdb9826eb347978df09779a8f06cf26c"
+      },
+      {
+        "path": "cesium/Workers/createPolygonGeometry.js",
+        "sha256": "a17661276bb34d7b6855480088ba63286356b2cf73c537f9f77b55ea448f08b3"
+      },
+      {
+        "path": "cesium/Workers/createPolygonOutlineGeometry.js",
+        "sha256": "018b9360ba755c7b3ca4bdb0805317ec7ef97b50bc1a1aa35d48636bec71b142"
+      },
+      {
+        "path": "cesium/Workers/createPolylineGeometry.js",
+        "sha256": "3faaf50829061c11d13a10c392b588fc98d66ce9cb6f6116848b97db8ac38e77"
+      },
+      {
+        "path": "cesium/Workers/createPolylineVolumeGeometry.js",
+        "sha256": "7d964d414e5d5e9c3703e1a9937b23593203ceb1200e6f2d7616a4a2a36bb452"
+      },
+      {
+        "path": "cesium/Workers/createPolylineVolumeOutlineGeometry.js",
+        "sha256": "b4bf1a1b309c99532e2ea4e0b61fea887029e6181df7bb72f6f66d849ed3d8cf"
+      },
+      {
+        "path": "cesium/Workers/createRectangleGeometry.js",
+        "sha256": "6416032c3e95c087ecd49dd083eff056720508e2d7ccf1806d7687be04222fdf"
+      },
+      {
+        "path": "cesium/Workers/createRectangleOutlineGeometry.js",
+        "sha256": "c8b2cc68a4e957172157e5fe24a9b02671ada7f9788a0dada085937a1293e88d"
+      },
+      {
+        "path": "cesium/Workers/createSimplePolylineGeometry.js",
+        "sha256": "93f4a0fac02fefb0f15a1df81e8fc7a491f6c5fd885aba9fff2d47fb92b274ab"
+      },
+      {
+        "path": "cesium/Workers/createSphereGeometry.js",
+        "sha256": "1c8368e889ae1a457d428acad7ff2984f0cd52541816112a7050d0c4a867aa82"
+      },
+      {
+        "path": "cesium/Workers/createSphereOutlineGeometry.js",
+        "sha256": "f9db10f048eec599366e9c53ad5d4ecd2ecd55998561657221b3ba81ff3ee1b5"
+      },
+      {
+        "path": "cesium/Workers/createTaskProcessorWorker.js",
+        "sha256": "65493b8bc150f105b42b99310fd0d3706e4ff844ee7c787d5ccec240fd43a772"
+      },
+      {
+        "path": "cesium/Workers/createVectorTileClampedPolylines.js",
+        "sha256": "d325a58c501c84e9228ee85fa250806bb549b9553b26fc09d6ff2e8e8aa648d5"
+      },
+      {
+        "path": "cesium/Workers/createVectorTileGeometries.js",
+        "sha256": "55ed08fc95e4401df4332fd5b77442008e9e2139e6aac38f4b2515aa535cc18f"
+      },
+      {
+        "path": "cesium/Workers/createVectorTilePoints.js",
+        "sha256": "2e5a47026f7c3e6e3b5c1abfdecd8b891cd2985a073e9d9d6a7d92ce7f4b7591"
+      },
+      {
+        "path": "cesium/Workers/createVectorTilePolygons.js",
+        "sha256": "644b7f1771ddee36357f44c14d5330b0bacfd08550b7971f5242a207e26b4829"
+      },
+      {
+        "path": "cesium/Workers/createVectorTilePolylines.js",
+        "sha256": "81912bdb0e3f171920ac37592542eabeb2363aaa99604d8a56e619e098226f1a"
+      },
+      {
+        "path": "cesium/Workers/createVerticesFromCesium3DTilesTerrain.js",
+        "sha256": "af9136f29b4328a9c420e4a9acbe7051a535fda53f65c8544090288e9afb9984"
+      },
+      {
+        "path": "cesium/Workers/createVerticesFromGoogleEarthEnterpriseBuffer.js",
+        "sha256": "467359d94fa884a5bd70e67a35beed04de53a883640eb9411c4095c3de2c70f0"
+      },
+      {
+        "path": "cesium/Workers/createVerticesFromHeightmap.js",
+        "sha256": "c91596474366ede86d9e2a44494ab0baa51d5e36c18da87618fdc22d4b49416d"
+      },
+      {
+        "path": "cesium/Workers/createVerticesFromQuantizedTerrainMesh.js",
+        "sha256": "3e0b8934e4b4353b58ef7026ddec5fff762c2b35051a1ad2d5b69b483dd2f8e0"
+      },
+      {
+        "path": "cesium/Workers/createWallGeometry.js",
+        "sha256": "989b8ade6e548c4aa9c6168f692f9088a067fe68f1fc6440fb8a41782da904d7"
+      },
+      {
+        "path": "cesium/Workers/createWallOutlineGeometry.js",
+        "sha256": "29c84cefa6275256f1ab20d2b3fd307bd84bd9feab25af5dcdc35a7194080eab"
+      },
+      {
+        "path": "cesium/Workers/decodeDraco.js",
+        "sha256": "a8f91577249ae018beaa17e0f75898bf92c063ec64152c35a9a1a6a78dfe03e8"
+      },
+      {
+        "path": "cesium/Workers/decodeGoogleEarthEnterprisePacket.js",
+        "sha256": "5e21cf6aab53f28e871bd1c4f67d03587f6c49e8b18081fa90d91ceb09df6360"
+      },
+      {
+        "path": "cesium/Workers/decodeI3S.js",
+        "sha256": "b4f53976abf64ef0edae7efe0d771e916fab32c7b2a22827066a395c79ab4f75"
+      },
+      {
+        "path": "cesium/Workers/gaussianSplatSorter.js",
+        "sha256": "f83557921ce870751efdc3d20c55bcbe855ef718e58c4228fb7b8a1b0f9ee166"
+      },
+      {
+        "path": "cesium/Workers/gaussianSplatTextureGenerator.js",
+        "sha256": "0dde5372a103a0fd83daba3bdcd72015de3a8b635d35895b4401a9df7ccc6bf6"
+      },
+      {
+        "path": "cesium/Workers/incrementallyBuildTerrainPicker.js",
+        "sha256": "ee16bb738db5b8918e7ec842aadbbb5ade03c3ccce585c96ab3531b61b27131a"
+      },
+      {
+        "path": "cesium/Workers/transcodeKTX2.js",
+        "sha256": "5a3fa3d23c919229debf1d81fecf033860023c024600a65b9ed8108a4f5fced3"
+      },
+      {
+        "path": "cesium/Workers/transferTypedArrayTest.js",
+        "sha256": "a35a27a278d047a1ca32e41beb3af324f8fbadf4db15a0b6a0da61a02ac487d1"
+      },
+      {
+        "path": "cesium/Workers/upsampleQuantizedTerrainMesh.js",
+        "sha256": "be0aee4b5d916a10961ab5258fed31dd82dda1635d142b834b91ef98b8d49cef"
+      },
+      {
+        "path": "cesium/Workers/upsampleVerticesFromCesium3DTilesTerrain.js",
+        "sha256": "9830cc6e5a4fe7a28817e29d0d3404cd1b7f46e3039d91809a3fdf7dc7425fe4"
+      },
+      {
+        "path": "cesium/notices/LICENSE.md",
+        "sha256": "721844bc0cdaa9b1a9a145dbca1f981e2de15a7e200a5d1fd9f5f1eed8e5d030"
+      },
+      {
+        "path": "cesium/notices/ThirdParty.extra.json",
+        "sha256": "5fff210f16bcbe0d414a4f634ceb2b0564dad92065733c26ec3ee4aff89a4b10"
+      },
+      {
+        "path": "cesium/notices/ThirdParty.json",
+        "sha256": "c9b447829d8489798e7bb74624e0308bbb0d0f974b9ff6e369dc21878a1cb45c"
+      },
+      {
+        "path": "fonts/LICENSE-Inter.txt",
+        "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345"
+      },
+      {
+        "path": "fonts/inter.woff2",
+        "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+      },
+      {
+        "path": "index.html",
+        "sha256": "39626b8c377c7e1323de2ba841736c5f74b5a2b785f6fdaec900567ee4da7a20"
+      },
+      {
+        "path": "samples/S2A_10SEG_20250619_0_L2A.jpg",
+        "sha256": "9b015aa7bde354d5ea743c6e770d8360aa1e0d25f87fe7a3250a7c33e2ca5b75"
+      },
+      {
+        "path": "samples/S2B_10SEG_20250602_0_L2A.jpg",
+        "sha256": "fd6318446c6b248e56e77d96cd227d438377c1f4870b85da3f1227be014d9356"
+      },
+      {
+        "path": "samples/S2B_10SEG_20250612_0_L2A.jpg",
+        "sha256": "244d7f41147ec2509cc3dd5acbc275a016646c28d3ecff576cddde37ba6d7cc3"
+      },
+      {
+        "path": "samples/S2B_10SEG_20250622_0_L2A.jpg",
+        "sha256": "411bfbc12f7f6fbf2a4a69a865264a050f01950ac10fba4aa5326d9198f6e983"
+      },
+      {
+        "path": "samples/S2C_10SEG_20250607_0_L2A.jpg",
+        "sha256": "7421c41abb547f9cc689924e07f0255c978e224aef3716b42983470622bbfcd2"
+      },
+      {
+        "path": "samples/S2C_10SEG_20250617_0_L2A.jpg",
+        "sha256": "732774a3adc3a0e47dbcecb25362a05b46bba23cd1e8598301c363d837eb7575"
+      },
+      {
+        "path": "samples/S2C_10SEG_20250627_0_L2A.jpg",
+        "sha256": "3751458f48656a9892d1843b205b6e6814b7bd9abfbd89bdff69a49adcc56652"
+      },
+      {
+        "path": "samples/cop-dem-90-response.json",
+        "sha256": "77cb9044ff06a754523fb075c3791bc8c31b6b28c02f23dba165fc70affaf21c"
+      },
+      {
+        "path": "samples/cop-dem-response.json",
+        "sha256": "24cb0172d498573f5561000aa09e5e55fc31222b93384764b8eaa1aa8a18090a"
+      },
+      {
+        "path": "samples/copernicus-response.json",
+        "sha256": "b79c7ba14da2987ab4f5ba92bb15a2633b4d52c76ee4f31144943c00a550e76a"
+      },
+      {
+        "path": "samples/earth-search-response.json",
+        "sha256": "c1ea737d2436177f8d29292cf9c57324cbf17e5a09990621a51a693e59a92442"
+      },
+      {
+        "path": "samples/landsat-quality-response.json",
+        "sha256": "53a3cf2ce333250d2c1496b724cc92eedd1769fc2054de72c7568180b7bcdd7a"
+      },
+      {
+        "path": "samples/landsat-response.json",
+        "sha256": "33c0b82ad3a2df3c9f580a4b8e604db3c1bf2b0f212c6e23afcc19982995f16e"
+      },
+      {
+        "path": "samples/manifest.json",
+        "sha256": "b8ce39e9b8f7393eb62b2b272bf0eb7a3ef163ebcc2aba1a477e08407b5088dd"
+      },
+      {
+        "path": "samples/modis-vegetation-response.json",
+        "sha256": "a14998b1d5da40d599e8852fee247810c65b1f3fb457f0905f186a20db2c42e0"
+      },
+      {
+        "path": "samples/naip-response.json",
+        "sha256": "8cc1a75ce740f456a3b63a386da84fe6aad00d1594ca22d8446b8e741fcb4561"
+      },
+      {
+        "path": "samples/nasa-response.json",
+        "sha256": "95a213e6fdf6efa97b3cd5291718809d0d6a6fe494b8e1d4d6f91222405a34f3"
+      },
+      {
+        "path": "samples/planetary-computer-response.json",
+        "sha256": "c4f61ba3061c0ccc08665952abc9994049ec5308eb1c4f94ececf6b94de6be55"
+      },
+      {
+        "path": "samples/srtm-response.json",
+        "sha256": "5e32949d16be30d5d7ab31f92c523b557e88ced23ca1623808f9aa86fe7dc4cb"
+      }
+    ],
+    "desktop": {
+      "path": "G:\\code\\geod-global\\.verification\\renderer-modis-vi-quality-accepted-20261004\\desktop-1260cb1dcc2ce371.exe",
+      "bytes": 81416192,
+      "sha256": "1260cb1dcc2ce371e479d7bc7a7b695dafce56dcca17ceebde2c07da4eda2357"
+    }
+  },
+  "summaryControls": {
+    "status": "passed",
+    "refusedControls": [
+      "failed-stage",
+      "wrong-index-scale",
+      "false-preview-statistics",
+      "changed-qa-pin",
+      "partial-output-comparison",
+      "no-real-fallback",
+      "parents-present",
+      "false-native-window",
+      "unmatched-ui-output",
+      "inflated-mcp"
+    ],
+    "canonicalRuntimeUnchanged": true,
+    "legacyNdviEviBytesUnchanged": true,
+    "scope": "Receipt and hash binding; not a new download or native-window acceptance"
+  },
+  "boundaries": [
+    "GeoD good/usable thresholds are product choices based on NASA QA definitions, not NASA-recommended screening policies.",
+    "Composite-start ordering does not expose the selected per-pixel observation date. Ancillary layers still process independently.",
+    "One selected index is exported per action; identical pinned inputs, policy and area yield identical paired selections for NDVI/EVI.",
+    "Original signed DN, scale, NoData and same sinusoidal grid are retained. No resampling, reprojection or averaging.",
+    "Winner-map and both index digests are stored; no winner ordinal, coupled QA/reliability/day raster or complete original NASA HDF is exported.",
+    "Preview statistics stay sampled; selection statistics cover all output pixels.",
+    "Hidden production-renderer/API checks do not accept a native WebView or installed application. Protected originals still await accounts. No installer or publication."
+  ]
+}

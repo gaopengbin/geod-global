@@ -1,0 +1,338 @@
+{
+  "schemaVersion": "geod-wcs-mcp-verification/v1",
+  "status": "passed",
+  "startedAt": "2026-10-03T04:50:44.974233+00:00",
+  "binarySha256": "e36212db97b7cf758fa91cbee0ced08279ed1898c7921b6e3fa2644d7794c4ef",
+  "jobId": "95919f40-f427-4b8b-baaf-1bf7fedd88d2",
+  "projectId": "610f8c64-b24f-4d63-8e09-ff060afb310f",
+  "planId": "895586bb46c9a4a72484308098b18716e15398649fd2e33fd557b6dd8789c151",
+  "successfulPublicGetCoverageTransfers": 0,
+  "successfulPublicMetadataRequests": 0,
+  "sessions": [
+    {
+      "mode": "direct",
+      "writes": false,
+      "protocolVersion": "2025-11-25",
+      "discoveredTools": 15,
+      "catalogEntries": 8,
+      "jobStatus": "succeeded",
+      "settled": true,
+      "bytes": 9600,
+      "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "mode": "direct",
+      "writes": true,
+      "protocolVersion": "2025-11-25",
+      "discoveredTools": 26,
+      "catalogEntries": 8,
+      "jobStatus": "succeeded",
+      "settled": true,
+      "bytes": 9600,
+      "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "mode": "loopback",
+      "writes": false,
+      "protocolVersion": "2025-11-25",
+      "discoveredTools": 15,
+      "catalogEntries": 8,
+      "jobStatus": "succeeded",
+      "settled": true,
+      "bytes": 9600,
+      "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "mode": "loopback",
+      "writes": true,
+      "protocolVersion": "2025-11-25",
+      "discoveredTools": 26,
+      "catalogEntries": 8,
+      "jobStatus": "succeeded",
+      "settled": true,
+      "bytes": 9600,
+      "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "protocolVersion": "2025-11-25",
+      "discoveredTools": 15,
+      "catalogEntries": 8,
+      "jobStatus": "succeeded",
+      "settled": true,
+      "bytes": 9600,
+      "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+      "width": 48,
+      "height": 48
+    }
+  ],
+  "independentPixelChecks": [
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 0,
+      "row": 0,
+      "values": [
+        -35.18000030517578
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 47,
+      "row": 0,
+      "values": [
+        -35.349998474121094
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 24,
+      "row": 24,
+      "values": [
+        -39.2400016784668
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 0,
+      "row": 47,
+      "values": [
+        -31.510000228881836
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 47,
+      "row": 47,
+      "values": [
+        -32.0
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": true,
+      "column": 0,
+      "row": 0,
+      "values": [
+        -35.18000030517578
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": true,
+      "column": 47,
+      "row": 0,
+      "values": [
+        -35.349998474121094
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": true,
+      "column": 24,
+      "row": 24,
+      "values": [
+        -39.2400016784668
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": true,
+      "column": 0,
+      "row": 47,
+      "values": [
+        -31.510000228881836
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": true,
+      "column": 47,
+      "row": 47,
+      "values": [
+        -32.0
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": false,
+      "column": 0,
+      "row": 0,
+      "values": [
+        -35.18000030517578
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": false,
+      "column": 47,
+      "row": 0,
+      "values": [
+        -35.349998474121094
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": false,
+      "column": 24,
+      "row": 24,
+      "values": [
+        -39.2400016784668
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": false,
+      "column": 0,
+      "row": 47,
+      "values": [
+        -31.510000228881836
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": false,
+      "column": 47,
+      "row": 47,
+      "values": [
+        -32.0
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": true,
+      "column": 0,
+      "row": 0,
+      "values": [
+        -35.18000030517578
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": true,
+      "column": 47,
+      "row": 0,
+      "values": [
+        -35.349998474121094
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": true,
+      "column": 24,
+      "row": 24,
+      "values": [
+        -39.2400016784668
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": true,
+      "column": 0,
+      "row": 47,
+      "values": [
+        -31.510000228881836
+      ]
+    },
+    {
+      "mode": "loopback",
+      "writes": true,
+      "column": 47,
+      "row": 47,
+      "values": [
+        -32.0
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 0,
+      "row": 0,
+      "values": [
+        -35.18000030517578
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 47,
+      "row": 0,
+      "values": [
+        -35.349998474121094
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 24,
+      "row": 24,
+      "values": [
+        -39.2400016784668
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 0,
+      "row": 47,
+      "values": [
+        -31.510000228881836
+      ]
+    },
+    {
+      "mode": "direct",
+      "writes": false,
+      "column": 47,
+      "row": 47,
+      "values": [
+        -32.0
+      ]
+    }
+  ],
+  "checks": [
+    "read_only_discovery_and_dispatch",
+    "saved_catalog_full_pagination",
+    "exact_pinned_description_plan_project",
+    "native_original_file_inspection",
+    "independent_original_pixel_samples",
+    "local_plan_prepare",
+    "idempotent_project_append",
+    "checksum_verified_download_reuse_and_settlement",
+    "private_source_rejection",
+    "direct_and_loopback_stdio",
+    "protocol_only_stdout_clean_eof",
+    "reconnect_registry_and_file_recovery",
+    "no_external_requests_through_rejecting_proxy"
+  ],
+  "registryBytesUnchanged": true,
+  "blockedProxyAttempts": [],
+  "finishedAt": "2026-10-03T04:50:48.438916+00:00",
+  "validation": {
+    "nativeWorkspacePassed": 337,
+    "nativeWorkspaceIgnored": 4,
+    "wcsMcpRegressionTestsAdded": 6,
+    "allMcpRegressionTests": 16,
+    "clippyWorkspaceAllTargets": "passed",
+    "nativeRuntimeBuild": "passed",
+    "newPublicAcquisitionThroughMcpClaimed": false,
+    "windowsInstalledWebViewOrOtherAgentClientsClaimed": false
+  },
+  "harnessNotes": [
+    "Windows extended-length native paths are checked using actual parent-directory identity.",
+    "The verification service is terminated only after all persisted tasks are terminal.",
+    "MCP sessions use clean stdin EOF; the original verification-store proxy settings are restored."
+  ]
+}

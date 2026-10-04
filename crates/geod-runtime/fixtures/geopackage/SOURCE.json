@@ -1,0 +1,20 @@
+{
+  "kind": "independently generated synthetic test fixture; not a downloaded production dataset",
+  "file": "independent-ogr.gpkg",
+  "sha256": "a65fdcee8a141bf841fef550bc62f25170482a69aa8fa05a7ffd64668afcaa47",
+  "bytes": 184320,
+  "generator": "GDAL 3.9.2 OGR GeoPackage driver, VERSION=1.4, SPATIAL_INDEX=YES; Python sqlite3 adds a nonspatial source_notes table",
+  "generatorScript": "scripts/generate-geopackage-fixture.py",
+  "license": "LicenseRef-Proprietary; inherits this repository's license for original generated test controls; no third-party spatial dataset is used",
+  "scope": "Core feature geometry and independent producer encoding; not OGC conformance certification",
+  "layers": [
+    {"table": "all", "epsg": 4326, "geometry": "Point ZM", "features": 4},
+    {"table": "routes_m", "epsg": 4326, "geometry": "LineString M", "features": 1},
+    {"table": "web_mercator", "epsg": 3857, "geometry": "Point", "features": 1},
+    {"table": "utm33", "epsg": 32633, "geometry": "Polygon with hole", "features": 1},
+    {"table": "collection", "epsg": 4326, "geometry": "GeometryCollection", "features": 1}
+  ],
+  "otherContents": ["source_notes: attributes"],
+  "checks": ["NULL and empty geometry", "unsafe integer IDs and attributes", "Chinese text", "Base64 binary attributes", "Boolean, date and datetime declarations", "original Z and M values", "NAD83/WKT and operation-area handling have separate tests and an externally sourced OGC sample"],
+  "regeneration": "Use --out NEW_FILE.gpkg. SQLite layout, timestamps and exact bytes can differ by producer version; the checked-in frozen file is separately pinned by SHA-256. The generator does not load the GeoD parser."
+}

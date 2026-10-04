@@ -1,0 +1,448 @@
+{
+  "checkedAt": "2026-10-02T01:58:51.736Z",
+  "product": {
+    "name": "NASA SRTMGL1 v003",
+    "collection": "SRTMGL1_003",
+    "horizontalReference": "EPSG:4326",
+    "verticalReference": "EGM96 / EPSG:5773",
+    "dataType": "Int16 big endian",
+    "grid": [
+      3601,
+      3601
+    ],
+    "pixelSizeDegrees": [
+      0.0002777777777777778,
+      0.0002777777777777778
+    ],
+    "pixelInterpretation": "PixelIsPoint",
+    "nodata": -32768
+  },
+  "scope": {
+    "livePublicCatalogue": true,
+    "publicBrowseImage": true,
+    "nativeMissingAccount": true,
+    "nativeHgtRead": "synthetic fixture directly seeded in isolated job records; not a NASA download",
+    "positiveEarthdataAuthorization": false,
+    "actualOriginalDownload": false,
+    "projectClipOrMosaic": "implemented; actual native processing of synthetic HGT inputs independently decoded by GDAL; not production original acceptance"
+  },
+  "catalogue": [
+    {
+      "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?collections=SRTMGL1_003&bbox=-122.55%2C37.68%2C-122.32%2C37.84&limit=100",
+      "status": 200,
+      "items": [
+        {
+          "id": "N37W123.SRTMGL1.hgt",
+          "collection": "SRTMGL1_003",
+          "bbox": [
+            -123.0002778,
+            36.9997222,
+            -121.9997222,
+            38.0002778
+          ]
+        }
+      ],
+      "next": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=SRTMGL1_003&limit=100&cursor=eyJqc29uIjoiW1wibHBjbG91ZFwiLDk1MDIyNzIwMDAwMCwyODIxMDc3Mzk2XSIsInVtbSI6IltcImxwY2xvdWRcIiw5NTAyMjcyMDAwMDAsMjgyMTA3NzM5Nl0ifQ%3D%3D"
+    },
+    {
+      "url": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search?bbox=-122.55%2C37.68%2C-122.32%2C37.84&collections=SRTMGL1_003&limit=100&cursor=eyJqc29uIjoiW1wibHBjbG91ZFwiLDk1MDIyNzIwMDAwMCwyODIxMDc3Mzk2XSIsInVtbSI6IltcImxwY2xvdWRcIiw5NTAyMjcyMDAwMDAsMjgyMTA3NzM5Nl0ifQ%3D%3D",
+      "status": 200,
+      "items": []
+    }
+  ],
+  "missingAccount": {
+    "itemId": "N38W123.SRTMGL1.hgt",
+    "assetKey": "srtm",
+    "status": "failed",
+    "bytesDownloaded": 0,
+    "outputPath": null,
+    "error": "Connect this data source in Settings before downloading protected files.",
+    "attempts": 1,
+    "settled": true
+  },
+  "syntheticFixture": {
+    "origin": "synthetic, directly seeded into isolated QA records; not a downloaded NASA file",
+    "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+    "bytes": 189633,
+    "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+    "independentGdal": {
+      "driver": "SRTMHGT",
+      "dtype": "int16",
+      "width": 3601,
+      "height": 3601,
+      "nodata": -32768,
+      "bounds": [
+        -123.00013888888888,
+        36.999861111111116,
+        -121.9998611111111,
+        38.00013888888889
+      ],
+      "transform": [
+        0.0002777777777777778,
+        0,
+        -123.00013888888888,
+        0,
+        -0.0002777777777777778,
+        38.00013888888889,
+        0,
+        0,
+        1
+      ],
+      "pixelInterpretation": "Point",
+      "fullGridCompared": 12967201,
+      "exactMatch": true
+    },
+    "nativeMetadata": {
+      "width": 3601,
+      "height": 3601,
+      "bandCount": 1,
+      "dataType": "Int16",
+      "crs": "EPSG:4326",
+      "bounds": [
+        -123.00013888888888,
+        36.99986111111111,
+        -121.99986111111112,
+        38.00013888888889
+      ],
+      "pixelSize": [
+        0.0002777777777777778,
+        0.0002777777777777778
+      ],
+      "nodata": -32768,
+      "previewWidth": 768,
+      "previewHeight": 768,
+      "classes": [],
+      "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+      "elevation": {
+        "product": "srtmgl1-v003",
+        "heightUnit": "metre",
+        "coordinateUnit": "degree",
+        "verticalReference": "EPSG:5773",
+        "pixelInterpretation": "PixelIsPoint",
+        "displayRange": [
+          -394,
+          4391
+        ],
+        "sampleCount": 589824,
+        "validSampleCount": 589823,
+        "nodataIsNan": false
+      }
+    },
+    "nativeSamples": [
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -123,
+          38
+        ],
+        "pixel": [
+          0,
+          0
+        ],
+        "center": [
+          -123,
+          38
+        ],
+        "value": -32768,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": true
+      },
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122,
+          38
+        ],
+        "pixel": [
+          3600,
+          0
+        ],
+        "center": [
+          -122,
+          38
+        ],
+        "value": -32767,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -123,
+          37
+        ],
+        "pixel": [
+          0,
+          3600
+        ],
+        "center": [
+          -123,
+          37
+        ],
+        "value": -27,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122,
+          37
+        ],
+        "pixel": [
+          3600,
+          3600
+        ],
+        "center": [
+          -122,
+          37
+        ],
+        "value": 32767,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122.99805555555555,
+          37.99861111111111
+        ],
+        "pixel": [
+          7,
+          5
+        ],
+        "center": [
+          -122.99805555555555,
+          37.99861111111111
+        ],
+        "value": -474,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122.99777777777778,
+          37.99861111111111
+        ],
+        "pixel": [
+          8,
+          5
+        ],
+        "center": [
+          -122.99777777777777,
+          37.99861111111111
+        ],
+        "value": 0,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      },
+      {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122.5,
+          37.5
+        ],
+        "pixel": [
+          1800,
+          1800
+        ],
+        "center": [
+          -122.5,
+          37.5
+        ],
+        "value": 1700,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      }
+    ],
+    "thumbnailDimensions": [
+      160,
+      160
+    ],
+    "pngVerifiedByPillow": true
+  },
+  "actualRuntimeRestart": {
+    "checkedAt": "2026-10-02T02:03:32.838393+00:00",
+    "actualRuntimeRestart": true,
+    "fixtureOrigin": "synthetic, directly seeded into isolated QA records; not a downloaded NASA file",
+    "sameMetadata": true,
+    "sameOriginalPixelSamples": true,
+    "samePng": true,
+    "cacheContentAndFileIdentityPreserved": {
+      "cache\\thumbnails\\v1\\c1fa3e3848f9cc0b4457a04a8e4628d4181be209ada75a9ce9a9d0f2e0a9ee53.json": {
+        "sha256": "81f11e1d6c5cd02e5c4cc1ff185841cf5bbfbc5808a515d6bb7f2d6504e255b3",
+        "mtimeNs": 1790906612824973800,
+        "bytes": 4736,
+        "fileId": 1125899912134059,
+        "deviceId": 1118046761265666400,
+        "createdNs": 1790905982310225000
+      }
+    },
+    "mtimePolicy": "Cache hits update modified time for least-recently-used eviction; contents and file identity remain unchanged"
+  },
+  "headlessViews": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "discovery": "live NASA CMR-STAC over browser CORS",
+      "browse": {
+        "width": 3601,
+        "height": 3601,
+        "alt": "高程浏览预览：N37W123"
+      },
+      "overflow": false,
+      "errors": [],
+      "protectedBrowserRequests": [],
+      "pixel": {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122.5,
+          37.5
+        ],
+        "pixel": [
+          1800,
+          1800
+        ],
+        "center": [
+          -122.5,
+          37.5
+        ],
+        "value": 1700,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "discovery": "captured actual CMR response replay",
+      "browse": {
+        "width": 3601,
+        "height": 3601,
+        "alt": "高程浏览预览：N37W123"
+      },
+      "overflow": false,
+      "errors": [],
+      "protectedBrowserRequests": [],
+      "pixel": {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122.5,
+          37.5
+        ],
+        "pixel": [
+          1800,
+          1800
+        ],
+        "center": [
+          -122.5,
+          37.5
+        ],
+        "value": 1700,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "discovery": "captured actual CMR response replay",
+      "browse": {
+        "width": 3601,
+        "height": 3601,
+        "alt": "高程浏览预览：N37W123"
+      },
+      "overflow": false,
+      "errors": [],
+      "protectedBrowserRequests": [],
+      "pixel": {
+        "jobId": "070b601e-d70d-4643-8fb8-f00ac452ba6e",
+        "sha256": "4aae5fec89b2c52ce21ba2566729c463e9b0c7bf2cc6c761fd63f4027b0ebecc",
+        "crs": "EPSG:4326",
+        "coordinate": [
+          -122.5,
+          37.5
+        ],
+        "pixel": [
+          1800,
+          1800
+        ],
+        "center": [
+          -122.5,
+          37.5
+        ],
+        "value": 1700,
+        "label": "Elevation",
+        "color": "#808080",
+        "isNoData": false
+      }
+    }
+  ],
+  "nativeBridge": "actual isolated geod-runtime 4325",
+  "csp": "desktop devCsp with explicit loopback browser QA bridge",
+  "screenshots": ".verification/srtm-ui/ (ignored local QA; synthetic Workspace rasters)",
+  "requirementsRemaining": [
+    "Positive Earthdata authorization and production HGT ZIP archive acceptance",
+    "Independent production source grid and height verification",
+    "Repeat project processing acceptance with authenticated production HGT originals",
+    "Reprojection and terrain analysis",
+    "Other planned products retain their separate status"
+  ],
+  "checks": {
+    "dependencyIsolationAndLocalDocLinks": "passed",
+    "desktopAclAndCsp": "passed",
+    "contractAndRecipeStructure": "passed (does not replace actual artifact validation)",
+    "nodeTests": {
+      "passed": 107
+    },
+    "reactIntegrationTests": {
+      "passed": 104,
+      "files": 18
+    },
+    "nativeRuntimeTests": {
+      "passed": 152,
+      "ignored": 4,
+      "failed": 0
+    },
+    "nativeCliTests": {
+      "passed": 3
+    },
+    "desktopCustomProtocolTests": {
+      "passed": 4
+    },
+    "frontendBuild": "passed; existing main chunk size warning remains",
+    "runtimeClippy": "passed with -D warnings",
+    "cargoFmt": "passed",
+    "gitDiffWhitespace": "passed",
+    "packagingOrPublishingPerformed": false
+  },
+  "processingEvidence": "srtm-processing-verification.json"
+}

@@ -1,0 +1,868 @@
+{
+  "schemaVersion": "geod-reflectance-inspection-verification/v1",
+  "checkedAt": "2026-10-01T12:46:48.668Z",
+  "scope": "Native original Landsat C2 L2 UInt16 and HLS L30 v2 Int16 inspection/display/pixel queries and persisted thumbnails",
+  "sources": [
+    {
+      "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+      "assetKey": "blue",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B2.TIF",
+      "bytes": 92080083,
+      "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+      "metadata": {
+        "width": 7671,
+        "height": 7791,
+        "bandCount": 1,
+        "dataType": "UInt16",
+        "crs": "EPSG:32610",
+        "bounds": [
+          462285,
+          4030485,
+          692415,
+          4264215
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "nodata": 0,
+        "previewWidth": 756,
+        "previewHeight": 768,
+        "classes": [],
+        "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+        "reflectance": {
+          "product": "landsat-c2-l2",
+          "band": "blue",
+          "scale": 0.0000275,
+          "offset": -0.2,
+          "displayRange": [
+            6839,
+            31391
+          ],
+          "sampleCount": 580608,
+          "validSampleCount": 395543,
+          "pixelInterpretation": "PixelIsPoint"
+        }
+      },
+      "samples": [
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            462300,
+            4264200
+          ],
+          "pixel": [
+            0,
+            0
+          ],
+          "center": [
+            462300,
+            4264200
+          ],
+          "value": 0,
+          "label": "blue reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            462330,
+            4264170
+          ],
+          "pixel": [
+            1,
+            1
+          ],
+          "center": [
+            462330,
+            4264170
+          ],
+          "value": 0,
+          "label": "blue reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            692400,
+            4030500
+          ],
+          "pixel": [
+            7670,
+            7790
+          ],
+          "center": [
+            692400,
+            4030500
+          ],
+          "value": 0,
+          "label": "blue reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            492300,
+            4204200
+          ],
+          "pixel": [
+            1000,
+            2000
+          ],
+          "center": [
+            492300,
+            4204200
+          ],
+          "value": 0,
+          "label": "blue reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            577350,
+            4147350
+          ],
+          "pixel": [
+            3835,
+            3895
+          ],
+          "center": [
+            577350,
+            4147350
+          ],
+          "value": 9341,
+          "reflectance": 0.056877500000000025,
+          "label": "blue reflectance band",
+          "color": "#0f0f0f",
+          "isNoData": false
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            537300,
+            4144200
+          ],
+          "pixel": [
+            2500,
+            4000
+          ],
+          "center": [
+            537300,
+            4144200
+          ],
+          "value": 24784,
+          "reflectance": 0.48156000000000004,
+          "label": "blue reflectance band",
+          "color": "#7b7b7b",
+          "isNoData": false
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            612300,
+            4114200
+          ],
+          "pixel": [
+            5000,
+            5000
+          ],
+          "center": [
+            612300,
+            4114200
+          ],
+          "value": 9219,
+          "reflectance": 0.05352249999999997,
+          "label": "blue reflectance band",
+          "color": "#0e0e0e",
+          "isNoData": false
+        },
+        {
+          "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+          "sha256": "e350eebc6dc62e40fd0f6ed7a8b4419be4a2787a897391e8ddbfaf59d2fb9cd1",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            642300,
+            4174200
+          ],
+          "pixel": [
+            6000,
+            3000
+          ],
+          "center": [
+            642300,
+            4174200
+          ],
+          "value": 11351,
+          "reflectance": 0.11215249999999999,
+          "label": "blue reflectance band",
+          "color": "#1d1d1d",
+          "isNoData": false
+        }
+      ]
+    },
+    {
+      "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+      "assetKey": "green",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B3.TIF",
+      "bytes": 93388645,
+      "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+      "metadata": {
+        "width": 7671,
+        "height": 7791,
+        "bandCount": 1,
+        "dataType": "UInt16",
+        "crs": "EPSG:32610",
+        "bounds": [
+          462285,
+          4030485,
+          692415,
+          4264215
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "nodata": 0,
+        "previewWidth": 756,
+        "previewHeight": 768,
+        "classes": [],
+        "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+        "reflectance": {
+          "product": "landsat-c2-l2",
+          "band": "green",
+          "scale": 0.0000275,
+          "offset": -0.2,
+          "displayRange": [
+            7968,
+            30114
+          ],
+          "sampleCount": 580608,
+          "validSampleCount": 395568,
+          "pixelInterpretation": "PixelIsPoint"
+        }
+      },
+      "samples": [
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            462300,
+            4264200
+          ],
+          "pixel": [
+            0,
+            0
+          ],
+          "center": [
+            462300,
+            4264200
+          ],
+          "value": 0,
+          "label": "green reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            462330,
+            4264170
+          ],
+          "pixel": [
+            1,
+            1
+          ],
+          "center": [
+            462330,
+            4264170
+          ],
+          "value": 0,
+          "label": "green reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            692400,
+            4030500
+          ],
+          "pixel": [
+            7670,
+            7790
+          ],
+          "center": [
+            692400,
+            4030500
+          ],
+          "value": 0,
+          "label": "green reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            492300,
+            4204200
+          ],
+          "pixel": [
+            1000,
+            2000
+          ],
+          "center": [
+            492300,
+            4204200
+          ],
+          "value": 0,
+          "label": "green reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            577350,
+            4147350
+          ],
+          "pixel": [
+            3835,
+            3895
+          ],
+          "center": [
+            577350,
+            4147350
+          ],
+          "value": 10062,
+          "reflectance": 0.07670500000000002,
+          "label": "green reflectance band",
+          "color": "#141414",
+          "isNoData": false
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            537300,
+            4144200
+          ],
+          "pixel": [
+            2500,
+            4000
+          ],
+          "center": [
+            537300,
+            4144200
+          ],
+          "value": 24277,
+          "reflectance": 0.46761749999999996,
+          "label": "green reflectance band",
+          "color": "#777777",
+          "isNoData": false
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            612300,
+            4114200
+          ],
+          "pixel": [
+            5000,
+            5000
+          ],
+          "center": [
+            612300,
+            4114200
+          ],
+          "value": 10572,
+          "reflectance": 0.09072999999999998,
+          "label": "green reflectance band",
+          "color": "#171717",
+          "isNoData": false
+        },
+        {
+          "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+          "sha256": "679c701ee7e0b0d9f6abc3dd49ebb0a58a9d4692b527f9e4643b7f35a4b2c1db",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            642300,
+            4174200
+          ],
+          "pixel": [
+            6000,
+            3000
+          ],
+          "center": [
+            642300,
+            4174200
+          ],
+          "value": 13899,
+          "reflectance": 0.1822225,
+          "label": "green reflectance band",
+          "color": "#2e2e2e",
+          "isNoData": false
+        }
+      ]
+    },
+    {
+      "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+      "assetKey": "red",
+      "itemId": "LC09_L2SP_044034_20250628_02_T1",
+      "href": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/044/034/LC09_L2SP_044034_20250628_20250629_02_T1/LC09_L2SP_044034_20250628_20250629_02_T1_SR_B4.TIF",
+      "bytes": 95591695,
+      "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+      "metadata": {
+        "width": 7671,
+        "height": 7791,
+        "bandCount": 1,
+        "dataType": "UInt16",
+        "crs": "EPSG:32610",
+        "bounds": [
+          462285,
+          4030485,
+          692415,
+          4264215
+        ],
+        "pixelSize": [
+          30,
+          30
+        ],
+        "nodata": 0,
+        "previewWidth": 756,
+        "previewHeight": 768,
+        "classes": [],
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "reflectance": {
+          "product": "landsat-c2-l2",
+          "band": "red",
+          "scale": 0.0000275,
+          "offset": -0.2,
+          "displayRange": [
+            7501,
+            30146
+          ],
+          "sampleCount": 580608,
+          "validSampleCount": 395568,
+          "pixelInterpretation": "PixelIsPoint"
+        }
+      },
+      "samples": [
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            462300,
+            4264200
+          ],
+          "pixel": [
+            0,
+            0
+          ],
+          "center": [
+            462300,
+            4264200
+          ],
+          "value": 0,
+          "label": "red reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            462330,
+            4264170
+          ],
+          "pixel": [
+            1,
+            1
+          ],
+          "center": [
+            462330,
+            4264170
+          ],
+          "value": 0,
+          "label": "red reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            692400,
+            4030500
+          ],
+          "pixel": [
+            7670,
+            7790
+          ],
+          "center": [
+            692400,
+            4030500
+          ],
+          "value": 0,
+          "label": "red reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            492300,
+            4204200
+          ],
+          "pixel": [
+            1000,
+            2000
+          ],
+          "center": [
+            492300,
+            4204200
+          ],
+          "value": 0,
+          "label": "red reflectance band",
+          "color": "#000000",
+          "isNoData": true
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            577350,
+            4147350
+          ],
+          "pixel": [
+            3835,
+            3895
+          ],
+          "center": [
+            577350,
+            4147350
+          ],
+          "value": 10096,
+          "reflectance": 0.07763999999999999,
+          "label": "red reflectance band",
+          "color": "#141414",
+          "isNoData": false
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            537300,
+            4144200
+          ],
+          "pixel": [
+            2500,
+            4000
+          ],
+          "center": [
+            537300,
+            4144200
+          ],
+          "value": 24571,
+          "reflectance": 0.4757025,
+          "label": "red reflectance band",
+          "color": "#797979",
+          "isNoData": false
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            612300,
+            4114200
+          ],
+          "pixel": [
+            5000,
+            5000
+          ],
+          "center": [
+            612300,
+            4114200
+          ],
+          "value": 12034,
+          "reflectance": 0.13093500000000002,
+          "label": "red reflectance band",
+          "color": "#212121",
+          "isNoData": false
+        },
+        {
+          "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+          "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+          "crs": "EPSG:32610",
+          "coordinate": [
+            642300,
+            4174200
+          ],
+          "pixel": [
+            6000,
+            3000
+          ],
+          "center": [
+            642300,
+            4174200
+          ],
+          "value": 14541,
+          "reflectance": 0.19987749999999999,
+          "label": "red reflectance band",
+          "color": "#333333",
+          "isNoData": false
+        }
+      ]
+    }
+  ],
+  "independentRasterChecks": [
+    {
+      "band": "blue",
+      "independentReader": "rasterio/GDAL + numpy/Pillow",
+      "metadataMatch": true,
+      "originalDnChecks": 8,
+      "reflectanceMatch": true,
+      "allPreviewPixelsMatch": true,
+      "previewPixels": 580608
+    },
+    {
+      "band": "green",
+      "independentReader": "rasterio/GDAL + numpy/Pillow",
+      "metadataMatch": true,
+      "originalDnChecks": 8,
+      "reflectanceMatch": true,
+      "allPreviewPixelsMatch": true,
+      "previewPixels": 580608
+    },
+    {
+      "band": "red",
+      "independentReader": "rasterio/GDAL + numpy/Pillow",
+      "metadataMatch": true,
+      "originalDnChecks": 8,
+      "reflectanceMatch": true,
+      "allPreviewPixelsMatch": true,
+      "previewPixels": 580608
+    }
+  ],
+  "persistentThumbnailRestart": [
+    {
+      "jobId": "6adb1062-e5c5-438d-80ca-a7f7f129ae80",
+      "band": "blue",
+      "identicalAfterRuntimeRestart": true,
+      "elapsedMs": 35
+    },
+    {
+      "jobId": "9785b8b8-8089-4778-9b63-f964c9af8df0",
+      "band": "green",
+      "identicalAfterRuntimeRestart": true,
+      "elapsedMs": 7
+    },
+    {
+      "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+      "band": "red",
+      "identicalAfterRuntimeRestart": true,
+      "elapsedMs": 6
+    }
+  ],
+  "interface": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "nativeRuntimeResponses": true,
+      "catalogueFixtureOnly": true,
+      "threeNativeThumbnails": true,
+      "rawBandInspection": true,
+      "pixelText": "DN 10,096\n\n反射率 · 0.07764\n\n列 3,835，行 3,895 · 从 0 计数\n\n577,350 · 4,147,350 m",
+      "pixel": {
+        "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "crs": "EPSG:32610",
+        "coordinate": [
+          577350,
+          4147350
+        ],
+        "pixel": [
+          3835,
+          3895
+        ],
+        "center": [
+          577350,
+          4147350
+        ],
+        "value": 10096,
+        "reflectance": 0.07763999999999999,
+        "label": "red reflectance band",
+        "color": "#141414",
+        "isNoData": false
+      },
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "nativeRuntimeResponses": true,
+      "catalogueFixtureOnly": true,
+      "threeNativeThumbnails": true,
+      "rawBandInspection": true,
+      "pixelText": "DN 10,096\n\n反射率 · 0.07764\n\n列 3,835，行 3,895 · 从 0 计数\n\n577,350 · 4,147,350 m",
+      "pixel": {
+        "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "crs": "EPSG:32610",
+        "coordinate": [
+          577350,
+          4147350
+        ],
+        "pixel": [
+          3835,
+          3895
+        ],
+        "center": [
+          577350,
+          4147350
+        ],
+        "value": 10096,
+        "reflectance": 0.07763999999999999,
+        "label": "red reflectance band",
+        "color": "#141414",
+        "isNoData": false
+      },
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "nativeRuntimeResponses": true,
+      "catalogueFixtureOnly": true,
+      "threeNativeThumbnails": true,
+      "rawBandInspection": true,
+      "pixelText": "DN 10,096\n\n反射率 · 0.07764\n\n列 3,835，行 3,895 · 从 0 计数\n\n577,350 · 4,147,350 m",
+      "pixel": {
+        "jobId": "e2f7220b-50ef-427c-a9b6-2c0e78a813c1",
+        "sha256": "3642840ee224c5af67a398f12532adc0f8d09d0eded5e8a1e512e01c09e4f546",
+        "crs": "EPSG:32610",
+        "coordinate": [
+          577350,
+          4147350
+        ],
+        "pixel": [
+          3835,
+          3895
+        ],
+        "center": [
+          577350,
+          4147350
+        ],
+        "value": 10096,
+        "reflectance": 0.07763999999999999,
+        "label": "red reflectance band",
+        "color": "#141414",
+        "isNoData": false
+      },
+      "overflow": false,
+      "errors": []
+    }
+  ],
+  "independentBrowserPixelChecks": {
+    "checks": 3,
+    "originalDnMatch": true,
+    "coordinateToPixelMatch": true,
+    "reflectanceMatch": true
+  },
+  "checks": {
+    "node": {
+      "passed": 82
+    },
+    "ui": {
+      "passed": 85
+    },
+    "native": {
+      "passed": 117,
+      "ignored": 1
+    },
+    "desktop": {
+      "passed": 4
+    },
+    "cargoFmt": "passed",
+    "runtimeClippyAllTargets": "passed",
+    "desktopClippyAllTargets": "passed",
+    "repositoryIsolation": "passed",
+    "desktopRegisteredCommands": 37,
+    "contracts": "passed",
+    "recipes": "passed",
+    "productionBuild": "passed"
+  },
+  "localFilesPreviouslyDownloaded": true,
+  "newOriginalTransfers": 0,
+  "hls": {
+    "originalDownloadWithRealAccount": false,
+    "typedReaderVerifiedWithDeterministicTiffFixtures": true,
+    "fixturesCover": [
+      "Int16",
+      "negative DN",
+      "NoData -9999",
+      "unbounded reflectance",
+      "original pixel boundaries",
+      "pixel type/grid/product mismatch",
+      "SHA-256 mismatch",
+      "managed paths",
+      "persistent cache restart"
+    ]
+  },
+  "limitations": [
+    "No NASA or Copernicus positive real-account original-download acceptance",
+    "Reflectance crop/mosaic and RGB composition not implemented",
+    "No QA/Fmask applied",
+    "SAFE JP2 local decoding not implemented",
+    "Native UI data exercised through headless browser plus actual native loopback adapter; no desktop takeover",
+    "Display sample percentiles are not whole-scene statistics",
+    "No installer or publication"
+  ],
+  "references": [
+    "https://www.usgs.gov/landsat-missions/landsat-collection-2-level-2-science-products",
+    "https://lpdaac.usgs.gov/documents/1698/HLS_User_Guide_V2.pdf",
+    "https://gdal.org/en/stable/development/rfc/rfc33_gtiff_pixelispoint.html"
+  ]
+}
