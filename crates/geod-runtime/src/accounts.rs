@@ -144,6 +144,7 @@ impl CredentialVault for UnsupportedVault {
     }
 }
 
+#[cfg(any(windows, test))]
 fn decode_saved(bytes: &[u8]) -> Result<StoredCredential> {
     let value: StoredCredential = serde_json::from_slice(bytes).map_err(|_| STORAGE_ERROR)?;
     if value.version != 1
