@@ -1,0 +1,579 @@
+{
+  "schema": "geod-global.forum-demand-research/v1",
+  "researchedAt": "2026-10-07",
+  "searchEngine": "Exa with supplemental web search/read for Reddit",
+  "exaCalls": 10,
+  "requestedResults": 90,
+  "returnedResults": 72,
+  "deduplicatedCandidates": 61,
+  "selectedForumThreads": 23,
+  "platforms": [
+    "Reddit",
+    "GIS Stack Exchange",
+    "Copernicus Data Space Community",
+    "ESA STEP Forum",
+    "NASA Earthdata Forum",
+    "小木虫"
+  ],
+  "limits": [
+    "Purposive sample, not market share or demand prevalence measurement",
+    "Chinese indexed results mostly tutorials; only one readable Chinese forum question retained",
+    "Older threads retained as recurring workflow evidence, not current service failure proof",
+    "CDSE 503 and 93% token failure threads explicitly report resolution",
+    "Existing implementation and saved acceptance records reviewed; no new AI workflow or data downloads executed"
+  ],
+  "scope": "2D imagery, radar and elevation; no 3D",
+  "implementationEvidence": [
+    "docs/provider-integration-status.md",
+    "docs/agent-conversation.md",
+    "docs/agent.md",
+    "crates/geod-runtime/src/agent_actions/catalog.rs",
+    "crates/geod-runtime/src/projects.rs"
+  ],
+  "conclusion": "AI对话可简化已支持公开二维产品的选源、区域解析、计划、下载、同网格处理和验收。任意波段、AOI质量选景、按区域远程采集、多区域/长时序批次及未接入产品仍有缺口；不宣称23条需求已被实际对话下载解决。",
+  "workflow": "用途与约束解析 → 可用产品和实际行政区/上传范围 → 查询分页/覆盖与质量 → 预算及权限 → 用户确认或已授权自动执行 → 原生下载/处理 → settled状态及文件校验 → 结果与缺测报告",
+  "priorityOrder": [
+    {
+      "priority": "P0",
+      "item": "用途到可用产品的明确映射，严格区分科学波段、真彩色、渲染图；保留时间/分辨率/格式硬条件"
+    },
+    {
+      "priority": "P0",
+      "item": "研究区内云/阴影与有效覆盖评分，查询完整性和多景组合；不把第一景或整景云量当区域质量"
+    },
+    {
+      "priority": "P0",
+      "item": "增加Sentinel-2红光/NIR及必要科学波段，校准与质量后可核对的指数"
+    },
+    {
+      "priority": "P0",
+      "item": "真正按AOI采集COG窗口，配合容量预算；当前下载整景再裁剪不算节省传输"
+    },
+    {
+      "priority": "P0",
+      "item": "真实NASA/CDSE授权验收及完整批次缺失检查；可靠恢复、来源绑定、令牌/上游故障分类"
+    },
+    {
+      "priority": "P1",
+      "item": "多AOI与逐月/逐年批次，分片、跨网格处理、确定性命名、部分成功与续跑"
+    },
+    {
+      "priority": "P1",
+      "item": "按用户目标扩展历史Landsat、热红外/LST、VIIRS夜光、HLS多波段及其他MODIS产品；每产品独立验收"
+    }
+  ],
+  "records": [
+    {
+      "id": "D01",
+      "platform": "Reddit r/gis",
+      "date": "2025-03-26",
+      "dateEvidence": "检索索引明确日期；正文核读",
+      "title": "How to download Landsat satellite imagery?",
+      "url": "https://www.reddit.com/r/gis/comments/1jkjp48/how_to_download_landsat_satellite_imagery/",
+      "need": "波士顿能看清建筑的影像；希望全市一张图而非手动逐瓦片",
+      "fit": "可利用现有能力完成受限范围",
+      "current": "NAIP RGB+NIR 原文件、地图和同网格裁剪/拼接已有真实验收",
+      "gap": "先确认建筑尺度及可用年份；全市高分辨率需要容量/网格预检，不能承诺任意整市单文件",
+      "prompt": "下载波士顿能看清建筑的公开影像，告诉我实际年份，按城区边界保存为GeoTIFF。",
+      "priority": "P0",
+      "evidence": "docs/provider-integration-status.md:20; docs/agent.md:538"
+    },
+    {
+      "id": "D02",
+      "platform": "Reddit r/remotesensing",
+      "date": "2026-09-29",
+      "dateEvidence": "检索明确日期；原帖正文核读",
+      "title": "Free high-resolution satellite imagery sources for university research?",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1wt8ric/free_highresolution_satellite_imagery_sources_for/",
+      "need": "伊朗低于10米的NDVI/NDRE历史时序；免费或学术可用",
+      "fit": "当前不能完整满足",
+      "current": "公开Sentinel真彩色/SCL；固定Agent不提供NIR/红边下载或NDRE",
+      "gap": "区域可用授权高分数据、NIR/红边科学波段、指数与时序；不得用重采样或真彩色冒充",
+      "prompt": "给我伊朗这片农田小于10米、可发表研究的NDVI/NDRE时序；没有合适数据请明确说明。",
+      "priority": "P1",
+      "evidence": "crates/geod-runtime/src/agent_actions/catalog.rs:35; docs/agent.md:158"
+    },
+    {
+      "id": "D03",
+      "platform": "Reddit r/remotesensing",
+      "date": "2024-07-03",
+      "dateEvidence": "检索明确日期；原帖正文核读",
+      "title": "How to download high resolution thermal satellite imagery?",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1dusn6g/how_to_download_high_resolution_thermal_satellite/",
+      "need": "德黑兰城市热岛项目的高分辨率热红外影像",
+      "fit": "当前不能满足",
+      "current": "当前Landsat固定下载项是RGB和QA；没有温度产品适配",
+      "gap": "Landsat地表温度/ECOSTRESS等逐产品接入，温度校准、质量和实际空间分辨率",
+      "prompt": "下载德黑兰夏季热岛分析用的地表温度影像，保留温度单位和质量信息。",
+      "priority": "P1",
+      "evidence": "crates/geod-runtime/src/agent_actions/catalog.rs:37"
+    },
+    {
+      "id": "D04",
+      "platform": "Reddit r/remotesensing",
+      "date": "2026-05-27",
+      "dateEvidence": "检索明确日期；原帖正文核读",
+      "title": "Is it possible to download high-resolution Google Maps satellite imagery for free for research purposes?",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1tpahaz/is_it_possible_to_download_highresolution_google/",
+      "need": "南亚深度学习特征提取，类似Google卫星底图的高清数据及使用权",
+      "fit": "可帮助选源；不能承诺下载目标数据",
+      "current": "公开原波段与渲染底图分别登记；通用服务来源有局部适配",
+      "gap": "各国正射/授权数据源覆盖、训练与发表许可核查；地图可见不等于原波段或下载权",
+      "prompt": "找适合南亚建筑识别训练的公开高清影像，列出覆盖、年份和使用条件再下载。",
+      "priority": "P1",
+      "evidence": "docs/provider-integration-status.md:20; docs/provider-integration-status.md:29"
+    },
+    {
+      "id": "D05",
+      "platform": "GIS Stack Exchange",
+      "date": "2025-05-21",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Limit to the bounding box size when making requests using the Sentinel Hub API",
+      "url": "https://gis.stackexchange.com/questions/493572/limit-to-the-bounding-box-size-when-making-requests-using-the-sentinel-hub-api",
+      "need": "AOI扩大后10米RGB请求触发2500像素宽高上限；希望保持分辨率",
+      "fit": "有替代来源基础；大范围需补齐",
+      "current": "可走Earth Search/PC直接COG；同网格流式拼接，工程最多32景",
+      "gap": "自动分片、跨网格重投影、预算预检和分片交付；论坛API上限不等于本软件上限",
+      "prompt": "按10米分辨率下载这个较大区域，自动分片，不能偷偷降分辨率。",
+      "priority": "P0",
+      "evidence": "crates/geod-runtime/src/projects.rs:13; crates/geod-runtime/src/mosaic/stream.rs"
+    },
+    {
+      "id": "D06",
+      "platform": "GIS Stack Exchange",
+      "date": "2024-01-10",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Download Sentinel-2A imagery to local machine",
+      "url": "https://gis.stackexchange.com/questions/474018/download-sentinel-2a-imagery-to-local-machine",
+      "need": "按矢量边界逐景导出S2，导出分裂且ArcGIS波段值异常",
+      "fit": "RGB/SCL流程可解决部分；任意波段不足",
+      "current": "保留原始类型、网格与校准；真实文件下载和原值检查",
+      "gap": "S2科学波段未覆盖；需数据类型/缩放/NoData检查，不能把显示拉伸图当科学数据",
+      "prompt": "按我的边界逐景下载哨兵数据，保留科学数值，并检查GeoTIFF能否正确读取。",
+      "priority": "P0",
+      "evidence": "docs/agent.md:158; docs/agent.md:219"
+    },
+    {
+      "id": "D07",
+      "platform": "GIS Stack Exchange",
+      "date": "2023-08-20",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Opening a Sentinel 2 imagery from AWS servers using Python rasterio module",
+      "url": "https://gis.stackexchange.com/questions/465480/opening-a-sentinel-2-imagery-from-aws-servers-using-python-rasterio-module",
+      "need": "只读多边形内B04/B08计算NDVI；整景下载慢且结果数值错误",
+      "fit": "当前不能完整满足",
+      "current": "COG预览和下载后裁剪已有；固定S2仅visual/SCL",
+      "gap": "按AOI远程COG窗口采集；S2红/NIR、校准后的NDVI及原值核对",
+      "prompt": "只下载这个地块的红光和近红外，不下载整景，并生成正确的NDVI。",
+      "priority": "P0",
+      "evidence": "docs/provider-integration-status.md:12; crates/geod-runtime/src/agent_actions/catalog.rs:35"
+    },
+    {
+      "id": "D08",
+      "platform": "GIS Stack Exchange",
+      "date": "2021-03-02",
+      "dateEvidence": "核读原帖明确日期；保留旧帖作工作流需求",
+      "title": "Obtaining small images that intersect with shapefile on Google Earth Engine",
+      "url": "https://gis.stackexchange.com/questions/388738/obtaining-small-images-that-intersect-with-shapefile-on-google-earth-engine",
+      "need": "1250个2.5公里方格分别导出10米RGB合成，现有脚本崩溃",
+      "fit": "小批次基础可复用；规模工作流未覆盖",
+      "current": "单工程区域裁剪与有界任务；不是1250地块批量产品",
+      "gap": "多AOI循环、按要素编号命名、时间合成、持久批次清单与部分成功恢复",
+      "prompt": "按上传文件中的地块分别下载，按地块编号命名，失败的单独列出。",
+      "priority": "P1",
+      "evidence": "crates/geod-runtime/src/projects.rs:13; docs/agent-conversation.md"
+    },
+    {
+      "id": "D09",
+      "platform": "ESA STEP Forum",
+      "date": "2021-12-16",
+      "dateEvidence": "核读原帖明确日期；旧帖不当作当前故障",
+      "title": "Manually download DEMs",
+      "url": "https://forum.step.esa.int/t/manually-download-dems/34219",
+      "need": "公司代理/离线场景下手动准备SRTM地形校正辅助数据",
+      "fit": "公开高程可替代部分；不等同原需求",
+      "current": "GLO-30/90下载和同网格处理已验收；SRTM授权原包待真实账号",
+      "gap": "指定SRTM1/3、EGM96/EGM2008及DSM差异必须解释；SNAP辅助目录/轨道安装未实现",
+      "prompt": "给我这个研究区可离线使用的高程；如果不是SRTM，请说明产品和高程基准差异。",
+      "priority": "P0",
+      "evidence": "docs/provider-integration-status.md:17; docs/provider-integration-status.md:19"
+    },
+    {
+      "id": "D10",
+      "platform": "ESA STEP Forum",
+      "date": "2019-05-18",
+      "dateEvidence": "核读原帖明确日期；旧帖作归档/规模需求",
+      "title": "Downloading Sentinel 1 data of an entire Country",
+      "url": "https://forum.step.esa.int/t/downloading-sentinel-1-data-of-an-entire-country/15597",
+      "need": "整个国家2017至2018年的全部Sentinel-1原始数据，部分历史产品难找",
+      "fit": "RTC子集可做；原始整国归档未覆盖",
+      "current": "Sentinel-1 IW RTC VV/VH/HH/HV原文件与处理有真实记录",
+      "gap": "GRD/SLC及轨道选择、归档完整性、海量时序和跨网格；RTC不能静默代替GRD/SLC",
+      "prompt": "下载这个国家2017至2018年的Sentinel-1；先核实我要的是RTC还是GRD/SLC。",
+      "priority": "P1",
+      "evidence": "docs/provider-integration-status.md:24"
+    },
+    {
+      "id": "D11",
+      "platform": "Copernicus Data Space Community",
+      "date": "2024-07-02",
+      "dateEvidence": "核读原帖及回复明确日期",
+      "title": "Access token creation failed for large number of image download",
+      "url": "https://forum.dataspace.copernicus.eu/t/access-token-creation-failed-for-large-number-of-image-download/835",
+      "need": "批量5000景S2 L1C运行10小时后token失效",
+      "fit": "授权适配基础已实现；规模/产品未验收",
+      "current": "Global有CDSE授权与受保护L2A SAFE适配；没有真实授权正向验收",
+      "gap": "L1C不在固定来源；5000景队列、刷新/重认证、来源绑定恢复、限流；不可承诺AI修复提供方",
+      "prompt": "批量下载5000景，令牌失效时保留进度并引导重新授权，不重复成功文件。",
+      "priority": "P1",
+      "evidence": "docs/agent.md:182; docs/provider-integration-status.md:16"
+    },
+    {
+      "id": "D12",
+      "platform": "Copernicus Data Space Community",
+      "date": "2026-05-08",
+      "dateEvidence": "核读；2026-05-18/19用户确认恢复",
+      "title": "OData and browser downloads 503",
+      "url": "https://forum.dataspace.copernicus.eu/t/odata-and-browser-downloads-503/5067",
+      "need": "目录与登录均正常，原包下载503，浏览器同样失败",
+      "fit": "应正确报告与恢复；不能保证直接解决",
+      "current": "任务区分失败与成功；用户可明确重试；不同源不能默认视为同产品",
+      "gap": "区分上游故障/授权/网络；同等产品镜像推荐需核实，不偷换SAFE为预览；此帖故障已恢复",
+      "prompt": "这次下载失败，检查是授权还是服务故障；有等价公开来源时说明差异再继续。",
+      "priority": "P0",
+      "evidence": "docs/agent-conversation.md:45; docs/agent-integration-status.md:49"
+    },
+    {
+      "id": "D13",
+      "platform": "NASA Earthdata Forum",
+      "date": "2025-08-19",
+      "dateEvidence": "核读原帖作者时间",
+      "title": "HLS data access and spatial subsetting",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=7149",
+      "need": "数百H3区域2015至今每日HLS L30/S30 B2/B4/NIR/Fmask并计算EVI，整景慢/云访问拒绝",
+      "fit": "当前不能完整满足",
+      "current": "固定HLS仅L30 RGB；原包正向授权待验收",
+      "gap": "S30、NIR/Fmask、远程区域读、多AOI/多年批次、EVI；不能以MODIS 16天EVI替代高频HLS",
+      "prompt": "每天检查这些地块的HLS新数据，下载所需波段并续接EVI时序。",
+      "priority": "P1",
+      "evidence": "crates/geod-runtime/src/agent_actions/catalog.rs:44; docs/provider-integration-status.md:15"
+    },
+    {
+      "id": "D14",
+      "platform": "NASA Earthdata Forum",
+      "date": "2024-03-31",
+      "dateEvidence": "核读原帖作者时间",
+      "title": "Question about MODIS daily data GeoTIFF download",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=5356",
+      "need": "北极2000至2023年每日MCD43A4/反照率GeoTIFF，订单长期排队",
+      "fit": "当前不能满足指定产品",
+      "current": "已接MOD09A1/MYD09A1 8天与MOD13Q1/MYD13Q1 16天；不是整个MODIS平台",
+      "gap": "MCD43产品接入与多年日序列分片；不把8天/16天产品当每日数据",
+      "prompt": "下载这片北极区域2000至2023年每日MCD43A4，不要用8天反射率替代。",
+      "priority": "P1",
+      "evidence": "docs/provider-integration-status.md:11; docs/provider-integration-status.md:21"
+    },
+    {
+      "id": "D15",
+      "platform": "小木虫",
+      "date": "",
+      "dateEvidence": "原帖发布日期未抽取；可见2019-12-08回复，不据此推定发帖日期",
+      "title": "请问GF和SPOT卫星数据有免费下载的地方吗？",
+      "url": "https://muchong.com/t-13708167-1",
+      "need": "免费获取GF/SPOT高分辨率影像",
+      "fit": "可提供替代选源；未接目标数据",
+      "current": "Global定位国际公开二维来源；未接GF/SPOT授权下载",
+      "gap": "数据可用性和使用权不因AI改变；可用公开源只能在分辨率/覆盖满足时推荐",
+      "prompt": "我想找免费高分影像，先核实这片区域有哪些可用产品，不要直接给底图截图。",
+      "priority": "P2",
+      "evidence": "docs/agent.md:158"
+    },
+    {
+      "id": "D16",
+      "platform": "GIS Stack Exchange",
+      "date": "2021-10-20",
+      "dateEvidence": "核读原帖明确日期；旧帖作AOI质量需求",
+      "title": "Filtering Sentinel2 image collection by cloud coverage over specific polygon",
+      "url": "https://gis.stackexchange.com/questions/414431/filtering-sentinel2-image-collection-by-cloud-coverage-over-specific-polygon",
+      "need": "只按研究区云量筛选，整景云量会错删可用影像",
+      "fit": "缺少通用AOI评分",
+      "current": "目录云量筛选、SCL数据与部分Landsat/MODIS质量处理已有",
+      "gap": "S2 AOI内有效覆盖、云/阴影比例与排序；单纯clip不会重新计算元数据云量，论坛答案不作为实现依据",
+      "prompt": "只看我研究区的云和阴影比例，选覆盖完整且可用像元最多的一组影像。",
+      "priority": "P0",
+      "evidence": "docs/agent.md:158; docs/provider-integration-status.md:14"
+    },
+    {
+      "id": "D17",
+      "platform": "GIS Stack Exchange",
+      "date": "2024-01-12",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Error when trying to export monthly images from Sentinel 2",
+      "url": "https://gis.stackexchange.com/questions/474194/error-when-trying-to-export-monthly-images-from-sentinel-2",
+      "need": "逐月导出多光谱波段、NDVI/EVI等，批处理代码错误",
+      "fit": "现有单次下载不足以覆盖",
+      "current": "MODIS已计算NDVI/EVI及质量处理；S2任意指数/逐月合成不在固定适配",
+      "gap": "按月拆任务、波段数学、合成策略、无数据月份标记与确定性命名",
+      "prompt": "逐月下载2024年这片区域影像和NDVI，缺测月份明确列出。",
+      "priority": "P1",
+      "evidence": "docs/agent.md:238; crates/geod-runtime/src/agent_actions/catalog.rs:35"
+    },
+    {
+      "id": "D18",
+      "platform": "GIS Stack Exchange",
+      "date": "2023-11-25",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Discrepancy between actual size of coordinates and clipped satellite image box sizes",
+      "url": "https://gis.stackexchange.com/questions/470900/discrepancy-between-actual-size-of-coordinates-and-clipped-satellite-image-box-s",
+      "need": "AOI裁剪图仅覆盖部分区域；代码只选first景",
+      "fit": "可复用拼接；自动覆盖判定待强化",
+      "current": "相交检索、原生同网格拼接、覆盖标记；明确目录相交不是完整覆盖",
+      "gap": "搜索分页、同日期可用景集合和覆盖率/缺口评估；不能一景first默认完成",
+      "prompt": "下载完整覆盖这个区域的影像，拼接后检查哪些地方仍缺数据。",
+      "priority": "P0",
+      "evidence": "docs/agent.md:246; docs/agent-conversation.md:33"
+    },
+    {
+      "id": "D19",
+      "platform": "Copernicus Data Space Community",
+      "date": "2026-04-10",
+      "dateEvidence": "核读；发帖人2026-04-13称已下载成功",
+      "title": "401 Error message",
+      "url": "https://forum.dataspace.copernicus.eu/t/401-error-message/4954",
+      "need": "S2下载93%时令牌过期，耗时后重来",
+      "fit": "需账户实测才能作可靠承诺",
+      "current": "保存授权和原生刷新路径已有；安全下载及部分文件区别",
+      "gap": "实际CDSE长传输/刷新/续取正向验收；帖子已解决，不当作现时服务不可用",
+      "prompt": "这个任务下载到93%失败了，核对进度和授权后继续，不把部分文件标成完成。",
+      "priority": "P0",
+      "evidence": "docs/agent.md:207; docs/provider-integration-status.md:16"
+    },
+    {
+      "id": "D20",
+      "platform": "NASA Earthdata Forum",
+      "date": "2024-08-28",
+      "dateEvidence": "核读原帖作者时间",
+      "title": "Unable to download HLS data: 403 error but authenticated",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=5893",
+      "need": "已登录且可检索HLS，原波段下载却403",
+      "fit": "授权入口有；不能宣称端到端解决",
+      "current": "Earthdata本机账号状态和受保护下载适配；正向原包等待测试账号",
+      "gap": "登录成功/产品权限/云端地域与具体访问权限分别诊断",
+      "prompt": "我已经登录Earthdata却下载不了HLS，检查具体授权状态并说明下一步。",
+      "priority": "P0",
+      "evidence": "docs/provider-integration-status.md:15; docs/agent.md:203"
+    },
+    {
+      "id": "D21",
+      "platform": "Copernicus Data Space Community",
+      "date": "2025-03-04",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Download process stops before all required data have been downloaded",
+      "url": "https://forum.dataspace.copernicus.eu/t/download-process-stops-before-all-the-required-data-have-been-downloaded/3344",
+      "need": "并行4景下载一个月的数据，中途停止且漏景，网页能查到",
+      "fit": "任务可查；完整批次采集仍需补齐",
+      "current": "查询分页有界、工程最多32景、任务有真实状态及用户重试",
+      "gap": "全集分页清单、期望/完成差集、批次状态、去重与失败续跑；不把第一页当全部",
+      "prompt": "检查这个月哪些景漏下载了，只补缺失文件，并给出完成清单。",
+      "priority": "P0",
+      "evidence": "docs/agent.md:249; crates/geod-runtime/src/projects.rs:13"
+    },
+    {
+      "id": "D22",
+      "platform": "GIS Stack Exchange",
+      "date": "2025-04-14",
+      "dateEvidence": "核读原帖明确日期",
+      "title": "Download monthly VIIRS for certain years",
+      "url": "https://gis.stackexchange.com/questions/491902/download-monthly-viirs-for-certain-years",
+      "need": "2018至2024月度VIIRS夜光，cf_cvg>=5质量过滤，按年月命名",
+      "fit": "当前不能满足",
+      "current": "接入VIIRS09A1反射率并非DNB夜光；没有夜光月度产品适配",
+      "gap": "VIIRS DNB月度avg_rad/cf_cvg、质量与单位、逐月批次、命名",
+      "prompt": "下载2018至2024年这个行政区每月VIIRS夜光，观测数至少5并按年月保存。",
+      "priority": "P1",
+      "evidence": "docs/provider-integration-status.md:22"
+    },
+    {
+      "id": "D23",
+      "platform": "Reddit r/gis",
+      "date": "2026",
+      "dateEvidence": "搜索索引2026-08-13；页面相对时间不一致，确切日期未确认",
+      "title": "Looking for 1995 Satellite Imagery",
+      "url": "https://www.reddit.com/r/gis/comments/1vnh36v/looking_for_1995_satellite_imagery/",
+      "need": "1995年海岸制图的较高空间分辨率历史影像",
+      "fit": "当前固定来源不能满足",
+      "current": "Landsat固定适配只接8/9；未接5/7及地方历史航空档案",
+      "gap": "Landsat历史传感器与公开正射档案；需处理历史年份/覆盖/地理配准，不能拿现代影像替代",
+      "prompt": "给我这个海岸1995年的影像，找不到所需分辨率时提供真实可用的替代方案。",
+      "priority": "P1",
+      "evidence": "crates/geod-runtime/src/agent_actions/catalog.rs:37"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "A01",
+      "record": [
+        "D01"
+      ],
+      "prompt": "下载波士顿能看清建筑的公开影像，告诉我实际年份并按城区保存为GeoTIFF。",
+      "expected": "选NAIP等实际可用高清源，核实覆盖/年份/网格/容量；下载后原值与坐标检查，不强求整市单图",
+      "stage": "现有能力的场景验收",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A02",
+      "record": [
+        "D18"
+      ],
+      "prompt": "我要下载纽约最新卫星影像，按纽约市边界裁剪，检查完整覆盖。",
+      "expected": "纽约市多边形与同名州区分；实际UTC和观测日期；多景覆盖率及缺口报告；下载后settled文件检查",
+      "stage": "现有流程可复用；覆盖质量评分待补",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A03",
+      "record": [
+        "D09"
+      ],
+      "prompt": "下载这片山区的公开高程，拼接裁剪后离线使用，说明高程基准。",
+      "expected": "GLO-30/90在实际网格允许时处理；声明DSM/EGM2008；不能默认为SRTM/EGM96；原Float32保持",
+      "stage": "现有能力的场景验收",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A04",
+      "record": [
+        "D17"
+      ],
+      "prompt": "下载这个研究区2024年MODIS 16天NDVI/EVI，保留质量信息。",
+      "expected": "13Q1真实指数非RGB推算；日期为16天合成；原DN/scale/NoData和四层匹配；全年分批和空期报告",
+      "stage": "单批产品已支持；完整全年批次验收未执行",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A05",
+      "record": [
+        "D07"
+      ],
+      "prompt": "只下载这个农田的红光和近红外并计算NDVI，不要下载整景。",
+      "expected": "需S2科学波段和远程AOI窗口采集；不能以真彩色/先下整景冒充；校准后NDVI独立核对",
+      "stage": "需研发",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A06",
+      "record": [
+        "D16",
+        "D18"
+      ],
+      "prompt": "找最近三个月研究区内云影最少、覆盖完整的影像，不是整景云量最低。",
+      "expected": "按AOI计算质量/有效覆盖，输出影像组合与实际日期；明确没有达标数据",
+      "stage": "需研发AOI质量选景",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A07",
+      "record": [
+        "D08"
+      ],
+      "prompt": "按这个文件里的1250个地块分别下载，按编号命名，只重跑失败地块。",
+      "expected": "持久多AOI批次、去重、部分成功清单、资源预算；不一轮无限工具调用",
+      "stage": "需研发",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A08",
+      "record": [
+        "D11",
+        "D19",
+        "D20",
+        "D21"
+      ],
+      "prompt": "继续上次下载，只补漏景，遇到授权过期保留进度并告诉我如何重新授权。",
+      "expected": "完整期望清单与差集、来源绑定续取、权限刷新/引导；不把登录或部分文件当成果",
+      "stage": "已有局部能力；正向账户及完整批次待验收",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A09",
+      "record": [
+        "D22"
+      ],
+      "prompt": "下载2018到2024年每月VIIRS夜光，cf_cvg至少5，按年月保存。",
+      "expected": "接入DNB avg_rad/cf_cvg；不能用09A1反射率替代；真实单位与年月批次",
+      "stage": "需新产品适配",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A10",
+      "record": [
+        "D03"
+      ],
+      "prompt": "下载德黑兰热岛分析用的地表温度，保留开尔文和质量掩膜。",
+      "expected": "温度产品、缩放偏移/QA/实际分辨率；不能用RGB或插值当高分温度",
+      "stage": "需新产品适配",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A11",
+      "record": [
+        "D23"
+      ],
+      "prompt": "找这个海岸1995年的影像；没有高分数据就说明限制，不要换成2025年。",
+      "expected": "历史传感器/档案与明确年份；空结果/不可满足是真实回答，不修改硬条件",
+      "stage": "需历史来源适配",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    },
+    {
+      "id": "A12",
+      "record": [
+        "D02",
+        "D04",
+        "D15"
+      ],
+      "prompt": "我要这片伊朗区域免费小于10米、能用于论文的NDRE影像。",
+      "expected": "核对NIR/红边/空间分辨率/许可/覆盖；不能把10米插值成5米或底图PNG冒充原波段",
+      "stage": "约束识别和可用性报告验收",
+      "status": "未执行_研究建议",
+      "downloadPerformed": false,
+      "aiModelCalled": false
+    }
+  ],
+  "successDefinition": [
+    "实际区域/产品/日期/波段符合需求",
+    "必要下载和处理状态为succeeded且settled",
+    "真实文件完整校验、有效栅格、坐标/范围/类型/NoData/scale单位检查",
+    "缺测/失败/覆盖缺口明确；来源与许可可追踪",
+    "出现限制时不能偷换数据类型、分辨率或年份"
+  ],
+  "observedButNotAdopted": [
+    "部分论坛答案与数据科学规则不一致，例如裁剪不会自动重算目录云量；原帖只用于需求证据",
+    "大范围已有流式同网格处理，不沿用旧版800万总像素限制；仍不能从局部验收推出任意省/国数据和通用重投影已支持",
+    "Google/商业授权问题不从论坛回复直接下法律结论；这里只记录实际需求和当前未覆盖状态"
+  ],
+  "filesCreatedOnly": true,
+  "productChanged": false,
+  "newEndToEndAcceptance": false
+}

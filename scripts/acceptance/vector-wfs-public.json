@@ -1,0 +1,9 @@
+{
+  "name": "WFS Berlin cities",
+  "url": "https://demo.mapserver.org/cgi-bin/wfs",
+  "protocol": "WFS2",
+  "collectionId": "ms:cities",
+  "bounds": [13.2, 52.4, 13.6, 52.6],
+  "pageSize": 1,
+  "responseFormat": "gml32"
+}

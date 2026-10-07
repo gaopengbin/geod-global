@@ -1,0 +1,109 @@
+{
+  "schema": "geod-agent-place-verification/v1",
+  "status": "passed",
+  "verifiedAt": "2026-10-06T13:28:38.691800+00:00",
+  "scope": "Desktop development; user-named place lookup, declared latest-imagery defaults and review preparation",
+  "reportedHumanPrompt": "我要下载纽约最新的卫星影像",
+  "mapContext": "unrelated San Francisco area",
+  "realModel": {
+    "modelRoute": "deepseek-v4-flash",
+    "upstreamVendorVerified": false,
+    "humanMessages": 1,
+    "toolSequence": [
+      "geod_place_search",
+      "geod_workspace_context",
+      "geod_sources_list",
+      "geod_scene_search",
+      "geod_download_plan"
+    ],
+    "cityExtent": [
+      -74.258843,
+      40.476578,
+      -73.700233,
+      40.91763
+    ],
+    "nativeReviewStatus": "pending",
+    "files": [
+      {
+        "assetKey": "visual",
+        "bytes": 126593259,
+        "date": "2026-10-03T15:52:07.006000Z",
+        "itemId": "S2C_18TWK_20261003_0_L2A"
+      },
+      {
+        "assetKey": "visual",
+        "bytes": 277418719,
+        "date": "2026-10-03T15:51:52.428000Z",
+        "itemId": "S2C_18TWL_20261003_0_L2A"
+      },
+      {
+        "assetKey": "visual",
+        "bytes": 85854073,
+        "date": "2026-10-03T15:52:03.712000Z",
+        "itemId": "S2C_18TXK_20261003_0_L2A"
+      },
+      {
+        "assetKey": "visual",
+        "bytes": 296338516,
+        "date": "2026-10-03T15:51:49.078000Z",
+        "itemId": "S2C_18TXL_20261003_0_L2A"
+      }
+    ],
+    "expectedBytes": 786204567,
+    "compactResponseChecked": true,
+    "catalogIntersectionDoesNotProveFullCoverage": true
+  },
+  "placeService": {
+    "provider": "Photon",
+    "endpoint": "https://photon.komoot.io/api/",
+    "documentation": "https://github.com/komoot/photon/blob/master/docs/api-v1.md",
+    "dataAttribution": "© OpenStreetMap contributors",
+    "dataLicense": "ODbL-1.0",
+    "cacheDays": 7,
+    "cacheSurvivesRestart": true,
+    "maxCandidates": 5,
+    "maxResponseBytes": 1048576,
+    "maxRequestsPerSecond": 1,
+    "bulkOrAutocomplete": false,
+    "serviceSlaClaimed": false
+  },
+  "checks": {
+    "runtimeAgentTests": 56,
+    "desktopTests": 35,
+    "nodeAgentTests": 69,
+    "agentPanelTests": 52,
+    "clippyWarningsDenied": "passed",
+    "repositoryIsolation": "passed"
+  },
+  "execution": {
+    "originalFileDownloads": 0,
+    "jobsQueued": 0,
+    "userCredentialsReadOrChanged": false,
+    "usedUserDesktop": false,
+    "installerCreated": false,
+    "published": false
+  },
+  "evidence": [
+    {
+      "file": ".verification/agent-place-model-1791293219324329000/case/native-acceptance.json",
+      "sha256": "27a5b772c7e74fe695d673f4f18fb1e151e7f7e0ffe334c7f0ecaf477140f321"
+    },
+    {
+      "file": ".verification/agent-place-public-1791293204396/native-acceptance.json",
+      "sha256": "d66eda1a40b0cf3c5bdd96dcca480cba7459d92fa702e4fcd371866c2d6c5e50"
+    },
+    {
+      "file": "agent/service.mjs",
+      "sha256": "df0a4e9f702042f6321c9ba2744ab5eac57c81753794bb7971f46c9f209b0525"
+    },
+    {
+      "file": "crates/geod-runtime/src/agent_actions/places.rs",
+      "sha256": "32d50b46061964337a24d296802020ab7da2d1797f3c4e4d5c25112a0938bc06"
+    },
+    {
+      "file": "src-tauri/src/agent_place_tests.rs",
+      "sha256": "a64c2a166973e9664643e374d8d0991d7c6f2b38ecfaba6e157d1343ed45372d"
+    }
+  ],
+  "compatibility": "Superseded by agent-conversation-restore-verification.json: same native model connection now automatically restores old application conversations after tool upgrades; distinct connections remain isolated."
+}

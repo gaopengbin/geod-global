@@ -1,0 +1,9 @@
+{
+  "name": "Overpass Berlin buildings",
+  "url": "https://overpass-api.de/api/interpreter",
+  "protocol": "Overpass",
+  "collectionId": "buildings",
+  "bounds": [13.3773, 52.5167, 13.3783, 52.5174],
+  "pageSize": null,
+  "responseFormat": null
+}

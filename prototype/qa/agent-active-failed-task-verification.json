@@ -1,0 +1,60 @@
+{
+  "schema": "geod-agent-active-failed-task-verification/v1",
+  "status": "passed-with-declared-scope",
+  "verifiedAt": "2026-10-06",
+  "scope": "Two actual DeepSeek-compatible desktop Agent turns read one normal native public-SCL transfer while running and after an explicitly controlled HTTPS transport fault. The second turn resumes the same conversation and Codex thread after Agent restart. No injected job states, natural provider-outage claim, completed-file claim, native window or installed-release acceptance.",
+  "model": "deepseek-v4-flash",
+  "protocol": "openai-compatible",
+  "upstreamVendorVerified": false,
+  "actualModelTurns": 2,
+  "actualModelRequests": 5,
+  "actualNativeModelReads": 6,
+  "allModelRequestsHttp200": true,
+  "nativeToolDefinitionsPerRequest": 48,
+  "nativeJobsCreated": 1,
+  "jobStatesInjected": false,
+  "modelWrites": 0,
+  "partialBytes": 208337,
+  "sourceFileBytes": 2362143,
+  "partialSha256": "123f1f5fb5dbb6f9d7530a38bdd2d9b6e06c8cec7f7453974ec24f4c4f3217e7",
+  "partialMatchesRetainedRealSourcePrefix": true,
+  "controlledTransportFault": true,
+  "failedTaskSettled": true,
+  "partialRasterInspectionRejected": true,
+  "noFinalArtifact": true,
+  "sameConversationAndCodexThreadResumed": true,
+  "freshProjectNameAndStatusChecked": true,
+  "ownedCredentialReadAbsent": true,
+  "nativeJobsUnchangedByReadOnlyAudit": true,
+  "recordedWorkflowNativeCheck": "passed",
+  "modelCallsDuringRecheck": 0,
+  "newTransfersDuringRecheck": 0,
+  "originalNativeTest": {
+    "exitCode": 101,
+    "status": "failed-retained",
+    "reason": "The test required the literal Chinese word for failure. The actual reply accurately said status=failed and not successful. The corrected checker accepted the explicit native status and audited the retained real history and bytes without repeating paid calls.",
+    "claim": "This record does not relabel the original live native test as passed. The separate recorded-workflow check passed."
+  },
+  "evidence": [
+    ".verification/agent-project-task-model-fault-1791282231740012500/launch.json",
+    ".verification/agent-project-task-model-fault-1791282231740012500/native.log",
+    ".verification/agent-project-task-model-fault-1791282231740012500/recorded-workflow-acceptance.json",
+    ".verification/agent-project-task-model-fault-1791282231740012500/owned-vault-cleanup.json"
+  ],
+  "developmentProgram": {
+    "path": "target/debug/geod-global-desktop.exe",
+    "bytes": 100918272,
+    "sha256": "4224d5de0d3cd0d52182b388a97f40f098a1c4fed79360c6c05b2e317c1de806",
+    "build": "Previously passed custom-protocol debug build containing the current renderer; this turn changes acceptance code and documentation only."
+  },
+  "limits": [
+    "One already approved compatible text/tool route, not every model or protocol.",
+    "A controlled source-tunnel disconnection, not proof of a natural data-provider outage.",
+    "The transferred prefix is verified; this interrupted attempt has no completed raster artifact.",
+    "Deferred media, external model failures, protected original-file accounts and release acceptance remain excluded from the fixed current-round scope."
+  ],
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "installerCreated": false,
+  "published": false
+}

@@ -5,6 +5,26 @@ import { genericMapMetadata, genericCoordinateToPixel, genericProjectionDefiniti
 import { jobsForProject } from './projects-client.js';
 import { stacConnection, stacSnapshot, stacInspection, stacJob, stacProject, sourceHash, jobId, snapshotId } from './stac-fixtures.js';
 
+test('static directory selection preserves actual collection identity and rejects foreign branch or forged API capability', async () => {
+  const key = 'e'.repeat(64), previous = globalThis.fetch;
+  const connection = { ...stacConnection, kind: 'catalog', collections: [], searchUrl: null, capabilities: { searchGet: false, searchPost: false },
+    catalogNodes: [{ key, id: 'directory-id', kind: 'Catalog', title: 'Directory', description: 'Published catalog', license: null, url: stacConnection.url, parentKey: null }] };
+  assert.equal(validateStacConnection(connection), connection);
+  for (const change of [{ capabilities: { searchGet: true, searchPost: false } }, { catalogNodes: [] }, { catalogNodes: [{ ...connection.catalogNodes[0], parentKey: key }] }]) assert.throws(() => validateStacConnection({ ...connection, ...change }));
+  const request = { connectionId: connection.id, collectionId: key, bounds: [10,20,11,21] };
+  const snapshot = { ...stacSnapshot, provenance: { ...stacSnapshot.provenance, searchMode: 'catalog', search: { ...request, cursor: null } } };
+  assert.equal(validateStacSnapshot(snapshot).collectionId, 'temperature');
+  assert.throws(() => validateStacSnapshot({ ...snapshot, provenance: { ...snapshot.provenance, searchMode: undefined } }));
+  let page = { items: [snapshot], scannedItems: 32, nextCursor: null, complete: true, limitReached: false };
+  globalThis.fetch = async () => ({ ok: true, json: async () => page });
+  try {
+    assert.equal((await stacRequest('search', request)).items[0].collectionId, 'temperature');
+    await assert.rejects(stacRequest('search', { ...request, collectionId: 'f'.repeat(64) }), /different source or collection/);
+    page = { ...page, scannedItems: undefined }; await assert.rejects(stacRequest('search', request));
+    page = { ...page, scannedItems: 1001 }; await assert.rejects(stacRequest('search', request));
+  } finally { globalThis.fetch = previous; }
+});
+
 test('custom sources retain unknown assets, interval times and original metadata without sensor interpretation', () => {
   assert.equal(validateStacConnection(stacConnection), stacConnection);
   assert.equal(validateStacSnapshot(stacSnapshot), stacSnapshot);

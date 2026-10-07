@@ -2,7 +2,7 @@
 //! HTTP routes, diagnostics or returned account state. Passwords are one-use.
 use crate::{proxy, JobManager, Result};
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine};
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 use reqwest::{header, Client, Response};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -225,6 +225,11 @@ impl Accounts {
                     && status.status == "connected"
                 {
                     status.status = "saved";
+                    // The expired access session can still be refreshed by the
+                    // worker. A saved-state read describes the stored grant,
+                    // not the old access-token lifetime; no refresh occurs here.
+                    status.expires_at = timestamp(saved.expires_at);
+                    status.verified_at = Some(saved.verified_at.clone());
                 }
                 if saved.expires_at <= Utc::now().timestamp() {
                     status.status = "expired";
@@ -235,6 +240,28 @@ impl Accounts {
                 status
             })
             .collect()
+    }
+    pub(crate) fn require_agent_download(&self, provider: AccountProvider) -> Result<()> {
+        if self
+            .statuses()
+            .iter()
+            .find(|s| s.provider == provider)
+            .is_some_and(|s| {
+                matches!(s.status, "saved" | "connected")
+                    && s.expires_at
+                        .as_deref()
+                        .and_then(|v| DateTime::parse_from_rfc3339(v).ok())
+                        .is_some_and(|v| v > Utc::now())
+                    && s.verified_at
+                        .as_deref()
+                        .and_then(|v| DateTime::parse_from_rfc3339(v).ok())
+                        .is_some_and(|v| v <= Utc::now())
+            })
+        {
+            Ok(())
+        } else {
+            Err(NOT_CONNECTED.into())
+        }
     }
     fn remember(
         &mut self,
@@ -890,6 +917,55 @@ mod tests {
         let statuses = serde_json::to_string(&accounts.statuses()).unwrap();
         assert!(!statuses.contains("PRIVATE"));
         server.abort();
+    }
+
+    #[test]
+    fn agent_admission_retains_saved_refresh_availability_without_refreshing_or_mutating() {
+        // Explicit in-memory synthetic grant; no network or Windows vault.
+        let vault = Arc::new(MemoryVault::default());
+        let mut accounts = Accounts {
+            vault: vault.clone(),
+            sessions: BTreeMap::new(),
+            rejected: BTreeSet::new(),
+        };
+        let refresh_expiry = Utc::now().timestamp() + 1800;
+        accounts
+            .remember(
+                AccountProvider::Copernicus,
+                StoredCredential {
+                    version: 1,
+                    secret: Zeroizing::new("SYNTHETIC-REFRESH-GRANT".into()),
+                    expires_at: refresh_expiry,
+                    verified_at: crate::now(),
+                },
+                Zeroizing::new("SYNTHETIC-ACCESS-SESSION".into()),
+                Utc::now().timestamp() - 60,
+            )
+            .unwrap();
+        let before = vault.entries.lock().unwrap().clone();
+        let status = accounts
+            .statuses()
+            .into_iter()
+            .find(|s| s.provider == AccountProvider::Copernicus)
+            .unwrap();
+        assert_eq!(status.status, "saved");
+        assert_eq!(status.expires_at, timestamp(refresh_expiry));
+        assert!(accounts
+            .require_agent_download(AccountProvider::Copernicus)
+            .is_ok());
+        assert_eq!(*vault.entries.lock().unwrap(), before);
+        assert!(
+            accounts.sessions[&AccountProvider::Copernicus].expires_at < Utc::now().timestamp()
+        );
+        accounts.rejected.insert(AccountProvider::Copernicus);
+        assert!(accounts
+            .require_agent_download(AccountProvider::Copernicus)
+            .is_err());
+        accounts.rejected.clear();
+        vault.delete(AccountProvider::Copernicus).unwrap();
+        assert!(accounts
+            .require_agent_download(AccountProvider::Copernicus)
+            .is_err());
     }
 
     #[tokio::test]

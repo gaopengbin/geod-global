@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Files, FolderOpen, Shapes, Box, Image as ImageIcon, Map as MapIcon } from 'lucide-react';
+import { Files, FolderOpen, Shapes, Image as ImageIcon, Map as MapIcon } from 'lucide-react';
 import { PageHeader, SegmentedControl } from './ui/index.jsx';
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
@@ -8,10 +8,9 @@ import { ProjectsLibrary } from './projects-ui.jsx';
 import { VectorLibrary } from './vector-library.jsx';
 import { MapImageLibrary } from './wms-ui.jsx';
 import { TileLibrary } from './tiles-ui.jsx';
-import { ThreeDLibrary } from './three-d-ui.jsx';
 import './library-page.css';
 
-const viewFromHash = () => {const view=new URLSearchParams(location.hash.split('?')[1] || '').get('view');return ['files','vectors','maps','tiles','3d'].includes(view)?view:'projects';};
+const viewFromHash = () => {const view=new URLSearchParams(location.hash.split('?')[1] || '').get('view');return ['files','vectors','maps','tiles'].includes(view)?view:'projects';};
 
 export function LibraryPage({ focusedProjectId, onOpenProject, onCloseProject, onContinueExploring, areaBounds, areaPolygon }) {
   const { t, number } = useI18n();
@@ -50,11 +49,10 @@ export function LibraryPage({ focusedProjectId, onOpenProject, onCloseProject, o
       { value: 'vectors', icon: Shapes, label: t('Vector files') },
       { value: 'maps', icon: ImageIcon, label: t('Map images') },
       { value: 'tiles', icon: MapIcon, label: t('Offline tiles') },
-      { value: '3d', icon: Box, label: t('3D assets') },
     ]}/>
     </div>
     <div className="data-library-view" key={view}>
-      {view === 'projects' ? projects : view === 'vectors' ? <VectorLibrary areaBounds={areaBounds} areaPolygon={areaPolygon}/> : view === 'maps' ? <MapImageLibrary areaBounds={areaBounds} areaPolygon={areaPolygon}/> : view === 'tiles' ? <TileLibrary areaBounds={areaBounds}/> : view === '3d' ? <ThreeDLibrary/> : <RuntimeLibrary areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
+      {view === 'projects' ? projects : view === 'vectors' ? <VectorLibrary areaBounds={areaBounds} areaPolygon={areaPolygon}/> : view === 'maps' ? <MapImageLibrary areaBounds={areaBounds} areaPolygon={areaPolygon}/> : view === 'tiles' ? <TileLibrary areaBounds={areaBounds}/> : <RuntimeLibrary areaBounds={areaBounds} areaPolygon={areaPolygon}/>}
     </div>
   </section>;
 }

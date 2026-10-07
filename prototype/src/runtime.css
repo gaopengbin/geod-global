@@ -66,7 +66,9 @@
 .runtime-raster-count small { color: var(--ink-2); }
 .runtime-raster-provenance { margin-top: 18px; font-size: 12px; }
 .artifact-export { margin-top: 14px; }
+.artifact-export-compact { margin-top:0; }
 .artifact-package { margin-top: 12px; padding: 16px; }
+.artifact-package-dialog p { line-height:1.6; }
 .artifact-package p { line-height: 1.6; }
 
 @media (max-width: 760px) {

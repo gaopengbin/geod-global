@@ -1,0 +1,128 @@
+{
+  "schema": "geod-agent-images-verification/v1",
+  "date": "2026-10-06",
+  "status": "image-input-development-acceptance-passed",
+  "architecture": {
+    "orchestrator": "Codex 0.159.2",
+    "sdk": "AI SDK 7.0.127",
+    "onlyCodexOwnsLoop": true,
+    "sdkToolExecuteCallbacks": false
+  },
+  "input": {
+    "formats": [
+      "PNG",
+      "JPEG",
+      "WebP"
+    ],
+    "perTurnImages": 3,
+    "uploadBytes": 2097152,
+    "maxSourceDimensions": [
+      4096,
+      4096
+    ],
+    "previewLongestSide": 1024,
+    "noUpscale": true,
+    "preserveExifOrientation": true,
+    "stripUploadMetadata": true,
+    "managedPreview": "SHA-256 addressed PNG",
+    "applicationHistory": "Metadata references only; Codex private history may retain image content.",
+    "perConversationImages": 6,
+    "perConversationBytes": 15728640,
+    "managedStoreBytes": 134217728,
+    "cleanupUiImplemented": false
+  },
+  "fixture": {
+    "receipt": ".verification/agent-image-fixture-20261005/ingestion.json",
+    "kind": "Controlled test image, not a GIS raster or downloaded product.",
+    "image": {
+      "bytes": 7217,
+      "height": 400,
+      "id": "72c3fabfbc5442f27424bc92c33210f81ea14a0961916ca9e71f4dc3b7511d32",
+      "mimeType": "image/png",
+      "name": "visual-check.png",
+      "width": 800
+    }
+  },
+  "controlledProtocolAcceptance": {
+    "receipt": ".verification/agent-native-protocols-1791215851498/acceptance.json",
+    "protocols": [
+      "openai-compatible",
+      "anthropic-messages",
+      "google-generative-ai"
+    ],
+    "providerRequests": 12,
+    "nativeReadCalls": 6,
+    "turns": 6,
+    "sameThreadRestartPerProtocol": true,
+    "exactImageBytesForwardedPerRequest": true,
+    "nativeToolDeclarations": 30,
+    "businessData": "Actual empty native CLI project store.",
+    "upstreamGeneration": "Controlled fixture."
+  },
+  "desktopNativeAcceptance": {
+    "receipt": ".verification/agent-image-native-1791216794648/native-acceptance.json",
+    "providerRequests": 4,
+    "nativeReadCalls": 2,
+    "nativeToolDeclarations": 48,
+    "chain": "Desktop native ingestion, preview, connection registry, owned Node private IPC, pinned Codex, SDK and native core.",
+    "sameThreadAfterRestart": true,
+    "upstreamGeneration": "Controlled fixture.",
+    "credentialStorage": "RAM marker fixture; no user credentials."
+  },
+  "liveModelAcceptance": {
+    "receipt": ".verification/agent-image-live-launch-1791215934680364800/launch.json",
+    "conversationReceipt": ".verification/agent-native-protocols-1791215935764/acceptance.json",
+    "route": "gpt-5.6-terra",
+    "protocol": "openai-compatible",
+    "providerRequests": 4,
+    "nativeReadCalls": 2,
+    "turns": 2,
+    "layoutVerified": true,
+    "observedContent": "Left red circle; right blue square.",
+    "nativeProjectTotal": 0,
+    "sameThreadAfterRestart": true,
+    "upstreamVendorVerified": false,
+    "literalKeyScanPassed": true,
+    "gatewayChanged": false
+  },
+  "checks": {
+    "agentTestsPassed": 37,
+    "agentUiTestsPassed": 37,
+    "frontendNodeTestsPassed": 303,
+    "desktopRustPassed": 20,
+    "desktopRustIgnored": 14,
+    "explicitImageNativeAcceptanceTests": 2,
+    "rendererCases": 12,
+    "rendererReceipt": ".verification/agent-images-ui-1791216604471/verification.json",
+    "repositoryChecks": "passed",
+    "desktopClippy": "passed",
+    "ownedStdioStartup": "passed",
+    "debugBuild": "custom-protocol",
+    "newRustNoticePackages": 5,
+    "newRustLicenseFiles": 9,
+    "noticeInventory": "licenses/agent-images/inventory.json",
+    "completeDesktopTransitiveAudit": false
+  },
+  "desktop": {
+    "file": ".verification/renderer-agent-images-accepted-20261006/desktop-7050144bb43874a6.exe",
+    "bytes": 91119104,
+    "sha256": "7050144bb43874a62b28db23eb4fcd6c5ebead593f303d808b9c54ac349b6517"
+  },
+  "identityClosure": {
+    "sourceInputs": 717,
+    "rendererFiles": 663,
+    "runtimeFiles": 23
+  },
+  "limits": [
+    "Selected model must support vision; saved connections are not automatically verified.",
+    "Native Claude/Gemini cloud route acceptance is still incomplete.",
+    "OpenAI encrypted reasoning, other attachment types and context compaction remain unsupported.",
+    "Image storage cleanup UI still needs implementation.",
+    "Native window and clean installed distribution acceptance remain separate."
+  ],
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "installedPackageBuilt": false,
+  "published": false,
+  "failedRendererHarnessPreserved": ".verification/agent-images-ui-1791216318163/verification.json"
+}

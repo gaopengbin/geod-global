@@ -12,6 +12,7 @@ use serde_json::json;
 mod stac;
 mod three_d;
 mod tiles;
+mod vector;
 mod wcs;
 
 pub const ALLOWED_ORIGIN: &str = "http://127.0.0.1:4317";
@@ -733,6 +734,7 @@ pub fn router(manager: JobManager) -> Router {
         .merge(stac::routes())
         .merge(wcs::routes())
         .merge(tiles::routes())
+        .merge(vector::routes())
         .merge(three_d::routes())
         .layer(DefaultBodyLimit::max(2 * 1024 * 1024))
         .layer(middleware::from_fn(browser_boundary))

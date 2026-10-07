@@ -458,7 +458,7 @@ fn description(root: &Path, id: &str) -> Result<(DescriptionRecord, Description)
     let value = xml::description(&xml, &record, id)?;
     Ok((record, value))
 }
-fn plan(root: &Path, id: &str) -> Result<Plan> {
+pub(crate) fn plan(root: &Path, id: &str) -> Result<Plan> {
     let record: PlanRecord =
         serde_json::from_slice(&stored(root, "plan", "json", id)?).map_err(io_error)?;
     if record.version != 1 {

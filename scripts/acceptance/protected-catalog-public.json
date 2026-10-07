@@ -1,0 +1,8 @@
+[
+  {"provider":"copernicus","bounds":[-122.55,37.65,-122.45,37.85],"start":"2025-06-01","end":"2025-06-30","cloudMax":100,"limit":1},
+  {"provider":"nasa-earthdata","bounds":[-122.55,37.65,-122.45,37.85],"start":"2025-06-01","end":"2025-06-30","cloudMax":100,"limit":1},
+  {"provider":"nasa-srtm","bounds":[-122.55,37.65,-122.45,37.85],"limit":1},
+  {"provider":"nasa-viirs-suomi","bounds":[-122.55,37.65,-122.45,37.85],"start":"2025-06-01","end":"2025-06-30","cloudMax":100,"limit":1},
+  {"provider":"nasa-viirs-noaa20","bounds":[-122.55,37.65,-122.45,37.85],"start":"2025-06-01","end":"2025-06-30","cloudMax":100,"limit":1},
+  {"provider":"nasa-viirs-noaa21","bounds":[-122.55,37.65,-122.45,37.85],"start":"2025-06-01","end":"2025-06-30","cloudMax":100,"limit":1}
+]

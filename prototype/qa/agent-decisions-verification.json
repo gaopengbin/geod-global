@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "scope": "Actual React UI and controlled IPC; no live model, native window or downloaded data",
+  "modelCalls": 0,
+  "measurements": [
+    {
+      "theme": "light",
+      "locale": "zh-CN",
+      "width": 560,
+      "documentWidth": 560,
+      "overflow": 0
+    },
+    {
+      "theme": "dark",
+      "locale": "zh-CN",
+      "width": 360,
+      "documentWidth": 360,
+      "overflow": 0
+    },
+    {
+      "theme": "light",
+      "locale": "en",
+      "width": 360,
+      "documentWidth": 360,
+      "overflow": 0
+    }
+  ],
+  "screenshots": [
+    "agent-decision-options-compact-dark.png",
+    "agent-download-task-desktop.png",
+    "agent-download-task-compact-dark.png"
+  ],
+  "workPackage": "WP-W03 / Agent decision and task confirmation",
+  "date": "2026-10-07",
+  "checks": [
+    "Recommendations are not preselected",
+    "All questions require actual options or custom text",
+    "Answers bind to the selected conversation and question IDs",
+    "Choice answers are preferences, never execution approval",
+    "Pending choices block dependent planning and confirmation",
+    "Changed choices require a fresh or revised review",
+    "Answers and reviewed task context survive history restoration",
+    "Explicit native automatic permission skips questions and confirmation",
+    "Failed answer saves retain the pending decision",
+    "An oversized review never exposes an incomplete confirmation or corrupts history",
+    "Task cards show the request, answers, native file scope, dates, output and limits",
+    "Vector acquisition retains request and choice context",
+    "Selected options have distinct border and background colors"
+  ],
+  "testEvidence": {
+    "agent": {
+      "command": "npm run test:agent",
+      "passed": 87
+    },
+    "client": {
+      "command": "node --test prototype/src/agent-client.test.js",
+      "passed": 25
+    },
+    "ui": {
+      "command": "npx vitest run prototype/src/agent-panel.integration.test.jsx",
+      "passed": 63,
+      "additionalTargetedVectorTestPassed": 1
+    },
+    "desktop": {
+      "command": "cargo test --locked -p geod-global-desktop --features custom-protocol",
+      "passed": 45,
+      "ignoredLiveAcceptance": 22
+    },
+    "frontendBuild": "passed",
+    "ownedAgentRuntimePreparation": "passed"
+  },
+  "limitations": [
+    "Controlled UI and native tests are not a live model or original-data download acceptance",
+    "No installer was packaged or published",
+    "Unified TaskRequest, batch execution and aggregate task completion remain future implementation"
+  ]
+}

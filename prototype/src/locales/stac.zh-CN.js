@@ -1,4 +1,10 @@
 export default {
+  'Static STAC catalog': '静态 STAC 目录',
+  'Catalog directory': '目录分组',
+  'Directory details': '目录详情', 'Directory identifier': '目录标识',
+  'Continue scanning': '继续扫描',
+  '{count} item documents scanned': '已扫描 {count} 个条目文档',
+  'Scans the selected directory and its children using saved item links. Filters by declared bounding box and observation time; items without bounds are excluded. Up to 1000 item documents per search.': '读取所选目录及子目录中的条目，按声明的边界框与观测时间筛选；无边界框的条目不计入结果。每次搜索最多扫描 1000 个条目文档。',
   'Original page request': '原始分页请求',
   'Verify downloaded originals': '检查已下载原文件',
   '{verified} verified · {queued} repair downloads queued': '{verified} 个文件校验通过 · {queued} 个修复下载已加入队列',

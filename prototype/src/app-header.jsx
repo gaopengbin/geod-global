@@ -8,7 +8,7 @@ import './app-header.css';
 
 export function GeoDBrand({ compact = false }) {
   const { t } = useI18n();
-  return <a className="geod-brand" href="#Explore" aria-label={t('GeoD home')}>
+  return <a className="geod-brand" href="#Home" aria-label={t('GeoD home')}>
     <img src="./brand/geod-symbol.png" width="32" height="32" alt="" draggable="false" />
     {!compact && <span>GeoD <span className="geod-brand-edition">Global</span></span>}
   </a>;

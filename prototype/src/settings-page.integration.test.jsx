@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SettingsPage } from './settings-page.jsx';
 import { I18nProvider } from './i18n.jsx';
@@ -25,6 +25,13 @@ function Preferences() {
 }
 
 describe('Settings preferences', () => {
+  it('offers only current 2D source management', () => {
+    render(<Preferences/>);
+    expect(screen.queryByRole('heading',{name:'3D asset sources'})).toBeNull();
+    expect(screen.queryByRole('button',{name:/3D/})).toBeNull();
+    expect(screen.getByRole('button',{name:'Manage raster sources'})).toBeTruthy();
+    expect(screen.getByRole('button',{name:'Manage coverage services'})).toBeTruthy();
+  });
   it('changes language immediately, persists it and synchronizes desktop labels', async () => {
     const user = userEvent.setup();
     render(<Preferences/>);
@@ -62,7 +69,7 @@ describe('Settings preferences', () => {
     expect(container.querySelector('.settings-background').contains(exit)).toBe(true);
     expect(runtimeRequest).not.toHaveBeenCalled();
     await userEvent.click(exit);
-    await waitFor(() => expect(screen.getByRole('status').textContent).toBe('Running or queued tasks: 0'));
+    await waitFor(() => expect(within(screen.getByRole('dialog')).getByRole('status').textContent).toBe('Running or queued tasks: 0'));
     expect(screen.getByRole('button', { name: 'Exit and stop tasks' })).toBeTruthy();
     await userEvent.click(screen.getByRole('button', { name: 'Close', exact: true }));
     expect(screen.queryByRole('dialog')).toBeNull();

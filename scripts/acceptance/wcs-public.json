@@ -1,0 +1,6 @@
+{
+  "name": "Explicit EMODnet WCS acceptance",
+  "url": "https://ows.emodnet-bathymetry.eu/wcs",
+  "coverageId": "emodnet__mean",
+  "bounds": [2, 53, 2.05, 53.05]
+}

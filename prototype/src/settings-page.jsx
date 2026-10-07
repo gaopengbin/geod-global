@@ -9,7 +9,7 @@ import { ProviderAccountsPanel } from './accounts-ui.jsx';
 import './settings-page.css';
 import { StacSourcesPanel } from './stac-ui.jsx';
 import { WcsSourcesPanel } from './wcs-ui.jsx';
-import { ThreeDSourcesPanel } from './three-d-ui.jsx';
+import { UpdatesPanel } from './distribution-ui.jsx';
 
 export function SettingsPage({ theme, onThemeChange, onOpenRasterSources, onOpenCoverageSources, areaBounds }) {
   const { t, locale, setLocale } = useI18n();
@@ -31,10 +31,10 @@ export function SettingsPage({ theme, onThemeChange, onOpenRasterSources, onOpen
       </Surface>
       <ProxySettingsPanel/>
     </div>
+    <UpdatesPanel/>
     <ProviderAccountsPanel/>
     <StacSourcesPanel onOpen={onOpenRasterSources} bounds={areaBounds}/>
     <WcsSourcesPanel onOpen={onOpenCoverageSources} bounds={areaBounds}/>
-    <ThreeDSourcesPanel/>
     <Disclosure className="settings-diagnostics" summary={t('Local diagnostics · advanced')}><DiagnosticsPanel/></Disclosure>
   </section>;
 }

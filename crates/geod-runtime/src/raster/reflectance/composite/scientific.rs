@@ -400,6 +400,60 @@ fn inspect_grid(root: &Path, jobs: &[Job; 3]) -> Result<Grid> {
     expected.ok_or("Missing scientific RGB grid".into())
 }
 
+impl RgbSpec {
+    /// Re-run native preflight using the exact reviewed inputs and quality policy.
+    pub(crate) fn request(&self) -> RgbRequest {
+        RgbRequest {
+            job_ids: self.sources.each_ref().map(|s| s.pin.job_id.clone()),
+            project_id: self.project_id.clone(),
+            name: Some(self.name.clone()),
+            quality_mask: self.quality_mask.as_ref().map(QualityMaskSpec::request),
+        }
+    }
+    pub(crate) fn source_job_ids(&self) -> std::collections::BTreeSet<&str> {
+        let mut ids = self
+            .sources
+            .iter()
+            .map(|s| s.pin.job_id.as_str())
+            .collect::<std::collections::BTreeSet<_>>();
+        if let Some(mask) = &self.quality_mask {
+            ids.extend(mask.sources().iter().map(|s| s.pin.job_id.as_str()));
+            if let Some(coupled) = mask.coupled() {
+                ids.extend(
+                    coupled
+                        .scenes
+                        .iter()
+                        .flat_map(|scene| scene.sources.iter())
+                        .map(|s| s.pin.job_id.as_str()),
+                );
+            }
+        }
+        ids
+    }
+}
+
+/// Build a task without admitting it. UI and Agent use the same validated job.
+pub(crate) fn rgb_job(spec: RgbSpec, jobs: &BTreeMap<String, Job>) -> Result<Job> {
+    validate_spec(&spec)?;
+    let mut job = crate::new_download_job(crate::CreateJobRequest {
+        item_id: spec.sources[0].item_id.clone(),
+        asset_key: "reflectance_rgb".into(),
+        href: spec.sources[0].href.clone(),
+        media_type: "image/tiff".into(),
+        title: Some(spec.name.clone()),
+    });
+    job.kind = "raster_rgb".into();
+    job.source = "Locally combined pinned original reflectance samples".into();
+    job.validation = "Checking pinned RGB bands".into();
+    job.rgb_spec = Some(Box::new(spec));
+    validate_sources(&job, jobs)?;
+    if let Some(mask) = &job.rgb_spec.as_ref().unwrap().quality_mask {
+        quality_mask::validate_sources(mask, jobs)?;
+    }
+    coupled::validate_sources(job.rgb_spec.as_ref().unwrap(), jobs)?;
+    Ok(job)
+}
+
 impl JobManager {
     pub async fn plan_scientific_rgb(&self, request: RgbRequest) -> Result<RgbPlan> {
         let jobs = self.composite_jobs(request.job_ids).await?;
@@ -506,22 +560,14 @@ impl JobManager {
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
         }
-        let mut job = crate::new_download_job(crate::CreateJobRequest {
-            item_id: spec.sources[0].item_id.clone(),
-            asset_key: "reflectance_rgb".into(),
-            href: spec.sources[0].href.clone(),
-            media_type: "image/tiff".into(),
-            title: Some(spec.name.clone()),
-        });
-        job.kind = "raster_rgb".into();
-        job.source = "Locally combined pinned original reflectance samples".into();
-        job.validation = "Checking pinned RGB bands".into();
-        job.rgb_spec = Some(Box::new(spec));
-        validate_sources(&job, &store.jobs)?;
-        if let Some(mask) = &job.rgb_spec.as_ref().unwrap().quality_mask {
-            quality_mask::validate_sources(mask, &store.jobs)?;
+        if spec
+            .source_job_ids()
+            .iter()
+            .any(|id| store.active.contains_key(*id))
+        {
+            return Err("Wait for every source task to settle before planning processing".into());
         }
-        coupled::validate_sources(job.rgb_spec.as_ref().unwrap(), &store.jobs)?;
+        let job = rgb_job(spec, &store.jobs)?;
         store.jobs.insert(job.id.clone(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.remove(&job.id);

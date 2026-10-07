@@ -36,11 +36,13 @@ tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "rt-multi
 tokio-util = { version = "0.7", features = ["rt"] }
 url = "2"
 uuid = { version = "1", features = ["v4", "serde"] }
+unicode-normalization = "=0.1.25"
 zip = { version = "=8.6.0", default-features = false, features = ["deflate"] }
 zeroize = { version = "=1.9.0", features = ["serde"] }
 
 [target.'cfg(windows)'.dependencies]
 keyring = { version = "=3.6.3", default-features = false, features = ["windows-native"] }
+windows-sys = { version = "=0.61.2", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
 
 [dev-dependencies]
 tempfile = "3"

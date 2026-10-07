@@ -15,7 +15,7 @@ export function defaultLiveSearch(now = new Date()) {
   const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
   const start = new Date(end);
   start.setUTCDate(start.getUTCDate() - 29);
-  return { ...INITIAL_SEARCH, start: start.toISOString().slice(0, 10), end: end.toISOString().slice(0, 10) };
+  return { ...INITIAL_SEARCH, bbox: '', start: start.toISOString().slice(0, 10), end: end.toISOString().slice(0, 10) };
 }
 
 export function validateBounds(input) {

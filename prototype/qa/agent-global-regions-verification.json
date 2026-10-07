@@ -1,0 +1,590 @@
+{
+  "schema": "geod-agent-global-regions-verification/v1",
+  "status": "passed",
+  "verifiedAt": "2026-10-06T14:27:31.686234+00:00",
+  "scope": "Desktop development; global administrative names and actual source envelopes, not polygon crop or legal-boundary approval",
+  "bundled": {
+    "adm0Features": 242,
+    "referenceSubdivisions": 4596,
+    "sourceGroupingCodes": 251,
+    "offlineTestCountries": [
+      "CHN",
+      "USA",
+      "DEU",
+      "JPN",
+      "BRA",
+      "FRA",
+      "ZAF",
+      "AUS"
+    ],
+    "aliasesSha256": "5ccfa93fb593d011b0d6b5b5e2561714969372627b0df1ba718117781355ab67"
+  },
+  "realNativeQueries": [
+    {
+      "adminLevel": 2,
+      "cacheAfterReopen": true,
+      "countryCode": "DEU",
+      "elapsedMs": 1149,
+      "name": "Köln",
+      "result": {
+        "adminLevel": 2,
+        "boundsMeaning": "Actual source geometry envelope in WGS84 west south east north; a search rectangle, not the polygon or proof of imagery coverage.",
+        "candidates": [
+          {
+            "adminLevel": 2,
+            "aliases": [],
+            "bounds": [
+              5.866755375000025,
+              50.32301195400004,
+              7.792022809000059,
+              51.25028900400008
+            ],
+            "countryCode": "DEU",
+            "countryName": "Germany",
+            "id": "gb:9070358B57109950257038",
+            "name": "Köln"
+          }
+        ],
+        "countryCode": "DEU",
+        "hierarchyMeaning": "ADM0 is a source country or region grouping. ADM1 and deeper levels follow each source country's hierarchy, not a universal city or county label. Intermediate parents are not inferred from a bounding box.",
+        "matchCount": 1,
+        "next": "Use the exact relevant candidate bounds in geod_scene_search. Respect level and country; ask one short clarification for genuinely ambiguous matches. For a missing city or district, read geod_region_levels for the known country and search its available detailed levels; geod_place_search is a separate city gazetteer fallback. Never substitute a same-named province for a requested city or invent coordinates.",
+        "provenance": {
+          "adminLevel": 2,
+          "attribution": "geoBoundaries and the listed original boundary source; retain the original license attribution.",
+          "boundaryId": "DEU-ADM2-9070358",
+          "buildDate": "Dec 12, 2023",
+          "cacheDays": 7,
+          "cached": false,
+          "checkedAt": "2026-10-06T14:22:46.912082600+00:00",
+          "countryCode": "DEU",
+          "dataYear": "2021",
+          "declaredUnits": 38,
+          "geometry": "Source-provided simplified WGS84 boundaries; bounds are derived from every real geometry. No legal-boundary or current-year guarantee.",
+          "geometrySource": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/DEU/ADM2/geoBoundaries-DEU-ADM2_simplified.geojson",
+          "geometryUnits": 38,
+          "levelName": "Government District",
+          "license": "Data license Germany - Attribution - Version 2.0",
+          "licenseSource": "www.govdata.de/dl-de/by-2-0",
+          "originalSource": "Federal Agency for Cartography and Geodesy",
+          "provider": "geoBoundaries gbOpen",
+          "sha256": "b811e77a73d37d9826ed0b17aaa017f7c92340c80707bdda4b95ce363e6364ab",
+          "source": "https://www.geoboundaries.org/api/current/gbOpen/DEU/ADM2/",
+          "unitCountMatchesMetadata": true
+        },
+        "query": "Köln",
+        "truncated": false
+      }
+    },
+    {
+      "adminLevel": 1,
+      "cacheAfterReopen": true,
+      "countryCode": "FRA",
+      "elapsedMs": 1226,
+      "name": "Île-de-France",
+      "result": {
+        "adminLevel": 1,
+        "boundsMeaning": "Actual source geometry envelope in WGS84 west south east north; a search rectangle, not the polygon or proof of imagery coverage.",
+        "candidates": [
+          {
+            "adminLevel": 1,
+            "aliases": [],
+            "bounds": [
+              1.446300057070426,
+              48.12007725103844,
+              3.559027106557363,
+              49.24146284349249
+            ],
+            "countryCode": "FRA",
+            "countryName": "France",
+            "id": "gb:19338628B22645672383103",
+            "name": "Île-de-France"
+          }
+        ],
+        "countryCode": "FRA",
+        "hierarchyMeaning": "ADM0 is a source country or region grouping. ADM1 and deeper levels follow each source country's hierarchy, not a universal city or county label. Intermediate parents are not inferred from a bounding box.",
+        "matchCount": 1,
+        "next": "Use the exact relevant candidate bounds in geod_scene_search. Respect level and country; ask one short clarification for genuinely ambiguous matches. For a missing city or district, read geod_region_levels for the known country and search its available detailed levels; geod_place_search is a separate city gazetteer fallback. Never substitute a same-named province for a requested city or invent coordinates.",
+        "provenance": {
+          "adminLevel": 1,
+          "attribution": "geoBoundaries and the listed original boundary source; retain the original license attribution.",
+          "boundaryId": "FRA-ADM1-19338628",
+          "buildDate": "Dec 12, 2023",
+          "cacheDays": 7,
+          "cached": false,
+          "checkedAt": "2026-10-06T14:22:48.158425400+00:00",
+          "countryCode": "FRA",
+          "dataYear": "2022",
+          "declaredUnits": 13,
+          "geometry": "Source-provided simplified WGS84 boundaries; bounds are derived from every real geometry. No legal-boundary or current-year guarantee.",
+          "geometrySource": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/FRA/ADM1/geoBoundaries-FRA-ADM1_simplified.geojson",
+          "geometryUnits": 13,
+          "levelName": "Region",
+          "license": "Etalab Open License 2.0",
+          "licenseSource": "geoservices.ign.fr/sites/default/files/2021-11/IGNF_ADMIN_EXPRESS_3-1.html",
+          "originalSource": "Institut national de l'information géographique et forestière (IGN-F)",
+          "provider": "geoBoundaries gbOpen",
+          "sha256": "7dc61e5c7e4c81f5fa10d339e6a5bc8428f1346f43f4426d9d165d2e44fc3a7e",
+          "source": "https://www.geoboundaries.org/api/current/gbOpen/FRA/ADM1/",
+          "unitCountMatchesMetadata": true
+        },
+        "query": "Île-de-France",
+        "truncated": false
+      }
+    },
+    {
+      "adminLevel": 2,
+      "cacheAfterReopen": true,
+      "countryCode": "FRA",
+      "elapsedMs": 1293,
+      "name": "Paris",
+      "result": {
+        "adminLevel": 2,
+        "boundsMeaning": "Actual source geometry envelope in WGS84 west south east north; a search rectangle, not the polygon or proof of imagery coverage.",
+        "candidates": [
+          {
+            "adminLevel": 2,
+            "aliases": [],
+            "bounds": [
+              2.224219105880447,
+              48.81556223807286,
+              2.469724350790882,
+              48.9021475933584
+            ],
+            "countryCode": "FRA",
+            "countryName": "France",
+            "id": "gb:29444166B33792924009837",
+            "name": "Paris"
+          }
+        ],
+        "countryCode": "FRA",
+        "hierarchyMeaning": "ADM0 is a source country or region grouping. ADM1 and deeper levels follow each source country's hierarchy, not a universal city or county label. Intermediate parents are not inferred from a bounding box.",
+        "matchCount": 1,
+        "next": "Use the exact relevant candidate bounds in geod_scene_search. Respect level and country; ask one short clarification for genuinely ambiguous matches. For a missing city or district, read geod_region_levels for the known country and search its available detailed levels; geod_place_search is a separate city gazetteer fallback. Never substitute a same-named province for a requested city or invent coordinates.",
+        "provenance": {
+          "adminLevel": 2,
+          "attribution": "geoBoundaries and the listed original boundary source; retain the original license attribution.",
+          "boundaryId": "FRA-ADM2-29444166",
+          "buildDate": "Dec 12, 2023",
+          "cacheDays": 7,
+          "cached": false,
+          "checkedAt": "2026-10-06T14:22:49.485152400+00:00",
+          "countryCode": "FRA",
+          "dataYear": "2022",
+          "declaredUnits": 96,
+          "geometry": "Source-provided simplified WGS84 boundaries; bounds are derived from every real geometry. No legal-boundary or current-year guarantee.",
+          "geometrySource": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/FRA/ADM2/geoBoundaries-FRA-ADM2_simplified.geojson",
+          "geometryUnits": 96,
+          "levelName": "Department",
+          "license": "Etalab Open License 2.0",
+          "licenseSource": "geoservices.ign.fr/sites/default/files/2021-11/IGNF_ADMIN_EXPRESS_3-1.html",
+          "originalSource": "Institut national de l'information géographique et forestière (IGN-F)",
+          "provider": "geoBoundaries gbOpen",
+          "sha256": "a14ed131c86c802e5d546c7cbeccbd4daebc94a66fea413f563935a53504f251",
+          "source": "https://www.geoboundaries.org/api/current/gbOpen/FRA/ADM2/",
+          "unitCountMatchesMetadata": true
+        },
+        "query": "Paris",
+        "truncated": false
+      }
+    },
+    {
+      "adminLevel": 2,
+      "cacheAfterReopen": true,
+      "countryCode": "IND",
+      "elapsedMs": 942,
+      "name": "Pune",
+      "result": {
+        "adminLevel": 2,
+        "boundsMeaning": "Actual source geometry envelope in WGS84 west south east north; a search rectangle, not the polygon or proof of imagery coverage.",
+        "candidates": [
+          {
+            "adminLevel": 2,
+            "aliases": [],
+            "bounds": [
+              73.32336,
+              17.89286,
+              75.16408,
+              19.39512
+            ],
+            "countryCode": "IND",
+            "countryName": "India",
+            "id": "gb:76128533B71380851181380",
+            "name": "Pune"
+          }
+        ],
+        "countryCode": "IND",
+        "hierarchyMeaning": "ADM0 is a source country or region grouping. ADM1 and deeper levels follow each source country's hierarchy, not a universal city or county label. Intermediate parents are not inferred from a bounding box.",
+        "matchCount": 1,
+        "next": "Use the exact relevant candidate bounds in geod_scene_search. Respect level and country; ask one short clarification for genuinely ambiguous matches. For a missing city or district, read geod_region_levels for the known country and search its available detailed levels; geod_place_search is a separate city gazetteer fallback. Never substitute a same-named province for a requested city or invent coordinates.",
+        "provenance": {
+          "adminLevel": 2,
+          "attribution": "geoBoundaries and the listed original boundary source; retain the original license attribution.",
+          "boundaryId": "IND-ADM2-76128533",
+          "buildDate": "Dec 12, 2023",
+          "cacheDays": 7,
+          "cached": false,
+          "checkedAt": "2026-10-06T14:22:50.464902600+00:00",
+          "countryCode": "IND",
+          "dataYear": "2021",
+          "declaredUnits": 736,
+          "geometry": "Source-provided simplified WGS84 boundaries; bounds are derived from every real geometry. No legal-boundary or current-year guarantee.",
+          "geometrySource": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2_simplified.geojson",
+          "geometryUnits": 735,
+          "levelName": "District",
+          "license": "Open Data Commons Open Database License 1.0",
+          "licenseSource": "geonode.pathwaysdata.com/layers/geonode",
+          "originalSource": "Pathways Data Pvt. Ltd., lgdirectory.gov.in",
+          "provider": "geoBoundaries gbOpen",
+          "sha256": "d68db39cd3e2d0892af268e2b0454166368ce3b5b8a78fcda63069ec92a641db",
+          "source": "https://www.geoboundaries.org/api/current/gbOpen/IND/ADM2/",
+          "unitCountMatchesMetadata": false
+        },
+        "query": "Pune",
+        "truncated": false
+      }
+    },
+    {
+      "adminLevel": 1,
+      "cacheAfterReopen": true,
+      "countryCode": "KEN",
+      "elapsedMs": 4,
+      "name": "Nairobi",
+      "result": {
+        "adminLevel": 1,
+        "boundsMeaning": "Actual source geometry envelope in WGS84 west south east north; a search rectangle, not the polygon or proof of imagery coverage.",
+        "candidates": [
+          {
+            "adminLevel": 1,
+            "aliases": [
+              "Federal Area|Nairobi District|Masai District",
+              "KE-110",
+              "Nairobi",
+              "Nairóbi",
+              "Ναϊρόμπι",
+              "Найроби",
+              "Найробі",
+              "ניירובי",
+              "نایروبی",
+              "نيروبي",
+              "نیروبی",
+              "नैरोबी",
+              "নাইরোবি",
+              "ナイロビ",
+              "内罗毕",
+              "奈洛比",
+              "나이로비"
+            ],
+            "bounds": [
+              36.676242,
+              -1.417123,
+              37.131512,
+              -1.139361
+            ],
+            "countryCode": "KEN",
+            "countryName": "Kenya",
+            "id": "ne:ADM1:KEN-1196",
+            "name": "Nairobi"
+          },
+          {
+            "adminLevel": 1,
+            "aliases": [
+              "Eastern",
+              "Federal Area|Nairobi District|Masai District",
+              "KE-400",
+              "Keleti",
+              "Mashariki",
+              "Oriental",
+              "Orientale",
+              "Prowincja Wschodnia",
+              "Timur",
+              "Tỉnh Phía Đông",
+              "orientale",
+              "Östprovinsen",
+              "Ανατολική επαρχία",
+              "Восточная провинция",
+              "Східна провінція",
+              "מזרחי",
+              "استان شرقی",
+              "المحافظة الشرقية",
+              "مشرقی صوبہ",
+              "पूर्वी प्रांत",
+              "ইস্টার্ন প্রদেশ",
+              "东部省",
+              "東部州",
+              "東部省",
+              "동부"
+            ],
+            "bounds": [
+              36.045324,
+              -3.067772,
+              39.451526,
+              4.449652
+            ],
+            "countryCode": "KEN",
+            "countryName": "Kenya",
+            "id": "ne:ADM1:KEN-889",
+            "name": "Eastern"
+          }
+        ],
+        "countryCode": "KEN",
+        "hierarchyMeaning": "ADM0 is a source country or region grouping. ADM1 and deeper levels follow each source country's hierarchy, not a universal city or county label. Intermediate parents are not inferred from a bounding box.",
+        "matchCount": 2,
+        "next": "Use the exact relevant candidate bounds in geod_scene_search. Respect level and country; ask one short clarification for genuinely ambiguous matches. For a missing city or district, read geod_region_levels for the known country and search its available detailed levels; geod_place_search is a separate city gazetteer fallback. Never substitute a same-named province for a requested city or invent coordinates.",
+        "provenance": {
+          "aliasesSha256": "5ccfa93fb593d011b0d6b5b5e2561714969372627b0df1ba718117781355ab67",
+          "cached": true,
+          "coverage": "Bundled ADM0 and ADM1 only; detailed levels use country-specific geoBoundaries coverage. Reference geometry is not a legal boundary determination.",
+          "datasets": [
+            {
+              "level": 0,
+              "scale": "1:50m",
+              "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+              "units": 242
+            },
+            {
+              "level": 1,
+              "scale": "1:10m",
+              "sha256": "425ff16b5df1ef13e5f81d856e07373b8e265da04754558758310f7a4f2d2e27",
+              "units": 4596,
+              "version": "5.1.1"
+            }
+          ],
+          "license": "Public domain",
+          "offline": true,
+          "provider": "Natural Earth",
+          "source": "https://www.naturalearthdata.com/"
+        },
+        "query": "Nairobi",
+        "truncated": false
+      }
+    },
+    {
+      "adminLevel": 2,
+      "cacheAfterReopen": true,
+      "countryCode": "USA",
+      "elapsedMs": 2767,
+      "name": "Los Angeles",
+      "result": {
+        "adminLevel": 2,
+        "boundsMeaning": "Actual source geometry envelope in WGS84 west south east north; a search rectangle, not the polygon or proof of imagery coverage.",
+        "candidates": [
+          {
+            "adminLevel": 2,
+            "aliases": [],
+            "bounds": [
+              -118.94489963199999,
+              32.80059970600007,
+              -117.64638610599997,
+              34.82330596800006
+            ],
+            "countryCode": "USA",
+            "countryName": "United States of America",
+            "id": "gb:52423323B87301828944684",
+            "name": "Los Angeles"
+          }
+        ],
+        "countryCode": "USA",
+        "hierarchyMeaning": "ADM0 is a source country or region grouping. ADM1 and deeper levels follow each source country's hierarchy, not a universal city or county label. Intermediate parents are not inferred from a bounding box.",
+        "matchCount": 1,
+        "next": "Use the exact relevant candidate bounds in geod_scene_search. Respect level and country; ask one short clarification for genuinely ambiguous matches. For a missing city or district, read geod_region_levels for the known country and search its available detailed levels; geod_place_search is a separate city gazetteer fallback. Never substitute a same-named province for a requested city or invent coordinates.",
+        "provenance": {
+          "adminLevel": 2,
+          "attribution": "geoBoundaries and the listed original boundary source; retain the original license attribution.",
+          "boundaryId": "USA-ADM2-52423323",
+          "buildDate": "Dec 12, 2023",
+          "cacheDays": 7,
+          "cached": false,
+          "checkedAt": "2026-10-06T14:22:53.304918200+00:00",
+          "countryCode": "USA",
+          "dataYear": "2018",
+          "declaredUnits": 3233,
+          "geometry": "Source-provided simplified WGS84 boundaries; bounds are derived from every real geometry. No legal-boundary or current-year guarantee.",
+          "geometrySource": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/USA/ADM2/geoBoundaries-USA-ADM2_simplified.geojson",
+          "geometryUnits": 3233,
+          "levelName": "Counties",
+          "license": "Public Domain",
+          "licenseSource": "www.census.gov/programs-surveys/geography/technical-documentation/naming-convention/cartographic-boundary-file.html",
+          "originalSource": "United States Census Bureau, MAF/TIGER Database",
+          "provider": "geoBoundaries gbOpen",
+          "sha256": "16249e8d795aaded6a72910a8c72115a073814b25ee902d61ccc9a9490c6641a",
+          "source": "https://www.geoboundaries.org/api/current/gbOpen/USA/ADM2/",
+          "unitCountMatchesMetadata": true
+        },
+        "query": "Los Angeles",
+        "truncated": false
+      }
+    }
+  ],
+  "realModel": {
+    "status": "passed",
+    "humanMessages": 1,
+    "coordinateParametersSupplied": false,
+    "isoCodesSupplied": false,
+    "adminLevelsSupplied": false,
+    "modelRoute": "deepseek-v4-flash",
+    "upstreamVendorVerified": false,
+    "tools": [
+      "geod_region_search",
+      "geod_region_search",
+      "geod_region_levels",
+      "geod_region_search"
+    ],
+    "actualCandidates": [
+      {
+        "candidate": {
+          "id": "ne:ADM1:CHN-1820",
+          "name": "Zhejiang",
+          "countryCode": "CHN",
+          "adminLevel": 1,
+          "bounds": [
+            117.999237,
+            27.182196,
+            122.531098,
+            31.177839
+          ]
+        },
+        "provenance": {
+          "aliasesSha256": "5ccfa93fb593d011b0d6b5b5e2561714969372627b0df1ba718117781355ab67",
+          "cached": true,
+          "coverage": "Bundled ADM0 and ADM1 only; detailed levels use country-specific geoBoundaries coverage. Reference geometry is not a legal boundary determination.",
+          "datasets": [
+            {
+              "level": 0,
+              "scale": "1:50m",
+              "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+              "units": 242
+            },
+            {
+              "level": 1,
+              "scale": "1:10m",
+              "sha256": "425ff16b5df1ef13e5f81d856e07373b8e265da04754558758310f7a4f2d2e27",
+              "units": 4596,
+              "version": "5.1.1"
+            }
+          ],
+          "license": "Public domain",
+          "offline": true,
+          "provider": "Natural Earth",
+          "source": "https://www.naturalearthdata.com/"
+        }
+      },
+      {
+        "candidate": {
+          "id": "ne:ADM1:DEU-1572",
+          "name": "North Rhine-Westphalia",
+          "countryCode": "DEU",
+          "adminLevel": 1,
+          "bounds": [
+            5.852489,
+            50.32308,
+            9.462142,
+            52.524185
+          ]
+        },
+        "provenance": {
+          "aliasesSha256": "5ccfa93fb593d011b0d6b5b5e2561714969372627b0df1ba718117781355ab67",
+          "cached": true,
+          "coverage": "Bundled ADM0 and ADM1 only; detailed levels use country-specific geoBoundaries coverage. Reference geometry is not a legal boundary determination.",
+          "datasets": [
+            {
+              "level": 0,
+              "scale": "1:50m",
+              "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+              "units": 242
+            },
+            {
+              "level": 1,
+              "scale": "1:10m",
+              "sha256": "425ff16b5df1ef13e5f81d856e07373b8e265da04754558758310f7a4f2d2e27",
+              "units": 4596,
+              "version": "5.1.1"
+            }
+          ],
+          "license": "Public domain",
+          "offline": true,
+          "provider": "Natural Earth",
+          "source": "https://www.naturalearthdata.com/"
+        }
+      },
+      {
+        "candidate": {
+          "id": "gb:76128533B71380851181380",
+          "name": "Pune",
+          "countryCode": "IND",
+          "adminLevel": 2,
+          "bounds": [
+            73.32336,
+            17.89286,
+            75.16408,
+            19.39512
+          ]
+        },
+        "provenance": {
+          "adminLevel": 2,
+          "attribution": "geoBoundaries and the listed original boundary source; retain the original license attribution.",
+          "boundaryId": "IND-ADM2-76128533",
+          "buildDate": "Dec 12, 2023",
+          "cacheDays": 7,
+          "cached": false,
+          "checkedAt": "2026-10-06T14:24:22.883098200+00:00",
+          "countryCode": "IND",
+          "dataYear": "2021",
+          "declaredUnits": 736,
+          "geometry": "Source-provided simplified WGS84 boundaries; bounds are derived from every real geometry. No legal-boundary or current-year guarantee.",
+          "geometrySource": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2_simplified.geojson",
+          "geometryUnits": 735,
+          "levelName": "District",
+          "license": "Open Data Commons Open Database License 1.0",
+          "licenseSource": "geonode.pathwaysdata.com/layers/geonode",
+          "originalSource": "Pathways Data Pvt. Ltd., lgdirectory.gov.in",
+          "provider": "geoBoundaries gbOpen",
+          "sha256": "d68db39cd3e2d0892af268e2b0454166368ce3b5b8a78fcda63069ec92a641db",
+          "source": "https://www.geoboundaries.org/api/current/gbOpen/IND/ADM2/",
+          "unitCountMatchesMetadata": false
+        }
+      }
+    ],
+    "indiaCatalogCoverageIssues": [
+      {
+        "declaredLevel": 1,
+        "reason": "inconsistent-source-metadata"
+      }
+    ],
+    "nativeReceipt": ".verification\\agent-regions-model-1791296652936550800\\case\\native-acceptance.json"
+  },
+  "originalReportedRequest": {
+    "status": "passed",
+    "humanPrompt": "我要下载纽约最新的卫星影像",
+    "actualPlaceProvider": "U.S. Census Bureau · TIGERweb",
+    "nativeReviewStatus": "pending",
+    "nativeReceipt": ".verification\\agent-place-model-1791296696331646000\\case\\native-acceptance.json"
+  },
+  "checks": {
+    "nativeAgentActionTests": 65,
+    "desktopTests": 35,
+    "agentNodeTests": 75,
+    "uiTests": 301,
+    "clippyWarningsDenied": "passed",
+    "dependencyAndAliasVerification": "passed"
+  },
+  "development": {
+    "runningPid": 21668,
+    "windowTitle": "GeoD Global",
+    "previewHttpStatus": 200,
+    "userDesktopControlled": false,
+    "installerCreated": false
+  },
+  "limits": {
+    "remoteCacheDays": 7,
+    "remoteDeadlineSeconds": 45,
+    "maxDatasetMiB": 64,
+    "maxIndexedUnits": 100000,
+    "allCountriesAllLevelsGuaranteed": false,
+    "administrativePolygonClipImplementedByThisChange": false
+  },
+  "originalDownloads": 0,
+  "published": false,
+  "originalVerificationEnvironment": "Isolated QA stores; did not detect the actual-profile MSIX mapping failure",
+  "actualProfileFollowUp": "agent-profile-storage-verification.json"
+}

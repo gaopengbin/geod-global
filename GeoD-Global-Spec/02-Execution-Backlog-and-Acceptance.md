@@ -5,9 +5,13 @@
 **执行澄清：2026-09-21 · 独立仓库边界、F02依赖、商业决策状态与分开的发布门禁。**
 **依据：`01-Product-Market-GTM-Spec.md`。这是完整目标的实施分解，不是缩减版功能表。**
 
+**2026-10-07 范围更新：只做二维；WP-V03、WP-X03 及三维验收从当前队列撤下。** 来源看板显示完整二维目录与待接入状态，见[当前产品范围](../docs/product-scope.md)。早期附件中的三维设计仅供历史追溯。
+
 工作包使用 `WP-` 前缀，与来源索引和决策日志的编号区分；可以用于后续 GitHub Epic/Issue。当前仅形成文件，**没有自动创建这些 Issue、修改代码、注册商户、购买域名或发送外联邮件**。
 
 状态统一使用：`proposed → specified → implementing → verified → released`。任何任务不得因为 AI 生成了代码就直接进入 verified；需要运行记录、样例产物与独立检查。
+
+**2026-10-07 Agent 通用任务更新：** 两轮公开需求归入八个可组合类别，后续按[通用任务能力与完成标准](15-General-Agent-Tasks.md)的 WP-W03-T01–T05 实施。先完成统一请求、能力匹配和聚合成果验收，再推进多区域时序批次与科学统计。任务分类规划指引已接入对话服务；这些工作包仍为 specified，不能据此声明全部类别可执行。
 
 ---
 
@@ -21,10 +25,10 @@ WP-D01 全量 IA + WP-D02 视觉 Token + WP-D03 全状态页面
 WP-A01 共享契约 / WP-A02 Product shell / WP-A03 凭据与许可策略
         ├── WP-P01 Provider SDK → WP-P02/03/04/05 数据源 adapter
         ├── WP-J01 任务状态 → WP-J02 恢复与磁盘安全
-        ├── WP-V01 2D adapter → WP-V02 Raster preview → WP-V03 3D
+        ├── WP-V01 2D adapter → WP-V02 Raster preview
         └── WP-F01 Artifact → WP-F02a 验证框架 → WP-F03 Library
                    ↓
-WP-X01/02/03 栅格、矢量与三维处理 → 对应 WP-F02b 格式/数值验证
+WP-X01/02 栅格、高程与二维矢量处理 → 对应 WP-F02b 格式/数值验证
                    ↓
 WP-W01 Recipes → WP-W02 CLI → WP-W03 MCP/AI
                    ↓
@@ -38,7 +42,7 @@ WP-Q01 跨平台QA / WP-Q02 许可安全 / WP-Q03 发行 / WP-O01 支持与运�
 
 并行不代表没有依赖。例如支付页面可先设计，但 WP-PAY01 未通过不能启用生产 Checkout；GIS 界面可先原型，但不能把 mock 场景作为真实搜索结果发布。
 
-**F02依赖解释**：F02a定义验证协议和提交门槛，先于具体处理器；F02b按格式随对应X工作包交付，不等待X01–03全部完成。F03可以展示待验证记录，只有通过对应F02b并提交的产物才算有效成果。完整依赖、状态归约和具体开发队列见[附件06](06-Decisions-Contracts-and-Release-Gates.md)。
+**F02依赖解释**：F02a定义验证协议和提交门槛，先于具体处理器；F02b按格式随对应X工作包交付，不等待X01–02全部完成。F03可以展示待验证记录，只有通过对应F02b并提交的产物才算有效成果。完整依赖、状态归约和具体开发队列见[附件06](06-Decisions-Contracts-and-Release-Gates.md)，其中三维工作包已撤下。
 
 **仓库边界**：所有新工程在独立 Global 仓库实施；“共享”默认指 Global 的桌面/CLI/MCP入口。国内代码仅作参考，未来复用通过明确版本的库，不跨仓引用源码或本机依赖。独立安装/构建与发布隔离要求见[附件08](08-Repository-Boundary.md)。
 
@@ -60,7 +64,7 @@ WP-Q01 跨平台QA / WP-Q02 许可安全 / WP-Q03 发行 / WP-O01 支持与运�
 
 ### WP-D01 — 完整信息架构
 
-**当前交付**：Explore、Workspace、My Data、Tasks 四个主入口，Settings与Help在侧栏底部；裁剪方案在 My Data 中作为折叠高级功能。Sources、Cloud/Teams/Billing及未接入数据域暂不提供入口，待真实能力通过验收再加入。Area/Scene/Layer/Recipe/Job/Artifact 对象关系仍保留。
+**当前交付**：Home 的 Agent 对话和完整二维来源目录，Explore、Workspace、My Data、Tasks；Settings与Help在侧栏底部。未接入来源在看板显示待接入，不提供执行入口。Cloud/Teams/Billing暂不提供入口。Area/Scene/Layer/Recipe/Job/Artifact 对象关系仍保留。
 
 **验收**：同一AOI跨数据域不丢；用户不创建账号/项目即可开始本地工作；从任意任务能找到成果与参数；从成果能找到来源与配方。
 
@@ -98,15 +102,13 @@ WP-Q01 跨平台QA / WP-Q02 许可安全 / WP-Q03 发行 / WP-O01 支持与运�
 | WP-P05 | 自定义/商业来源 | 域名限制、BYO认证、能力/授权、诊断 | 未授权操作不可执行，错误明晰 | WP-P01,WP-A03 |
 | WP-V01 | 二维Viewer adapter | 共享extent/AOI/layer模型、OL对照测试 | COG/WMTS/矢量/XYZ样例与性能记录 | WP-A01,WP-D03 |
 | WP-V02 | 栅格预览 | 多波段、拉伸、指数、NoData、图例、像素值 | 显示/数值分离与正确性对照 | WP-V01,WP-P02 |
-| WP-V03 | 三维Viewer | Cesium、资产范围、引用、相机、2D/3D联动 | tileset样例、资源释放与真实授权 | WP-A01 |
 | WP-X01 | Raster processing | 选择波段、掩膜、裁剪、拼接、网格、重投影、COG | 基准样例、独立数值和格式验证 | WP-A01,WP-J01,WP-F01,WP-F02a |
 | WP-X02 | Elevation / Vector | 地形派生、原始要素、转换、瓦片打包 | 单位/CRS/几何/属性/样式验证 | WP-A01,WP-J01,WP-F01,WP-F02a；地形依赖WP-X01，来源依赖WP-P01 |
-| WP-X03 | 3D packaging | 相交瓦片选择、依赖本地化、校验 | 变换、隐式切片、纹理、缺失引用测试 | WP-V03,WP-J01,WP-F01,WP-F02a |
 | WP-J01 | 统一Job engine | 状态机、事件、错误、阶段、任务输入快照 | 状态迁移测试，无伪成功 | WP-A01 |
 | WP-J02 | 恢复和磁盘安全 | 持久化、断点、原子提交、容量、取消、临时区 | 断网/杀进程/磁盘满故障注入 | WP-J01 |
 | WP-F01 | Artifact与来源 | 成果集合、metadata、recipe、source、checksums | 产物可独立打开、来源字段齐全 | WP-A01,WP-J01 |
 | WP-F02a | 验证协议与框架 | 注册、报告结构、必需输出声明、错误分类与成果提交门槛 | 未验证/失败产物不能计为有效成果 | WP-A01,WP-F01 |
-| WP-F02b | 分格式结果验证器 | 栅格/高程/矢量/瓦片/3D格式、数值与完整性检查 | 正常样例通过、破损样例失败；各格式分别验收 | WP-F02a及对应WP-X01、02或03，不要求全部完成 |
+| WP-F02b | 分格式结果验证器 | 栅格/高程/二维矢量/瓦片格式、数值与完整性检查 | 正常样例通过、破损样例失败；各格式分别验收 | WP-F02a及对应WP-X01、02，不要求全部完成 |
 | WP-F03 | My Data | 搜索、地图查看、移动文件、删除记录/文件分离 | 文件丢失与误删防护测试；待验证与有效成果区分 | WP-F01,WP-F02a,WP-D03 |
 | WP-W01 | Recipes | 版本、导入预检、固定输入、批量区域、重跑 | 去敏分享、未知版本、不可信操作测试 | WP-A01,WP-J01 |
 | WP-W02 | CLI | JSON/NDJSON、退出码、dry-run、任务操作 | 无UI自动化端到端测试 | WP-W01 |
@@ -241,10 +243,6 @@ Owner建立组织 → 邀请Editor/Viewer → 共享去敏配方 → Editor运�
 | TILE-03 | 512px/zoom offset | 拼接与像素地理变换正确 |
 | TIME-01 | Wayback同采集日期不同release | 不冒称新增观测 |
 | TIME-02 | 无合格观测窗口 | 输出缺失说明，不拼“假日期” |
-| 3D-01 | 嵌套tileset与transform | 相交选择与下载位置正确 |
-| 3D-02 | 缺纹理/外部引用/子树 | Partial/Failed，不报完整成功 |
-| 3D-03 | 区域过滤而非几何裁切 | 超出AOI的可能性在UI/metadata明确 |
-| 3D-04 | 隐式切片/不支持扩展 | 正确支持或明确拒绝，不静默丢数据 |
 
 空间与数值验收用独立工具/库交叉检查，不仅用GeoD自己重新打开自己输出的文件。固定样例应有数据许可、下载出处、校验和与预期摘要。
 

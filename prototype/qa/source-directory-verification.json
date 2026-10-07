@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-07",
+  "scope": "Current planned 2D source directory; excludes 3D",
+  "inventory": {
+    "total": 50,
+    "releasedProducts": 9,
+    "protectedCatalogs": 6,
+    "serviceConnectionPaths": 16,
+    "localImportPaths": 6,
+    "pending": 13
+  },
+  "desktopZh": {
+    "actionable": 37,
+    "cards": 50,
+    "documentWidth": 1440,
+    "heights": [
+      184
+    ],
+    "overflow": [],
+    "overlap": [],
+    "pending": 13,
+    "viewportWidth": 1440
+  },
+  "compactEnDark": {
+    "viewport": [
+      720,
+      900
+    ],
+    "cards": 50,
+    "heights": [
+      184
+    ],
+    "overflow": [],
+    "overlap": [],
+    "documentWidth": 720
+  },
+  "routing": {
+    "serviceCardsVerified": 16,
+    "localLibraryCardsVerified": 6,
+    "rapidReopenVerified": true,
+    "automaticCatalogSearch": false,
+    "automaticModelSend": false,
+    "automaticServiceMutation": false
+  },
+  "checks": {
+    "uiRegression": {
+      "files": 9,
+      "passed": 142
+    },
+    "finalHomeRegression": {
+      "passed": 14
+    },
+    "navigationAndStartup": {
+      "passed": 7
+    },
+    "build": "passed",
+    "repositoryIsolation": "passed",
+    "activeUiThreeDEntrypoints": 0,
+    "builtCesiumAssets": false
+  },
+  "development": {
+    "pid": 41348,
+    "frontend": "http://127.0.0.1:4317",
+    "httpStatus": 200,
+    "installerBuilt": false
+  },
+  "previewLimit": "Browser preview opens service forms; service registry reads require the desktop bridge or local runtime. No new remote product acceptance is claimed.",
+  "screenshots": [
+    "source-directory-statuses-zh.png",
+    "source-directory-pending-zh.png",
+    "source-directory-compact-en-dark.png"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "geod-agent-home-ui/v1",
+  "verifiedAt": "2026-10-07T00:01:39+08:00",
+  "startup": "Home",
+  "sampleAreaSelected": false,
+  "automaticCatalogSearch": false,
+  "initialAgentMapContext": null,
+  "providerCards": 15,
+  "originalDownloadsReleased": 9,
+  "protectedCatalogsPendingOriginalVerification": 6,
+  "capabilitiesUseSharedProviderAndReleasePolicy": true,
+  "conversation": {
+    "reusesExistingAgentPanelAndPromptInput": true,
+    "draftRetainedAcrossHomeAndExplore": true,
+    "explicitSendUsesExistingAgentRequest": true,
+    "suggestionClickOnlyFillsDraft": true,
+    "realModelRequestsSentByThisUiVerification": 0
+  },
+  "checks": {
+    "uiSuite": { "files": 40, "passed": 311 },
+    "dataLogicSuite": { "passed": 317 },
+    "finalTargetedAgentAndHomeTests": { "passed": 62 },
+    "frontendBuild": "passed",
+    "repositoryIsolation": "passed"
+  },
+  "visual": {
+    "browserPreview": "http://127.0.0.1:4317/#Home",
+    "desktop": { "width": 1280, "height": 720, "horizontalOverflow": false },
+    "compact": { "width": 720, "height": 900, "horizontalOverflow": false },
+    "themes": ["light", "dark"],
+    "allSourceCardHeightsEqual": true,
+    "screenshots": ["../../.verification/ai-home-ui/desktop-light.png", "../../.verification/ai-home-ui/compact-dark.png"],
+    "emptyAreaPicker": "global view, blank coordinates, search disabled until an area is chosen",
+    "nativeWindowScreenshotCaptured": false
+  },
+  "development": {
+    "launcherPid": 84072,
+    "applicationPid": 41348,
+    "windowTitle": "GeoD Global",
+    "windowHandle": 1974524,
+    "httpStatus": 200,
+    "installerPackaged": false,
+    "githubPublished": false
+  }
+}

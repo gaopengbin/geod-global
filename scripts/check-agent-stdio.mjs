@@ -1,0 +1,13 @@
+import { spawn } from 'node:child_process';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+import { tmpdir } from 'node:os';
+const home=await mkdtemp(join(tmpdir(),'geod-stdio-check-'));
+const runtime=resolve('.agent-runtime/win32-x64');
+const env={NODE_USE_ENV_PROXY:'1'};
+for(const name of ['SystemRoot','SYSTEMROOT','WINDIR','TEMP','TMP','HTTPS_PROXY','HTTP_PROXY','NO_PROXY'])if(process.env[name])env[name]=process.env[name];
+const child=spawn(join(runtime,'node.exe'),[join(runtime,'agent.mjs'),home,join(runtime,'codex.exe')],{env,cwd:home,windowsHide:true,stdio:['pipe','pipe','pipe']});
+child.stdout.on('data',bytes=>process.stdout.write(bytes));child.stderr.on('data',bytes=>process.stderr.write(bytes));
+child.on('exit',async code=>{console.log(JSON.stringify({exit:code}));await rm(home,{recursive:true,force:true});});
+child.stdin.write(JSON.stringify({id:1,method:'snapshot',params:{}})+'\n');
+setTimeout(()=>child.stdin.end(),2000);

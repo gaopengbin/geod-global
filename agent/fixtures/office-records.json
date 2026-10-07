@@ -1,0 +1,35 @@
+[
+  {
+    "document": {
+      "bytes": 37423,
+      "characters": 0,
+      "id": "075f7d99fcf40a52cb1ff422f0ed56ae5f7d2878336b7ffbae6e5c28f1315de4",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "name": "notes.docx"
+    },
+    "previewCharacters": 96,
+    "text": "GeoD 文档检查\n北京 🌍 & <GeoD>\n<script>window.officeInjected=true</script>\n城市\t经度\n北京\t116.4\n\nGeoD header\n"
+  },
+  {
+    "document": {
+      "bytes": 5910,
+      "characters": 0,
+      "id": "6694885a18f3e199039d8c97a8f17fd06cf7d002f01511ed165fab7e2de0326a",
+      "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "name": "data.xlsx"
+    },
+    "previewCharacters": 96,
+    "text": "[数据]\nA1\t城市\nB1\t值\nA2\t北京\nB2\t1.25\nA3\t上海\nB3\t2.5\nB4\t\t[formula: SUM(B2:B3)]\n\n[说明]\nA1\t公式不会执行 & 原文件保持不变\n\n"
+  },
+  {
+    "document": {
+      "bytes": 1919,
+      "characters": 0,
+      "id": "9bb55840e822f82d61a4ff37029b71731b7160d60a881d8ca2014378d9b549c0",
+      "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "name": "slides.pptx"
+    },
+    "previewCharacters": 50,
+    "text": "[1]\n第一张 & GeoD\n\n[2]\nSecond in presentation order\n\n"
+  }
+]

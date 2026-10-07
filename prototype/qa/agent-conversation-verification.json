@@ -1,0 +1,51 @@
+{
+  "schema": "geod-natural-language-workflow-acceptance/v1",
+  "status": "passed",
+  "modelRoute": "deepseek-v4-flash",
+  "upstreamVendorVerified": false,
+  "humanMessages": 1,
+  "cardClicks": 0,
+  "automaticContinuation": true,
+  "continuations": 1,
+  "taskCount": 2,
+  "tasks": [
+    {
+      "id": "59c92c7b-8dc7-473a-bf77-4d326d7b1ab8",
+      "kind": "raster_clip",
+      "status": "succeeded",
+      "bytes": 694,
+      "sha256": "edb6bfe57183004ecb202012dfb5936632b4c8d5e2e00031cd211521f6a45696"
+    },
+    {
+      "id": "9eebc56a-a576-497a-9b5d-19db814f9066",
+      "kind": "download",
+      "status": "succeeded",
+      "bytes": 1958612,
+      "sha256": "2017a6ce23176b164f03fc54ba2f17ceb452ada2ec65d0691e70c05126f9d6a6"
+    }
+  ],
+  "crop": {
+    "width": 46,
+    "height": 56,
+    "sha256": "edb6bfe57183004ecb202012dfb5936632b4c8d5e2e00031cd211521f6a45696"
+  },
+  "nativeTools": [
+    "geod_workspace_context",
+    "geod_execution_policy",
+    "geod_sources_list",
+    "geod_scene_search",
+    "geod_project_plan",
+    "geod_plan_execute",
+    "geod_project_download_plan",
+    "geod_job_status",
+    "geod_raster_inspect",
+    "geod_clip_plan",
+    "geod_workspace_open"
+  ],
+  "workspaceOpenRequestVerified": true,
+  "nativeMapRenderObserved": false,
+  "usedUserDesktop": false,
+  "credentialVaultWritten": false,
+  "modelRequests": 15,
+  "scope": "One actual public SCL original, actual native project and crop; one original human request, same Codex thread continuation. Not a packaged Windows installer acceptance."
+}

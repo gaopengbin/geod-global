@@ -9,6 +9,8 @@
 **产品负责人：高鹏彬 · Global 目录：`G:\code\geod-global` · 国内参考项目：`gaopengbin/geo-downloader`**
 **状态：完整目标设计，供产品决策、界面设计和开发拆解；不是已发布功能清单。**
 
+**范围决定：2026-10-07，只做二维。** 完整来源看板及待接入状态见[当前产品范围](../docs/product-scope.md)。三维从当前产品目标撤下，早期研究与历史实现记录仅作追溯。
+
 > **产品一句话**：一个本地优先的空间数据工作台，让用户围绕同一个区域发现、预览、比较、处理和导出数据，并把成功的操作变成可重复工作流。
 >
 > **商业方案提案**：保留已有免费开源发行权益，以可选托管协作、企业运行保障和专业服务探索收入。桌面 Pro、Cloud 与服务的最终组合尚未决定，不能把本提案视为用户批准未来全部新增本地能力免费或必须建设云服务。
@@ -84,7 +86,7 @@
 
 说明：
 
-> Find, preview, process, and export imagery, elevation, vector, and 3D data in a local-first desktop workspace.
+> Find, preview, process, and export 2D imagery, elevation rasters, maps and vector data in a local-first desktop workspace.
 
 公开文案只列发布版本实际支持的能力；目标设计不直接当营销承诺。
 
@@ -100,7 +102,7 @@
 
 ### 1.3 不做什么
 
-不做完整 GIS 编辑器、摄影测量重建平台、地籍确权系统、自动驾驶地图、安全关键导航、通用聊天软件；不以全球实时高清卫星、无限离线下载、任意商业影像再分发为卖点；不把三维查看等同于三维重建；不为了收费强迫开放数据绕行 GeoD 云端。
+不做完整 GIS 编辑器、三维数据接入与查看、摄影测量重建平台、地籍确权系统、自动驾驶地图、安全关键导航、通用聊天软件；不以全球实时高清卫星、无限离线下载、任意商业影像再分发为卖点；不为了收费强迫开放数据绕行 GeoD 云端。
 
 AI 是可选操作入口，GeoD Cloud 是可选托管服务，二者都不能成为本地任务的强制依赖。
 
@@ -134,7 +136,7 @@ AI 是可选操作入口，GeoD Cloud 是可选托管服务，二者都不能成
 | H04 | 托管协作有人付费 | 有预算者明确需要共享、审计、通知或运行治理 | 本地 JSON/Git 足够，云服务没有新增价值 |
 | H05 | 独立客户端减少操作摩擦 | 同一任务盲测减少步骤和返工 | QGIS 插件表现相当且没有切换理由 |
 
-访谈建议覆盖 18 位潜在用户：6 位小团队 GIS/环境咨询人员、6 位数据/科研开发者、3 位地图产品开发者、3 位制图/教育或三维场景人员。人数是研究计划，不是已访谈记录。招募与研究记录模板见附件三。
+访谈建议覆盖 18 位潜在用户：6 位小团队 GIS/环境咨询人员、6 位数据/科研开发者、3 位地图产品开发者、3 位制图/教育人员。人数是研究计划，不是已访谈记录。招募与研究记录模板见附件三。
 
 ---
 
@@ -218,7 +220,7 @@ Workspace 是工作上下文，不是必须注册的云项目。用户可以使�
 
 ```text
 Top bar：Workspace name | Search places, datasets and commands | Account/Help
-Navigation rail | Discovery / Layers | Map / 3D / Compare | Inspector
+Navigation rail | Discovery / Layers | 2D Map / Compare | Inspector
 Bottom：Contextual timeline / Tasks drawer / Coordinates and attribution
 ```
 
@@ -263,7 +265,7 @@ Bottom：Contextual timeline / Tasks drawer / Coordinates and attribution
 
 ---
 
-## 8. 六大数据域的完整能力
+## 8. 五大二维数据域的完整能力
 
 ### 8.1 Satellite：场景到分析数据
 
@@ -297,17 +299,9 @@ OSM 提供 Buildings、Roads、Water、Land use、POIs 等预设，但须处理�
 
 格式转换只在有明确数据语义时开放。GeoJSON 到 PMTiles 需要制瓦片、层名、缩放与样式设计，不是改扩展名。属性表支持过滤与抽样预览，不能一次性把百万条记录加载进 DOM。
 
-### 8.5 3D：授权资产获取与预览
+### 8.5 Local Data：本地文件也是一等来源
 
-复用现有 3D Tiles 工作，完整目标包含远程/本地 tileset、glTF/GLB、地形与点云适配。3DGS 作为需单独验证的 renderer/格式能力，不能笼统宣称所有 PLY 都支持。
-
-必须区分：**按区域选择相交瓦片**与**几何精确裁切模型**。前者的成果可能超出 AOI，界面和 metadata 要解释；后者需要另一个处理器。纹理、外部引用、变换、隐式切片与依赖完整性纳入验收，不以根 tileset 下载成功判定全部成功。
-
-Google Photorealistic 3D Tiles 不作为默认可离线导出的示例。官方 Map Tiles API 有缓存、提取与离线使用限制；是否例外应依实际协议，不由一个 API Key 决定。[S12]
-
-### 8.6 Local Data：本地文件也是一等来源
-
-支持打开、检查、预览、转换和登记本地 GeoTIFF/COG、矢量、瓦片包、3D Tiles。无需 GeoD 账号、网络或云端鉴权。
+支持打开、检查、预览、转换和登记本地 GeoTIFF/COG、二维矢量和瓦片包。无需 GeoD 账号、网络或云端鉴权。独立本地栅格导入仍按来源目录标为待接入。
 
 导入 SHP 时识别同名配套文件与 CRS，未知 CRS 不猜。文件可引用，不默认复制；用户选择“托管到 GeoD 数据目录”才复制。大文件使用窗口读取、分级预览或旁车处理，不全量进入 WebView 内存。
 
@@ -333,7 +327,6 @@ Google Photorealistic 3D Tiles 不作为默认可离线导出的示例。官方 
 | Wayback / 用户授权影像服务 | 历史及连续影像 | 版本与瓦片服务 adapter | 核对下载、缓存、展示条款 | 现有模块基础；授权独立审核 [R01] |
 | 吉林一号/其他商业厂商 | 商业影像 | 在线地图、目录、订单交付分别建能力 | BYO 账号不等于取得导出/再分发权 | 候选；未签合作、不写免费额度或确定价格 |
 | 自定义 STAC/COG/WMS/WMTS/WCS | 用户提供数据 | Capability detection + manifest | 自签证书、代理、鉴权、访问范围 | 各协议的公开有界路径逐项接入，真实验收与剩余范围见[完整进度](../docs/provider-integration-status.md)；不承诺任意服务自动兼容 |
-| 自有或授权 3D Tiles | 三维 | tileset 与依赖读取 | 资产级许可；完整性和范围语义 | 复用现有基础并验证 [R01] |
 
 NAIP 在信息架构中归 **Aerial imagery**，不当作卫星型号。Provider 条目显示真实地域覆盖，不能将美国地方数据标成全球。
 
@@ -396,7 +389,6 @@ Swipe、Side by side、Opacity、Flicker 共用两个显式选择的数据对象
 | 高程 | DEM、派生 GeoTIFF、等高线/剖面 | 垂直参考与单位；派生参数 |
 | 矢量要素 | GeoPackage、GeoJSON、按需 SHP | 属性、几何、编码、CRS；SHP 限制提示 |
 | 瓦片 | PMTiles、MBTiles、允许的瓦片集合 | tile matrix、元数据、样式依赖与署名 |
-| 三维 | tileset 与资产集合、相应模型格式 | 引用、变换、纹理、外部依赖、许可 |
 
 COG 不是给 TIFF 改名，应按其布局、分块、overview 等要求生成并验证；GDAL 有对应驱动，但依赖打包与跨平台测试仍是工程工作。[S16]
 
@@ -484,7 +476,7 @@ services/
 
 ### 13.2 Viewer 选择
 
-**推荐设计**：Global 的专业二维工作区采用 OpenLayers adapter，利用其 COG、多波段等能力；Cesium adapter 服务三维；现有 Leaflet/MapLibre 继续保障既有产品与迁移。OpenLayers 官方 COG/NDVI 示例证明相应预览能力存在，不证明 GeoD 已接入或性能已达标。[R03][S14][S15]
+**推荐设计**：Global 的专业二维工作区采用 OpenLayers adapter，利用其 COG、多波段等能力；现有 Leaflet/MapLibre 继续保障既有产品与迁移。OpenLayers 官方 COG/NDVI 示例证明相应预览能力存在，不证明 GeoD 已接入或性能已达标。[R03][S14][S15]
 
 不是所有引擎同时叠一屏。由工作模式启用所需 renderer，共享 camera extent、AOI、selection 与 layer 描述；释放失活 WebGL 资源。MapLibre 是否保留在 Global，由矢量样式一致性测试决定，而不是因为已有依赖就再增加一个常驻引擎。
 

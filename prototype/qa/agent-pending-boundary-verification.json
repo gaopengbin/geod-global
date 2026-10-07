@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "scenario": "Same reported failed conversation, isolated copy; original saved model and owned Codex runtime",
+  "rootCause": "Unanswered legacy missing-polygon fallback blocked planning; repeated compactions and reads then exhausted the operation budget",
+  "oldDecision": "superseded without answer",
+  "polygonParts": 3,
+  "polygonHash": "0430a8bbbba38e41e53f4b1c29690e7966685604cbfa6aa5e3dfb9bfffec24d5",
+  "projectReviewStatus": "pending",
+  "operationEntries": 9,
+  "compactionsDuringRetry": 1,
+  "nativeJobsCreated": 0,
+  "userStoreModified": false,
+  "vaultWrites": 0,
+  "checks": {
+    "agentTests": 112,
+    "uiTests": 70,
+    "ownedCodexGoalLifecycle": "passed",
+    "repositoryChecks": "passed",
+    "productionFrontend": "passed",
+    "pinnedCompactionScope": "strict valid config accepted; invalid control rejected"
+  },
+  "limitations": "Verified retry to a native polygon project and map preview. No original imagery transfer, saved project or completed crop; UI tests do not establish native visual acceptance.",
+  "developmentBuild": "passed",
+  "packaged": false,
+  "evidence": {
+    "native": "G:\\code\\geod-global\\.verification\\agent-crop-followup-1791366506077173100\\legacy-boundary-verification.json",
+    "snapshot": "G:\\code\\geod-global\\.verification\\agent-crop-followup-1791366506077173100\\legacy-boundary-snapshot.json"
+  },
+  "developmentWindow": {
+    "processId": 56508,
+    "executable": "G:\\code\\geod-global\\.verification\\goals-desktop-target\\debug\\geod-global-desktop.exe",
+    "responding": true,
+    "windowTitle": "GeoD Global",
+    "sha256": "72e8c7944346c0228beb90286b39a9623fd74c49255499f61d9d35d7e31480e8",
+    "historyEntries": 60,
+    "packaged": false
+  }
+}

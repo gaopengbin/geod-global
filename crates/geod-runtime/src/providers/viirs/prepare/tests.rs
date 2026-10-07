@@ -120,6 +120,7 @@ async fn setup(path: &Path) -> (JobManager, crate::Project, Job) {
         manager.persist(&store.jobs).await.unwrap();
     }
     let scene = crate::projects::ProjectScene {
+        footprint: None,
         item_id: source.item_id.clone(),
         date: "2025-06-26T00:00:00Z".into(),
         cloud: None,

@@ -1,0 +1,137 @@
+{
+  "schema": "geod-agent-task-compact-acceptance/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-07T12:09:21.413Z",
+  "scope": "Controlled React and native IPC fixture with 18 complete file and task rows. Browser layout, internal scrolling, progress updates and review actions; no model calls, native jobs, approval or downloads.",
+  "tests": {
+    "agentPanelIntegration": 72,
+    "repositoryIsolation": "passed",
+    "frontendBuild": "passed",
+    "developerBuild": "passed"
+  },
+  "browser": {
+    "status": "passed",
+    "scope": "Controlled React and native IPC fixture with 18 complete file and task rows. Browser layout, internal scrolling, progress updates and review actions; no model calls, native jobs, approval or downloads.",
+    "cases": [
+      {
+        "width": 960,
+        "height": 900,
+        "theme": "light",
+        "locale": "zh-CN",
+        "files": 18,
+        "jobs": 18,
+        "detailsInitiallyClosed": true,
+        "internalScrollContained": true,
+        "scrollPreservedOnProgressUpdate": true,
+        "lastTaskActionsReachable": true,
+        "pendingConfirmationEnabled": true,
+        "approvalIssued": false,
+        "jobList": {
+          "height": 320,
+          "scrollHeight": 1341,
+          "overflowY": "auto"
+        },
+        "fileList": {
+          "height": 240,
+          "scrollHeight": 771,
+          "overflowY": "auto"
+        },
+        "horizontalOverflow": false,
+        "composerVisible": true,
+        "cardHeight": 471.765625
+      },
+      {
+        "width": 560,
+        "height": 900,
+        "theme": "light",
+        "locale": "zh-CN",
+        "files": 18,
+        "jobs": 18,
+        "detailsInitiallyClosed": true,
+        "internalScrollContained": true,
+        "scrollPreservedOnProgressUpdate": true,
+        "lastTaskActionsReachable": true,
+        "pendingConfirmationEnabled": true,
+        "approvalIssued": false,
+        "jobList": {
+          "height": 320,
+          "scrollHeight": 1341,
+          "overflowY": "auto"
+        },
+        "fileList": {
+          "height": 240,
+          "scrollHeight": 771,
+          "overflowY": "auto"
+        },
+        "horizontalOverflow": false,
+        "composerVisible": true,
+        "cardHeight": 471.765625
+      },
+      {
+        "width": 360,
+        "height": 900,
+        "theme": "dark",
+        "locale": "zh-CN",
+        "files": 18,
+        "jobs": 18,
+        "detailsInitiallyClosed": true,
+        "internalScrollContained": true,
+        "scrollPreservedOnProgressUpdate": true,
+        "lastTaskActionsReachable": true,
+        "pendingConfirmationEnabled": true,
+        "approvalIssued": false,
+        "jobList": {
+          "height": 320,
+          "scrollHeight": 1341,
+          "overflowY": "auto"
+        },
+        "fileList": {
+          "height": 240,
+          "scrollHeight": 771,
+          "overflowY": "auto"
+        },
+        "horizontalOverflow": false,
+        "composerVisible": true,
+        "cardHeight": 471.765625
+      },
+      {
+        "width": 360,
+        "height": 700,
+        "theme": "light",
+        "locale": "en",
+        "files": 18,
+        "jobs": 18,
+        "detailsInitiallyClosed": true,
+        "internalScrollContained": true,
+        "scrollPreservedOnProgressUpdate": true,
+        "lastTaskActionsReachable": true,
+        "pendingConfirmationEnabled": true,
+        "approvalIssued": false,
+        "jobList": {
+          "height": 280,
+          "scrollHeight": 1341,
+          "overflowY": "auto"
+        },
+        "fileList": {
+          "height": 210,
+          "scrollHeight": 771,
+          "overflowY": "auto"
+        },
+        "horizontalOverflow": false,
+        "composerVisible": true,
+        "cardHeight": 510.796875
+      }
+    ],
+    "errors": [],
+    "nativeDesktopVisualAcceptance": false
+  },
+  "developerExecutable": {
+    "path": "target/debug/geod-global-desktop.exe",
+    "sha256": "b61ded5cb242b81d7222e05598bc0ad319469d157c4fe95ac9ca36af2beffb8b",
+    "installerCreated": false
+  },
+  "developerLaunch": {
+    "status": "deferred",
+    "reason": "A native raster mosaic and its conversation are still active; preserve the running app."
+  }
+}

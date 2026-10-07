@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "reportedError": "Agent returned invalid goal state.",
+  "rootCause": "In-place re-audit temporarily cleared verified output IDs, exposing an invalid complete goal to asynchronous snapshots; healthy refresh did not clear its stale UI error",
+  "changes": [
+    "Audit all native outputs in a detached copy, then publish one complete state",
+    "Discard late audits after goal clear, replacement or output rebind; preserve human pause",
+    "Keep refresh errors separate from action errors and clear recovered refresh failures",
+    "Localized goal-state validation failure in Chinese"
+  ],
+  "regression": {
+    "reproducedBeforeFix": true,
+    "agentTests": 114,
+    "agentPanelTests": 68,
+    "snapshotRecoveryAndActionErrorRetention": "passed",
+    "nativeFileFailureRemainsIncomplete": "passed",
+    "pauseClearRebindDuringAudit": "passed"
+  },
+  "actualUserResult": {
+    "jobId": "d61deb51-82d4-449b-a72d-98b8a1ee58e3",
+    "status": "succeeded",
+    "fileExists": true,
+    "bytes": 30308389,
+    "sha256MatchesNativeRecord": true,
+    "sha256": "a0ccd69f3adb4ad44a4e613c42e90186b9e7337f8cb013340df47dcd47c03404",
+    "goalStateValid": true,
+    "goalStatus": "complete",
+    "scope": "Read-only inspection of actual user result and stored native checksum; no redownload or processing",
+    "mosaicOutput": {
+      "width": 4777,
+      "height": 4953,
+      "bandCount": 3,
+      "crs": "EPSG:32618",
+      "bounds": [
+        562410,
+        4480910,
+        610180,
+        4530440
+      ],
+      "pixelSize": [
+        10,
+        10
+      ],
+      "sourceCount": 4,
+      "maskedPixels": 11431891,
+      "coveredPixels": 12228545,
+      "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData"
+    }
+  },
+  "goalAfterDevelopmentRestart": {
+    "valid": true,
+    "status": "complete"
+  },
+  "controlledBrowser": {
+    "status": "passed",
+    "viewports": [
+      560,
+      360
+    ],
+    "locales": [
+      "zh-CN",
+      "en"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "output": "G:\\code\\geod-global\\.verification\\agent-goals-ui-1791368157776",
+    "scope": "Existing goal cards and private controls in a controlled hidden browser; no native visual acceptance"
+  },
+  "repositoryIsolation": "passed",
+  "frontendBuild": "passed",
+  "developmentBuild": "passed",
+  "developmentWindow": {
+    "processId": 18164,
+    "path": "G:\\code\\geod-global\\target\\debug\\geod-global-desktop.exe",
+    "responding": true,
+    "title": "GeoD Global",
+    "packaged": false
+  },
+  "packaged": false,
+  "scope": "Actual existing result verified read-only. No new model request, download, crop or processing was submitted for this fix."
+}

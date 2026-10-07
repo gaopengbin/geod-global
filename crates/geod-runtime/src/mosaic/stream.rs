@@ -74,27 +74,15 @@ fn strip_rows(plan: &MosaicPlan, polygon: bool) -> Result<u32> {
     Ok(rows.clamp(1, MAX_STRIP_ROWS).min(plan.height))
 }
 
-pub(super) fn encode_mosaic(
-    root: &Path,
-    id: &str,
-    mut plan: MosaicPlan,
-    rasters: &mut [SourceRaster],
-    geometry: Option<&PolygonGeometry>,
-    cancel: &CancellationToken,
-    progress: Option<&UnboundedSender<(u64, &'static str)>>,
-) -> Result<MosaicOutput> {
-    check_cancel(Some(cancel))?;
+pub(super) fn preflight_budget(root: &Path, plan: &MosaicPlan, polygon: bool) -> Result<u64> {
+    strip_rows(plan, polygon)?;
     let assets = root.join("assets").canonicalize().map_err(io_error)?;
     if assets != root.join("assets") {
         return Err("Managed output directory was redirected".into());
     }
-    let final_path = assets.join(format!("{id}.tif"));
-    if final_path.exists() {
-        return Err("Mosaic output already exists".into());
-    }
     let raw_bytes = (plan.width as u64)
         .checked_mul(plan.height as u64)
-        .and_then(|count| count.checked_mul(plan.band_count as u64 * sample_bytes(&plan) as u64))
+        .and_then(|count| count.checked_mul(plan.band_count as u64 * sample_bytes(plan) as u64))
         .ok_or("Mosaic output byte count overflow")?;
     // Compressed size is unknown until written. Reserve a conservative upper
     // estimate so an incomplete file cannot silently exhaust the workspace.
@@ -112,6 +100,25 @@ pub(super) fn encode_mosaic(
     if available < required {
         return Err(format!("Insufficient workspace disk space for mosaic: need {required} bytes, available {available} bytes"));
     }
+    Ok(required)
+}
+
+pub(super) fn encode_mosaic(
+    root: &Path,
+    id: &str,
+    mut plan: MosaicPlan,
+    rasters: &mut [SourceRaster],
+    geometry: Option<&PolygonGeometry>,
+    cancel: &CancellationToken,
+    progress: Option<&UnboundedSender<(u64, &'static str)>>,
+) -> Result<MosaicOutput> {
+    check_cancel(Some(cancel))?;
+    let assets = root.join("assets").canonicalize().map_err(io_error)?;
+    let final_path = assets.join(format!("{id}.tif"));
+    if final_path.exists() {
+        return Err("Mosaic output already exists".into());
+    }
+    let required = preflight_budget(root, &plan, geometry.is_some())?;
     let mut temporary = tempfile::Builder::new()
         .prefix(&format!("{id}.mosaic-"))
         .suffix(".part")

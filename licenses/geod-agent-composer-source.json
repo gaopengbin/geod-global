@@ -1,0 +1,28 @@
+{
+  "schema": "geod-source-adaptation/v1",
+  "repository": "geod-agent",
+  "packageVersion": "0.2.3",
+  "checkoutHead": "c2d1c50e2fb15dcf88f6fc9f92ddd18589d895d9",
+  "sourceState": "Local working copy; hashes identify the actual files read, including uncommitted edits",
+  "date": "2026-10-06",
+  "license": "MIT",
+  "retainedNotice": "GeoD-Agent-Composer-MIT.txt",
+  "sources": [
+    {"path": "apps/geod-agent-desktop/src/components/agents/prompt-input.tsx", "sha256": "6e2b5b20567ef61c24a48a46681670fe640f56e9efa89fe1ed1d270bae8567db"},
+    {"path": "apps/geod-agent-desktop/src/agent-panel.tsx", "sha256": "8fcf148b21fcac7b7d9726b8957722b9e35755c71c306350bd5c5a20d9ad21c3"},
+    {"path": "apps/geod-agent-desktop/src/theme.css", "sha256": "af5dc0366680efd93f0f3fdaa822d1ef15066b50534030bcf85cb500837d37b1"},
+    {"path": "apps/geod-agent-desktop/src/context-window.tsx", "sha256": "acf38aabbea280e12f3b9f4dc98d554234dc53be572617ce56d5b70ca781b955"},
+    {"path": "apps/geod-agent-desktop/src/icons.ts", "sha256": "2d0906eccb174e8286938ded3583cc34c67277ef6dfae02165ad8d4de41ce021"},
+    {"path": "LICENSE", "sha256": "f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191"}
+  ],
+  "targets": ["prototype/src/ui/prompt-input.jsx", "prototype/src/ui/prompt-input.css", "prototype/src/agent-panel.jsx", "prototype/src/agent-panel.css"],
+  "adaptations": [
+    "Existing Beautiful UI adapters replace the source motion button, select and popover adapters; no new framework or sibling runtime dependency",
+    "Source form dimensions, independent text measurement, plus menu, permission, context ring, compact model and send/stop icon order retained",
+    "Toolbar reserves space for controls so a model name cannot overlap permission or context at narrow widths",
+    "Attachment and permission actions use Global's existing native IPC; audio is a Google-native file attachment and data boundary attachment accepts GeoJSON",
+    "Context usage is taken from validated native snapshots; no estimated token categories or unsupported window sizes",
+    "Chinese composition guards, draft retention, current stop behavior and model-connection binding retained",
+    "Animations remain enabled as requested; no motion package dependency added"
+  ]
+}

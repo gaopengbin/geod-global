@@ -1,0 +1,50 @@
+import React from 'react';
+import {afterEach,beforeEach,describe,it,expect,vi} from 'vitest';
+import {render,screen,fireEvent,waitFor,cleanup} from '@testing-library/react';
+import {I18nProvider} from './i18n.jsx';
+import AgentPlanMapPreview from './agent-plan-map-preview.jsx';
+import {agentRequest} from './agent-client.js';
+import {loadPlanPreviewScenes} from './agent-map-preview.js';
+import {normalizeScene} from './catalog.js';
+import catalog from '../public/samples/earth-search-response.json';
+vi.mock('./agent-client.js',()=>({agentRequest:vi.fn()}));
+vi.mock('./agent-map-preview.js',()=>({loadPlanPreviewScenes:vi.fn()}));
+vi.mock('./explore-map.jsx',()=>({ExploreMap:({scene,area,scenes,loadedScenes,previewScenes,previewChannel})=><div aria-label="Real map adapter test" data-loaded={loadedScenes.map(s=>s.id).join(',')} data-previews={previewScenes.map(s=>s.id).join(',')} data-channel={previewChannel}>{scene?.id} · {area.join(',')} · {scenes.length}</div>}));
+const plan={planId:'a1234567-1234-1234-1234-123456789abc',planHash:'a'.repeat(64),bounds:[-74.3,40.4,-73.7,41],files:[{assetKey:'visual'}]};
+const preview={...plan,provider:'earth-search',geometry:null,selections:[]};
+const scenes=catalog.features.slice(0,2).map(item=>normalizeScene(item));
+beforeEach(()=>{const storage=new Map([['geod-global-locale','en']]);Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value)}});agentRequest.mockReset();loadPlanPreviewScenes.mockReset();agentRequest.mockResolvedValue(preview);loadPlanPreviewScenes.mockResolvedValue({scenes,failed:0});});
+afterEach(cleanup);
+describe('task map preview',()=>{
+  it('loads every reviewed scene by default, toggles independent visibility and leaves the download review unchanged',async()=>{
+    const original=structuredClone(plan);
+    const close=vi.fn();render(<I18nProvider><AgentPlanMapPreview plan={plan} sessionId="session" onClose={close}/></I18nProvider>);
+    const first=await screen.findByRole('checkbox',{name:'Show scene '+scenes[0].id}),second=screen.getByRole('checkbox',{name:'Show scene '+scenes[1].id});
+    expect(agentRequest).toHaveBeenCalledWith('planMapPreview',{sessionId:'session',planId:plan.planId,planHash:plan.planHash});
+    const map=screen.getByLabelText('Real map adapter test');expect(map.getAttribute('data-loaded')).toBe(scenes.map(s=>s.id).join(','));
+    expect(first.getAttribute('aria-checked')).toBe('true');expect(second.getAttribute('aria-checked')).toBe('true');
+    fireEvent.click(first);expect(map.getAttribute('data-loaded')).toBe(scenes[1].id);expect(second.getAttribute('aria-checked')).toBe('true');
+    fireEvent.click(second);expect(map.getAttribute('data-loaded')).toBe('');expect(map.hasAttribute('data-channel')).toBe(false);
+    fireEvent.click(screen.getByRole('button',{name:'Show all'}));expect(map.getAttribute('data-loaded')).toBe(scenes.map(s=>s.id).join(','));
+    fireEvent.click(screen.getByRole('button',{name:'Hide all'}));expect(map.getAttribute('data-loaded')).toBe('');
+    expect(plan).toEqual(original);
+    expect(screen.queryByRole('dialog')).toBeNull();expect(screen.getByRole('region',{name:'Task map preview'})).toBeTruthy();
+    fireEvent.click(screen.getByRole('button',{name:'Close map preview'}));expect(close).toHaveBeenCalledOnce();
+    expect(agentRequest.mock.calls.every(([method])=>method==='planMapPreview')).toBe(true);
+  });
+  it('defaults all provider preview scenes on and keeps an unchecked scene off the online map',async()=>{
+    const modis=scenes.map((s,i)=>({...s,id:'modis_'+i,provider:'planetary-modis',crs:'MODIS:Sinusoidal',assets:{}}));
+    loadPlanPreviewScenes.mockResolvedValue({scenes:modis,failed:0});
+    render(<I18nProvider><AgentPlanMapPreview plan={plan} sessionId="session" onClose={()=>{}}/></I18nProvider>);
+    const first=await screen.findByRole('checkbox',{name:'Show scene modis_0'}),map=screen.getByLabelText('Real map adapter test');
+    expect(map.getAttribute('data-previews')).toBe('modis_0,modis_1');fireEvent.click(first);expect(map.getAttribute('data-previews')).toBe('modis_1');
+    fireEvent.click(screen.getByRole('button',{name:'Hide all'}));expect(map.getAttribute('data-previews')).toBe('');expect(map.hasAttribute('data-channel')).toBe(false);
+  });
+  it('preserves the area on partial failure, retries, and aborts when dismissed',async()=>{
+    loadPlanPreviewScenes.mockResolvedValue({scenes:[],failed:2});
+    const {unmount}=render(<I18nProvider><AgentPlanMapPreview plan={plan} sessionId="session" onClose={()=>{}}/></I18nProvider>);
+    await screen.findByRole('alert');expect(screen.getByLabelText('Real map adapter test').textContent).toContain('-74.3,40.4,-73.7,41');
+    fireEvent.click(screen.getByRole('button',{name:'Retry preview'}));await waitFor(()=>expect(loadPlanPreviewScenes).toHaveBeenCalledTimes(2));
+    const signal=loadPlanPreviewScenes.mock.calls.at(-1)[1].signal;unmount();expect(signal.aborted).toBe(true);
+  });
+});

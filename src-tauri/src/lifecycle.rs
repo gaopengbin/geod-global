@@ -3,6 +3,7 @@ use std::sync::{Arc, Condvar, Mutex};
 
 #[derive(Default)]
 struct State {
+    maintenance: bool,
     exiting: bool,
     finished: bool,
     commands: usize,
@@ -28,7 +29,7 @@ impl DesktopLifecycle {
             .state
             .lock()
             .unwrap_or_else(|error| error.into_inner());
-        if state.exiting {
+        if state.exiting || state.maintenance {
             return Err(
                 "The application is exiting; wait for it to finish before reopening".into(),
             );
@@ -50,6 +51,17 @@ impl DesktopLifecycle {
         }
         state.exiting = true;
         true
+    }
+
+    /// Freeze new native actions before the updater checks idle state. This
+    /// closes the race between an idle check and another download/Agent turn.
+    pub fn maintenance(&self) -> Result<MaintenanceGuard, String> {
+        let mut state = self.0.state.lock().unwrap_or_else(|e| e.into_inner());
+        if state.exiting || state.maintenance {
+            return Err("Application maintenance is already running.".into());
+        }
+        state.maintenance = true;
+        Ok(MaintenanceGuard(self.clone()))
     }
 
     pub fn exiting(&self) -> bool {
@@ -90,6 +102,18 @@ impl DesktopLifecycle {
                 .wait(state)
                 .unwrap_or_else(|error| error.into_inner());
         }
+    }
+}
+
+pub struct MaintenanceGuard(DesktopLifecycle);
+impl Drop for MaintenanceGuard {
+    fn drop(&mut self) {
+        self.0
+             .0
+            .state
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .maintenance = false;
     }
 }
 
@@ -135,5 +159,18 @@ mod tests {
         worker.join().unwrap();
         assert!(lifecycle.finished());
         assert!(lifecycle.enter().is_err());
+    }
+    #[test]
+    fn maintenance_blocks_new_actions_and_releases_after_a_failed_install() {
+        let lifecycle = DesktopLifecycle::default();
+        let existing = lifecycle.enter().unwrap();
+        let guard = lifecycle.maintenance().unwrap();
+        assert!(lifecycle.enter().is_err());
+        assert!(lifecycle.maintenance().is_err());
+        assert!(!lifecycle.exiting());
+        drop(existing);
+        lifecycle.drain_commands();
+        drop(guard);
+        assert!(lifecycle.enter().is_ok());
     }
 }

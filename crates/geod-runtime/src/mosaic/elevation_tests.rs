@@ -93,6 +93,7 @@ fn request(
             .map(|job| {
                 let [lon, lat] = crate::providers::dem_cell(&job.item_id).unwrap();
                 ProjectScene {
+                    footprint: None,
                     item_id: job.item_id.clone(),
                     date: "2021-01-01T00:00:00Z".into(),
                     cloud: None,
@@ -124,6 +125,7 @@ fn project(sources: &[Job], bounds: [f64; 4]) -> Project {
         wcs_items: Vec::new(),
         created_at: now(),
         updated_at: now(),
+        agent_approvals: Vec::new(),
     }
 }
 

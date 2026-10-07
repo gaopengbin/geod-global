@@ -1,0 +1,23 @@
+/* GeoD Agent composer composition and sizes, mapped to Global's UI tokens. */
+.bui-prompt-input { position:relative; width:100%; min-width:0; container-type:inline-size; padding:12px; border:1px solid var(--line); border-radius:24px; background:var(--surface); color:var(--ink); transition:border-color var(--motion-fast),box-shadow var(--motion-fast); }
+.bui-prompt-input:focus-within { border-color:var(--line-strong); box-shadow:0 2px 12px var(--shadow-color,#0000000d); }
+.bui-prompt-input .bui-prompt-textarea, .bui-prompt-measurement { font-family:inherit; font-size:15px; font-weight:400; line-height:24px; letter-spacing:inherit; padding:2px 4px; overflow-wrap:break-word; white-space:pre-wrap; box-sizing:border-box; }
+.bui-prompt-input .bui-prompt-textarea { display:block; width:100%; height:48px; min-width:0; min-height:0; max-height:none; margin:0; border:0; border-radius:0; resize:none; overflow-y:auto; scrollbar-width:none; background:transparent; color:var(--ink); box-shadow:none; outline:none; }
+.bui-prompt-textarea::-webkit-scrollbar { display:none; }
+.bui-prompt-input .bui-prompt-textarea::placeholder { color:var(--ink-3); }
+.bui-prompt-input .bui-prompt-textarea:focus-visible { outline:none; box-shadow:none; }
+.bui-prompt-measurement { position:absolute; top:0; left:12px; right:12px; visibility:hidden; pointer-events:none; }
+.bui-prompt-input .prompt-input-toolbar { display:flex; flex-wrap:nowrap; align-items:center; min-width:0; min-height:32px; gap:3px; margin-top:10px; }
+.prompt-input-toolbar > .bui-button { flex:none; width:32px; height:32px; padding:0; border-radius:50%; }
+.prompt-input-toolbar .prompt-input-add { color:var(--ink-2); }
+.prompt-input-plus { display:grid; place-items:center; transition:transform .2s cubic-bezier(.2,.8,.2,1); }
+.prompt-input-plus[data-open=true] { transform:rotate(45deg); }
+.prompt-input-toolbar .prompt-input-submit { margin-left:auto; }
+.prompt-input-submit-icon { display:grid; place-items:center; animation:prompt-input-icon-in .18s ease-out; }
+@keyframes prompt-input-icon-in { from { opacity:0; transform:translateY(3px) scale(.8); } to { opacity:1; transform:translateY(0) scale(1); } }
+.prompt-input-actions { width:224px; padding:6px; border-radius:12px; }
+.prompt-input-actions .prompt-input-action { display:flex; align-items:flex-start; gap:10px; width:100%; padding:9px 10px; border-radius:8px; background:transparent; text-align:left; }
+.prompt-input-action-icon { display:grid; place-items:center; width:20px; height:20px; flex:none; color:var(--ink-2); }
+.prompt-input-action-copy { display:grid; min-width:0; gap:3px; font-size:14px; line-height:20px; }
+.prompt-input-action-copy small { font-size:12px; line-height:17px; font-weight:400; color:var(--ink-2); }
+@container (max-width:410px) { .prompt-input-toolbar > .bui-button { width:28px; height:28px; } }

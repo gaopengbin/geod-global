@@ -1,0 +1,218 @@
+{
+  "schema": "geod-agent-area-coverage-acceptance/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-07T11:09:30.588Z",
+  "scope": "Actual bundled administrative polygon and online Earth Search STAC footprints. Native read-only search/coverage/project preparation; no external model, original imagery transfer, masking or user-store changes in this acceptance.",
+  "boundary": {
+    "name": "Beijing",
+    "provider": "Natural Earth",
+    "license": "Public domain",
+    "precision": "ADM1 1:10m",
+    "legalBoundaryDetermination": false,
+    "sha256": "d3caa8a07feb2af4d2535d7eb0526cf5765b900b93171ca78ad7280e425e1c91",
+    "bounds": [
+      115.42182335766176,
+      39.440435289556945,
+      117.4885705907601,
+      41.047727362727585
+    ]
+  },
+  "query": {
+    "provider": "earth-search",
+    "collection": "sentinel-2-l2a",
+    "start": "2026-09-08",
+    "end": "2026-10-07",
+    "cloudMaxExclusive": 5,
+    "pageSize": 20
+  },
+  "pages": [
+    {
+      "page": 1,
+      "selectedScenes": 14,
+      "coverage": {
+        "areaMethod": "planar-wgs84",
+        "basis": "catalog-footprints",
+        "coveredFraction": 0.7019573540766744,
+        "missingBounds": [
+          [
+            115.42182335616187,
+            39.738085671366434,
+            116.43900291980341,
+            40.55958026930807
+          ]
+        ],
+        "missingParts": 1,
+        "note": "Geometric catalog-footprint coverage only. It does not prove valid pixels or cloud-free coverage; those require downloaded raster checks.",
+        "sceneCount": 14,
+        "scopeSha256": "d3caa8a07feb2af4d2535d7eb0526cf5765b900b93171ca78ad7280e425e1c91",
+        "status": "partial",
+        "target": "polygon",
+        "unknownItemIds": []
+      },
+      "canContinue": true
+    },
+    {
+      "page": 2,
+      "selectedScenes": 18,
+      "coverage": {
+        "areaMethod": "planar-wgs84",
+        "basis": "catalog-footprints",
+        "coveredFraction": 1,
+        "missingBounds": [],
+        "missingParts": 0,
+        "note": "Geometric catalog-footprint coverage only. It does not prove valid pixels or cloud-free coverage; those require downloaded raster checks.",
+        "sceneCount": 18,
+        "scopeSha256": "d3caa8a07feb2af4d2535d7eb0526cf5765b900b93171ca78ad7280e425e1c91",
+        "status": "complete",
+        "target": "polygon",
+        "unknownItemIds": []
+      },
+      "canContinue": true
+    }
+  ],
+  "selectedSceneIds": [
+    "S2A_50SMJ_20261007_0_L2A",
+    "S2A_50SNJ_20261007_0_L2A",
+    "S2A_50TMK_20261007_0_L2A",
+    "S2A_50TNK_20261007_0_L2A",
+    "S2A_50TML_20261007_0_L2A",
+    "S2A_50TNL_20261007_0_L2A",
+    "S2C_50SMJ_20261005_0_L2A",
+    "S2C_50TMK_20261005_0_L2A",
+    "S2C_50TML_20261005_0_L2A",
+    "S2B_50SLJ_20261003_0_L2A",
+    "S2B_50SMJ_20261003_0_L2A",
+    "S2A_50TLL_20260930_0_L2A",
+    "S2A_50TML_20260930_1_L2A",
+    "S2B_50TNL_20260930_1_L2A",
+    "S2B_50SLJ_20260923_0_L2A",
+    "S2B_50SMJ_20260923_0_L2A",
+    "S2B_50TLK_20260923_0_L2A",
+    "S2B_50TMK_20260923_0_L2A"
+  ],
+  "review": {
+    "kind": "project",
+    "status": "pending",
+    "planHash": "37448bfc1f23143a7d1fb03907af7f971c97705cf18a1576c6fab46f00332c27",
+    "polygonSha256": "d3caa8a07feb2af4d2535d7eb0526cf5765b900b93171ca78ad7280e425e1c91",
+    "areaCoverage": {
+      "areaMethod": "planar-wgs84",
+      "basis": "catalog-footprints",
+      "coveredFraction": 1,
+      "missingBounds": [],
+      "missingParts": 0,
+      "note": "Geometric catalog-footprint coverage only. It does not prove valid pixels or cloud-free coverage; those require downloaded raster checks.",
+      "sceneCount": 18,
+      "scopeSha256": "d3caa8a07feb2af4d2535d7eb0526cf5765b900b93171ca78ad7280e425e1c91",
+      "status": "complete",
+      "target": "polygon",
+      "unknownItemIds": []
+    }
+  },
+  "jobsCreated": 0,
+  "projectsCreated": 0,
+  "automatedChecks": {
+    "agentTests": 118,
+    "agentActionsTests": 80,
+    "agentPanelIntegrationTests": 69,
+    "agentClientTests": 26,
+    "repositoryIsolation": "passed"
+  },
+  "browserLayout": {
+    "status": "passed",
+    "scope": "Actual native review data in controlled browser IPC; partial/unknown variants check display and disabled confirmation. No native desktop, model, approval or download.",
+    "cases": [
+      {
+        "state": "complete",
+        "theme": "light",
+        "locale": "zh-CN",
+        "width": 560,
+        "overflow": false,
+        "cardWidth": 518,
+        "composerVisible": true
+      },
+      {
+        "state": "complete",
+        "theme": "dark",
+        "locale": "zh-CN",
+        "width": 360,
+        "overflow": false,
+        "cardWidth": 318,
+        "composerVisible": true
+      },
+      {
+        "state": "complete",
+        "theme": "light",
+        "locale": "en",
+        "width": 360,
+        "overflow": false,
+        "cardWidth": 318,
+        "composerVisible": true
+      },
+      {
+        "state": "partial",
+        "theme": "light",
+        "locale": "zh-CN",
+        "width": 560,
+        "overflow": false,
+        "cardWidth": 518,
+        "composerVisible": true
+      },
+      {
+        "state": "partial",
+        "theme": "dark",
+        "locale": "zh-CN",
+        "width": 360,
+        "overflow": false,
+        "cardWidth": 318,
+        "composerVisible": true
+      },
+      {
+        "state": "partial",
+        "theme": "light",
+        "locale": "en",
+        "width": 360,
+        "overflow": false,
+        "cardWidth": 318,
+        "composerVisible": true
+      },
+      {
+        "state": "unknown",
+        "theme": "light",
+        "locale": "zh-CN",
+        "width": 560,
+        "overflow": false,
+        "cardWidth": 518,
+        "composerVisible": true
+      },
+      {
+        "state": "unknown",
+        "theme": "dark",
+        "locale": "zh-CN",
+        "width": 360,
+        "overflow": false,
+        "cardWidth": 318,
+        "composerVisible": true
+      },
+      {
+        "state": "unknown",
+        "theme": "light",
+        "locale": "en",
+        "width": 360,
+        "overflow": false,
+        "cardWidth": 318,
+        "composerVisible": true
+      }
+    ],
+    "errors": [],
+    "nativeDesktopVisualAcceptance": false
+  },
+  "developerExecutable": {
+    "path": ".verification/goals-desktop-target/debug/geod-global-desktop.exe",
+    "sha256": "39151f1d85e8d323e936c85a8659c9d2e2ac9be06ec56ffbcdca5ad926442d74",
+    "installerCreated": false,
+    "processId": 2656,
+    "responding": true,
+    "windowTitle": "GeoD Global"
+  }
+}

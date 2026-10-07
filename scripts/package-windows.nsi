@@ -3,6 +3,8 @@ Unicode true
 !include "MUI2.nsh"
 !include "x64.nsh"
 !include "LogicLib.nsh"
+!include "FileFunc.nsh"
+Var RestartAfterUpdate
 !define APP_ID "xyz.laogao.geod.global"
 !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_ID}"
 Name "GeoD Global"
@@ -35,6 +37,13 @@ LangString RemoveText ${LANG_ENGLISH} "Remove GeoD Global application files? Dow
 LangString RemoveText ${LANG_SIMPCHINESE} "卸载 GeoD Global 应用程序？下载文件、任务历史、偏好和安装目录中的额外文件将保留。"
 
 Function .onInit
+  StrCpy $RestartAfterUpdate ""
+  ${GetParameters} $0
+  ClearErrors
+  ${GetOptions} $0 "/R" $1
+  ${IfNot} ${Errors}
+    StrCpy $RestartAfterUpdate "yes"
+  ${EndIf}
   ${IfNot} ${RunningX64}
     MessageBox MB_ICONSTOP "GeoD Global requires Windows x64."
     Abort
@@ -69,6 +78,9 @@ Section "GeoD Global"
   WriteRegStr HKCU "${UNINSTALL_KEY}" "UninstallString" '$\"$INSTDIR\Uninstall GeoD Global.exe$\"'
   WriteRegDWORD HKCU "${UNINSTALL_KEY}" "NoModify" 1
   WriteRegDWORD HKCU "${UNINSTALL_KEY}" "NoRepair" 1
+  ${If} $RestartAfterUpdate == "yes"
+    Exec '$\"$INSTDIR\geod-global-desktop.exe$\"'
+  ${EndIf}
 SectionEnd
 
 Section "Uninstall"

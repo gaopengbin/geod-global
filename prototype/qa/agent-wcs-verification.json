@@ -1,0 +1,77 @@
+{
+  "schema": "geod-agent-wcs-acceptance/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-05T10:48:01.418279+00:00",
+  "scope": "Explicit bounded WCS sample through actual model/native project-review/download-review/confirmation/read/restart flow; not every WCS service or release acceptance",
+  "source": {
+    "bounds": [
+      2,
+      53,
+      2.05,
+      53.05
+    ],
+    "coverageId": "emodnet__mean",
+    "name": "Explicit EMODnet WCS acceptance",
+    "url": "https://ows.emodnet-bathymetry.eu/wcs"
+  },
+  "model": {
+    "route": "deepseek-v4-flash",
+    "upstreamVendorVerified": false,
+    "turns": 4,
+    "nativeModelToolCalls": 14,
+    "nativeHumanRevisionEntries": 1,
+    "failedModelCalls": 0,
+    "resumedSameConversation": true,
+    "resumedSameModelThread": true
+  },
+  "sourceRules": "scripts/acceptance/wcs-public.json",
+  "actual": {
+    "projectCount": 1,
+    "jobCount": 1,
+    "vectorCount": 0,
+    "jobId": "81904e29-6edc-4626-a35b-8933c906d084",
+    "bytes": 9600,
+    "sha256": "0562d00271b191f277e79b6140dad31fe7d1b55ad5ddb4dc24c4f252f7d1eadb",
+    "width": 48,
+    "height": 48,
+    "channels": 1,
+    "sampleCount": 2304,
+    "status": "succeeded",
+    "settled": true
+  },
+  "independent": {
+    "originalXmlGrid": true,
+    "allRasterioSamplesAndMasksEqual": true,
+    "secondPublicResponseBytesEqual": true,
+    "nativeRecordsUnchanged": true
+  },
+  "declaredFields": [
+    {
+      "name": "Depth",
+      "description": "Depth",
+      "unit": "W.m-2.Sr-1",
+      "nilValues": [
+        {
+          "value": "NaN",
+          "reason": "http://www.opengis.net/def/nil/OGC/0/unknown"
+        }
+      ]
+    }
+  ],
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "credentialVaultWritten": false,
+  "published": false,
+  "syntheticData": false,
+  "automaticRetries": 0,
+  "evidenceReports": [
+    ".verification/agent-wcs-model-1791197147422897200/case/native-acceptance.json",
+    ".verification/agent-wcs-model-1791197147422897200/independent-data/report.json",
+    ".verification/agent-wcs-public-1791196400302390800/independent-data/report.json"
+  ],
+  "limitations": [
+    "Generated native-grid coverage subset, not original scene or scientific calibration",
+    "Other model routes and installed WebView must be accepted independently",
+    "The known source unit discrepancy is preserved without inference"
+  ]
+}

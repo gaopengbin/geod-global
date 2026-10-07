@@ -291,7 +291,203 @@ pub(crate) fn validate_mosaic_sources(job: &Job, jobs: &BTreeMap<String, Job>) -
     Ok(sources)
 }
 
+pub(crate) fn mosaic_job(
+    project: &Project,
+    jobs: &BTreeMap<String, Job>,
+    asset_key: &str,
+    selection: Option<vegetation::Request>,
+) -> Result<Job> {
+    if selection.is_some() && !crate::providers::vegetation::KEYS.contains(&asset_key) {
+        return Err("Vegetation quality selection is only available for NDVI or EVI".into());
+    }
+    if !matches!(
+        asset_key,
+        "scl"
+            | "visual"
+            | "red"
+            | "green"
+            | "blue"
+            | "elevation"
+            | "srtm"
+            | "aerial"
+            | "vv"
+            | "vh"
+            | "hh"
+            | "hv"
+            | "ndvi"
+            | "evi"
+            | "vi_quality"
+            | "vi_reliability"
+            | "vi_doy"
+            | "vi_red"
+            | "vi_nir"
+            | "vi_blue"
+            | "vi_mir"
+            | "vi_view_zenith"
+            | "vi_sun_zenith"
+            | "vi_relative_azimuth"
+            | "modis_qc"
+            | "modis_state"
+            | "qa_pixel"
+            | "qa_radsat"
+    ) {
+        return Err(
+                "Choose SCL, true-color imagery, NAIP imagery, a reflectance band, MODIS or Landsat quality, elevation or an RTC polarization"
+                    .into(),
+            );
+    }
+    let known_crs = project
+        .scenes
+        .iter()
+        .filter_map(|scene| scene.crs.as_deref())
+        .collect::<std::collections::HashSet<_>>();
+    if known_crs.len() > 1 {
+        return Err("Selected scenes span multiple UTM zones; split them into one project per CRS before mosaicking".into());
+    }
+    let mut pins = Vec::with_capacity(project.scenes.len());
+    let mut coverage_sources = Vec::new();
+    let mut ordered_scenes = project.scenes.iter().collect::<Vec<_>>();
+    ordered_scenes.sort_by(|a, b| a.date.cmp(&b.date).then_with(|| a.item_id.cmp(&b.item_id)));
+    for scene in ordered_scenes {
+        let source = crate::prepared::scene_source(scene, jobs, asset_key).ok_or_else(|| {
+            format!(
+                "Download or prepare {} for every scene before mosaicking",
+                asset_key
+            )
+        })?;
+        pins.push(MosaicSource {
+            job_id: source.id.clone(),
+            sha256: source.sha256.clone().unwrap(),
+        });
+        if asset_key == "qa_radsat" {
+            let coverage = crate::prepared::scene_source(scene, jobs, "qa_pixel")
+                    .ok_or("Download matching QA_PIXEL files for every scene before processing saturation flags")?;
+            landsat::validate_pair(source, coverage)?;
+            coverage_sources.push(MosaicSource {
+                job_id: coverage.id.clone(),
+                sha256: coverage.sha256.clone().unwrap(),
+            });
+        }
+    }
+    let timestamp = now();
+    let vi_selection = selection
+        .map(|request| vegetation::create(project, jobs, request.policy))
+        .transpose()?;
+    if let Some(selection) = &vi_selection {
+        vegetation::validate_spec(asset_key, &pins, selection)?;
+    }
+    let job = Job {
+        id: Uuid::new_v4().to_string(),
+        agent_approval: None,
+        kind: "raster_mosaic".into(),
+        parent_id: None,
+        recipe: None,
+        crop: None,
+        mosaic: Some(MosaicSpec {
+            project_id: project.id.clone(),
+            asset_key: asset_key.into(),
+            sources: pins,
+            coverage_sources,
+            vi_selection,
+        }),
+        mosaic_output: None,
+        manifest_path: None,
+        safe: None,
+        safe_output: None,
+        viirs_science: None,
+        transfer: None,
+        viirs_prepare: None,
+        stac_source: None,
+        wcs_source: None,
+        rgb_spec: None,
+        rgb_output: None,
+        item_id: format!("project:{}", project.id),
+        asset_key: asset_key.into(),
+        href: crate::prepared::scene_source(&project.scenes[0], jobs, asset_key)
+            .unwrap()
+            .href
+            .clone(),
+        media_type: "image/tiff".into(),
+        title: format!("{} · {} mosaic", project.name, asset_key.to_uppercase()),
+        status: JobStatus::Queued,
+        bytes_downloaded: 0,
+        total_bytes: None,
+        sha256: None,
+        output_path: None,
+        error: None,
+        created_at: timestamp.clone(),
+        updated_at: timestamp,
+        source: "Project source rasters / pinned original products".into(),
+        validation: "Pending source checksum validation and pixel-aligned mosaic/clip".into(),
+        attempts: 1,
+    };
+    Ok(job)
+}
+
 impl JobManager {
+    pub(crate) async fn mosaic_review_job_with_selection(
+        &self,
+        id: &str,
+        key: &str,
+        selection: Option<vegetation::Request>,
+    ) -> Result<(Project, Job)> {
+        let project = self
+            .inner
+            .projects
+            .lock()
+            .await
+            .get(id)
+            .cloned()
+            .ok_or("Unknown project")?;
+        let store = self.inner.store.lock().await;
+        let job = mosaic_job(&project, &store.jobs, key, selection)?;
+        let sources = validate_mosaic_sources(&job, &store.jobs)?;
+        if sources
+            .iter()
+            .any(|source| store.active.contains_key(&source.id))
+        {
+            return Err("Wait for every source task to settle before planning processing".into());
+        }
+        Ok((project, job))
+    }
+
+    pub(crate) async fn mosaic_preflight(
+        &self,
+        project: &Project,
+        job: &Job,
+    ) -> Result<MosaicPlan> {
+        let sources = {
+            let store = self.inner.store.lock().await;
+            validate_mosaic_sources(job, &store.jobs)?
+        };
+        let root = self.inner.root.clone();
+        let project = project.clone();
+        let key = job.asset_key.clone();
+        let selection = job.mosaic.as_ref().and_then(|m| m.vi_selection.clone());
+        let permit = self
+            .inner
+            .raster_permits
+            .clone()
+            .acquire_owned()
+            .await
+            .map_err(io_error)?;
+        tokio::task::spawn_blocking(move || {
+            let _permit = permit;
+            let (plan, _) = prepare_mosaic(
+                &root,
+                &project,
+                &sources,
+                &key,
+                &CancellationToken::new(),
+                None,
+                selection.as_ref(),
+            )?;
+            Ok(plan)
+        })
+        .await
+        .map_err(io_error)?
+    }
+
     pub async fn run_project_mosaic(&self, id: &str, asset_key: &str) -> Result<Job> {
         self.run_project_mosaic_with_selection(id, asset_key, None)
             .await
@@ -303,45 +499,6 @@ impl JobManager {
         asset_key: &str,
         selection: Option<vegetation::Request>,
     ) -> Result<Job> {
-        if selection.is_some() && !crate::providers::vegetation::KEYS.contains(&asset_key) {
-            return Err("Vegetation quality selection is only available for NDVI or EVI".into());
-        }
-        if !matches!(
-            asset_key,
-            "scl"
-                | "visual"
-                | "red"
-                | "green"
-                | "blue"
-                | "elevation"
-                | "srtm"
-                | "aerial"
-                | "vv"
-                | "vh"
-                | "hh"
-                | "hv"
-                | "ndvi"
-                | "evi"
-                | "vi_quality"
-                | "vi_reliability"
-                | "vi_doy"
-                | "vi_red"
-                | "vi_nir"
-                | "vi_blue"
-                | "vi_mir"
-                | "vi_view_zenith"
-                | "vi_sun_zenith"
-                | "vi_relative_azimuth"
-                | "modis_qc"
-                | "modis_state"
-                | "qa_pixel"
-                | "qa_radsat"
-        ) {
-            return Err(
-                "Choose SCL, true-color imagery, NAIP imagery, a reflectance band, MODIS or Landsat quality, elevation or an RTC polarization"
-                    .into(),
-            );
-        }
         let project = self
             .inner
             .projects
@@ -350,96 +507,12 @@ impl JobManager {
             .get(id)
             .cloned()
             .ok_or("Unknown project")?;
-        let known_crs = project
-            .scenes
-            .iter()
-            .filter_map(|scene| scene.crs.as_deref())
-            .collect::<std::collections::HashSet<_>>();
-        if known_crs.len() > 1 {
-            return Err("Selected scenes span multiple UTM zones; split them into one project per CRS before mosaicking".into());
-        }
         let mut store = self.inner.store.lock().await;
         store.accepting_jobs()?;
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
         }
-        let mut pins = Vec::with_capacity(project.scenes.len());
-        let mut coverage_sources = Vec::new();
-        let mut ordered_scenes = project.scenes.iter().collect::<Vec<_>>();
-        ordered_scenes.sort_by(|a, b| a.date.cmp(&b.date).then_with(|| a.item_id.cmp(&b.item_id)));
-        for scene in ordered_scenes {
-            let source =
-                crate::prepared::scene_source(scene, &store.jobs, asset_key).ok_or_else(|| {
-                    format!(
-                        "Download or prepare {} for every scene before mosaicking",
-                        asset_key
-                    )
-                })?;
-            pins.push(MosaicSource {
-                job_id: source.id.clone(),
-                sha256: source.sha256.clone().unwrap(),
-            });
-            if asset_key == "qa_radsat" {
-                let coverage = crate::prepared::scene_source(scene, &store.jobs, "qa_pixel")
-                    .ok_or("Download matching QA_PIXEL files for every scene before processing saturation flags")?;
-                landsat::validate_pair(source, coverage)?;
-                coverage_sources.push(MosaicSource {
-                    job_id: coverage.id.clone(),
-                    sha256: coverage.sha256.clone().unwrap(),
-                });
-            }
-        }
-        let timestamp = now();
-        let vi_selection = selection
-            .map(|request| vegetation::create(&project, &store.jobs, request.policy))
-            .transpose()?;
-        if let Some(selection) = &vi_selection {
-            vegetation::validate_spec(asset_key, &pins, selection)?;
-        }
-        let job = Job {
-            id: Uuid::new_v4().to_string(),
-            kind: "raster_mosaic".into(),
-            parent_id: None,
-            recipe: None,
-            crop: None,
-            mosaic: Some(MosaicSpec {
-                project_id: project.id.clone(),
-                asset_key: asset_key.into(),
-                sources: pins,
-                coverage_sources,
-                vi_selection,
-            }),
-            mosaic_output: None,
-            manifest_path: None,
-            safe: None,
-            safe_output: None,
-            viirs_science: None,
-            transfer: None,
-            viirs_prepare: None,
-            stac_source: None,
-            wcs_source: None,
-            rgb_spec: None,
-            rgb_output: None,
-            item_id: format!("project:{}", project.id),
-            asset_key: asset_key.into(),
-            href: crate::prepared::scene_source(&project.scenes[0], &store.jobs, asset_key)
-                .unwrap()
-                .href
-                .clone(),
-            media_type: "image/tiff".into(),
-            title: format!("{} · {} mosaic", project.name, asset_key.to_uppercase()),
-            status: JobStatus::Queued,
-            bytes_downloaded: 0,
-            total_bytes: None,
-            sha256: None,
-            output_path: None,
-            error: None,
-            created_at: timestamp.clone(),
-            updated_at: timestamp,
-            source: "Project source rasters / pinned original products".into(),
-            validation: "Pending source checksum validation and pixel-aligned mosaic/clip".into(),
-            attempts: 1,
-        };
+        let job = mosaic_job(&project, &store.jobs, asset_key, selection)?;
         store.jobs.insert(job.id.clone(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.remove(&job.id);
@@ -461,14 +534,25 @@ impl JobManager {
             .mosaic
             .as_ref()
             .ok_or("Mosaic specification is missing")?;
-        let mut project = self
-            .inner
-            .projects
-            .lock()
-            .await
-            .get(&spec.project_id)
-            .cloned()
-            .ok_or("Project was removed")?;
+        let mut project = if let Some(scope) = job
+            .agent_approval
+            .as_ref()
+            .and_then(|a| a.project_scope.as_ref())
+        {
+            scope.validate()?;
+            if scope.id != spec.project_id {
+                return Err("Approved project differs from its mosaic task".into());
+            }
+            scope.to_project(&job.created_at)
+        } else {
+            self.inner
+                .projects
+                .lock()
+                .await
+                .get(&spec.project_id)
+                .cloned()
+                .ok_or("Project was removed")?
+        };
         if let Some(selection) = &spec.vi_selection {
             // The submitted area and scene set remain stable while a user adds
             // more scenes or renames the project for a later download.
@@ -1133,17 +1217,15 @@ fn write_mosaic(
     )
 }
 
-#[allow(clippy::too_many_arguments)]
-fn write_mosaic_with_selection(
+fn prepare_mosaic(
     root: &Path,
     project: &Project,
     sources: &[Job],
     key: &str,
-    output_id: &str,
     cancel: &CancellationToken,
     progress: Option<&UnboundedSender<(u64, &'static str)>>,
     selection: Option<&vegetation::Spec>,
-) -> Result<MosaicOutput> {
+) -> Result<(MosaicPlan, Vec<SourceRaster>)> {
     let primary_count = project.scenes.len();
     if sources.is_empty()
         || sources.len()
@@ -1273,6 +1355,28 @@ fn write_mosaic_with_selection(
             }
         }
     }
+    stream::preflight_budget(root, &plan, project.geometry.is_some())?;
+    Ok((plan, rasters))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn write_mosaic_with_selection(
+    root: &Path,
+    project: &Project,
+    sources: &[Job],
+    key: &str,
+    output_id: &str,
+    cancel: &CancellationToken,
+    progress: Option<&UnboundedSender<(u64, &'static str)>>,
+    selection: Option<&vegetation::Spec>,
+) -> Result<MosaicOutput> {
+    let (plan, mut rasters) =
+        prepare_mosaic(root, project, sources, key, cancel, progress, selection)?;
+    let report = |completed, stage| {
+        if let Some(progress) = progress {
+            let _ = progress.send((completed, stage));
+        }
+    };
     let output = stream::encode_mosaic(
         root,
         output_id,
@@ -1700,6 +1804,7 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(index, job)| ProjectScene {
+                footprint: None,
                 item_id: format!("SCENE_{index}"),
                 date: format!("2026-09-0{}T00:00:00Z", index + 1),
                 cloud: Some(0.0),
@@ -1726,6 +1831,7 @@ mod tests {
             wcs_items: Vec::new(),
             created_at: now(),
             updated_at: now(),
+            agent_approvals: Vec::new(),
         }
     }
 
@@ -2202,6 +2308,7 @@ mod tests {
                 jobs.push(job);
             }
             scenes.push(ProjectScene {
+                footprint: None,
                 item_id,
                 date: format!("2026-09-0{}T00:00:00Z", index + 1),
                 cloud: Some(0.0),

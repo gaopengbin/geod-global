@@ -195,6 +195,7 @@ async fn legacy_get_registry_reopens_unchanged_and_rejects_forged_selected_metho
     .unwrap();
     let id = "00000000-0000-4000-8000-000000000001";
     let connection = Connection {
+        catalog_nodes: vec![],
         id: id.into(),
         name: "Legacy GET".into(),
         url: "https://example.com/".into(),

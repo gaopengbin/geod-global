@@ -6,10 +6,14 @@
   "license": "GPL-3.0-only",
   "description": "Independent GeoD Global product repository and desktop workspace design.",
   "engines": {
-    "node": ">=22.12.0",
+    "node": ">=22.13.0",
     "npm": ">=10"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "4.0.71",
+    "@ai-sdk/google": "4.0.87",
+    "@ai-sdk/openai": "4.0.83",
+    "@ai-sdk/openai-compatible": "3.0.62",
     "@radix-ui/react-checkbox": "1.3.11",
     "@radix-ui/react-collapsible": "1.1.20",
     "@radix-ui/react-dialog": "1.1.23",
@@ -22,11 +26,13 @@
     "@radix-ui/react-toast": "1.2.23",
     "@radix-ui/react-toggle-group": "1.1.19",
     "@radix-ui/react-tooltip": "1.2.16",
+    "ai": "7.0.127",
     "cesium": "1.146.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "1.14.0",
     "ol": "10.10.0",
+    "pdfjs-dist": "6.4.299",
     "proj4": "2.22.0",
     "react": "19.2.5",
     "react-day-picker": "10.0.2",
@@ -36,10 +42,12 @@
     "tailwind-merge": "3.7.0"
   },
   "devDependencies": {
+    "@openai/codex": "0.159.2",
     "@tailwindcss/vite": "4.3.3",
-    "@tauri-apps/cli": "2.11.5",
+    "@tauri-apps/cli": "2.12.0",
     "@testing-library/react": "16.3.3",
     "@testing-library/user-event": "14.6.7",
+    "esbuild": "0.28.2",
     "jsdom": "29.1.1",
     "playwright": "1.63.0",
     "tailwindcss": "4.3.3",
@@ -47,6 +55,8 @@
     "vitest": "4.1.11"
   },
   "scripts": {
+    "agent:prepare": "node scripts/prepare-agent-runtime.mjs",
+    "test:agent": "node --test agent/*.test.mjs scripts/prepare-agent-runtime.test.mjs",
     "dev": "vite prototype --config prototype/vite.config.mjs",
     "build": "vite build prototype --config prototype/vite.config.mjs",
     "preview": "vite preview prototype --config prototype/vite.config.mjs",
@@ -60,8 +70,9 @@
     "check:isolation": "node scripts/verify-repository.mjs",
     "check:contracts": "python GeoD-Global-Spec/contracts/verify_contracts.py",
     "check:recipes": "python scripts/check-recipe-schema.py",
-    "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes",
-    "verify": "npm run check && npm test && npm run test:ui && npm run build",
+    "check:boundaries": "python scripts/build-agent-boundary-bundle.py --check",
+    "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes && npm run check:boundaries",
+    "verify": "npm run check && npm test && npm run test:agent && npm run test:ui && npm run build",
     "verify:all": "npm run verify && npm run test:runtime && npm run test:desktop",
     "test:ui": "vitest run"
   }

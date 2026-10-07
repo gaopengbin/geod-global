@@ -83,6 +83,91 @@ fn read_only_discovery_and_dispatch_both_deny_writes() {
 }
 
 #[test]
+fn desktop_agent_schemas_include_only_bounded_reads() {
+    let definitions = agent_read_definitions();
+    assert_eq!(definitions.len(), AGENT_READ_TOOLS.len());
+    for definition in &definitions {
+        let name = definition["name"].as_str().unwrap();
+        assert!(AGENT_READ_TOOLS.contains(&name));
+        assert!(!WRITE_TOOLS.contains(&name));
+        if matches!(
+            name,
+            "geod_jobs_list"
+                | "geod_projects_list"
+                | "geod_recipes_list"
+                | "geod_stac_connections"
+                | "geod_stac_catalog"
+                | "geod_stac_assets"
+                | "geod_feature_services"
+                | "geod_feature_collections"
+                | "geod_vectors_list"
+                | "geod_vector_features"
+                | "geod_vector_node"
+        ) {
+            assert_eq!(
+                definition["inputSchema"]["properties"]["limit"]["maximum"],
+                20
+            );
+            assert_eq!(
+                definition["inputSchema"]["properties"]["limit"]["default"],
+                5
+            );
+        }
+    }
+}
+
+#[test]
+fn desktop_agent_excludes_nested_credentials_paths_and_source_urls() {
+    let mut value = json!({"id":"readable-id","sha256":"real-checksum","status":"succeeded","settled":true,
+        "outputPath":"C:\\private\\file.tif","query":{"bbox":[0,0,1,1]},
+        "assets":[{"href":"https://example.com/file?token=secret","headers":{"Authorization":"Bearer secret"},
+            "accountToken":"secret","name":"https://example.com/file?token=secret","label":"C:\\private\\file.tif","count":2}]});
+    sanitize_agent_value(&mut value);
+    assert_eq!(value["sha256"], "real-checksum");
+    assert_eq!(value["settled"], true);
+    assert_eq!(value["assets"][0]["count"], 2);
+    for secret in [
+        "secret",
+        "C:\\private",
+        "example.com",
+        "outputPath",
+        "accountToken",
+        "headers",
+        "query",
+    ] {
+        assert!(!value.to_string().contains(secret));
+    }
+}
+
+#[tokio::test]
+async fn desktop_agent_rejects_writes_and_invalid_arguments_without_new_store_ownership() {
+    let directory = tempfile::tempdir().unwrap();
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    for (name, arguments) in [
+        ("geod_download", json!({})),
+        ("geod_job_cancel", json!({})),
+        ("geod_jobs_list", json!({"limit":21})),
+        ("geod_projects_list", json!({"limit":0})),
+        ("geod_health", json!({"path":"../secret"})),
+        ("geod_project_get", json!({"id":"../secret"})),
+    ] {
+        assert!(agent_read_call(manager.clone(), name, arguments)
+            .await
+            .is_err());
+    }
+    let health = agent_read_call(manager.clone(), "geod_health", json!({}))
+        .await
+        .unwrap();
+    assert_eq!(health["adapter"]["transport"], "desktop-agent");
+    assert_eq!(health["adapter"]["mode"], "read-only");
+    assert!(!health
+        .to_string()
+        .contains(&directory.path().to_string_lossy().to_string()));
+    assert!(manager.list().await.is_empty());
+    manager.shutdown().await.unwrap();
+}
+
+#[test]
 fn write_inputs_share_runtime_allowlist_and_pinned_recipe_contract() {
     let mut request: Value = serde_json::from_str(include_str!(
         "../../../../examples/sentinel-scl-download.json"

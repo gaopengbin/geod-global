@@ -88,7 +88,7 @@ fn preset(id: &str) -> Result<(&'static str, &'static [&'static str])> {
         _ => Err("Unknown OSM preset".into()),
     }
 }
-pub(super) fn query_bounds(b: [f64; 4]) -> Result<()> {
+pub(crate) fn query_bounds(b: [f64; 4]) -> Result<()> {
     bounds(b)?;
     let area = 6371.0088_f64.powi(2)
         * (b[2] - b[0]).to_radians()

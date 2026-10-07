@@ -5,7 +5,7 @@ use crate::{
     stac::{self, Selection},
     CreateJobRequest, Job, JobManager, JobStatus, Project, ProjectDownloads, Result,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::{
     collections::{HashMap, HashSet},
     fs::File,
@@ -14,7 +14,7 @@ use std::{
 use tokio_util::sync::CancellationToken;
 use uuid::Uuid;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct SaveProjectRequest {
     pub project_id: Option<String>,
@@ -23,7 +23,7 @@ pub struct SaveProjectRequest {
     pub selections: Vec<Selection>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct DownloadRequest {
     pub project_id: String,
@@ -150,6 +150,7 @@ impl JobManager {
                 wcs_items: Vec::new(),
                 created_at: timestamp.clone(),
                 updated_at: timestamp.clone(),
+                agent_approvals: Vec::new(),
             },
         };
         // Appending a new source never silently replaces the existing project's AOI.

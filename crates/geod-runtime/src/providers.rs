@@ -9,7 +9,7 @@ pub mod radar;
 pub mod srtm;
 pub mod vegetation;
 pub mod viirs;
-pub(crate) use planetary::AccessCache;
+pub(crate) use planetary::{reviewed_catalogue, AccessCache};
 
 pub const PC_HOST: &str = "sentinel2l2a01.blob.core.windows.net";
 pub const LANDSAT_HOST: &str = "landsateuwest.blob.core.windows.net";

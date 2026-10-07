@@ -12,6 +12,9 @@ use uuid::Uuid;
 
 pub const MAX_PROJECT_SCENES: usize = 32;
 
+mod jobs;
+pub(crate) use jobs::related_ids;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ProjectAsset {
@@ -34,6 +37,8 @@ pub struct ReflectanceBand {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ProjectScene {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub footprint: Option<PolygonGeometry>,
     pub item_id: String,
     pub date: String,
     pub cloud: Option<f64>,
@@ -74,6 +79,8 @@ pub struct Project {
     pub wcs_items: Vec<crate::wcs::ProjectItem>,
     pub created_at: String,
     pub updated_at: String,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub agent_approvals: Vec<crate::agent_actions::ApprovalReceipt>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -103,7 +110,7 @@ pub(crate) fn validate_project_name(name: &str) -> Result<String> {
 }
 
 impl CreateProjectRequest {
-    fn validate(&self, fixture_origin: Option<&str>) -> Result<()> {
+    pub(crate) fn validate(&self, fixture_origin: Option<&str>) -> Result<()> {
         validate_project_name(&self.name)?;
         if !valid_bounds(self.bounds) {
             return Err(
@@ -314,6 +321,7 @@ impl JobManager {
             wcs_items: Vec::new(),
             created_at: timestamp.clone(),
             updated_at: timestamp,
+            agent_approvals: Vec::new(),
         };
         let mut projects = self.inner.projects.lock().await;
         projects.insert(project.id.clone(), project.clone());
@@ -549,6 +557,7 @@ mod tests {
             bounds: [-123.0, 37.0, -122.0, 38.0],
             geometry: None,
             scenes: vec![ProjectScene {
+                footprint: None,
                 item_id: "S2C_TEST".into(),
                 date: "2026-09-28T00:00:00Z".into(),
                 cloud: Some(0.0),

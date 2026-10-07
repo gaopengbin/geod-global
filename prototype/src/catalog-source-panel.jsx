@@ -7,7 +7,7 @@ import { catalogPreviewKind } from './catalog-preview.js';
 import { originalsReleased } from './release-policy.js';
 
 // Compact presentation only. Release eligibility stays in the shared policy.
-const presentation = {
+export const sourcePresentation = {
   'earth-search': ['Sentinel-2 · Earth Search', '10 m true color · 20 m SCL · Earth Search'],
   'planetary-computer': ['Sentinel-2 · Planetary Computer', '10 m true color · 20 m SCL · Planetary Computer'],
   'planetary-landsat': ['Landsat 8 / 9', '30 m reflectance + quality layers · Planetary Computer'],
@@ -33,7 +33,7 @@ export function CatalogSourcePanel({ provider, onChange, onOpenStac, onOpenWcs }
   const [servicesOpen, setServicesOpen] = useState(false);
   const released = originalsReleased(provider);
   const previewLabel = source => catalogPreviewKind(source) ? 'Online preview' : canDisplayImagery(source) ? 'Load to preview' : 'Footprints only';
-  const [name, detail] = presentation[provider.id] || [provider.name, provider.dataset];
+  const [name, detail] = sourcePresentation[provider.id] || [provider.name, provider.dataset];
   const openService = callback => {
     pendingService.current = callback;
     setServicesOpen(false);

@@ -11,6 +11,13 @@ const arcgisLayer={objectIdField:'OBJECTID',geometryType:'esriGeometryPoint',spa
 const arcgisService={...service,name:'Earthquakes',url:'https://example.com/arcgis/rest/services/Earthquakes/FeatureServer',arcgis:{copyrightText:'Service provider',excludedLayers:[{id:'2',name:'Elevation',reason:'Z, M and declared curve layers need a separate geometry adapter'}]},collections:[{id:'0',title:'Earthquakes',description:'Point features',licenseLinks:[],arcgis:arcgisLayer}]};
 const osmService={...service,name:'Authorized OSM service',url:'https://example.com/overpass/api/interpreter',overpass:{generator:'Overpass API 0.7.62',apiVersion:0.6,metadataSha256:'a'.repeat(64),copyrightText:'Data from openstreetmap.org under ODbL.'},collections:Object.entries(OVERPASS_PRESETS).map(([id,title])=>({id,title,description:OVERPASS_DESCRIPTION,licenseLinks:['https://www.openstreetmap.org/copyright']}))};
 beforeEach(()=>{vi.clearAllMocks();translationState.values={};featureRequest.mockImplementation(async op=>op==='list'?[service]:op==='connect'?service:{id:'file'});});
+it('a directory card opens its requested protocol even with saved services, without selecting a remote endpoint',async()=>{
+  render(<FeatureServiceDialog initialProtocol="Overpass" onClose={()=>{}}/>);
+  expect((await screen.findByRole('combobox',{name:'Service protocol'})).textContent).toBe('OSM Overpass');
+  expect(screen.getByRole('textbox',{name:'Overpass endpoint URL'}).value).toBe('');
+  expect(screen.queryByRole('combobox',{name:'Data service'})).toBeNull();
+  expect(featureRequest.mock.calls.every(([op])=>op==='list')).toBe(true);
+});
 it('does not query without an explicit region and describes full feature geometry',async()=>{
   render(<FeatureServiceDialog onClose={()=>{}} onImported={()=>{}}/>);
   await screen.findByText('Full polygons with attributes');expect(screen.getByRole('button',{name:'Get features and save'}).disabled).toBe(true);

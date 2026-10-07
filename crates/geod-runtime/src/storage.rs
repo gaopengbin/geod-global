@@ -2,6 +2,83 @@
 //! Resolving a file is different from resolving its parent under MSIX virtualization.
 use crate::{extension, io_error, Job, JobStatus, Result};
 use std::path::{Path, PathBuf};
+#[cfg(windows)]
+mod msix;
+
+/// Resolve a single managed child directory. A packaged Windows parent can
+/// give a child process a merged AppData view: its existing root resolves to
+/// the logical directory, while a newly created child resolves to this same
+/// package's LocalCache. Bind that namespace to an exclusively created file's
+/// OS handle; a detached launcher need not remain alive.
+pub(crate) fn managed_directory(root: &Path, name: &str) -> Result<PathBuf> {
+    if name.is_empty()
+        || name.len() > 100
+        || !name.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-')
+    {
+        return Err("Invalid managed directory name".into());
+    }
+    if directory(root)? != root {
+        return Err("Managed storage root changed".into());
+    }
+    let expected = root.join(name);
+    let actual = directory(&expected)?;
+    if actual == expected {
+        return Ok(actual);
+    }
+    #[cfg(windows)]
+    if merged_appdata_directory(root, &expected, &actual) {
+        return Ok(actual);
+    }
+    Err("Agent record directory was redirected.".into())
+}
+fn directory(path: &Path) -> Result<PathBuf> {
+    let metadata = std::fs::symlink_metadata(path).map_err(io_error)?;
+    let redirected = metadata.file_type().is_symlink();
+    #[cfg(windows)]
+    let redirected = {
+        use std::os::windows::fs::MetadataExt;
+        redirected || metadata.file_attributes() & 0x400 != 0
+    };
+    if redirected || !metadata.is_dir() {
+        return Err("Agent record directory was redirected.".into());
+    }
+    path.canonicalize().map_err(io_error)
+}
+#[cfg(windows)]
+fn merged_appdata_directory(root: &Path, expected: &Path, actual: &Path) -> bool {
+    let Some(local) = std::env::var_os("LOCALAPPDATA") else {
+        return false;
+    };
+    let Ok(local) = PathBuf::from(local).canonicalize() else {
+        return false;
+    };
+    msix::matches(root, expected, actual, &local)
+}
+#[cfg(windows)]
+fn package_cache_matches(expected: &Path, actual: &Path, local: &Path, family: &str) -> bool {
+    use std::path::Component;
+    let Ok(relative) = expected.strip_prefix(local) else {
+        return false;
+    };
+    if relative.as_os_str().is_empty()
+        || relative
+            .components()
+            .any(|c| !matches!(c, Component::Normal(_)))
+        || relative
+            .components()
+            .next()
+            .is_some_and(|c| c.as_os_str().eq_ignore_ascii_case("Packages"))
+    {
+        return false;
+    }
+    actual
+        == local
+            .join("Packages")
+            .join(family)
+            .join("LocalCache")
+            .join("Local")
+            .join(relative)
+}
 
 pub(crate) fn regular_file(path: &Path) -> Result<PathBuf> {
     let metadata = std::fs::symlink_metadata(path).map_err(io_error)?;
@@ -65,6 +142,72 @@ pub fn verified_output_path(root: &Path, job: &Job) -> Result<PathBuf> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn managed_directory_keeps_exact_scope_and_rejects_files_or_path_injection() {
+        let temporary = tempfile::tempdir().unwrap();
+        let root = temporary.path().canonicalize().unwrap();
+        std::fs::create_dir(root.join("agent-places")).unwrap();
+        assert_eq!(
+            managed_directory(&root, "agent-places").unwrap(),
+            root.join("agent-places").canonicalize().unwrap()
+        );
+        std::fs::write(root.join("agent-searches"), []).unwrap();
+        for name in ["agent-searches", "../outside", "a/b", "a\\b", "", ".."] {
+            assert!(managed_directory(&root, name).is_err());
+        }
+    }
+    #[cfg(windows)]
+    #[test]
+    fn msix_correspondence_requires_exact_profile_package_and_relative_path() {
+        let local = Path::new(r"C:\Users\Example\AppData\Local");
+        let expected = local.join("GeoD").join("runtime").join("agent-places");
+        let actual = local
+            .join("Packages")
+            .join("Example.Package_abc")
+            .join("LocalCache")
+            .join("Local")
+            .join("GeoD/runtime/agent-places");
+        assert!(package_cache_matches(
+            &expected,
+            &actual,
+            local,
+            "Example.Package_abc"
+        ));
+        assert!(!package_cache_matches(
+            &expected,
+            &actual,
+            local,
+            "Other.Package_abc"
+        ));
+        assert!(!package_cache_matches(
+            &expected,
+            &actual.with_file_name("agent-searches"),
+            local,
+            "Example.Package_abc"
+        ));
+        assert!(!package_cache_matches(
+            &expected,
+            &actual,
+            Path::new(r"D:\OtherProfile"),
+            "Example.Package_abc"
+        ));
+        assert!(!package_cache_matches(
+            &local.join("../outside"),
+            &actual,
+            local,
+            "Example.Package_abc"
+        ));
+    }
+    #[cfg(unix)]
+    #[test]
+    fn managed_directory_rejects_links_even_inside_the_root() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path().canonicalize().unwrap();
+        std::fs::create_dir(root.join("other")).unwrap();
+        std::os::unix::fs::symlink(root.join("other"), root.join("agent-places")).unwrap();
+        assert!(managed_directory(&root, "agent-places").is_err());
+    }
 
     #[test]
     fn exact_file_resolves_both_file_paths_and_rejects_other_files() {

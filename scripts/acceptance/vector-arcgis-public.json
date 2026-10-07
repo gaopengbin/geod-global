@@ -1,0 +1,9 @@
+{
+  "name": "ArcGIS earthquake sample",
+  "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer",
+  "protocol": "ArcGIS",
+  "collectionId": "0",
+  "bounds": [-123, 37, -121, 39],
+  "pageSize": 2,
+  "responseFormat": null
+}

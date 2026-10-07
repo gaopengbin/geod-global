@@ -1,0 +1,171 @@
+{
+  "schema": "geod-readme-development-visuals/v1",
+  "checkedAt": "2026-10-07T13:43:48.506Z",
+  "capture": {
+    "status": "passed",
+    "scope": "Current real React App with an empty controlled native IPC snapshot; no model, catalog, tasks, download, production account or native desktop visual acceptance.",
+    "cases": [
+      {
+        "locale": "en",
+        "width": 1440,
+        "height": 960,
+        "horizontalOverflow": false,
+        "theme": "dark",
+        "calls": [
+          "set_desktop_appearance",
+          "agent_snapshot",
+          "distribution_snapshot",
+          "health",
+          "list_jobs",
+          "list_projects",
+          "set_desktop_locale",
+          "activate_desktop_frame"
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "width": 1440,
+        "height": 960,
+        "horizontalOverflow": false,
+        "theme": "dark",
+        "calls": [
+          "set_desktop_appearance",
+          "agent_snapshot",
+          "distribution_snapshot",
+          "health",
+          "list_jobs",
+          "list_projects",
+          "set_desktop_locale",
+          "activate_desktop_frame"
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "layout": {
+    "status": "passed",
+    "renderer": "GitHub Markdown API (GFM); local preview stylesheet, Mermaid remains a code block in this preview.",
+    "cases": [
+      {
+        "locale": "en",
+        "width": 1280,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1200,
+            "height": 340
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "From a request to a local result",
+          "A growing 2D data directory",
+          "One native core, several interfaces",
+          "Quick start",
+          "Development status",
+          "Documentation & contributions",
+          "License"
+        ]
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1200,
+            "height": 340
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "From a request to a local result",
+          "A growing 2D data directory",
+          "One native core, several interfaces",
+          "Quick start",
+          "Development status",
+          "Documentation & contributions",
+          "License"
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "width": 1280,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1200,
+            "height": 340
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "从一句需求，到本地成果",
+          "持续扩充的二维数据目录",
+          "同一个原生核心，多种使用方式",
+          "快速开始",
+          "开发进度",
+          "文档与参与",
+          "许可"
+        ]
+      },
+      {
+        "locale": "zh-CN",
+        "width": 390,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1200,
+            "height": 340
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "从一句需求，到本地成果",
+          "持续扩充的二维数据目录",
+          "同一个原生核心，多种使用方式",
+          "快速开始",
+          "开发进度",
+          "文档与参与",
+          "许可"
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "a7a581c6b846f047f24f9f21a2bdd7edad69de94d57f6e8f57c929af1f65b1b3"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "96ccb877fe01bb9d53d7dec25c38d3f023e8fb0cb7b920a8d178d37c2381520a"
+    },
+    {
+      "path": "docs/images/readme-cover.svg",
+      "sha256": "d39ce46ef9cb77e795673e745412f5f09a25afef68271945c0208be246aa8248"
+    },
+    {
+      "path": "docs/images/agent-home-en.png",
+      "sha256": "550786438b97cb485019659b18f60de783c38f2f94d7fe2224982f180550db35"
+    },
+    {
+      "path": "docs/images/agent-home-zh-CN.png",
+      "sha256": "2f0697f0c48a43c46464fbbc6294d65339b2bc7359e9e1b2b3852a7a9173cdf8"
+    }
+  ],
+  "nativeDesktopVisualAcceptance": false,
+  "newInstallerPublished": false
+}

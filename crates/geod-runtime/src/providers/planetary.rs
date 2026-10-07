@@ -287,6 +287,25 @@ impl CatalogueItem {
     }
 }
 
+/// The Agent catalog path shares the same exact product/band checks as downloads.
+/// This never fetches a token or returns a signed URL.
+pub(crate) fn reviewed_catalogue(
+    value: Value,
+    collection: &str,
+) -> Result<BTreeMap<String, String>> {
+    let source = match collection {
+        "sentinel-2-l2a" => &SENTINEL,
+        "landsat-c2-l2" => &LANDSAT,
+        "naip" => &NAIP,
+        "sentinel-1-rtc" => &RADAR,
+        "modis-09A1-061" => &MODIS,
+        vegetation::COLLECTION => &VEGETATION,
+        _ => return Err(CATALOG_MISMATCH.into()),
+    };
+    let id = value["id"].as_str().ok_or(CATALOG_MISMATCH)?.to_owned();
+    Ok(CatalogueItem::from_value(value, source, &id)?.assets)
+}
+
 #[derive(Default)]
 struct ContainerState {
     token: Option<Token>,
@@ -378,6 +397,35 @@ pub(crate) struct AccessCache {
 }
 
 impl AccessCache {
+    /// Cache already-reviewed results fetched by the native fixed catalog adapter.
+    /// They obey the same five-minute TTL and exact URL equality as item GETs.
+    pub(crate) async fn observe_catalogue(&self, value: &Value, collection: &str) -> Result<()> {
+        let (source, state) = match collection {
+            "sentinel-2-l2a" => (&SENTINEL, &self.sentinel),
+            "landsat-c2-l2" => (&LANDSAT, &self.landsat),
+            "naip" => (&NAIP, &self.naip),
+            "sentinel-1-rtc" => (&RADAR, &self.radar),
+            "modis-09A1-061" => (&MODIS, &self.modis),
+            vegetation::COLLECTION => (&VEGETATION, &self.modis),
+            _ => return Err(CATALOG_MISMATCH.into()),
+        };
+        let items = value["features"].as_array().ok_or(CATALOG_MISMATCH)?;
+        let mut reviewed = Vec::new();
+        for value in items {
+            let id = value["id"].as_str().ok_or(CATALOG_MISMATCH)?.to_owned();
+            reviewed.push((
+                id.clone(),
+                CatalogueItem::from_value(value.clone(), source, &id)?,
+            ));
+        }
+        let mut state = state.lock().await;
+        state.prune();
+        for (id, item) in reviewed {
+            state.reserve_catalogue_slot();
+            state.catalogue.insert(id, item);
+        }
+        Ok(())
+    }
     pub(crate) async fn resolve(
         &self,
         client: &reqwest::Client,

@@ -1,0 +1,1292 @@
+{
+  "schema": "geod-global.forum-demand-research/v2",
+  "round": 2,
+  "researchedAt": "2026-10-07",
+  "timezone": "Asia/Shanghai",
+  "scope": "二维遥感影像、雷达、高程及与数据获取直接相邻的区域定义、科学检查、时序和离线交付；不接入三维。",
+  "previousRound": "docs/research/remote-sensing-user-needs-2026-10-07.json",
+  "method": {
+    "searchEngine": "Exa 语义检索，补充公开网页搜索和正文读取",
+    "exaCalls": 17,
+    "requestedResults": 144,
+    "returnedResults": 144,
+    "uniqueUrls": 141,
+    "canonicalCandidates": 141,
+    "searchBatches": [
+      {
+        "id": "cn_qa",
+        "requestedResults": 10,
+        "returnedResults": 10
+      },
+      {
+        "id": "cn_academic",
+        "requestedResults": 10,
+        "returnedResults": 10
+      },
+      {
+        "id": "cn_gis",
+        "requestedResults": 10,
+        "returnedResults": 10
+      },
+      {
+        "id": "intl_hub",
+        "requestedResults": 10,
+        "returnedResults": 10
+      },
+      {
+        "id": "intl_esri",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_nasa",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_github",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_research",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "cn_specific",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "cn_china_sat",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_rg_more",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_crop_flood",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_points",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_gee",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "intl_points_more",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "cn_economics",
+        "requestedResults": 8,
+        "returnedResults": 8
+      },
+      {
+        "id": "cn_more_forums",
+        "requestedResults": 8,
+        "returnedResults": 8
+      }
+    ],
+    "countsNote": "Exa 返回量与唯一 URL 量只统计 Exa 批次；最终留存还包含补充网页核读。不能以留存比例推算需求频率。",
+    "selection": "原始用户提问、论坛讨论或用户提交的 Issue，优先具体地域 / 产品 / 时间 / 输出要求。实际正文核读，去掉教程、新闻、文库、推广和疑似批量生成问答。",
+    "deduplication": "与第一轮 23 条逐线程去重；同一帖子不同分页、同一需求转载 / 前置追问不重复计数。国内 / 海外按平台分组，不推断作者国籍。",
+    "evidenceBoundary": "原帖是需求证据，不是科学处理或服务规则的权威依据。用户提出的根因必须和已核实结论分开；论坛历史故障不代表当前服务故障。",
+    "readabilityBoundary": "36 条核读原始提问正文；2 条另列存档索引补充。工具抽取正文不等于每个实时站点都可直接打开。",
+    "sampleLimit": "有目的的公开样本，不代表市场份额、用户总体比例、付费意愿或统计显著性。中文部分覆盖有限，无法读取的知乎 / 百度页面未计入。",
+    "executionBoundary": "本轮只检索、读文和核对现有代码 / 验收文档；未运行新模型对话、影像下载或科学处理验收。"
+  },
+  "counts": {
+    "newThreads": 38,
+    "domesticPlatformThreads": 10,
+    "overseasPlatformThreads": 28,
+    "originalQuestionBodyRead": 36,
+    "archivalIndexSupplement": 2,
+    "platformsThisRound": [
+      "CSDN 问答",
+      "小木虫",
+      "地信网",
+      "Sentinel Hub Forum",
+      "Copernicus Data Space Community",
+      "Esri Community",
+      "GitHub Issues",
+      "NASA Earthdata Forum",
+      "ESA STEP Forum",
+      "ResearchGate",
+      "Stack Overflow",
+      "GIS Stack Exchange"
+    ],
+    "previousThreads": 23,
+    "combinedIndependentThreads": 61,
+    "combinedPlatforms": [
+      "Reddit",
+      "GIS Stack Exchange",
+      "Copernicus Data Space Community",
+      "ESA STEP Forum",
+      "NASA Earthdata Forum",
+      "小木虫",
+      "CSDN 问答",
+      "地信网",
+      "Sentinel Hub Forum",
+      "Esri Community",
+      "GitHub Issues",
+      "ResearchGate",
+      "Stack Overflow"
+    ]
+  },
+  "conclusion": "本轮证据支持将 Agent 定位为可核对的二维数据准备助手。AI 能简化产品选择、真实范围解析、参数补全、下载和验收；但需要原生工具约束实际波段、时间、分辨率、质量、授权和成果形式。当前能力可承接部分公开产品场景，不能据论坛调研宣称 61 条需求已全部通过自然语言完成。",
+  "newFindings": [
+    {
+      "finding": "需求经常是可直接使用的成果，不仅是影像文件",
+      "evidenceIds": [
+        "R2-I08",
+        "R2-I04",
+        "R2-I27",
+        "R2-I28"
+      ],
+      "implication": "SAFE 模型输入、训练切片、CSV 时序应有明确成果规格，不能统一返回 RGB。"
+    },
+    {
+      "finding": "中文地域需求包含非行政区和历史序列",
+      "evidenceIds": [
+        "R2-C06",
+        "R2-C09",
+        "R2-C10"
+      ],
+      "implication": "湿地 / 流域 / 地块的来源与边界定义要显式保留；行政区外接矩形不能自动替代。"
+    },
+    {
+      "finding": "订单、导出、下载和本地验收是不同步骤",
+      "evidenceIds": [
+        "R2-C02",
+        "R2-C03",
+        "R2-I16",
+        "R2-I26"
+      ],
+      "implication": "目录有结果、订单已完成、导出已启动和云端有链接，都不能直接报告本地成果完成。"
+    },
+    {
+      "finding": "完整清单比简单文件哈希多一层要求",
+      "evidenceIds": [
+        "R2-I02",
+        "R2-I06",
+        "R2-I15"
+      ],
+      "implication": "逐项校验产品、瓦片、采集 / 合成时间、波段和期数，报告缺失及替换。"
+    },
+    {
+      "finding": "灾前灾后数据要能比较",
+      "evidenceIds": [
+        "R2-I19",
+        "R2-I20",
+        "R2-I21"
+      ],
+      "implication": "除了时间接近，还要约束轨道、极化、网格、云、科学波段和基线质量。"
+    },
+    {
+      "finding": "诊断不能无条件相信错误标题或模型猜测",
+      "evidenceIds": [
+        "R2-I12",
+        "R2-I13",
+        "R2-I24"
+      ],
+      "implication": "有证据地区分令牌、限流、查询超时、无有效覆盖与显示问题；不要让模型无限重试。"
+    },
+    {
+      "finding": "国内新增产品与海外公开源是两类接入工作",
+      "evidenceIds": [
+        "R2-C04",
+        "R2-C07",
+        "R2-C10"
+      ],
+      "implication": "高分 GMI、LST、土地覆盖等需要逐产品适配；现有 Sentinel / Landsat / MODIS 系列名称不能代表全部产品完成。"
+    }
+  ],
+  "priorityOrder": [
+    {
+      "priority": "P0",
+      "item": "把用途转换为可检查的成果规格",
+      "includes": [
+        "实际产品 / 处理级别 / 科学层",
+        "真实区域及边界来源",
+        "采集时间与合成时段",
+        "目标分辨率与像元网格",
+        "SAFE / 科学 TIFF / 渲染图 / 表格等交付类型",
+        "所需账号和许可"
+      ],
+      "why": "避免看起来下载成功却拿到错误产品，或擅自用 RGB、粗分辨率、州级范围替代。",
+      "evidenceIds": [
+        "R2-C01",
+        "R2-C06",
+        "R2-I02",
+        "R2-I08"
+      ]
+    },
+    {
+      "priority": "P0",
+      "item": "增加下载清单与成果有效性验收",
+      "includes": [
+        "分页完整性及重复 / 缺失记录",
+        "逐文件日期、产品、瓦片、波段",
+        "响应文件头和实际可解码像元",
+        "有效覆盖、NoData、单位和质量",
+        "失败分类及重试预算"
+      ],
+      "why": "真实文件可读、数据符合请求、任务最终完成需同时成立。",
+      "evidenceIds": [
+        "R2-C03",
+        "R2-I10",
+        "R2-I13",
+        "R2-I15",
+        "R2-I24",
+        "R2-I26"
+      ]
+    },
+    {
+      "priority": "P1",
+      "item": "多区域 × 时间批次",
+      "includes": [
+        "CSV / GeoPackage 地块 ID",
+        "按真实采集日期或明确合成时段组织",
+        "按季 / 年规划",
+        "容量预算、网格分区、检查点和缺失续跑"
+      ],
+      "why": "20 地块夏季数据、历年城区及一整年影像不能靠单工程无限扩充。",
+      "evidenceIds": [
+        "R2-C09",
+        "R2-I03",
+        "R2-I05",
+        "R2-I14"
+      ]
+    },
+    {
+      "priority": "P1",
+      "item": "科学用途和产品缺口按需求接入",
+      "includes": [
+        "Sentinel-2 NIR / SWIR 和匹配质量",
+        "LST、年度土地覆盖、夜光等独立产品",
+        "点 / 缓冲区时序 CSV",
+        "真实 SAFE 正向账号验收"
+      ],
+      "why": "这些产品的格式、单位、质量及输出结构要分别落实，不能只扩菜单。",
+      "evidenceIds": [
+        "R2-C07",
+        "R2-C10",
+        "R2-I08",
+        "R2-I21",
+        "R2-I27",
+        "R2-I28"
+      ],
+      "boundary": "本轮不改变国际公开源先行的既有执行范围；国内受控或商业源先明确授权与产品规则。"
+    },
+    {
+      "priority": "P2",
+      "item": "训练样本与展示处理扩展",
+      "includes": [
+        "固定像素 patch / 重采样 / 掩膜",
+        "全色融合",
+        "地理参考保持与展示匀色",
+        "更大离线瓦片包"
+      ],
+      "why": "作为明确模式独立验收，保持科学原值与展示成果分离。",
+      "evidenceIds": [
+        "R2-C08",
+        "R2-I04",
+        "R2-I09",
+        "R2-I25"
+      ]
+    }
+  ],
+  "capabilityBoundary": {
+    "reviewedFiles": [
+      "docs/provider-integration-status.md",
+      "docs/agent.md",
+      "crates/geod-runtime/src/agent_actions/catalog.rs",
+      "crates/geod-runtime/src/projects.rs"
+    ],
+    "supportedFoundation": "十五个固定源及已接入公开自定义来源的原生工具；部分产品已有实际文件、科学原值、质量处理、同网格裁剪 / 拼接与离线证据。实际模型路线验收范围按原文档保留，不推及所有来源。",
+    "sentinel2": "固定公开源为 visual / SCL，不包含通用 NIR / SWIR；CDSE SAFE 有适配但生产原包正向授权待验收。",
+    "landsat": "固定项为 RGB、QA_PIXEL、QA_RADSAT；未据此声称全色、NIR / SWIR 或温度产品完成。",
+    "modis": "MOD13Q1 / MYD13Q1 和 MOD09A1 / MYD09A1 的已验收具体图层，不代表 LST、土地覆盖及完整 MODIS 平台。",
+    "radar": "IW RTC 的极化 / 轨向与原值处理，不代表 GRD / SLC 校准或洪灾算法。",
+    "largeBatch": "工程最多 32 景；目录读取默认 5、最高 20 每页，不代表检索总量上限。真正跨区域全年任务需另行编排。",
+    "subset": "现有固定 COG 原件下载后本地裁剪与远端 AOI 按需采集不同。预览的 Range 读取不证明原件下载仅取 AOI。",
+    "mosaic": "当前同网格流式拼接；不再以旧 8 百万总像素限制描述当前能力。通用跨网格处理和时间统计合成仍需研发。",
+    "arcgis": "公开单图层默认渲染 PNG 及带坐标交付，不是认证 ImageServer 的科学波段 TIFF。",
+    "offline": "本地 MBTiles 128 MiB / 512 瓦片；有界渲染下载与离线恢复不代表全球 MBTiles 制作和合法商业使用已验收。",
+    "accounts": "用户暂无 NASA / Copernicus 测试账号；软件内入口和合成格式检查不等于生产授权原件下载验收。"
+  },
+  "primaryProductChecks": [
+    {
+      "topic": "MCD12Q1 与 MCD12Q2",
+      "finding": "MCD12Q1 v061 提供年度土地覆盖类型；MCD12Q2 v061 提供年度物候指标，不能按同一种分类产品使用。",
+      "sources": [
+        "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q1-061",
+        "https://www.earthdata.nasa.gov/data/catalog/lpcloud-mcd12q2-061"
+      ],
+      "readability": "直接网页读取 403，Exa 官方页正文抽取成功；未下载产品。"
+    },
+    {
+      "topic": "VIIRS 系列与夜光",
+      "finding": "已规划的 VNP09A1 是地表反射率合成，EOG VNL 是 DNB 夜光产品；既有 VIIRS 入口不等于夜光已接入。",
+      "sources": [
+        "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp09a1-002",
+        "https://eogdata.mines.edu/products/vnl/"
+      ],
+      "readability": "EOG 正文直接可读；NASA 官方页抽取可读。"
+    },
+    {
+      "topic": "当前公开产品生命周期提示",
+      "finding": "本轮抽取的 NASA VNP09A1 页面提示 Suomi NPP 数据交付将于 2026-11-01 停止，并建议转向 NOAA-20 / NOAA-21；接入规划应单独核查公告与产品覆盖，不将历史数据不可用或替代产品已验收作为推断。",
+      "sources": [
+        "https://www.earthdata.nasa.gov/data/catalog/lpcloud-vnp09a1-002"
+      ],
+      "readability": "官方索引正文提示；未在应用内修改或执行迁移。"
+    }
+  ],
+  "records": [
+    {
+      "id": "R2-C01",
+      "platformGroup": "国内平台",
+      "platform": "CSDN 问答",
+      "date": "2025-06-04",
+      "dateEvidence": "原帖作者时间",
+      "title": "91 卫图显示天地图仅供预览，如何下载",
+      "url": "https://ask.csdn.net/questions/8388629",
+      "category": "下载与交付",
+      "need": "用户看到卫星底图，却遇到仅供预览提示；希望知道实际可下载的来源。",
+      "fit": "部分支持",
+      "current": "已有公开产品原件和渲染影像入口。",
+      "gap": "天地图该资产许可及授权未验收；需解释预览、渲染成果和科学原件的区别，提供合规替代产品。",
+      "priority": "P0",
+      "prompt": "下载这片区域可合法保存的影像，说明实际来源、日期和是否为原始数据。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "回答明确含 AIGC；仅采用原始提问，不采纳其操作建议。"
+    },
+    {
+      "id": "R2-C02",
+      "platformGroup": "国内平台",
+      "platform": "CSDN 问答",
+      "date": "2023-11-09",
+      "dateEvidence": "原帖明确日期",
+      "title": "自然资源卫星云平台只能导出文件名",
+      "url": "https://ask.csdn.net/questions/8027013",
+      "category": "下载与交付",
+      "need": "检索有结果，但下载相关选项灰色，只有文件名可导出。",
+      "fit": "需接入",
+      "current": "目前已做 NASA / CDSE 软件内账号入口。",
+      "gap": "该国内平台未接入；要核实账号、产品授权及交付方式，不能把目录命中当成功下载。",
+      "priority": "P1",
+      "prompt": "检查这些国内卫星产品能否实际下载，缺少什么授权请明确指出。",
+      "implementationEvidence": "docs/provider-integration-status.md:15",
+      "readability": "正文核读",
+      "sourceLimit": "历史用户故障，不代表当前平台仍故障。"
+    },
+    {
+      "id": "R2-C03",
+      "platformGroup": "国内平台",
+      "platform": "CSDN 问答",
+      "date": "2025-01-10",
+      "dateEvidence": "原帖作者时间",
+      "title": "陆地观测卫星平台订单完成却没有影像",
+      "url": "https://ask.csdn.net/questions/8175354",
+      "category": "下载与交付",
+      "need": "平台订单完成后点击下载，却未得到遥感图像文件。",
+      "fit": "需接入",
+      "current": "原生下载有任务、文件读取与验收基础。",
+      "gap": "国内订单平台未接入；订单完成、下载启动、本地文件验收需分别记录。",
+      "priority": "P1",
+      "prompt": "把订单中的影像保存到本地，并列出成功文件和未交付项。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "正文核读",
+      "sourceLimit": "回答注明使用豆包；不采用其未经验证的排障结论。"
+    },
+    {
+      "id": "R2-C04",
+      "platformGroup": "国内平台",
+      "platform": "CSDN 问答",
+      "date": "2024-02-05",
+      "dateEvidence": "网页原帖日期",
+      "title": "寻找高分五号 GMI 一级数据官方入口",
+      "url": "https://ask.csdn.net/questions/8062501",
+      "category": "产品选择",
+      "need": "用户明确需要 GF-5 GMI L1，想找具体官方获取入口。",
+      "fit": "需接入",
+      "current": "二维看板可展示待接入产品。",
+      "gap": "GF-5 GMI 产品、目录、账号及许可未适配；不以普通光学 RGB 替代。",
+      "priority": "P1",
+      "prompt": "找高分五号 GMI 一级数据的官方获取渠道，确认我是否有下载权限。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "正文核读",
+      "sourceLimit": "Exa 首次 521，补充网页阅读成功；未验证该产品真实下载。"
+    },
+    {
+      "id": "R2-C05",
+      "platformGroup": "国内平台",
+      "platform": "CSDN 问答",
+      "date": "2024-09-06",
+      "dateEvidence": "网页原帖日期",
+      "title": "全年 Sentinel-2 NDVI 如何得到植被生长季开始日期",
+      "url": "https://ask.csdn.net/questions/8141767",
+      "category": "下载后分析",
+      "need": "用户已下载全年影像并计算 NDVI，仍无法生成生长季开始日期空间图。",
+      "fit": "需研发",
+      "current": "已有 MODIS NDVI / EVI 原值和质量处理。",
+      "gap": "S2 NIR 科学层、时序平滑、物候定义、缺测处理与验证未完成。",
+      "priority": "P2",
+      "prompt": "按这片区域全年影像生成生长季开始日期图，说明算法和缺测。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "下载已完成仍需分析；不能把更多下载当作完整解决。"
+    },
+    {
+      "id": "R2-C06",
+      "platformGroup": "国内平台",
+      "platform": "CSDN 问答",
+      "date": "2025-12-26",
+      "dateEvidence": "原帖作者时间",
+      "title": "洞庭湖湿地植被研究缺少边界矢量",
+      "url": "https://ask.csdn.net/questions/9120539",
+      "category": "区域定义",
+      "need": "近十年洞庭湖湿地植被覆盖研究，卡在湿地边界矢量的定义和获取。",
+      "fit": "部分支持",
+      "current": "已有全球行政区、地点及本地矢量导入基础。",
+      "gap": "湿地、流域和保护区不等同于行政区；需边界来源、定义、年份和确认，不能自动编造。",
+      "priority": "P0",
+      "prompt": "准备洞庭湖湿地研究边界，说明定义与年份，再按此边界找影像。",
+      "implementationEvidence": "docs/provider-integration-status.md:25",
+      "readability": "正文核读",
+      "sourceLimit": "论坛回答只作讨论，不视为权威湿地边界标准。"
+    },
+    {
+      "id": "R2-C07",
+      "platformGroup": "国内平台",
+      "platform": "小木虫",
+      "date": "2012-10-03",
+      "dateEvidence": "原帖明确日期",
+      "title": "MODIS 地表温度产品、缺测和单位如何理解",
+      "url": "https://muchong.com/t-5020723-1",
+      "category": "产品选择",
+      "need": "用户不清楚产品级别，日温度缺日期，且不知道 DN 如何转为温度。",
+      "fit": "需接入",
+      "current": "已有部分 MODIS 指数与反射率产品的单位和 QA。",
+      "gap": "MOD11 温度产品未适配；需产品级别、单位、比例因子、质量和缺测说明。",
+      "priority": "P1",
+      "prompt": "下载研究区逐日地表温度，保留单位、质量标记，并列出缺测日期。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "2012 年历史工作流；不采用回复中的具体温度换算数值。"
+    },
+    {
+      "id": "R2-C08",
+      "platformGroup": "国内平台",
+      "platform": "小木虫",
+      "date": null,
+      "dateEvidence": "可见 2017-05 回复；原始发帖日期未确认",
+      "title": "拼接影像色差大，Photoshop 处理会丢坐标",
+      "url": "https://muchong.com/t-11332926-1",
+      "category": "下载后分析",
+      "need": "2015 / 2017 影像色差大，尝试匀色不满意，担心外部修图丢失地理坐标。",
+      "fit": "部分支持",
+      "current": "已有带坐标裁剪 / 同网格拼接和独立显示拉伸。",
+      "gap": "无匀色工具及外部编辑往返；展示调色要与科学原值分开并保持地理参考。",
+      "priority": "P2",
+      "prompt": "把这两景拼接用于展示，保留地理坐标及原始科学值。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "存档索引补充",
+      "sourceLimit": "索引正文可读；实时页面提示归档禁止浏览。回复中的重新配准建议未验证。"
+    },
+    {
+      "id": "R2-C09",
+      "platformGroup": "国内平台",
+      "platform": "地信网",
+      "date": null,
+      "dateEvidence": "可见回复 2019-04-07 至 09；原帖日期未确认",
+      "title": "需要黑龙江双鸭山市历年城区影像",
+      "url": "http://bbs.3s001.com/thread-267532-2-1.html",
+      "category": "批量与时序",
+      "need": "论文需要双鸭山市历年城区遥感影像，希望有人协助获取。",
+      "fit": "部分支持",
+      "current": "当前公开光学源可按区域和历史时间检索。",
+      "gap": "需要中文地名解析、可用年份报告、同季节及覆盖一致性；不能保证每年都有合适数据。",
+      "priority": "P1",
+      "prompt": "找双鸭山市历年同季节影像，按年份保存并列出缺少年份。",
+      "implementationEvidence": "crates/geod-runtime/src/projects.rs:13; docs/agent.md:135",
+      "readability": "存档索引补充",
+      "sourceLimit": "只计一个线程；正文来自索引缓存，实时站点不可读。软件分享及感谢回复不计需求。"
+    },
+    {
+      "id": "R2-C10",
+      "platformGroup": "国内平台",
+      "platform": "小木虫",
+      "date": "2014-12-28",
+      "dateEvidence": "首帖楼层时间；不使用 URL 的 201705 作发帖日期",
+      "title": "MODIS 土地覆盖产品差异和江西省瓦片选择",
+      "url": "http://muchong.com/html/201705/8351747.html",
+      "category": "产品选择",
+      "need": "不知道 MOD / MCD、12Q1 / 12Q2 区别和文件名；希望确定江西省需要哪些瓦片。",
+      "fit": "需接入",
+      "current": "已有区域解析与部分 MODIS 正弦网格产品。",
+      "gap": "土地覆盖与物候产品需单独适配；通过实际覆盖选瓦片，不让用户手算 h/v。",
+      "priority": "P1",
+      "prompt": "下载江西省某年土地覆盖产品，说明类别体系、版本及所需瓦片。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "NASA 官方说明核对：MCD12Q1 是年度土地覆盖分类，MCD12Q2 是年度物候指标。"
+    },
+    {
+      "id": "R2-I01",
+      "platformGroup": "海外平台",
+      "platform": "Sentinel Hub Forum",
+      "date": "2024-09-10",
+      "dateEvidence": "原帖明确日期",
+      "title": "多云区域两年无云合成遇到图像数量和超时限制",
+      "url": "https://forum.sentinel-hub.com/t/cloudless-mosaic-and-image-limit-in-sentinel-processing-api/9549",
+      "category": "下载后分析",
+      "need": "需要多年 median / quantile 合成，普通逐景处理受图像数量和请求限制影响。",
+      "fit": "部分支持",
+      "current": "已有部分产品质量筛选及同网格拼接。",
+      "gap": "空间拼接不等于时间中位数合成；需 S2 科学层、AOI 质量、分块和可核对的时间合成。",
+      "priority": "P1",
+      "prompt": "为多云研究区生成两年低云合成，报告实际有效观测与合成方法。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "历史限额与错误只作为用户工作流证据。"
+    },
+    {
+      "id": "R2-I02",
+      "platformGroup": "海外平台",
+      "platform": "Sentinel Hub Forum",
+      "date": "2024-01-22",
+      "dateEvidence": "原帖明确日期",
+      "title": "时间段内每次影像的真实采集日期",
+      "url": "https://forum.sentinel-hub.com/t/download-of-multiple-images-and-dates-in-a-specific-time-period/8488",
+      "category": "批量与时序",
+      "need": "用户按每天请求图像，却不确定返回图像实际是哪天采集，希望获得期间全部观测。",
+      "fit": "部分支持",
+      "current": "STAC 元数据与原生逐景日期已有基础。",
+      "gap": "请求日期不能充当采集日期；需完整分页、重复 / 缺失清单及合成时段说明。",
+      "priority": "P0",
+      "prompt": "下载这个月每次真实观测，并用实际采集时间命名文件。",
+      "implementationEvidence": "docs/agent.md:759",
+      "readability": "正文核读",
+      "sourceLimit": "不能把服务按日期返回的合成影像认作当天单景。"
+    },
+    {
+      "id": "R2-I03",
+      "platformGroup": "海外平台",
+      "platform": "Sentinel Hub Forum",
+      "date": "2023-05-31",
+      "dateEvidence": "原帖明确日期",
+      "title": "20 块农田整个夏季 RGB GeoTIFF 批量下载",
+      "url": "https://forum.sentinel-hub.com/t/download-multiple-images/7396",
+      "category": "批量与时序",
+      "need": "已有农田 GeoPackage，需要全部地块在三个月内的 RGB GeoTIFF，现有示例只处理一景。",
+      "fit": "部分支持",
+      "current": "本地 GeoPackage 和受限工程下载可复用。",
+      "gap": "多地块 × 日期队列、命名、清单、失败续跑与容量预检未完成。",
+      "priority": "P1",
+      "prompt": "按这 20 块农田分别下载整个夏季影像，保留地块 ID 和采集日期。",
+      "implementationEvidence": "crates/geod-runtime/src/projects.rs:13; docs/agent.md:135",
+      "readability": "正文核读",
+      "sourceLimit": "不能把一个工程最多 32 景扩充描述为无限时间批次。"
+    },
+    {
+      "id": "R2-I04",
+      "platformGroup": "海外平台",
+      "platform": "Sentinel Hub Forum",
+      "date": "2020-11-25",
+      "dateEvidence": "原帖明确日期",
+      "title": "224×224 多时相多波段训练样本",
+      "url": "https://forum.sentinel-hub.com/t/sentinel-2-l2a-multi-temporal-stack/2932",
+      "category": "下载后分析",
+      "need": "需要固定尺寸、20 米网格、多波段及云 / 阴影 / 饱和掩膜，按日期和波段输出。",
+      "fit": "需研发",
+      "current": "已有 RGB / SCL 下载和同网格处理。",
+      "gap": "S2 NIR / SWIR 等层、统一重采样、固定像素切片及训练样本规格未完成。",
+      "priority": "P2",
+      "prompt": "按指定波段输出每期 224×224 像素训练样本，附质量掩膜与采集时间。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "固定训练样本是新增成果模式，不是普通裁剪尺寸的简单替换。"
+    },
+    {
+      "id": "R2-I05",
+      "platformGroup": "海外平台",
+      "platform": "Sentinel Hub Forum",
+      "date": "2024-06-24",
+      "dateEvidence": "原帖明确日期",
+      "title": "中国范围全年 Sentinel-2 L1C 多波段下载",
+      "url": "https://forum.sentinel-hub.com/t/assistance-needed-for-year-long-sentinel-2-l1c-imagery-downloads-for-china-region/9350",
+      "category": "批量与时序",
+      "need": "大范围全年影像有空白及处理问题，希望确认区域、波段和下载设置。",
+      "fit": "需研发",
+      "current": "已有受限区域 Sentinel-2 L2A 下载。",
+      "gap": "L1C 与 L2A 不应互换；需范围 / 网格预检、跨分区、全年批次和科学波段。",
+      "priority": "P1",
+      "prompt": "准备中国指定研究区一整年 L1C 数据，先检查覆盖和网格，再估算容量。",
+      "implementationEvidence": "crates/geod-runtime/src/projects.rs:13; docs/agent.md:135",
+      "readability": "正文核读",
+      "sourceLimit": "海外平台上的中国研究区需求；不据此推断作者国籍。"
+    },
+    {
+      "id": "R2-I06",
+      "platformGroup": "海外平台",
+      "platform": "Copernicus Data Space Community",
+      "date": "2025-05-08",
+      "dateEvidence": "原帖明确日期",
+      "title": "NetCDF 有 18 期，GeoTIFF 却只得到一层",
+      "url": "https://forum.dataspace.copernicus.eu/t/openeo-download-issue-as-geo-tiff-vs-nc-for-sentinel2/3669",
+      "category": "下载与交付",
+      "need": "用户期望保存全部时相，导出格式切换后发现时间维度没有按预期保留。",
+      "fit": "部分支持",
+      "current": "原生工程保留逐景元数据。",
+      "gap": "openEO 导出未接入；需逐期独立文件或明确多维容器，验收时间维度完整性。",
+      "priority": "P0",
+      "prompt": "把这 18 期影像逐期保存为 GeoTIFF，附日期与文件对应表。",
+      "implementationEvidence": "docs/agent.md:759",
+      "readability": "正文核读",
+      "sourceLimit": "后续 4713 帖链接同一问题，按一个需求去重。"
+    },
+    {
+      "id": "R2-I07",
+      "platformGroup": "海外平台",
+      "platform": "Esri Community",
+      "date": "2024-03-26",
+      "dateEvidence": "原帖明确日期",
+      "title": "没有 Raster Analytics，想导出 Sentinel-2 原分辨率 TIFF",
+      "url": "https://community.esri.com/t5/arcgis-api-for-python-questions/sentinel2-image-service-clip-without-raster/td-p/1401090",
+      "category": "下载与交付",
+      "need": "企业 ImageServer 区域裁剪结果分辨率不符合期望，且没有栅格分析授权。",
+      "fit": "部分支持",
+      "current": "公开 ArcGIS PNG 保存及公开 Sentinel COG 原件已有基础。",
+      "gap": "账号 ImageServer 科学 TIFF 未接入；替代公开源须说明波段、分辨率和来源差异。",
+      "priority": "P1",
+      "prompt": "保存这个区域原分辨率科学数据，没有服务权限就说明并提供可用公开替代。",
+      "implementationEvidence": "docs/provider-integration-status.md:32",
+      "readability": "正文核读",
+      "sourceLimit": "公开渲染 PNG 不等同于该用户要的原始多波段 TIFF。"
+    },
+    {
+      "id": "R2-I08",
+      "platformGroup": "海外平台",
+      "platform": "Esri Community",
+      "date": "2024-04-14",
+      "dateEvidence": "原帖明确日期",
+      "title": "光伏识别模型需要 Sentinel-2 BOA 完整 SAFE，而不是 RGB",
+      "url": "https://community.esri.com/t5/imagery-and-remote-sensing-questions/downloading-sentinel-2-l2a-data/td-p/1409526",
+      "category": "产品选择",
+      "need": "用户下载到 RGB TIFF，但目标模型要求 Sentinel-2 L2A 反射率完整 SAFE 产品。",
+      "fit": "部分支持",
+      "current": "CDSE 完整 SAFE 下载适配和账号入口已实现。",
+      "gap": "暂无真实账号正向原包验收；需完整包、模型输入契约及授权验证，不能替换成视觉 RGB。",
+      "priority": "P0",
+      "prompt": "下载适合该光伏识别模型的完整 L2A SAFE，先核对其输入要求。",
+      "implementationEvidence": "docs/provider-integration-status.md:15",
+      "readability": "正文核读",
+      "sourceLimit": "原帖已标记解决；这证明产品选择障碍，不证明当前官方浏览器故障。"
+    },
+    {
+      "id": "R2-I09",
+      "platformGroup": "海外平台",
+      "platform": "Esri Community",
+      "date": "2024-02-01",
+      "dateEvidence": "原帖明确日期",
+      "title": "Landsat 全色融合 15 米导出失败，较粗分辨率能成功",
+      "url": "https://community.esri.com/t5/arcgis-rest-apis-and-services-questions/landsat8-pansharpened-image-export/td-p/1376951",
+      "category": "下载后分析",
+      "need": "同一导出请求在目标 15 米输出遇到类型错误，粗分辨率输出可成功。",
+      "fit": "需研发",
+      "current": "当前 Landsat 下载 RGB 与两类 QA。",
+      "gap": "全色波段、融合、数据类型与渲染参数未适配；不能用粗化成果静默替代。",
+      "priority": "P2",
+      "prompt": "输出 15 米全色融合图，明确实际网格与处理方式；不支持就说明。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "帖子已解决；不视为当前持续故障。"
+    },
+    {
+      "id": "R2-I10",
+      "platformGroup": "海外平台",
+      "platform": "Esri Community",
+      "date": "2023-05-27",
+      "dateEvidence": "原帖明确日期",
+      "title": "ArcGIS REST 下载 DEM 得到 HTML 而不是栅格",
+      "url": "https://community.esri.com/t5/python-questions/download-queried-raster-from-arcgis-rest/td-p/1293773",
+      "category": "下载与交付",
+      "need": "用户希望将 USGS 3DEP 服务中的查询区域实际保存为 TIFF，却保存了网页内容。",
+      "fit": "需接入",
+      "current": "已有 GLO 高程原值与公开 ArcGIS 渲染。",
+      "gap": "3DEP 科学导出未适配；需响应类型 / 文件头校验、真实文件解析和实际覆盖核对。",
+      "priority": "P0",
+      "prompt": "把研究区 DEM 保存为可读取的 TIFF，并检查原值、单位和覆盖。",
+      "implementationEvidence": "docs/provider-integration-status.md:32",
+      "readability": "正文核读",
+      "sourceLimit": "3DEP 来源需求不能用 PNG 渲染成果满足。"
+    },
+    {
+      "id": "R2-I11",
+      "platformGroup": "海外平台",
+      "platform": "Esri Community",
+      "date": "2021-12-14",
+      "dateEvidence": "原帖明确日期",
+      "title": "ArcGIS Pro 中批量获取光学影像做指数与分类",
+      "url": "https://community.esri.com/t5/arcgis-pro-questions/bulk-download-of-optical-images-from-arcgis-pro/td-p/1126054",
+      "category": "批量与时序",
+      "need": "需要 Landsat / Sentinel 科学影像批量用于指数、分类和时间序列，在线图层使用受阻。",
+      "fit": "部分支持",
+      "current": "公开目录及工程原件下载可复用。",
+      "gap": "任意科学波段、时间批次、跨网格和后续分类仍缺失。",
+      "priority": "P1",
+      "prompt": "为分类研究批量准备影像，按所需科学波段检查而不是只下载真彩色。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "历史平台体验不代表现有 ArcGIS 服务状态。"
+    },
+    {
+      "id": "R2-I12",
+      "platformGroup": "海外平台",
+      "platform": "GitHub Issues",
+      "date": "2025-11-21",
+      "dateEvidence": "Issue 创建时间；回复读至 2026-05",
+      "title": "SAS 开始时间被误判为到期时间",
+      "url": "https://github.com/microsoft/PlanetaryComputer/issues/463",
+      "category": "下载可靠性",
+      "need": "用户将 SAS 开始日期早于当前日期判断为已过期，担心批次无法下载。",
+      "fit": "可复用已有能力",
+      "current": "已有原生 SAS 签名与更新；可据错误分类诊断。",
+      "gap": "应区分用户假设、真实到期字段与实测请求，不让模型无根据宣称平台签名故障。",
+      "priority": "P0",
+      "prompt": "检查这个批次失败的实际原因，区分令牌到期、权限、网络和源文件变化。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "正文核读",
+      "sourceLimit": "回复解释 st 与 se 并给出成功请求；原帖标题不是已证实的签名故障。"
+    },
+    {
+      "id": "R2-I13",
+      "platformGroup": "海外平台",
+      "platform": "GitHub Issues",
+      "date": "2026-05-02",
+      "dateEvidence": "Issue 创建时间",
+      "title": "复杂 STAC 查询超时，简单健康检查通过",
+      "url": "https://github.com/microsoft/PlanetaryComputer/issues/476",
+      "category": "检索可靠性",
+      "need": "复杂 AOI / 时间查询超时，简单集合检查正常，用户很难判断服务是否可用。",
+      "fit": "部分支持",
+      "current": "已有保存目录、分页和原始查询记录。",
+      "gap": "需按真实查询形状探测、受控拆分和恢复；错误不应变成零结果。",
+      "priority": "P0",
+      "prompt": "查询实际研究区的历史影像；超时请解释并安全恢复，不要当作没有数据。",
+      "implementationEvidence": "docs/agent.md:759",
+      "readability": "正文核读",
+      "sourceLimit": "约 70% 是报告者在指定时段的样本，不是本轮测量或当前全平台故障率。"
+    },
+    {
+      "id": "R2-I14",
+      "platformGroup": "海外平台",
+      "platform": "GitHub Issues",
+      "date": "2024-08-03",
+      "dateEvidence": "Issue 创建时间",
+      "title": "遇到 429 / 504 时希望自动退避继续批次",
+      "url": "https://github.com/cmosig/sentle/issues/9",
+      "category": "下载可靠性",
+      "need": "用户请求在限流或网关错误时退避，让长下载能够恢复而不是整个退出。",
+      "fit": "部分支持",
+      "current": "已有原生下载恢复、条件 Range 及任务状态。",
+      "gap": "需长期批次检查点、重试预算、取消和失败清单；不能无限模型重试。",
+      "priority": "P0",
+      "prompt": "批量下载时限流自动退避，保留进度；停止后只重跑缺失项。",
+      "implementationEvidence": "crates/geod-runtime/src/projects.rs:13; docs/agent.md:135",
+      "readability": "正文核读",
+      "sourceLimit": "已关闭的增强请求，仅说明恢复需求，不宣称当前该库仍缺失。"
+    },
+    {
+      "id": "R2-I15",
+      "platformGroup": "海外平台",
+      "platform": "NASA Earthdata Forum",
+      "date": "2024-03-07",
+      "dateEvidence": "首帖作者时间",
+      "title": "下载脚本中的年份和瓦片与查询结果不一致",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=5277",
+      "category": "下载与交付",
+      "need": "MOD11A1 查询 519 个 granule，批量脚本却含错误年份和瓦片，手动下载表现不同。",
+      "fit": "需接入",
+      "current": "已有来源绑定、原文件和目录归档基础。",
+      "gap": "MOD11A1 未接入；需要逐项核对产品、瓦片、时间与查询清单，哈希正确仍可能拿错数据。",
+      "priority": "P0",
+      "prompt": "按这些日期和瓦片下载 LST，并核对每个文件是否符合查询条件。",
+      "implementationEvidence": "docs/agent.md:759",
+      "readability": "正文核读",
+      "sourceLimit": "报告历史错误，不推断根因或当前故障。"
+    },
+    {
+      "id": "R2-I16",
+      "platformGroup": "海外平台",
+      "platform": "NASA Earthdata Forum",
+      "date": "2025-01-02",
+      "dateEvidence": "原帖明确日期",
+      "title": "AppEEARS 输出只有 S3 地址，希望交付本机",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=6320",
+      "category": "下载与交付",
+      "need": "用户想在本地批量取得结果，不希望只在同区域 EC2 中读取 S3。",
+      "fit": "需接入",
+      "current": "当前支持产品可保存受管本地原件。",
+      "gap": "AppEEARS 任务和交付未接入；需账号授权、导出轮询及本地实际文件验证。",
+      "priority": "P1",
+      "prompt": "把 AppEEARS 结果真正保存到我电脑，而不是只给云端链接。",
+      "implementationEvidence": "docs/provider-integration-status.md:15",
+      "readability": "正文核读",
+      "sourceLimit": "云端结果可见不等于本地交付成功。"
+    },
+    {
+      "id": "R2-I17",
+      "platformGroup": "海外平台",
+      "platform": "NASA Earthdata Forum",
+      "date": "2025-02-03",
+      "dateEvidence": "首帖作者时间",
+      "title": "初学者不知道怎么下载 MOD13Q1 栅格",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=6414",
+      "category": "产品选择",
+      "need": "用户只知道 MOD13Q1，仍不知道栅格如何获取和使用。",
+      "fit": "可复用已有能力",
+      "current": "已有 MOD13Q1 / MYD13Q1 v061 PC COG、科学原值与质量筛选。",
+      "gap": "先确定区域、时间和所需图层；明确 PC 转换 COG 与 NASA 原 HDF 的区别。",
+      "priority": "P0",
+      "prompt": "下载指定区域的 MOD13Q1 NDVI，保留科学单位和质量信息。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "是已有能力适合承接的场景；本轮未执行新的自然语言验收。"
+    },
+    {
+      "id": "R2-I18",
+      "platformGroup": "海外平台",
+      "platform": "NASA Earthdata Forum",
+      "date": "2023-07-19",
+      "dateEvidence": "首帖作者时间",
+      "title": "希望按自己的 Shapefile 范围下载子集",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=4477",
+      "category": "区域定义",
+      "need": "用户不知道哪些 NASA 工具能用上传的矢量范围做空间子集。",
+      "fit": "部分支持",
+      "current": "已有本地矢量及部分产品同网格多边形裁剪。",
+      "gap": "AppEEARS 等服务未适配，通用重投影和真正远端 AOI 子集缺失。",
+      "priority": "P1",
+      "prompt": "按我的 Shapefile 范围准备影像，先检查坐标系和边界再下载。",
+      "implementationEvidence": "docs/provider-integration-status.md:25",
+      "readability": "正文核读",
+      "sourceLimit": "整景下载后本地裁剪与远端按区域采集分别标明。"
+    },
+    {
+      "id": "R2-I19",
+      "platformGroup": "海外平台",
+      "platform": "ESA STEP Forum",
+      "date": "2020-06-17",
+      "dateEvidence": "原帖明确日期",
+      "title": "灾前灾后 Sentinel-1 升降轨不匹配",
+      "url": "https://forum.step.esa.int/t/compare-s1a-and-s1b-images-for-change-detection/23724",
+      "category": "下载后分析",
+      "need": "气旋洪灾前后影像来自不同轨向，叠加比较产生疑问。",
+      "fit": "部分支持",
+      "current": "已有 IW RTC 极化与升降轨筛选及原值读取。",
+      "gap": "相对轨道 / 几何可比性、GRD 处理与变化分析未完成；不任取最近两景作科学比较。",
+      "priority": "P1",
+      "prompt": "准备灾前灾后可比较的雷达影像，核对轨道、极化、网格和日期。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "回复存在观点差异，不采用未经核实的科学阈值。"
+    },
+    {
+      "id": "R2-I20",
+      "platformGroup": "海外平台",
+      "platform": "ESA STEP Forum",
+      "date": "2020-09-22",
+      "dateEvidence": "原帖明确日期",
+      "title": "SAR 洪灾参考图偏暗，不知道是不是水",
+      "url": "https://forum.step.esa.int/t/flood-detection-using-sar/25528",
+      "category": "下载后分析",
+      "need": "同轨灾前参考图异常暗，用户无法判断水体、处理或显示问题。",
+      "fit": "部分支持",
+      "current": "已有 RTC Float32 gamma0 / dB 与原值检查。",
+      "gap": "原始 GRD 校准、参考图质量与洪灾判读未完成，黑色显示不能直接当水体。",
+      "priority": "P1",
+      "prompt": "检查灾前灾后雷达图为什么偏暗，区分显示范围、无效值和真实信号。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "这是分析邻接需求，不能仅以两景下载完成宣称已识别洪水。"
+    },
+    {
+      "id": "R2-I21",
+      "platformGroup": "海外平台",
+      "platform": "ESA STEP Forum",
+      "date": "2025-06-01",
+      "dateEvidence": "原帖明确日期",
+      "title": "Sentinel-2 真彩色看不出火烧痕迹",
+      "url": "https://forum.step.esa.int/t/mapping-fires-with-s2-images/44628",
+      "category": "下载后分析",
+      "need": "火灾制图中 RGB 不明显，既有做法对新影像无效，希望正确选时相和产品。",
+      "fit": "需研发",
+      "current": "当前固定 S2 下载项为 visual / SCL。",
+      "gap": "NIR / SWIR、火前火后匹配、NBR 等科学指标与验证尚缺。",
+      "priority": "P1",
+      "prompt": "准备此次火灾前后低云影像及烧毁区分析所需波段，并报告可比较性。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "作者澄清本次为 2025 火灾；不误写成用户选错年份。"
+    },
+    {
+      "id": "R2-I22",
+      "platformGroup": "海外平台",
+      "platform": "ResearchGate",
+      "date": "2015-04-07",
+      "dateEvidence": "Asked 时间",
+      "title": "在一张地图上联合查 Landsat 和 MODIS",
+      "url": "https://www.researchgate.net/post/Does-any-one-know-how-to-query-available-Landsat-and-MODIS-data-within-one-map",
+      "category": "多源发现",
+      "need": "用户不熟悉 path/row 和 h/v，希望同一地图查询两种产品并确定覆盖。",
+      "fit": "可复用已有能力",
+      "current": "现有多源目录、区域检索与地图显示可承担来源查找基础。",
+      "gap": "跨源统一查询 / 排序、覆盖完整性和科学可比性仍需明确验证。",
+      "priority": "P0",
+      "prompt": "在同一研究区查 Landsat 与 MODIS，比较覆盖、日期和实际分辨率。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "正文核读",
+      "sourceLimit": "国际平台上的提问；作者页面标注中国科学院，不把平台所在地等同用户国籍。"
+    },
+    {
+      "id": "R2-I23",
+      "platformGroup": "海外平台",
+      "platform": "ResearchGate",
+      "date": "2013-10-18",
+      "dateEvidence": "Asked 时间",
+      "title": "西非小区域土地变化研究，想找低成本数据",
+      "url": "https://www.researchgate.net/post/How-can-one-obtain-small-scale-satellite-data-on-land-use-and-land-changes",
+      "category": "产品选择",
+      "need": "研究者需要小尺度西非稀树草原土地利用 / 变化数据，希望降低获取成本。",
+      "fit": "部分支持",
+      "current": "全球公开光学影像来源可复用。",
+      "gap": "要先确认最小目标尺度、实际年份和许可；分类与土地变化分析未完成。",
+      "priority": "P1",
+      "prompt": "为西非这片研究区选免费可引用的土地变化影像，说明分辨率是否够用。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "历史获取问题不能证明如今特定产品仍收费或仍可免费获得。"
+    },
+    {
+      "id": "R2-I24",
+      "platformGroup": "海外平台",
+      "platform": "Stack Overflow",
+      "date": "2024-03-04",
+      "dateEvidence": "Asked 时间",
+      "title": "Earth Engine 导出的 Landsat TIFF 是黑色",
+      "url": "https://stackoverflow.com/questions/78101058/black-tif-images-when-filtering-landsat-imagery-in-google-earth-engine",
+      "category": "成果验收",
+      "need": "用户改变范围、大小和比例仍得到黑图，不知道文件是否真的有有效数据。",
+      "fit": "部分支持",
+      "current": "原值、NoData 和显示拉伸检查已有基础。",
+      "gap": "通用 GEE 未接入；需独立查覆盖、掩膜和科学值，不直接猜测黑图根因。",
+      "priority": "P0",
+      "prompt": "检查这份 TIFF 是否有有效覆盖与像元，区分无数据和显示问题。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "正文核读",
+      "sourceLimit": "只采用问题，不将单一回复当科学根因结论。"
+    },
+    {
+      "id": "R2-I25",
+      "platformGroup": "海外平台",
+      "platform": "GIS Stack Exchange",
+      "date": "2026-03-13",
+      "dateEvidence": "Asked 时间",
+      "title": "永不联网电脑需要可商用全球卫星 MBTiles",
+      "url": "https://gis.stackexchange.com/questions/500272/world-satellite-map-with-qgis-in-an-offline-computer",
+      "category": "离线交付",
+      "need": "用户只能硬盘搬运数据，希望免费合法商用、能在离线 QGIS 打开的 MBTiles。",
+      "fit": "部分支持",
+      "current": "已有受限 MBTiles 导入与部分渲染影像离线保存。",
+      "gap": "当前 128 MiB / 512 瓦片限制；全球金字塔采集、MBTiles 制作和逐资产许可验收未完成。",
+      "priority": "P1",
+      "prompt": "准备可离线使用的影像包，先核对商用许可、覆盖、容量和 QGIS 兼容性。",
+      "implementationEvidence": "docs/provider-integration-status.md:27",
+      "readability": "正文核读",
+      "sourceLimit": "许可必须查实际产品及年份；不直接采纳回复中的许可证推断。"
+    },
+    {
+      "id": "R2-I26",
+      "platformGroup": "海外平台",
+      "platform": "GIS Stack Exchange",
+      "date": "2024-12-12",
+      "dateEvidence": "Asked 时间",
+      "title": "脚本启动了 11 个 GEE 导出任务却没有文件",
+      "url": "https://gis.stackexchange.com/questions/488702/downloading-satellite-raster-data-using-earth-engine-lib-in-python",
+      "category": "成果验收",
+      "need": "打印任务启动日志，但用户在 Drive 看不到最终文件。",
+      "fit": "部分支持",
+      "current": "已有 settled 状态和本地文件验收的任务链。",
+      "gap": "GEE 导出未接入；需轮询、失败原因和实际目标文件核对，启动日志不等于交付。",
+      "priority": "P0",
+      "prompt": "检查导出任务是否真正完成，列出本地或目标目录中的实际文件。",
+      "implementationEvidence": "docs/provider-integration-status.md:9",
+      "readability": "正文核读",
+      "sourceLimit": "提问者具体输出为 11 景；本轮没有执行该脚本。"
+    },
+    {
+      "id": "R2-I27",
+      "platformGroup": "海外平台",
+      "platform": "GIS Stack Exchange",
+      "date": "2022-05-01",
+      "dateEvidence": "Asked 时间；不把 2026 最后活跃作发帖日期",
+      "title": "CSV 点位不同缓冲区的月均 NDVI 表",
+      "url": "https://gis.stackexchange.com/questions/430165/calculate-monthly-modis-ndvi-of-multiple-regions-using-gee-python-api-and-export",
+      "category": "下载后分析",
+      "need": "坐标 CSV 中多个地点，分别按不同缓冲距离取得月度 NDVI 时间序列 DataFrame。",
+      "fit": "需研发",
+      "current": "已有 MODIS 指数原值和矢量输入基础。",
+      "gap": "缓冲区、分区统计、月合成、QA / 缺测及表格输出未实现为完整任务。",
+      "priority": "P1",
+      "prompt": "按这份地点 CSV 输出每站多个缓冲区的月均 NDVI，附有效观测数量。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "与同作者 429958 前置问题归为一个需求，不重复计数。"
+    },
+    {
+      "id": "R2-I28",
+      "platformGroup": "海外平台",
+      "platform": "Stack Overflow",
+      "date": "2023-07-12",
+      "dateEvidence": "Asked 时间",
+      "title": "多个坐标的 MOD13Q1 历年 NDVI CSV 导出投影错误",
+      "url": "https://stackoverflow.com/questions/76670361/unable-to-export-time-series-from-modis-ndvi-in-gee-as-transforming-geometry-int",
+      "category": "下载后分析",
+      "need": "用户需要每个地点 2010–2022 NDVI 时序 CSV，遇到几何投影转换错误。",
+      "fit": "需研发",
+      "current": "已有 MOD13Q1 原值、比例因子与质量读取。",
+      "gap": "批量点取值、坐标转换、科学比例因子与米制采样距离分开、时序 CSV 尚缺。",
+      "priority": "P1",
+      "prompt": "把这些站点的历年 NDVI 输出 CSV，保存日期、QA、单位和缺失值。",
+      "implementationEvidence": "docs/agent.md:158; crates/geod-runtime/src/agent_actions/catalog.rs:35",
+      "readability": "正文核读",
+      "sourceLimit": "从原始代码看到 scale 被混用；不将论坛代码复制为软件正确实现。"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "A-R2-01",
+      "prompt": "下载指定小范围 MOD13Q1 NDVI，保留质量信息并报告缺测。",
+      "evidenceIds": [
+        "R2-I17"
+      ],
+      "pass": "正确选中具体 v061 指数层；清楚说明 PC 转换 COG；原值、比例因子、质量与时间可核对。",
+      "status": "未执行；已有能力可复用，需新增自然语言场景验收"
+    },
+    {
+      "id": "A-R2-02",
+      "prompt": "按双鸭山市边界找历年同季节影像，列出缺少年份。",
+      "evidenceIds": [
+        "R2-C09"
+      ],
+      "pass": "使用真实行政区；先列实际可用年份和覆盖，批次不静默遗漏，明确容量与跨网格限制。",
+      "status": "未执行；批次能力待研发"
+    },
+    {
+      "id": "A-R2-03",
+      "prompt": "按洞庭湖湿地边界准备近十年影像。",
+      "evidenceIds": [
+        "R2-C06"
+      ],
+      "pass": "先给可核对的湿地定义、来源、年份；无法获取时明确说明，不换成所在城市或湖泊外接矩形。",
+      "status": "未执行；非行政区边界发现待完善"
+    },
+    {
+      "id": "A-R2-04",
+      "prompt": "我要 GF-5 GMI 一级数据。",
+      "evidenceIds": [
+        "R2-C04"
+      ],
+      "pass": "指出具体产品未接入，提供已核实官方渠道 / 授权说明；不伪造下载或用 Sentinel RGB 替代。",
+      "status": "未执行；诚实能力边界场景"
+    },
+    {
+      "id": "A-R2-05",
+      "prompt": "这张底图仅供预览，帮我保存研究用影像。",
+      "evidenceIds": [
+        "R2-C01"
+      ],
+      "pass": "核对实际资产许可和交付种类；不可下载时明确限制并说明可用替代产品及差异。",
+      "status": "未执行；资产许可需核实"
+    },
+    {
+      "id": "A-R2-06",
+      "prompt": "按光伏识别模型要求下载完整 L2A SAFE。",
+      "evidenceIds": [
+        "R2-I08"
+      ],
+      "pass": "确认模型规格；合法授权成功；完整生产 SAFE 可读且不是 RGB TIFF 替代；失败原因可核对。",
+      "status": "未执行；需要用户账号及生产原包验收"
+    },
+    {
+      "id": "A-R2-07",
+      "prompt": "把 18 期影像逐期保存为 GeoTIFF。",
+      "evidenceIds": [
+        "R2-I02",
+        "R2-I06"
+      ],
+      "pass": "清单中时间与实际文件一一对应；不把请求日期当采集日期；18 期或明确缺失报告。",
+      "status": "未执行；完整时序交付待完善"
+    },
+    {
+      "id": "A-R2-08",
+      "prompt": "按这份 GeoPackage 中 20 个地块下载整个夏季影像。",
+      "evidenceIds": [
+        "R2-I03"
+      ],
+      "pass": "地块 ID、真实日期、网格、预算、检查点均保存；部分成功和缺失项可恢复。",
+      "status": "未执行；多区域批次待研发"
+    },
+    {
+      "id": "A-R2-09",
+      "prompt": "按地点 CSV 输出逐月 NDVI 和多种缓冲区均值。",
+      "evidenceIds": [
+        "R2-I27",
+        "R2-I28"
+      ],
+      "pass": "投影、比例因子和采样距离区分；QA 与缺测规则明确；CSV 中站点 / 时间 / 单位可独立核对。",
+      "status": "未执行；表格时序成果待研发"
+    },
+    {
+      "id": "A-R2-10",
+      "prompt": "准备洪灾前后可比较的雷达影像。",
+      "evidenceIds": [
+        "R2-I19",
+        "R2-I20"
+      ],
+      "pass": "核对轨道、极化、网格、日期和参考质量；不从显示颜色直接输出未经验证的洪灾结论。",
+      "status": "未执行；可比性与分析待研发"
+    },
+    {
+      "id": "A-R2-11",
+      "prompt": "准备火前火后的烧毁区分析数据。",
+      "evidenceIds": [
+        "R2-I21"
+      ],
+      "pass": "列出所需科学波段、质量与时相；缺少 NIR / SWIR 时明确不能完成，不以 RGB 成果冒充科学指标。",
+      "status": "未执行；S2 科学层待接入"
+    },
+    {
+      "id": "A-R2-12",
+      "prompt": "准备可在永不联网的 QGIS 电脑使用的影像包。",
+      "evidenceIds": [
+        "R2-I25"
+      ],
+      "pass": "实际格式 / 容量 / 覆盖 / 年份 / 许可核对，断网机器可打开；超出当前包限制提前说明。",
+      "status": "未执行；大离线包与许可待验收"
+    },
+    {
+      "id": "A-R2-13",
+      "prompt": "下载这些日期和瓦片的 MOD11A1，核对清单。",
+      "evidenceIds": [
+        "R2-I15"
+      ],
+      "pass": "每个文件产品、时间、瓦片均符合请求；匹配哈希而内容错误仍判失败。",
+      "status": "未执行；MOD11A1 待接入"
+    },
+    {
+      "id": "A-R2-14",
+      "prompt": "遇到限流请保存进度，下一次只补缺失项。",
+      "evidenceIds": [
+        "R2-I12",
+        "R2-I13",
+        "R2-I14"
+      ],
+      "pass": "分清授权、限流、服务超时、源变化；有限重试可取消；失败不当零结果；不反复要求用户重试同一请求。",
+      "status": "未执行；已有恢复基础，长批次待完善"
+    },
+    {
+      "id": "A-R2-15",
+      "prompt": "检查我导出的 TIFF 是否真正完成并可用。",
+      "evidenceIds": [
+        "R2-C03",
+        "R2-I10",
+        "R2-I24",
+        "R2-I26"
+      ],
+      "pass": "最终任务状态、目标文件、格式、有效覆盖 / 像元均核对；HTML、只启动的导出和纯显示黑图分别处理。",
+      "status": "未执行；已有检查工具可复用"
+    },
+    {
+      "id": "A-R2-16",
+      "prompt": "下载江西省年度土地覆盖，解释 MODIS 12Q1 / 12Q2 差别。",
+      "evidenceIds": [
+        "R2-C10"
+      ],
+      "pass": "依据官方产品定义选择，范围覆盖与实际瓦片吻合，分类体系与版本明确；未接入不伪造完成。",
+      "status": "未执行；产品待接入"
+    }
+  ],
+  "observedButNotAdopted": [
+    {
+      "reason": "标题与日期可读但缺少原帖正文，不计入 38 条",
+      "url": "https://bbs.pinggu.org/thread-10560870-1-1.html",
+      "clue": "求黄河流域夜间灯光数据、图表，2021-04-17；作为夜光方向线索，不据此宣称下载参数或付费意愿。"
+    },
+    {
+      "reason": "百度知道原帖提取超时，未计数",
+      "url": "https://zhidao.baidu.com/question/188377745.html"
+    },
+    {
+      "reason": "知乎结果主要为推广、教程或仅答案，未取得原始提问正文；不计新样本",
+      "url": "https://www.zhihu.com/tardis/bd/ans/2505058646"
+    },
+    {
+      "reason": "CSDN Wenku AIGC 页及疑似批量模板问答不采用；所选六条只采用原始问题，AI 回复不构成实现依据",
+      "examples": [
+        "wenku.csdn.net/answer/*",
+        "ask.csdn.net/questions/9284096",
+        "ask.csdn.net/questions/9089180"
+      ]
+    },
+    {
+      "reason": "经管之家出售夜光 / 面板数据的帖子是卖方供应信息，不是需求或支付意愿证据",
+      "examples": [
+        "https://bbs.pinggu.org/thread-11323710-1-1.html",
+        "https://bbs.pinggu.org/thread-16176579-1-1.html"
+      ]
+    },
+    {
+      "reason": "软件推广及其多页感谢回复不计独立需求",
+      "url": "http://bbs.3s001.com/thread-354582-1-1.html"
+    },
+    {
+      "reason": "同一个 openEO 问题重复线索，只计 3669",
+      "url": "https://forum.dataspace.copernicus.eu/t/openeo-download-issue-as-geo-tiff-vs-nc-for-sentinel2/4713"
+    },
+    {
+      "reason": "同作者点位月 NDVI 前置问题与 430165 合并为一个需求",
+      "url": "https://gis.stackexchange.com/questions/429958"
+    },
+    {
+      "reason": "AppEEARS 403 下载历史案例已核读，与本轮已有账号 / 交付需求相似，未新增计数",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=3342"
+    },
+    {
+      "reason": "化学提问与任务无关",
+      "url": "https://muchong.com/html/201102/2903077.html"
+    }
+  ],
+  "filesCreatedOnly": true,
+  "productChanged": false,
+  "newEndToEndAcceptance": false,
+  "newModelCalls": 0,
+  "newImageryDownloads": 0,
+  "published": false
+}

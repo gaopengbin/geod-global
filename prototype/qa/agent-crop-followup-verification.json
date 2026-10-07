@@ -1,0 +1,40 @@
+{
+  "schema": "geod-agent-crop-followup/v1",
+  "status": "passed",
+  "date": "2026-10-07",
+  "scope": "Actual saved DeepSeek connection and actual owned Codex engine in an isolated copy of the reported failing conversation. Preview and review only; no downloaded or cropped raster.",
+  "questionPhase": {
+    "status": "completed",
+    "choiceQuestions": 1,
+    "pendingChoice": true
+  },
+  "choicePhase": {
+    "goalRevised": true,
+    "nativeJobsCreated": 0,
+    "projectReview": "pending",
+    "savedChoiceUsed": true,
+    "selectedScenes": 4,
+    "status": "passed",
+    "userStoreModified": false,
+    "verificationScope": "Actual model/native choice continuation; no downloaded or cropped raster"
+  },
+  "agentRuntimeSha256": "358f60fb1c91bdbdab37847793f8ad34713bd257e68a2eed67ab58be27d138b1",
+  "regression": {
+    "agentAndProtocolTests": 63,
+    "additionalRetryDecisionTests": 34,
+    "uiTests": 69,
+    "streaming": "passed with actual Codex and controlled SSE"
+  },
+  "developmentLaunch": {
+    "processId": 43372,
+    "executable": "G:\\code\\geod-global\\.verification\\goals-desktop-target\\debug\\geod-global-desktop.exe",
+    "logs": "G:\\code\\geod-global\\.verification\\crop-followup-desktop-launch-20261007-164438",
+    "oldProcesses": [
+      44112
+    ],
+    "activeJobsBeforeRestart": 0,
+    "activeConversationsBeforeRestart": 0
+  },
+  "packaged": false,
+  "published": false
+}

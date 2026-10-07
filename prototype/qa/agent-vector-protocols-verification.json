@@ -1,0 +1,443 @@
+{
+  "schema": "geod-agent-vector-protocols-acceptance/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-05",
+  "actualModelWorkflow": true,
+  "modelRoute": "deepseek-v4-flash",
+  "upstreamVendorVerified": false,
+  "nativeWindowTested": false,
+  "usedUserDesktop": false,
+  "published": false,
+  "cases": [
+    {
+      "protocol": "wfs",
+      "sourceCase": {
+        "bounds": [
+          13.2,
+          52.4,
+          13.6,
+          52.6
+        ],
+        "collectionId": "ms:cities",
+        "name": "WFS Berlin cities",
+        "pageSize": 1,
+        "protocol": "WFS2",
+        "responseFormat": "gml32",
+        "url": "https://demo.mapserver.org/cgi-bin/wfs"
+      },
+      "format": "wfs-snapshot",
+      "featureCount": 1,
+      "coordinateCount": 1,
+      "geometryCounts": {
+        "Point": 1
+      },
+      "bytes": 7361,
+      "sourceSha256": "149fe4167ef67faa9c2b895b62294ad1a69ee321db75a7fb5ac963463d9be5f7",
+      "geojsonSha256": "066d65de8e58673c59e7b74b3874b06a6ba106c71a806f0b8cccd4db38090a86",
+      "modelTurns": 3,
+      "successfulNativeToolCalls": 13,
+      "modelPerformedExtraction": false,
+      "nativeConfirmationPerformedExtraction": true,
+      "resumedSameConversation": true,
+      "resumedSameModelThread": true,
+      "repeatedConfirmationKeepsOneResult": true,
+      "jobsCreated": 0,
+      "sourceReference": {
+        "protocol": "WFS 2",
+        "assetId": "3d53a485-fa8a-4cac-b8f0-db11048173cc",
+        "sourceBytes": 7361,
+        "sourceSha256": "149fe4167ef67faa9c2b895b62294ad1a69ee321db75a7fb5ac963463d9be5f7",
+        "exportSha256": "066d65de8e58673c59e7b74b3874b06a6ba106c71a806f0b8cccd4db38090a86",
+        "sourceFeatureCount": 1,
+        "coordinateCount": 1,
+        "geometryCounts": {
+          "Point": 1
+        },
+        "holes": 0,
+        "bounds": [
+          13.4,
+          52.516667,
+          13.4,
+          52.516667
+        ],
+        "schemaProperties": [
+          {
+            "name": "POPULATION",
+            "fieldType": "integer",
+            "nullable": false,
+            "optional": true
+          },
+          {
+            "name": "NAME",
+            "fieldType": "string",
+            "nullable": false,
+            "optional": true
+          }
+        ],
+        "format": {
+          "id": "gml32",
+          "mime": "application/gml+xml; version=3.2"
+        },
+        "sourceKey": null,
+        "expectedIds": [
+          "cities.5987"
+        ],
+        "sourceRawDocuments": [
+          {
+            "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acities",
+            "sha256": "0f6f21c42d2b893ca8c93e218d1b20dae3209549047f7c4b619db195da45af71",
+            "bytes": 1026,
+            "returned": 0,
+            "originalDocument": "original-documents/schema-before.xsd"
+          },
+          {
+            "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeNames=ms%3Acities",
+            "sha256": "0f6f21c42d2b893ca8c93e218d1b20dae3209549047f7c4b619db195da45af71",
+            "bytes": 1026,
+            "returned": 0,
+            "originalDocument": "original-documents/schema-after.xsd"
+          },
+          {
+            "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+            "sha256": "ae778a36a193710d7dde46bfa514465e94740087272c7eb50a0fd3817bc8ccb9",
+            "bytes": 761,
+            "returned": 0,
+            "originalDocument": "original-documents/hits-before.xml"
+          },
+          {
+            "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&resultType=hits",
+            "sha256": "08e1b8c13797ce3603eb460fdad4f7fc4185dcce13364a601ef01e7af2eca933",
+            "bytes": 761,
+            "returned": 0,
+            "originalDocument": "original-documents/hits-after.xml"
+          },
+          {
+            "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=1",
+            "sha256": "256d87f01c77983318bc339c8aae3df24aaf2baaf19e2662423c7ac9c4084ce8",
+            "bytes": 1652,
+            "returned": 1,
+            "originalDocument": "original-documents/first-001.xml"
+          },
+          {
+            "url": "https://demo.mapserver.org/cgi-bin/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms%3Acities&bbox=52.4%2C13.2%2C52.6%2C13.6%2Curn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&outputFormat=application%2Fgml%2Bxml%3B+version%3D3.2&srsName=urn%3Aogc%3Adef%3Acrs%3AEPSG%3A%3A4326&startIndex=0&count=1",
+            "sha256": "256d87f01c77983318bc339c8aae3df24aaf2baaf19e2662423c7ac9c4084ce8",
+            "bytes": 1652,
+            "returned": 1,
+            "originalDocument": "original-documents/verification-001.xml"
+          }
+        ],
+        "pageMetadata": [
+          {
+            "pass": "first",
+            "page": 1,
+            "responseMetadata": {
+              "numberReturned": 1,
+              "numberMatched": "unknown",
+              "timeStamp": "2026-10-05T06:56:47",
+              "next": null
+            }
+          },
+          {
+            "pass": "verification",
+            "page": 1,
+            "responseMetadata": {
+              "numberReturned": 1,
+              "numberMatched": "unknown",
+              "timeStamp": "2026-10-05T06:56:47",
+              "next": null
+            }
+          }
+        ],
+        "features": [
+          {
+            "id": "cities.5987",
+            "sourceKey": null,
+            "geometryType": "Point",
+            "coordinates": 1,
+            "holes": 0,
+            "geosValid": true,
+            "propertyNames": [
+              "NAME",
+              "POPULATION"
+            ],
+            "coordinatesOutsideSelection": 0
+          }
+        ],
+        "sourceDocumentsBytes": 6878,
+        "twoReadsVerified": true,
+        "transactionalSnapshotClaimed": false,
+        "originalFirstPassIdsPreserved": true,
+        "allPropertiesAndFullCoordinatesVerified": true,
+        "independentGeometryMethod": "Separate Python XML/JSON decoding, exact coordinates/properties comparison and Shapely/GEOS validity/hole counts",
+        "rawResponseFile": "source-archive.json",
+        "exportFile": "export.geojson",
+        "nonEmpty": true
+      },
+      "offlineBackends": [
+        {
+          "mode": "data-dir",
+          "calls": 6,
+          "featuresReconstructed": 1,
+          "completeOriginalEquality": true,
+          "sourceAndRegistriesUnchanged": true,
+          "publicProxyRequests": 0,
+          "writeToolDenied": true
+        },
+        {
+          "mode": "loopback",
+          "calls": 6,
+          "featuresReconstructed": 1,
+          "completeOriginalEquality": true,
+          "sourceAndRegistriesUnchanged": true,
+          "publicProxyRequests": 0,
+          "writeToolDenied": true
+        }
+      ],
+      "nativeEvidence": ".verification/agent-vector-plan-model-1791194187262195400/case/native-acceptance.json",
+      "independentEvidence": ".verification/agent-vector-plan-model-1791194187262195400/vector-data-verification/acceptance.json"
+    },
+    {
+      "protocol": "arcgis",
+      "sourceCase": {
+        "bounds": [
+          -123.0,
+          37.0,
+          -121.0,
+          39.0
+        ],
+        "collectionId": "0",
+        "name": "ArcGIS earthquake sample",
+        "pageSize": 2,
+        "protocol": "ArcGIS",
+        "responseFormat": null,
+        "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer"
+      },
+      "format": "geojson",
+      "featureCount": 6,
+      "coordinateCount": 6,
+      "geometryCounts": {
+        "Point": 6
+      },
+      "bytes": 9177,
+      "sourceSha256": "ea4ffe97fd1ad7b67fae35cb3473ef413ec7c7b41c77ca1d04c02d8b275caae1",
+      "geojsonSha256": "ea4ffe97fd1ad7b67fae35cb3473ef413ec7c7b41c77ca1d04c02d8b275caae1",
+      "modelTurns": 3,
+      "successfulNativeToolCalls": 13,
+      "modelPerformedExtraction": false,
+      "nativeConfirmationPerformedExtraction": true,
+      "resumedSameConversation": true,
+      "resumedSameModelThread": true,
+      "repeatedConfirmationKeepsOneResult": true,
+      "jobsCreated": 0,
+      "sourceReference": {
+        "protocol": "ArcGIS",
+        "completeGeoJsonEquality": true,
+        "independentEsriAttributesAndCoordinatesEqual": true,
+        "features": 6
+      },
+      "offlineBackends": [
+        {
+          "mode": "data-dir",
+          "calls": 13,
+          "featuresReconstructed": 6,
+          "completeOriginalEquality": true,
+          "sourceAndRegistriesUnchanged": true,
+          "publicProxyRequests": 0,
+          "writeToolDenied": true
+        },
+        {
+          "mode": "loopback",
+          "calls": 13,
+          "featuresReconstructed": 6,
+          "completeOriginalEquality": true,
+          "sourceAndRegistriesUnchanged": true,
+          "publicProxyRequests": 0,
+          "writeToolDenied": true
+        }
+      ],
+      "nativeEvidence": ".verification/agent-vector-plan-model-1791194255741894300/case/native-acceptance.json",
+      "independentEvidence": ".verification/agent-vector-plan-model-1791194255741894300/vector-data-verification/acceptance.json"
+    },
+    {
+      "protocol": "overpass",
+      "sourceCase": {
+        "bounds": [
+          13.3773,
+          52.5167,
+          13.3783,
+          52.5174
+        ],
+        "collectionId": "buildings",
+        "name": "Overpass Berlin buildings",
+        "pageSize": null,
+        "protocol": "Overpass",
+        "responseFormat": null,
+        "url": "https://overpass-api.de/api/interpreter"
+      },
+      "format": "overpass-json",
+      "featureCount": 9,
+      "coordinateCount": 196,
+      "geometryCounts": {
+        "MultiPolygon": 2,
+        "Polygon": 7
+      },
+      "bytes": 54941,
+      "sourceSha256": "21764dc147fb4691ff7fd6572ef9db8139d71e52eaed5895b86496a17b6a6a29",
+      "geojsonSha256": "a57e98cfbc81f5a766d5d3b5cfdf8f8a7821a87b8bbb89b22aee6feb1e08bf12",
+      "modelTurns": 3,
+      "successfulNativeToolCalls": 13,
+      "modelPerformedExtraction": false,
+      "nativeConfirmationPerformedExtraction": true,
+      "resumedSameConversation": true,
+      "resumedSameModelThread": true,
+      "repeatedConfirmationKeepsOneResult": true,
+      "jobsCreated": 0,
+      "sourceReference": {
+        "protocol": "Overpass",
+        "assetId": "f921d07f-40d6-4bb3-aa4b-4fb4606389a2",
+        "preset": "buildings",
+        "nonEmpty": true,
+        "sourceBytes": 54941,
+        "sourceSha256": "21764dc147fb4691ff7fd6572ef9db8139d71e52eaed5895b86496a17b6a6a29",
+        "exportSha256": "a57e98cfbc81f5a766d5d3b5cfdf8f8a7821a87b8bbb89b22aee6feb1e08bf12",
+        "selectedCounts": {
+          "nodes": 0,
+          "ways": 7,
+          "relations": 2,
+          "total": 9
+        },
+        "dependencyCounts": {
+          "nodes": 140,
+          "ways": 5,
+          "relations": 0,
+          "total": 145
+        },
+        "dataTimestamp": "2026-10-05T09:53:01Z",
+        "requestedAt": "2026-10-05T09:55:01.364727100+00:00",
+        "requestedBounds": [
+          13.3773,
+          52.5167,
+          13.3783,
+          52.5174
+        ],
+        "actualGeometryBounds": [
+          13.3773786,
+          52.5165722,
+          13.3803895,
+          52.5179807
+        ],
+        "coordinateCount": 196,
+        "geometryCounts": {
+          "Polygon": 7,
+          "MultiPolygon": 2
+        },
+        "holes": 3,
+        "coordinatesOutsideSelection": 116,
+        "expectedIds": [
+          "way/26365404",
+          "way/131487807",
+          "way/237814708",
+          "way/1222347388",
+          "way/1222347389",
+          "way/1222347390",
+          "way/1222347391",
+          "relation/1766958",
+          "relation/3203717"
+        ],
+        "features": [
+          {
+            "id": "way/26365404",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "way/131487807",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "way/237814708",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "way/1222347388",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "way/1222347389",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "way/1222347390",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "way/1222347391",
+            "geometryType": "Polygon",
+            "holes": 0,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "relation/1766958",
+            "geometryType": "MultiPolygon",
+            "holes": 1,
+            "independentGeosEqual": true
+          },
+          {
+            "id": "relation/3203717",
+            "geometryType": "MultiPolygon",
+            "holes": 2,
+            "independentGeosEqual": true
+          }
+        ],
+        "rawBytesAndProvenanceVerified": true,
+        "selectedObjectsOnly": true,
+        "allTagsNodeIdsMemberReferencesRolesAndMetadataEqual": true,
+        "allGeometriesValidAndEqualIndependentGeos": true,
+        "wayCoordinatePrecisionAndOrderEqual": true,
+        "relationEdgesPreserved": true,
+        "areaRuleSource": "crates/geod-runtime/src/vector/osm/polygon-features.json",
+        "areaRulesSha256": "cf81018ba820557c59c2c27de7ea6b314009abed040cd11249e94ed1a3a10583",
+        "geometryMethod": "Independent Shapely/GEOS polygonization and topological equality, plus exact way coordinates and relation edge multisets; shared pinned declarative OSM area classification rules"
+      },
+      "offlineBackends": [
+        {
+          "mode": "data-dir",
+          "calls": 32,
+          "featuresReconstructed": 9,
+          "completeOriginalEquality": true,
+          "sourceAndRegistriesUnchanged": true,
+          "publicProxyRequests": 0,
+          "writeToolDenied": true
+        },
+        {
+          "mode": "loopback",
+          "calls": 32,
+          "featuresReconstructed": 9,
+          "completeOriginalEquality": true,
+          "sourceAndRegistriesUnchanged": true,
+          "publicProxyRequests": 0,
+          "writeToolDenied": true
+        }
+      ],
+      "nativeEvidence": ".verification/agent-vector-plan-model-1791194085504318600/case/native-acceptance.json",
+      "independentEvidence": ".verification/agent-vector-plan-model-1791194085504318600/vector-data-verification/acceptance.json"
+    }
+  ],
+  "limitations": [
+    "Explicit public QA samples only; not all services or datasets.",
+    "Saved service metadata is not live availability or product entitlement proof.",
+    "WFS/OSM original-format checks use archived source responses; ArcGIS additionally refetches GeoJSON and Esri JSON.",
+    "Renderer responses are declared fixtures; no native WebView window acceptance."
+  ]
+}

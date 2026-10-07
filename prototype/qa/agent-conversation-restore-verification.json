@@ -1,0 +1,92 @@
+{
+  "schema": "geod-agent-conversation-restore-verification/v1",
+  "status": "passed",
+  "verifiedAt": "2026-10-06T13:45:35.992871+00:00",
+  "scope": "Windows desktop development: cold history loading and same-connection tool upgrades",
+  "loading": {
+    "method": "Same-host isolated native DesktopAgent store; full runtime verification and owned Node startup; no model calls",
+    "before": {
+      "coldHistorySnapshotMs": 5460,
+      "entriesPreserved": true,
+      "paidModelCalls": 0,
+      "runtimeVerificationMs": 5370,
+      "schema": "geod-agent-startup-timing/v1",
+      "status": "passed",
+      "usedUserDesktop": false,
+      "userCredentialsRead": false,
+      "warmHistorySnapshotMs": 0
+    },
+    "after": {
+      "coldHistorySnapshotMs": 382,
+      "entriesPreserved": true,
+      "paidModelCalls": 0,
+      "runtimeVerificationMs": 234,
+      "schema": "geod-agent-startup-timing/v1",
+      "status": "passed",
+      "usedUserDesktop": false,
+      "userCredentialsRead": false,
+      "warmHistorySnapshotMs": 0
+    },
+    "optimization": "Optimized SHA-256 dependency in dev profile; blocking worker with incremental file reads",
+    "skippedRuntimeChecks": false,
+    "timingGuaranteeForEveryDevice": false
+  },
+  "restoration": {
+    "applicationConversationIdPreserved": true,
+    "displayHistoryPreserved": true,
+    "nativePlanReferencesAndExecutionBindingPreserved": true,
+    "exactNativeConnectionIdentityRequired": true,
+    "differentAccountEndpointProtocolOrModelNotMigrated": true,
+    "newCodexThreadWithCurrentNativeTools": true,
+    "historicalContextBudgetBytes": 48000,
+    "historicalTextCannotGrantExecutionPermission": true,
+    "restorationSurvivesServiceRestart": true,
+    "savedAttachmentsRevalidatedBeforeRestoration": true
+  },
+  "realModel": {
+    "modelRoute": "deepseek-v4-flash",
+    "upstreamVendorVerified": false,
+    "humanMessages": 2,
+    "firstRequest": "Remember the New York latest-imagery requirement without searching or executing",
+    "continuation": "Continue the previous imagery requirement and prepare a download plan",
+    "oldConversationContinuedAfterAddingPlaceTool": true,
+    "realPlaceQuery": true,
+    "realCatalogQuery": true,
+    "nativeReviewStatus": "pending",
+    "cityExtent": [
+      -74.258843,
+      40.476578,
+      -73.700233,
+      40.91763
+    ],
+    "fileCount": 4,
+    "jobsQueued": 0
+  },
+  "checks": {
+    "nodeAgentTests": 73,
+    "desktopTests": 35,
+    "agentPanelTests": 52,
+    "clippyWarningsDenied": "passed",
+    "repositoryIsolation": "passed"
+  },
+  "execution": {
+    "userCredentialsReadOrChangedByAcceptanceTests": false,
+    "usedUserDesktop": false,
+    "installerCreated": false,
+    "published": false
+  },
+  "evidence": [
+    {
+      "file": ".verification/agent-restore-before/timing.json",
+      "sha256": "271e7ef6af9f68c2d0ebfe8710f47ef97685dd1c7b95fc3a58ac68d7e9d873f6"
+    },
+    {
+      "file": ".verification/agent-restore-after/timing.json",
+      "sha256": "e0e864e788e548d6039a8eec256449a8b1a333dc7cca91acae6effa3e55b3e60"
+    },
+    {
+      "file": ".verification/agent-place-restore-model-1791294153375571200/case/native-acceptance.json",
+      "sha256": "880c220e46ed8ee974aa14a3325a77af8032d53781c902de168f874a5153e385"
+    }
+  ]
+}

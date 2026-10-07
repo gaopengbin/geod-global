@@ -1,0 +1,65 @@
+{
+  "schema": "geod-administrative-boundary-acceptance/v1",
+  "status": "passed",
+  "nativeUnitTests": 73,
+  "agentUnitTests": 108,
+  "uiTests": 69,
+  "actualCodexModel": {
+    "status": "passed",
+    "engine": "actual owned Codex runtime",
+    "model": "actual saved connection",
+    "polygonParts": 3,
+    "positions": 1645,
+    "downloadJobs": 0,
+    "newLiveCensusQuery": false,
+    "scope": "Source boundary to pending project and map; no original transfer or completed crop"
+  },
+  "projectReview": {
+    "status": "pending",
+    "polygon": {
+      "bounds": [
+        -74.25884300038047,
+        40.4765780002232,
+        -73.70016900037544,
+        40.917705000258394
+      ],
+      "sha256": "0430a8bbbba38e41e53f4b1c29690e7966685604cbfa6aa5e3dfb9bfffec24d5"
+    }
+  },
+  "source": {
+    "source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+    "sourceType": "Archived genuine public query response from earlier local verification; not a current live-query claim",
+    "sourceIdentity": {
+      "GEOID": "3651000",
+      "name": "New York city",
+      "wkid": 4326
+    },
+    "sourceVintage": "January 1, 2026 (current layer metadata checked October 7, 2026)",
+    "license": "U.S. government public data",
+    "attribution": "Source: U.S. Census Bureau",
+    "sha256": "aa4d46b527401466d919287a16e231abe9808a1433d2f3935427b996834a0c79",
+    "rings": 3,
+    "positions": 1645,
+    "productionUse": false
+  },
+  "offlineAdminBoundaryCountries": 251,
+  "liveCensusRequest": {
+    "status": "passed",
+    "freshCensusQuery": true,
+    "proxyMode": "System",
+    "checkedAt": "2026-10-07T09:28:29.775560600+00:00",
+    "provider": "U.S. Census Bureau · TIGERweb",
+    "cachedAtFirstLookup": false,
+    "censusGeoid": "3651000",
+    "polygonParts": 3,
+    "positions": 1645,
+    "nativeDownloadJobs": 0,
+    "scope": "Actual software native client, fresh isolated cache; public Census geometry and Earth Search metadata/preflight, no downloads",
+    "directRouteDiagnostic": "curl without the configured Windows system proxy returned HTTP 200 with Request Rejected HTML",
+    "configuredProxyDiagnostic": "same public endpoint and query returned actual JSON with the existing Windows proxy; no account or credentials",
+    "providerRule": "Unspecified; no claim about a particular IP, country or firewall rule",
+    "report": "G:\\code\\geod-global\\.verification\\census-network-route-20261007-172826"
+  },
+  "developmentBuild": "passed",
+  "packaged": false
+}

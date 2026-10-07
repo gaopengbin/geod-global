@@ -1,0 +1,58 @@
+[
+  {
+    "audio": {
+      "channels": 1,
+      "durationMs": 3000,
+      "sampleRate": 16000
+    },
+    "document": {
+      "bytes": 96044,
+      "characters": 0,
+      "id": "376fd2870f838f9a20c684bffcdfd00edd004b08c697157d6f2069c8b7d04584",
+      "mimeType": "audio/wav",
+      "name": "tone.wav"
+    }
+  },
+  {
+    "audio": {
+      "channels": 1,
+      "durationMs": 3000,
+      "sampleRate": 16000
+    },
+    "document": {
+      "bytes": 25100,
+      "characters": 0,
+      "id": "f5f01513c1bd6f8c9a0c5eea390e2a15cd01e9aaa4c155f82a956acc76da931f",
+      "mimeType": "audio/mpeg",
+      "name": "tone.mp3"
+    }
+  },
+  {
+    "audio": {
+      "channels": 1,
+      "durationMs": 3000,
+      "sampleRate": 16000
+    },
+    "document": {
+      "bytes": 26230,
+      "characters": 0,
+      "id": "4b200e2ab9d333e18c3c72765e65deda1459fd69ba1d40df827c3c3b90a68361",
+      "mimeType": "audio/flac",
+      "name": "tone.flac"
+    }
+  },
+  {
+    "audio": {
+      "channels": 1,
+      "durationMs": 3000,
+      "sampleRate": 16000
+    },
+    "document": {
+      "bytes": 6040,
+      "characters": 0,
+      "id": "2333955df97a22a8fb816e600a21b82fc95e538f51b0545897affb40315738f7",
+      "mimeType": "audio/ogg",
+      "name": "tone.ogg"
+    }
+  }
+]

@@ -50,6 +50,7 @@ async fn coupled_scene_selection_falls_back_as_a_triplet_and_survives_parent_rem
     let scenes = groups
         .iter()
         .map(|jobs| ProjectScene {
+            footprint: None,
             item_id: jobs[0].item_id.clone(),
             date: providers::modis::period(&jobs[0].item_id).unwrap()[0].clone(),
             cloud: None,

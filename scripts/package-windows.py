@@ -86,6 +86,13 @@ SEMVER = re.compile(
 
 
 def command(*args, capture=False, env=None):
+    if env is None:
+        # Signing is a separate post-build action; compilation/npm must never
+        # inherit a release private key from the invoking terminal or CI step.
+        env = os.environ.copy()
+        for name in list(env):
+            if name.startswith(('TAURI_SIGNING_PRIVATE_KEY', 'GEOD_GLOBAL_SIGNING_PRIVATE_KEY')) or name == 'GEOD_GLOBAL_SIGNING_PASSWORD':
+                env.pop(name)
     result = subprocess.run(args, cwd=ROOT, capture_output=capture, encoding='utf-8', errors='strict', env=env)
     if result.returncode:
         raise RuntimeError(f'Command failed ({result.returncode}): {args[0]}\n{result.stderr or ""}')
@@ -109,7 +116,7 @@ def relative(path, base):
 def is_build_input(name):
     if name in ['README.md','prototype/README.md','src-tauri/README.md'] or (name.startswith('crates/') and name.endswith('/README.md')) or name.startswith(('docs/', 'examples/', 'prototype/qa/')):
         return False
-    return name in ['Cargo.toml','Cargo.lock','package.json','package-lock.json','rust-toolchain','rust-toolchain.toml'] or name.startswith(('prototype/','crates/','src-tauri/','.cargo/','schemas/'))
+    return name in ['Cargo.toml','Cargo.lock','package.json','package-lock.json','rust-toolchain','rust-toolchain.toml','scripts/prepare-agent-runtime.mjs'] or name.startswith(('agent/','licenses/agent-runtime/','prototype/','crates/','src-tauri/','.cargo/','schemas/'))
 
 
 def source_identity(build_only=False):
@@ -160,6 +167,43 @@ def build_receipt_path(profile):
     return ROOT / '.verification' / f'windows-build-{TARGET}-{profile}.json'
 
 
+def verify_agent_runtime():
+    """Only the reviewed manifest payload belongs in an installer, never npm/vendor trees."""
+    base = ROOT / '.agent-runtime/win32-x64'
+    manifest_path = base / 'manifest.json'
+    value = json.loads(manifest_path.read_text(encoding='utf-8'))
+    records = value.get('files', {})
+    required = {'node.exe', 'codex.exe', 'agent.mjs', 'RUNTIME-NOTICES.txt', 'licenses/inventory.json'}
+    if value.get('version') != 1 or value.get('platform') != 'win32-x64' or value.get('nodeVersion') != '24.14.0' or value.get('codexVersion') != '0.159.2' or not required.issubset(records):
+        raise RuntimeError('Agent runtime manifest is incomplete or unreviewed')
+    for name, record in records.items():
+        parts = PurePosixPath(name)
+        if parts.is_absolute() or '..' in parts.parts or '\\' in name or ':' in name or name not in required and name != 'agent.mjs.LEGAL.txt' and not name.startswith('licenses/'):
+            raise RuntimeError('Agent runtime manifest contains an unexpected file')
+        original = base / name
+        resolved = original.resolve(strict=True)
+        if not resolved.is_relative_to(base.resolve()) or original.is_symlink() or getattr(original.stat(), 'st_file_attributes', 0) & 0x400:
+            raise RuntimeError('Agent runtime payload was redirected')
+        if not re.fullmatch('[a-f0-9]{64}', record.get('sha256', '')) or original.stat().st_size != record.get('bytes') or digest(original) != record['sha256']:
+            raise RuntimeError('Agent runtime payload checksum changed')
+    return {'manifestSha256': digest(manifest_path), 'files': records,
+            'bytes': sum(record['bytes'] for record in records.values()) + manifest_path.stat().st_size}
+
+
+def collect_agent_runtime(payload, receipt):
+    if verify_agent_runtime() != receipt:
+        raise RuntimeError('Agent runtime differs from the build receipt')
+    base = ROOT / '.agent-runtime/win32-x64'
+    destination = payload / 'agent-runtime'
+    for name in ['manifest.json', *receipt['files']]:
+        target = destination / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(base / name, target)
+        expected = receipt['manifestSha256'] if name == 'manifest.json' else receipt['files'][name]['sha256']
+        if digest(target) != expected:
+            raise RuntimeError('Copied Agent runtime checksum changed')
+
+
 def cargo_build_command(profile):
     args = ['cargo', 'build', '--locked', '--jobs', '2', '--target', TARGET, '--target-dir', str(ROOT / 'target'), '-p', 'geod-global-desktop', '-p', 'geod-runtime', '--features', 'geod-global-desktop/custom-protocol']
     if profile == 'release': args.append('--release')
@@ -167,6 +211,8 @@ def cargo_build_command(profile):
 
 
 def build_binaries(profile, rust):
+    command('npm.cmd', 'run', 'agent:prepare')
+    agent_runtime = verify_agent_runtime()
     inputs = source_identity(build_only=True)
     print('Building frontend, desktop and CLI; documentation may change independently.', flush=True)
     command('npm.cmd', 'run', 'build')
@@ -174,6 +220,9 @@ def build_binaries(profile, rust):
     if os.environ.get('RUSTFLAGS') or os.environ.get('CARGO_ENCODED_RUSTFLAGS'):
         raise RuntimeError('Clear custom RUSTFLAGS/CARGO_ENCODED_RUSTFLAGS for a reproducible packaging build')
     build_env = os.environ.copy()
+    for name in list(build_env):
+        if name.startswith(('TAURI_SIGNING_PRIVATE_KEY', 'GEOD_GLOBAL_SIGNING_PRIVATE_KEY')) or name == 'GEOD_GLOBAL_SIGNING_PASSWORD':
+            build_env.pop(name)
     build_env['CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_RUSTFLAGS'] = '-Ctarget-feature=+crt-static'
     command(*cargo, env=build_env)
     if source_identity(build_only=True)['treeSha256'] != inputs['treeSha256']:
@@ -186,7 +235,9 @@ def build_binaries(profile, rust):
     receipt = {'schemaVersion':'geod-windows-build/v1','target':TARGET,'profile':profile,
                'createdAt':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()), 'source':inputs,
                'rustc':rust,'node':command('node','--version',capture=True),
-               'cargoArgs':[arg if arg != str(ROOT / 'target') else 'target' for arg in cargo[1:]],'targetDirectory':'repository target/','targetRustflags':'-Ctarget-feature=+crt-static','binaries':binaries}
+               'cargoArgs':[arg if arg != str(ROOT / 'target') else 'target' for arg in cargo[1:]],'targetDirectory':'repository target/','targetRustflags':'-Ctarget-feature=+crt-static','binaries':binaries,'agentRuntime':agent_runtime}
+    if verify_agent_runtime() != agent_runtime:
+        raise RuntimeError('Agent runtime changed during compilation; rebuild before packaging')
     write_json(build_receipt_path(profile),receipt)
     return receipt
 
@@ -197,6 +248,8 @@ def verified_build_receipt(profile):
     receipt = json.loads(path.read_text(encoding='utf-8'))
     if receipt['target'] != TARGET or receipt['profile'] != profile or receipt['source']['treeSha256'] != source_identity(build_only=True)['treeSha256']:
         raise RuntimeError('Build inputs changed since the receipt; rebuild binaries first')
+    if receipt.get('agentRuntime') != verify_agent_runtime():
+        raise RuntimeError('Agent runtime changed since the receipt; rebuild binaries first')
     if {item['file'] for item in receipt['binaries']} != {'geod-global-desktop.exe','geod-runtime.exe'}:
         raise RuntimeError('Build receipt has an unexpected binary list')
     for item in receipt['binaries']:
@@ -682,6 +735,7 @@ def main():
         binary = item['file']
         original = ROOT / 'target' / TARGET / args.profile / binary
         copy_verified_binary(original, payload / binary, item)
+    collect_agent_runtime(payload, receipt['agentRuntime'])
     shutil.copytree(ROOT / 'examples', payload / 'examples')
     shutil.copytree(ROOT / 'docs/workflows', payload / 'docs/workflows')
     for document in (ROOT / 'docs').glob('*.md'):

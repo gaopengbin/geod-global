@@ -34,6 +34,7 @@ import {
   ListChecks,
   MousePointer2,
   Mountain,
+  MessageSquare,
 } from "lucide-react";
 import "./ui/foundation.css";
 import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
@@ -42,7 +43,7 @@ import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
 import "./styles.css";
 import "./catalog.css";
 import { compositePeriodLabel } from './composite-period.js';
-import { SAMPLE_BBOX, defaultLiveSearch, searchURL, validateBounds, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
+import { defaultLiveSearch, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks } from "./runtime-ui.jsx";
 import { SaveProjectButton } from "./projects-ui.jsx";
 import { LibraryPage } from "./library-page.jsx";
@@ -50,8 +51,13 @@ import { scenesForDownload } from "./projects-client.js";
 import { desktopAvailable, runtimeRequest } from "./runtime-client.js";
 import { mergeProjectCatalog, projectCatalogScenes, projectExploreSearch } from "./project-explore.js";
 import { SettingsPage } from './settings-page.jsx';
+import { DistributionProvider, NotificationCenter } from './distribution-ui.jsx';
 import { StacSourceDialog } from './stac-ui.jsx';
 import { WcsSourceDialog } from './wcs-ui.jsx';
+import { MapServiceDialog } from './wms-ui.jsx';
+import { FeatureServiceDialog } from './features-ui.jsx';
+import { TileSourceDialog } from './tiles-ui.jsx';
+import { SOURCE_DIRECTORY } from './source-directory.js';
 import { normalizeNavigationHash } from './navigation.js';
 import { I18nProvider, useI18n } from "./i18n.jsx";
 import { AppHeader, GeoDBrand } from './app-header.jsx';
@@ -62,6 +68,8 @@ import { catalogPreviewKind, catalogPreviewChannel, catalogBrowsePreview } from 
 import { providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel, demTileLabel, copDemLabel } from './providers.js';
 import { imageryHrefs } from './explore-imagery.js';
 import { RELEASE_VERSION } from './release-policy.js';
+import { AgentPanel } from './agent-panel.jsx';
+import { agentMapContext, selectedSearchBounds } from './startup.js';
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
 const VectorWorkspace = React.lazy(() => import("./vector-map.jsx").then(module => ({ default: module.VectorWorkspace })));
@@ -69,8 +77,10 @@ const MapImageWorkspace = React.lazy(() => import("./wms-map.jsx").then(module =
 const TileWorkspace = React.lazy(() => import("./tiles-map.jsx").then(module => ({ default: module.TileWorkspace })));
 const AreaPicker = React.lazy(() => import("./area-picker.jsx").then(module => ({ default: module.AreaPicker })));
 const ExploreMap = React.lazy(() => import("./explore-map.jsx").then(module => ({ default: module.ExploreMap })));
+const AgentPlanMapPreview = React.lazy(() => import('./agent-plan-map-preview.jsx'));
 
 const nav = [
+  ["Home", MessageSquare],
   ["Explore", Compass],
   ["Workspace", Layers],
   ["My Data", Folder],
@@ -79,9 +89,9 @@ const nav = [
 const pageFromHash = () => {
   let requested;
   try { requested = decodeURIComponent(location.hash.slice(1).split('?')[0]); }
-  catch { return "Explore"; }
+  catch { return "Home"; }
   if (requested === "Recipes") return "My Data";
-  return [...nav.map(([name]) => name), "Settings"].includes(requested) ? requested : "Explore";
+  return [...nav.map(([name]) => name), "Settings"].includes(requested) ? requested : "Home";
 };
 const projectFromHash = () => {
   if (!['My Data', 'Explore'].includes(pageFromHash())) return null;
@@ -116,7 +126,10 @@ function SceneThumbnail({ src, alt }) {
   </span> : <span className="catalog-thumbnail-missing" role="img" aria-label={t("Preview unavailable: {description}", { description: alt })}>{t("Preview unavailable")}</span>;
 }
 
-function App() {
+export function App() {
+  return <DistributionProvider><AppContent/></DistributionProvider>;
+}
+function AppContent() {
   const { t, date, number, locale } = useI18n();
   const [liveCatalog, setLiveCatalog] = useState(null);
   const [searchInput, setSearchInput] = useState(defaultLiveSearch);
@@ -140,10 +153,8 @@ function App() {
   const searchRunner = useRef(null);
   if (!searchRunner.current) searchRunner.current = createSearchRunner();
   const catalog = liveCatalog;
-  let pendingBounds = SAMPLE_BBOX;
-  try { pendingBounds = validateBounds(searchInput.bbox); }
-  catch { pendingBounds = appliedSearch?.bbox || SAMPLE_BBOX; }
-  const bbox = appliedSearch?.bbox || pendingBounds;
+  const pendingBounds = selectedSearchBounds(searchInput);
+  const bbox = selectedSearchBounds(searchInput, appliedSearch);
   const areaName = areaPolygon?.place?.name || "Custom search area";
   const [page, setPage] = useState(pageFromHash);
   const [vectorId,setVectorId]=useState(()=>new URLSearchParams(location.hash.split('?')[1]||'').get('vector'));
@@ -185,6 +196,11 @@ function App() {
     [showArea, setShowArea] = useState(true),
     [inspector, setInspector] = useState(window.innerWidth >= 1280);
   const [stacOpen, setStacOpen] = useState(false);
+  const [sourceEntry, setSourceEntry] = useState(null);
+  const [agentOpen, setAgentOpen] = useState(() => pageFromHash() === 'Home');
+  const [mapPreview,setMapPreview]=useState(null);
+  useEffect(()=>setMapPreview(null),[page]);
+  const agentClose = useRef(null);
   const [wcsOpen, setWcsOpen] = useState(false);
   const [modal, setModal] = useState(null),
     [theme, setTheme] = useState(stored("theme", "light"));
@@ -243,10 +259,8 @@ function App() {
       setLiveState("error");
     }
   };
-  useEffect(() => {
-    // Opening local data or saved maps must not start an online catalogue search.
-    if (page === 'Explore' && !exploringProjectId && !appliedSearch) runSearch(searchInput);
-  }, [page, exploringProjectId]);
+  // Catalog searches begin only after an explicit area/filter/source action,
+  // or when restoring the actual area of a saved project.
   useEffect(() => () => searchRunner.current.cancel(), []);
   const cancelSearch = () => { searchRunner.current.cancel(); setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
   const catalogError = (message) => {
@@ -280,6 +294,7 @@ function App() {
       const hash = normalizeNavigationHash(location.hash);
       if (location.hash !== hash) history.replaceState(null, "", hash);
       setPage(next);
+      if (next === 'Home') setAgentOpen(true);
       setVectorId(new URLSearchParams(hash.split('?')[1]||'').get('vector'));
       setMapImageId(new URLSearchParams(hash.split('?')[1]||'').get('map'));
       setTilePackageId(new URLSearchParams(hash.split('?')[1]||'').get('tiles'));
@@ -332,6 +347,33 @@ function App() {
     setPage(p);
     setFocusedProjectId(p === 'My Data' ? projectId : null);
     setExploringProjectId(p === 'Explore' ? projectId : null);
+  };
+  const chooseSource = provider => {
+    const next = { ...searchInput, provider };
+    if (next.provider === 'planetary-naip' && sourceProvider.id !== next.provider) {
+      beforeAerialDates.current = {start:searchInput.start,end:searchInput.end};
+      next.start = '2010-01-01'; next.end = new Date().toISOString().slice(0,10);
+    } else if (sourceProvider.id === 'planetary-naip' && next.provider !== sourceProvider.id && beforeAerialDates.current) {
+      Object.assign(next,beforeAerialDates.current); beforeAerialDates.current = null;
+    }
+    setSearchInput(next);
+    if (selectedSearchBounds(next)) runSearch(next);
+  };
+  const exploreSource = provider => {
+    setInspector(false);
+    chooseSource(provider);
+    go('Explore');
+  };
+  const openSourceEntry = id => {
+    const action = SOURCE_DIRECTORY.find(source => source.id === id)?.action;
+    if (!action) return;
+    if (action.kind === 'provider') return exploreSource(action.providerId);
+    if (action.kind === 'library') {
+      location.hash = `My%20Data?view=${action.view}`;
+      return;
+    }
+    // A close animation may still be mounted when another card is selected.
+    setSourceEntry(previous=>({...action,id,generation:(previous?.generation || 0)+1}));
   };
   const openProject = (id) => go('My Data', id);
   const continueInProject = project => go('Explore', project?.id || activeProject?.id || null);
@@ -420,6 +462,10 @@ function App() {
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
+  const home = page === "Home";
+  const agentVisible = home || agentOpen;
+  const previewing=Boolean(mapPreview&&agentVisible);
+  const workAreaVisible=!home&&!previewing;
   const workspace = page === "Explore" || page === "Workspace";
   const hasInspector = inspector && Boolean(selected || mapMatches.length);
   const workspaceMinWidth = page === 'Explore'
@@ -427,7 +473,7 @@ function App() {
     : 360;
   const resizeHint = t('Drag to resize · Double-click to reset · Arrow keys to adjust');
   return (
-    <div className="app">
+    <div className={`app ${home ? 'app-home' : ''}`}>
       <AppHeader theme={theme} collapsed={navCollapsed} onToggleNavigation={() => {
         const panel = navigationPanel.current;
         if (!panel) { setNavCollapsed(value => !value); return; }
@@ -439,10 +485,18 @@ function App() {
       }}
         leading={page === "Explore" && discoveryCollapsed && <Button variant="secondary" size="sm" icon={PanelLeftOpen} className="discovery-toggle" aria-label={t("Show scene list")} aria-controls="explore-discovery" aria-expanded={false} onClick={() => setDiscoveryCollapsed(false)}>{t("Imagery scenes")}</Button>}
         context={<div className="breadcrumb">
-          <strong>{currentProject?.name || t("{source} workspace", { source: page === 'Explore' ? sourceProvider.name : 'GeoD Global' })}</strong>
+          <strong>{home ? t('AI workspace') : currentProject?.name || t("{source} workspace", { source: page === 'Explore' ? sourceProvider.name : 'GeoD Global' })}</strong>
           <ChevronRight size={14} aria-hidden="true" /><span>{t(page)}</span>
         </div>}
         actions={<>
+          <NotificationCenter/>
+          {!home && <Button size="icon" variant="quiet" icon={MessageSquare} aria-label={t(agentOpen ? 'Close Agent' : 'Open Agent')} tooltip={t(agentOpen ? 'Close Agent' : 'Open Agent')}
+            aria-controls="geod-agent-panel" aria-expanded={agentOpen} onClick={() => {
+              if (agentOpen) { agentClose.current?.(); return; }
+              setInspector(false);
+              if (window.innerWidth < 1100) setDiscoveryCollapsed(true);
+              setAgentOpen(true);
+            }}/>}
           {page === 'Explore' && exploringProjectId && <>
             <Button size="sm" icon={Folder} onClick={() => openProject(exploringProjectId)}>{t('Return to project details')}</Button>
             <Button size="icon" variant="quiet" aria-label={t('Leave project exploration')} title={t('Leave project exploration')} onClick={() => { setActiveProject(null); restoredProjectId.current = null; go('Explore'); }}><X size={15}/></Button>
@@ -452,13 +506,13 @@ function App() {
           </Button>
           <span className="local-status"><span />{t("Local workspace")}</span>
         </>} />
-      <ResizableGroup className="app-body" storageKey="shell" panelIds={['navigation-pane', 'work-area-pane']} persist={false}
+      <ResizableGroup className={`app-body ${home ? "app-home-body" : ""} ${previewing ? 'app-map-preview-body' : ''}`} storageKey="shell" panelIds={['navigation-pane', ...(workAreaVisible ? ['work-area-pane'] : []), ...(agentVisible ? ['agent-pane'] : []), ...(previewing ? ['agent-map-preview-pane'] : [])]} persist={false}
         onLayoutChanged={(_, meta) => {
           if (meta.isUserInteraction && !navigationPanel.current?.isCollapsed()) {
             try { localStorage.setItem('geod-design-nav-width', JSON.stringify(expandedNavigationSize.current)); } catch { /* Keep the in-memory size. */ }
           }
         }}>
-      <ResizablePanel id="navigation-pane" minSize={180} maxSize={280} collapsible collapsedSize={72} defaultSize={initialNavigationSize.current}
+      <ResizablePanel key="navigation-pane" id="navigation-pane" minSize={180} maxSize={280} collapsible collapsedSize={72} defaultSize={initialNavigationSize.current}
         panelRef={navigationPanel} groupResizeBehavior="preserve-pixel-size"
         onResize={size => {
           setNavCollapsed(size.inPixels < 179);
@@ -476,8 +530,8 @@ function App() {
         footer={<span className="sidebar-local-label"><ShieldCheck size={14} />{t("Local workspace")}</span>}
       />
       </ResizablePanel>
-      <ResizeHandle label={t('Resize navigation panel')} hint={resizeHint} disabled={navCollapsed}/>
-      <ResizablePanel id="work-area-pane" minSize={workspaceMinWidth}>
+      <ResizeHandle key="navigation-divider" label={t('Resize navigation panel')} hint={resizeHint} disabled={navCollapsed}/>
+      {workAreaVisible && <ResizablePanel key="work-area-pane" id="work-area-pane" minSize={workspaceMinWidth}>
       <div className="app-main">
         {page === 'Explore' && exploringProjectId && !currentProject && !projectError && <p className="project-context-status" role="status"><Spinner size={15}/>{t('Loading project scenes…')}</p>}
         {page === 'Explore' && exploringProjectId && projectError && <p className="project-context-status projects-error" role="alert">{t(projectError)}</p>}
@@ -495,20 +549,11 @@ function App() {
                   <Button variant="quiet" size="icon" aria-label={t("Hide scene list")} title={t("Hide scene list")} aria-controls="explore-discovery" aria-expanded={true} onClick={() => setDiscoveryCollapsed(true)}><PanelLeftClose size={18} /></Button>
                 </div>
               </div>
-              <CatalogSourcePanel provider={sourceProvider} onOpenStac={() => setStacOpen(true)} onOpenWcs={() => setWcsOpen(true)} onChange={provider => {
-                const next = { ...searchInput, provider };
-                if (next.provider === 'planetary-naip' && sourceProvider.id !== next.provider) {
-                  beforeAerialDates.current = {start:searchInput.start,end:searchInput.end};
-                  next.start = '2010-01-01'; next.end = new Date().toISOString().slice(0,10);
-                } else if (sourceProvider.id === 'planetary-naip' && next.provider !== sourceProvider.id && beforeAerialDates.current) {
-                  Object.assign(next,beforeAerialDates.current); beforeAerialDates.current = null;
-                }
-                setSearchInput(next); runSearch(next);
-              }}/>
+              <CatalogSourcePanel provider={sourceProvider} onOpenStac={() => setStacOpen(true)} onOpenWcs={() => setWcsOpen(true)} onChange={chooseSource}/>
               <Button className="area-picker" onClick={() => setModal("area")}>
                 <MapPin size={17} />
                 <span>
-                  <strong>{t(areaName)}</strong>
+                  <strong>{t(bbox ? areaName : "Choose a search area")}</strong>
                   <small>{t("WGS 84 · editable search bounds")}</small>
                 </span>
                 <ChevronDown size={16} />
@@ -789,7 +834,15 @@ function App() {
           </main>
         )}
       </div>
-      </ResizablePanel>
+      </ResizablePanel>}
+      {agentVisible && workAreaVisible && <ResizeHandle key="agent-divider" label={t('Resize Agent panel')} hint={resizeHint}/>}
+      {agentVisible && <ResizablePanel key="agent-pane" id="agent-pane" defaultSize={previewing ? '42%' : home ? undefined : 360} minSize={home||previewing ? 320 : 280} maxSize={home||previewing ? undefined : 640} groupResizeBehavior="preserve-pixel-size">
+        <AgentPanel closeRef={agentClose} variant={home ? 'home' : 'sidebar'} onChooseSource={exploreSource} onOpenSourceEntry={openSourceEntry} onPreviewPlan={setMapPreview} context={agentMapContext({page,input:searchInput,appliedSearch,areaPolygon,projectId:currentProject?.id || focusedProjectId})} onClose={() => {setMapPreview(null);setAgentOpen(false);}} onOpenProject={openProject} onOpenTasks={id => { location.hash = 'Tasks?job=' + id; }} onOpenResult={view=>{location.hash='Workspace?'+(view.kind==='vector'?'vector':'file')+'='+view.id;}}/>
+      </ResizablePanel>}
+      {previewing&&<ResizeHandle key="agent-map-preview-divider" label={t('Resize map preview panel')} hint={resizeHint}/>}
+      {previewing&&<ResizablePanel key="agent-map-preview-pane" id="agent-map-preview-pane" defaultSize="58%" minSize={320}>
+        <React.Suspense fallback={<p role="status"><Spinner/>{t('Reading task area…')}</p>}><AgentPlanMapPreview {...mapPreview} onClose={()=>setMapPreview(null)}/></React.Suspense>
+      </ResizablePanel>}
       </ResizableGroup>
       {filtersOpen && page === 'Explore' && <CatalogFilters initialValues={searchInput} onClose={() => setFiltersOpen(false)} onApply={applyFilters} onArea={values => {
         setSearchInput(values);
@@ -798,6 +851,11 @@ function App() {
       }} />}
       {wcsOpen && <WcsSourceDialog areaBounds={bbox} currentProject={currentProject} onClose={() => setWcsOpen(false)}/>}
       {stacOpen && <StacSourceDialog areaBounds={bbox} currentProject={currentProject} onClose={() => setStacOpen(false)}/>}
+      {sourceEntry?.kind === 'stac' && <StacSourceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} initialKind={sourceEntry.sourceType} areaBounds={bbox} currentProject={currentProject} onClose={()=>setSourceEntry(null)}/>}
+      {sourceEntry?.kind === 'wcs' && <WcsSourceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} areaBounds={bbox} currentProject={currentProject} onClose={()=>setSourceEntry(null)}/>}
+      {sourceEntry?.kind === 'map' && <MapServiceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} initialProtocol={sourceEntry.protocol} initialPreset={sourceEntry.preset} areaBounds={bbox} areaPolygon={areaPolygon} onClose={()=>setSourceEntry(null)}/>}
+      {sourceEntry?.kind === 'vector' && <FeatureServiceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} initialProtocol={sourceEntry.protocol} areaBounds={bbox} areaPolygon={areaPolygon} onClose={()=>setSourceEntry(null)}/>}
+      {sourceEntry?.kind === 'tiles' && <TileSourceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} areaBounds={bbox} onClose={()=>setSourceEntry(null)}/>}
       {modal && (
         <Modal closeLabel={t("Close dialog")}
           title={
@@ -874,7 +932,7 @@ function App() {
                 <li>{t('Reopen local files and previews offline. Closing the window keeps tasks running in the tray.')}</li>
                 <li>{t('NASA and Copernicus account setup is included; protected original downloads are deferred until real-account verification.')}</li>
               </ul>
-              <p className="muted">{t('Release candidate. Check the included release notes for supported products and limits. No automatic update service is included.')}</p>
+              <p className="muted">{t('Release candidate. Check the included release notes for supported products and limits. Software updates and notifications are in Settings.')}</p>
               <p className="muted">{t("Inter is bundled locally. Catalog searches, imagery previews and asset downloads contact their source providers. This workspace sends no analytics.")}</p>
             </div>
           )}
@@ -883,4 +941,4 @@ function App() {
     </div>
   );
 }
-createRoot(document.getElementById("root")).render(<I18nProvider><RuntimeProvider><App /></RuntimeProvider></I18nProvider>);
+if (document.getElementById("root")) createRoot(document.getElementById("root")).render(<I18nProvider><RuntimeProvider><App /></RuntimeProvider></I18nProvider>);

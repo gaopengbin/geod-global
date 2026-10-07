@@ -56,6 +56,7 @@ fn request(sources: &[Job], geometry: Option<crop::PolygonGeometry>) -> CreatePr
         scenes: sources
             .iter()
             .map(|job| ProjectScene {
+                footprint: None,
                 item_id: job.item_id.clone(),
                 date: "2025-06-30T14:06:54Z".into(),
                 cloud: None,
@@ -86,6 +87,7 @@ fn project(sources: &[Job]) -> Project {
         wcs_items: Vec::new(),
         created_at: now(),
         updated_at: now(),
+        agent_approvals: Vec::new(),
     }
 }
 fn values(output: &MosaicOutput) -> Vec<f32> {

@@ -405,4 +405,35 @@ class PackagingTests(unittest.TestCase):
             self.assertIn('VIAddVersionKey "FileVersion" "${APP_VERSION}"',script)
 
 
+class AgentPayloadTests(unittest.TestCase):
+    def fixture(self, root):
+        base=root/'.agent-runtime/win32-x64';base.mkdir(parents=True)
+        records={}
+        for name in ['node.exe','codex.exe','agent.mjs','RUNTIME-NOTICES.txt','licenses/inventory.json']:
+            path=base/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(b'owned fixture')
+            records[name]={'bytes':path.stat().st_size,'sha256':packaging.digest(path)}
+        packaging.write_json(base/'manifest.json',{'version':1,'platform':'win32-x64','nodeVersion':'24.14.0','codexVersion':'0.159.2','files':records})
+        return base
+
+    def test_manifest_only_copies_reviewed_files_and_ignores_extra_helpers(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)):
+            base=self.fixture(Path(folder));(base/'unused-shell.exe').write_bytes(b'must not ship')
+            receipt=packaging.verify_agent_runtime();payload=Path(folder)/'payload';payload.mkdir();packaging.collect_agent_runtime(payload,receipt)
+            self.assertTrue((payload/'agent-runtime/codex.exe').is_file());self.assertFalse((payload/'agent-runtime/unused-shell.exe').exists())
+            (base/'agent.mjs').write_bytes(b'changed')
+            with self.assertRaisesRegex(RuntimeError,'checksum changed'):packaging.collect_agent_runtime(payload,receipt)
+
+    def test_path_escape_and_unlisted_executables_are_rejected(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging,'ROOT',Path(folder)):
+            base=self.fixture(Path(folder));manifest=base/'manifest.json';value=json.loads(manifest.read_text(encoding='utf-8'))
+            for name in ['../outside.exe','extra-helper.exe','licenses/../../outside.exe','C:/private.txt']:
+                changed={**value,'files':{**value['files'],name:{'bytes':1,'sha256':'0'*64}}};packaging.write_json(manifest,changed)
+                with self.assertRaisesRegex(RuntimeError,'unexpected file'):packaging.verify_agent_runtime()
+
+    def test_build_commands_never_inherit_private_signing_variables(self):
+        with mock.patch.dict(packaging.os.environ,{'GEOD_GLOBAL_SIGNING_PRIVATE_KEY':'isolated-test-key','GEOD_GLOBAL_SIGNING_PASSWORD':'isolated-test-password','TAURI_SIGNING_PRIVATE_KEY':'isolated-test-key'}),mock.patch.object(packaging.subprocess,'run') as run:
+            run.return_value.returncode=0;packaging.command('fixture-build')
+            env=run.call_args.kwargs['env'];self.assertNotIn('GEOD_GLOBAL_SIGNING_PRIVATE_KEY',env);self.assertNotIn('GEOD_GLOBAL_SIGNING_PASSWORD',env);self.assertNotIn('TAURI_SIGNING_PRIVATE_KEY',env)
+
+
 if __name__ == '__main__': unittest.main()

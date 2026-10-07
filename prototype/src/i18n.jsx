@@ -25,10 +25,16 @@ import stacChinese from './locales/stac.zh-CN.js';
 import wcsChinese from './locales/wcs.zh-CN.js';
 import tilesChinese from './locales/tiles.zh-CN.js';
 import threeDChinese from './locales/three-d.zh-CN.js';
+import agentChinese from './locales/agent.zh-CN.js';
+import sourceDirectoryChinese from './locales/source-directory.zh-CN.js';
+import distributionChinese from './locales/distribution.zh-CN.js';
 import { syncDesktopLocale } from './runtime-client.js';
 
 const chinese = { ...threeDChinese, ...tilesChinese, ...wcsChinese, ...stacChinese, ...wmsChinese, ...featuresChinese, ...vectorChinese, ...radarChinese, ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese, ...projectsChinese, ...proxyChinese, ...accountsChinese, ...elevationChinese, ...aerialChinese, ...localRgbChinese, ...modisChinese, ...viirsChinese, ...landsatQualityChinese, ...vegetationChinese, ...vegetationQualityChinese, ...modisScienceChinese };
 const I18nContext = createContext(null);
+Object.assign(chinese, agentChinese);
+Object.assign(chinese, sourceDirectoryChinese);
+Object.assign(chinese, distributionChinese);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 
 export function I18nProvider({ children }) {

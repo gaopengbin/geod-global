@@ -1,6 +1,6 @@
 # GeoD Global local MCP
 
-The `geod-runtime serve-mcp` command exposes the same persisted jobs, projects, WCS coverage selections, raster inspection, pixel lookup, scientific RGB and executable recipes used by the desktop application and CLI. It is a local stdio adapter built with the official [`rmcp` Rust SDK](https://github.com/modelcontextprotocol/rust-sdk), pinned to `3.4.0`. It does not start a second processing implementation or a public MCP endpoint.
+The `geod-runtime serve-mcp` command exposes the same persisted jobs, projects, custom STAC selections, WCS coverage selections, raster inspection, pixel lookup, scientific RGB and executable recipes used by the desktop application and CLI. It is a local stdio adapter built with the official [`rmcp` Rust SDK](https://github.com/modelcontextprotocol/rust-sdk), pinned to `3.4.0`. It does not start a second processing implementation or a public MCP endpoint.
 
 ## Connect to an existing local runtime
 
@@ -25,7 +25,7 @@ The service at port 4318 must already be running. An example MCP client configur
 
 Put the binary on your PATH or replace `command` with its absolute path. For a source checkout, build with `cargo build --locked -p geod-runtime` and use `target/debug/geod-runtime.exe` on Windows or `target/debug/geod-runtime` on Linux/macOS. Pass the executable directly to the client: a command wrapper that writes status messages to stdout would corrupt the protocol.
 
-Writes are disabled by default. To let the client connect a WCS source, persist a coverage definition/plan/project, download data, save/run recipes or change task state, add `--allow-write` to the process arguments. This setting is checked in both tool discovery and tool dispatch; tool arguments cannot enable it. Clients should still provide their normal user controls for mutating tool calls.
+Writes are disabled by default. To let the client connect/search a custom STAC source, connect a WCS source, persist metadata/plans/projects, download data, save/run recipes or change task state, add `--allow-write` to the process arguments. STAC search persists snapshots and consumes cursors, so it is a mutating metadata operation even though it downloads no raster. This setting is checked in both tool discovery and tool dispatch; tool arguments cannot enable it. Clients should still provide their normal user controls for mutating tool calls.
 
 `--server` accepts only an HTTP `127.0.0.1` origin. Credentials, URL paths, query strings, fragments, remote hosts, proxy routing and redirects are rejected. This is an adapter to GeoD's existing local REST service, **not** an MCP Streamable HTTP server.
 
@@ -44,12 +44,16 @@ The desktop currently owns its runtime internally and does not expose its own HT
 
 The default controls which **tools** may write. Opening a direct store still creates/locks the directory and performs normal interrupted-job recovery. It is not a forensic, zero-write filesystem viewer.
 
+Saved vector services and local vector files add six read-only tools. They share the native verification and bounded node reader, and do not connect, query, extract or modify data. Tool names, paging, Agent redaction and real public/offline evidence are in [Vector MCP and Agent integration](vector-agent.md).
+
 ## Available tools
+
+Custom sources add six reads (`geod_stac_connections`, `geod_stac_catalog`, `geod_stac_snapshot`, `geod_stac_assets`, `geod_stac_inspect`, `geod_stac_pixel`) and five opted-in mutations (`geod_stac_connect`, `geod_stac_search`, `geod_stac_project_save`, `geod_stac_download`, `geod_stac_forget`). Their exact request examples, source semantics and fresh public/offline verification are in [STAC MCP and Agent integration](stac-mcp.md). Item/asset metadata is preserved natively, never interpreted as instructions; search summaries retain every returned identity and continuation while details are read separately. These external MCP mutations are not added to the desktop Agent's model allowlist.
 
 | Tool | Default | Result |
 | --- | --- | --- |
 | `geod_health` | Read | Runtime status, storage location, limits and ownership behavior |
-| `geod_jobs_list` | Read | Jobs, newest first; optional `offset` and `limit` (default 20, maximum 100) |
+| `geod_jobs_list` | Read | Jobs, newest first; optional `projectId` filters exact native sources and processing lineage before pagination. Scoped results include fresh settlement and `checkedAt`; without it, the existing global list remains unchanged. Optional `offset` and `limit` (default 20, maximum 100) |
 | `geod_job_status` | Read | One job and its worker `settled` flag |
 | `geod_raster_inspect` | Read | Verified supported RGB / SCL / reflectance / NAIP / GLO-30 Public checksum, geometry and product metadata; PNG is omitted |
 | `geod_raster_pixel` | Read | Original samples, zero-based column/row and pixel center in the source CRS; NAIP includes raw RGB and `nearInfrared` |
@@ -80,7 +84,7 @@ The default controls which **tools** may write. Opening a direct store still cre
 | `geod_rgb_run` | `--allow-write` | Queue an Int16/UInt16 scientific RGB GeoTIFF from pinned local bands |
 | `geod_rgb_package` | `--allow-write` | Prepare a verified local ZIP containing the file, display preview, provenance and checksums |
 
-There are 18 read tools and 13 additional mutation tools. Job/project/connection tools use `{"id":"lowercase-hyphenated-uuid"}`; saved WCS description/plan IDs instead use 64 lowercase SHA-256 characters. Sensor-specific pixel lookup adds numeric source-CRS `x` and `y`; WCS pixel lookup adds integer TIFF `column` and `row`. Recipe tools use `{"recipe":{...}}` with the complete [executable recipe contract](../schemas/raster-recipe-v1.schema.json). Download uses `{"request":{...}}` matching the [Sentinel example](../examples/sentinel-scl-download.json). WCS mutations also use a `request` envelope, with the native contracts in [WCS coverage subsets](wcs-coverages.md). Unknown arguments are rejected at every input layer.
+There are 30 read tools and 18 additional mutation tools. Job/project/connection tools use `{"id":"lowercase-hyphenated-uuid"}`; saved WCS description/plan IDs instead use 64 lowercase SHA-256 characters. Sensor-specific pixel lookup adds numeric source-CRS `x` and `y`; WCS pixel lookup adds integer TIFF `column` and `row`. Recipe tools use `{"recipe":{...}}` with the complete [executable recipe contract](../schemas/raster-recipe-v1.schema.json). Download uses `{"request":{...}}` matching the [Sentinel example](../examples/sentinel-scl-download.json). WCS mutations also use a `request` envelope, with the native contracts in [WCS coverage subsets](wcs-coverages.md). Unknown arguments are rejected at every input layer.
 
 Jobs and recipes are the runtime's persisted records, not the design prototype's simulation cards. SCL is Sentinel's scene classification layer, not a land-cover product. Current processing is rectangular clipping of supported single-band UInt8 SCL GeoTIFFs; see the [raster workflow](workflows/clip-sentinel-scl.md) for processing limits.
 

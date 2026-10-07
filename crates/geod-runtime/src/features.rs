@@ -65,7 +65,7 @@ pub struct ConnectRequest {
 fn default_protocol() -> String {
     "OGC".into()
 }
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct QueryRequest {
     pub service_id: String,
@@ -74,6 +74,21 @@ pub struct QueryRequest {
     pub area_geometry: Option<crate::crop::PolygonGeometry>,
     pub page_size: Option<usize>,
     pub response_format: Option<String>,
+}
+pub(crate) enum Snapshot {
+    Features(vector::ImportVectorRequest, Provenance),
+    Wfs(Vec<u8>, Provenance),
+    Osm(Vec<u8>, overpass::Provenance),
+}
+fn validate_query(request: &QueryRequest) -> Result<()> {
+    bounds(request.bounds)?;
+    if !(1..=PAGE_SIZE).contains(&request.page_size.unwrap_or(PAGE_SIZE)) {
+        return Err("Feature page size must be between 1 and 200".into());
+    }
+    if let Some(area) = &request.area_geometry {
+        validate_area(area, request.bounds)?;
+    }
+    Ok(())
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -761,14 +776,7 @@ impl JobManager {
     }
     pub async fn query_features(&self, request: QueryRequest) -> Result<vector::VectorAsset> {
         self.inner.store.lock().await.accepting_jobs()?;
-        bounds(request.bounds)?;
-        let page_size = request.page_size.unwrap_or(PAGE_SIZE);
-        if !(1..=PAGE_SIZE).contains(&page_size) {
-            return Err("Feature page size must be between 1 and 200".into());
-        }
-        if let Some(area) = &request.area_geometry {
-            validate_area(area, request.bounds)?;
-        }
+        validate_query(&request)?;
         let service = self
             .inner
             .feature_services
@@ -777,6 +785,20 @@ impl JobManager {
             .get(&request.service_id)
             .cloned()
             .ok_or("Unknown data service")?;
+        let snapshot = self.feature_snapshot(request, service).await?;
+        self.import_feature_snapshot(snapshot, None).await
+    }
+    /// Fetch and validate exactly the pinned native service; registration is separate.
+    pub(crate) async fn feature_snapshot(
+        &self,
+        request: QueryRequest,
+        service: FeatureService,
+    ) -> Result<Snapshot> {
+        validate_query(&request)?;
+        let page_size = request.page_size.unwrap_or(PAGE_SIZE);
+        if service.id != request.service_id {
+            return Err("Feature service identity changed".into());
+        }
         let collection = service
             .collections
             .iter()
@@ -790,7 +812,7 @@ impl JobManager {
             )
             .await
             .map_err(|_| "WFS extraction timed out; no file was registered")??;
-            return self.import_wfs_source(bytes, source).await;
+            return Ok(Snapshot::Wfs(bytes, source));
         }
         if request.response_format.is_some() {
             return Err("Response format selection requires a WFS connection".into());
@@ -802,7 +824,7 @@ impl JobManager {
             )
             .await
             .map_err(|_| "OSM extraction timed out; no file was registered")??;
-            return self.import_osm_source(bytes, source).await;
+            return Ok(Snapshot::Osm(bytes, source));
         }
         if service.arcgis.is_some() {
             let (data, source, title) = tokio::time::timeout(
@@ -811,15 +833,13 @@ impl JobManager {
             )
             .await
             .map_err(|_| "Feature extraction timed out; no file was registered")??;
-            return self
-                .import_vector_source(
-                    vector::ImportVectorRequest {
-                        name: format!("{} · ArcGIS", title.chars().take(108).collect::<String>()),
-                        text: serde_json::to_string(&data).map_err(io_error)?,
-                    },
-                    Some(source),
-                )
-                .await;
+            return Ok(Snapshot::Features(
+                vector::ImportVectorRequest {
+                    name: format!("{} · ArcGIS", title.chars().take(108).collect::<String>()),
+                    text: serde_json::to_string(&data).map_err(io_error)?,
+                },
+                source,
+            ));
         }
         let settings = self.proxy_settings().await;
         let snapshot=tokio::time::timeout(Duration::from_secs(120),async {
@@ -841,13 +861,12 @@ impl JobManager {
         }).await.map_err(|_|"Feature extraction timed out; no file was registered")??;
         // Persistence is outside the network deadline: it must finish or roll back.
         let (data, source, title) = snapshot;
-        self.import_vector_source(
+        Ok(Snapshot::Features(
             vector::ImportVectorRequest {
                 name: format!("{} · OGC", title.chars().take(110).collect::<String>()),
                 text: serde_json::to_string(&data).map_err(io_error)?,
             },
-            Some(source),
-        )
-        .await
+            source,
+        ))
     }
 }

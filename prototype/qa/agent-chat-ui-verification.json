@@ -1,0 +1,33 @@
+{
+  "schema": "geod-agent-chat-ui-verification/v1",
+  "date": "2026-10-06",
+  "status": "passed",
+  "reference": "GeoD Agent 0.2.3 whole composer adapted into the existing Beautiful UI layer; source hashes and MIT notice retained in licenses/geod-agent-composer-source.json",
+  "stream": {
+    "runtime": "Prepared Node 24.14.0 and actual owned Codex 0.159.2 process",
+    "provider": "Controlled loopback SSE through the actual AI SDK adapter",
+    "sourceRequests": 1,
+    "notifications": 5,
+    "partialSnapshots": 2,
+    "paidModelCalls": 0,
+    "businessToolsRun": 0,
+    "evidence": ".verification/agent-stream-1791290026342/verification.json"
+  },
+  "renderer": {
+    "environment": "Owned hidden Edge; actual shared React UI with controlled native IPC",
+    "viewportSizes": [[1000, 840], [320, 780]],
+    "panelWidths": [260, 320, 460, 493],
+    "themes": ["light", "dark"],
+    "longModelTriggerMaxWidth": 180,
+    "modelMenuWidth": 208,
+    "emptyInputHeight": 48,
+    "longInputMaxHeight": 144,
+    "emptyFormHeight": 116,
+    "checks": ["whole composer toolbar and icons", "cold narrow mount and resize", "center alignment and no overlap", "empty and long input height", "attachment menu and native chooser", "native permission switch", "unknown and reported context usage", "privacy in context popup", "model management from composer", "compact model picker and popup collision", "keyboard Escape and focus", "Chinese IME", "incremental text and caret", "reader scroll preserved", "jump to latest", "stop freezes output", "copy original answer", "collapsed execution records", "long draft", "listener cleanup"],
+    "evidence": ".verification/agent-chat-ui-1791292225495/result.json",
+    "modelConnectionDialogEvidence": ".verification/agent-model-ui-1791292066626/result.json"
+  },
+  "checks": {"agentUiTests": 52, "sharedUiTests": 12, "nodeServiceAndClientTests": 40, "nativeSignalValidation": "passed", "desktopAcl": "passed", "repositoryIsolation": "passed", "clippy": "passed", "frontendCompilation": "passed"},
+  "developmentAppEvidence": ".verification/agent-composer-development-confirmed.json",
+  "limits": {"upstreamModelIntelligenceTestedThisRound": false, "nativeWebViewPixelsObserved": false, "usedUserDesktop": false, "savedConnectionsChanged": false, "installerCreated": false, "published": false}
+}

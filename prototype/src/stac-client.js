@@ -24,13 +24,22 @@ export function validStacUrl(value) {
 
 export function validateStacConnection(value) {
   if (!object(value) || !uuid.test(value.id) || !text(value.name, 240) || !value.name.trim()
-    || !validStacUrl(value.url) || !['api', 'item', 'raster'].includes(value.kind) || !time(value.connectedAt)
+    || !validStacUrl(value.url) || !['api', 'item', 'raster', 'catalog'].includes(value.kind) || !time(value.connectedAt)
     || !object(value.capabilities) || typeof value.capabilities.searchGet !== 'boolean' || typeof value.capabilities.searchPost !== 'boolean'
     || value.searchMethod !== undefined && !['GET', 'POST'].includes(value.searchMethod)
     || !Array.isArray(value.collections) || value.collections.length > 4096 || !Array.isArray(value.snapshotIds)
     || value.snapshotIds.some(id => !hash.test(id)) || new Set(value.snapshotIds).size !== value.snapshotIds.length
     || value.collections.some(c => !object(c) || !text(c.id, 512) || !c.id || !text(c.title) || !text(c.description, 32768) || !text(c.license))
     || new Set(value.collections.map(c => c.id)).size !== value.collections.length) fail('The raster source returned invalid connection metadata.');
+  const nodes = value.catalogNodes || [];
+  if (!Array.isArray(nodes) || nodes.length > 128 || value.kind !== 'catalog' && nodes.length
+    || value.kind === 'catalog' && (!nodes.length || value.collections.length || value.snapshotIds.length
+      || value.capabilities.searchGet || value.capabilities.searchPost || value.searchUrl !== null)
+    || nodes.some((node, index) => !object(node) || !hash.test(node.key) || !text(node.id, 512) || !node.id
+      || !text(node.title, 512) || !text(node.description, 32768) || !['Catalog', 'Collection'].includes(node.kind)
+      || !validStacUrl(node.url) || !(node.license === null || text(node.license, 2048))
+      || (index === 0 ? node.parentKey !== null || node.url !== value.url : !nodes.slice(0, index).some(parent => parent.key === node.parentKey)))
+    || new Set(nodes.map(node => node.key)).size !== nodes.length || new Set(nodes.map(node => node.url)).size !== nodes.length) fail('The raster source returned invalid static directory metadata.');
   return value;
 }
 
@@ -47,7 +56,11 @@ export function validateStacSnapshot(value) {
       || new TextEncoder().encode(JSON.stringify(value.provenance.documentRequest)).length > 16384)
     || value.provenance.metadataDocuments.some(receipt => !object(receipt) || !validStacUrl(receipt.url) || !hash.test(receipt.sha256))
     || !(value.provenance.collection === null || object(value.provenance.collection))
-    || !(value.provenance.search === null || object(value.provenance.search) && value.provenance.search.connectionId === value.connectionId && value.provenance.search.collectionId === value.collectionId && validQueryBounds(value.provenance.search.bounds))
+    || value.provenance.searchMode !== undefined && value.provenance.searchMode !== 'catalog'
+    || !(value.provenance.search === null ? value.provenance.searchMode === undefined : object(value.provenance.search)
+      && value.provenance.search.connectionId === value.connectionId
+      && (value.provenance.searchMode === 'catalog' ? hash.test(value.provenance.search.collectionId) : value.provenance.search.collectionId === value.collectionId)
+      && validQueryBounds(value.provenance.search.bounds))
     || !(value.bbox === null || validQueryBounds(value.bbox))
     || !Array.isArray(value.assets) || value.assets.length > 512 || value.assets.some(asset =>
       !object(asset) || !text(asset.key, 1024) || !asset.key || !text(asset.title) || !text(asset.href, 8192)
@@ -133,7 +146,7 @@ export async function stacRequest(operation, payload = {}, signal) {
   const commands = { list: 'list_stac_connections', connect: 'connect_stac', forget: 'forget_stac_connection', search: 'search_stac', snapshot: 'stac_snapshot', inspect: 'inspect_stac_asset', pixel: 'sample_stac_asset', project: 'save_stac_project', downloads: 'download_stac_project' };
   if (!commands[operation]) fail('Unknown raster source operation.');
   if (['forget', 'inspect', 'pixel'].includes(operation) && !uuid.test(payload.id) || operation === 'snapshot' && !hash.test(payload.id)) fail('Invalid saved raster identifier.');
-  if (operation === 'connect' && (!validStacUrl(payload.url) || !payload.name?.trim() || !['api', 'item', 'raster'].includes(payload.kind))) fail('Enter a source name and a public HTTPS URL.');
+  if (operation === 'connect' && (!validStacUrl(payload.url) || !payload.name?.trim() || !['api', 'item', 'raster', 'catalog'].includes(payload.kind))) fail('Enter a source name and a public HTTPS URL.');
   if (operation === 'search' && (!uuid.test(payload.connectionId) || !text(payload.collectionId, 512) || !payload.collectionId || !validQueryBounds(payload.bounds))) fail('Choose a collection and a valid search region.');
   if (operation === 'pixel' && (!integer(payload.column) || !integer(payload.row))) fail('Enter a nonnegative pixel column and row.');
   if (operation === 'project' && (!validQueryBounds(payload.bounds) || !Array.isArray(payload.selections) || !payload.selections.length || payload.selections.length > 32)) fail('Select 1 to 32 raster assets and a valid project region.');
@@ -157,8 +170,10 @@ export async function stacRequest(operation, payload = {}, signal) {
   if (operation === 'snapshot') { validateStacSnapshot(value); if (value.id !== payload.id) fail('The saved item does not match the requested snapshot.'); }
   if (operation === 'search') {
     if (!object(value) || !Array.isArray(value.items) || value.items.length > 100 || !(value.nextCursor === null || text(value.nextCursor, 16384) && value.nextCursor.length)
-      || typeof value.complete !== 'boolean' || typeof value.limitReached !== 'boolean' || value.complete && value.nextCursor !== null) fail('Invalid raster search page.');
-    value.items.forEach(item => { validateStacSnapshot(item); if (item.connectionId !== payload.connectionId || item.collectionId !== payload.collectionId) fail('Raster search returned an item from a different source or collection.'); });
+      || typeof value.complete !== 'boolean' || typeof value.limitReached !== 'boolean' || value.complete && (value.nextCursor !== null || value.limitReached)
+      || value.scannedItems !== undefined && (!integer(value.scannedItems) || value.scannedItems > 1000 || value.scannedItems < value.items.length)) fail('Invalid raster search page.');
+    value.items.forEach(item => { validateStacSnapshot(item); if (item.connectionId !== payload.connectionId
+      || (item.provenance.searchMode === 'catalog' ? item.provenance.search.collectionId !== payload.collectionId || value.scannedItems === undefined : item.collectionId !== payload.collectionId)) fail('Raster search returned an item from a different source or collection.'); });
   }
   if (operation === 'inspect') validateStacInspection(value, payload.id);
   if (operation === 'pixel') validateStacPixel(value, payload);

@@ -1,0 +1,178 @@
+{
+  "schema": "geod-agent-natural-status-verification/v1",
+  "status": "passed-with-declared-scope",
+  "verifiedAt": "2026-10-05T13:52:33.210694+00:00",
+  "scope": "Actual Chat Completions routes through owned desktop Agent IPC, connection isolation, native Windows credential persistence and process restart. No native window or installed release acceptance.",
+  "modelRoutes": [
+    "deepseek-v4-flash",
+    "gpt-5.6-terra",
+    "qwen3.8-flash"
+  ],
+  "modelTurns": 8,
+  "nativeModelToolCalls": 26,
+  "failedModelToolCalls": 0,
+  "modelRequests": 27,
+  "allRequestsHttp200": true,
+  "nativeToolDefinitionsPerRequest": 48,
+  "nativeWindowsVaultEntriesWritten": 6,
+  "nativeVaultEntriesDeletedAndReadAbsent": true,
+  "ownedFilesScannedForModelKey": 252,
+  "userModelPreferencesChanged": false,
+  "providerAccountsChanged": false,
+  "upstreamVendorVerified": false,
+  "nativeWindowsWindowTested": false,
+  "usedUserDesktop": false,
+  "installerCreated": false,
+  "published": false,
+  "privateOrchestratorModel": "geod-text-tools",
+  "remoteModelIdentityPreserved": true,
+  "protocol": "openai-compatible",
+  "soleOrchestrationLoop": "Codex App Server 0.159.2",
+  "modelExecutionToolsExposed": false,
+  "runs": [
+    {
+      "status": "passed",
+      "modelRoutes": [
+        "deepseek-v4-flash",
+        "qwen3.8-flash"
+      ],
+      "modelTurns": 4,
+      "nativeModelToolCalls": 14,
+      "failedModelToolCalls": 0,
+      "modelRequests": 14,
+      "allRequestsHttp200": true,
+      "nativeToolDefinitionsPerRequest": 48,
+      "metadataProjects": 1,
+      "jobs": 0,
+      "nativeWindowsVaultEntriesWritten": 3,
+      "nativeVaultEntriesDeletedAndReadAbsent": true,
+      "sameConversationAndThreadResumed": true,
+      "incompatibleHistoryRefused": true,
+      "identicalEndpointModelConnectionsIsolated": true,
+      "busyMutationRefused": true,
+      "freshNativeProjectNamesChecked": true,
+      "sourceMetadataSha256": "af48e15b92ff53dcae60d48993561a10ba7b804ce9224c67839d54cf7e82e964",
+      "naturalUserRequestsWithoutToolNames": true,
+      "freshAttachedProjectAndTaskReadsChecked": true,
+      "allUserMessagesWithoutToolNames": true,
+      "lastAnswerCharacters": {
+        "turnA": 131,
+        "turnB": 262,
+        "turnC": 142,
+        "resumedA": 159
+      },
+      "finalAnswersContainNoAdditionalReadApproval": true,
+      "nativeReadOnlyTools": [
+        "geod_jobs_list",
+        "geod_project_get",
+        "geod_projects_list",
+        "geod_workspace_context"
+      ],
+      "modelKeyAbsentFromOwnedFiles": true,
+      "ownedFilesScanned": 83,
+      "evidence": [
+        {
+          "path": ".verification/agent-connection-model-1791208027415045400/case/native-acceptance.json",
+          "bytes": 31802,
+          "sha256": "77cc3974c6079edddcdced432ace35d8ea8837ff276f7beb23a6f38022e7445e"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791208027415045400/launch.json",
+          "bytes": 26161,
+          "sha256": "f203052bea7420134c879d55d56813d0742bc6552b3e7fe775c7fa8974c2aef4"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791208027415045400/native.log",
+          "bytes": 590,
+          "sha256": "1d41b44abc08698f06804e8220c2c0fae2ecfea45351fa33b207a2b0c2e83192"
+        }
+      ]
+    },
+    {
+      "status": "passed",
+      "modelRoutes": [
+        "deepseek-v4-flash",
+        "gpt-5.6-terra"
+      ],
+      "modelTurns": 4,
+      "nativeModelToolCalls": 12,
+      "failedModelToolCalls": 0,
+      "modelRequests": 13,
+      "allRequestsHttp200": true,
+      "nativeToolDefinitionsPerRequest": 48,
+      "metadataProjects": 1,
+      "jobs": 0,
+      "nativeWindowsVaultEntriesWritten": 3,
+      "nativeVaultEntriesDeletedAndReadAbsent": true,
+      "sameConversationAndThreadResumed": true,
+      "incompatibleHistoryRefused": true,
+      "identicalEndpointModelConnectionsIsolated": true,
+      "busyMutationRefused": true,
+      "freshNativeProjectNamesChecked": true,
+      "sourceMetadataSha256": "af48e15b92ff53dcae60d48993561a10ba7b804ce9224c67839d54cf7e82e964",
+      "naturalUserRequestsWithoutToolNames": true,
+      "freshAttachedProjectAndTaskReadsChecked": true,
+      "allUserMessagesWithoutToolNames": true,
+      "lastAnswerCharacters": {
+        "turnA": 91,
+        "turnB": 73,
+        "turnC": 127,
+        "resumedA": 104
+      },
+      "finalAnswersContainNoAdditionalReadApproval": true,
+      "nativeReadOnlyTools": [
+        "geod_jobs_list",
+        "geod_project_get",
+        "geod_workspace_context"
+      ],
+      "modelKeyAbsentFromOwnedFiles": true,
+      "ownedFilesScanned": 83,
+      "evidence": [
+        {
+          "path": ".verification/agent-connection-model-1791208165656931800/case/native-acceptance.json",
+          "bytes": 28621,
+          "sha256": "c809a0fe5aa110121a653fea24e2a7849c3f9a84caa977648b98902f59ef6991"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791208165656931800/launch.json",
+          "bytes": 22871,
+          "sha256": "95e0cd1debc065bbed956ef560d315eb1c8b5c16e9bb8419db5bbca6b010ebfe"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791208165656931800/native.log",
+          "bytes": 590,
+          "sha256": "9f8928f9b93ae9832c10fbbd02cd300775d8697161f1b1da4ae8236a44d57ab0"
+        }
+      ]
+    }
+  ],
+  "remainingScope": [
+    "Positive protected original authorization with actual test accounts",
+    "Other model protocols, images, encrypted reasoning and compaction",
+    "Clean installed distribution and native window acceptance"
+  ],
+  "naturalUserRequestsWithoutToolNames": true,
+  "freshAttachedProjectAndTaskReadsChecked": true,
+  "previousModelSwitchingAcceptance": {
+    "path": "prototype/qa/agent-model-connections-verification.json",
+    "bytes": 4732,
+    "sha256": "241c5a0a8fe7abc2206643609f229322224f038b2385e08960647955d8167766"
+  },
+  "earlierFailedAttempt": {
+    "status": "failed",
+    "httpStatus": 400,
+    "causeEstablished": false,
+    "notCountedAsPassed": true,
+    "ownedVaultCleanupVerified": true,
+    "launch": {
+      "path": ".verification/agent-connection-model-1791207541032893700/launch.json",
+      "bytes": 2511,
+      "sha256": "82d5f6c6ce226d750e423e41189db7ec9f30f517059e0bbd90c47b60c9ea44ed"
+    },
+    "nativeLog": {
+      "path": ".verification/agent-connection-model-1791207541032893700/native.log",
+      "bytes": 1057,
+      "sha256": "bea0ee0de453fa6c5beae7b50e779728f66ff14da16a9cea96328f00f1fed7b6"
+    }
+  }
+}

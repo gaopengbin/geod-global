@@ -761,3 +761,25 @@ async fn live_public_batch_downloads_match_verified_originals_without_persisting
     reopened.shutdown().await.unwrap();
     println!("Actual Landsat batch: 3 files, 281060423 bytes, original SHA-256 matches; 1 catalogue + 1 container SAS; restart restored unsigned records.");
 }
+#[tokio::test]
+async fn reviewed_search_cache_is_atomic_and_rejects_changed_product_assets() {
+    let value: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../../../prototype/public/samples/planetary-computer-response.json"
+    ))
+    .unwrap();
+    let cache = super::AccessCache::default();
+    cache
+        .observe_catalogue(&value, "sentinel-2-l2a")
+        .await
+        .unwrap();
+    let expected = value["features"].as_array().unwrap().len();
+    assert_eq!(cache.sentinel.lock().await.catalogue.len(), expected);
+    let mut substituted = value;
+    substituted["features"][0]["assets"]["SCL"]["href"] =
+        serde_json::json!("https://example.com/forged.tif");
+    assert!(cache
+        .observe_catalogue(&substituted, "sentinel-2-l2a")
+        .await
+        .is_err());
+    assert_eq!(cache.sentinel.lock().await.catalogue.len(), expected);
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "geod-open-source-board-acceptance/v1",
+  "checkedAt": "2026-10-07T13:04:18.969Z",
+  "status": "passed",
+  "researchRecord": "docs/research/open-data-sources-2026-10-07.json",
+  "inventory": {
+    "newCandidates": 35,
+    "total": 85,
+    "pending": 48,
+    "sha256": "39bfaa24a056440873c3aa9baac804944600218b405b3d0c2463d0250fd3ff0b"
+  },
+  "validation": {
+    "homeIntegrationTests": 15,
+    "repositoryIsolation": "passed",
+    "frontendBuild": "passed",
+    "developerBuild": "passed",
+    "browser": {
+      "status": "passed",
+      "scope": "SourceBoard component in Edge with actual inventory, bilingual themes and viewport checks. No provider requests, download plans or native jobs.",
+      "cases": [
+        {
+          "width": 1440,
+          "height": 960,
+          "theme": "light",
+          "locale": "zh-CN",
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        },
+        {
+          "width": 960,
+          "height": 900,
+          "theme": "light",
+          "locale": "zh-CN",
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        },
+        {
+          "width": 560,
+          "height": 900,
+          "theme": "dark",
+          "locale": "zh-CN",
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "theme": "light",
+          "locale": "en",
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        }
+      ],
+      "errors": [],
+      "nativeDesktopVisualAcceptance": false
+    }
+  },
+  "developerLaunch": {
+    "processId": 17232,
+    "executable": "G:\\code\\geod-global\\target\\debug\\geod-global-desktop.exe",
+    "logs": "G:\\code\\geod-global\\.verification\\source-directory-desktop-launch-20261007-210315",
+    "oldProcesses": [
+      41624
+    ],
+    "activeJobsBeforeRestart": 0,
+    "activeConversationsBeforeRestart": 0,
+    "title": "GeoD Global",
+    "responding": true,
+    "windowHandle": 1187090,
+    "sha256": "7c3f59bacdbb92d9944834b022f8296a60d9cf8ec51852614bd644ba0654a346",
+    "installerCreated": false,
+    "nativeDesktopVisualAcceptance": false
+  },
+  "newAdapterAcceptance": 0,
+  "newNativeDownloads": 0,
+  "installerCreated": false
+}

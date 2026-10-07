@@ -248,6 +248,7 @@ async fn setup(directory: &Path) -> (JobManager, crate::Project, Job) {
         manager.persist(&store.jobs).await.unwrap();
     }
     let scene = crate::projects::ProjectScene {
+        footprint: None,
         item_id: ITEM.into(),
         date: "2025-06-27T18:49:41Z".into(),
         cloud: Some(0.0),

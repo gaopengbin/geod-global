@@ -1,0 +1,67 @@
+{
+  "schema": "geod-agent-runtime-notices/v1",
+  "runtimeVersions": { "node": "24.14.0", "codex": "0.159.2" },
+  "codexCommit": "ff6aec96948b70d94983af2641a6b67c94faeff5",
+  "records": [
+    {
+      "file": "Node-v24.14.0-LICENSE.txt",
+      "component": "Node.js",
+      "version": "24.14.0",
+      "license": "MIT and bundled third-party licenses",
+      "kind": "complete upstream combined license",
+      "source": "https://raw.githubusercontent.com/nodejs/node/v24.14.0/LICENSE",
+      "sha256": "4573185d56580da2b890ba34a85a409257640f1c5632eade4300137266194d18",
+      "bytes": 156926
+    },
+    {
+      "file": "Codex-v0.159.2-LICENSE.txt",
+      "component": "OpenAI Codex",
+      "version": "0.159.2",
+      "license": "Apache-2.0",
+      "kind": "complete license terms",
+      "source": "https://raw.githubusercontent.com/openai/codex/ff6aec96948b70d94983af2641a6b67c94faeff5/LICENSE",
+      "sha256": "d17f227e4df5da1600391338865ce0f3055211760a36688f816941d58232d8dc",
+      "bytes": 10926
+    },
+    {
+      "file": "Codex-v0.159.2-NOTICE.txt",
+      "component": "OpenAI Codex",
+      "version": "0.159.2",
+      "license": "Apache-2.0",
+      "kind": "upstream attribution notice",
+      "source": "https://raw.githubusercontent.com/openai/codex/ff6aec96948b70d94983af2641a6b67c94faeff5/NOTICE",
+      "sha256": "9d71575ecfd9a843fc1677b0efb08053c6ba9fd686a0de1a6f5382fd3c220915",
+      "bytes": 242
+    },
+    {
+      "file": "Ratatui-v0.30.2-LICENSE.txt",
+      "component": "Ratatui code attributed by Codex NOTICE",
+      "version": "0.30.2",
+      "license": "MIT",
+      "kind": "complete license and copyright",
+      "source": "https://raw.githubusercontent.com/ratatui/ratatui/ratatui-v0.30.2/LICENSE",
+      "sha256": "50eb43e8d742c9c61a9391e42b2184fce54dbd1893a1bb1c85b8c9ee217ab1f5",
+      "bytes": 1132
+    },
+    {
+      "file": "Codex-Wezterm-LICENSE.txt",
+      "component": "WezTerm source vendored by Codex",
+      "version": "Codex 0.159.2 vendored source",
+      "license": "MIT",
+      "kind": "complete license and copyright",
+      "source": "https://raw.githubusercontent.com/openai/codex/ff6aec96948b70d94983af2641a6b67c94faeff5/third_party/wezterm/LICENSE",
+      "sha256": "331312c214f14dc1455a0e45e3a66f4b70bbc73916cffd525570e8cdb9d63bf4",
+      "bytes": 1076
+    },
+    {
+      "file": "AI-provider-utils-v5.0.53-LICENSE.txt",
+      "component": "@ai-sdk/provider-utils",
+      "version": "5.0.53",
+      "license": "Apache-2.0",
+      "kind": "upstream copyright and license declaration",
+      "source": "https://raw.githubusercontent.com/vercel/ai/eb93c81f2d6200e0732745d0cd582600fe4c5055/LICENSE",
+      "sha256": "b4f9adb7c568904834d0dd6cc98d16c390d21ca32fc17ae7a267715269bd5529",
+      "bytes": 552
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "geod-source-identities-ui/v1",
+  "verifiedAt": "2026-10-07T00:31:37+08:00",
+  "scope": "Homepage data-source cards in local development",
+  "officialMissionOrInstrumentMarks": ["Sentinel-1", "Sentinel-2", "MODIS", "STS-99/SRTM"],
+  "otherSeriesTreatment": "GeoD text and existing Lucide icons, not official logos",
+  "hostingPlatformShownSeparately": true,
+  "repeatedPlatformTextRemoved": true,
+  "localArtworkFiles": 4,
+  "builtArtworkHashesMatchManifest": true,
+  "remoteArtworkRequestsRequired": false,
+  "officialArtworkCompleteAndAspectRatioPreserved": true,
+  "credits": "Visible board credits, image alt labels, credit tooltips, source README and hash manifest",
+  "imageFailure": "Series text and icon fallback; exploration remains available",
+  "checks": {
+    "realAppIntegrationTests": {"passed": 6, "backend": "owned mocks", "includesImageFailureFallbackAndSinglePlatformLabel": true},
+    "frontendBuild": "passed",
+    "diffWhitespace": "passed"
+  },
+  "visual": {
+    "environment": "Hidden browser preview of actual development frontend; not native WebView screenshot",
+    "desktop": {"width": 1440, "height": 1080, "theme": "light", "cards": 15, "cardHeight": 154, "allCardHeightsEqual": true, "horizontalOverflow": false, "allSevenOfficialImageInstancesLoaded": true},
+    "compact": {"width": 720, "height": 900, "theme": "dark", "cardHeight": 154, "allCardHeightsEqual": true, "horizontalOverflow": false},
+    "sentinelSeriesFilterResults": 4,
+    "consoleErrors": [],
+    "screenshots": ["../../.verification/ai-home-ui/source-identities-desktop-light.png", "../../.verification/ai-home-ui/source-identities-compact-dark.png"]
+  },
+  "development": {"applicationPid": 41348, "windowTitle": "GeoD Global", "httpStatus": 200, "frontendUpdate": "HMR", "installerPackaged": false},
+  "realModelRequests": 0,
+  "dataAccountCredentialsChanged": false
+}

@@ -74,6 +74,7 @@ fn binding(job: &Job) -> Result<String> {
         &job.media_type,
         &job.stac_source,
         &job.wcs_source,
+        &job.agent_approval,
     ))
     .map_err(io_error)?;
     Ok(format!("{:x}", Sha256::digest(bytes)))
@@ -150,7 +151,7 @@ pub(crate) async fn cleanup_staging(root: &Path) -> Result<()> {
     Ok(())
 }
 
-fn strong_etag(value: &str) -> bool {
+pub(crate) fn strong_etag(value: &str) -> bool {
     let bytes = value.as_bytes();
     (2..=512).contains(&bytes.len())
         && bytes[0] == b'"'

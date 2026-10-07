@@ -1,0 +1,173 @@
+{
+  "schema": "geod-agent-context-verification/v1",
+  "date": "2026-10-06",
+  "status": "context-organization-development-candidate",
+  "fullAgentIntegrationComplete": false,
+  "architecture": {
+    "codex": "0.159.2",
+    "sdk": "7.0.127",
+    "onlyCodexOwnsLoop": true,
+    "sdkToolExecuteCallbacks": false
+  },
+  "implemented": [
+    "Native manual context organization",
+    "Native automatic checkpoint tracking",
+    "Saved image recovery, including mid-turn compaction",
+    "Visible history and draft preservation",
+    "Independent native review ledger",
+    "Stop before native turn ID arrives",
+    "Semantic image metadata equality across native JSON ordering",
+    "Blank model answers are failures",
+    "Closed context-limit error code; native same-thread retry"
+  ],
+  "evidence": {
+    "manualProtocols": {
+      "file": ".verification/agent-native-protocols-1791263127944/acceptance.json",
+      "bytes": 1973,
+      "sha256": "af60a81b530de09e26371497b0ecf81fa3df595442e8697a1dd24387fdaf43a1"
+    },
+    "automaticProtocols": {
+      "file": ".verification/agent-native-protocols-1791264402902/acceptance.json",
+      "bytes": 2090,
+      "sha256": "60fe830b342f060804d538fbbd1aba585f6aada126fcc1579f8253832509c4a5"
+    },
+    "contextLimitRetry": {
+      "file": ".verification/agent-native-protocols-1791266331397/acceptance.json",
+      "bytes": 1382,
+      "sha256": "08a01cf2745f7398fcdbe1fee54ed0e099955650681d3a50ca5d8104673a3afb"
+    },
+    "streamContextLimitRetry": {
+      "file": ".verification/agent-native-protocols-1791270397779/acceptance.json",
+      "bytes": 2353,
+      "sha256": "945e818cb75615ab488e4bfe6602a5da199eee7c47ad8c6379beae7fe2f6c1f0"
+    },
+    "desktopNative": {
+      "file": ".verification/agent-image-native-1791270465822/native-acceptance.json",
+      "bytes": 14314,
+      "sha256": "c7aa1be39c586cf149d484a5ebd37197799160d986765bc671b2440e33abf02f"
+    },
+    "liveManual": {
+      "file": ".verification/agent-context-live-launch-1791263155315276200/launch.json",
+      "bytes": 1647,
+      "sha256": "6f048b720386b70aa3052821727e7e68644747ce12787eba099c62fa9b5770ad"
+    },
+    "renderer": {
+      "file": ".verification/agent-images-ui-1791270034127/verification.json",
+      "bytes": 3347,
+      "sha256": "4f005c60b1a9d03f7dccd693c9336d4345493f30b56a1d65bacfa2ba986ec08d"
+    }
+  },
+  "controlled": {
+    "manualProtocolRequests": 15,
+    "manualNativeReads": 6,
+    "automaticProtocolRequests": 18,
+    "automaticNativeReads": 9,
+    "automaticTrigger": "Controlled upstream token usage, not naturally growing cloud conversation.",
+    "contextLimitRejections": 1,
+    "contextLimitRetryRequests": 6,
+    "contextLimitRetryReads": 2,
+    "streamContextLimitRejections": 1,
+    "streamContextLimitRetryRequests": 6,
+    "streamContextLimitRetryReads": 2,
+    "contextLimitRetryBehavior": "The rejected turn remains failed; the explicitly retried turn is compacted natively before continuing."
+  },
+  "desktopNative": {
+    "providerRequests": 9,
+    "nativeReads": 4,
+    "toolDeclarations": 48,
+    "checkpointCount": 3,
+    "sourceSha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8",
+    "pendingPlanId": "9506edef-0413-4cb8-996e-3265d7a27ccd",
+    "pendingPlanHash": "bc70ecac55a895048043bffd005e7d94d70701cc8d3f52c2b8a9f4879e89834a",
+    "planGeneration": "Actual native source preflight; only the transcript reference was seeded.",
+    "upstream": "Controlled fixture",
+    "credentialStorage": "RAM marker fixture",
+    "planExecuted": false
+  },
+  "liveManual": {
+    "model": "gpt-5.6-terra",
+    "requests": 5,
+    "nativeReads": 2,
+    "turns": 2,
+    "sameThreadAfterRestart": true,
+    "observedContent": "Left red circle; right blue square. Actual native project total 0.",
+    "upstreamVendorVerified": false
+  },
+  "liveLongConversation": null,
+  "checks": {
+    "agentTestsPassed": 45,
+    "frontendNodeTestsPassed": 304,
+    "frontendUiTestsPassed": 288,
+    "frontendUiFilesPassed": 39,
+    "desktopTestsPassed": 20,
+    "desktopTestsIgnored": 14,
+    "explicitDesktopContextCase": true,
+    "rendererCases": 18,
+    "repositoryChecks": "passed",
+    "desktopClippy": "passed",
+    "debugBuild": "custom-protocol"
+  },
+  "storage": {
+    "conversations": 50,
+    "savedEntriesPerConversation": 200,
+    "newMessageEntryGuard": 180,
+    "newMessageBytesGuard": 700000,
+    "historyBytes": 5000000,
+    "nativeContextWindowConfiguration": 32768,
+    "nativeAutomaticThresholdConfiguration": 26000
+  },
+  "desktop": {
+    "file": ".verification/renderer-agent-context-candidate-20261006/desktop-c8740fa1e06497fa.exe",
+    "bytes": 91131904,
+    "sha256": "c8740fa1e06497fa690573084aaeb72eae5b5ec24a1c7d517d3954abf4c65564"
+  },
+  "identityClosure": {
+    "sourceInputs": 1078,
+    "rendererFiles": 663,
+    "runtimeFiles": 23
+  },
+  "remaining": [
+    "Native Claude/Gemini cloud route acceptance",
+    "OpenAI encrypted reasoning",
+    "Other attachments",
+    "Image cache cleanup UI",
+    "More long-conversation and interruption edge cases",
+    "Protected source positive authorization and original-file acceptance",
+    "Complete dependency distribution audit",
+    "Native window and clean installation acceptance",
+    "Naturally growing live-model automatic context acceptance"
+  ],
+  "usedUserDesktop": false,
+  "nativeWindowTested": false,
+  "installedPackageBuilt": false,
+  "published": false,
+  "retainedFailedAttempts": [
+    {
+      "receipt": {
+        "file": ".verification/agent-context-long-live-launch-1791269431910034000/launch.json",
+        "bytes": 1670,
+        "sha256": "4ad655027ad9380d4e22406daec39a8f89a4b7fc23a9c5fea751cb0217ee36b8"
+      },
+      "status": "failed",
+      "explanation": "Verification forwarder failed on null tool content; the counting helper was repaired. This attempt remains failed."
+    },
+    {
+      "receipt": {
+        "file": ".verification/agent-context-long-live-launch-1791269880091664500/launch.json",
+        "bytes": 26783,
+        "sha256": "48e2e0d9868e2a09e3a5b510b72b5aa2afb690f7552df1ddffae04b237a9de37"
+      },
+      "status": "failed",
+      "explanation": "Thirteen completed image/read turns and two actual automatic checkpoints preceded an unclassified stream failure. This attempt remains failed; later code separately covers typed in-stream context errors."
+    },
+    {
+      "receipt": {
+        "file": ".verification/agent-context-long-live-launch-1791270430112926600/launch.json",
+        "bytes": 2040,
+        "sha256": "4ea4b7ff8aff36179f46661bf60ed7ef61d2d50f876206ec7d9875c90c733c73"
+      },
+      "status": "failed",
+      "explanation": "Latest runtime: one actual native read followed by an upstream HTTP 400 refusal categorized in memory as reasoning-budget-rejected. No completed turn or long-conversation acceptance is claimed."
+    }
+  ]
+}

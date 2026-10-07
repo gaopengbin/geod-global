@@ -1,0 +1,84 @@
+{
+  "schema": "geod-open-data-research/v1",
+  "checkedAt": "2026-10-07",
+  "scope": "Domestic and international 2D data. Discovery and official metadata review; no new production asset downloads, provider login, applications or adapter acceptance.",
+  "inventory": {
+    "path": "prototype/src/open-data-candidates.json",
+    "sha256": "39bfaa24a056440873c3aa9baac804944600218b405b3d0c2463d0250fd3ff0b",
+    "newCandidates": 35,
+    "allDirectoryEntries": 85,
+    "pendingEntries": 48,
+    "access": {
+      "public": 24,
+      "application": 1,
+      "registration": 5,
+      "samples": 1,
+      "mixed": 4
+    },
+    "category": {
+      "imagery": 5,
+      "radar": 1,
+      "thematic": 21,
+      "vectors": 5,
+      "elevation": 3
+    },
+    "priority": {
+      "P1": 15,
+      "P2": 19,
+      "P3": 1
+    }
+  },
+  "search": {
+    "requestedRecentWindow": [
+      "2025-10-07",
+      "2026-10-07"
+    ],
+    "olderAndUndatedLeadsRetained": true,
+    "searchResultEntries": 120,
+    "distinctDiscoveryUrls": 112,
+    "fetchRequests": 55,
+    "fetchRequestsIncludeRetriesAndFailures": true,
+    "discoveryRecord": "docs/research/open-data-discovery-2026-10-07.json"
+  },
+  "integration": {
+    "newAdapterAcceptance": 0,
+    "newNativeDownloads": 0,
+    "allNewEntries": "planned"
+  },
+  "leads": [
+    {
+      "url": "https://mp.weixin.qq.com/s/eiDLf7_cG7vMfHVh55WzTQ",
+      "publisher": "航天宏图",
+      "publishedDate": null,
+      "outcome": "Official historical announcement of limited SAR samples; registration and current sample rights untested."
+    },
+    {
+      "url": "https://mp.weixin.qq.com/s/RtU0Z6CHfT7FCaSY7WbHLQ",
+      "publisher": "沐庆",
+      "publishedDate": null,
+      "outcome": "SinoLC-1 lead checked against author Zenodo record and paper; classified map, not raw high-resolution RGB."
+    },
+    {
+      "url": "https://mp.weixin.qq.com/s/bd8wmr3bHidLdUrbGIsutA",
+      "publisher": "水经注GIS",
+      "publishedDate": null,
+      "outcome": "Not added as free original satellite imagery. Publisher documentation says DAT offline packages; export requires a paid VIP layer. Sensor/data rights unverified.",
+      "followup": "https://rivermap.cn/docs/show-2277.html"
+    }
+  ],
+  "fetchLimitations": [
+    {
+      "url": "https://www.resdc.cn/DOI/DOI.aspx?DOIid=54",
+      "issue": "Repeated fetch errors; search metadata and new/old DOI differ. Full 30m terms remain unresolved."
+    },
+    {
+      "url": "https://storage.googleapis.com/global-surface-water/downloads2021.html",
+      "issue": "Old download page fetch failed; current official 1984–2024 page found and read."
+    },
+    {
+      "url": "https://glad.umd.edu/dataset/global-forest-change",
+      "issue": "Old URL fetch failed; current official GFC-2025-v1.13 download entry verified in search."
+    }
+  ],
+  "priorityMeaning": "Suggested research/implementation ordering, not release dates. Prioritize public regional files and boundary data; enforce product-specific coverage, units, classes, licenses and complete-file verification."
+}

@@ -1,0 +1,124 @@
+{
+  "schema": "geod-agent-project-task-status-verification/v1",
+  "status": "passed-with-declared-scope",
+  "verifiedAt": "2026-10-05T14:35:04.482731+00:00",
+  "scope": "Actual desktop Agent IPC and two live text/tool routes read one real completed SCL copy; unrelated failed tasks are controlled metadata fixtures. No new source download, native window or installed release acceptance.",
+  "modelRoutes": [
+    "deepseek-v4-flash",
+    "qwen3.8-flash"
+  ],
+  "modelTurns": 3,
+  "nativeModelToolCalls": 9,
+  "failedModelToolCalls": 0,
+  "modelRequests": 9,
+  "allRequestsHttp200": true,
+  "nativeToolDefinitionsPerRequest": 48,
+  "completedFile": {
+    "bytes": 2362143,
+    "jobId": "f2567c01-f7c3-4b15-be9e-7f05119f0712",
+    "scope": "Copy of prior real Sentinel SCL download, native checksum inspection before and after model reads; no new source download",
+    "sha256": "ede35bce788bbafd2c0dbda4bca8c0b56c30fbf1027b37db63d8c5ee92e8b1d8"
+  },
+  "foreignRecords": {
+    "count": 8,
+    "scope": "Controlled failed metadata distractors only, not actual failed downloads"
+  },
+  "nativeProjectTotal": 1,
+  "globalTaskTotal": 9,
+  "projectFilteringBeforePaginationChecked": true,
+  "sameConversationAndThreadResumed": true,
+  "naturalRequestsWithoutToolNames": true,
+  "taskRecordsUnchanged": true,
+  "providerAccountsUnchanged": true,
+  "userModelPreferencesChanged": false,
+  "nativeWindowsVaultEntriesWritten": 2,
+  "nativeVaultEntriesDeletedAndReadAbsent": true,
+  "ownedFilesScannedForModelKey": 175,
+  "protocol": "openai-compatible",
+  "soleOrchestrationLoop": "Codex App Server 0.159.2",
+  "upstreamVendorVerified": false,
+  "nativeWindowsWindowTested": false,
+  "usedUserDesktop": false,
+  "installerCreated": false,
+  "published": false,
+  "checks": {
+    "nativeProjectAssociationNewTestsPassed": 7,
+    "runtimePassed": 566,
+    "runtimeIgnored": 10,
+    "agentNodePassed": 29,
+    "desktopPassed": 14,
+    "desktopIgnored": 12,
+    "clippyWarningsDenied": "passed",
+    "repositoryContractsRecipes": "passed",
+    "customProtocolDebugBuild": "passed",
+    "ownedAgentStdio": "passed"
+  },
+  "evidence": [
+    {
+      "path": ".verification/agent-project-task-model-1791210505902593700/case/native-acceptance.json",
+      "bytes": 19844,
+      "sha256": "2d7c7dd00be4e44c3110a52b9b8e9cfd07ec05c2b2b5653302cb18c351f3c2b1"
+    },
+    {
+      "path": ".verification/agent-project-task-model-1791210505902593700/launch.json",
+      "bytes": 17105,
+      "sha256": "29444b6888a7903f0b72379e4c068ae652ff32f304aa3625426e3c5e7ebfa8ae"
+    },
+    {
+      "path": ".verification/agent-project-task-model-1791210505902593700/native.log",
+      "bytes": 670,
+      "sha256": "ca1f2d14eca6fc58a1007e95d07d90994d5642665e0dd015dbfd1ffa1626d188"
+    },
+    {
+      "path": ".verification/agent-project-task-model-1791210505902593700/owned-vault-cleanup.json",
+      "bytes": 212,
+      "sha256": "b517f62f7d1096d6d1b18f620ea44c13618e1ec262dfb53d6e454b791385879c"
+    }
+  ],
+  "earlierHarnessAttempts": [
+    {
+      "status": "failed",
+      "notCountedAsPassed": true,
+      "launch": {
+        "path": ".verification/agent-project-task-model-1791210237761177100/launch.json",
+        "bytes": 1344,
+        "sha256": "551e6848ea51f38106150589032e46ba1829d3dc87fa58d94a9443bfe48fcae7"
+      },
+      "nativeLog": {
+        "path": ".verification/agent-project-task-model-1791210237761177100/native.log",
+        "bytes": 1074,
+        "sha256": "a3a26a1c47333d9759530d739a44c15437c46a1cdc7b243d9d5700586f2e4838"
+      },
+      "ownedVaultCleanup": {
+        "path": ".verification/agent-project-task-model-1791210237761177100/owned-vault-cleanup.json",
+        "bytes": 212,
+        "sha256": "b517f62f7d1096d6d1b18f620ea44c13618e1ec262dfb53d6e454b791385879c"
+      }
+    },
+    {
+      "status": "failed",
+      "notCountedAsPassed": true,
+      "launch": {
+        "path": ".verification/agent-project-task-model-1791210351945489200/launch.json",
+        "bytes": 18924,
+        "sha256": "3e7ba9286c975421be0ac5357ead6e708ff031fecac14ce6a8f783d8d039ab4e"
+      },
+      "nativeLog": {
+        "path": ".verification/agent-project-task-model-1791210351945489200/native.log",
+        "bytes": 1239,
+        "sha256": "8a06baa00f094c5a117c290f4bcfd15e7084b2549c8c77ae910f673c01af5596"
+      },
+      "ownedVaultCleanup": {
+        "path": ".verification/agent-project-task-model-1791210351945489200/owned-vault-cleanup.json",
+        "bytes": 212,
+        "sha256": "9e83a57dac6b63177fbaab19ce0120442d8750bad879a06e3c553097ec154af9"
+      }
+    }
+  ],
+  "remainingScope": [
+    "Live active and failed current-project model scenarios",
+    "Protected original authorization with actual test accounts",
+    "Other model protocols, images, encrypted reasoning and compaction",
+    "Clean installed distribution and native window acceptance"
+  ]
+}

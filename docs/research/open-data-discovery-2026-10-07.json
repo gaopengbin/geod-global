@@ -1,0 +1,785 @@
+{
+  "searches": [
+    {
+      "key": "source_discovery_0",
+      "items": [
+        {
+          "title": "免费下载高清卫星影像！",
+          "url": "https://mp.weixin.qq.com/s/bd8wmr3bHidLdUrbGIsutA",
+          "published": "N/A"
+        },
+        {
+          "title": "中国多时期土地利用遥感监测数据集（...",
+          "url": "https://www.resdc.cn/DOI/",
+          "published": "N/A"
+        },
+        {
+          "title": "“航天宏图一号”千景SAR数据免费共享 携手科学探索未来",
+          "url": "https://mp.weixin.qq.com/s/eiDLf7_cG7vMfHVh55WzTQ",
+          "published": "N/A"
+        },
+        {
+          "title": "遥感免费数据源合集— RS Free Data Source 1.0.0 文档",
+          "url": "https://rs-freedatasource.readthedocs.io/",
+          "published": "N/A"
+        },
+        {
+          "title": "中巴资源卫星",
+          "url": "http://www.dsac.cn/(F(VZjXwN-B27VzBlvdOD-CojJZzN_jHwcD4nclc8BP2xFWZGsNK07YJ9yVx0vOGv5f9LB7KUXci3Re_qgrshxTDJmv6F5pZKkn9wehC3RIu6-o3Pjk3TRBqFjkvHfpLoLW0))/DataProduct/Index/1005",
+          "published": "N/A"
+        },
+        {
+          "title": "免费从网盘下载的影像和高程DEM如何使用？-高程DEM-高清卫星影像下载_私有化地图部署_离线地图瓦片发布_谷歌卫星地图下载器-水经注GIS",
+          "url": "https://rivermap.cn/docs/show-2277.html",
+          "published": "N/A"
+        },
+        {
+          "title": "地理遥感数据介绍-地理遥感生态网平台-中国领先的地理生态信息服务平台",
+          "url": "https://www.gisrs.cn/?public_298%2F7cfce933-43ea-4d7b-8dcc-9ecd4f1aedc9.html=",
+          "published": "N/A"
+        },
+        {
+          "title": "国家遥感数据与应用服务平台",
+          "url": "https://www.cpeos.org.cn/dataSearch3D/",
+          "published": "N/A"
+        },
+        {
+          "title": "高分系列(GaoFen-1~GaoFen-14)卫星介绍及其数据下载教程-腾讯云开发者社区-腾讯云",
+          "url": "https://developer.cloud.tencent.com/article/2113139",
+          "published": "N/A"
+        },
+        {
+          "title": "高分卫星、环境卫星、资源卫星等遥感影像下载-腾讯云开发者社区-腾讯云",
+          "url": "https://cloud.tencent.com/developer/article/2514795",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "source_discovery_1",
+      "items": [
+        {
+          "title": "Your Gateway to NASA Earth Observation Data | NASA Earthdata",
+          "url": "https://www.earthdata.nasa.gov/",
+          "published": "N/A"
+        },
+        {
+          "title": "Global Imagery Browse Services APIs | NASA Earthdata",
+          "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api",
+          "published": "2021-06-09T00:00:00.000Z"
+        },
+        {
+          "title": "GIS Data Download | U.S. Geological Survey",
+          "url": "https://www.usgs.gov/the-national-map-data-delivery/gis-data-download",
+          "published": "N/A"
+        },
+        {
+          "title": "LAADS DAAC | NASA",
+          "url": "https://ladsweb.modaps.eosdis.nasa.gov/tools-and-services",
+          "published": "N/A"
+        },
+        {
+          "title": "JAXA Earth API",
+          "url": "https://data.earth.jaxa.jp/en/",
+          "published": "N/A"
+        },
+        {
+          "title": "Data Catalog | Planetary Computer",
+          "url": "https://planetarycomputer.microsoft.com/CATALOG",
+          "published": "N/A"
+        },
+        {
+          "title": "OpenLandMap - OpenGeoHub Foundation: Connect | Create",
+          "url": "https://opengeohub.org/about-openlandmap/",
+          "published": "N/A"
+        },
+        {
+          "title": "N/A",
+          "url": "https://docs.digitalearthafrica.org/en/latest/data_specs/",
+          "published": "N/A"
+        },
+        {
+          "title": "Data & Access - EnMAP",
+          "url": "https://www.enmap.org/data_access/",
+          "published": "N/A"
+        },
+        {
+          "title": "Sentinel-2 Global Image Mosaic — Copernicus Land Monitoring Service",
+          "url": "https://land.copernicus.eu/api/en/products/global-image-mosaic",
+          "published": "N/A"
+        },
+        {
+          "title": "Medium Resolution Digital Elevation Model (MRDEM) - CanElevation Series - Open Government Portal",
+          "url": "https://open.canada.ca/data/en/dataset/18752265-bda3-498c-a4ba-9dfe68cb98da",
+          "published": "N/A"
+        },
+        {
+          "title": "Free GIS Data Directory & Geo Data Hub | GeoDataViewer",
+          "url": "https://geodataviewer.com/datasets/",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "source_discovery_2",
+      "items": [
+        {
+          "title": "资源学科创新平台",
+          "url": "https://www.data.ac.cn/",
+          "published": "N/A"
+        },
+        {
+          "title": "国家地球系统科学数据中心简介",
+          "url": "https://www.geodata.cn/main/help/aboutuskxsj",
+          "published": "N/A"
+        },
+        {
+          "title": "国家生态数据中心资源共享服务平台",
+          "url": "https://www.nesdc.org.cn/",
+          "published": "N/A"
+        },
+        {
+          "title": "全国土地覆盖数据服务-土地资源类数据服务-地理国情监测云平台",
+          "url": "http://www.dsac.cn/dsac_VX/DataProduct/Detail/200827",
+          "published": "N/A"
+        },
+        {
+          "title": "资源环境科学与数据平台",
+          "url": "https://www.resdc.cn/DataList.aspx",
+          "published": "N/A"
+        },
+        {
+          "title": "绿源大地资源环境数据服务",
+          "url": "http://www.resdata.com.cn/datasearch/",
+          "published": "N/A"
+        },
+        {
+          "title": "资源环境科学与数据平台",
+          "url": "https://www.resdc.cn/DOI/doi.aspx?DOIid=54",
+          "published": "N/A"
+        },
+        {
+          "title": "地理国情数据库",
+          "url": "http://www.ngcc.cn/dlxxzy/dlgqsjk/",
+          "published": "N/A"
+        },
+        {
+          "title": "二、地球系统科学数据共享平台科技资源开放共享目录",
+          "url": "https://www.most.gov.cn/ztzl/kjzykfgx/kjzygjjctjpt/kjzyptml/201407/W020140716588457346988.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "二级分类土地利用数据-地理遥感生态网平台-中国领先的地理生态信息服务平台",
+          "url": "https://www.gisrs.cn/?data_79%2F75cc9192-749e-4883-9c16-d830ca56f28c.html=",
+          "published": "N/A"
+        },
+        {
+          "title": "国家自然资源和地理空间基础信息库",
+          "url": "https://sgic.net.cn/",
+          "published": "N/A"
+        },
+        {
+          "title": "地理空间数据云",
+          "url": "https://gscloud.cn/",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "source_follow_0",
+      "items": [
+        {
+          "title": "数据分享|中国首套1米分辨率的全国土地覆盖数据集（SinoLC-1）（百度云盘链接）",
+          "url": "https://mp.weixin.qq.com/s/RtU0Z6CHfT7FCaSY7WbHLQ",
+          "published": "N/A"
+        },
+        {
+          "title": "数据资源-星图云开放平台",
+          "url": "https://open.geovisearth.com/service/resource",
+          "published": "N/A"
+        },
+        {
+          "title": "空天院发布多要素高分辨率地物矢量数据集IRSAMap--中国科学院空天信息创新研究院",
+          "url": "https://www.aircas.ac.cn/dtxw/kydt/202509/t20250925_7979579.html",
+          "published": "2025-09-25T00:00:00.000Z"
+        },
+        {
+          "title": "免费下载高清卫星影像！",
+          "url": "https://mp.weixin.qq.com/s/bd8wmr3bHidLdUrbGIsutA",
+          "published": "N/A"
+        },
+        {
+          "title": "场景分类高分辨率样本数据集",
+          "url": "https://open.geovisearth.com/service/resource/179",
+          "published": "N/A"
+        },
+        {
+          "title": "国家地球系统科学数据中心地球系统科学数据共享平台",
+          "url": "http://www.geodata.cn/data/index.html",
+          "published": "N/A"
+        },
+        {
+          "title": "NASA Earthdata: Your Gateway to NASA Earth Observation ...",
+          "url": "https://www.earthdata.nasa.gov/",
+          "published": "N/A"
+        },
+        {
+          "title": "IRSAMap|遥感数据集|地理信息系统数据集",
+          "url": "https://www.selectdataset.com/dataset/0f3688e54dab5052c2453fce1420c22f/irsamap",
+          "published": "2025-08-22T00:00:00.000Z"
+        },
+        {
+          "title": "裁剪到市！全球17种土地类型数据集(全球/中国/分省/分市/Tif)",
+          "url": "https://blog.csdn.net/2301_78812497/article/details/148625918",
+          "published": "2025-06-13T01:38:31.000Z"
+        },
+        {
+          "title": "最新论文 | SegEarth-OV2: 西安交大团队提出无标注遥感图像开放词汇语义分割框架, 代码/模型开源！",
+          "url": "https://mp.weixin.qq.com/s/UH1vVQgceVu_JMR04tAeXA",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "source_follow_1",
+      "items": [
+        {
+          "title": "GLC_FCS30D: the first global 30-m land-cover dynamic monitoring product with fine classification system from 1985 to 2022 | Zenodo",
+          "url": "https://zenodo.org/records/15063683",
+          "published": "2025-03-21T00:00:00.000Z"
+        },
+        {
+          "title": "The 30 m annual land cover datasets and its dynamics in China ...",
+          "url": "https://zenodo.org/records/15853565",
+          "published": "2025-07-10T00:00:00.000Z"
+        },
+        {
+          "title": "China's 30 meter annual land cover dataset and its dynamic changes (1985-2022) -",
+          "url": "https://www.ncdc.ac.cn/portal/metadata/9de270f3-b5ad-4e19-afc0-2531f3977f2f",
+          "published": "N/A"
+        },
+        {
+          "title": "GLC_FCS30D: global 30-m land-cover dynamic monitoring product with a fine classification system from 1985 to 2022 -- Global 30m surface coverage fine classification products",
+          "url": "https://data.casearth.cn/thematic/glc_fcs30/314",
+          "published": "N/A"
+        },
+        {
+          "title": "全球精细地表覆盖 - 地球大数据科学工程",
+          "url": "https://data.casearth.cn/thematic/glc_fcs30?lang=zh_CN",
+          "published": "N/A"
+        },
+        {
+          "title": "全球精细地表覆盖",
+          "url": "https://data.casearth.cn/thematic/glc_fcs30?lang=zh",
+          "published": "N/A"
+        },
+        {
+          "title": "SDG中心刘良云研究员团队发布首套1985-2022年全球30米土地 ...",
+          "url": "https://www.cbas.ac.cn/yjjz/202403/t20240327_489908.html",
+          "published": "2024-03-27T00:00:00.000Z"
+        },
+        {
+          "title": "GLC_FCS10: a global 10-m land-cover dataset with a fine classification system from Sentinel-1 and Sentinel-2 time-series data in Google Earth Engine",
+          "url": "https://exa.ai/library/publication/mdtyh4zf135",
+          "published": "2025-03-20T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "key": "official_search_0",
+      "items": [
+        {
+          "title": "Download HydroSHEDS v2 Core Data | Flow Direction & Rivers",
+          "url": "https://www.hydrosheds.org/downloads-core-data-v2",
+          "published": "N/A"
+        },
+        {
+          "title": "Download HydroSHEDS Core Products",
+          "url": "https://www.hydrosheds.org/hydrosheds-core-downloads",
+          "published": "N/A"
+        },
+        {
+          "title": "SoilGrids250m 2.0  aggregated 1km (30 arcsec)",
+          "url": "https://zenodo.org/records/15252413",
+          "published": "2025-04-20T00:00:00.000Z"
+        },
+        {
+          "title": "SoilGrids access – SoilGrids Documentation",
+          "url": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+          "published": "N/A"
+        },
+        {
+          "title": "SoilGrids - global gridded soil information – SoilGrids Documentation",
+          "url": "https://docs.isric.org/globaldata/soilgrids/index.html",
+          "published": "N/A"
+        },
+        {
+          "title": "WOPR",
+          "url": "https://wopr.worldpop.org/",
+          "published": "N/A"
+        },
+        {
+          "title": "Global Demographic Data",
+          "url": "https://data.worldpop.org/repo/prj/Global_2015_2030/R2025A/doc/Global2_Release_Statement_R2025A_v1.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "HydroSHEDS v2",
+          "url": "https://www.hydrosheds.org/hydrosheds-v2",
+          "published": "N/A"
+        },
+        {
+          "title": "WebDAV: R - terra – SoilGrids Documentation",
+          "url": "https://docs.isric.org/globaldata/soilgrids/webdav_from_R_terra.html",
+          "published": "N/A"
+        },
+        {
+          "title": "World - Population Counts | Humanitarian Dataset | HDX",
+          "url": "https://data.humdata.org/dataset/worldpop-population-counts-for-world",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "official_search_1",
+      "items": [
+        {
+          "title": "ERA5 Land hourly time-series data from 1950 to present",
+          "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries?tab=download",
+          "published": "2025-06-04T00:00:00.000Z"
+        },
+        {
+          "title": "VIIRS Nighttime Light",
+          "url": "https://eogdata.mines.edu/products/vnl/",
+          "published": "N/A"
+        },
+        {
+          "title": "ERA5-Land hourly data from 1950 to present",
+          "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=analysis_ready_data",
+          "published": "2019-07-12T00:00:00.000Z"
+        },
+        {
+          "title": "ERA5-Land: data documentation - Copernicus Knowledge Base - ECMWF Confluence Wiki",
+          "url": "https://confluence.ecmwf.int/spaces/CKB/pages/140385202/ERA5-Land+data+documentation",
+          "published": "N/A"
+        },
+        {
+          "title": "Gridded Bathymetry Data | GEBCO",
+          "url": "https://www.gebco.net/data-products/gridded-bathymetry-data",
+          "published": "N/A"
+        },
+        {
+          "title": "ERA5-Land monthly averaged data from 1950 to present",
+          "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means?tab=overview",
+          "published": "N/A"
+        },
+        {
+          "title": "VIIRS Nighttime Day/Night Annual Band Composites V2.2  |  Earth Engine Data Catalog  |  Google for Developers",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/NOAA_VIIRS_DNB_ANNUAL_V22",
+          "published": "N/A"
+        },
+        {
+          "title": "World Bank - Light Every Night — Open Nighttime Lights",
+          "url": "https://worldbank.github.io/OpenNightLights/wb-light-every-night-readme.html",
+          "published": "N/A"
+        },
+        {
+          "title": "ERA5 Land hourly time-series data from 1950 to present",
+          "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries?tab=overview",
+          "published": "2025-06-04T00:00:00.000Z"
+        },
+        {
+          "title": "Annual time series of global VIIRS nighttime lights for 2000 ...",
+          "url": "https://data.europa.eu/data/datasets/oai-zenodo-org-8277198?locale=en",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "official_search_2",
+      "items": [
+        {
+          "title": "Attribution and Licensing - Overture Documentation",
+          "url": "https://docs.overturemaps.org/attribution/",
+          "published": "N/A"
+        },
+        {
+          "title": "Accessing the Overture Catalog | Overture Documentation",
+          "url": "https://docs.overturemaps.org/getting-data/cloud-sources/",
+          "published": "N/A"
+        },
+        {
+          "title": "microsoft/GlobalMLBuildingFootprints",
+          "url": "https://github.com/microsoft/GlobalMLBuildingFootprints?tab=readme-ov-file",
+          "published": "N/A"
+        },
+        {
+          "title": "Overture 2024-03-12-alpha.0 Release Notes - Overture Maps Foundation",
+          "url": "https://overturemaps.org/overture-2024-03-12-alpha-0-release-notes/",
+          "published": "2024-03-12T00:00:00.000Z"
+        },
+        {
+          "title": "GEOFABRIK // Downloads",
+          "url": "https://www.geofabrik.de/data/download.html",
+          "published": "N/A"
+        },
+        {
+          "title": "GitHub - microsoft/GlobalMLBuildingFootprints: Worldwide ...",
+          "url": "https://github.com/microsoft/globalmlbuildingfootprints",
+          "published": "N/A"
+        },
+        {
+          "title": "Microsoft Building Footprints - Planetary Computer",
+          "url": "https://planetarycomputer.microsoft.com/dataset/ms-buildings",
+          "published": "N/A"
+        },
+        {
+          "title": "OvertureMaps/data",
+          "url": "https://github.com/OvertureMaps/data",
+          "published": "2023-07-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "key": "target_search_0",
+      "items": [
+        {
+          "title": "SinoLC-1: the first 1-meter resolution national-scale land- ...",
+          "url": "https://zenodo.org/records/8214871",
+          "published": "2023-08-04T12:42:19.000Z"
+        },
+        {
+          "title": "SinoLC-1: the first 1-meter resolution national-scale land-cover map of China created with the deep learning framework and open-access data (Update data: August, 2023) | Zenodo",
+          "url": "https://zenodo.org/records/8214467",
+          "published": "2023-08-04T00:00:00.000Z"
+        },
+        {
+          "title": "SinoLC-1: the first 1-meter resolution national-scale land-cover map of China created with the deep learning framework and open-access data (East of China) | Zenodo",
+          "url": "https://zenodo.org/records/7709370",
+          "published": "2023-03-08T00:00:00.000Z"
+        },
+        {
+          "title": "SinoLC-1: the first 1-meter resolution national-scale land-cover map of China created with the deep learning framework and open-access data (Southwest of China) | Zenodo",
+          "url": "https://zenodo.org/records/7707462",
+          "published": "2023-03-08T00:00:00.000Z"
+        },
+        {
+          "title": "SinoLC-1: the first 1 m resolution national-scale land-cover ...",
+          "url": "https://essd.copernicus.org/articles/15/4749/2023/",
+          "published": "2023-10-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "key": "target_search_1",
+      "items": [
+        {
+          "title": "IRSAMap: High-Resolution Land Cover Vector Dataset",
+          "url": "https://data.casearth.cn/dataset/68d9f8879418b437b225aed8",
+          "published": "N/A"
+        },
+        {
+          "title": "ucas-dlg/IRSAMap",
+          "url": "https://github.com/ucas-dlg/IRSAMap",
+          "published": "N/A"
+        },
+        {
+          "title": "空天院发布多要素高分辨率地物矢量数据集IRSAMap--中国科学院空天信息创新研究院",
+          "url": "http://www.aircas.cas.cn/dtxw/kydt/202509/t20250925_7979579.html",
+          "published": "2025-09-25T00:00:00.000Z"
+        },
+        {
+          "title": "空天院发布多要素高分辨率地物矢量数据集IRSAMap",
+          "url": "https://aircas.ac.cn/dtxw/kydt/202509/t20250925_7979579.html",
+          "published": "2025-09-25T00:00:00.000Z"
+        },
+        {
+          "title": "IRSAMap:Towards Large-Scale, High-Resolution Land ...",
+          "url": "https://arxiv.org/abs/2508.16272",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "target_search_2",
+      "items": [
+        {
+          "title": "FABDEM V1-2",
+          "url": "https://data.bris.ac.uk/data/dataset/s5hqmjcdj8yo2ibzi9b4ew3sn",
+          "published": "N/A"
+        },
+        {
+          "title": "MERIT Hydro: Global Hydrography Datasets",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/MERIT_Hydro_v1_0_1",
+          "published": "N/A"
+        },
+        {
+          "title": "Readme",
+          "url": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/readme.txt",
+          "published": "N/A"
+        },
+        {
+          "title": "FABDEM V1-2",
+          "url": "https://research-information.bris.ac.uk/en/datasets/fabdem-v1-2/",
+          "published": "N/A"
+        },
+        {
+          "title": "FABDEM - University of Bristol Research Portal",
+          "url": "https://research-information.bris.ac.uk/en/datasets/fabdem-2/",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "target_search_3",
+      "items": [
+        {
+          "title": "LICENSE AGREEMENT ON THE USE OF ENMAP DATA",
+          "url": "https://www.enmap.org/data/resources/EnMAP_Data_License.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "EnMAP Campaign Portal",
+          "url": "https://www.enmap.org/data_tools/flights/",
+          "published": "N/A"
+        },
+        {
+          "title": "Data & Access",
+          "url": "https://www.enmap.org/data_access/",
+          "published": "N/A"
+        },
+        {
+          "title": "EnMAP Frequently Asked Questions",
+          "url": "https://www.enmap.org/data/doc/EnMAP_FAQ.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "EOC Geoservice EnMAP HSI - Level 2A Hyperspectral Images - Global",
+          "url": "https://geoservice.dlr.de/web/datasets/enmap_l2_hsi",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "target_follow_0",
+      "items": [
+        {
+          "title": "Global Forest Change 2000-2025 Data Download",
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2025-v1.13/download.html",
+          "published": "N/A"
+        },
+        {
+          "title": "Hansen Global Forest Change v1.13 (2000-2025)",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2025_v1_13",
+          "published": "N/A"
+        },
+        {
+          "title": "Global Forest Change - LCLUC - University of Maryland",
+          "url": "https://lcluc.umd.edu/metadata/global-forest-change",
+          "published": "N/A"
+        },
+        {
+          "title": "Global Forest Change - Google Earth Engine Apps",
+          "url": "https://glad.earthengine.app/view/global-forest-change",
+          "published": "N/A"
+        },
+        {
+          "title": "Hansen Global Forest Change — UMD",
+          "url": "https://docs.cecil.earth/datasets/9659ec1d-7091-4f8b-9db5-e9fe07d2f508",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "target_follow_1",
+      "items": [
+        {
+          "title": "LICENSE AGREEMENT ON THE USE OF ENMAP DATA",
+          "url": "https://geoservice.dlr.de/resources/licenses/enmap/EnMAP-Data_License.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "Data & Access - EnMAP",
+          "url": "https://www.enmap.org/data_access/",
+          "published": "N/A"
+        },
+        {
+          "title": "EnMAP Frequently Asked Questions",
+          "url": "https://www.enmap.org/data/doc/EnMAP_FAQ.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "EOC Geoservice EnMAP HSI - Level 2A Hyperspectral Images - Global",
+          "url": "https://geoservice.dlr.de/web/datasets/enmap_l2_hsi",
+          "published": "N/A"
+        },
+        {
+          "title": "Data Access ",
+          "url": "https://enmap-box.readthedocs.io/en/latest/general/data%5Faccess.html",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "target_follow_2",
+      "items": [
+        {
+          "title": "资源环境科学与数据平台",
+          "url": "https://www.resdc.cn/DOI/doi.aspx?DOIid=54",
+          "published": "N/A"
+        },
+        {
+          "title": "中国多时期土地利用遥感监测数据集（CNLUCC）",
+          "url": "https://www.resdc.cn/DOI/DOI.aspx?DOIID=201",
+          "published": "N/A"
+        },
+        {
+          "title": "资源环境科学与数据平台",
+          "url": "https://www.resdc.cn/doi/doi.aspx?DOIid=54",
+          "published": "N/A"
+        },
+        {
+          "title": "资源环境科学与数据平台",
+          "url": "https://www.resdc.cn/DOI/DOI.aspx?DOIID=54&WebShieldSessionVerify=f0gKBc7GvSgwMt1bbQlf",
+          "published": "N/A"
+        },
+        {
+          "title": "中国多时期土地利用遥感监测数据集（... - 资源环境科学与数据平台",
+          "url": "https://www.resdc.cn/DOI/",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "target_follow_3",
+      "items": [
+        {
+          "title": "GLC_FCS10: global 10 m land-cover dataset with fine ...",
+          "url": "https://zenodo.org/records/14729665",
+          "published": "2025-01-24T00:00:00.000Z"
+        },
+        {
+          "title": "GLC_FCS10: global 10 m land-cover dataset with fine ...",
+          "url": "https://data.casearth.cn/dataset/68ae9791913dfd1b2d6cdfb9",
+          "published": "N/A"
+        },
+        {
+          "title": "GLC_FCS10: a global 10 m land-cover dataset with a fine ...",
+          "url": "https://essd.copernicus.org/articles/17/4039/2025/",
+          "published": "2025-08-21T00:00:00.000Z"
+        },
+        {
+          "title": "ESSD - Assets - GLC_FCS10: a global 10 m land-cover dataset with a fine classification system from Sentinel-1 and Sentinel-2 time-series data in Google Earth Engine",
+          "url": "https://essd.copernicus.org/articles/17/4039/2025/essd-17-4039-2025-assets.html",
+          "published": "2025-08-21T00:00:00.000Z"
+        },
+        {
+          "title": "ESSD - Metrics - GLC_FCS10: a global 10 m land-cover dataset with a fine classification system from Sentinel-1 and Sentinel-2 time-series data in Google Earth Engine",
+          "url": "https://essd.copernicus.org/articles/17/4039/2025/essd-17-4039-2025-metrics.html",
+          "published": "2025-08-21T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "fetchRequests": 55,
+  "fetchBatches": [
+  {
+    "batch": 1,
+    "returnedPages": [
+      "https://data.inpe.br/dados/cbers-4a/",
+      "https://registry.opendata.aws/maxar-open-data/",
+      "https://www.enmap.org/data_access/",
+      "https://data.earth.jaxa.jp/en/",
+      "https://worldcover2021.esa.int/",
+      "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1",
+      "https://data.casearth.cn/thematic/glc_fcs30?lang=zh",
+      "https://zenodo.org/records/5816591",
+      "https://www.hydrosheds.org/",
+      "https://www.worldpop.org/",
+      "https://soilgrids.org/",
+      "https://ghsl.jrc.ec.europa.eu/download.php"
+    ],
+    "errors": []
+  },
+  {
+    "batch": 2,
+    "returnedPages": [
+      "https://mp.weixin.qq.com/s/eiDLf7_cG7vMfHVh55WzTQ",
+      "https://www.piesat.cn/",
+      "https://www.geoBoundaries.org/",
+      "https://www.worldclim.org/data/worldclim21.html",
+      "https://www.chc.ucsb.edu/data/chirps",
+      "https://eogdata.mines.edu/products/vnl/",
+      "https://glad.earthengine.app/view/global-forest-change",
+      "https://www.usgs.gov/3d-elevation-program/about-3dep-products-services",
+      "https://www.tpdc.ac.cn/",
+      "https://www.geodata.cn/"
+    ],
+    "errors": [
+      "Error fetching https://storage.googleapis.com/global-surface-water/downloads2021.html: CRAWL_NOT_FOUND",
+      "Error fetching https://www.resdc.cn/DOI/DOI.aspx?DOIid=54: unknown error"
+    ]
+  },
+  {
+    "batch": 3,
+    "returnedPages": [
+      "https://zenodo.org/records/15853565",
+      "https://www.aircas.ac.cn/dtxw/kydt/202509/t20250925_7979579.html",
+      "https://www.chc.ucsb.edu/data/chirps3",
+      "https://global-surface-water.appspot.com/download",
+      "https://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_Hydro/",
+      "https://data.bris.ac.uk/data/dataset/25wfy0f9ukoge2gs7a5mqpq2j7",
+      "https://soilgrids.org/",
+      "https://www.worldpop.org/datacatalog/",
+      "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html"
+    ],
+    "errors": [
+      "Error fetching https://glad.umd.edu/dataset/global-forest-change: CRAWL_NOT_FOUND"
+    ]
+  },
+  {
+    "batch": 4,
+    "returnedPages": [
+      "https://zenodo.org/records/8214467",
+      "https://data.bris.ac.uk/data/dataset/s5hqmjcdj8yo2ibzi9b4ew3sn",
+      "https://www.hydrosheds.org/hydrosheds-core-downloads",
+      "https://github.com/ucas-dlg/IRSAMap",
+      "https://www.geodata.cn/main/help/aboutuskxsj",
+      "https://data.tpdc.ac.cn/",
+      "https://gscloud.cn/"
+    ],
+    "errors": [
+      "Error fetching https://www.resdc.cn/DOI/DOI.aspx?DOIid=54: unknown error"
+    ]
+  },
+  {
+    "batch": 5,
+    "returnedPages": [
+      "https://www.enmap.org/data/doc/EnMAP_FAQ.pdf",
+      "https://www.worldpop.org/sdi/intro/",
+      "https://ghsl.jrc.ec.europa.eu/ghs_buS2023.php",
+      "https://www.gebco.net/data-products/gridded-bathymetry-data",
+      "https://zenodo.org/records/14729665",
+      "https://geoservice.dlr.de/web/datasets/enmap_l2_hsi",
+      "https://www.usgs.gov/3d-elevation-program/about-3dep-products-services"
+    ],
+    "errors": []
+  },
+  {
+    "batch": 6,
+    "returnedPages": [
+      "https://esa-worldcover.org/en/data-access",
+      "https://zenodo.org/records/15063683",
+      "https://zenodo.org/records/15853565",
+      "https://zenodo.org/records/14729665",
+      "https://zenodo.org/records/8214467",
+      "https://www.geoboundaries.org/"
+    ],
+    "errors": []
+  }
+],
+  "checkedAt": "2026-10-07",
+  "newNativeDownloads": 0,
+  "resultEntries": 120,
+  "uniqueDiscoveryUrls": 112
+}

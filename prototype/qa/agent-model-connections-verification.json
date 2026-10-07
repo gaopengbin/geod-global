@@ -1,0 +1,123 @@
+{
+  "schema": "geod-agent-model-connections-verification/v1",
+  "status": "passed-with-declared-scope",
+  "verifiedAt": "2026-10-05T13:27:20.629001+00:00",
+  "scope": "Actual Chat Completions routes through owned desktop Agent IPC, connection isolation, native Windows credential persistence and process restart. No native window or installed release acceptance.",
+  "modelRoutes": [
+    "deepseek-v4-flash",
+    "gpt-5.6-terra",
+    "qwen3.8-flash"
+  ],
+  "modelTurns": 8,
+  "nativeModelToolCalls": 17,
+  "failedModelToolCalls": 0,
+  "modelRequests": 18,
+  "allRequestsHttp200": true,
+  "nativeToolDefinitionsPerRequest": 48,
+  "nativeWindowsVaultEntriesWritten": 6,
+  "nativeVaultEntriesDeletedAndReadAbsent": true,
+  "ownedFilesScannedForModelKey": 166,
+  "userModelPreferencesChanged": false,
+  "providerAccountsChanged": false,
+  "upstreamVendorVerified": false,
+  "nativeWindowsWindowTested": false,
+  "usedUserDesktop": false,
+  "installerCreated": false,
+  "published": false,
+  "privateOrchestratorModel": "geod-text-tools",
+  "remoteModelIdentityPreserved": true,
+  "protocol": "openai-compatible",
+  "soleOrchestrationLoop": "Codex App Server 0.159.2",
+  "modelExecutionToolsExposed": false,
+  "runs": [
+    {
+      "status": "passed",
+      "modelRoutes": [
+        "deepseek-v4-flash",
+        "gpt-5.6-terra"
+      ],
+      "modelTurns": 4,
+      "nativeModelToolCalls": 8,
+      "failedModelToolCalls": 0,
+      "modelRequests": 9,
+      "allRequestsHttp200": true,
+      "nativeToolDefinitionsPerRequest": 48,
+      "metadataProjects": 1,
+      "jobs": 0,
+      "nativeWindowsVaultEntriesWritten": 3,
+      "nativeVaultEntriesDeletedAndReadAbsent": true,
+      "sameConversationAndThreadResumed": true,
+      "incompatibleHistoryRefused": true,
+      "identicalEndpointModelConnectionsIsolated": true,
+      "busyMutationRefused": true,
+      "freshNativeProjectNamesChecked": true,
+      "sourceMetadataSha256": "af48e15b92ff53dcae60d48993561a10ba7b804ce9224c67839d54cf7e82e964",
+      "modelKeyAbsentFromOwnedFiles": true,
+      "ownedFilesScanned": 83,
+      "evidence": [
+        {
+          "path": ".verification/agent-connection-model-1791206130110263100/case/native-acceptance.json",
+          "bytes": 30740,
+          "sha256": "fe55f291e1b6b7fab9e917e8a02f76f07bbca6390dacb6dda66c39bbafeeeb99"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791206130110263100/launch.json",
+          "bytes": 2853,
+          "sha256": "d856e77d1d420d1aa6e034c5148ac14b7f98d1f58d4c7b0b17bcb84ee2fd2ff9"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791206130110263100/native.log",
+          "bytes": 590,
+          "sha256": "25ebaed179b45862dd8fbfe69d7c24df78b85af961906ef76f46dfe6fb2b53da"
+        }
+      ]
+    },
+    {
+      "status": "passed",
+      "modelRoutes": [
+        "deepseek-v4-flash",
+        "qwen3.8-flash"
+      ],
+      "modelTurns": 4,
+      "nativeModelToolCalls": 9,
+      "failedModelToolCalls": 0,
+      "modelRequests": 9,
+      "allRequestsHttp200": true,
+      "nativeToolDefinitionsPerRequest": 48,
+      "metadataProjects": 1,
+      "jobs": 0,
+      "nativeWindowsVaultEntriesWritten": 3,
+      "nativeVaultEntriesDeletedAndReadAbsent": true,
+      "sameConversationAndThreadResumed": true,
+      "incompatibleHistoryRefused": true,
+      "identicalEndpointModelConnectionsIsolated": true,
+      "busyMutationRefused": true,
+      "freshNativeProjectNamesChecked": true,
+      "sourceMetadataSha256": "af48e15b92ff53dcae60d48993561a10ba7b804ce9224c67839d54cf7e82e964",
+      "modelKeyAbsentFromOwnedFiles": true,
+      "ownedFilesScanned": 83,
+      "evidence": [
+        {
+          "path": ".verification/agent-connection-model-1791206285546094900/case/native-acceptance.json",
+          "bytes": 32497,
+          "sha256": "3056d88387d286b05dc77e9fe57f4d1b47da7d38dcd9323b3e09005f4e22842f"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791206285546094900/launch.json",
+          "bytes": 2856,
+          "sha256": "f627d0202434083671478f27f72474876a572af225663d0bbbf3333beedd4b62"
+        },
+        {
+          "path": ".verification/agent-connection-model-1791206285546094900/native.log",
+          "bytes": 589,
+          "sha256": "7ec08272757d739f5f0366046e2fbce8662400d17699fe21849e617701e5d841"
+        }
+      ]
+    }
+  ],
+  "remainingScope": [
+    "Positive protected original authorization with actual test accounts",
+    "Other model protocols, images, encrypted reasoning and compaction",
+    "Clean installed distribution and native window acceptance"
+  ]
+}

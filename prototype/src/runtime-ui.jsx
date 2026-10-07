@@ -370,7 +370,7 @@ function RasterDialog({ job, onClose }) {
   </Modal>;
 }
 
-export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon, projectName, projectId }) {
+export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon, projectName, projectId, focusedJobId }) {
   const { act, health, projects = [], jobs: allJobs = jobs, busyJobs = {}, batchRetry } = useContext(RuntimeContext);
   const { t, locale, number, date } = useI18n();
   const [busy, setBusy] = useState({});
@@ -442,6 +442,7 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
       ? `${date(`${sceneId[2]}-${sceneId[3]}-${sceneId[4]}`)} · ${sceneId[1]}` : !derived && landsatId ? `${date(`${landsatId[3]}-${landsatId[4]}-${landsatId[5]}`)} · ${landsatId[1]}/${landsatId[2]}` : job.title || job.itemId;
     return {
       id: job.id,
+      highlighted: job.id === focusedJobId,
       title: scientificRgb ? job.title || t('Scientific RGB') : customRaster ? readableTitle : projectName && mosaic ? `${t(assetLabel(job.assetKey))} · ${t(projectClip ? 'Area clip' : 'Mosaic and clip')}` : safeId ? `${date(`${safeId[1]}-${safeId[2]}-${safeId[3]}`)} · ${safeId[4]}` : readableTitle,
       description: library ? type : scientificRgb ? t('Create scientific RGB') : coverage ? t('Coverage subset download') : customRaster ? t('Original raster download') : viirsOriginal ? t('VIIRS original product download') : mosaic ? t(projectClip ? 'Project clip task' : 'Project mosaic task') : prepared ? t(job.viirsPrepare ? 'Prepare VIIRS band' : 'Prepare SAFE raster') : safeProduct ? t('Original SAFE product download') : job.assetKey === 'aerial' ? t('Aerial imagery download') : elevation ? t('Elevation download') : radar ? `RTC · ${job.assetKey.toUpperCase()}` : MODIS_SCIENCE[job.assetKey] ? t(assetLabel(job.assetKey)) : quality ? t('Quality layer download') : vegetation ? t(assetLabel(job.assetKey)) : reflectance ? t(assetLabel(job.assetKey)) : t(derived ? 'Raster clip task' : job.assetKey === 'scl' ? 'SCL download' : job.assetKey === 'visual' ? 'True-color download' : 'Preview download'),
       icon: scientificRgb ? Layers : derived ? Crop : Download,
@@ -497,6 +498,19 @@ export function RuntimeTasks({ areaBounds, areaPolygon }) {
   const { jobs, health, checking, batchRetry, retryAll } = useContext(RuntimeContext);
   const { t, number } = useI18n();
   const [view, setView] = useState('active');
+  const readFocused = () => {
+    const id = new URLSearchParams(location.hash.split('?')[1] || '').get('job');
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id || '') ? id : null;
+  };
+  const [focusedJobId, setFocusedJobId] = useState(readFocused);
+  const focusedJob = jobs.find(job => job.id === focusedJobId);
+  useEffect(() => { const restore = () => setFocusedJobId(readFocused()); window.addEventListener('hashchange', restore); return () => window.removeEventListener('hashchange', restore); }, []);
+  useEffect(() => {
+    if (focusedJob) setView(['queued', 'running'].includes(focusedJob.status) ? 'active' : ['failed', 'interrupted'].includes(focusedJob.status) ? 'attention' : 'history');
+  }, [focusedJobId, focusedJob?.status]);
+  useEffect(() => {
+    if (focusedJobId) document.querySelector(`.tasks-page [data-item-id="${focusedJobId}"]`)?.scrollIntoView({ block:'nearest' });
+  }, [focusedJobId, focusedJob?.status, view]);
   const groups = {
     active: jobs.filter(job => ['queued', 'running'].includes(job.status)),
     attention: jobs.filter(job => ['failed', 'interrupted'].includes(job.status)),
@@ -527,7 +541,7 @@ export function RuntimeTasks({ areaBounds, areaPolygon }) {
       {batchRetry?.failures.length > 0 && <RuntimeError summary="Some tasks could not be queued again. They remain available for retry." message={batchRetry.failures.map(item => `${item.title}: ${item.message}`).join('\n')}/>}
       {batchRetry && !batchRetry.running && batchRetry.processed < batchRetry.total && <p role="status">{t('The connection was lost. Remaining tasks were not submitted; reconnect to retry them.')}</p>}
     </Surface>}
-    {!jobs.length && !health ? <Surface variant="inset" className="runtime-empty" role={checking ? 'status' : undefined}><p>{checking && <Spinner size={16}/>} {t(checking ? 'Loading local tasks…' : 'Reconnect the task service to read your tasks.')}</p></Surface> : groups[view].length ? <RuntimeJobRows jobs={groups[view]} areaBounds={areaBounds} areaPolygon={areaPolygon}/> : <EmptyState icon={view === 'attention' ? CheckCircle2 : Download} title={t(view === 'active' ? 'No tasks running' : view === 'attention' ? 'No tasks need attention' : 'No task history yet')} description={t(view === 'active' ? 'Downloads and processing run here. Your completed files stay in My Data.' : view === 'attention' ? 'Failed or interrupted tasks appear here with a retry action.' : 'Completed and cancelled tasks appear here.')} action={<Button asChild><a href="#My%20Data">{t('Open My Data')}</a></Button>}/>}
+    {!jobs.length && !health ? <Surface variant="inset" className="runtime-empty" role={checking ? 'status' : undefined}><p>{checking && <Spinner size={16}/>} {t(checking ? 'Loading local tasks…' : 'Reconnect the task service to read your tasks.')}</p></Surface> : groups[view].length ? <RuntimeJobRows jobs={groups[view]} areaBounds={areaBounds} areaPolygon={areaPolygon} focusedJobId={focusedJobId}/> : <EmptyState icon={view === 'attention' ? CheckCircle2 : Download} title={t(view === 'active' ? 'No tasks running' : view === 'attention' ? 'No tasks need attention' : 'No task history yet')} description={t(view === 'active' ? 'Downloads and processing run here. Your completed files stay in My Data.' : view === 'attention' ? 'Failed or interrupted tasks appear here with a retry action.' : 'Completed and cancelled tasks appear here.')} action={<Button asChild><a href="#My%20Data">{t('Open My Data')}</a></Button>}/>}
   </section>;
 }
 

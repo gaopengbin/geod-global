@@ -1,0 +1,807 @@
+{
+  "schema": "geod-source-compact-acceptance/v1",
+  "checkedAt": "2026-10-07T13:18:47.257Z",
+  "status": "passed",
+  "inventory": {
+    "total": 85,
+    "pending": 48,
+    "productGroups": 16,
+    "availableUnchanged": 31,
+    "protectedUnchanged": 6
+  },
+  "sourceHashes": {
+    "prototype/src/source-directory.js": "9c73b444f0407ef33442aa117ec3b8c8436a3c163a72ef7f1d966e756791a70a",
+    "prototype/src/source-board.jsx": "f0ef05caf272e01daf23881256840a00e915c850cef596cd1f5724b5f82962f2",
+    "prototype/src/source-board.css": "3ed814437c0adec72356c1da66169bbd02c10d4b5d8b345cd8b6b80051bc65c1",
+    "prototype/src/locales/source-directory.zh-CN.js": "3fcb58731e2057378ff77e912a6473a36144cfae6f1b28cc36b3036757020c44"
+  },
+  "validation": {
+    "homeIntegrationTests": 15,
+    "repositoryIsolation": "passed",
+    "frontendBuild": "passed",
+    "developerBuild": "passed",
+    "browser": {
+      "status": "passed",
+      "scope": "SourceBoard component in Edge with actual inventory, bilingual themes and viewport checks. No provider requests, download plans or native jobs.",
+      "cases": [
+        {
+          "width": 1440,
+          "height": 960,
+          "theme": "light",
+          "locale": "zh-CN",
+          "productGroups": [
+            {
+              "id": "optical",
+              "sources": [
+                "earth-search",
+                "planetary-landsat",
+                "planetary-naip",
+                "planetary-modis",
+                "planetary-computer",
+                "nasa-viirs-noaa21",
+                "nasa-viirs-noaa20",
+                "nasa-viirs-npp",
+                "copernicus",
+                "nasa-earthdata",
+                "usgs-landsat",
+                "modis-more",
+                "viirs-more",
+                "nasa-more",
+                "commercial-imagery",
+                "cbers-4a",
+                "maxar-open",
+                "enmap"
+              ]
+            },
+            {
+              "id": "radar",
+              "sources": [
+                "planetary-radar",
+                "piesat-open-samples"
+              ]
+            },
+            {
+              "id": "elevation",
+              "sources": [
+                "copernicus-dem",
+                "copernicus-dem-90",
+                "nasa-srtm",
+                "srtm-gl3",
+                "srtm-num",
+                "nasadem",
+                "fabdem",
+                "usgs-3dep-dem",
+                "gebco"
+              ]
+            },
+            {
+              "id": "land-cover",
+              "sources": [
+                "worldcover",
+                "dynamic-world",
+                "glc-fcs30d",
+                "glc-fcs10",
+                "clcd",
+                "sinolc-1",
+                "resdc-cnlucc"
+              ]
+            },
+            {
+              "id": "vegetation",
+              "sources": [
+                "planetary-vegetation",
+                "glad-forest"
+              ]
+            },
+            {
+              "id": "hydrology",
+              "sources": [
+                "jrc-water",
+                "hydrosheds",
+                "merit-hydro"
+              ]
+            },
+            {
+              "id": "population",
+              "sources": [
+                "worldpop",
+                "ghsl"
+              ]
+            },
+            {
+              "id": "soil",
+              "sources": [
+                "soilgrids"
+              ]
+            },
+            {
+              "id": "climate",
+              "sources": [
+                "era5-land",
+                "chirps",
+                "worldclim"
+              ]
+            },
+            {
+              "id": "nightlights",
+              "sources": [
+                "eog-nightlights"
+              ]
+            },
+            {
+              "id": "vectors",
+              "sources": [
+                "osm-overpass",
+                "ogc-features",
+                "wfs-service",
+                "arcgis-features",
+                "irsamap",
+                "ms-buildings",
+                "overture-maps",
+                "geoboundaries",
+                "geofabrik"
+              ]
+            },
+            {
+              "id": "maps",
+              "sources": [
+                "nasa-gibs",
+                "wms-service",
+                "wmts-service",
+                "xyz-service",
+                "tms-service",
+                "arcgis-map",
+                "wayback"
+              ]
+            },
+            {
+              "id": "tiles",
+              "sources": [
+                "protomaps"
+              ]
+            },
+            {
+              "id": "catalogs",
+              "sources": [
+                "custom-stac-api",
+                "static-stac",
+                "stac-item",
+                "direct-cog",
+                "wcs-service",
+                "earth-search-more",
+                "planetary-more",
+                "copernicus-more"
+              ]
+            },
+            {
+              "id": "local",
+              "sources": [
+                "local-pmtiles",
+                "local-mbtiles",
+                "local-geojson",
+                "local-geopackage",
+                "local-shapefile",
+                "local-osm",
+                "local-raster"
+              ]
+            },
+            {
+              "id": "portals",
+              "sources": [
+                "esa-tpm",
+                "jaxa-earth",
+                "geodata-china",
+                "tpdc",
+                "gscloud"
+              ]
+            }
+          ],
+          "compact": {
+            "columns": 4,
+            "medianCardHeight": 132,
+            "maxCardHeight": 139,
+            "clippedCards": [],
+            "horizontalOverflow": false
+          },
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        },
+        {
+          "width": 960,
+          "height": 900,
+          "theme": "light",
+          "locale": "zh-CN",
+          "productGroups": [
+            {
+              "id": "optical",
+              "sources": [
+                "earth-search",
+                "planetary-landsat",
+                "planetary-naip",
+                "planetary-modis",
+                "planetary-computer",
+                "nasa-viirs-noaa21",
+                "nasa-viirs-noaa20",
+                "nasa-viirs-npp",
+                "copernicus",
+                "nasa-earthdata",
+                "usgs-landsat",
+                "modis-more",
+                "viirs-more",
+                "nasa-more",
+                "commercial-imagery",
+                "cbers-4a",
+                "maxar-open",
+                "enmap"
+              ]
+            },
+            {
+              "id": "radar",
+              "sources": [
+                "planetary-radar",
+                "piesat-open-samples"
+              ]
+            },
+            {
+              "id": "elevation",
+              "sources": [
+                "copernicus-dem",
+                "copernicus-dem-90",
+                "nasa-srtm",
+                "srtm-gl3",
+                "srtm-num",
+                "nasadem",
+                "fabdem",
+                "usgs-3dep-dem",
+                "gebco"
+              ]
+            },
+            {
+              "id": "land-cover",
+              "sources": [
+                "worldcover",
+                "dynamic-world",
+                "glc-fcs30d",
+                "glc-fcs10",
+                "clcd",
+                "sinolc-1",
+                "resdc-cnlucc"
+              ]
+            },
+            {
+              "id": "vegetation",
+              "sources": [
+                "planetary-vegetation",
+                "glad-forest"
+              ]
+            },
+            {
+              "id": "hydrology",
+              "sources": [
+                "jrc-water",
+                "hydrosheds",
+                "merit-hydro"
+              ]
+            },
+            {
+              "id": "population",
+              "sources": [
+                "worldpop",
+                "ghsl"
+              ]
+            },
+            {
+              "id": "soil",
+              "sources": [
+                "soilgrids"
+              ]
+            },
+            {
+              "id": "climate",
+              "sources": [
+                "era5-land",
+                "chirps",
+                "worldclim"
+              ]
+            },
+            {
+              "id": "nightlights",
+              "sources": [
+                "eog-nightlights"
+              ]
+            },
+            {
+              "id": "vectors",
+              "sources": [
+                "osm-overpass",
+                "ogc-features",
+                "wfs-service",
+                "arcgis-features",
+                "irsamap",
+                "ms-buildings",
+                "overture-maps",
+                "geoboundaries",
+                "geofabrik"
+              ]
+            },
+            {
+              "id": "maps",
+              "sources": [
+                "nasa-gibs",
+                "wms-service",
+                "wmts-service",
+                "xyz-service",
+                "tms-service",
+                "arcgis-map",
+                "wayback"
+              ]
+            },
+            {
+              "id": "tiles",
+              "sources": [
+                "protomaps"
+              ]
+            },
+            {
+              "id": "catalogs",
+              "sources": [
+                "custom-stac-api",
+                "static-stac",
+                "stac-item",
+                "direct-cog",
+                "wcs-service",
+                "earth-search-more",
+                "planetary-more",
+                "copernicus-more"
+              ]
+            },
+            {
+              "id": "local",
+              "sources": [
+                "local-pmtiles",
+                "local-mbtiles",
+                "local-geojson",
+                "local-geopackage",
+                "local-shapefile",
+                "local-osm",
+                "local-raster"
+              ]
+            },
+            {
+              "id": "portals",
+              "sources": [
+                "esa-tpm",
+                "jaxa-earth",
+                "geodata-china",
+                "tpdc",
+                "gscloud"
+              ]
+            }
+          ],
+          "compact": {
+            "columns": 3,
+            "medianCardHeight": 132,
+            "maxCardHeight": 132,
+            "clippedCards": [],
+            "horizontalOverflow": false
+          },
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        },
+        {
+          "width": 560,
+          "height": 900,
+          "theme": "dark",
+          "locale": "zh-CN",
+          "productGroups": [
+            {
+              "id": "optical",
+              "sources": [
+                "earth-search",
+                "planetary-landsat",
+                "planetary-naip",
+                "planetary-modis",
+                "planetary-computer",
+                "nasa-viirs-noaa21",
+                "nasa-viirs-noaa20",
+                "nasa-viirs-npp",
+                "copernicus",
+                "nasa-earthdata",
+                "usgs-landsat",
+                "modis-more",
+                "viirs-more",
+                "nasa-more",
+                "commercial-imagery",
+                "cbers-4a",
+                "maxar-open",
+                "enmap"
+              ]
+            },
+            {
+              "id": "radar",
+              "sources": [
+                "planetary-radar",
+                "piesat-open-samples"
+              ]
+            },
+            {
+              "id": "elevation",
+              "sources": [
+                "copernicus-dem",
+                "copernicus-dem-90",
+                "nasa-srtm",
+                "srtm-gl3",
+                "srtm-num",
+                "nasadem",
+                "fabdem",
+                "usgs-3dep-dem",
+                "gebco"
+              ]
+            },
+            {
+              "id": "land-cover",
+              "sources": [
+                "worldcover",
+                "dynamic-world",
+                "glc-fcs30d",
+                "glc-fcs10",
+                "clcd",
+                "sinolc-1",
+                "resdc-cnlucc"
+              ]
+            },
+            {
+              "id": "vegetation",
+              "sources": [
+                "planetary-vegetation",
+                "glad-forest"
+              ]
+            },
+            {
+              "id": "hydrology",
+              "sources": [
+                "jrc-water",
+                "hydrosheds",
+                "merit-hydro"
+              ]
+            },
+            {
+              "id": "population",
+              "sources": [
+                "worldpop",
+                "ghsl"
+              ]
+            },
+            {
+              "id": "soil",
+              "sources": [
+                "soilgrids"
+              ]
+            },
+            {
+              "id": "climate",
+              "sources": [
+                "era5-land",
+                "chirps",
+                "worldclim"
+              ]
+            },
+            {
+              "id": "nightlights",
+              "sources": [
+                "eog-nightlights"
+              ]
+            },
+            {
+              "id": "vectors",
+              "sources": [
+                "osm-overpass",
+                "ogc-features",
+                "wfs-service",
+                "arcgis-features",
+                "irsamap",
+                "ms-buildings",
+                "overture-maps",
+                "geoboundaries",
+                "geofabrik"
+              ]
+            },
+            {
+              "id": "maps",
+              "sources": [
+                "nasa-gibs",
+                "wms-service",
+                "wmts-service",
+                "xyz-service",
+                "tms-service",
+                "arcgis-map",
+                "wayback"
+              ]
+            },
+            {
+              "id": "tiles",
+              "sources": [
+                "protomaps"
+              ]
+            },
+            {
+              "id": "catalogs",
+              "sources": [
+                "custom-stac-api",
+                "static-stac",
+                "stac-item",
+                "direct-cog",
+                "wcs-service",
+                "earth-search-more",
+                "planetary-more",
+                "copernicus-more"
+              ]
+            },
+            {
+              "id": "local",
+              "sources": [
+                "local-pmtiles",
+                "local-mbtiles",
+                "local-geojson",
+                "local-geopackage",
+                "local-shapefile",
+                "local-osm",
+                "local-raster"
+              ]
+            },
+            {
+              "id": "portals",
+              "sources": [
+                "esa-tpm",
+                "jaxa-earth",
+                "geodata-china",
+                "tpdc",
+                "gscloud"
+              ]
+            }
+          ],
+          "compact": {
+            "columns": 2,
+            "medianCardHeight": 132,
+            "maxCardHeight": 139,
+            "clippedCards": [],
+            "horizontalOverflow": false
+          },
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "theme": "light",
+          "locale": "en",
+          "productGroups": [
+            {
+              "id": "optical",
+              "sources": [
+                "earth-search",
+                "planetary-landsat",
+                "planetary-naip",
+                "planetary-modis",
+                "planetary-computer",
+                "nasa-viirs-noaa21",
+                "nasa-viirs-noaa20",
+                "nasa-viirs-npp",
+                "copernicus",
+                "nasa-earthdata",
+                "usgs-landsat",
+                "modis-more",
+                "viirs-more",
+                "nasa-more",
+                "commercial-imagery",
+                "cbers-4a",
+                "maxar-open",
+                "enmap"
+              ]
+            },
+            {
+              "id": "radar",
+              "sources": [
+                "planetary-radar",
+                "piesat-open-samples"
+              ]
+            },
+            {
+              "id": "elevation",
+              "sources": [
+                "copernicus-dem",
+                "copernicus-dem-90",
+                "nasa-srtm",
+                "srtm-gl3",
+                "srtm-num",
+                "nasadem",
+                "fabdem",
+                "usgs-3dep-dem",
+                "gebco"
+              ]
+            },
+            {
+              "id": "land-cover",
+              "sources": [
+                "worldcover",
+                "dynamic-world",
+                "glc-fcs30d",
+                "glc-fcs10",
+                "clcd",
+                "sinolc-1",
+                "resdc-cnlucc"
+              ]
+            },
+            {
+              "id": "vegetation",
+              "sources": [
+                "planetary-vegetation",
+                "glad-forest"
+              ]
+            },
+            {
+              "id": "hydrology",
+              "sources": [
+                "jrc-water",
+                "hydrosheds",
+                "merit-hydro"
+              ]
+            },
+            {
+              "id": "population",
+              "sources": [
+                "worldpop",
+                "ghsl"
+              ]
+            },
+            {
+              "id": "soil",
+              "sources": [
+                "soilgrids"
+              ]
+            },
+            {
+              "id": "climate",
+              "sources": [
+                "era5-land",
+                "chirps",
+                "worldclim"
+              ]
+            },
+            {
+              "id": "nightlights",
+              "sources": [
+                "eog-nightlights"
+              ]
+            },
+            {
+              "id": "vectors",
+              "sources": [
+                "osm-overpass",
+                "ogc-features",
+                "wfs-service",
+                "arcgis-features",
+                "irsamap",
+                "ms-buildings",
+                "overture-maps",
+                "geoboundaries",
+                "geofabrik"
+              ]
+            },
+            {
+              "id": "maps",
+              "sources": [
+                "nasa-gibs",
+                "wms-service",
+                "wmts-service",
+                "xyz-service",
+                "tms-service",
+                "arcgis-map",
+                "wayback"
+              ]
+            },
+            {
+              "id": "tiles",
+              "sources": [
+                "protomaps"
+              ]
+            },
+            {
+              "id": "catalogs",
+              "sources": [
+                "custom-stac-api",
+                "static-stac",
+                "stac-item",
+                "direct-cog",
+                "wcs-service",
+                "earth-search-more",
+                "planetary-more",
+                "copernicus-more"
+              ]
+            },
+            {
+              "id": "local",
+              "sources": [
+                "local-pmtiles",
+                "local-mbtiles",
+                "local-geojson",
+                "local-geopackage",
+                "local-shapefile",
+                "local-osm",
+                "local-raster"
+              ]
+            },
+            {
+              "id": "portals",
+              "sources": [
+                "esa-tpm",
+                "jaxa-earth",
+                "geodata-china",
+                "tpdc",
+                "gscloud"
+              ]
+            }
+          ],
+          "compact": {
+            "columns": 1,
+            "medianCardHeight": 132,
+            "maxCardHeight": 142,
+            "clippedCards": [],
+            "horizontalOverflow": false
+          },
+          "allEntries": 85,
+          "pending": 48,
+          "newCandidates": 35,
+          "availableUnchanged": 31,
+          "protectedUnchanged": 6,
+          "pendingNoninteractive": true,
+          "filtersWorking": true,
+          "horizontalOverflow": false,
+          "clippedCards": []
+        }
+      ],
+      "errors": [],
+      "nativeDesktopVisualAcceptance": false
+    }
+  },
+  "developerLaunch": {
+    "processId": 67744,
+    "executable": "G:\\code\\geod-global\\.verification\\goals-desktop-target\\debug\\geod-global-desktop.exe",
+    "logs": "G:\\code\\geod-global\\.verification\\source-compact-desktop-launch-20261007-211812",
+    "oldProcesses": [
+      17232
+    ],
+    "activeJobsBeforeRestart": 0,
+    "activeConversationsBeforeRestart": 0,
+    "title": "GeoD Global",
+    "responding": true,
+    "windowHandle": 5442152,
+    "sha256": "f546909bcdc4518d030f392704884eca5aac4a3b44bd260d1bbbc3ad689de5f0",
+    "installerCreated": false,
+    "nativeDesktopVisualAcceptance": false
+  },
+  "newAdapterAcceptance": 0,
+  "newNativeDownloads": 0,
+  "installerCreated": false
+}

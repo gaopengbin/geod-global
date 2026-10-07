@@ -14,8 +14,10 @@ use std::{
 use url::Url;
 use uuid::Uuid;
 
+mod catalog;
 pub mod raster;
 mod search;
+pub use catalog::CatalogNode;
 pub use raster::{GenericRasterInspection, GenericRasterPixel};
 pub use search::{MetadataRequest, SearchMethod};
 const MAX_DOCUMENT: usize = 8 * 1024 * 1024;
@@ -84,6 +86,8 @@ pub struct Connection {
     pub search_method: SearchMethod,
     pub metadata_sha256: Vec<String>,
     pub metadata_documents: Vec<DocumentReceipt>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub catalog_nodes: Vec<CatalogNode>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -108,6 +112,8 @@ pub struct SearchPage {
     pub next_cursor: Option<String>,
     pub complete: bool,
     pub limit_reached: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub scanned_items: Option<usize>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -151,6 +157,8 @@ pub struct Provenance {
     pub metadata_documents: Vec<DocumentReceipt>,
     pub search: Option<SearchRequest>,
     pub collection: Option<Value>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub search_mode: Option<String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -184,6 +192,8 @@ pub(crate) struct Registry {
     connections: BTreeMap<String, Connection>,
     #[serde(skip)]
     cursors: BTreeMap<String, Cursor>,
+    #[serde(skip)]
+    catalog_cursors: BTreeMap<String, catalog::CatalogCursor>,
 }
 fn hash(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
@@ -511,7 +521,7 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
         if raw["href"] != href || raw["kind"] != "direct-raster" {
             return Err("Direct raster metadata changed".into());
         }
-        return Ok(ItemSnapshot{id:id.into(),connection_id:record.connection_id.clone(),collection_id:None,item_id:record.document_sha256.clone(),title:record.service_name.clone(),datetime:None,start_datetime:None,end_datetime:None,bbox:None,geometry:Value::Null,properties:json!({}),assets:vec![Asset{key:"raster".into(),title:record.service_name.clone(),href,media_type:Some("image/tiff; application=geotiff".into()),roles:vec!["data".into()],eligible:true,reason:None,metadata:raw.clone()}],retrieved_at:record.retrieved_at.clone(),document_sha256:record.document_sha256.clone(),temporal_status:"missing".into(),warnings:vec!["Direct raster source has no declared acquisition time; COG layout is not validated.".into()],provenance:Provenance{document_url:record.document_url.clone(),document_request:None,metadata_documents:record.metadata_documents.clone(),search:None,collection:None}});
+        return Ok(ItemSnapshot{id:id.into(),connection_id:record.connection_id.clone(),collection_id:None,item_id:record.document_sha256.clone(),title:record.service_name.clone(),datetime:None,start_datetime:None,end_datetime:None,bbox:None,geometry:Value::Null,properties:json!({}),assets:vec![Asset{key:"raster".into(),title:record.service_name.clone(),href,media_type:Some("image/tiff; application=geotiff".into()),roles:vec!["data".into()],eligible:true,reason:None,metadata:raw.clone()}],retrieved_at:record.retrieved_at.clone(),document_sha256:record.document_sha256.clone(),temporal_status:"missing".into(),warnings:vec!["Direct raster source has no declared acquisition time; COG layout is not validated.".into()],provenance:Provenance{document_url:record.document_url.clone(),document_request:None,metadata_documents:record.metadata_documents.clone(),search:None,collection:None,search_mode:None}});
     }
     let value = if let Some(index) = record.item_index {
         raw["features"]
@@ -679,6 +689,7 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
             metadata_documents: record.metadata_documents.clone(),
             search: record.search.clone(),
             collection: None,
+            search_mode: (record.kind == "catalog").then(|| "catalog".into()),
         },
     })
 }
@@ -714,7 +725,7 @@ fn record(root: &Path, id: &str) -> Result<(Record, ItemSnapshot)> {
     if record.version != 1
         || !uuid(&record.connection_id)
         || !text(&record.service_name, 80)
-        || !matches!(record.kind.as_str(), "api" | "item" | "raster")
+        || !matches!(record.kind.as_str(), "api" | "item" | "raster" | "catalog")
         || chrono::DateTime::parse_from_rfc3339(&record.retrieved_at).is_err()
     {
         return Err("Invalid STAC snapshot provenance".into());
@@ -752,6 +763,9 @@ fn record(root: &Path, id: &str) -> Result<(Record, ItemSnapshot)> {
     let value = json_document(&document(root, &record.document_sha256)?)?;
     let mut snapshot = item(&record, id, &value)?;
     attach_collection(root, &mut snapshot)?;
+    if record.kind == "catalog" {
+        catalog::validate_record(root, &record, &snapshot)?;
+    }
     Ok((record, snapshot))
 }
 fn save_snapshot(root: &Path, record: Record, raw: &Value) -> Result<ItemSnapshot> {
@@ -762,6 +776,9 @@ fn save_snapshot(root: &Path, record: Record, raw: &Value) -> Result<ItemSnapsho
     let id = hash(&bytes);
     let mut snapshot = item(&record, &id, raw)?;
     attach_collection(root, &mut snapshot)?;
+    if record.kind == "catalog" {
+        catalog::validate_record(root, &record, &snapshot)?;
+    }
     immutable(root, "snapshot", &bytes)?;
     Ok(snapshot)
 }
@@ -930,6 +947,22 @@ fn revalidation_request(saved: &Record, original_item: &Value) -> Result<Metadat
         Ok(request)
     }
 }
+pub(crate) async fn asset_head(
+    settings: &ProxySettings,
+    root: &Path,
+    selection: &Selection,
+) -> Result<reqwest::Response> {
+    let asset = resolve(root, selection)?;
+    let url = public_url(&asset.href)?;
+    features::client_with_timeout(&url, settings, Duration::from_secs(12))
+        .await?
+        .head(url)
+        .header("Accept", "image/tiff, application/octet-stream")
+        .send()
+        .await
+        .map_err(|_| "Could not check source file size. Check your proxy and try again.".into())
+}
+
 pub(crate) async fn asset_response(
     settings: &ProxySettings,
     job: &Job,
@@ -991,10 +1024,14 @@ pub(crate) async fn asset_response(
         }
     }
     let url = public_url(&asset.href)?;
-    features::client_with_timeout(&url, settings, Duration::from_secs(30 * 60))
+    let mut request = features::client_with_timeout(&url, settings, Duration::from_secs(30 * 60))
         .await?
         .get(url)
-        .header("Accept", "image/tiff, application/octet-stream")
+        .header("Accept", "image/tiff, application/octet-stream");
+    if let Some(pin) = job.agent_approval.as_ref().and_then(|a| a.remote.as_ref()) {
+        request = request.header(reqwest::header::IF_MATCH, &pin.etag);
+    }
+    request
         .send()
         .await
         .map_err(|_| "Cannot reach the public original raster asset".into())
@@ -1018,7 +1055,10 @@ pub(crate) async fn load(root: &Path) -> Result<Registry> {
         if !uuid(id)
             || id != &connection.id
             || !text(&connection.name, 80)
-            || !matches!(connection.kind.as_str(), "api" | "item" | "raster")
+            || !matches!(
+                connection.kind.as_str(),
+                "api" | "item" | "raster" | "catalog"
+            )
             || connection.collections.len() > 512
             || connection.snapshot_ids.len() > 1
             || chrono::DateTime::parse_from_rfc3339(&connection.connected_at).is_err()
@@ -1043,6 +1083,12 @@ pub(crate) async fn load(root: &Path) -> Result<Registry> {
     Ok(registry)
 }
 fn validate_connection_documents(root: &Path, c: &Connection) -> Result<()> {
+    if c.kind == "catalog" {
+        return catalog::validate_connection(root, c);
+    }
+    if !c.catalog_nodes.is_empty() {
+        return Err("Non-catalog source has static directory metadata".into());
+    }
     let root_url = public_url(&c.url)?;
     if c.metadata_documents.len() > 22 || c.metadata_sha256.len() > 22 {
         return Err("STAC connection metadata exceeds its document limit".into());
@@ -1179,12 +1225,15 @@ impl JobManager {
         registry
             .cursors
             .retain(|_, c| c.request.connection_id != id);
+        registry
+            .catalog_cursors
+            .retain(|_, c| c.request.connection_id != id);
         Ok(())
     }
     pub async fn connect_stac(&self, request: ConnectRequest) -> Result<Connection> {
         self.inner.store.lock().await.accepting_jobs()?;
         if !text(request.name.trim(), 80)
-            || !matches!(request.kind.as_str(), "api" | "item" | "raster")
+            || !matches!(request.kind.as_str(), "api" | "item" | "raster" | "catalog")
         {
             return Err("Choose a source type and a name of 1–80 characters".into());
         }
@@ -1216,8 +1265,10 @@ impl JobManager {
             search_method: SearchMethod::Get,
             metadata_sha256: vec![],
             metadata_documents: vec![],
+            catalog_nodes: vec![],
         };
-        tokio::time::timeout(Duration::from_secs(60),async {
+        tokio::time::timeout(Duration::from_secs(if request.kind == "catalog" { 180 } else { 60 }),async {
+            if request.kind == "catalog" { return catalog::discover(&root, &settings, &mut connection).await; }
             if request.kind=="raster" {
                 let client=features::client(&url,&settings).await?;
                 let response=client.get(url.clone()).header("Range","bytes=0-15").send().await.map_err(|_|"Cannot inspect the public raster URL")?;
@@ -1237,8 +1288,8 @@ impl JobManager {
                 connection.metadata_documents=receipts.clone();let snapshot=save_snapshot(&root,Record{version:1,connection_id:connection.id.clone(),service_name:connection.name.clone(),kind:"item".into(),document_url:url.to_string(),document_request:None,document_sha256:digest,item_index:None,retrieved_at:connection.connected_at.clone(),metadata_documents:receipts,search:None},&value)?;connection.snapshot_ids.push(snapshot.id);return Ok(());
             }
             if !matches!(value["type"].as_str(),Some("Catalog"|"Collection")){return Err("The STAC API landing page must be a Catalog or Collection".into());}
-            let conforms=value["conformsTo"].as_array().ok_or("STAC API must advertise Item Search conformance")?;
-            if !conforms.iter().any(|v|v.as_str().is_some_and(|s|matches!(s,"https://api.stacspec.org/v1.0.0/item-search"|"https://api.stacspec.org/v1.0.0-rc.3/item-search"))){return Err("This source does not advertise supported STAC API Item Search; static catalog traversal is unsupported".into());}
+            let conforms=value["conformsTo"].as_array().ok_or("STAC API must advertise Item Search conformance; choose Static STAC catalog for directory traversal")?;
+            if !conforms.iter().any(|v|v.as_str().is_some_and(|s|matches!(s,"https://api.stacspec.org/v1.0.0/item-search"|"https://api.stacspec.org/v1.0.0-rc.3/item-search"))){return Err("This source does not advertise supported STAC API Item Search; choose Static STAC catalog for directory traversal".into());}
             let searches=search::endpoints(&value,&url)?;
             connection.capabilities.search_get=searches.get.is_some();connection.capabilities.search_post=searches.post_advertised;
             let endpoint=searches.post.or(searches.get).ok_or("STAC search is unavailable")?;
@@ -1270,11 +1321,25 @@ impl JobManager {
         registry
             .cursors
             .retain(|_, c| c.request.connection_id != connection.id);
+        registry
+            .catalog_cursors
+            .retain(|_, c| c.request.connection_id != connection.id);
         Ok(connection)
     }
     pub async fn search_stac(&self, request: SearchRequest) -> Result<SearchPage> {
         self.inner.store.lock().await.accepting_jobs()?;
         features::bounds(request.bounds)?;
+        if self
+            .inner
+            .stac
+            .lock()
+            .await
+            .connections
+            .get(&request.connection_id)
+            .is_some_and(|c| c.kind == "catalog")
+        {
+            return self.search_stac_catalog(request).await;
+        }
         let limit = request.limit.unwrap_or(100);
         if !(1..=100).contains(&limit) {
             return Err("STAC page size must be between 1 and 100".into());
@@ -1444,6 +1509,7 @@ impl JobManager {
             next_cursor,
             complete,
             limit_reached,
+            scanned_items: None,
         })
     }
 }

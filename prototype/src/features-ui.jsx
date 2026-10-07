@@ -4,12 +4,12 @@ import {Modal,Button,Input,Select,Spinner,Disclosure} from './ui/index.jsx';
 import {featureRequest,validQueryBounds,validOverpassBounds} from './features-client.js';
 import {useI18n} from './i18n.jsx';
 import './features.css';
-export function FeatureServiceDialog({areaBounds,areaPolygon,onClose,onImported}) {
+export function FeatureServiceDialog({areaBounds,areaPolygon,onClose,onImported,initialProtocol}) {
   const {t,number}=useI18n();
   const [services,setServices]=useState([]),[serviceId,setServiceId]=useState(''),[collectionId,setCollectionId]=useState('');
   const [loading,setLoading]=useState(true),[busy,setBusy]=useState(''),[error,setError]=useState(''),[adding,setAdding]=useState(false);
-  const [name,setName]=useState(''),[url,setUrl]=useState(''),[protocol,setProtocol]=useState('OGC'),[search,setSearch]=useState(''),[responseFormat,setResponseFormat]=useState('');
-  useEffect(()=>{const abort=new AbortController();featureRequest('list',{},abort.signal).then(list=>{setServices(list);setServiceId(list[0]?.id||'');setAdding(!list.length);}).catch(e=>{if(!abort.signal.aborted){setError(e.message);setAdding(true);}}).finally(()=>{if(!abort.signal.aborted)setLoading(false);});return()=>abort.abort();},[]);
+  const [name,setName]=useState(''),[url,setUrl]=useState(''),[protocol,setProtocol]=useState(['OGC','ArcGIS','Overpass','WFS2'].includes(initialProtocol)?initialProtocol:'OGC'),[search,setSearch]=useState(''),[responseFormat,setResponseFormat]=useState('');
+  useEffect(()=>{const abort=new AbortController();featureRequest('list',{},abort.signal).then(list=>{setServices(list);setServiceId(list[0]?.id||'');setAdding(Boolean(initialProtocol)||!list.length);}).catch(e=>{if(!abort.signal.aborted){setError(e.message);setAdding(true);}}).finally(()=>{if(!abort.signal.aborted)setLoading(false);});return()=>abort.abort();},[initialProtocol]);
   const selected=services.find(s=>s.id===serviceId);
   const collectionLabel=c=>selected?.overpass?t(c.title):c.title;
   const filtered=(selected?.collections||[]).filter(c=>`${collectionLabel(c)} ${c.id}`.toLocaleLowerCase().includes(search.toLocaleLowerCase()));

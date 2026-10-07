@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "unit": "bytes",
+  "installerCreated": false,
+  "agentRuntime": {
+    "Codex engine": 324702000,
+    "Node runtime": 91380224,
+    "Agent adapter": 1441194,
+    "Runtime notices": 234323
+  },
+  "agentRuntimeTotal": 417757741,
+  "frontendBeforeEmbedding": {
+    "assets": 4643172,
+    "basemaps": 61684485,
+    "brand": 545075,
+    "fonts": 52733,
+    "pdfjs": 3534473,
+    "samples": 722015,
+    "source-marks": 266109
+  },
+  "excludedRuntimeGroups": [
+    "Java/JRE",
+    "local OCR",
+    "Python/GDAL environment",
+    "Codex shell helpers",
+    "Codex voice/code-mode hosts",
+    "npm node_modules",
+    "Cesium runtime assets"
+  ],
+  "measurementBoundary": "Frontend resources are compressed and embedded by Tauri. Development executables and raw runtime sizes are not installer download sizes.",
+  "publishedRelease": {
+    "version": "v0.1.0-rc.3",
+    "assets": [
+      {
+        "name": "GeoD-Global_0.1.0-rc.3_windows-x64_release_8deb4bb853_20261004T131512Z-setup.exe",
+        "bytes": 69489064,
+        "url": "https://github.com/gaopengbin/geod-global/releases/download/v0.1.0-rc.3/GeoD-Global_0.1.0-rc.3_windows-x64_release_8deb4bb853_20261004T131512Z-setup.exe"
+      },
+      {
+        "name": "GeoD-Global_0.1.0-rc.3_windows-x64_release_8deb4bb853_20261004T131512Z.zip",
+        "bytes": 78819870,
+        "url": "https://github.com/gaopengbin/geod-global/releases/download/v0.1.0-rc.3/GeoD-Global_0.1.0-rc.3_windows-x64_release_8deb4bb853_20261004T131512Z.zip"
+      }
+    ]
+  }
+}

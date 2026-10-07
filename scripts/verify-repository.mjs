@@ -130,6 +130,13 @@ assert.equal(createHash('sha256').update(admin1IndexBytes).digest('hex'), admin1
 const admin1Index = JSON.parse(admin1IndexBytes.toString('utf8'));
 assert.equal(admin1Index.areas.length, 4596);
 assert.equal(new Set(admin1Index.areas.map(area => area.code)).size, 4596);
+const agentAdminAliasBytes = await readFile(path.join(admin1Directory, 'agent-aliases.json'));
+assert.equal(createHash('sha256').update(agentAdminAliasBytes).digest('hex'), '5ccfa93fb593d011b0d6b5b5e2561714969372627b0df1ba718117781355ab67');
+const agentAdminAliases = JSON.parse(agentAdminAliasBytes.toString('utf8'));
+assert.equal(agentAdminAliases.sourceSha256, admin1Manifest.sourceSha256);
+assert.equal(agentAdminAliases.version, admin1Manifest.version);
+assert.deepEqual(new Set(Object.keys(agentAdminAliases.aliases)), new Set(admin1Index.areas.map(area => area.code)));
+assert(Object.values(agentAdminAliases.aliases).every(names => Array.isArray(names) && names.length <= 40 && names.every(name => typeof name === 'string' && name && name.trim() === name && [...name].length <= 200 && !/\p{Cc}/u.test(name))));
 assert.deepEqual(admin1Manifest.clipLimitations, { polar: 2, 'date-line': 5, complex: 1 });
 for (const [reason, count] of Object.entries(admin1Manifest.clipLimitations))
   assert.equal(admin1Index.areas.filter(area => area.clipLimitation === reason).length, count);

@@ -5,6 +5,13 @@ The independent Tauri 2 application embeds the approved workspace build and uses
 server. The application identifier is `xyz.laogao.geod.global`; job state lives in
 the OS application-local data directory under this identifier, in `runtime/`.
 
+The optional development Agent attaches to that same core through six scoped
+commands. Prepare its owned Windows runtime with `npm run agent:prepare` before
+`npm run desktop:dev`. Its session folder and secure model credential are separate
+from personal Codex settings. See [Agent architecture and acceptance](../docs/agent.md)
+for current read/search/plan capabilities, native confirmation, reproducible checks
+and remaining release gates.
+
 The main window uses typed application commands for health, local jobs, raster
 inspection and executable recipes; it has no generic shell/filesystem command.
 Raster inspection accepts a

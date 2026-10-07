@@ -12,6 +12,15 @@ vi.mock('./runtime-ui.jsx', () => ({ RuntimeLibrary: () => <section aria-label="
 const show = props => render(<RuntimeContext.Provider value={{ jobs: [{ status: 'succeeded' }, { status: 'running' }] }}><LibraryPage {...props}/></RuntimeContext.Provider>);
 
 describe('Library navigation', () => {
+  it('keeps only the 2D collections and safely opens an old 3D bookmark', () => {
+    const original=location.hash;
+    try {
+      location.hash='#My%20Data?view=3d';show();
+      expect(screen.getByRole('region',{name:'Project content'})).toBeTruthy();
+      expect(screen.queryByRole('radio',{name:'3D assets'})).toBeNull();
+      expect(screen.getAllByRole('radio')).toHaveLength(5);
+    } finally {location.hash=original;}
+  });
   it('shows one collection at a time, restores direct file links and follows browser history', async () => {
     const user = userEvent.setup();
     const original = location.hash;

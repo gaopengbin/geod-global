@@ -37,6 +37,24 @@ impl From<ModisMaskSpec> for QualityMaskSpec {
     }
 }
 impl QualityMaskSpec {
+    pub(crate) fn request(&self) -> QualityMaskRequest {
+        match self {
+            Self::Modis(m) => ModisMaskRequest {
+                qc_job_id: m.sources[0].pin.job_id.clone(),
+                state_job_id: m.sources[1].pin.job_id.clone(),
+                policy: m.policy,
+                exclude_snow: m.exclude_snow,
+            }
+            .into(),
+            Self::Landsat(m) => LandsatMaskRequest {
+                qa_pixel_job_id: m.sources[0].pin.job_id.clone(),
+                qa_radsat_job_id: m.sources[1].pin.job_id.clone(),
+                policy: m.policy,
+                exclude_snow: m.exclude_snow,
+            }
+            .into(),
+        }
+    }
     pub fn sources(&self) -> &[RgbSource; 2] {
         match self {
             Self::Modis(m) => &m.sources,

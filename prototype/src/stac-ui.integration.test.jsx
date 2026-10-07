@@ -19,6 +19,29 @@ const runtime = { jobs: [stacJob], projects: [stacProject], health: {}, refresh,
 const renderDialog = props => render(<RuntimeContext.Provider value={runtime}><StacSourceDialog areaBounds={[10,20,11,21]} onClose={() => {}} {...props}/></RuntimeContext.Provider>);
 beforeEach(() => { vi.clearAllMocks(); stacRequest.mockImplementation(async op => op === 'list' ? [stacConnection] : op === 'snapshot' ? stacSnapshot : op === 'connect' ? stacConnection : op === 'project' ? stacProject : op === 'inspect' ? stacInspection : { items: [stacSnapshot], nextCursor: null, complete: true, limitReached: false }); runtimeRequest.mockResolvedValue([stacProject]); });
 async function selectSource(user) { await waitFor(() => expect(screen.getByRole('combobox', { name: 'Saved raster source' }).disabled).toBe(false)); await user.click(screen.getByRole('combobox', { name: 'Saved raster source' })); await user.click(screen.getByRole('option', { name: 'Local test catalog' })); }
+it('static catalog scans explicit directories, continues an empty page, and uses native branch keys without claiming API search', async () => {
+  const key = 'e'.repeat(64), child = 'f'.repeat(64);
+  const connection = { ...stacConnection, kind: 'catalog', collections: [], searchUrl: null, capabilities: { searchGet: false, searchPost: false },
+    catalogNodes: [{ key, id: 'root', title: 'Published directory', kind: 'Catalog', description: 'Static catalog', license: null, url: stacConnection.url, parentKey: null },
+      { key: child, id: 'actual-collection', title: 'Actual collection', kind: 'Collection', description: 'Actual declaration', license: 'CC0-1.0', url: `${stacConnection.url}/collection.json`, parentKey: key }] };
+  let searches = 0;
+  stacRequest.mockImplementation(async (op, payload) => op === 'list' ? [connection] : op === 'search' ? (++searches === 1
+    ? { items: [], scannedItems: 32, nextCursor: 'opaque-static-cursor', complete: false, limitReached: false }
+    : { items: [stacSnapshot], scannedItems: 33, nextCursor: null, complete: true, limitReached: false }) : stacProject);
+  const user = userEvent.setup(); renderDialog(); await selectSource(user);
+  expect(screen.getByText('Static STAC catalog')).toBeTruthy();
+  expect(stacRequest.mock.calls.some(([op]) => op === 'snapshot')).toBe(false);
+  await user.click(screen.getByRole('combobox', { name: 'Raster collection' })); await user.click(screen.getByRole('option', { name: 'Actual collection · Collection' }));
+  await user.click(screen.getByRole('button', { name: 'Search raster items' }));
+  await screen.findByText(/32 item documents scanned/);
+  expect(stacRequest.mock.calls.find(([op]) => op === 'search')[1].collectionId).toBe(child);
+  expect(screen.queryByRole('textbox', { name: 'Raster project bounds' })).toBeNull();
+  await user.click(screen.getByRole('button', { name: 'Continue scanning' })); await screen.findByText('Temperature field');
+  expect(stacRequest.mock.calls.filter(([op]) => op === 'search')[1][1].cursor).toBe('opaque-static-cursor');
+  expect(screen.queryByRole('button', { name: 'Continue scanning' })).toBeNull();
+  await user.clear(screen.getByRole('textbox', { name: 'Raster search bounds' }));
+  expect(screen.queryByText('Temperature field')).toBeNull(); expect(screen.queryByText(/33 item documents scanned/)).toBeNull();
+});
 it('uses an explicit source and collection, omits date/cloud defaults, selects original assets and saves before enqueue', async () => {
   const user = userEvent.setup(); renderDialog();
   expect(screen.getByRole('textbox', { name: 'Source URL' }).value).toBe('');

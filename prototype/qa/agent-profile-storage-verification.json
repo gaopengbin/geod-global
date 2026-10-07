@@ -1,0 +1,136 @@
+{
+  "schema": "geod-agent-profile-storage-verification/v1",
+  "status": "passed",
+  "verifiedAt": "2026-10-06T15:39:51.561661+00:00",
+  "scope": "Actual stopped Windows user-profile runtime, saved System route, separate QA conversations; development only",
+  "reproducedFailure": {
+    "tools": [
+      "geod_place_search",
+      "geod_region_levels",
+      "geod_scene_search"
+    ],
+    "reason": "Normal inherited MSIX AppData mapping rejected before records were saved",
+    "receipt": ".verification\\native-actual-profile-20261006\\native-system-probe.json"
+  },
+  "repair": {
+    "namespaceFromFreshManagedFileHandle": true,
+    "requiresLiveLauncherProcess": false,
+    "detachedLaunchParentExitedBeforeQueries": true,
+    "exactProfilePackageAndRelativePathRequired": true,
+    "symlinksAndReparsePointsRejected": true,
+    "temporaryWitnessRemoved": true
+  },
+  "realQueries": [
+    {
+      "tool": "geod_place_search",
+      "succeeded": true
+    },
+    {
+      "tool": "geod_region_levels",
+      "succeeded": true
+    },
+    {
+      "tool": "geod_region_search",
+      "succeeded": true
+    },
+    {
+      "tool": "geod_region_search",
+      "succeeded": true
+    },
+    {
+      "tool": "geod_region_search",
+      "succeeded": true
+    },
+    {
+      "tool": "geod_scene_search",
+      "succeeded": true
+    }
+  ],
+  "actualAdministrativeCandidates": [
+    {
+      "countryCode": "DEU",
+      "adminLevel": 2,
+      "names": [
+        "Köln"
+      ],
+      "source": "geoBoundaries gbOpen",
+      "cached": true,
+      "geometrySha256": "b811e77a73d37d9826ed0b17aaa017f7c92340c80707bdda4b95ce363e6364ab"
+    },
+    {
+      "countryCode": "FRA",
+      "adminLevel": 1,
+      "names": [
+        "Île-de-France"
+      ],
+      "source": "geoBoundaries gbOpen",
+      "cached": true,
+      "geometrySha256": "7dc61e5c7e4c81f5fa10d339e6a5bc8428f1346f43f4426d9d165d2e44fc3a7e"
+    },
+    {
+      "countryCode": "IND",
+      "adminLevel": 2,
+      "names": [
+        "Pune"
+      ],
+      "source": "geoBoundaries gbOpen",
+      "cached": true,
+      "geometrySha256": "d68db39cd3e2d0892af268e2b0454166368ce3b5b8a78fcda63069ec92a641db"
+    }
+  ],
+  "cacheAfterRuntimeReopen": {
+    "city": true,
+    "detailedAdministrativeIndex": true
+  },
+  "model": {
+    "status": "passed",
+    "route": "deepseek-v4-flash",
+    "upstreamVendorVerified": false,
+    "humanMessages": 2,
+    "coordinateParametersSupplied": false,
+    "sameConversationAfterToolUpgrade": true,
+    "currentMapAreaOverridden": true,
+    "nativeReviewStatus": "pending",
+    "bounds": [
+      -74.25884300038047,
+      40.4765780002232,
+      -73.70016900037544,
+      40.917705000258394
+    ],
+    "fileCount": 4,
+    "fileDates": [
+      "2026-10-03"
+    ],
+    "expectedBytes": 786204567,
+    "existingJobCount": 50,
+    "addedJobCount": 0
+  },
+  "checks": {
+    "agentNodeTests": 81,
+    "uiTests": 307,
+    "nativeAgentActionTests": 65,
+    "managedStorageTests": 5,
+    "desktopTests": 35,
+    "clippyWarningsDenied": "passed",
+    "dependencyIsolation": "passed",
+    "frontendBuild": "passed"
+  },
+  "receipts": {
+    "native": ".verification\\detached-profile-1791300482634752400\\native-system-probe.json",
+    "detachedLaunch": ".verification\\detached-profile-1791300482634752400\\launch.json",
+    "model": ".verification\\agent-place-restore-model-1791300987165906000\\case\\native-acceptance.json",
+    "sha256": {
+      "native": "5303ac413c11071b6107b6b68dfdc9cfb95c37261667749098b9f7f3c195ebae",
+      "model": "35bf43d6cef8360adc0490deccd4207f839692fbda08968a821918d90da60ec0"
+    }
+  },
+  "development": {
+    "runningPid": 21668,
+    "windowTitle": "GeoD Global",
+    "previewHttpStatus": 200,
+    "userDesktopControlled": false,
+    "installerCreated": false
+  },
+  "newOriginalDownloads": 0,
+  "published": false
+}

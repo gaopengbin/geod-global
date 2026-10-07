@@ -3,6 +3,9 @@
  * Radix owns interactive state, focus, keyboard and form integration.
  */
 import React, { forwardRef, useEffect, useId, useRef, useState } from 'react';
+export { MessageText } from './message-text.jsx';
+export { MessageScroller } from './message-scroller.jsx';
+export { PromptInput } from './prompt-input.jsx';
 import { createPortal } from 'react-dom';
 import { cva } from 'class-variance-authority';
 import { clsx } from 'clsx';
@@ -111,7 +114,7 @@ function selectOptions(children, group = null) {
     return selectOptions(child.props.children, group);
   });
 }
-export const Select = forwardRef(function Select({ className, contentClassName, displayValue, children, value, defaultValue, onChange, onInput, name, required, disabled, readOnly, form, id, ...props }, ref) {
+export const Select = forwardRef(function Select({ className, contentClassName, descriptionLayout = 'inline', displayValue, optionIcons, children, value, defaultValue, onChange, onInput, name, required, disabled, readOnly, form, id, ...props }, ref) {
   const options = selectOptions(children);
   const groups = [];
   for (const option of options) {
@@ -137,7 +140,10 @@ export const Select = forwardRef(function Select({ className, contentClassName, 
     <SelectPrimitive.Root value={actual === '' ? emptyKey : actual} onValueChange={update} disabled={disabled || readOnly}>
       <SelectPrimitive.Trigger ref={node => { triggerRef.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; }} id={id} data-slot="select-trigger" className={cn('bui-select flex items-center justify-between gap-2', fieldClasses, className)} aria-required={required || undefined} {...props}><span className="min-w-0 flex-1 truncate text-left"><SelectPrimitive.Value>{displayValue ?? selected?.label ?? ''}</SelectPrimitive.Value></span><SelectPrimitive.Icon asChild><ChevronDown className="shrink-0" size={15} aria-hidden="true" /></SelectPrimitive.Icon></SelectPrimitive.Trigger>
       <SelectPrimitive.Portal><SelectPrimitive.Content data-slot="select-content" className={cn('bui-select-content', contentClassName)} position="popper" sideOffset={5} collisionPadding={12}><SelectPrimitive.ScrollUpButton className="bui-select-scroll"><ChevronDown size={14} className="rotate-180" /></SelectPrimitive.ScrollUpButton><SelectPrimitive.Viewport className="bui-select-viewport">{groups.map(({ group, options: entries }, index) => {
-        const items = entries.map(option => <SelectPrimitive.Item key={option.value} value={option.value === '' ? emptyKey : option.value} disabled={option.disabled} className="bui-select-item"><SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>{option.description && <span data-slot="select-item-description" aria-hidden="true">{option.description}</span>}<SelectPrimitive.ItemIndicator data-slot="select-item-indicator"><Check size={14} aria-hidden="true" /></SelectPrimitive.ItemIndicator></SelectPrimitive.Item>);
+        const items = entries.map(option => {
+          const Icon = optionIcons?.[option.value];
+          return <SelectPrimitive.Item key={option.value} value={option.value === '' ? emptyKey : option.value} disabled={option.disabled} data-description-layout={option.description ? descriptionLayout : undefined} className="bui-select-item"><SelectPrimitive.ItemText>{Icon ? <span className="bui-select-icon-label"><Icon size={16} aria-hidden="true"/>{option.label}</span> : option.label}</SelectPrimitive.ItemText>{option.description && <span data-slot="select-item-description" aria-hidden="true">{option.description}</span>}<SelectPrimitive.ItemIndicator data-slot="select-item-indicator"><Check size={14} aria-hidden="true" /></SelectPrimitive.ItemIndicator></SelectPrimitive.Item>;
+        });
         return group ? <SelectPrimitive.Group className="bui-select-group" key={group.key ?? index}><SelectPrimitive.Label className="bui-select-group-label">{group.label}</SelectPrimitive.Label>{items}</SelectPrimitive.Group> : <React.Fragment key={index}>{items}</React.Fragment>;
       })}</SelectPrimitive.Viewport><SelectPrimitive.ScrollDownButton className="bui-select-scroll"><ChevronDown size={14} /></SelectPrimitive.ScrollDownButton></SelectPrimitive.Content></SelectPrimitive.Portal>
     </SelectPrimitive.Root>
@@ -166,7 +172,7 @@ export const DialogDescription = DialogPrimitive.Description;
 export const DialogContent = forwardRef(function DialogContent({ className, children, ...props }, ref) {
   return <DialogPrimitive.Portal><DialogPrimitive.Overlay data-slot="dialog-overlay" className="bui-dialog-overlay" /><DialogPrimitive.Content ref={ref} data-slot="dialog-content" className={cn('bui-dialog-content', className)} {...props}>{children}</DialogPrimitive.Content></DialogPrimitive.Portal>;
 });
-export function Modal({ title, description, onClose, closeDisabled = false, closeLabel = 'Close', wide, children, className, ...props }) {
+export function Modal({ title, description, onClose, closeDisabled = false, closeLabel = 'Close', wide, footer, children, className, ...props }) {
   const returnFocus = useRef(typeof document === 'undefined' ? null : document.activeElement);
   const [open, setOpen] = useState(true);
   const dismiss = useRef(onClose);
@@ -181,6 +187,7 @@ export function Modal({ title, description, onClose, closeDisabled = false, clos
   return <DialogPrimitive.Root open={open} onOpenChange={next => { if (!next && !closeDisabled) setOpen(false); }}><DialogContent className={cn(wide && 'bui-dialog-wide', className)} {...(!description ? { 'aria-describedby': undefined } : {})} onCloseAutoFocus={event => { event.preventDefault(); if (returnFocus.current?.isConnected) returnFocus.current.focus(); }} onEscapeKeyDown={event => { if (closeDisabled) event.preventDefault(); }} onPointerDownOutside={event => { if (closeDisabled) event.preventDefault(); }} {...props}>
     <header className="bui-dialog-header"><div><DialogPrimitive.Title className="bui-dialog-title">{title}</DialogPrimitive.Title>{description && <DialogPrimitive.Description className="bui-dialog-description">{description}</DialogPrimitive.Description>}</div><DialogPrimitive.Close asChild><Button variant="quiet" size="icon" disabled={closeDisabled} aria-label={closeLabel}><X size={18} aria-hidden="true" /></Button></DialogPrimitive.Close></header>
     <div className="bui-dialog-body">{children}</div>
+    {footer && <footer className="bui-dialog-footer">{footer}</footer>}
   </DialogContent></DialogPrimitive.Root>;
 }
 
@@ -242,7 +249,7 @@ function TaskRow({ item, layout }) {
   const StatusIcon = Icon || (status === 'succeeded' ? Check : ['failed', 'interrupted'].includes(status) ? CircleAlert : status === 'cancelled' ? X : Clock3);
   const tone = ['succeeded', 'running'].includes(status) ? 'blue' : status === 'failed' ? 'red' : 'neutral';
   const badge = statusLabel && <Badge tone={statusTone || tone}>{statusLabel}</Badge>;
-  return <article data-slot="task-row" role="listitem" data-status={status} data-preview={preview ? true : undefined} className="bui-task-row">
+  return <article data-slot="task-row" role="listitem" data-item-id={item.id} data-highlighted={item.highlighted || undefined} data-status={status} data-preview={preview ? true : undefined} className="bui-task-row">
     <div className="bui-task-summary">
     <div className="bui-task-main">
       {preview || <span className="bui-task-icon" data-tone={tone}>{status === 'running' ? <Spinner /> : <StatusIcon size={16} aria-hidden="true" />}</span>}

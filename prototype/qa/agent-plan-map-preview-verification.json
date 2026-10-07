@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "scope": "Real App/React/OpenLayers right panel with controlled readonly IPC. Every reviewed scene defaults visible; real COG range reads for all four. Independent hide/show, all-off/all-on, resize, composer/confirmation and closing verified. No native WebView or download execution.",
+  "planId": "ecf32458-e22f-40e2-9417-9e4561e2fd96",
+  "scenes": [
+    "S2C_18TWK_20261003_0_L2A",
+    "S2C_18TWL_20261003_0_L2A",
+    "S2C_18TXK_20261003_0_L2A",
+    "S2C_18TXL_20261003_0_L2A"
+  ],
+  "measurements": [
+    {
+      "theme": "light",
+      "width": 1280,
+      "overflow": false,
+      "panelWidth": 758.90625,
+      "mapHeight": 474.3125,
+      "mapIsRightOfChat": true,
+      "conversationVisible": true,
+      "footerVisible": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 900,
+      "overflow": false,
+      "panelWidth": 496,
+      "mapHeight": 474.3125,
+      "mapIsRightOfChat": true,
+      "conversationVisible": true,
+      "footerVisible": true,
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "checks": {
+    "homeAndMultiSelectionTests": 18,
+    "sharedPreviewAndMultiSelectionTests": 15,
+    "frontendBuild": "passed",
+    "debugBuild": "passed"
+  },
+  "developmentLaunch": {
+    "processId": 103044,
+    "executable": "target/debug/geod-global-desktop.exe",
+    "sha256": "42b387eea739594333657a41671050433a579b50f4f98f629f45e659573a5220",
+    "errors": false
+  },
+  "packaged": false,
+  "published": false
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "document": {
+      "bytes": 51819,
+      "characters": 0,
+      "id": "627db129a2a8c419bde24cb401321a28e84d36d03cf67ce32c1e8e9bcfbc3661",
+      "mimeType": "video/mp4",
+      "name": "clip.mp4"
+    },
+    "video": {
+      "codec": "H.264",
+      "durationMs": 3064,
+      "hasAudio": true,
+      "height": 180,
+      "width": 320
+    }
+  },
+  {
+    "document": {
+      "bytes": 42837,
+      "characters": 0,
+      "id": "412e5c1ad17b0be64a5b395707a33d5d83633de0114884cc4470f470bc6cc467",
+      "mimeType": "video/webm",
+      "name": "clip.webm"
+    },
+    "video": {
+      "codec": "VP9",
+      "durationMs": 3000,
+      "hasAudio": true,
+      "height": 180,
+      "width": 320
+    }
+  },
+  {
+    "document": {
+      "bytes": 52369,
+      "characters": 0,
+      "id": "d2eacca9fe8f19dd1cec80acdfe2df3409b87176005c52726a95f50bde3ac795",
+      "mimeType": "video/webm",
+      "name": "clip-vp8.webm"
+    },
+    "video": {
+      "codec": "VP8",
+      "durationMs": 3016,
+      "hasAudio": true,
+      "height": 180,
+      "width": 320
+    }
+  }
+]

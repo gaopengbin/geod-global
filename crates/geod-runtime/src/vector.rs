@@ -12,6 +12,9 @@ use uuid::Uuid;
 pub mod geopackage;
 pub mod local_osm;
 mod osm;
+pub mod reads;
+mod review;
+pub use review::VectorApproval;
 pub mod shapefile;
 #[cfg(test)]
 mod tests;
@@ -52,6 +55,8 @@ pub struct VectorAsset {
     pub shapefile: Option<shapefile::Provenance>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub local_osm: Option<local_osm::Provenance>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub agent_approval: Option<VectorApproval>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -440,6 +445,7 @@ fn initial(title: &str, mode: &str) -> Result<VectorAsset> {
         geo_package: None,
         shapefile: None,
         local_osm: None,
+        agent_approval: None,
         attribution: None,
         license_url: None,
         data_timestamp: None,
@@ -524,6 +530,16 @@ pub(crate) async fn load(root: &Path) -> Result<BTreeMap<String, Record>> {
         Err(e) => return Err(io_error(e)),
     };
     for (id, r) in &records {
+        if let Some(approval) = &r.asset.agent_approval {
+            approval.validate()?;
+            if r.asset.storage_mode != "managed"
+                || r.asset.remote_source.is_none() && r.asset.osm_source.is_none()
+            {
+                return Err(
+                    "Agent vector approval requires an original managed service snapshot".into(),
+                );
+            }
+        }
         if let Some(source) = &r.asset.geo_package {
             geopackage::validate(source, r.asset.feature_count)?;
             if r.asset.format != "geopackage"
@@ -725,6 +741,9 @@ impl JobManager {
         self.inner.store.lock().await.accepting_jobs()?;
         let asset = inspection.asset;
         let mut records = self.inner.vectors.lock().await;
+        if records.contains_key(&asset.id) {
+            return Err("Vector identity is already registered".into());
+        }
         if records.len() >= 1024 {
             return Err("Vector registry is full (1,024 files)".into());
         }

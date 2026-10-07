@@ -1,0 +1,45 @@
+{
+  "schema": "geod-series-artwork/v1",
+  "recordedAt": "2026-10-06T16:30:41.682686+00:00",
+  "use": "Informational mission/instrument identification in catalogue cards",
+  "transformations": "No cropping, recolouring, redrawing or CSS filtering; aspect ratio retained",
+  "modisExtraction": "Complete embedded image extracted from official PDF using PyMuPDF",
+  "files": [
+    {
+      "file": "sentinel-1.jpg",
+      "source": "https://www.esa.int/eologos/images/sentinel-1.jpg",
+      "credit": "Sentinel-1 © ESA",
+      "bytes": 52385,
+      "width": 591,
+      "height": 159,
+      "sha256": "cab4435cf9d00deb6edbb2d93990adc122486f788aafc57a09773ecf710473ff"
+    },
+    {
+      "file": "sentinel-2.jpg",
+      "source": "https://www.esa.int/eologos/images/sentinel-2.jpg",
+      "credit": "Sentinel-2 © ESA",
+      "bytes": 37501,
+      "width": 591,
+      "height": 159,
+      "sha256": "643311c015ae07ef6223fc4dc9a777daeff1a140264ac5891d533727ccadef6b"
+    },
+    {
+      "file": "modis.png",
+      "source": "https://landweb.modaps.eosdis.nasa.gov/data/userguide/Terra_SNPP_orbit_anomalies_20240612.pdf",
+      "credit": "NASA/GSFC-SBRS; page 1 embedded image object 7",
+      "bytes": 132337,
+      "width": 485,
+      "height": 512,
+      "sha256": "009edb3422fb95a4e043bcc348e38d6cba0d675b9638e06e34686b4a6602d916"
+    },
+    {
+      "file": "srtm.jpg",
+      "source": "https://www.dlr.de/de/forschung-und-transfer/themen/das-system-erde-im-blick/25-jahre-srtm/das-logo-der-shuttle-radar-topography-mission-srtm/@@images/image-400-3079ad3ec410994276177c67d6e319ba.jpeg",
+      "credit": "NASA, via DLR; STS-99/SRTM mission patch",
+      "bytes": 39472,
+      "width": 400,
+      "height": 483,
+      "sha256": "a08667ad7f63d96dd2bdb0ca03a8523ab920a609b6bd43c6ebfb929553c989bb"
+    }
+  ]
+}

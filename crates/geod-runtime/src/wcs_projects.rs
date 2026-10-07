@@ -14,7 +14,7 @@ use std::{
 use tokio_util::sync::CancellationToken;
 use uuid::Uuid;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct SaveProjectRequest {
     pub project_id: Option<String>,
@@ -28,6 +28,14 @@ pub struct SaveProjectRequest {
 pub struct DownloadRequest {
     pub project_id: String,
     pub selections: Option<Vec<SourcePin>>,
+}
+
+/// Internal admission contract for a native human-confirmed Agent review.
+/// Not deserializable from desktop/MCP download requests.
+pub(crate) struct ReviewedDownload {
+    pub project_hash: String,
+    pub expires_at: String,
+    pub jobs: Vec<(String, crate::agent_actions::ApprovalReceipt)>,
 }
 
 fn matching_pin(root: &Path, project: &Project, pin: &SourcePin) -> Result<Option<SourcePin>> {
@@ -97,6 +105,7 @@ impl JobManager {
                 wcs_items: Vec::new(),
                 created_at: timestamp.clone(),
                 updated_at: timestamp.clone(),
+                agent_approvals: Vec::new(),
             }
         };
         for item in additions {
@@ -133,6 +142,22 @@ impl JobManager {
     }
 
     pub async fn download_wcs_project(&self, request: DownloadRequest) -> Result<ProjectDownloads> {
+        self.download_wcs_project_inner(request, None).await
+    }
+
+    pub(crate) async fn download_wcs_project_reviewed(
+        &self,
+        request: DownloadRequest,
+        review: ReviewedDownload,
+    ) -> Result<ProjectDownloads> {
+        self.download_wcs_project_inner(request, Some(review)).await
+    }
+
+    async fn download_wcs_project_inner(
+        &self,
+        request: DownloadRequest,
+        review: Option<ReviewedDownload>,
+    ) -> Result<ProjectDownloads> {
         let project = self
             .inner
             .projects
@@ -163,6 +188,12 @@ impl JobManager {
                 return Err("Choose unique coverage requests belonging to this project".into());
             }
             resolved.push((wcs::resolve(&self.inner.root, &pin)?, pin));
+        }
+        if review
+            .as_ref()
+            .is_some_and(|r| r.jobs.len() != resolved.len())
+        {
+            return Err("Coverage review task count changed".into());
         }
         let mut verified: HashMap<String, (Job, Result<File>)> = HashMap::new();
         let mut store = self.inner.store.lock().await;
@@ -201,10 +232,55 @@ impl JobManager {
             store = self.inner.store.lock().await;
             store.accepting_jobs()?;
         }
+        // Recheck the entire mixed project scope at admission and hold it through
+        // the atomic queue commit. Release the store first to preserve lock order.
+        drop(store);
+        let projects = self.inner.projects.lock().await;
+        if let Some(review) = &review {
+            let current = projects
+                .get(&project.id)
+                .ok_or("The target project was removed")?;
+            if crate::agent_actions::ProjectScope::from_project(current).fingerprint()?
+                != review.project_hash
+            {
+                return Err("The project changed. Create and review a new plan.".into());
+            }
+        }
+        store = self.inner.store.lock().await;
+        store.accepting_jobs()?;
+        // Completed records can change while taking the project lock. Never
+        // reuse a file checked for another receipt or retire an unchecked file.
+        if store.jobs.values().any(|job| {
+            job.status == JobStatus::Succeeded
+                && resolved
+                    .iter()
+                    .any(|(_, p)| job.wcs_source.as_ref() == Some(p))
+                && !verified
+                    .get(&job.id)
+                    .is_some_and(|(checked, _)| same_completed(checked, job))
+        }) {
+            return Err("Coverage tasks changed during admission; prepare a fresh request".into());
+        }
+        if let Some(review) = &review {
+            if chrono::DateTime::parse_from_rfc3339(&review.expires_at)
+                .map_or(true, |date| date <= chrono::Utc::now())
+            {
+                return Err("Agent plan expired. Create a new plan before confirming.".into());
+            }
+            if review
+                .jobs
+                .iter()
+                .any(|(id, _)| store.jobs.contains_key(id))
+            {
+                return Err(
+                    "Coverage review task identifier conflicts with an existing task".into(),
+                );
+            }
+        }
         let mut jobs = Vec::new();
         let mut created = Vec::new();
         let mut invalid = Vec::new();
-        for (item, pin) in resolved {
+        for (index, (item, pin)) in resolved.into_iter().enumerate() {
             if let Some(existing) = store.jobs.values().find(|job| {
                 job.wcs_source.as_ref() == Some(&pin)
                     && matches!(
@@ -216,6 +292,9 @@ impl JobManager {
                 if existing.status != JobStatus::Succeeded
                     || verified.get(&existing.id).is_some_and(|(_, f)| f.is_ok())
                 {
+                    if review.is_some() {
+                        return Err("A selected coverage already has a reusable task. Prepare a new download plan.".into());
+                    }
                     jobs.push(existing.clone());
                     continue;
                 }
@@ -230,6 +309,10 @@ impl JobManager {
             });
             job.source = item.service_name;
             job.wcs_source = Some(pin);
+            if let Some(review) = &review {
+                job.id = review.jobs[index].0.clone();
+                job.agent_approval = Some(review.jobs[index].1.clone());
+            }
             job.validation =
                 "Pending coverage response size, checksum and declared native grid validation"
                     .into();
@@ -269,6 +352,7 @@ impl JobManager {
             store.active.insert(job.id.clone(), token.clone());
             self.spawn(job.id, token);
         }
+        drop(projects);
         Ok(ProjectDownloads {
             project_id: project.id,
             asset_key: "wcs_coverage".into(),

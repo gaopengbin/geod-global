@@ -35,12 +35,12 @@ export function StacSourcesPanel({ onOpen, bounds }) {
   </Surface>{open && <StacSourceDialog areaBounds={bounds} onClose={() => setOpen(false)}/>}</>;
 }
 
-export function StacSourceDialog({ areaBounds, currentProject, onClose, onSaved }) {
+export function StacSourceDialog({ areaBounds, currentProject, onClose, onSaved, initialKind = 'api' }) {
   const { t, locale, date, number } = useI18n();
   const { projects = [], refresh = async () => {} } = useContext(RuntimeContext) || {};
   const [connections, setConnections] = useState([]);
   const [connectionId, setConnectionId] = useState('new');
-  const [kind, setKind] = useState('api');
+  const [kind, setKind] = useState(['api','catalog','item','raster'].includes(initialKind) ? initialKind : 'api');
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [collectionId, setCollectionId] = useState('');
@@ -59,7 +59,10 @@ export function StacSourceDialog({ areaBounds, currentProject, onClose, onSaved 
   const [error, setError] = useState('');
   const request = useRef(null);
   const connection = connections.find(item => item.id === connectionId);
-  const collection = connection?.collections.find(item => item.id === collectionId);
+  const searchable = connection?.kind === 'api' || connection?.kind === 'catalog';
+  const staticCatalog = connection?.kind === 'catalog';
+  const directories = staticCatalog ? connection.catalogNodes : connection?.collections || [];
+  const collection = directories.find(item => (staticCatalog ? item.key : item.id) === collectionId);
   const bounds = parseBounds(region);
   const selections = Object.values(selected);
   const choices = currentProject && !projects.some(item => item.id === currentProject.id) ? [currentProject, ...projects] : projects;
@@ -80,8 +83,8 @@ export function StacSourceDialog({ areaBounds, currentProject, onClose, onSaved 
     finally { if (!abort.signal.aborted) setBusy(''); }
   }
   async function loadConnection(next, signal) {
-    clearResults(); setConnectionId(next.id); setCollectionId(next.collections[0]?.id || '');
-    if (next.kind !== 'api') setItems(await Promise.all(next.snapshotIds.map(id => stacRequest('snapshot', { id }, signal))));
+    clearResults(); setConnectionId(next.id); setCollectionId(next.kind === 'catalog' ? next.catalogNodes[0]?.key || '' : next.collections[0]?.id || '');
+    if (!['api', 'catalog'].includes(next.kind)) setItems(await Promise.all(next.snapshotIds.map(id => stacRequest('snapshot', { id }, signal))));
   }
   const connect = event => { event.preventDefault(); perform('connect', async signal => {
     const next = await stacRequest('connect', { name: name.trim(), url: url.trim(), kind }, signal);
@@ -108,22 +111,23 @@ export function StacSourceDialog({ areaBounds, currentProject, onClose, onSaved 
       }}><option value="new">{t('Add a raster source')}</option>{connections.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</Select></label>
       {connection && <Button size="icon" disabled={Boolean(busy)} aria-label={t('Forget raster connection')} onClick={() => perform('forget', async signal => { await stacRequest('forget', { id: connectionId }, signal); setConnections(previous => previous.filter(item => item.id !== connectionId)); setConnectionId('new'); clearResults(); })}><Trash2 size={16}/></Button>}</div>
       {!connection && <form className="stac-connect" onSubmit={connect}>
-        <div className="stac-grid"><label className="stac-field"><span>{t('Source type')}</span><Select aria-label={t('Source type')} value={kind} disabled={Boolean(busy)} onChange={event => setKind(event.target.value)}><option value="api">STAC API</option><option value="item">{t('STAC item')}</option><option value="raster">{t('COG / GeoTIFF URL')}</option></Select></label>
+        <div className="stac-grid"><label className="stac-field"><span>{t('Source type')}</span><Select aria-label={t('Source type')} value={kind} disabled={Boolean(busy)} onChange={event => setKind(event.target.value)}><option value="api">STAC API</option><option value="catalog">{t('Static STAC catalog')}</option><option value="item">{t('STAC item')}</option><option value="raster">{t('COG / GeoTIFF URL')}</option></Select></label>
           <label className="stac-field"><span>{t('Source name')}</span><Input aria-label={t('Source name')} value={name} maxLength={80} disabled={Boolean(busy)} onChange={event => setName(event.target.value)} required/></label></div>
         <label className="stac-field"><span>{t('Source URL')}</span><Input aria-label={t('Source URL')} placeholder="https://…" value={url} disabled={Boolean(busy)} onChange={event => setUrl(event.target.value)} required/></label>
         <p className="stac-help">{t('Use a public HTTPS source you are authorized to access. Account-protected providers remain in Data source authorization.')}</p>
         <Button type="submit" variant="primary" disabled={Boolean(busy) || !name.trim() || !url.trim()}><Plus size={15}/>{t('Connect raster source')}</Button>
       </form>}
       {connection && <>
-        <div className="stac-connection-summary"><Badge>{connection.kind === 'api' ? 'STAC API' : t(connection.kind === 'item' ? 'STAC item' : 'COG / GeoTIFF URL')}</Badge><span>{connection.url}</span></div>
-        {connection.kind === 'api' && <>
-          <label className="stac-field"><span>{t('Collection')}</span><Select aria-label={t('Raster collection')} disabled={Boolean(busy) || !connection.collections.length} value={collectionId} onChange={event => updateFilter(() => setCollectionId(event.target.value))}>{connection.collections.map(item => <option key={item.id} value={item.id}>{item.title || item.id}</option>)}</Select></label>
-          {collection && <Disclosure summary={t('Collection details')}><p className="stac-help">{collection.description}</p><dl className="stac-details"><dt>{t('Collection')}</dt><dd>{collection.id}</dd><dt>{t('Declared license')}</dt><dd>{collection.license || t('Not declared')}</dd></dl></Disclosure>}
+        <div className="stac-connection-summary"><Badge>{connection.kind === 'api' ? 'STAC API' : t(staticCatalog ? 'Static STAC catalog' : connection.kind === 'item' ? 'STAC item' : 'COG / GeoTIFF URL')}</Badge><span>{connection.url}</span></div>
+        {searchable && <>
+          <label className="stac-field"><span>{t(staticCatalog ? 'Catalog directory' : 'Collection')}</span><Select aria-label={t('Raster collection')} disabled={Boolean(busy) || !directories.length} value={collectionId} onChange={event => updateFilter(() => setCollectionId(event.target.value))}>{directories.map(item => <option key={staticCatalog ? item.key : item.id} value={staticCatalog ? item.key : item.id}>{item.title || item.id}{staticCatalog ? ` · ${item.kind}` : ''}</option>)}</Select></label>
+          {staticCatalog && <p className="stac-help">{t('Scans the selected directory and its children using saved item links. Filters by declared bounding box and observation time; items without bounds are excluded. Up to 1000 item documents per search.')}</p>}
+          {collection && <Disclosure summary={t(staticCatalog ? 'Directory details' : 'Collection details')}><p className="stac-help">{collection.description}</p><dl className="stac-details"><dt>{t(staticCatalog ? 'Directory identifier' : 'Collection')}</dt><dd>{collection.id}</dd><dt>{t('Declared license')}</dt><dd>{collection.license || t('Not declared')}</dd></dl></Disclosure>}
           <label className="stac-field"><span>{t('Search bounds · west, south, east, north')}</span><Input aria-label={t('Raster search bounds')} value={region} disabled={Boolean(busy)} onChange={event => updateFilter(() => setRegion(event.target.value))}/></label>
           <label className="stac-check"><Input type="checkbox" checked={useTime} disabled={Boolean(busy)} onChange={event => updateFilter(() => setUseTime(event.target.checked))}/>{t('Limit by observation date')}</label>
           {useTime && <div className="stac-grid"><label className="stac-field"><span>{t('Start date')}</span><DatePicker aria-label={t('Raster start date')} locale={locale} value={start} disabled={Boolean(busy)} onChange={event => updateFilter(() => setStart(event.target.value))}/></label><label className="stac-field"><span>{t('End date')}</span><DatePicker aria-label={t('Raster end date')} locale={locale} value={end} disabled={Boolean(busy)} onChange={event => updateFilter(() => setEnd(event.target.value))}/></label></div>}
-          {!connection.capabilities.searchGet && !connection.capabilities.searchPost && <p className="stac-help">{t('This source does not advertise supported Item Search. Its connection metadata is retained.')}</p>}
-          <Button variant="primary" disabled={Boolean(busy) || !(connection.capabilities.searchGet || connection.capabilities.searchPost) || !collectionId || !validQueryBounds(bounds) || useTime && (!start || !end || start > end)} onClick={() => search(false)}><Search size={15}/>{t('Search raster items')}</Button>
+          {!staticCatalog && !connection.capabilities.searchGet && !connection.capabilities.searchPost && <p className="stac-help">{t('This source does not advertise supported Item Search. Its connection metadata is retained.')}</p>}
+          <Button variant="primary" disabled={Boolean(busy) || !(staticCatalog || connection.capabilities.searchGet || connection.capabilities.searchPost) || !collectionId || !validQueryBounds(bounds) || useTime && (!start || !end || start > end)} onClick={() => search(false)}><Search size={15}/>{t('Search raster items')}</Button>
         </>}
         <div className="stac-items">{items.map(item => <Surface as="article" variant="inset" className="stac-item" key={item.id}>
           <div className="stac-item-heading"><strong>{item.title || item.itemId}</strong>{item.datetime && <span>{date(item.datetime)}</span>}</div>
@@ -136,11 +140,11 @@ export function StacSourceDialog({ areaBounds, currentProject, onClose, onSaved 
           <Disclosure summary={t('Asset source details')}><dl className="stac-details"><dt>{t('Source URL')}</dt><dd>{asset.href}</dd><dt>{t('Declared roles')}</dt><dd>{asset.roles.join(', ') || t('Not declared')}</dd><dt>{t('Original asset metadata')}</dt><dd><pre>{JSON.stringify(asset.metadata, null, 2)}</pre></dd></dl></Disclosure></div>; })}</div>
           <SourceMetadata item={item}/>
         </Surface>)}</div>
-        {page && <div className="stac-search-footer"><span className="stac-help" role="status">{t(page.limitReached ? 'Search limit reached. Narrow the area, dates or collection.' : page.complete ? '{count} items loaded · search complete' : '{count} items loaded · more available', { count: number(items.length) })}</span>{page.nextCursor && <Button disabled={Boolean(busy)} onClick={() => search(true)}>{t('Load more items')}</Button>}</div>}
+        {page && <div className="stac-search-footer"><span className="stac-help" role="status">{t(page.limitReached ? 'Search limit reached. Narrow the area, dates or collection.' : page.complete ? '{count} items loaded · search complete' : '{count} items loaded · more available', { count: number(items.length) })}{page.scannedItems !== undefined && <> · {t('{count} item documents scanned', { count: number(page.scannedItems) })}</>}</span>{page.nextCursor && <Button disabled={Boolean(busy)} onClick={() => search(true)}>{t(staticCatalog ? 'Continue scanning' : 'Load more items')}</Button>}</div>}
         {items.length > 0 && <Surface variant="inset" className="stac-destination">
           <strong>{t('{count} original assets selected', { count: number(selections.length) })}</strong>
           <label className="stac-field"><span>{t('Save into project')}</span><Select aria-label={t('Save into project')} value={destination} disabled={Boolean(busy)} onChange={event => { setDestination(event.target.value); setSaved(null); setQueued(false); }}><option value="new">{t('New project')}</option>{choices.map(project => <option key={project.id} value={project.id}>{project.name}</option>)}</Select></label>
-          {destination === 'new' && <><label className="stac-field"><span>{t('Project name')}</span><Input aria-label={t('Raster project name')} value={projectName} maxLength={120} disabled={Boolean(busy)} onChange={event => { setProjectName(event.target.value); setSaved(null); }}/></label>{connection.kind !== 'api' && <label className="stac-field"><span>{t('Project bounds · west, south, east, north')}</span><Input aria-label={t('Raster project bounds')} value={region} disabled={Boolean(busy)} onChange={event => { setRegion(event.target.value); setSaved(null); }}/></label>}</>}
+          {destination === 'new' && <><label className="stac-field"><span>{t('Project name')}</span><Input aria-label={t('Raster project name')} value={projectName} maxLength={120} disabled={Boolean(busy)} onChange={event => { setProjectName(event.target.value); setSaved(null); }}/></label>{!searchable && <label className="stac-field"><span>{t('Project bounds · west, south, east, north')}</span><Input aria-label={t('Raster project bounds')} value={region} disabled={Boolean(busy)} onChange={event => { setRegion(event.target.value); setSaved(null); }}/></label>}</>}
           <p className="stac-help">{t('The area organizes this project. Downloads keep the complete original asset; no clipping or band conversion is applied.')}</p>
           <div className="stac-actions"><Button variant={saved ? 'secondary' : 'primary'} disabled={Boolean(busy) || !selections.length || !validQueryBounds(projectBounds) || destination === 'new' && !projectName.trim() || Boolean(saved)} onClick={save}><FolderOpen size={15}/>{t(saved ? 'Selection saved' : 'Save asset selection')}</Button>
             {saved && <Button variant="primary" disabled={Boolean(busy) || Boolean(queued)} onClick={download}><Download size={15}/>{t(queued === 'ready' ? 'Original files ready' : queued ? 'Downloads queued' : 'Download selected originals')}</Button>}</div>

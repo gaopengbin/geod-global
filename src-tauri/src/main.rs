@@ -1,8 +1,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod agent;
+mod distribution;
 mod elevation_preview;
 mod lifecycle;
 
+use agent::{DesktopAgent, ModelRequest};
+use distribution::{
+    distribution_preferences, distribution_snapshot, notifications_read, notifications_refresh,
+    update_cancel, update_check, update_download, update_install,
+};
 use lifecycle::DesktopLifecycle;
 
 use geod_runtime::{
@@ -19,13 +26,266 @@ use std::sync::{
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    Manager, RunEvent, State, WebviewWindowBuilder, WindowEvent,
+    Emitter, Manager, RunEvent, State, WebviewWindowBuilder, WindowEvent,
 };
 use tauri_plugin_decoration::WebviewWindowExt;
 use tauri_plugin_opener::OpenerExt;
 
 #[derive(Clone, Default)]
 struct DesktopFrameReady(Arc<AtomicBool>);
+
+struct AgentAvailability(Result<DesktopAgent, String>);
+impl AgentAvailability {
+    fn agent(&self) -> Result<&DesktopAgent, String> {
+        self.0.as_ref().map_err(Clone::clone)
+    }
+}
+
+#[tauri::command]
+async fn agent_snapshot(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.snapshot().await
+}
+#[tauri::command]
+async fn agent_save_model(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    request: ModelRequest,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.save_model(request).await
+}
+#[tauri::command]
+async fn agent_test_model(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    request: ModelRequest,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.test_model(request).await
+}
+#[tauri::command]
+async fn agent_acknowledge_view(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: String,
+    request_id: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .operation(
+            "acknowledgeView",
+            serde_json::json!({"sessionId":session_id,"requestId":request_id}),
+        )
+        .await
+}
+#[tauri::command]
+async fn agent_execution_mode(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: Option<String>,
+    mode: agent::ExecutionMode,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.execution_mode(session_id, mode).await
+}
+#[tauri::command]
+async fn agent_goal_control(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: String,
+    action: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .operation(
+            "goalControl",
+            serde_json::json!({"sessionId":session_id,"action":action}),
+        )
+        .await
+}
+// Tauri injects two state arguments alongside the existing typed IPC payload.
+#[allow(clippy::too_many_arguments)]
+#[tauri::command]
+async fn agent_send(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: Option<String>,
+    text: String,
+    context: Option<geod_runtime::agent_actions::MapContext>,
+    images: Option<Vec<String>>,
+    documents: Option<Vec<String>>,
+    decision_answer: Option<serde_json::Value>,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    if let Some(context) = &context {
+        context.validate()?;
+    }
+    agent
+        .agent()?
+        .operation(
+            "send",
+            serde_json::json!({"sessionId":session_id,"text":text,"context":context,"images":images.unwrap_or_default(),"documents":documents.unwrap_or_default(),"decisionAnswer":decision_answer}),
+        )
+        .await
+}
+#[tauri::command]
+async fn agent_attach_image(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    name: String,
+    encoded: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.attach_image(name, encoded).await
+}
+#[tauri::command]
+async fn agent_image_preview(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    id: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.image_preview(id).await
+}
+#[tauri::command]
+async fn agent_attach_document(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    name: String,
+    encoded: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.attach_document(name, encoded).await
+}
+#[tauri::command]
+async fn agent_document_preview(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    id: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent.agent()?.document_preview(id).await
+}
+#[tauri::command]
+async fn agent_attachment_storage(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    protected_images: Vec<String>,
+    protected_documents: Vec<String>,
+    cleanup: bool,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .attachment_storage(protected_images, protected_documents, cleanup)
+        .await
+}
+#[tauri::command]
+async fn agent_image_storage(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    protected_images: Vec<String>,
+    cleanup: bool,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .image_storage(protected_images, cleanup)
+        .await
+}
+#[tauri::command]
+async fn agent_compact(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .operation("compact", serde_json::json!({"sessionId":session_id}))
+        .await
+}
+#[tauri::command]
+async fn agent_plan_map_preview(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: String,
+    plan_id: String,
+    plan_hash: String,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .plan_map_preview(&session_id, &plan_id, &plan_hash)
+        .await
+}
+#[tauri::command]
+async fn agent_approve_plan(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    session_id: String,
+    plan_id: String,
+    plan_hash: String,
+    action: Option<String>,
+    revision: Option<geod_runtime::agent_actions::PlanRevision>,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    match action.as_deref().unwrap_or("approve") {
+        "approve" if revision.is_none() => {
+            agent
+                .agent()?
+                .approve_plan(&session_id, &plan_id, &plan_hash)
+                .await
+        }
+        "draft" if revision.is_none() => {
+            agent
+                .agent()?
+                .plan_revision_draft(&session_id, &plan_id, &plan_hash)
+                .await
+        }
+        "revise" => {
+            agent
+                .agent()?
+                .revise_plan(
+                    &session_id,
+                    &plan_id,
+                    &plan_hash,
+                    revision.ok_or("Revision parameters are required.")?,
+                )
+                .await
+        }
+        _ => Err("Unsupported or ambiguous Agent review action.".into()),
+    }
+}
+#[tauri::command]
+async fn agent_select(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+    id: Option<String>,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .operation("select", serde_json::json!({"id":id}))
+        .await
+}
+#[tauri::command]
+async fn agent_interrupt(
+    lifecycle: State<'_, DesktopLifecycle>,
+    agent: State<'_, AgentAvailability>,
+) -> Result<serde_json::Value, String> {
+    let _command = lifecycle.enter()?;
+    agent
+        .agent()?
+        .operation("interrupt", serde_json::json!({}))
+        .await
+}
 
 async fn restore_desktop_frame(window: &tauri::WebviewWindow) -> Result<&'static str, String> {
     // A minimized WebView retains its old viewport while the native client
@@ -210,6 +470,7 @@ fn request_exit(app: &tauri::AppHandle) {
     let _ = tray.tasks.set_enabled(false);
     let _ = tray.quit.set_enabled(false);
     let manager = app.state::<JobManager>().inner().clone();
+    let agent = app.state::<AgentAvailability>().0.clone().ok();
     let app = app.clone();
     tauri::async_runtime::spawn(async move {
         // Finish in-flight IPC writes before interrupting background jobs.
@@ -218,6 +479,9 @@ fn request_exit(app: &tauri::AppHandle) {
             tauri::async_runtime::spawn_blocking(move || drain.drain_commands()).await
         {
             eprintln!("Could not drain desktop commands: {error}");
+        }
+        if let Some(agent) = agent {
+            agent.shutdown().await;
         }
         let result = manager.shutdown().await;
         if let Err(error) = &result {
@@ -1433,6 +1697,14 @@ async fn reveal_job(
 }
 
 fn main() {
+    let mut context = tauri::generate_context!();
+    if cfg!(debug_assertions) {
+        // Debug fixtures are still restricted to numeric loopback by our
+        // product-owned channel validator. Release transport remains HTTPS.
+        if let Some(config) = context.config_mut().plugins.0.get_mut("updater") {
+            config["dangerousInsecureTransportProtocol"] = serde_json::json!(true);
+        }
+    }
     tauri::Builder::default()
         .register_asynchronous_uri_scheme_protocol("geod-elevation", elevation_preview::handle)
         // Claim the application instance before opening its exclusive runtime store.
@@ -1440,6 +1712,7 @@ fn main() {
             restore_window(app);
         }))
         .plugin(tauri_plugin_decoration::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(
             tauri_plugin_opener::Builder::new()
                 .open_js_links_on_click(false)
@@ -1451,7 +1724,31 @@ fn main() {
             let storage_root = app.path().app_local_data_dir()?.join("runtime");
             let manager = tauri::async_runtime::block_on(JobManager::open(storage_root))
                 .map_err(std::io::Error::other)?;
+            let agent_home = app.path().app_local_data_dir()?.join("agent");
+            let agent_runtime = if cfg!(debug_assertions) {
+                PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../.agent-runtime/win32-x64")
+            } else {
+                app.path().resource_dir()?.join("agent-runtime")
+            };
+            let desktop_agent = tauri::async_runtime::block_on(DesktopAgent::open(
+                agent_home,
+                agent_runtime,
+                manager.clone(),
+            ));
+            if let Ok(agent) = &desktop_agent {
+                let handle = app.handle().clone();
+                agent.on_change(move |revision| {
+                    let _ = handle.emit_to("main", "geod-agent-changed", revision);
+                });
+            }
+            app.manage(AgentAvailability(desktop_agent));
             app.manage(manager);
+            app.manage(
+                distribution::Distribution::open(
+                    app.path().app_local_data_dir()?.join("distribution"),
+                )
+                .map_err(std::io::Error::other)?,
+            );
             // Install native state before the webview can send its first IPC call.
             create_tray(app)?;
             let config = app.config().app.windows[0].clone();
@@ -1492,6 +1789,32 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            distribution_snapshot,
+            distribution_preferences,
+            update_check,
+            update_download,
+            update_cancel,
+            update_install,
+            notifications_refresh,
+            notifications_read,
+            agent_snapshot,
+            agent_save_model,
+            agent_test_model,
+            agent_execution_mode,
+            agent_acknowledge_view,
+            agent_send,
+            agent_goal_control,
+            agent_attach_image,
+            agent_image_preview,
+            agent_image_storage,
+            agent_attach_document,
+            agent_document_preview,
+            agent_attachment_storage,
+            agent_compact,
+            agent_select,
+            agent_interrupt,
+            agent_approve_plan,
+            agent_plan_map_preview,
             list_three_d,
             discover_three_d,
             acquire_three_d,
@@ -1590,7 +1913,7 @@ fn main() {
             reveal_job,
             open_source
         ])
-        .build(tauri::generate_context!())
+        .build(context)
         .expect("GeoD Global desktop could not start")
         .run(|app, event| match event {
             RunEvent::WindowEvent {
@@ -1686,6 +2009,7 @@ mod tests {
 
     fn completed(path: &Path) -> Job {
         Job {
+            agent_approval: None,
             id: "11111111-1111-4111-8111-111111111111".into(),
             kind: "download".into(),
             parent_id: None,

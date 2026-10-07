@@ -5,6 +5,13 @@ vi.mock('./wms-client.js',async load=>({...await load(),mapRequest:vi.fn()}));
 const id='735f227b-5f95-473f-967b-077f3419bc68',layer={name:'land',title:'Land imagery',styles:[],time:{default:'2025-06-27',values:'2025-06-01/2025-06-30/P1D'}};
 const service={id,name:'NASA GIBS',url:'https://maps.example.com/wms',layers:[layer],maxWidth:2048,maxHeight:2048};
 beforeEach(()=>{vi.clearAllMocks();mapRequest.mockImplementation(async op=>op==='services'?[service]:{id:'image'});});
+it('a directory card opens its requested new connection even with saved services, without contacting the provider',async()=>{
+ render(<MapServiceDialog initialProtocol="WMTS" onClose={()=>{}}/>);
+ expect((await screen.findByRole('combobox',{name:'Map service type'})).textContent).toBe('WMTS');
+ expect(screen.getByRole('textbox',{name:'WMTS endpoint URL'}).value).toBe('');
+ expect(screen.queryByRole('combobox',{name:'Map service'})).toBeNull();
+ expect(mapRequest.mock.calls.every(([op])=>op==='services')).toBe(true);
+});
 it('WMTS capability documents retain their discovery method when connecting and refreshing',async()=>{
  const url='https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/1.0.0/WMTSCapabilities.xml';
  const m={id:'opaque-level',scaleDenominator:(Math.PI*6378137/180)/.00028,topLeft:[-180,90],tileWidth:16,tileHeight:16,matrixWidth:32,matrixHeight:16};

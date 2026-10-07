@@ -1,0 +1,113 @@
+{
+  "schema": "geod-agent-goals-verification/v1",
+  "date": "2026-10-07",
+  "implementation": "Pinned owned Codex Goals RPC plus GeoD required-delivery manifest and existing workflow coordinator",
+  "checks": {
+    "realCodexEngine": {
+      "scope": "Real pinned Codex goal RPC/persistence; loopback model is controlled. No actual geographic task or external model.",
+      "status": "passed",
+      "requests": 2,
+      "successRequests": 1,
+      "failureRequests": 1,
+      "failurePausesNativeGoal": true,
+      "restored": {
+        "threadId": "01a11535-a03e-7da1-a3ae-d8cd5b5fa37a",
+        "objective": "Verify native persisted goal lifecycle with a controlled reply.",
+        "status": "paused",
+        "tokenBudget": null,
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791357198,
+        "updatedAt": 1791357198
+      },
+      "completed": {
+        "threadId": "01a11535-a03e-7da1-a3ae-d8cd5b5fa37a",
+        "objective": "Verify native persisted goal lifecycle with a controlled reply.",
+        "status": "complete",
+        "tokenBudget": null,
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791357198,
+        "updatedAt": 1791357199
+      }
+    },
+    "ui": {
+      "status": "passed",
+      "scope": "Controlled React/IPC layout and controls; no native WebView, external model or download.",
+      "measurements": [
+        {
+          "theme": "light",
+          "locale": "zh-CN",
+          "width": 560,
+          "overflow": false,
+          "cardWidth": 518,
+          "composerVisible": true
+        },
+        {
+          "theme": "dark",
+          "locale": "zh-CN",
+          "width": 360,
+          "overflow": false,
+          "cardWidth": 318,
+          "composerVisible": true
+        },
+        {
+          "theme": "light",
+          "locale": "en",
+          "width": 360,
+          "overflow": false,
+          "cardWidth": 318,
+          "composerVisible": true
+        }
+      ],
+      "errors": []
+    },
+    "agentTests": {
+      "passed": 98,
+      "failed": 0
+    },
+    "clientAndAclTests": {
+      "passed": 27,
+      "failed": 0
+    },
+    "agentPanelIntegrationTests": {
+      "passed": 66,
+      "failed": 0
+    },
+    "nativeDesktopTests": {
+      "passed": 45,
+      "ignored": 22,
+      "failed": 0
+    },
+    "frontendBuild": "passed",
+    "ownedSidecarPreparation": "passed",
+    "independentDesktopBuild": {
+      "status": "passed",
+      "file": ".verification/goals-desktop-target/debug/geod-global-desktop.exe",
+      "bytes": 107616768,
+      "sha256": "3bb2d7f193924104c06e410f1dca96cbe5088deb708881dcebfd123f32aca83a",
+      "launched": true
+    },
+    "developerStartup": {
+      "status": "running",
+      "processId": 60464,
+      "windowTitle": "GeoD Global",
+      "responding": true,
+      "oldIdleDeveloperProcessReplaced": 51572,
+      "activeTasksBeforeRestart": 0,
+      "activeConversationsBeforeRestart": 0,
+      "startupErrors": false,
+      "historyRestored": true,
+      "logs": ".verification/goals-desktop-launch-20261007-153256",
+      "scope": "Process/window availability and sidecar/history restore; no native visual or live model task acceptance."
+    }
+  },
+  "limits": [
+    "Model requests and data-plan/file test values are controlled. No new live model download or scientific acceptance.",
+    "UI uses actual React with controlled IPC in a hidden browser, not native WebView visual acceptance.",
+    "Full structured semantic TaskRequest, temporal batch checkpoints and statistics CSV are not added."
+  ],
+  "existingDeveloperExecutable": "Idle previous standard-target development app replaced by the verified independent debug candidate.",
+  "packaged": false,
+  "published": false
+}

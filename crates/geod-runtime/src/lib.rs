@@ -2,6 +2,7 @@
 //! it does not establish GeoTIFF scientific correctness or source authenticity.
 
 pub mod accounts;
+pub mod agent_actions;
 pub mod artifact;
 pub mod crop;
 pub mod diagnostics;
@@ -93,6 +94,8 @@ pub struct CreateJobRequest {
 #[serde(rename_all = "camelCase")]
 pub struct Job {
     pub id: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub agent_approval: Option<agent_actions::ApprovalReceipt>,
     #[serde(default = "default_job_kind")]
     pub kind: String,
     #[serde(default)]
@@ -187,6 +190,7 @@ struct Inner {
     wcs: Mutex<wcs::Registry>,
     proxy_settings: Mutex<ProxySettings>,
     accounts: Mutex<accounts::Accounts>,
+    agent_commits: Mutex<()>,
     planetary_access: providers::AccessCache,
     permits: Semaphore,
     preview_permits: Semaphore,
@@ -222,6 +226,7 @@ fn new_download_job(request: CreateJobRequest) -> Job {
     let title = request.title.unwrap_or_else(|| request.item_id.clone());
     Job {
         id: Uuid::new_v4().to_string(),
+        agent_approval: None,
         kind: default_job_kind(),
         parent_id: None,
         recipe: None,
@@ -573,6 +578,7 @@ impl JobManager {
                 wcs: Mutex::new(wcs),
                 proxy_settings: Mutex::new(proxy_settings),
                 permits: Semaphore::new(2),
+                agent_commits: Mutex::new(()),
                 preview_permits: Semaphore::new(4),
                 raster_permits: Arc::new(Semaphore::new(1)),
                 thumbnail_permits: Arc::new(Semaphore::new(1)),
@@ -619,6 +625,11 @@ impl JobManager {
     }
     pub async fn get(&self, id: &str) -> Option<Job> {
         self.inner.store.lock().await.jobs.get(id).cloned()
+    }
+    /// Includes output finalization, even after a job records its terminal state.
+    pub async fn has_active_work(&self) -> bool {
+        let store = self.inner.store.lock().await;
+        !store.active.is_empty() || store.jobs.values().any(|job| active(&job.status))
     }
 
     /// Export a completed derived GeoTIFF only after rechecking the managed
@@ -1114,7 +1125,11 @@ impl JobManager {
                 .planetary_access
                 .resolve(client, &job.href, &job.item_id, &job.asset_key)
                 .await?;
-            transfer::request(client.get(href), checkpoint)
+            let mut request = client.get(href);
+            if let Some(pin) = job.agent_approval.as_ref().and_then(|a| a.remote.as_ref()) {
+                request = request.header(reqwest::header::IF_MATCH, &pin.etag);
+            }
+            transfer::request(request, checkpoint)
                 .send()
                 .await
                 .map_err(|error| error.without_url().to_string())
@@ -1191,6 +1206,19 @@ impl JobManager {
             .as_ref()
             .map(|pin| pin.total)
             .or_else(|| response.content_length());
+        if let Some(pin) = job.agent_approval.as_ref().and_then(|a| a.remote.as_ref()) {
+            if total != Some(pin.bytes)
+                || response
+                    .headers()
+                    .get(reqwest::header::ETAG)
+                    .and_then(|v| v.to_str().ok())
+                    != Some(pin.etag.as_str())
+            {
+                return Err(
+                    "Approved source file changed; create and confirm a new Agent plan".into(),
+                );
+            }
+        }
         let validator = prepared
             .checkpoint
             .as_ref()

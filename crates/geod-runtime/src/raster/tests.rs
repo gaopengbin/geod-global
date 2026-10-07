@@ -91,6 +91,7 @@ pub(crate) fn record(root: &Path, bytes: &[u8]) -> Job {
     let path = assets.join(format!("{id}.tif"));
     std::fs::write(&path, bytes).unwrap();
     Job {
+        agent_approval: None,
         id,
         item_id: "S2_TEST".into(),
         asset_key: "scl".into(),

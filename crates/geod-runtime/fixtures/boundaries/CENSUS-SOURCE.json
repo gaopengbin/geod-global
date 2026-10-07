@@ -1,0 +1,16 @@
+{
+  "source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+  "sourceType": "Archived genuine public query response from earlier local verification; not a current live-query claim",
+  "sourceIdentity": {
+    "GEOID": "3651000",
+    "name": "New York city",
+    "wkid": 4326
+  },
+  "sourceVintage": "January 1, 2026 (current layer metadata checked October 7, 2026)",
+  "license": "U.S. government public data",
+  "attribution": "Source: U.S. Census Bureau",
+  "sha256": "aa4d46b527401466d919287a16e231abe9808a1433d2f3935427b996834a0c79",
+  "rings": 3,
+  "positions": 1645,
+  "productionUse": false
+}

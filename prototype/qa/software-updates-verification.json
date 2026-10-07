@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-06T17:56:15.364616+00:00",
+  "product": "GeoD Global",
+  "packaged": false,
+  "published": false,
+  "installerExecuted": false,
+  "productionChannel": "awaiting first independently signed release",
+  "desktop": {
+    "path": "target/debug/geod-global-desktop.exe",
+    "bytes": 107585536,
+    "sha256": "6aac197e4440bb5aa10ace0044211c8429467ee3d18f4a16e5901cc017a132ac",
+    "pid": 64356,
+    "runningVerified": true,
+    "windowTitle": "GeoD Global",
+    "nativeWindowVisualAcceptance": false
+  },
+  "checks": {
+    "nativeDistributionTests": 8,
+    "nativeLifecycleTests": 2,
+    "uiDistributionHomeSettingsTests": 27,
+    "nodeTests": 318,
+    "agentNoticeTests": 5,
+    "packageTests": 33,
+    "releaseTests": {
+      "passed": 17,
+      "skipped": 1
+    },
+    "channelMetadataTests": 3,
+    "frontendBuild": "passed",
+    "desktopBuild": "passed",
+    "desktopAclAndRepositoryIsolation": "passed",
+    "minifiedAgentStdio": "passed"
+  },
+  "sdkCases": [
+    "valid signed download",
+    "tampered bytes rejected",
+    "wrong key rejected",
+    "announced version mismatch rejected",
+    "truncated download rejected",
+    "same version skips download",
+    "older version skips download",
+    "missing signed version rejected"
+  ],
+  "ui": {
+    "source": "actual shared React components; populated/update states use explicitly labelled isolated native responses",
+    "desktop": {
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "readAllAndUnreadEmpty": true
+    },
+    "compactDark": {
+      "width": 390,
+      "height": 844,
+      "dialogWidth": 358,
+      "overflow": false,
+      "developmentInstallDisabled": true
+    },
+    "screenshots": [
+      "updates-notifications-desktop.png",
+      "updates-notifications-compact-dark.png",
+      "software-update-settings.png"
+    ]
+  },
+  "limitations": [
+    "No installer or portable archive generated for the current Agent build.",
+    "No production update/message endpoint published.",
+    "No installed upgrade, restart or rollback performed.",
+    "Published rc.3 requires a manual first upgrade to gain the new updater."
+  ]
+}

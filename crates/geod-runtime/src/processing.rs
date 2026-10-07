@@ -170,6 +170,46 @@ pub(crate) async fn load_recipes(root: &Path) -> Result<BTreeMap<String, SavedRe
     Ok(recipes)
 }
 
+pub(crate) fn clip_job(recipe: RasterRecipe, source: Job) -> Job {
+    let timestamp = now();
+    Job {
+        id: Uuid::new_v4().to_string(),
+        agent_approval: None,
+        kind: "raster_clip".into(),
+        parent_id: Some(source.id),
+        title: recipe.name.clone(),
+        recipe: Some(recipe),
+        crop: None,
+        mosaic: None,
+        mosaic_output: None,
+        manifest_path: None,
+        safe: None,
+        safe_output: None,
+        viirs_science: None,
+        transfer: None,
+        viirs_prepare: None,
+        stac_source: None,
+        wcs_source: None,
+        rgb_spec: None,
+        rgb_output: None,
+        item_id: source.item_id,
+        asset_key: "scl".into(),
+        href: source.href,
+        media_type: "image/tiff".into(),
+        status: JobStatus::Queued,
+        bytes_downloaded: 0,
+        total_bytes: None,
+        sha256: None,
+        output_path: None,
+        error: None,
+        created_at: timestamp.clone(),
+        updated_at: timestamp,
+        source: source.source,
+        validation: "Pending pinned source validation and exact pixel-window clip".into(),
+        attempts: 1,
+    }
+}
+
 impl JobManager {
     pub async fn list_recipes(&self) -> Vec<SavedRecipe> {
         let mut recipes: Vec<_> = self.inner.recipes.lock().await.values().cloned().collect();
@@ -240,42 +280,7 @@ impl JobManager {
         if store.active.len() >= 64 {
             return Err("The local queue is full (64 jobs)".into());
         }
-        let timestamp = now();
-        let job = Job {
-            id: Uuid::new_v4().to_string(),
-            kind: "raster_clip".into(),
-            parent_id: Some(source.id),
-            title: recipe.name.clone(),
-            recipe: Some(recipe),
-            crop: None,
-            mosaic: None,
-            mosaic_output: None,
-            manifest_path: None,
-            safe: None,
-            safe_output: None,
-            viirs_science: None,
-            transfer: None,
-            viirs_prepare: None,
-            stac_source: None,
-            wcs_source: None,
-            rgb_spec: None,
-            rgb_output: None,
-            item_id: source.item_id,
-            asset_key: "scl".into(),
-            href: source.href,
-            media_type: "image/tiff".into(),
-            status: JobStatus::Queued,
-            bytes_downloaded: 0,
-            total_bytes: None,
-            sha256: None,
-            output_path: None,
-            error: None,
-            created_at: timestamp.clone(),
-            updated_at: timestamp,
-            source: source.source,
-            validation: "Pending pinned source validation and exact pixel-window clip".into(),
-            attempts: 1,
-        };
+        let job = clip_job(recipe, source);
         store.jobs.insert(job.id.clone(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.remove(&job.id);

@@ -1,0 +1,84 @@
+{
+  "schema": "geod-agent-plan-progress-acceptance/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-07T11:39:10.085Z",
+  "scope": "Controlled React and native IPC status fixture. Pinned goal progress, actual contract state updates, review navigation and goal controls; no model, native jobs, approval or download.",
+  "tests": {
+    "agentPanelIntegration": 71,
+    "repositoryIsolation": "passed",
+    "frontendBuild": "passed",
+    "developerBuild": "passed"
+  },
+  "browser": {
+    "status": "passed",
+    "scope": "Controlled React and native IPC status fixture. Pinned goal progress, actual contract state updates, review navigation and goal controls; no model, native jobs, approval or download.",
+    "cases": [
+      {
+        "theme": "light",
+        "locale": "zh-CN",
+        "variant": "home",
+        "pinnedAtScrollTop": 64,
+        "filesVerifiedAfterUpdate": 2,
+        "width": 960,
+        "height": 900,
+        "overflow": false,
+        "cardOutsideTranscript": true,
+        "composerVisible": true,
+        "conversationHeight": 306,
+        "detailsScrolls": true
+      },
+      {
+        "theme": "light",
+        "locale": "zh-CN",
+        "variant": "sidebar",
+        "pinnedAtScrollTop": 65,
+        "filesVerifiedAfterUpdate": 2,
+        "width": 560,
+        "height": 900,
+        "overflow": false,
+        "cardOutsideTranscript": true,
+        "composerVisible": true,
+        "conversationHeight": 284,
+        "detailsScrolls": true
+      },
+      {
+        "theme": "dark",
+        "locale": "zh-CN",
+        "variant": "sidebar",
+        "pinnedAtScrollTop": 65,
+        "filesVerifiedAfterUpdate": 2,
+        "width": 360,
+        "height": 900,
+        "overflow": false,
+        "cardOutsideTranscript": true,
+        "composerVisible": true,
+        "conversationHeight": 282,
+        "detailsScrolls": true
+      },
+      {
+        "theme": "light",
+        "locale": "en",
+        "variant": "sidebar",
+        "pinnedAtScrollTop": 65,
+        "filesVerifiedAfterUpdate": 2,
+        "width": 360,
+        "height": 700,
+        "overflow": false,
+        "cardOutsideTranscript": true,
+        "composerVisible": true,
+        "conversationHeight": 104,
+        "detailsScrolls": true
+      }
+    ],
+    "errors": [],
+    "nativeDesktopVisualAcceptance": false
+  },
+  "developerExecutable": {
+    "path": "target/debug/geod-global-desktop.exe",
+    "sha256": "005995790dc894493a9d05887b2c62016decedcb2ed01b06970961413c34b2d6",
+    "installerCreated": false,
+    "processId": 53444,
+    "responding": true,
+    "windowTitle": "GeoD Global"
+  }
+}

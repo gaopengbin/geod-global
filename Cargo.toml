@@ -7,3 +7,8 @@ resolver = "2"
 edition = "2021"
 rust-version = "1.91"
 license = "GPL-3.0-only"
+
+# Development startup verifies ~400 MiB of owned runtime binaries. Keep the
+# same cryptographic checks without running SHA compression in debug mode.
+[profile.dev.package.sha2]
+opt-level = 3

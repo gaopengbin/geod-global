@@ -1,138 +1,146 @@
 <div align="center">
 
-<img src="docs/images/readme-cover.svg" alt="GeoD Global — geospatial data workspace. Windows release candidate, GPLv3." width="100%">
+<img src="docs/images/readme-cover.svg" alt="GeoD Global — AI-powered 2D geospatial workspace" width="100%">
 
-### From scene to local data.
+### Describe the place. Review the plan. Keep the data.
 
-A Windows workspace for discovering imagery, inspecting source pixels,
-preparing supported rasters, and keeping their provenance close.
+An AI-assisted Windows workspace for finding, downloading and preparing **2D geospatial data**.
 
-**[Download candidate](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.3)** · **[Explore the workflow](#one-workflow-from-discovery-to-delivery)** · **[Build from source](#build-from-source)** · **[Share feedback](https://github.com/gaopengbin/geod-global/issues)**
+[![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-2563eb?style=flat-square)](src-tauri/README.md) [![Development](https://img.shields.io/badge/status-in%20development-0f766e?style=flat-square)](docs/development-preview.md) [![License](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
+
+**[Quick start](#quick-start)** · **[Data sources](#a-growing-2d-data-directory)** · **[Agent architecture](docs/agent.md)** · **[Releases](https://github.com/gaopengbin/geod-global/releases)** · **[Feedback](https://github.com/gaopengbin/geod-global/issues)**
 
 English · [简体中文](README.zh-CN.md)
 
 </div>
 
----
+<img src="docs/images/agent-home-en.png" alt="Current English development interface: natural-language task composer and compact product-grouped source directory" width="100%">
 
-<img src="docs/images/sentinel2-desktop.jpg" alt="Actual GeoD Global Windows desktop showing Sentinel-2 imagery around San Francisco Bay, scene selection, acquisition details and geographic preview." width="100%">
+<sub>Current development frontend, October 7, 2026. Captured with an empty controlled workspace; no model request or download is represented. [Visual provenance](docs/images/README.md).</sub>
 
-<sub>Actual English Windows desktop capture, September 30, 2026. Copernicus Sentinel data (2026) · Earth Search · Natural Earth overview. This capture predates the current release candidate and shows a remote imagery preview, not completed download or export.</sub>
+## From a request to a local result
 
-## Built for the handoff before analysis
+Ask for a place, time range and intended output. GeoD helps resolve the area, discover supported products, preview the selected scenes and prepare a complete task for review. Downloads and supported processing run in the local Rust engine; results retain their source identity and checksums.
 
-Finding a scene is only the beginning. GeoD Global brings discovery, source files, raster inspection and repeatable preparation into a local project, so you can continue in your GIS or research tools with the data's context intact.
+> “Find recent Sentinel-2 imagery for Beijing, with scene cloud cover below 5%, cover the administrative area and crop the result to its boundary.”
 
-| Discover & compare | Inspect & prepare | Keep & repeat |
+| Describe & clarify | Preview & review | Execute & inspect |
 | :--- | :--- | :--- |
-| Search supported Sentinel-2 scenes by area, date and cloud cover. Review metadata and compatible previews. | Read original SCL pixels, inspect a local raster and crop a rectangle on its source grid. | Keep source identities, recipes, provenance sidecars and SHA-256 checksums with your outputs. |
+| Natural-language dialogue, streaming replies, model connections and option cards for decisions. | Administrative polygons, a right-side map preview with multiple scenes, and complete task cards. | Persistent local jobs, compatible-grid crop/mosaic, source-pixel inspection and documented export paths. |
 
-## One workflow, from discovery to delivery
+When a goal is set, a side panel tracks its steps, pending decisions, jobs and verified outputs. By default, the user confirms the complete task before execution. An explicit automatic-execution preference is handled through the native permission policy. Completion follows settled jobs and validated files, rather than the model's wording.
 
-**01 / Find a scene** → **02 / Get the source** → **03 / Inspect pixels** → **04 / Review a crop** → **05 / Export with context**
+[Goal workflow](docs/agent-goals.md) · [Decision cards](docs/agent-conversation.md) · [Area and coverage checks](docs/agent-area-coverage.md) · [Map preview](docs/agent-map-preview.md)
 
-1. **Discover** Sentinel-2 through the supported Earth Search catalog. Check the footprint, date and source assets.
-2. **Download** a supported full-scene SCL or true-color GeoTIFF, or a JPEG thumbnail. Tasks persist locally; interrupted downloads can be retried through the task page.
-3. **Inspect** supported UInt8 SCL rasters in their original WGS84 UTM grid. The local 2D workspace supports up to four layers in the same CRS.
-4. **Prepare** a rectangular SCL crop after preflight. Save and rerun the recipe through the workspace or CLI.
-5. **Deliver** a verified, managed crop as GeoTIFF plus provenance, recipe, README and checksums in a ZIP. Ordinary crop bundles cap the TIFF at 32 MiB; documented scientific RGB bundles use a separate 512 MiB limit.
+## A growing 2D data directory
 
-[Read the executable SCL workflow →](docs/workflows/clip-sentinel-scl.md)
+**85 entries · 16 product/connection groups · 48 pending integration.** The directory includes concrete products, service connections and local file formats. These are different capabilities: a supported protocol does not make every dataset on a platform available.
 
-## Current scope
-
-**Windows 0.1.0-rc.3 release candidate · GPLv3 source.** Downloads and their actual publication status are listed on [GitHub Releases](https://github.com/gaopengbin/geod-global/releases). The candidate is for evaluation and feedback; the complete product plan remains in development.
-
-| Included in this candidate | Remaining limits |
+| Product family | Current development scope |
 | :--- | :--- |
-| Nine public source entries: Sentinel-2, Landsat, MODIS, radar, NAIP and DEM | Arbitrary science formats, reprojection and cross-grid processing |
-| Supported original-pixel inspection, crop/mosaic, scientific RGB and documented quality filters | Other products and quality rules require separate implementation and validation |
-| Named projects, task retry, persistent thumbnails, CLI and local MCP | Protected original downloads and an in-app Agent assistant remain pending |
-| Branded desktop header, resizable panels, tray background tasks, English / Chinese and light / dark themes | Unsigned Windows x64; native GUI and clean-machine acceptance remain separate |
+| **Optical & aerial** | Sentinel-2 L2A through Earth Search / Planetary Computer, Landsat 8/9, MODIS reflectance and US NAIP. Product-specific file and processing evidence is documented. |
+| **SAR & elevation** | Sentinel-1 IW RTC VV/VH/HH/HV; public Copernicus DEM GLO-30 / GLO-90. Formats, grids and units remain product-specific. |
+| **Vegetation & quality** | MODIS NDVI/EVI and supporting science layers; documented Landsat/MODIS quality screening and scientific RGB. |
+| **Protected products** | NASA HLS, SRTM and VIIRS, plus Copernicus Sentinel-2 SAFE: public catalog and authorization flows; production original-file acceptance still requires real-account verification. |
+| **Services & local data** | STAC, COG/GeoTIFF URLs, WCS, WMS/WMTS/XYZ/TMS, ArcGIS, OGC API Features, WFS, bounded Overpass, PMTiles and supported local vector/tile files. |
+| **Research candidates** | 35 new candidates: CBERS, disaster open imagery, EnMAP, land cover, water, forests, population, soil, climate, buildings and administrative boundaries. All marked **pending integration**. |
 
-Choose the per-user installer or portable ZIP on the release page. Windows 10/11 x64 and WebView2 Evergreen Runtime are required; development tools are unnecessary. The files are unsigned, and this candidate is not the latest stable release. [Windows setup](docs/releases/WINDOWS-README.md) · [Candidate notes](docs/releases/0.1.0-rc.3.md).
+The compact cards group imagery, radar, elevation, land cover, water, population and other products while keeping the provider and access conditions visible. Grid columns adapt to the available panel width.
 
-The source menu distinguishes online previews, imagery loaded after selection and footprint-only catalogues. [Public preview checks](docs/explore-public-previews.md) · [Provider capabilities and original-file evidence](docs/providers.md). NASA Earthdata / Copernicus authorization setup is included; protected original downloads remain disabled pending real-account verification.
+[Full source directory and scope](docs/product-scope.md) · [Integration status](docs/provider-integration-status.md) · [Open-data research CSV](docs/research/open-data-sources-2026-10-07.csv)
 
-The old v0.1.0 release remains a draft. An official Global website and hosted early-access form remain in preparation.
+“Open” may mean public download, registration, a research application or limited samples. A 1 m classified map is not 1 m original RGB imagery; disaster open data is not a free global on-demand archive. The product scope is **2D**, including elevation rasters; 3D models and point clouds are outside the current plan.
 
-## Build from source
+<details>
+<summary><strong>Map workspace and task progress</strong></summary>
 
-Use **Node.js 22.12+**, **npm 10+** and **Rust 1.91.1+**. Start from this repository's root:
+<img src="docs/images/sentinel2-desktop.jpg" alt="Actual English Windows desktop showing a georeferenced Sentinel-2 preview near San Francisco Bay" width="100%">
+
+<sub>Real native Windows capture, September 30, 2026; remote imagery preview. Copernicus Sentinel data (2026), Earth Search and Natural Earth overview. It predates the current Agent interface and is not evidence of completed download.</sub>
+
+<img src="prototype/qa/agent-plan-sidebar-home.png" alt="Agent conversation with a right-side plan progress panel" width="100%">
+
+<sub>Development UI acceptance capture using controlled task state. Demonstrates layout and navigation, not a live acquisition. [Verification record](prototype/qa/agent-plan-sidebar-verification.json).</sub>
+
+</details>
+
+## One native core, several interfaces
+
+```mermaid
+flowchart LR
+    U[Your request] --> W[Windows workspace]
+    W --> A[Codex agent runtime]
+    A <--> B[AI SDK protocol bridge]
+    B <--> M[Your model provider]
+    A --> T[Scoped GeoD tools]
+    T --> R[Rust task and data engine]
+    W --> P[Native task review]
+    P --> R
+    C[CLI and local MCP] --> R
+    R --> F[Local files and provenance]
+```
+
+Codex owns the Agent loop; the AI SDK adapts the selected model protocol. Native GeoD tools handle geographic queries, plans and file operations. Desktop, CLI and local MCP share the Rust core. Model credentials use the Windows credential vault, with separate histories for each connection. The workspace runs locally; conversations and selected attachments still contact the configured model provider, and data requests contact their providers.
+
+[Agent implementation and acceptance](docs/agent-integration-status.md) · [CLI/MCP setup](docs/mcp.md) · [Attachments](docs/agent-documents.md)
+
+## Quick start
+
+The current Agent experience is in **source development**. The published [v0.1.0-rc.3 Windows candidate](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.3) predates these changes and does not include the new Agent. This source update does not publish a new installer.
+
+For the native app, use **Windows x64**, Node.js **22.13+**, npm **10+**, Rust **1.91.1+**, Visual Studio C++ Build Tools and WebView2. From the repository root:
 
 ```sh
 git clone https://github.com/gaopengbin/geod-global.git
 cd geod-global
 npm ci
-npm run dev
+npm run agent:prepare
+npm run desktop:dev
 ```
 
-Open **http://127.0.0.1:4317/** for the local development UI. To enable its supported real file downloads, run this in a second terminal:
-
-```sh
-npm run runtime
-```
-
-The runtime listens on `127.0.0.1:4318`; local tasks and files live in `.geod-global/`. Catalog browsing does not need a GeoD account. Data-provider rights and access requirements still apply.
+`agent:prepare` prepares the pinned Windows Node/Codex runtime and its license inventory. Connect your model in the app; start with a place and a task. See [desktop setup](src-tauri/README.md) and [development guide](docs/development-guide.md).
 
 <details>
-<summary><strong>Native Windows desktop, build and verification</strong></summary>
-
-See the [desktop setup](src-tauri/README.md) for platform dependencies. The native desktop calls the Rust core directly and does not need the separate browser runtime.
+<summary><strong>Browser preview, builds and checks</strong></summary>
 
 ```sh
-npm run desktop:dev
+# Browser UI at http://127.0.0.1:4317/
+npm run dev
+
+# Optional browser companion at http://127.0.0.1:4318/
+npm run runtime
+
+# Embedded debug desktop; no installer
 npm run desktop:build
-```
 
-`desktop:build` produces a debug executable, not a signed public installer. For production frontend preview:
-
-```sh
-npm run build
-npm run preview
-```
-
-Contract checks also need Python 3.12. Use a virtual environment for its dependencies:
-
-```sh
+# Python 3.12 dependencies for contract/fixture checks
 python -m pip install -r requirements-dev.txt
-npm run verify
-npm run test:runtime
+npm run verify:all
 ```
 
-`npm run verify:all` combines the frontend/contract checks and runtime tests; `cargo test --locked --workspace` includes the desktop crate. These are commands to run, not a claim that every current remote CI job has passed.
-
-Full reference: [development guide](docs/development-guide.md) · [开发与验收参考](docs/development-guide.zh-CN.md).
+The in-app Agent and secure model setup require the native Windows application. A browser preview is not a substitute for desktop capability acceptance. Test fixtures, controlled UI captures and live data evidence are recorded separately.
 
 </details>
 
-## One core, several ways to work
+## Development status
 
-**Desktop workspace** for hands-on preparation. **CLI** for repeatable recipes. **Local MCP** for supported tool calls. All use the same Rust task and raster core.
+Update controls and the notification center are implemented in development. The independent signed production channel awaits a new signed release; development builds do not install updates. [Updates and size audit](docs/software-updates.md).
 
-The MCP entry is `geod-runtime serve-mcp`. It starts with read-only tools and preflight; writes require explicit enablement. The in-app conversational Agent is planned and is not included in this candidate. [Connection modes and lifecycle →](docs/mcp.md)
+Supported crop/mosaic and science workflows have product and grid limits. General reprojection, arbitrary cross-grid processing, additional adapters, protected production originals and clean-machine release acceptance remain separate work. [Current limitations](docs/provider-integration-status.md) · [Latest local development notes](docs/development-preview.md).
 
-## Explore the project
+## Documentation & contributions
 
-| Start here | Go deeper |
+| Start here | Explore further |
 | :--- | :--- |
-| [SCL crop workflow](docs/workflows/clip-sentinel-scl.md) | [Raster inspection and language support](GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md) |
-| [Local MCP setup](docs/mcp.md) | [Processing and recipes](GeoD-Global-Spec/11-Executable-Processing-and-Recipes.md) |
-| [Development guide](docs/development-guide.md) | [Workspace and delivery evidence](GeoD-Global-Spec/12-Workspace-Agent-and-Distribution.md) |
-| [Windows packaging](docs/releases/windows-packaging.md) | [Product specification](GeoD-Global-Spec/00-README.md) |
+| [Development setup](docs/development-guide.md) | [Product specification](GeoD-Global-Spec/00-README.md) |
+| [Agent workflows](docs/agent.md) | [Processing and recipes](GeoD-Global-Spec/11-Executable-Processing-and-Recipes.md) |
+| [SCL crop walkthrough](docs/workflows/clip-sentinel-scl.md) | [Windows packaging](docs/releases/windows-packaging.md) |
+| [Data-provider evidence](docs/providers.md) | [Workspace and delivery](GeoD-Global-Spec/12-Workspace-Agent-and-Distribution.md) |
 
-## Feedback & contributions
-
-Tell us about a recent task: which scene or raster you used, what you needed as local output, and where preparation became awkward. [Open an issue](https://github.com/gaopengbin/geod-global/issues) or [follow the developer on Bluesky](https://bsky.app/profile/laogao98.bsky.social).
-
-For a code change, start with an issue to agree on its scope. Keep fixtures separate from real downloads and processing evidence, and retain third-party attribution. Leave private client data, credentials and sensitive coordinates out of public reports.
+Have a real task or an open dataset to suggest? [Open an issue](https://github.com/gaopengbin/geod-global/issues) with the place, product, period and desired output. For a data source, include its official download entry, coverage and access terms. Keep credentials and private client data out of reports.
 
 ## License
 
-First-party project code is **[GPL-3.0-only](LICENSE)**, © 2026 Gao Pengbin. Commercial use is permitted under the GPL; distribution of covered software must meet its corresponding-source and licensing requirements. [Separate commercial permissions may be discussed](COMMERCIAL-LICENSING.md); this is not an automatic exception.
+First-party code is **[GPL-3.0-only](LICENSE)**, © 2026 Gao Pengbin. Commercial use is permitted under the GPL, with its source and distribution obligations. [Separate commercial permissions](COMMERCIAL-LICENSING.md) may be discussed. Third-party software, datasets, mission marks and other assets retain their own terms.
 
-Third-party software, fonts, imagery and other assets retain their own terms. [Screenshot and illustration provenance](docs/images/README.md).
-
----
-
-<div align="center"><sub>GeoD Global · Independent desktop software by Gao Pengbin · Keep the source. Keep the context.</sub></div>
+<div align="center"><sub>GeoD Global · Independent software by Gao Pengbin · Keep the data. Keep its context.</sub></div>

@@ -1,0 +1,24 @@
+{
+  "schema": "geod-source-series-ui/v1",
+  "verifiedAt": "2026-10-07T00:12:52+08:00",
+  "scope": "Homepage source board, development only",
+  "dimensions": ["satellite/product series", "data type"],
+  "combination": "AND",
+  "series": ["Sentinel", "Landsat", "MODIS", "VIIRS", "Copernicus DEM", "SRTM", "NAIP", "HLS"],
+  "sentinel": {"allTypes": 4, "radar": 1, "elevation": 0, "downloadReleased": 3, "protectedCatalog": 1},
+  "emptyCombination": "Explicit empty state and reset, no silent filter replacement",
+  "hlsDistinctFromRawLandsat": true,
+  "viirsPlatformsIncluded": 3,
+  "draftPreserved": true,
+  "automaticCatalogRequests": 0,
+  "realModelRequests": 0,
+  "checks": {"realAppIntegrationTests": {"passed": 6, "backend": "owned mocks"}, "providerAndReleasePolicyTests": {"passed": 10}, "allProvidersClassified": true, "frontendBuild": "passed", "diffWhitespace": "passed"},
+  "visual": {
+    "environment": "Hidden local browser preview, not native WebView screenshot",
+    "desktop": {"width": 1280, "height": 900, "theme": "light", "horizontalOverflow": false, "sentinelCardHeights": [125, 125, 125, 125]},
+    "compact": {"width": 720, "height": 900, "theme": "dark", "horizontalOverflow": false},
+    "screenshots": ["../../.verification/ai-home-ui/series-sentinel-desktop.png", "../../.verification/ai-home-ui/series-compact-dark.png"],
+    "consoleErrors": []
+  },
+  "development": {"applicationPid": 41348, "windowTitle": "GeoD Global", "httpStatus": 200, "frontendUpdate": "HMR", "installerPackaged": false}
+}

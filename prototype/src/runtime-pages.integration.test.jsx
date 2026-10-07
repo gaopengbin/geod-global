@@ -13,9 +13,18 @@ const scl = { ...rgb, id: '733dc541-ccaf-4e4b-8bf2-c0f2f9cadd6b', assetKey: 'scl
 const wrap = (children, extra = {}) => render(<I18nProvider><RuntimeContext.Provider value={{ health: {}, jobs: [rgb, scl], projects: [{ id: 'project-1', scenes: [{ itemId: rgb.itemId, assets: { visual: { href: rgb.href } } }] }], act: vi.fn(), ...extra }}>{children}</RuntimeContext.Provider></I18nProvider>);
 beforeEach(() => {
   Object.defineProperty(window, 'localStorage', { configurable: true, value: { getItem: () => 'en', setItem: vi.fn() } });
+  window.history.replaceState(null, '', '#Tasks');
 });
 
 describe('File and task flows', () => {
+  it('a validated Agent job link opens its actual history tab and highlights the matching task', () => {
+    window.history.replaceState(null, '', `#Tasks?job=${id}`);
+    const { container } = wrap(<RuntimeTasks/>);
+    expect(screen.getByText('RGB source')).toBeTruthy();
+    expect(container.querySelector(`[data-item-id="${id}"]`).dataset.highlighted).toBe('true');
+    expect(container.querySelector(`[data-item-id="${scl.id}"]`).hasAttribute('data-highlighted')).toBe(false);
+    expect(screen.getByRole('radio', { name: 'History · 2' }).getAttribute('aria-checked')).toBe('true');
+  });
   it('does not report an empty task list before the initial service connection finishes', () => {
     wrap(<RuntimeTasks/>, { jobs: [], health: null, checking: true });
     expect(screen.getByText('Loading local tasks…')).toBeTruthy();

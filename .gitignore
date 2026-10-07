@@ -6,6 +6,7 @@ dist/
 .vite/
 .cache/
 .verification/
+.agent-runtime/
 .venv/
 __pycache__/
 *.py[cod]

@@ -1,138 +1,146 @@
 <div align="center">
 
-<img src="docs/images/readme-cover.svg" alt="GeoD Global 空间数据工作区，Windows 发布候选，GPLv3。" width="100%">
+<img src="docs/images/readme-cover.svg" alt="GeoD Global — AI 驱动的二维空间数据工作区" width="100%">
 
-### 从一景影像，到可用的本地数据。
+### 描述需求，审阅方案，拿到本地数据。
 
-面向 Windows 的空间数据工作区：发现影像、检查源像元、
-准备支持的栅格，并把来源信息留在项目里。
+面向 Windows 的 AI 空间数据工作区：用自然语言查找、下载和准备 **二维地理数据**。
 
-**[下载候选版](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.3)** · **[查看工作流](#从发现到交付)** · **[源码启动](#从源码启动)** · **[反馈任务](https://github.com/gaopengbin/geod-global/issues)**
+[![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-2563eb?style=flat-square)](src-tauri/README.md) [![开发中](https://img.shields.io/badge/status-in%20development-0f766e?style=flat-square)](docs/development-preview.md) [![协议](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE) [![检查](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
+
+**[快速开始](#快速开始)** · **[数据源](#持续扩充的二维数据目录)** · **[Agent 架构](docs/agent.md)** · **[发行版本](https://github.com/gaopengbin/geod-global/releases)** · **[反馈](https://github.com/gaopengbin/geod-global/issues)**
 
 [English](README.md) · 简体中文
 
 </div>
 
----
+<img src="docs/images/agent-home-zh-CN.png" alt="当前开发版中文首页：自然语言任务输入框和按产品分类的紧凑数据源看板" width="100%">
 
-<img src="docs/images/sentinel2-desktop.jpg" alt="真实英文 Windows 桌面截图：旧金山湾 Sentinel-2 影像、场景列表、采集信息与地理预览。" width="100%">
+<sub>2026-10-07 当前开发界面，使用空的受控工作区状态拍摄，没有调用模型或开始下载。[截图来源](docs/images/README.md)。</sub>
 
-<sub>2026-09-30 的真实英文 Windows 桌面截图，早于当前发布候选。Copernicus Sentinel data (2026) · Earth Search · Natural Earth overview。展示的是远程影像预览，不代表已完成下载或导出。</sub>
+## 从一句需求，到本地成果
 
-## 为分析前的数据准备而做
+告诉 GeoD 地点、时间和需要的结果。Agent 帮你确定范围、检索支持的数据、预览选中的影像，准备完整任务供审阅。下载和支持的处理流程由本地 Rust 引擎执行，结果保留源身份、处理记录和校验值。
 
-找到一景影像只是开始。GeoD Global 把数据发现、源文件、栅格检查和可重复的准备流程放进本地项目，方便你带着清晰的来源继续在 GIS 或科研工具中分析。
+> “找北京市近期的哨兵二号影像，场景云量小于 5%，覆盖完整行政区，并按行政区边界裁剪。”
 
-| 发现与比较 | 检查与准备 | 保存与重复 |
+| 描述与澄清 | 预览与审阅 | 执行与检查 |
 | :--- | :--- | :--- |
-| 按区域、日期、云量检索支持的 Sentinel-2 场景，查看元数据和兼容预览。 | 读取原始 SCL 像元，检查本地栅格，按源网格做矩形裁剪。 | 把源身份、配方、来源清单与 SHA-256 校验值留在成果旁。 |
+| 自然语言对话、流式回复、模型连接，需要决策时提供选项卡。 | 行政区多边形、右侧多景地图预览，以及完整任务确认卡。 | 本地持久任务、兼容网格裁剪 / 拼接、原始像元检查和已有交付流程。 |
 
-## 从发现到交付
+设定目标后，侧边计划面板跟踪步骤、待回答选项、任务状态和已校验成果。默认由用户在执行前确认完整任务；明确选择自动执行时，仍按原生权限策略处理。任务是否完成取决于实际任务收尾和文件校验。
 
-**01 / 找到场景** → **02 / 获取源文件** → **03 / 检查像元** → **04 / 审阅裁剪** → **05 / 带来源交付**
+[目标模式](docs/agent-goals.md) · [选项与对话](docs/agent-conversation.md) · [行政区及覆盖检查](docs/agent-area-coverage.md) · [地图预览](docs/agent-map-preview.md)
 
-1. **发现：** 通过支持的 Earth Search 目录检索 Sentinel-2，核对覆盖范围、时间和源资产。
-2. **下载：** 获取支持的整景 SCL／真彩色 GeoTIFF 或 JPEG 缩略图；任务本地持久化，中断后可在任务页重试。
-3. **检查：** 读取原始 WGS84 UTM 网格中的 UInt8 SCL 像元；二维工作区最多叠加 4 个同坐标系图层。
-4. **准备：** 在真实预检后执行 SCL 矩形裁剪，保存配方，再从界面或 CLI 重跑。
-5. **交付：** 对已核验的托管裁剪成果准备 ZIP，包含 GeoTIFF、来源、配方、说明和校验值。普通裁剪包的 TIFF 输入上限为 32 MiB；科学 RGB 使用独立的 512 MiB 有界交付。
+## 持续扩充的二维数据目录
 
-[阅读可执行的 SCL 工作流 →](docs/workflows/clip-sentinel-scl.md)
+**85 个入口 · 16 个产品 / 连接分类 · 48 项待接入。** 目录同时列出具体产品、服务连接和本地格式，分别显示能力与状态。支持某个协议，不代表该平台所有数据都已接入。
 
-## 当前范围
-
-**Windows 0.1.0-rc.3 发布候选，源码采用 GPLv3。** 下载及实际公开状态以 [GitHub Releases](https://github.com/gaopengbin/geod-global/releases) 为准。候选版供试用和反馈，完整产品规划继续实施。
-
-| 本候选已具备 | 剩余限制 |
+| 产品类别 | 当前开发范围 |
 | :--- | :--- |
-| 九个公开入口：Sentinel-2、Landsat、MODIS、雷达、NAIP 和 DEM | 任意科学格式、通用重投影和跨网格处理 |
-| 支持产品的原始像元、裁剪 / 拼接、科学 RGB 和明确验证的质量筛选 | 其他产品与质量规则需分别接入及验收 |
-| 命名工程、任务重试、持久缩略图、CLI 和本地 MCP | 受保护原产品下载及软件内 Agent 助手仍待完成 |
-| 品牌顶部栏、面板拖动调整、托盘后台运行、中英文与明暗主题 | Windows x64 未签名，原生窗口及干净设备验收单独进行 |
+| **光学与航空影像** | Earth Search / Planetary Computer 的 Sentinel-2 L2A、Landsat 8/9、MODIS 反射率、美国 NAIP。原文件与处理能力按产品分别记录。 |
+| **SAR 与高程** | Sentinel-1 IW RTC 的 VV/VH/HH/HV；公开 Copernicus DEM GLO-30 / GLO-90。格式、网格与单位逐产品核对。 |
+| **植被与质量** | MODIS NDVI/EVI 及辅助科学层；已有 Landsat/MODIS 质量筛选和科学 RGB 流程。 |
+| **受保护产品** | NASA HLS、SRTM、VIIRS，以及 Copernicus Sentinel-2 SAFE：已接公开目录和授权流程，生产原文件仍待真实账号验收。 |
+| **服务与本地数据** | STAC、COG/GeoTIFF URL、WCS、WMS/WMTS/XYZ/TMS、ArcGIS、OGC API Features、WFS、有界 Overpass、PMTiles，以及支持的本地矢量 / 瓦片文件。 |
+| **调研候选** | 新增 35 项：CBERS、灾害开放影像、EnMAP、土地覆盖、水体、森林、人口、土壤、气候、建筑和行政区等，全部明确标为 **待接入**。 |
 
-发布页提供当前用户安装程序和便携 ZIP。需要 Windows 10/11 x64 和 WebView2 Runtime，无需开发工具。文件未签名，此候选不设为最新稳定版。[安装说明](docs/releases/WINDOWS-README.md) · [候选范围](docs/releases/0.1.0-rc.3.md)。
+紧凑卡片按光学、雷达、高程、土地覆盖、水文、人口等产品分类摆放，独立显示供应平台和获取条件，随面板宽度调整列数。
 
-来源菜单区分在线预览、选景后加载和仅显示范围。[公开预览验收](docs/explore-public-previews.md)与[原文件及处理能力](docs/providers.md)分别记录。“设置”已提供 NASA Earthdata / Copernicus 授权入口，受保护原文件下载仍待真实账号验收，暂不开放。
+[完整范围与目录](docs/product-scope.md) · [接入状态](docs/provider-integration-status.md) · [开放数据调研表](docs/research/open-data-sources-2026-10-07.csv)
 
-旧 v0.1.0 Release 保留为草稿。独立英文官网和可公开使用的预约入口仍在准备。
+开放数据可能需要注册、科研申请，或仅开放有限样例。1 米分类图不能当作 1 米原始真彩色影像；灾害开放数据也不是全球按需免费影像库。当前只做 **二维**，包括高程栅格，不接入三维模型和点云。
 
-## 从源码启动
+<details>
+<summary><strong>地图工作区与计划进度</strong></summary>
 
-准备 **Node.js 22.12+**、**npm 10+**、**Rust 1.91.1+**，在仓库根目录运行：
+<img src="docs/images/sentinel2-desktop.jpg" alt="真实英文 Windows 桌面中的旧金山湾 Sentinel-2 地理配准预览" width="100%">
+
+<sub>2026-09-30 真实 Windows 窗口截图，展示远程影像预览。来源为 Copernicus Sentinel data (2026)、Earth Search 和 Natural Earth，早于当前 Agent 界面，不作为下载完成证据。</sub>
+
+<img src="prototype/qa/agent-plan-sidebar-home.png" alt="Agent 对话和右侧计划进度面板" width="100%">
+
+<sub>使用受控任务状态的开发界面验收截图，展示布局和导航，不表示一次真实采集。[验证记录](prototype/qa/agent-plan-sidebar-verification.json)。</sub>
+
+</details>
+
+## 同一个原生核心，多种使用方式
+
+```mermaid
+flowchart LR
+    U[用户需求] --> W[Windows 工作区]
+    W --> A[Codex Agent 运行时]
+    A <--> B[AI SDK 协议适配]
+    B <--> M[用户配置的模型]
+    A --> T[限定范围的 GeoD 工具]
+    T --> R[Rust 任务与数据引擎]
+    W --> P[原生任务确认]
+    P --> R
+    C[CLI 和本地 MCP] --> R
+    R --> F[本地文件与来源记录]
+```
+
+Codex 负责 Agent 循环，AI SDK 适配所选模型协议，原生 GeoD 工具处理地理查询、计划和文件操作。桌面、CLI 与本地 MCP 共用 Rust 核心。模型密钥保存于 Windows 凭据管理器，每个连接保留独立历史。工作区在本地运行，对话与选中的附件仍会发送到所配置的模型服务，数据检索和下载会访问相应提供商。
+
+[Agent 实现与验收](docs/agent-integration-status.md) · [CLI / MCP](docs/mcp.md) · [文档附件](docs/agent-documents.md)
+
+## 快速开始
+
+当前 Agent 体验属于 **源码开发版**。已发布的 [v0.1.0-rc.3 Windows 候选版](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.3) 早于这批改动，不包含新 Agent；本次源码提交不发布新安装包。
+
+桌面开发需要 **Windows x64**、Node.js **22.13+**、npm **10+**、Rust **1.91.1+**、Visual Studio C++ Build Tools 和 WebView2。在仓库根目录运行：
 
 ```sh
 git clone https://github.com/gaopengbin/geod-global.git
 cd geod-global
 npm ci
-npm run dev
+npm run agent:prepare
+npm run desktop:dev
 ```
 
-打开 **http://127.0.0.1:4317/**。浏览器调试界面的真实文件下载另开终端启动：
-
-```sh
-npm run runtime
-```
-
-服务仅监听 `127.0.0.1:4318`，任务与文件位于 `.geod-global/`。目录浏览无需 GeoD 账号；数据提供商的权利和授权要求仍适用。
+`agent:prepare` 准备固定版本的 Windows Node/Codex 运行环境及许可清单。在软件里连接模型，再描述地点和任务即可。详见[桌面环境](src-tauri/README.md)与[开发指南](docs/development-guide.zh-CN.md)。
 
 <details>
-<summary><strong>原生桌面、构建与验证</strong></summary>
-
-平台依赖见[桌面说明](src-tauri/README.md)。桌面版直接调用 Rust 核心，无需单独启动浏览器运行时。
+<summary><strong>浏览器预览、构建与检查</strong></summary>
 
 ```sh
-npm run desktop:dev
+# 浏览器界面：http://127.0.0.1:4317/
+npm run dev
+
+# 可选浏览器配套服务：http://127.0.0.1:4318/
+npm run runtime
+
+# 嵌入界面的调试程序，不制作安装包
 npm run desktop:build
-```
 
-`desktop:build` 生成调试可执行文件，不是已签名的公开安装包。前端生产资源预览：
-
-```sh
-npm run build
-npm run preview
-```
-
-契约检查另需 Python 3.12，建议使用虚拟环境：
-
-```sh
+# 契约 / 夹具检查需要 Python 3.12
 python -m pip install -r requirements-dev.txt
-npm run verify
-npm run test:runtime
+npm run verify:all
 ```
 
-`npm run verify:all` 合并前端／契约检查与运行时测试，`cargo test --locked --workspace` 包含桌面 crate。这些是验证命令，不表示当前远程 CI 均已通过。
-
-完整参考：[开发与验收参考](docs/development-guide.zh-CN.md) · [English development guide](docs/development-guide.md)。
+软件内 Agent 与安全模型配置需要原生 Windows 程序。浏览器预览不能替代桌面能力验收；夹具、受控界面截图与真实数据验证分别记录。
 
 </details>
 
-## 同一个核心，多种使用方式
+## 开发进度
 
-**桌面工作区**用于交互准备，**CLI**用于重复配方，**本地 MCP**用于支持的工具调用，复用同一套 Rust 任务和栅格核心。
+开发代码已加入软件更新和通知中心，独立签名生产渠道待新签名版本发布，开发版不安装更新。[更新与安装体积核对](docs/software-updates.md)。
 
-入口 `geod-runtime serve-mcp` 默认只开放读取与预检，写入需要显式启用。软件内对话 Agent 已在规划中，本候选尚未提供。[连接方式与生命周期 →](docs/mcp.md)
+已有裁剪、拼接和科学处理按产品与网格限制执行。通用重投影、任意跨网格处理、更多数据适配、受保护生产原件与干净设备发行验收，分别作为后续工作。[能力与限制](docs/provider-integration-status.md) · [最新开发说明](docs/development-preview.md)。
 
-## 文档导航
+## 文档与参与
 
 | 从这里开始 | 深入了解 |
 | :--- | :--- |
-| [SCL 裁剪工作流](docs/workflows/clip-sentinel-scl.md) | [多语言与栅格检查](GeoD-Global-Spec/10-Languages-and-Raster-Inspection.md) |
-| [本地 MCP](docs/mcp.md) | [处理与配方](GeoD-Global-Spec/11-Executable-Processing-and-Recipes.md) |
-| [开发与验收参考](docs/development-guide.zh-CN.md) | [工作区与交付证据](GeoD-Global-Spec/12-Workspace-Agent-and-Distribution.md) |
-| [Windows 打包](docs/releases/windows-packaging.md) | [完整产品规格](GeoD-Global-Spec/00-README.md) |
+| [开发环境](docs/development-guide.zh-CN.md) | [产品规格](GeoD-Global-Spec/00-README.md) |
+| [Agent 工作流](docs/agent.md) | [处理与配方](GeoD-Global-Spec/11-Executable-Processing-and-Recipes.md) |
+| [SCL 裁剪示例](docs/workflows/clip-sentinel-scl.md) | [Windows 打包](docs/releases/windows-packaging.md) |
+| [数据源证据](docs/providers.md) | [工作区与成果交付](GeoD-Global-Spec/12-Workspace-Agent-and-Distribution.md) |
 
-## 反馈与贡献
+有真实任务或开放数据源推荐，欢迎[创建 Issue](https://github.com/gaopengbin/geod-global/issues)，说明地点、产品、时间和需要的结果。推荐数据源时请附官方获取入口、覆盖范围和使用条件，省略密钥与私有客户数据。
 
-欢迎描述一个近期真实任务：用了哪个场景或栅格、需要什么本地结果、在哪一步遇到困难。[创建 Issue](https://github.com/gaopengbin/geod-global/issues)，或[关注开发者 Bluesky](https://bsky.app/profile/laogao98.bsky.social)。
+## 许可
 
-代码改动先通过 Issue 对齐范围，区分样本与真实下载／处理证据，保留第三方归属信息。公开反馈中请省略私有客户数据、密钥与敏感坐标。
+自有代码采用 **[GPL-3.0-only](LICENSE)**，© 2026 Gao Pengbin。允许按 GPL 商用，分发时须履行相应源码与许可义务。[独立商业许可](COMMERCIAL-LICENSING.md)可另行讨论。第三方软件、数据、任务标识和其他资产保留各自条款。
 
-## 协议
-
-自有项目代码采用 **[GPL-3.0-only](LICENSE)**，© 2026 Gao Pengbin。GPL 允许商用；分发覆盖程序时须履行相应源码与许可义务。[商业授权可另议](COMMERCIAL-LICENSING.md)，当前不自动授予 GPL 之外的例外。
-
-第三方软件、字体、影像与资产保留各自条款。[截图和插画来源](docs/images/README.md)。
-
----
-
-<div align="center"><sub>GeoD Global · Gao Pengbin 独立开发 · 留下源文件，也留下来源。</sub></div>
+<div align="center"><sub>GeoD Global · Gao Pengbin 独立开发 · 留下数据，也留下来源。</sub></div>

@@ -529,6 +529,7 @@ export default {
   "Province / state": "省／州",
   "The region is highlighted. Your search rectangle is unchanged until you choose its bounds or draw a new one.": "行政区已高亮。当前检索矩形尚未改变；选用外接矩形或重新绘制后才会更新。",
   "The region bounding rectangle is selected for search.": "已选用该行政区的外接矩形进行检索。",
+  "The region bounding rectangle is selected. Loading its polygon boundary…": "已选用该行政区的外接矩形，正在读取多边形边界…",
   "Use region bounding rectangle": "使用行政区外接矩形",
   "Selected bounds": "所选范围",
   "Longitude and latitude in degrees. West must be less than east; south must be less than north.": "经纬度单位为度。西界须小于东界，南界须小于北界。",

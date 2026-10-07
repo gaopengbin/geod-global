@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-07",
+  "behavior": "Selecting an administrative region automatically selects its loaded polygon and replaces the previous bounds. Pending geometry cannot overwrite later edits or selections.",
+  "region": "CHN-1155",
+  "renderedGeoJsonExport": {
+    "file": "admin-area-autoselect-beijing.geojson",
+    "source": "Natural Earth 1:10m CHN.geojson",
+    "geometryMatchesBundledSource": true,
+    "vertices": 375
+  },
+  "ui": {
+    "desktop": {
+      "viewport": [
+        1440,
+        1080
+      ],
+      "singleResultSelection": true,
+      "polygonSelected": true,
+      "primaryEnabled": true,
+      "screenshot": "admin-area-autoselect-desktop.png"
+    },
+    "compactDark": {
+      "bounds": [
+        115.42182335766176,
+        39.440435289556945,
+        117.4885705907601,
+        41.047727362727585
+      ],
+      "documentWidth": 720,
+      "polygonSelected": "true",
+      "primaryEnabled": true,
+      "viewport": [
+        720,
+        900
+      ],
+      "screenshot": "admin-area-autoselect-compact-dark.png"
+    }
+  },
+  "tests": {
+    "areaPickerIntegration": 9,
+    "homeRegression": 14,
+    "administrativeData": 6,
+    "build": "passed",
+    "automaticCatalogSearch": false,
+    "automaticDownloads": false,
+    "pendingPolygonWait": true
+  },
+  "development": {
+    "pid": 41348,
+    "http": 200,
+    "installerBuilt": false
+  }
+}

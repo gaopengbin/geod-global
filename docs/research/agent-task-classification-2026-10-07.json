@@ -1,0 +1,1361 @@
+{
+  "schema": "geod-global.general-agent-tasks/v1",
+  "date": "2026-10-07",
+  "scope": "2D only",
+  "role": "需求分类与通用验收规范；不是已通过端到端任务的能力清单",
+  "runtimePolicy": "agent/task-categories.mjs",
+  "runtimeIntegration": "agent/service.mjs developerInstructions for thread/start, thread/resume and compaction",
+  "specification": "GeoD-Global-Spec/15-General-Agent-Tasks.md",
+  "counts": {
+    "independentDemandThreads": 61,
+    "composableTaskCategories": 8,
+    "categoryAssignments": 169,
+    "note": "一条需求可涉及多类；各类数量是样本映射，不能相加当用户数量或用于需求频率排名。"
+  },
+  "planningDimensions": [
+    {
+      "dimension": "purpose",
+      "meaning": "使用场景与成果标准，不按问题关键词预设固定流程"
+    },
+    {
+      "dimension": "area",
+      "meaning": "地域、真实几何、来源及精确性；支持行政区、地点、用户矢量、点与明确范围"
+    },
+    {
+      "dimension": "product",
+      "meaning": "平台、系列、具体产品、处理级别、科学资产；实际支持从原生能力读取"
+    },
+    {
+      "dimension": "time",
+      "meaning": "采集日期、合成时段、事件前后、逐期分组和缺测规则"
+    },
+    {
+      "dimension": "grid",
+      "meaning": "CRS、原生网格、分辨率、重采样和对齐要求"
+    },
+    {
+      "dimension": "quality",
+      "meaning": "QA、云与阴影、NoData、有效覆盖、单位、校准及可比性"
+    },
+    {
+      "dimension": "delivery",
+      "meaning": "原包、科学栅格、渲染图、矢量、CSV或离线包及目标应用"
+    },
+    {
+      "dimension": "permission_budget",
+      "meaning": "原生会话权限、实际授权 / 许可、服务和本地资源限制"
+    }
+  ],
+  "requestContract": {
+    "status": "specified-not-implemented",
+    "name": "TaskRequest",
+    "requiredConcepts": [
+      "objective",
+      "categories",
+      "areas",
+      "products",
+      "temporal",
+      "requirements",
+      "outputs",
+      "constraints",
+      "assumptions",
+      "unresolved",
+      "provenance"
+    ],
+    "authority": "引用现有原生查询、几何、计划、权限与成果；模型不能自行声明资产、验证、授权或完成。",
+    "versioning": "明确条件改变时创建新任务版本；原计划仍通过现有来源 / 哈希 / 权限规则审核；请求级聚合完成判定随版本失效。"
+  },
+  "taskCategories": [
+    {
+      "id": "discover",
+      "label": "数据发现与选择",
+      "goal": "Find suitable data and resolve the actual requested area.",
+      "plannedWorkflow": "Resolve area and purpose; read native product capabilities; compare actual catalog results.",
+      "checks": "Report actual product, dates, spatial resolution, available assets and material coverage or permission limits. A metadata discovery result is not an acquired file.",
+      "requiredEvidence": [
+        "actual_area_reference",
+        "actual_product_and_assets",
+        "actual_dates_resolution_and_limits"
+      ],
+      "researchIds": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D09",
+        "D10",
+        "D15",
+        "D16",
+        "D18",
+        "D23",
+        "R2-C01",
+        "R2-C04",
+        "R2-C06",
+        "R2-C07",
+        "R2-C09",
+        "R2-C10",
+        "R2-I08",
+        "R2-I13",
+        "R2-I17",
+        "R2-I19",
+        "R2-I21",
+        "R2-I22",
+        "R2-I23",
+        "R2-I25"
+      ],
+      "remainingWork": "跨来源产品匹配、非行政区边界发现、实际覆盖与质量评价待完善。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "acquire",
+      "label": "数据获取与交付",
+      "goal": "Acquire the requested original or explicitly accepted service-generated product.",
+      "plannedWorkflow": "Pin actual assets and output requirements; prepare native review; follow execution permission; await native completion; inspect the saved result.",
+      "checks": "Check product, processing level, bands, time, actual extent and format against the request. Distinguish original, processed, rendered and preview assets. Saved credentials are not entitlement.",
+      "requiredEvidence": [
+        "native_execution_receipt",
+        "all_required_saved_assets",
+        "fresh_typed_file_verification",
+        "request_to_asset_match"
+      ],
+      "researchIds": [
+        "D01",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11",
+        "D12",
+        "D13",
+        "D14",
+        "D15",
+        "D17",
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "D23",
+        "R2-C01",
+        "R2-C02",
+        "R2-C03",
+        "R2-C04",
+        "R2-C07",
+        "R2-C09",
+        "R2-C10",
+        "R2-I02",
+        "R2-I03",
+        "R2-I05",
+        "R2-I07",
+        "R2-I08",
+        "R2-I10",
+        "R2-I11",
+        "R2-I12",
+        "R2-I14",
+        "R2-I15",
+        "R2-I16",
+        "R2-I17",
+        "R2-I18",
+        "R2-I26"
+      ],
+      "remainingWork": "保护产品生产授权、更多具体产品、通用远端按区域采集与用户要求到资产的完整核对待完善。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "spatial",
+      "label": "空间准备与处理",
+      "goal": "Prepare data for a supplied or resolved geographic area and grid.",
+      "plannedWorkflow": "Inspect geometry, CRS, source grids and mask semantics; prepare only available native clip or mosaic operations; verify the resulting grid and valid extent.",
+      "checks": "A bounding box is not an exact polygon. Catalog intersection is not full coverage. Do not imply reprojection, resampling or exact masking when the native operation does not perform it.",
+      "requiredEvidence": [
+        "actual_geometry_and_mask_semantics",
+        "output_grid_and_nodata",
+        "source_lineage",
+        "valid_extent"
+      ],
+      "researchIds": [
+        "D01",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D13",
+        "D16",
+        "D18",
+        "R2-C06",
+        "R2-C08",
+        "R2-C09",
+        "R2-C10",
+        "R2-I03",
+        "R2-I04",
+        "R2-I05",
+        "R2-I07",
+        "R2-I09",
+        "R2-I18",
+        "R2-I27"
+      ],
+      "remainingWork": "通用重投影、重采样和跨网格处理待实现；不能把包围框当精确几何。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "temporal",
+      "label": "时间序列与时相准备",
+      "goal": "Prepare actual observations, comparable periods or explicitly specified temporal composites.",
+      "plannedWorkflow": "Separate acquisition dates from composite periods; establish per-period selection and comparability; enumerate actual observations and missing periods; use available native operations.",
+      "checks": "A spatial mosaic is not a temporal mean or median. Do not relabel request dates as observation dates. Verify all requested periods and preserve per-period provenance.",
+      "requiredEvidence": [
+        "observation_or_composite_semantics",
+        "per_period_manifest",
+        "missing_and_duplicate_periods",
+        "comparison_or_composite_method"
+      ],
+      "researchIds": [
+        "D02",
+        "D08",
+        "D10",
+        "D11",
+        "D13",
+        "D14",
+        "D17",
+        "D21",
+        "D22",
+        "D23",
+        "R2-C05",
+        "R2-C07",
+        "R2-C09",
+        "R2-I01",
+        "R2-I02",
+        "R2-I03",
+        "R2-I04",
+        "R2-I05",
+        "R2-I06",
+        "R2-I11",
+        "R2-I15",
+        "R2-I19",
+        "R2-I21",
+        "R2-I23",
+        "R2-I27",
+        "R2-I28"
+      ],
+      "remainingWork": "长时间批次、时间统计合成、事件可比性规则与完整时序清单待实现。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "scientific",
+      "label": "科学图层与质量处理",
+      "goal": "Prepare scientifically meaningful bands, indices or physical quantities.",
+      "plannedWorkflow": "Read actual bands, calibration, units, NoData and QA; select an available native scientific operation; inspect original and derived values.",
+      "checks": "Rendered RGB cannot satisfy an unavailable scientific band. Do not invent algorithms, unit conversions, quality thresholds or validated analysis. Display stretch and scientific values are different.",
+      "requiredEvidence": [
+        "actual_band_availability",
+        "calibration_units_and_quality",
+        "scientific_values_not_display_pixels",
+        "independent_derived_value_checks"
+      ],
+      "researchIds": [
+        "D02",
+        "D03",
+        "D07",
+        "D13",
+        "D14",
+        "D16",
+        "D17",
+        "D22",
+        "R2-C05",
+        "R2-C07",
+        "R2-C10",
+        "R2-I01",
+        "R2-I04",
+        "R2-I08",
+        "R2-I09",
+        "R2-I11",
+        "R2-I17",
+        "R2-I19",
+        "R2-I20",
+        "R2-I21",
+        "R2-I23",
+        "R2-I27",
+        "R2-I28"
+      ],
+      "remainingWork": "已验收的特定图层不覆盖任意波段或算法；S2 NIR/SWIR、温度等需逐产品接入。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "statistics",
+      "label": "采样统计与表格成果",
+      "goal": "Produce point or region statistics and tabular time series when supported.",
+      "plannedWorkflow": "Resolve feature IDs, geometry, sample scale, time grouping and missing-data policy; check for available native statistics and export tools before planning.",
+      "checks": "Pixel inspection does not establish a completed batch statistic or CSV. Verify requested rows, IDs, dates, units, valid counts and missing values; otherwise explain the missing operation.",
+      "requiredEvidence": [
+        "feature_ids_and_geometry",
+        "sampling_and_aggregation_method",
+        "dates_units_quality_valid_counts",
+        "actual_table_rows_and_missing_values"
+      ],
+      "researchIds": [
+        "R2-I27",
+        "R2-I28"
+      ],
+      "remainingWork": "原值查询已存在，通用批量采样、区域统计与时序 CSV 未完成。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "offline",
+      "label": "离线组织与成果打包",
+      "goal": "Deliver a usable local dataset or offline package.",
+      "plannedWorkflow": "Check actual format, license evidence, native size limits and consumer requirements; use available native delivery; inspect saved package and dependencies.",
+      "checks": "A cloud link or preview is not local delivery. A tile container does not grant usage rights. Do not claim offline reopening or external application compatibility without actual evidence.",
+      "requiredEvidence": [
+        "actual_local_package",
+        "dependencies_provenance_and_license",
+        "native_resource_limit",
+        "actual_offline_and_consumer_check"
+      ],
+      "researchIds": [
+        "D04",
+        "D09",
+        "R2-C08",
+        "R2-I04",
+        "R2-I06",
+        "R2-I16",
+        "R2-I25"
+      ],
+      "remainingWork": "已有受限成果包，通用大离线包、打包依赖和目标应用兼容性仍需逐项验收。",
+      "fullCategoryVerified": false
+    },
+    {
+      "id": "inspect_recover",
+      "label": "成果检查与任务恢复",
+      "goal": "Inspect current results, diagnose failures and resume only authorized missing work.",
+      "plannedWorkflow": "Read fresh native project, plan, job and file state; separate prior failed attempts from current usable outputs; diagnose from evidence; use only authorized native recovery.",
+      "checks": "Queued, submitted or model-turn completed is not task completion. Raster success requires succeeded and settled=true plus the appropriate file check; vectors use their verified-file contract. Never repeatedly retry an unclassified error.",
+      "requiredEvidence": [
+        "fresh_native_state",
+        "typed_file_checks",
+        "evidence_based_failure_category",
+        "authorized_bounded_recovery",
+        "missing_scope_manifest"
+      ],
+      "researchIds": [
+        "D06",
+        "D07",
+        "D08",
+        "D11",
+        "D12",
+        "D14",
+        "D17",
+        "D18",
+        "D19",
+        "D20",
+        "D21",
+        "R2-C02",
+        "R2-C03",
+        "R2-C08",
+        "R2-I01",
+        "R2-I06",
+        "R2-I07",
+        "R2-I09",
+        "R2-I10",
+        "R2-I12",
+        "R2-I13",
+        "R2-I14",
+        "R2-I15",
+        "R2-I20",
+        "R2-I24",
+        "R2-I26",
+        "R2-I28"
+      ],
+      "remainingWork": "原生状态与恢复已有基础；统一用户请求的聚合完成门槛和长批次检查点仍需实现。",
+      "fullCategoryVerified": false
+    }
+  ],
+  "demandMapping": [
+    {
+      "id": "D01",
+      "round": 1,
+      "title": "How to download Landsat satellite imagery?",
+      "url": "https://www.reddit.com/r/gis/comments/1jkjp48/how_to_download_landsat_satellite_imagery/",
+      "need": "波士顿能看清建筑的影像；希望全市一张图而非手动逐瓦片",
+      "categories": [
+        "discover",
+        "acquire",
+        "spatial"
+      ],
+      "evidenceLimit": "检索索引明确日期；正文核读"
+    },
+    {
+      "id": "D02",
+      "round": 1,
+      "title": "Free high-resolution satellite imagery sources for university research?",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1wt8ric/free_highresolution_satellite_imagery_sources_for/",
+      "need": "伊朗低于10米的NDVI/NDRE历史时序；免费或学术可用",
+      "categories": [
+        "discover",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "检索明确日期；原帖正文核读"
+    },
+    {
+      "id": "D03",
+      "round": 1,
+      "title": "How to download high resolution thermal satellite imagery?",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1dusn6g/how_to_download_high_resolution_thermal_satellite/",
+      "need": "德黑兰城市热岛项目的高分辨率热红外影像",
+      "categories": [
+        "discover",
+        "acquire",
+        "scientific"
+      ],
+      "evidenceLimit": "检索明确日期；原帖正文核读"
+    },
+    {
+      "id": "D04",
+      "round": 1,
+      "title": "Is it possible to download high-resolution Google Maps satellite imagery for free for research purposes?",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1tpahaz/is_it_possible_to_download_highresolution_google/",
+      "need": "南亚深度学习特征提取，类似Google卫星底图的高清数据及使用权",
+      "categories": [
+        "discover",
+        "acquire",
+        "offline"
+      ],
+      "evidenceLimit": "检索明确日期；原帖正文核读"
+    },
+    {
+      "id": "D05",
+      "round": 1,
+      "title": "Limit to the bounding box size when making requests using the Sentinel Hub API",
+      "url": "https://gis.stackexchange.com/questions/493572/limit-to-the-bounding-box-size-when-making-requests-using-the-sentinel-hub-api",
+      "need": "AOI扩大后10米RGB请求触发2500像素宽高上限；希望保持分辨率",
+      "categories": [
+        "acquire",
+        "spatial"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D06",
+      "round": 1,
+      "title": "Download Sentinel-2A imagery to local machine",
+      "url": "https://gis.stackexchange.com/questions/474018/download-sentinel-2a-imagery-to-local-machine",
+      "need": "按矢量边界逐景导出S2，导出分裂且ArcGIS波段值异常",
+      "categories": [
+        "acquire",
+        "spatial",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D07",
+      "round": 1,
+      "title": "Opening a Sentinel 2 imagery from AWS servers using Python rasterio module",
+      "url": "https://gis.stackexchange.com/questions/465480/opening-a-sentinel-2-imagery-from-aws-servers-using-python-rasterio-module",
+      "need": "只读多边形内B04/B08计算NDVI；整景下载慢且结果数值错误",
+      "categories": [
+        "acquire",
+        "spatial",
+        "scientific",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D08",
+      "round": 1,
+      "title": "Obtaining small images that intersect with shapefile on Google Earth Engine",
+      "url": "https://gis.stackexchange.com/questions/388738/obtaining-small-images-that-intersect-with-shapefile-on-google-earth-engine",
+      "need": "1250个2.5公里方格分别导出10米RGB合成，现有脚本崩溃",
+      "categories": [
+        "acquire",
+        "spatial",
+        "temporal",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖明确日期；保留旧帖作工作流需求"
+    },
+    {
+      "id": "D09",
+      "round": 1,
+      "title": "Manually download DEMs",
+      "url": "https://forum.step.esa.int/t/manually-download-dems/34219",
+      "need": "公司代理/离线场景下手动准备SRTM地形校正辅助数据",
+      "categories": [
+        "discover",
+        "acquire",
+        "offline"
+      ],
+      "evidenceLimit": "核读原帖明确日期；旧帖不当作当前故障"
+    },
+    {
+      "id": "D10",
+      "round": 1,
+      "title": "Downloading Sentinel 1 data of an entire Country",
+      "url": "https://forum.step.esa.int/t/downloading-sentinel-1-data-of-an-entire-country/15597",
+      "need": "整个国家2017至2018年的全部Sentinel-1原始数据，部分历史产品难找",
+      "categories": [
+        "discover",
+        "acquire",
+        "temporal"
+      ],
+      "evidenceLimit": "核读原帖明确日期；旧帖作归档/规模需求"
+    },
+    {
+      "id": "D11",
+      "round": 1,
+      "title": "Access token creation failed for large number of image download",
+      "url": "https://forum.dataspace.copernicus.eu/t/access-token-creation-failed-for-large-number-of-image-download/835",
+      "need": "批量5000景S2 L1C运行10小时后token失效",
+      "categories": [
+        "acquire",
+        "temporal",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖及回复明确日期"
+    },
+    {
+      "id": "D12",
+      "round": 1,
+      "title": "OData and browser downloads 503",
+      "url": "https://forum.dataspace.copernicus.eu/t/odata-and-browser-downloads-503/5067",
+      "need": "目录与登录均正常，原包下载503，浏览器同样失败",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读；2026-05-18/19用户确认恢复"
+    },
+    {
+      "id": "D13",
+      "round": 1,
+      "title": "HLS data access and spatial subsetting",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=7149",
+      "need": "数百H3区域2015至今每日HLS L30/S30 B2/B4/NIR/Fmask并计算EVI，整景慢/云访问拒绝",
+      "categories": [
+        "acquire",
+        "spatial",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "核读原帖作者时间"
+    },
+    {
+      "id": "D14",
+      "round": 1,
+      "title": "Question about MODIS daily data GeoTIFF download",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=5356",
+      "need": "北极2000至2023年每日MCD43A4/反照率GeoTIFF，订单长期排队",
+      "categories": [
+        "acquire",
+        "temporal",
+        "scientific",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖作者时间"
+    },
+    {
+      "id": "D15",
+      "round": 1,
+      "title": "请问GF和SPOT卫星数据有免费下载的地方吗？",
+      "url": "https://muchong.com/t-13708167-1",
+      "need": "免费获取GF/SPOT高分辨率影像",
+      "categories": [
+        "discover",
+        "acquire"
+      ],
+      "evidenceLimit": "原帖发布日期未抽取；可见2019-12-08回复，不据此推定发帖日期"
+    },
+    {
+      "id": "D16",
+      "round": 1,
+      "title": "Filtering Sentinel2 image collection by cloud coverage over specific polygon",
+      "url": "https://gis.stackexchange.com/questions/414431/filtering-sentinel2-image-collection-by-cloud-coverage-over-specific-polygon",
+      "need": "只按研究区云量筛选，整景云量会错删可用影像",
+      "categories": [
+        "discover",
+        "spatial",
+        "scientific"
+      ],
+      "evidenceLimit": "核读原帖明确日期；旧帖作AOI质量需求"
+    },
+    {
+      "id": "D17",
+      "round": 1,
+      "title": "Error when trying to export monthly images from Sentinel 2",
+      "url": "https://gis.stackexchange.com/questions/474194/error-when-trying-to-export-monthly-images-from-sentinel-2",
+      "need": "逐月导出多光谱波段、NDVI/EVI等，批处理代码错误",
+      "categories": [
+        "acquire",
+        "temporal",
+        "scientific",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D18",
+      "round": 1,
+      "title": "Discrepancy between actual size of coordinates and clipped satellite image box sizes",
+      "url": "https://gis.stackexchange.com/questions/470900/discrepancy-between-actual-size-of-coordinates-and-clipped-satellite-image-box-s",
+      "need": "AOI裁剪图仅覆盖部分区域；代码只选first景",
+      "categories": [
+        "discover",
+        "spatial",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D19",
+      "round": 1,
+      "title": "401 Error message",
+      "url": "https://forum.dataspace.copernicus.eu/t/401-error-message/4954",
+      "need": "S2下载93%时令牌过期，耗时后重来",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读；发帖人2026-04-13称已下载成功"
+    },
+    {
+      "id": "D20",
+      "round": 1,
+      "title": "Unable to download HLS data: 403 error but authenticated",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=5893",
+      "need": "已登录且可检索HLS，原波段下载却403",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖作者时间"
+    },
+    {
+      "id": "D21",
+      "round": 1,
+      "title": "Download process stops before all required data have been downloaded",
+      "url": "https://forum.dataspace.copernicus.eu/t/download-process-stops-before-all-the-required-data-have-been-downloaded/3344",
+      "need": "并行4景下载一个月的数据，中途停止且漏景，网页能查到",
+      "categories": [
+        "acquire",
+        "temporal",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D22",
+      "round": 1,
+      "title": "Download monthly VIIRS for certain years",
+      "url": "https://gis.stackexchange.com/questions/491902/download-monthly-viirs-for-certain-years",
+      "need": "2018至2024月度VIIRS夜光，cf_cvg>=5质量过滤，按年月命名",
+      "categories": [
+        "acquire",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "核读原帖明确日期"
+    },
+    {
+      "id": "D23",
+      "round": 1,
+      "title": "Looking for 1995 Satellite Imagery",
+      "url": "https://www.reddit.com/r/gis/comments/1vnh36v/looking_for_1995_satellite_imagery/",
+      "need": "1995年海岸制图的较高空间分辨率历史影像",
+      "categories": [
+        "discover",
+        "acquire",
+        "temporal"
+      ],
+      "evidenceLimit": "搜索索引2026-08-13；页面相对时间不一致，确切日期未确认"
+    },
+    {
+      "id": "R2-C01",
+      "round": 2,
+      "title": "91 卫图显示天地图仅供预览，如何下载",
+      "url": "https://ask.csdn.net/questions/8388629",
+      "need": "用户看到卫星底图，却遇到仅供预览提示；希望知道实际可下载的来源。",
+      "categories": [
+        "discover",
+        "acquire"
+      ],
+      "evidenceLimit": "回答明确含 AIGC；仅采用原始提问，不采纳其操作建议。"
+    },
+    {
+      "id": "R2-C02",
+      "round": 2,
+      "title": "自然资源卫星云平台只能导出文件名",
+      "url": "https://ask.csdn.net/questions/8027013",
+      "need": "检索有结果，但下载相关选项灰色，只有文件名可导出。",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "历史用户故障，不代表当前平台仍故障。"
+    },
+    {
+      "id": "R2-C03",
+      "round": 2,
+      "title": "陆地观测卫星平台订单完成却没有影像",
+      "url": "https://ask.csdn.net/questions/8175354",
+      "need": "平台订单完成后点击下载，却未得到遥感图像文件。",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "回答注明使用豆包；不采用其未经验证的排障结论。"
+    },
+    {
+      "id": "R2-C04",
+      "round": 2,
+      "title": "寻找高分五号 GMI 一级数据官方入口",
+      "url": "https://ask.csdn.net/questions/8062501",
+      "need": "用户明确需要 GF-5 GMI L1，想找具体官方获取入口。",
+      "categories": [
+        "discover",
+        "acquire"
+      ],
+      "evidenceLimit": "Exa 首次 521，补充网页阅读成功；未验证该产品真实下载。"
+    },
+    {
+      "id": "R2-C05",
+      "round": 2,
+      "title": "全年 Sentinel-2 NDVI 如何得到植被生长季开始日期",
+      "url": "https://ask.csdn.net/questions/8141767",
+      "need": "用户已下载全年影像并计算 NDVI，仍无法生成生长季开始日期空间图。",
+      "categories": [
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "下载已完成仍需分析；不能把更多下载当作完整解决。"
+    },
+    {
+      "id": "R2-C06",
+      "round": 2,
+      "title": "洞庭湖湿地植被研究缺少边界矢量",
+      "url": "https://ask.csdn.net/questions/9120539",
+      "need": "近十年洞庭湖湿地植被覆盖研究，卡在湿地边界矢量的定义和获取。",
+      "categories": [
+        "discover",
+        "spatial"
+      ],
+      "evidenceLimit": "论坛回答只作讨论，不视为权威湿地边界标准。"
+    },
+    {
+      "id": "R2-C07",
+      "round": 2,
+      "title": "MODIS 地表温度产品、缺测和单位如何理解",
+      "url": "https://muchong.com/t-5020723-1",
+      "need": "用户不清楚产品级别，日温度缺日期，且不知道 DN 如何转为温度。",
+      "categories": [
+        "discover",
+        "acquire",
+        "scientific",
+        "temporal"
+      ],
+      "evidenceLimit": "2012 年历史工作流；不采用回复中的具体温度换算数值。"
+    },
+    {
+      "id": "R2-C08",
+      "round": 2,
+      "title": "拼接影像色差大，Photoshop 处理会丢坐标",
+      "url": "https://muchong.com/t-11332926-1",
+      "need": "2015 / 2017 影像色差大，尝试匀色不满意，担心外部修图丢失地理坐标。",
+      "categories": [
+        "spatial",
+        "offline",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "索引正文可读；实时页面提示归档禁止浏览。回复中的重新配准建议未验证。"
+    },
+    {
+      "id": "R2-C09",
+      "round": 2,
+      "title": "需要黑龙江双鸭山市历年城区影像",
+      "url": "http://bbs.3s001.com/thread-267532-2-1.html",
+      "need": "论文需要双鸭山市历年城区遥感影像，希望有人协助获取。",
+      "categories": [
+        "discover",
+        "acquire",
+        "spatial",
+        "temporal"
+      ],
+      "evidenceLimit": "只计一个线程；正文来自索引缓存，实时站点不可读。软件分享及感谢回复不计需求。"
+    },
+    {
+      "id": "R2-C10",
+      "round": 2,
+      "title": "MODIS 土地覆盖产品差异和江西省瓦片选择",
+      "url": "http://muchong.com/html/201705/8351747.html",
+      "need": "不知道 MOD / MCD、12Q1 / 12Q2 区别和文件名；希望确定江西省需要哪些瓦片。",
+      "categories": [
+        "discover",
+        "acquire",
+        "spatial",
+        "scientific"
+      ],
+      "evidenceLimit": "NASA 官方说明核对：MCD12Q1 是年度土地覆盖分类，MCD12Q2 是年度物候指标。"
+    },
+    {
+      "id": "R2-I01",
+      "round": 2,
+      "title": "多云区域两年无云合成遇到图像数量和超时限制",
+      "url": "https://forum.sentinel-hub.com/t/cloudless-mosaic-and-image-limit-in-sentinel-processing-api/9549",
+      "need": "需要多年 median / quantile 合成，普通逐景处理受图像数量和请求限制影响。",
+      "categories": [
+        "temporal",
+        "scientific",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "历史限额与错误只作为用户工作流证据。"
+    },
+    {
+      "id": "R2-I02",
+      "round": 2,
+      "title": "时间段内每次影像的真实采集日期",
+      "url": "https://forum.sentinel-hub.com/t/download-of-multiple-images-and-dates-in-a-specific-time-period/8488",
+      "need": "用户按每天请求图像，却不确定返回图像实际是哪天采集，希望获得期间全部观测。",
+      "categories": [
+        "acquire",
+        "temporal"
+      ],
+      "evidenceLimit": "不能把服务按日期返回的合成影像认作当天单景。"
+    },
+    {
+      "id": "R2-I03",
+      "round": 2,
+      "title": "20 块农田整个夏季 RGB GeoTIFF 批量下载",
+      "url": "https://forum.sentinel-hub.com/t/download-multiple-images/7396",
+      "need": "已有农田 GeoPackage，需要全部地块在三个月内的 RGB GeoTIFF，现有示例只处理一景。",
+      "categories": [
+        "acquire",
+        "spatial",
+        "temporal"
+      ],
+      "evidenceLimit": "不能把一个工程最多 32 景扩充描述为无限时间批次。"
+    },
+    {
+      "id": "R2-I04",
+      "round": 2,
+      "title": "224×224 多时相多波段训练样本",
+      "url": "https://forum.sentinel-hub.com/t/sentinel-2-l2a-multi-temporal-stack/2932",
+      "need": "需要固定尺寸、20 米网格、多波段及云 / 阴影 / 饱和掩膜，按日期和波段输出。",
+      "categories": [
+        "spatial",
+        "temporal",
+        "scientific",
+        "offline"
+      ],
+      "evidenceLimit": "固定训练样本是新增成果模式，不是普通裁剪尺寸的简单替换。"
+    },
+    {
+      "id": "R2-I05",
+      "round": 2,
+      "title": "中国范围全年 Sentinel-2 L1C 多波段下载",
+      "url": "https://forum.sentinel-hub.com/t/assistance-needed-for-year-long-sentinel-2-l1c-imagery-downloads-for-china-region/9350",
+      "need": "大范围全年影像有空白及处理问题，希望确认区域、波段和下载设置。",
+      "categories": [
+        "acquire",
+        "spatial",
+        "temporal"
+      ],
+      "evidenceLimit": "海外平台上的中国研究区需求；不据此推断作者国籍。"
+    },
+    {
+      "id": "R2-I06",
+      "round": 2,
+      "title": "NetCDF 有 18 期，GeoTIFF 却只得到一层",
+      "url": "https://forum.dataspace.copernicus.eu/t/openeo-download-issue-as-geo-tiff-vs-nc-for-sentinel2/3669",
+      "need": "用户期望保存全部时相，导出格式切换后发现时间维度没有按预期保留。",
+      "categories": [
+        "temporal",
+        "offline",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "后续 4713 帖链接同一问题，按一个需求去重。"
+    },
+    {
+      "id": "R2-I07",
+      "round": 2,
+      "title": "没有 Raster Analytics，想导出 Sentinel-2 原分辨率 TIFF",
+      "url": "https://community.esri.com/t5/arcgis-api-for-python-questions/sentinel2-image-service-clip-without-raster/td-p/1401090",
+      "need": "企业 ImageServer 区域裁剪结果分辨率不符合期望，且没有栅格分析授权。",
+      "categories": [
+        "acquire",
+        "spatial",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "公开渲染 PNG 不等同于该用户要的原始多波段 TIFF。"
+    },
+    {
+      "id": "R2-I08",
+      "round": 2,
+      "title": "光伏识别模型需要 Sentinel-2 BOA 完整 SAFE，而不是 RGB",
+      "url": "https://community.esri.com/t5/imagery-and-remote-sensing-questions/downloading-sentinel-2-l2a-data/td-p/1409526",
+      "need": "用户下载到 RGB TIFF，但目标模型要求 Sentinel-2 L2A 反射率完整 SAFE 产品。",
+      "categories": [
+        "discover",
+        "acquire",
+        "scientific"
+      ],
+      "evidenceLimit": "原帖已标记解决；这证明产品选择障碍，不证明当前官方浏览器故障。"
+    },
+    {
+      "id": "R2-I09",
+      "round": 2,
+      "title": "Landsat 全色融合 15 米导出失败，较粗分辨率能成功",
+      "url": "https://community.esri.com/t5/arcgis-rest-apis-and-services-questions/landsat8-pansharpened-image-export/td-p/1376951",
+      "need": "同一导出请求在目标 15 米输出遇到类型错误，粗分辨率输出可成功。",
+      "categories": [
+        "spatial",
+        "scientific",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "帖子已解决；不视为当前持续故障。"
+    },
+    {
+      "id": "R2-I10",
+      "round": 2,
+      "title": "ArcGIS REST 下载 DEM 得到 HTML 而不是栅格",
+      "url": "https://community.esri.com/t5/python-questions/download-queried-raster-from-arcgis-rest/td-p/1293773",
+      "need": "用户希望将 USGS 3DEP 服务中的查询区域实际保存为 TIFF，却保存了网页内容。",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "3DEP 来源需求不能用 PNG 渲染成果满足。"
+    },
+    {
+      "id": "R2-I11",
+      "round": 2,
+      "title": "ArcGIS Pro 中批量获取光学影像做指数与分类",
+      "url": "https://community.esri.com/t5/arcgis-pro-questions/bulk-download-of-optical-images-from-arcgis-pro/td-p/1126054",
+      "need": "需要 Landsat / Sentinel 科学影像批量用于指数、分类和时间序列，在线图层使用受阻。",
+      "categories": [
+        "acquire",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "历史平台体验不代表现有 ArcGIS 服务状态。"
+    },
+    {
+      "id": "R2-I12",
+      "round": 2,
+      "title": "SAS 开始时间被误判为到期时间",
+      "url": "https://github.com/microsoft/PlanetaryComputer/issues/463",
+      "need": "用户将 SAS 开始日期早于当前日期判断为已过期，担心批次无法下载。",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "回复解释 st 与 se 并给出成功请求；原帖标题不是已证实的签名故障。"
+    },
+    {
+      "id": "R2-I13",
+      "round": 2,
+      "title": "复杂 STAC 查询超时，简单健康检查通过",
+      "url": "https://github.com/microsoft/PlanetaryComputer/issues/476",
+      "need": "复杂 AOI / 时间查询超时，简单集合检查正常，用户很难判断服务是否可用。",
+      "categories": [
+        "discover",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "约 70% 是报告者在指定时段的样本，不是本轮测量或当前全平台故障率。"
+    },
+    {
+      "id": "R2-I14",
+      "round": 2,
+      "title": "遇到 429 / 504 时希望自动退避继续批次",
+      "url": "https://github.com/cmosig/sentle/issues/9",
+      "need": "用户请求在限流或网关错误时退避，让长下载能够恢复而不是整个退出。",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "已关闭的增强请求，仅说明恢复需求，不宣称当前该库仍缺失。"
+    },
+    {
+      "id": "R2-I15",
+      "round": 2,
+      "title": "下载脚本中的年份和瓦片与查询结果不一致",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=5277",
+      "need": "MOD11A1 查询 519 个 granule，批量脚本却含错误年份和瓦片，手动下载表现不同。",
+      "categories": [
+        "acquire",
+        "temporal",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "报告历史错误，不推断根因或当前故障。"
+    },
+    {
+      "id": "R2-I16",
+      "round": 2,
+      "title": "AppEEARS 输出只有 S3 地址，希望交付本机",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=6320",
+      "need": "用户想在本地批量取得结果，不希望只在同区域 EC2 中读取 S3。",
+      "categories": [
+        "acquire",
+        "offline"
+      ],
+      "evidenceLimit": "云端结果可见不等于本地交付成功。"
+    },
+    {
+      "id": "R2-I17",
+      "round": 2,
+      "title": "初学者不知道怎么下载 MOD13Q1 栅格",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=6414",
+      "need": "用户只知道 MOD13Q1，仍不知道栅格如何获取和使用。",
+      "categories": [
+        "discover",
+        "acquire",
+        "scientific"
+      ],
+      "evidenceLimit": "是已有能力适合承接的场景；本轮未执行新的自然语言验收。"
+    },
+    {
+      "id": "R2-I18",
+      "round": 2,
+      "title": "希望按自己的 Shapefile 范围下载子集",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=4477",
+      "need": "用户不知道哪些 NASA 工具能用上传的矢量范围做空间子集。",
+      "categories": [
+        "acquire",
+        "spatial"
+      ],
+      "evidenceLimit": "整景下载后本地裁剪与远端按区域采集分别标明。"
+    },
+    {
+      "id": "R2-I19",
+      "round": 2,
+      "title": "灾前灾后 Sentinel-1 升降轨不匹配",
+      "url": "https://forum.step.esa.int/t/compare-s1a-and-s1b-images-for-change-detection/23724",
+      "need": "气旋洪灾前后影像来自不同轨向，叠加比较产生疑问。",
+      "categories": [
+        "discover",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "回复存在观点差异，不采用未经核实的科学阈值。"
+    },
+    {
+      "id": "R2-I20",
+      "round": 2,
+      "title": "SAR 洪灾参考图偏暗，不知道是不是水",
+      "url": "https://forum.step.esa.int/t/flood-detection-using-sar/25528",
+      "need": "同轨灾前参考图异常暗，用户无法判断水体、处理或显示问题。",
+      "categories": [
+        "scientific",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "这是分析邻接需求，不能仅以两景下载完成宣称已识别洪水。"
+    },
+    {
+      "id": "R2-I21",
+      "round": 2,
+      "title": "Sentinel-2 真彩色看不出火烧痕迹",
+      "url": "https://forum.step.esa.int/t/mapping-fires-with-s2-images/44628",
+      "need": "火灾制图中 RGB 不明显，既有做法对新影像无效，希望正确选时相和产品。",
+      "categories": [
+        "discover",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "作者澄清本次为 2025 火灾；不误写成用户选错年份。"
+    },
+    {
+      "id": "R2-I22",
+      "round": 2,
+      "title": "在一张地图上联合查 Landsat 和 MODIS",
+      "url": "https://www.researchgate.net/post/Does-any-one-know-how-to-query-available-Landsat-and-MODIS-data-within-one-map",
+      "need": "用户不熟悉 path/row 和 h/v，希望同一地图查询两种产品并确定覆盖。",
+      "categories": [
+        "discover"
+      ],
+      "evidenceLimit": "国际平台上的提问；作者页面标注中国科学院，不把平台所在地等同用户国籍。"
+    },
+    {
+      "id": "R2-I23",
+      "round": 2,
+      "title": "西非小区域土地变化研究，想找低成本数据",
+      "url": "https://www.researchgate.net/post/How-can-one-obtain-small-scale-satellite-data-on-land-use-and-land-changes",
+      "need": "研究者需要小尺度西非稀树草原土地利用 / 变化数据，希望降低获取成本。",
+      "categories": [
+        "discover",
+        "temporal",
+        "scientific"
+      ],
+      "evidenceLimit": "历史获取问题不能证明如今特定产品仍收费或仍可免费获得。"
+    },
+    {
+      "id": "R2-I24",
+      "round": 2,
+      "title": "Earth Engine 导出的 Landsat TIFF 是黑色",
+      "url": "https://stackoverflow.com/questions/78101058/black-tif-images-when-filtering-landsat-imagery-in-google-earth-engine",
+      "need": "用户改变范围、大小和比例仍得到黑图，不知道文件是否真的有有效数据。",
+      "categories": [
+        "inspect_recover"
+      ],
+      "evidenceLimit": "只采用问题，不将单一回复当科学根因结论。"
+    },
+    {
+      "id": "R2-I25",
+      "round": 2,
+      "title": "永不联网电脑需要可商用全球卫星 MBTiles",
+      "url": "https://gis.stackexchange.com/questions/500272/world-satellite-map-with-qgis-in-an-offline-computer",
+      "need": "用户只能硬盘搬运数据，希望免费合法商用、能在离线 QGIS 打开的 MBTiles。",
+      "categories": [
+        "discover",
+        "offline"
+      ],
+      "evidenceLimit": "许可必须查实际产品及年份；不直接采纳回复中的许可证推断。"
+    },
+    {
+      "id": "R2-I26",
+      "round": 2,
+      "title": "脚本启动了 11 个 GEE 导出任务却没有文件",
+      "url": "https://gis.stackexchange.com/questions/488702/downloading-satellite-raster-data-using-earth-engine-lib-in-python",
+      "need": "打印任务启动日志，但用户在 Drive 看不到最终文件。",
+      "categories": [
+        "acquire",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "提问者具体输出为 11 景；本轮没有执行该脚本。"
+    },
+    {
+      "id": "R2-I27",
+      "round": 2,
+      "title": "CSV 点位不同缓冲区的月均 NDVI 表",
+      "url": "https://gis.stackexchange.com/questions/430165/calculate-monthly-modis-ndvi-of-multiple-regions-using-gee-python-api-and-export",
+      "need": "坐标 CSV 中多个地点，分别按不同缓冲距离取得月度 NDVI 时间序列 DataFrame。",
+      "categories": [
+        "spatial",
+        "temporal",
+        "scientific",
+        "statistics"
+      ],
+      "evidenceLimit": "与同作者 429958 前置问题归为一个需求，不重复计数。"
+    },
+    {
+      "id": "R2-I28",
+      "round": 2,
+      "title": "多个坐标的 MOD13Q1 历年 NDVI CSV 导出投影错误",
+      "url": "https://stackoverflow.com/questions/76670361/unable-to-export-time-series-from-modis-ndvi-in-gee-as-transforming-geometry-int",
+      "need": "用户需要每个地点 2010–2022 NDVI 时序 CSV，遇到几何投影转换错误。",
+      "categories": [
+        "temporal",
+        "scientific",
+        "statistics",
+        "inspect_recover"
+      ],
+      "evidenceLimit": "从原始代码看到 scale 被混用；不将论坛代码复制为软件正确实现。"
+    }
+  ],
+  "outcomeContract": {
+    "status": "specified-not-implemented",
+    "states": [
+      "verified_delivery",
+      "partial_delivery",
+      "awaiting_approval",
+      "awaiting_account_action",
+      "capability_missing",
+      "execution_failed"
+    ],
+    "requirements": [
+      "All required outputs exist and pass their typed native file checks.",
+      "All explicit product, time, area and output constraints are verified or remain visibly unresolved.",
+      "Raster jobs require succeeded AND settled=true; vector extraction uses submitted and freshly verified saved-file evidence.",
+      "Discovery is verified against metadata requirements without inventing files.",
+      "Batch expected and delivered manifests are compared; missing and failed entries are reported.",
+      "A materially different alternative requires human agreement.",
+      "Model turn completion and workflow monitor completion are not the full user-task verdict."
+    ]
+  },
+  "generalizationCases": [
+    {
+      "category": "discover",
+      "request": "为 {region} 的 {purpose} 选择合适数据，说明真实年份、分辨率和使用条件。",
+      "variants": [
+        "换语言及同名行政层级",
+        "换成明确坐标或用户矢量",
+        "换产品或缺失科学资产"
+      ],
+      "oracle": "使用原生返回；真实歧义集中澄清；未支持条件不自动替换。",
+      "id": "G01",
+      "executed": false
+    },
+    {
+      "category": "acquire",
+      "request": "把 {product} 在 {area} 和 {timeRange} 的 {assets} 保存成 {format}。",
+      "variants": [
+        "原件与服务生成成果",
+        "公开与需登录来源",
+        "已下载复用与全新下载"
+      ],
+      "oracle": "全部必需资产及产品 / 时间 / 区域匹配，原生执行完成与实际文件核对。",
+      "id": "G02",
+      "executed": false
+    },
+    {
+      "category": "spatial",
+      "request": "按 {geometry} 准备 {gridRequirement} 的成果，保留 {maskRule}。",
+      "variants": [
+        "矩形、带孔多边形、跨瓦片",
+        "相同与不同 CRS / 网格",
+        "无覆盖、部分覆盖和完整范围"
+      ],
+      "oracle": "精确性明确；没有原生转换操作则指出缺口，不改变 CRS 标签冒充重投影。",
+      "id": "G03",
+      "executed": false
+    },
+    {
+      "category": "temporal",
+      "request": "为 {areas} 准备 {periodGrouping} 的影像，采用 {selectionRule} 并报告缺测。",
+      "variants": [
+        "单时相、逐期、前后对比和时间合成",
+        "采集日期与合成时段",
+        "第一页面未穷尽与整期无合格观测"
+      ],
+      "oracle": "完整预期清单、真实时相和可比性；受限子集标注部分交付。",
+      "id": "G04",
+      "executed": false
+    },
+    {
+      "category": "scientific",
+      "request": "准备 {physicalQuantityOrIndex}，保留单位、原值与 {qualityPolicy}。",
+      "variants": [
+        "不同科学层、类型与比例因子",
+        "同网格匹配 QA 与不匹配 QA",
+        "实际没有必需波段"
+      ],
+      "oracle": "可验证配方与独立原值 / 派生值核对；展示图不满足科学层条件。",
+      "id": "G05",
+      "executed": false
+    },
+    {
+      "category": "statistics",
+      "request": "按 {features} 的 {samplingRule} 输出 {timeGrouping} 统计表。",
+      "variants": [
+        "点、缓冲区和区域",
+        "不同时间 / 波段分组",
+        "不同 CRS、无效值与缺测"
+      ],
+      "oracle": "实际行数、ID、日期、单位、QA、有效数量及缺失值核对；未有统计工具时明确能力缺口。",
+      "id": "G06",
+      "executed": false
+    },
+    {
+      "category": "offline",
+      "request": "准备能在 {consumer} 离线使用的 {dataPackage}。",
+      "variants": [
+        "科学原件、图像瓦片与矢量容器",
+        "不同使用许可与用途",
+        "不同容量和包依赖"
+      ],
+      "oracle": "真实本地文件和依赖，断网 / 目标软件检查与具体资产许可，不把链接当本地交付。",
+      "id": "G07",
+      "executed": false
+    },
+    {
+      "category": "inspect_recover",
+      "request": "检查 {taskOrArtifact} 是否满足原要求，只恢复已授权的缺失部分。",
+      "variants": [
+        "未创建、进行中、收尾、失败、成功",
+        "哈希正确但产品 / 时间错误",
+        "重启与重复恢复"
+      ],
+      "oracle": "新鲜状态与类型检查，区分阶段完成与用户目标；权限不变，重复请求不重复输出。",
+      "id": "G08",
+      "executed": false
+    }
+  ],
+  "implementationOrder": [
+    {
+      "id": "WP-W03-T01",
+      "name": "通用请求与能力匹配",
+      "status": "specified",
+      "dependsOn": [
+        "WP-A01",
+        "WP-P01",
+        "existing-native-plans"
+      ]
+    },
+    {
+      "id": "WP-W03-T02",
+      "name": "用户任务聚合完成判定",
+      "status": "specified",
+      "dependsOn": [
+        "WP-W03-T01",
+        "WP-F01",
+        "WP-F02a",
+        "WP-F02b"
+      ]
+    },
+    {
+      "id": "WP-W03-T03",
+      "name": "多区域时序批次与恢复",
+      "status": "specified",
+      "dependsOn": [
+        "WP-W03-T01",
+        "WP-W03-T02",
+        "WP-J01",
+        "WP-J02",
+        "WP-W01"
+      ]
+    },
+    {
+      "id": "WP-W03-T04",
+      "name": "逐产品科学准备与采样统计",
+      "status": "specified",
+      "dependsOn": [
+        "WP-W03-T01",
+        "WP-W03-T02",
+        "WP-X01",
+        "WP-X02",
+        "corresponding-provider"
+      ]
+    },
+    {
+      "id": "WP-W03-T05",
+      "name": "交付与跨类别真实验收",
+      "status": "specified",
+      "dependsOn": [
+        "WP-W03-T02",
+        "WP-W03-T03",
+        "WP-W03-T04",
+        "WP-Q01",
+        "WP-Q02"
+      ],
+      "note": "按类别同步实施，不等所有工作包结束才验证。"
+    }
+  ],
+  "evaluation": {
+    "deliveryScore": "真实自然语言请求产生符合全部要求且独立核对通过的成果数 / 实际执行的交付请求数",
+    "boundaryScore": "歧义、未授权、缺操作、超限等情况得到正确原生边界处理的数量 / 实际执行的边界场景数",
+    "distinctEvidence": [
+      "unit-or-controlled-contract",
+      "native-real-data",
+      "live-model-tool-loop",
+      "independent-artifact-check",
+      "offline-consumer-or-native-window"
+    ],
+    "holdout": "留出未用于实现的地域、表达、输入、产品组合和交付要求；同类能力用实际运行验证，不能靠固定论坛原句通过。",
+    "acceptedScope": "product × operation × input geometry/grid/time × output format × permission state",
+    "noSyntheticDeliveryCredit": true
+  },
+  "thisChange": {
+    "planningPolicyIntegrated": true,
+    "serviceAndWorkflowTestsPassed": 25,
+    "persistedRequestContractImplemented": false,
+    "aggregateOutcomeGateImplemented": false,
+    "newBatchRunnerImplemented": false,
+    "newScienceOrStatisticsImplemented": false,
+    "newLiveModelCalls": 0,
+    "newImageryDownloads": 0,
+    "newEndToEndAcceptance": false,
+    "packaged": false,
+    "published": false
+  }
+}

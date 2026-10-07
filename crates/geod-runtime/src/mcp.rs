@@ -1,6 +1,6 @@
 //! Local MCP adapter. Protocol/lifecycle are supplied by the official Rust SDK;
 //! all geospatial work remains in JobManager or the existing loopback service.
-use crate::{CreateJobRequest, JobManager, JobStatus, RasterRecipe};
+use crate::{CreateJobRequest, Job, JobManager, JobStatus, RasterRecipe};
 use futures_util::StreamExt;
 use rmcp::{
     model::{
@@ -33,9 +33,23 @@ const MAX_ARGUMENT_BYTES: usize = 8192;
 const MAX_RESPONSE_BYTES: usize = 4 * 1024 * 1024;
 const MAX_RESULT_BYTES: usize = 512 * 1024;
 mod rgb;
+mod stac;
+mod vector;
 mod wcs;
 
 const READ_TOOLS: &[&str] = &[
+    "geod_feature_services",
+    "geod_feature_collections",
+    "geod_vectors_list",
+    "geod_vector_inspect",
+    "geod_vector_features",
+    "geod_vector_node",
+    "geod_stac_connections",
+    "geod_stac_catalog",
+    "geod_stac_snapshot",
+    "geod_stac_assets",
+    "geod_stac_inspect",
+    "geod_stac_pixel",
     "geod_rgb_plan",
     "geod_rgb_inspect",
     "geod_rgb_pixel",
@@ -56,6 +70,11 @@ const READ_TOOLS: &[&str] = &[
     "geod_wcs_pixel",
 ];
 const WRITE_TOOLS: &[&str] = &[
+    "geod_stac_connect",
+    "geod_stac_search",
+    "geod_stac_project_save",
+    "geod_stac_download",
+    "geod_stac_forget",
     "geod_rgb_run",
     "geod_rgb_package",
     "geod_download",
@@ -223,12 +242,41 @@ impl Backend {
                     "disconnect":self.disconnect_behavior()}}),
                 )
             }
-            Operation::Jobs(page) => {
+            Operation::Jobs(args) => {
                 let jobs = match self {
                     Self::Direct(manager) => to_value(manager.list().await)?,
                     Self::Server { .. } => self.http(reqwest::Method::GET, "/jobs", None).await?,
                 };
-                paginate(jobs, page, "jobs")
+                let page = PageArgs {
+                    offset: args.offset,
+                    limit: args.limit,
+                };
+                let Some(id) = args.project_id else {
+                    return paginate(jobs, page, "jobs");
+                };
+                let project: crate::Project =
+                    serde_json::from_value(wcs::execute(self, wcs::Operation::Project(id)).await?)
+                        .map_err(|_| "Invalid runtime project response")?;
+                let jobs: Vec<Job> =
+                    serde_json::from_value(jobs).map_err(|_| "Invalid runtime jobs response")?;
+                let related = crate::projects::related_ids(&project, &jobs);
+                let mut value = paginate(
+                    to_value(
+                        jobs.into_iter()
+                            .filter(|job| related.contains(&job.id))
+                            .collect::<Vec<_>>(),
+                    )?,
+                    page,
+                    "jobs",
+                )?;
+                for job in value["jobs"].as_array_mut().ok_or("Invalid paged jobs")? {
+                    let id = job["id"].as_str().ok_or("Invalid job ID")?;
+                    *job = self.status(id).await?;
+                }
+                value["project"] = json!({"id":project.id,"name":project.name});
+                value["checkedAt"] = json!(crate::now());
+                value["scope"] = json!("Native source pins and project processing lineage; total and pagination exclude other projects. Task settlement does not revalidate file bytes.");
+                Ok(value)
             }
             Operation::Status(id) => self.status(&id).await,
             Operation::Inspect(id) => {
@@ -315,6 +363,8 @@ impl Backend {
             }
             Operation::Wcs(operation) => Box::pin(wcs::execute(self, *operation)).await,
             Operation::Rgb(operation) => Box::pin(rgb::execute(self, *operation)).await,
+            Operation::Stac(operation) => Box::pin(stac::execute(self, *operation)).await,
+            Operation::Vector(operation) => vector::execute(self, *operation).await,
         }
     }
 
@@ -417,6 +467,13 @@ struct PageArgs {
     limit: Option<usize>,
 }
 #[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct JobPageArgs {
+    offset: Option<usize>,
+    limit: Option<usize>,
+    project_id: Option<String>,
+}
+#[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct RecipeArgs {
     recipe: RasterRecipe,
@@ -428,7 +485,7 @@ struct DownloadArgs {
 }
 enum Operation {
     Health,
-    Jobs(PageArgs),
+    Jobs(JobPageArgs),
     Status(String),
     Inspect(String),
     Pixel(PixelArgs),
@@ -441,6 +498,8 @@ enum Operation {
     Retry(String),
     Wcs(Box<wcs::Operation>),
     Rgb(Box<rgb::Operation>),
+    Stac(Box<stac::Operation>),
+    Vector(Box<vector::Operation>),
 }
 
 fn arguments<T: DeserializeOwned>(value: Value) -> Result<T, ErrorData> {
@@ -474,7 +533,28 @@ fn parse_operation(name: &str, value: Value, allow_write: bool) -> Result<Operat
             let _: EmptyArgs = arguments(value)?;
             Operation::Health
         }
-        "geod_jobs_list" | "geod_recipes_list" => {
+        "geod_jobs_list" => {
+            if value.get("projectId").is_some_and(|id| !id.is_string()) {
+                return Err(ErrorData::invalid_params(
+                    "projectId must be a saved project UUID",
+                    None,
+                ));
+            }
+            let page: JobPageArgs = arguments(value)?;
+            if let Some(id) = &page.project_id {
+                validate_id(id)?;
+            }
+            if page.limit.is_some_and(|v| v == 0 || v > 100)
+                || page.offset.is_some_and(|v| v > 1_000_000)
+            {
+                return Err(ErrorData::invalid_params(
+                    "limit must be 1..100 and offset 0..1000000",
+                    None,
+                ));
+            }
+            Operation::Jobs(page)
+        }
+        "geod_recipes_list" => {
             let page: PageArgs = arguments(value)?;
             if page.limit.is_some_and(|v| v == 0 || v > 100)
                 || page.offset.is_some_and(|v| v > 1_000_000)
@@ -484,11 +564,7 @@ fn parse_operation(name: &str, value: Value, allow_write: bool) -> Result<Operat
                     None,
                 ));
             }
-            if name == "geod_jobs_list" {
-                Operation::Jobs(page)
-            } else {
-                Operation::Recipes(page)
-            }
+            Operation::Recipes(page)
         }
         "geod_job_status" | "geod_raster_inspect" | "geod_job_cancel" | "geod_job_retry" => {
             let IdArgs { id } = arguments(value)?;
@@ -529,6 +605,10 @@ fn parse_operation(name: &str, value: Value, allow_write: bool) -> Result<Operat
             Operation::Download(request)
         }
         _ if name.starts_with("geod_rgb_") => Operation::Rgb(Box::new(rgb::parse(name, value)?)),
+        _ if name.starts_with("geod_stac_") => Operation::Stac(Box::new(stac::parse(name, value)?)),
+        _ if name.starts_with("geod_vector") || name.starts_with("geod_feature_") => {
+            Operation::Vector(Box::new(vector::parse(name, value)?))
+        }
         _ => Operation::Wcs(Box::new(wcs::parse(name, value)?)),
     })
 }
@@ -553,9 +633,11 @@ fn tools(allow_write: bool) -> Vec<Tool> {
         "href":{"type":"string","description":"Reviewed unsigned HTTPS source asset matching itemId and assetKey. Supports configured Sentinel, Landsat, HLS, SAFE, Copernicus GLO-30 Public/GLO-90 and NAIP product paths; never a signed or arbitrary URL. Protected products require an existing native account connection."},
         "mediaType":{"type":"string","pattern":"^(image/(tiff|geotiff|jpeg)|application/zip)(;.*)?$"},"title":{"type":["string","null"],"maxLength":240}},
         "required":["itemId","assetKey","href","mediaType"],"additionalProperties":false}},"required":["request"],"additionalProperties":false});
+    let mut job_page = page.clone();
+    job_page["properties"]["projectId"] = id["properties"]["id"].clone();
     let mut specs = vec![
         ("geod_health", "Read local runtime health, limits, and session ownership. Local paths can be included in returned metadata.", empty),
-        ("geod_jobs_list", "List persisted local jobs, newest first, with offset/limit pagination. Read geod_job_status to establish settlement.", page.clone()),
+        ("geod_jobs_list", "List persisted local jobs, newest first, with offset/limit pagination. Pass projectId to filter by exact native source pins and project processing lineage before paging; that total excludes unrelated jobs and each returned task has fresh settled status at checkedAt. Unknown projects are errors, never a global fallback. Without projectId this is the global list; read geod_job_status for settlement. Task success is not a new file-byte verification.", job_page),
         ("geod_job_status", "Read one local job. Output is ready only when status=succeeded AND settled=true; cancellation may require more polling.", id.clone()),
         ("geod_raster_inspect", "Verify a supported managed raster: SHA-256, geometry and product-specific metadata for RGB, SCL, Landsat/HLS/MODIS reflectance, MOD13Q1/MYD13Q1 v061 NDVI/EVI and ten ancillary science layers, MODIS and Landsat unsigned quality flags, radar, NAIP RGB+NIR or elevation. MOD13 science reports typed DN, units, fill, calendar year for observation day and preview-sampled counts marked countsFullResolution=false. MOD13 quality-screened index outputs additionally report same-observation NDVI/EVI selection digests and countsFullResolution=true in vegetation.qualitySelection. Other quality files include original full-resolution counts and official bit definitions; Landsat QA_RADSAT zero is a valid no-saturation flag; PNG is omitted. Uses the shared bounded raster worker.", id.clone()),
         ("geod_raster_pixel", "Read original full-resolution samples at a coordinate in the inspected source CRS. Returns zero-based column/row, pixel center and verified SHA-256, with SCL class, RGB channels, NAIP nearInfrared, reflectance DN/calibration, vegetation Int16 DN/indexValue with scale 0.0001 and NoData -3000, MOD13 ancillary science with signed Int8 reliability, unsigned VI quality flags, observation date or converted reflectance/degree values, raw radar/elevation or exact unsigned MODIS/Landsat QA with decoded bit fields. No additional resampling or masking during reads; previously quality-screened outputs retain their committed DN and NoData.", point),
@@ -573,6 +655,8 @@ fn tools(allow_write: bool) -> Vec<Tool> {
     }
     specs.extend(wcs::tools(allow_write, &id));
     specs.extend(rgb::tools(allow_write, &id));
+    specs.extend(stac::tools(allow_write, &id));
+    specs.extend(vector::tools(&id));
     specs
         .into_iter()
         .map(|(name, description, schema)| {
@@ -582,7 +666,10 @@ fn tools(allow_write: bool) -> Vec<Tool> {
                     .read_only(read_only)
                     .destructive(matches!(
                         name,
-                        "geod_job_cancel" | "geod_job_retry" | "geod_wcs_forget"
+                        "geod_job_cancel"
+                            | "geod_job_retry"
+                            | "geod_wcs_forget"
+                            | "geod_stac_forget"
                     ))
                     .idempotent(read_only || name == "geod_job_cancel")
                     .open_world(matches!(
@@ -592,10 +679,230 @@ fn tools(allow_write: bool) -> Vec<Tool> {
                             | "geod_wcs_connect"
                             | "geod_wcs_describe"
                             | "geod_wcs_download"
+                            | "geod_stac_connect"
+                            | "geod_stac_search"
+                            | "geod_stac_download"
                     )),
             )
         })
         .collect()
+}
+
+// The desktop Agent attaches to the already-open JobManager. It must never
+// reopen that store or inherit the MCP process's write opt-in/lifecycle.
+pub fn agent_read_definitions() -> Vec<Value> {
+    tools(false)
+        .into_iter()
+        .filter(|tool| AGENT_READ_TOOLS.contains(&tool.name.as_ref()))
+        .map(|tool| {
+            let mut definition = json!({"name":tool.name,"description":tool.description,"inputSchema":tool.input_schema});
+            if matches!(tool.name.as_ref(), "geod_jobs_list" | "geod_projects_list" | "geod_recipes_list" | "geod_stac_connections" | "geod_stac_catalog" | "geod_stac_assets" | "geod_feature_services" | "geod_feature_collections" | "geod_vectors_list" | "geod_vector_features" | "geod_vector_node" | "geod_wcs_connections" | "geod_wcs_coverages") {
+                definition["inputSchema"]["properties"]["limit"]["maximum"] = json!(20);
+                definition["inputSchema"]["properties"]["limit"]["default"] = json!(5);
+            }
+            if tool.name == "geod_health" { definition["description"] = json!("Read the attached desktop runtime health and Agent limits. Local paths and secrets are excluded."); }
+            if tool.name == "geod_stac_snapshot" { definition["description"] = json!("Read a pinned native Item's complete raw properties, grid/geometry, time semantics, warnings and collection license declaration. The asset array is explicitly omitted with assetCount/eligibleAssetCount and assetsTool; follow geod_stac_assets nextOffset for every original declaration. No external requests, transfer URLs or inferred science/entitlement."); }
+            definition
+        })
+        .collect()
+}
+
+/// Metadata search is intentionally separate from the Agent's read-only
+/// adapter. It archives native receipts but never connects, saves projects or
+/// queues transfers, and does not inherit the MCP write-enabled router.
+pub(crate) fn agent_stac_search_definition() -> Value {
+    let (name, description, mut schema) = stac::tools(
+        true,
+        &json!({"properties":{"id":{"type":"string","format":"uuid"}}}),
+    )
+    .into_iter()
+    .find(|(name, _, _)| *name == "geod_stac_search")
+    .expect("STAC search schema");
+    schema["properties"]["request"]["properties"]["limit"]["maximum"] = json!(20);
+    schema["properties"]["request"]["properties"]["limit"]["default"] = json!(5);
+    json!({"name":name,"description":format!("{description} Agent: use only connections already saved in the app; read geod_stac_connections/catalog first. Use archived snapshotId/assetKey selections with geod_stac_project_plan, native confirmation, then geod_stac_download_plan. Search alone creates no project or download."),"inputSchema":schema})
+}
+pub(crate) async fn agent_stac_search(
+    manager: JobManager,
+    mut value: Value,
+) -> crate::Result<Value> {
+    let request = value
+        .get_mut("request")
+        .and_then(Value::as_object_mut)
+        .ok_or("Invalid Agent STAC search request")?;
+    request.entry("limit").or_insert(json!(5));
+    if request["limit"].as_u64().is_none_or(|v| v == 0 || v > 20) {
+        return Err("Agent search limit must be 1..20".into());
+    }
+    let operation = stac::parse("geod_stac_search", value)
+        .map_err(|_| "Invalid Agent STAC search arguments")?;
+    let mut result = stac::execute(&Backend::Direct(manager), operation).await?;
+    sanitize_agent_value(&mut result);
+    if result.to_string().len() > 32768 {
+        return Err("Agent STAC result exceeds 32 KiB; use a smaller page".into());
+    }
+    Ok(result)
+}
+
+/// Narrow metadata-only WCS adapter; model access never inherits MCP write mode.
+pub(crate) fn agent_wcs_metadata_definitions() -> Vec<Value> {
+    tools(true).into_iter().filter(|tool| matches!(tool.name.as_ref(),"geod_wcs_describe"|"geod_wcs_prepare"))
+        .map(|tool| json!({"name":tool.name,"description":format!("{} Agent: saved user connections only. This archives metadata / grid request definitions, not files, projects or jobs. Follow with geod_wcs_project_plan, native confirmation, then geod_wcs_download_plan and a separate native confirmation. WCS returns a generated subset, not an original scene.",tool.description.unwrap_or_default()),"inputSchema":tool.input_schema})).collect()
+}
+
+pub(crate) async fn agent_wcs_metadata(
+    manager: JobManager,
+    name: &str,
+    args: Value,
+) -> crate::Result<Value> {
+    if !matches!(name, "geod_wcs_describe" | "geod_wcs_prepare") {
+        return Err("Unknown Agent coverage metadata tool".into());
+    }
+    let operation = wcs::parse(name, args).map_err(|_| "Invalid Agent WCS metadata arguments")?;
+    let mut result = Box::pin(wcs::execute(&Backend::Direct(manager), operation)).await?;
+    sanitize_agent_value(&mut result);
+    if result.to_string().len() > 32768 {
+        return Err("Agent coverage metadata exceeds 32 KiB".into());
+    }
+    Ok(result)
+}
+
+/// Keep Agent preflight input identical to the native scientific RGB contract.
+pub(crate) fn agent_rgb_plan_schema() -> Value {
+    let tool = tools(false)
+        .into_iter()
+        .find(|t| t.name == "geod_rgb_plan")
+        .unwrap();
+    json!(tool.input_schema)
+}
+
+const AGENT_READ_TOOLS: &[&str] = &[
+    "geod_wcs_connections",
+    "geod_wcs_coverages",
+    "geod_wcs_description",
+    "geod_wcs_plan",
+    "geod_wcs_inspect",
+    "geod_wcs_pixel",
+    "geod_feature_services",
+    "geod_feature_collections",
+    "geod_vectors_list",
+    "geod_vector_inspect",
+    "geod_vector_features",
+    "geod_vector_node",
+    "geod_stac_connections",
+    "geod_stac_catalog",
+    "geod_stac_snapshot",
+    "geod_stac_assets",
+    "geod_stac_inspect",
+    "geod_stac_pixel",
+    "geod_health",
+    "geod_jobs_list",
+    "geod_job_status",
+    "geod_projects_list",
+    "geod_project_get",
+    "geod_raster_inspect",
+    "geod_raster_pixel",
+    "geod_recipes_list",
+    "geod_recipe_plan",
+    "geod_rgb_inspect",
+    "geod_rgb_pixel",
+];
+
+pub async fn agent_read_call(
+    manager: JobManager,
+    name: &str,
+    mut value: Value,
+) -> crate::Result<Value> {
+    if !AGENT_READ_TOOLS.contains(&name) {
+        return Err("This Agent stage allows only registered read-only GeoD tools".into());
+    }
+    if matches!(
+        name,
+        "geod_jobs_list"
+            | "geod_projects_list"
+            | "geod_recipes_list"
+            | "geod_stac_connections"
+            | "geod_stac_catalog"
+            | "geod_stac_assets"
+            | "geod_feature_services"
+            | "geod_feature_collections"
+            | "geod_vectors_list"
+            | "geod_vector_features"
+            | "geod_vector_node"
+            | "geod_wcs_connections"
+            | "geod_wcs_coverages"
+    ) {
+        let args = value
+            .as_object_mut()
+            .ok_or("Tool arguments must be an object")?;
+        args.entry("limit").or_insert(json!(5));
+        if args["limit"]
+            .as_u64()
+            .is_none_or(|limit| limit == 0 || limit > 20)
+        {
+            return Err("Agent list limit must be 1..20".into());
+        }
+    }
+    let operation =
+        parse_operation(name, value, false).map_err(|_| "Invalid GeoD tool arguments")?;
+    let mut result = Backend::Direct(manager).execute(operation).await?;
+    if name == "geod_stac_snapshot" {
+        stac::agent_snapshot(&mut result)?;
+    }
+    if name == "geod_health" {
+        result["adapter"] = json!({"transport":"desktop-agent","mode":"read-only",
+            "ownership":"The desktop owns jobs. Stopping an Agent response does not cancel downloads.",
+            "maxListLimit":20,"maxResultBytes":32768});
+    }
+    if name.starts_with("geod_vector") || name.starts_with("geod_feature_") {
+        vector::sanitize_agent_result(name, &mut result)?;
+    } else {
+        sanitize_agent_value(&mut result);
+    }
+    if result.to_string().len() > 32768 {
+        return Err("Agent result exceeds 32 KiB; request fewer records or one job".into());
+    }
+    Ok(result)
+}
+
+pub(crate) fn sanitize_agent_value(value: &mut Value) {
+    match value {
+        Value::Object(object) => {
+            object.retain(|key, _| {
+                let key = key.to_ascii_lowercase();
+                !key.contains("path")
+                    && !key.contains("token")
+                    && !key.contains("secret")
+                    && !key.contains("password")
+                    && !key.contains("credential")
+                    && !key.contains("dataurl")
+                    && !key.contains("header")
+                    && !matches!(
+                        key.as_str(),
+                        "href" | "url" | "query" | "root" | "error" | "authorization" | "footprint"
+                    )
+            });
+            for value in object.values_mut() {
+                sanitize_agent_value(value);
+            }
+        }
+        Value::Array(values) => values.iter_mut().for_each(sanitize_agent_value),
+        Value::String(text) if text.starts_with("https://") || text.starts_with("http://") => {
+            *text = "[source URL omitted]".into();
+        }
+        Value::String(text)
+            if text.starts_with('/')
+                || text.starts_with("\\\\")
+                || (text.as_bytes().get(1) == Some(&b':')
+                    && text
+                        .as_bytes()
+                        .get(2)
+                        .is_some_and(|byte| matches!(byte, b'/' | b'\\'))) =>
+        {
+            *text = "[local path omitted]".into();
+        }
+        _ => {}
+    }
 }
 
 #[derive(Default)]
@@ -842,5 +1149,7 @@ pub async fn serve(options: Options) -> crate::Result<()> {
     result.and(cleanup)
 }
 
+#[cfg(test)]
+mod project_jobs_tests;
 #[cfg(test)]
 mod tests;

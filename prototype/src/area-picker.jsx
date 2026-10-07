@@ -36,7 +36,7 @@ function styles(target) {
 
 export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
   const { t, number, locale } = useI18n();
-  const [fields, setFields] = useState(() => initialBbox.map(String));
+  const [fields, setFields] = useState(() => initialBbox?.map(String) || ['', '', '', '']);
   const [drawing, setDrawing] = useState(false);
   const [mapState, setMapState] = useState('loading');
   const [drawError, setDrawError] = useState(false);
@@ -58,6 +58,7 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
   const focused = useRef(null);
   const provinceSourceRef = useRef(null);
   const pendingProvinceRef = useRef(null);
+  const focusedProvinceRef = useRef(null);
   const provinceCodesRef = useRef(new Set());
   const focusPlaceRef = useRef(null);
   const mapStyles = useRef(null);
@@ -68,7 +69,10 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
   const places = useMemo(() => [...countries, ...provinces], [countries, provinces]);
   const placeResults = useMemo(() => searchAdministrativePlaces(places, placeQuery), [places, placeQuery]);
   const countryNames = useMemo(() => new Map(countries.map(place => [place.code, locale === 'zh-CN' && place.nameZh ? place.nameZh : place.nameEn])), [countries, locale]);
-  const focusedBoundsApplied = focusedPlace && parsed.bounds?.every((value, index) => value === roundCoordinate(focusedPlace.bounds[index]));
+  const focusedBoundsApplied = focusedPlace && parsed.bounds?.every((value, index) => Math.abs(value - focusedPlace.bounds[index]) <= 0.00001);
+  const focusedPolygonApplied = Boolean(focusedPlace && selectedPolygon?.place.code === focusedPlace.code);
+  const waitingForPolygon = Boolean(focusedPlace && !focusedPlace.feature && !focusedPlace.clipLimitation
+    && pendingProvinceRef.current === focusedPlace.code && countryGeometryState !== 'error');
   const nameOf = place => locale === 'zh-CN' && place.nameZh ? place.nameZh : place.nameEn;
   const subtitleOf = place => {
     const parent = countryNames.get(place.displayParentCode || place.parentCode);
@@ -80,17 +84,34 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
     complex: 'This boundary exceeds the local polygon vertex limit. Use its bounding rectangle for catalogue search; local polygon clipping is unavailable.',
   };
 
-  const focusPlace = place => {
+  const selectPlace = (place, polygon = true) => {
+    if (!place) return;
+    setSelectedPolygon(null);
+    setDrawError(false);
+    setDrawing(false);
+    if (place.clipLimitation === 'date-line') { setFields(['', '', '', '']); return; }
+    try {
+      const bounds = validateBounds(place.bounds);
+      setFields(bounds.map(String));
+      if (polygon && place.feature && !place.clipLimitation) {
+        const geometry = new GeoJSON().writeGeometryObject(place.feature.getGeometry(), { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
+        setSelectedPolygon({ geometry, place: administrativeSelection(place, locale) });
+      }
+    } catch { setFields(['', '', '', '']); setDrawError(true); }
+  };
+  const focusPlace = (place, { select = true, clearQuery = true, fit = true } = {}) => {
     if (!place) return;
     if (place.kind === 'province' && !place.feature) {
       const loaded = provinceSourceRef.current?.getFeatures().find(feature => feature.get('adm1_code') === place.code);
-      if (loaded) { focusPlace(administrativePlace(loaded, 'province', 'Natural Earth 1:10m')); return; }
+      if (loaded) { focusPlace(administrativePlace(loaded, 'province', 'Natural Earth 1:10m'), { select, clearQuery, fit }); return; }
     }
     focused.current?.clear();
     if (place.feature) focused.current?.addFeature(new Feature(place.feature.getGeometry().clone()));
     setFocusedPlace(place);
-    setPlaceQuery('');
-    map.current?.getView().fit(place.bounds, { padding: [45, 45, 45, 45], maxZoom: place.kind === 'country' ? 6 : 8, duration: 0 });
+    focusedProvinceRef.current = place.kind === 'province' ? place.code : null;
+    if (clearQuery) setPlaceQuery('');
+    if (select) selectPlace(place);
+    if (fit) map.current?.getView().fit(place.bounds, { padding: [45, 45, 45, 45], maxZoom: place.kind === 'country' ? 6 : 8, duration: 0 });
     if (place.kind === 'country') {
       pendingProvinceRef.current = null;
       if (provinceCodesRef.current.has(place.code)) setActiveCountry(place.code);
@@ -140,6 +161,7 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
     dragBox.setActive(false);
     instance.addInteraction(dragBox);
     dragBox.on('boxend', () => {
+      pendingProvinceRef.current = null;
       const extent = dragBox.getGeometry().getExtent().map(roundCoordinate);
       try { setFields(validateBounds(extent).map(String)); setSelectedPolygon(null); setDrawing(false); setDrawError(false); }
       catch { setDrawError(true); }
@@ -161,7 +183,7 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
     const resize = new ResizeObserver(() => {
       instance.updateSize();
       if (!fitted && instance.getSize()?.every(size => size > 0)) {
-        instance.getView().fit(initialBbox, { padding: [56, 56, 56, 56], maxZoom: 8, duration: 0 });
+        instance.getView().fit(initialBbox || [-180, -90, 180, 90], { padding: [56, 56, 56, 56], maxZoom: 8, duration: 0 });
         fitted = true;
       }
     });
@@ -188,16 +210,19 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
       if (!response.ok) throw new Error(`Administrative boundary HTTP ${response.status}`);
       return response.json();
     }).then(data => {
+      if (controller.signal.aborted) return;
       if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) throw new Error('Invalid country boundary data');
       const features = new GeoJSON().readFeatures(data, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
       const source = provinceSourceRef.current;
       if (!source) return;
       source.clear(); source.addFeatures(features);
       setCountryGeometryState('ready');
-      const pending = pendingProvinceRef.current;
-      if (pending) {
-        const feature = features.find(item => item.get('adm1_code') === pending);
-        if (feature) focusPlaceRef.current?.(administrativePlace(feature, 'province', 'Natural Earth 1:10m'));
+      const feature = features.find(item => item.get('adm1_code') === focusedProvinceRef.current);
+      if (feature) {
+        // Resolve the visible place, but do not replace a later manual edit or
+        // drawing with geometry requested by the previous selection.
+        const apply = pendingProvinceRef.current === focusedProvinceRef.current;
+        focusPlaceRef.current?.(administrativePlace(feature, 'province', 'Natural Earth 1:10m'), { select: apply, clearQuery: false, fit: apply });
       }
     }).catch(error => {
       if (error.name !== 'AbortError') { setCountryGeometryState('error'); setCountryGeometryError(error.message); }
@@ -218,23 +243,16 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
     map.current.updateSize();
     map.current.getView().fit(bounds, { padding: [56, 56, 56, 56], maxZoom: 8, duration: 0 });
   };
-  const changeField = (index, value) => { setDrawError(false); setSelectedPolygon(null); setFields(current => current.map((item, i) => i === index ? value : item)); };
+  const changeField = (index, value) => { pendingProvinceRef.current = null; setDrawError(false); setSelectedPolygon(null); setFields(current => current.map((item, i) => i === index ? value : item)); };
   const selectedArea = () => ({ bounds: parsed.bounds, geometry: selectedPolygon?.geometry || null, place: selectedPolygon?.place || null });
   const exportArea = () => onExport(selectedArea());
   const useFocusedBounds = () => {
-    if (!focusedPlace) return;
-    try { setFields(validateBounds(focusedPlace.bounds.map(roundCoordinate)).map(String)); setSelectedPolygon(null); setDrawError(false); }
-    catch { setDrawError(true); }
+    pendingProvinceRef.current = null;
+    selectPlace(focusedPlace, false);
   };
   const useFocusedPolygon = () => {
-    if (!focusedPlace) return;
-    try {
-      const geometry = new GeoJSON().writeGeometryObject(focusedPlace.feature.getGeometry(), { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' });
-      const bounds = validateBounds(focusedPlace.bounds);
-      setFields(bounds.map(String));
-      setSelectedPolygon({ geometry, place: administrativeSelection(focusedPlace, locale) });
-      setDrawError(false);
-    } catch { setDrawError(true); }
+    pendingProvinceRef.current = null;
+    selectPlace(focusedPlace);
   };
 
   return <div className="aoi-picker">
@@ -246,19 +264,21 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
           {placeQuery && <div className="aoi-place-results">{placeResults.map(place => <Button key={`${place.kind}-${place.code}`} size="row" onClick={() => focusPlace(place)}><span><strong>{nameOf(place)}</strong><small>{subtitleOf(place)}</small></span></Button>)}{!placeResults.length && <p role="status">{countryState === 'loading' || provinceState === 'loading' ? t('Loading administrative areas…') : t('No matching administrative area.')}</p>}</div>}
           <p>{t('Search countries, regions and 4,596 subdivisions. Outlines use 1:50m data; detailed boundaries load by source region at 1:10m. Boundaries are map references, not legal definitions.')}</p>
         </div>
-        <div className="aoi-map-toolbar"><Button selected={drawing} onClick={() => setDrawing(value => !value)}><SquareDashed size={16}/>{t(drawing ? 'Cancel drawing' : 'Draw rectangle')}</Button><div><Button size="icon" aria-label={t('Zoom in')} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() + 1)}><Plus size={16}/></Button><Button size="icon" aria-label={t('Zoom out')} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() - 1)}><Minus size={16}/></Button><Button size="icon" aria-label={t('Fit selected area')} disabled={!parsed.bounds} onClick={() => fit(parsed.bounds)}><Maximize size={16}/></Button><Button size="icon" aria-label={t('World view')} onClick={() => fit([-180, -90, 180, 90])}><Globe2 size={16}/></Button></div></div>
+        <div className="aoi-map-toolbar"><Button selected={drawing} onClick={() => { pendingProvinceRef.current = null; setDrawing(value => !value); }}><SquareDashed size={16}/>{t(drawing ? 'Cancel drawing' : 'Draw rectangle')}</Button><div><Button size="icon" aria-label={t('Zoom in')} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() + 1)}><Plus size={16}/></Button><Button size="icon" aria-label={t('Zoom out')} onClick={() => map.current?.getView().setZoom(map.current.getView().getZoom() - 1)}><Minus size={16}/></Button><Button size="icon" aria-label={t('Fit selected area')} disabled={!parsed.bounds} onClick={() => fit(parsed.bounds)}><Maximize size={16}/></Button><Button size="icon" aria-label={t('World view')} onClick={() => fit([-180, -90, 180, 90])}><Globe2 size={16}/></Button></div></div>
         <div className="aoi-map-wrap"><div ref={target} className={'aoi-map' + (drawing ? ' is-drawing' : '')} tabIndex={0} role="application" aria-label={t('WGS 84 reference map. Pan and zoom, click a region to load its subdivisions, or draw a rectangle.')} />{drawing && <p className="aoi-draw-hint" role="status">{t('Drag from one corner to the opposite corner to select an area.')}</p>}</div>
         <div className="aoi-map-caption"><span>{t('Natural Earth · regional outlines 1:50m · subdivisions 1:10m')}</span>{mapState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading reference map…')}</span>}{mapState === 'error' && <span role="alert">{t('Reference map unavailable; enter coordinates instead.')}</span>}{countryState === 'error' && <span role="alert">{t('Regional boundaries unavailable; draw or enter coordinates instead.')}</span>}{provinceState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading global subdivision index…')}</span>}{provinceState === 'error' && <span role="alert">{t('Global subdivision index unavailable; regional selection still works.')}</span>}{countryGeometryState === 'loading' && <span role="status"><Spinner size={14}/>{t('Loading subdivisions for {country}…', { country: countryNames.get(activeCountry) || activeCountry })}</span>}{countryGeometryState === 'error' && <span role="alert">{t('Subdivision geometry unavailable: {error}', { error: countryGeometryError })}</span>}{drawError && <span role="alert">{t('Draw a larger rectangle within WGS 84 limits.')}</span>}</div>
       </div>
       <div className="aoi-form">
-        {focusedPlace && <div className="aoi-place-focus"><Badge tone="blue">{t(focusedPlace.levelLabel)}</Badge><strong>{nameOf(focusedPlace)}</strong>{focusedPlace.displayParentCode && <small>{subtitleOf(focusedPlace)}</small>}<p>{t(!focusedPlace.feature ? 'Loading this region boundary; its bounding rectangle is available now.' : selectedPolygon?.place.code === focusedPlace.code ? 'The administrative polygon is selected. Search uses its bounding box; local SCL clipping uses the polygon.' : focusedBoundsApplied ? 'The region bounding rectangle is selected for search.' : 'The region is highlighted. Choose its polygon or bounding rectangle for the workspace.')}</p>{focusedPlace.clipLimitation && <p role="alert">{t(limitationMessages[focusedPlace.clipLimitation])}</p>}<div className="row-actions"><Button size="sm" disabled={!focusedPlace.feature || Boolean(focusedPlace.clipLimitation)} onClick={useFocusedPolygon}>{t('Use region polygon')}</Button><Button size="sm" disabled={focusedPlace.clipLimitation === 'date-line'} onClick={useFocusedBounds}>{t('Use bounding rectangle')}</Button></div></div>}
+        {focusedPlace && <div className="aoi-place-focus"><Badge tone="blue">{t(focusedPlace.levelLabel)}</Badge><strong>{nameOf(focusedPlace)}</strong>{focusedPlace.displayParentCode && <small>{subtitleOf(focusedPlace)}</small>}<p>{t(focusedPolygonApplied ? 'The administrative polygon is selected. Search uses its bounding box; local SCL clipping uses the polygon.' : focusedBoundsApplied ? !focusedPlace.feature ? 'The region bounding rectangle is selected. Loading its polygon boundary…' : 'The region bounding rectangle is selected for search.' : !focusedPlace.feature ? 'Loading this region boundary; its bounding rectangle is available now.' : 'The region is highlighted. Choose its polygon or bounding rectangle for the workspace.')}</p>{focusedPlace.clipLimitation && <p role="alert">{t(limitationMessages[focusedPlace.clipLimitation])}</p>}<div className="row-actions"><Button size="sm" selected={focusedPolygonApplied} disabled={!focusedPlace.feature || Boolean(focusedPlace.clipLimitation)} onClick={useFocusedPolygon}>{t('Use region polygon')}</Button><Button size="sm" selected={Boolean(focusedBoundsApplied && !focusedPolygonApplied)} disabled={focusedPlace.clipLimitation === 'date-line'} onClick={useFocusedBounds}>{t('Use bounding rectangle')}</Button></div></div>}
         <h3>{t('Selected bounds')}</h3>
         <p>{t('Longitude and latitude in degrees. West must be less than east; south must be less than north.')}</p>
         <div className="aoi-fields">{directions.map((direction, index) => <label key={direction}>{t(direction)}<Input type="number" step="any" min={index % 2 === 0 ? -180 : -90} max={index % 2 === 0 ? 180 : 90} value={fields[index]} onChange={event => changeField(index, event.target.value)}/></label>)}</div>
-        {parsed.error && <p className="aoi-error" role="alert">{t(parsed.error)}</p>}
+        {parsed.error && (fields.every(value => !value.trim())
+          ? <p className="muted">{t('Draw on the map, choose a region, or enter coordinates to begin.')}</p>
+          : <p className="aoi-error" role="alert">{t(parsed.error)}</p>)}
         {parsed.bounds && <output className="aoi-summary mono">[{parsed.bounds.map(value => number(value, { maximumFractionDigits: 5 })).join(', ')}]</output>}
       </div>
     </div>
-    <div className="aoi-actions"><Button onClick={onClose}>{t('Cancel')}</Button><Button icon={Download} disabled={!parsed.bounds} onClick={exportArea}>{t('Download area GeoJSON')}</Button><Button primary icon={Search} disabled={!parsed.bounds} onClick={() => onApply(selectedArea())}>{t('Search this area')}</Button></div>
+    <div className="aoi-actions"><Button onClick={onClose}>{t('Cancel')}</Button><Button icon={Download} disabled={!parsed.bounds || waitingForPolygon} onClick={exportArea}>{t('Download area GeoJSON')}</Button><Button primary icon={Search} disabled={!parsed.bounds || waitingForPolygon} onClick={() => onApply(selectedArea())}>{t('Search this area')}</Button></div>
   </div>;
 }

@@ -391,6 +391,7 @@ async fn landsat_coupled_preserves_unsigned_triplets_and_point_centres_after_par
             .iter()
             .enumerate()
             .map(|(i, jobs)| ProjectScene {
+                footprint: None,
                 item_id: jobs[0].item_id.clone(),
                 date: if i == 0 {
                     "2025-06-12T00:00:00Z"

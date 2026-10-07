@@ -1,0 +1,83 @@
+{
+  "schema": "geod-agent-native-protocols-verification/v1",
+  "date": "2026-10-05",
+  "status": "software-development-acceptance-passed-live-native-routes-unavailable",
+  "architecture": {
+    "orchestrator": "Codex 0.159.2",
+    "sdk": "AI SDK 7.0.127",
+    "onlyCodexOwnsLoop": true,
+    "sdkToolExecuteCallbacks": false
+  },
+  "adapters": {
+    "openai-compatible": "3.0.62",
+    "anthropic-messages": "4.0.71",
+    "google-generative-ai": "4.0.87"
+  },
+  "controlledNativeAcceptance": {
+    "receipt": ".verification/agent-native-protocols-1791213617394/acceptance.json",
+    "providerRequests": 8,
+    "nativeReadCalls": 4,
+    "turns": 4,
+    "nativeToolDeclarationsPerRoute": 30,
+    "businessData": "Fresh native CLI-owned store, actual project total zero; no mocked projects or downloads.",
+    "upstream": "Controlled SSE service, not real cloud generation.",
+    "reasoning": "Anthropic signatures and opaque thinking; Google tool thought signature; no bypass sentinel.",
+    "restart": "Both protocols resumed the same Codex thread after restart."
+  },
+  "liveNativeChecks": {
+    "receipt": ".verification/native-provider-model-launch-1791212935717159700/launch.json",
+    "status": "not-passed",
+    "nativeReadCalls": 0,
+    "cases": [
+      {
+        "model": "claude-haiku-4-5",
+        "protocol": "anthropic-messages",
+        "status": 503,
+        "diagnosis": "route-unavailable"
+      },
+      {
+        "model": "gemini-3.7-flash",
+        "protocol": "google-generative-ai",
+        "status": 500,
+        "diagnosis": "provider-rejected"
+      }
+    ],
+    "noProtocolFallback": true,
+    "upstreamVendorVerified": false,
+    "literalKeyScanPassed": true
+  },
+  "checks": {
+    "agent": 34,
+    "agentUi": 34,
+    "frontendNode": 302,
+    "desktopRustPassed": 15,
+    "desktopRustIgnored": 12,
+    "rendererCases": 14,
+    "rendererReceipt": ".verification/agent-ui-1791213239433/verification.json",
+    "repositoryCheck": "passed",
+    "desktopClippy": "passed",
+    "runtimeNoticeInventoryPackages": 11,
+    "ownedStdioStartup": "passed",
+    "debugBuild": "custom-protocol"
+  },
+  "desktop": {
+    "file": ".verification/renderer-agent-native-protocols-accepted-20261005-b/desktop-9e0f796365902c1a.exe",
+    "bytes": 88990208,
+    "sha256": "9e0f796365902c1a139c7fbad7b39a9d2684c0263e2ec580077b85f9af678846"
+  },
+  "identityClosure": {
+    "sourceInputs": 701,
+    "rendererFiles": 663,
+    "runtimeFiles": 23
+  },
+  "limits": [
+    "Current tested native Claude/Gemini gateway routes are not usable.",
+    "User-saved connections remain not-verified.",
+    "OpenAI encrypted reasoning, images, attachments and context compaction remain unsupported.",
+    "Native window and installed distribution acceptance remain separate."
+  ],
+  "usedUserDesktop": false,
+  "installedPackageBuilt": false,
+  "published": false,
+  "failedHarnessPreserved": ".verification/agent-native-protocols-1791212782171/acceptance.json"
+}
