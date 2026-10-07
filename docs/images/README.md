@@ -1,5 +1,21 @@
 # README visual assets
 
+## agent-data-overview.png
+
+Generated 2026-10-07 with the built-in imagegen tool for the README feature overview. The exact [generation prompt](agent-data-overview.prompt.txt) is preserved. It highlights the source directory and the goal-driven Agent workflow. Map thumbnails and outlines are synthetic decorative illustrations, not screenshots, measured coverage, data-provider imagery or proof of a completed task. No official mission logos were supplied or requested.
+
+Counts were read from the actual development source registry: 85 entries in 16 groups, with 31 available, 6 requiring authorization and 48 planned. These totals include fixed products, connection protocols and local file formats; they do not mean 85 implemented download adapters. Eight representative cards show available and planned examples. Provider coverage, credentials and processing acceptance still follow the product-specific records.
+
+The source directory and Codex-driven workflow descriptions refer to development source, not the older published installer. The illustration was visually reviewed for labels, counts and status separation. Its decorative map geography has no administrative or analytical meaning.
+
+## data-source-board-en.png / data-source-board-zh-CN.png
+
+Captured 2026-10-07 from the actual production SourceBoard React component in local Edge, using the actual 85-entry source registry and shared UI styles. The thematic category filter was selected through the component's real selector. Each image shows all 21 matching entries across 8 product groups, preserving each card, access label and pending status; no card was fabricated, renamed, reordered or removed for the capture.
+
+English image: 1280 × 1988; Chinese image: 1280 × 1786. Locally loaded images and fonts were ready, no cards were clipped and neither document overflowed horizontally. External network requests were blocked, no source card was activated, and no model, catalog, download, processing job or native desktop window was exercised. The isolated component capture is a source-directory illustration, not native end-to-end acceptance.
+
+Generation script and raw capture diagnostics are ignored development output at `.verification/capture-readme-source-board.mjs` and `.verification/readme-source-board`. The checked-in [feature-visual record](../../prototype/qa/readme-features-verification.json) records file hashes and bounded evidence. Existing brand/font/mission-mark notices continue to apply.
+
 ## readme-cover.svg
 
 Original vector brand cover by Gao Pengbin's project, created 2026-10-03 for this README. Geographic grids and layered outlines are decorative illustrations, not measurements or product screenshots. Included under the first-party project's GPL-3.0-only terms.

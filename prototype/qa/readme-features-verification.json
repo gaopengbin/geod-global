@@ -1,0 +1,477 @@
+{
+  "schema": "geod-readme-feature-visuals/v1",
+  "checkedAt": "2026-10-07T14:21:22.979Z",
+  "status": "passed",
+  "scope": "README feature positioning and visual assets only; existing product capabilities and integration statuses unchanged.",
+  "generatedIllustration": {
+    "file": "docs/images/agent-data-overview.png",
+    "tool": "built-in imagegen",
+    "prompt": "docs/images/agent-data-overview.prompt.txt",
+    "width": 1536,
+    "height": 1024,
+    "visualReview": true,
+    "syntheticMapThumbnails": true,
+    "actualProductScreenshot": false
+  },
+  "inventory": {
+    "total": 85,
+    "groups": [
+      {
+        "id": "optical",
+        "label": "Optical and aerial imagery",
+        "count": 18
+      },
+      {
+        "id": "radar",
+        "label": "SAR radar imagery",
+        "count": 2
+      },
+      {
+        "id": "elevation",
+        "label": "Elevation and bathymetry",
+        "count": 9
+      },
+      {
+        "id": "land-cover",
+        "label": "Land-cover products",
+        "count": 7
+      },
+      {
+        "id": "vegetation",
+        "label": "Vegetation and forest products",
+        "count": 2
+      },
+      {
+        "id": "hydrology",
+        "label": "Water and hydrology products",
+        "count": 3
+      },
+      {
+        "id": "population",
+        "label": "Population and settlement products",
+        "count": 2
+      },
+      {
+        "id": "soil",
+        "label": "Soil products",
+        "count": 1
+      },
+      {
+        "id": "climate",
+        "label": "Climate and precipitation products",
+        "count": 3
+      },
+      {
+        "id": "nightlights",
+        "label": "Nighttime light products",
+        "count": 1
+      },
+      {
+        "id": "vectors",
+        "label": "Vector datasets and services",
+        "count": 9
+      },
+      {
+        "id": "maps",
+        "label": "Map imagery and history",
+        "count": 7
+      },
+      {
+        "id": "tiles",
+        "label": "Offline map archives",
+        "count": 1
+      },
+      {
+        "id": "catalogs",
+        "label": "Raster catalogs and coverages",
+        "count": 8
+      },
+      {
+        "id": "local",
+        "label": "Local 2D files",
+        "count": 7
+      },
+      {
+        "id": "portals",
+        "label": "Public data portals",
+        "count": 5
+      }
+    ],
+    "status": {
+      "ready": 31,
+      "auth": 6,
+      "planned": 48
+    }
+  },
+  "actualSourceBoard": {
+    "status": "passed",
+    "scope": "Actual production SourceBoard React component with its actual registry; category filter selected through the shared UI. Isolated local capture, no provider requests, model calls, tasks, downloads or native window acceptance.",
+    "cases": [
+      {
+        "locale": "en",
+        "width": 1280,
+        "height": 1988,
+        "filter": "thematic",
+        "visibleEntries": 21,
+        "productGroups": 8,
+        "file": "docs/images/data-source-board-en.png",
+        "sha256": "eb8f663395f2446188894fcf87a63cc8abb9c8141b6d27809e77ecefad60e7e6",
+        "inventory": {
+          "total": 85,
+          "groups": [
+            {
+              "id": "optical",
+              "label": "Optical and aerial imagery",
+              "count": 18
+            },
+            {
+              "id": "radar",
+              "label": "SAR radar imagery",
+              "count": 2
+            },
+            {
+              "id": "elevation",
+              "label": "Elevation and bathymetry",
+              "count": 9
+            },
+            {
+              "id": "land-cover",
+              "label": "Land-cover products",
+              "count": 7
+            },
+            {
+              "id": "vegetation",
+              "label": "Vegetation and forest products",
+              "count": 2
+            },
+            {
+              "id": "hydrology",
+              "label": "Water and hydrology products",
+              "count": 3
+            },
+            {
+              "id": "population",
+              "label": "Population and settlement products",
+              "count": 2
+            },
+            {
+              "id": "soil",
+              "label": "Soil products",
+              "count": 1
+            },
+            {
+              "id": "climate",
+              "label": "Climate and precipitation products",
+              "count": 3
+            },
+            {
+              "id": "nightlights",
+              "label": "Nighttime light products",
+              "count": 1
+            },
+            {
+              "id": "vectors",
+              "label": "Vector datasets and services",
+              "count": 9
+            },
+            {
+              "id": "maps",
+              "label": "Map imagery and history",
+              "count": 7
+            },
+            {
+              "id": "tiles",
+              "label": "Offline map archives",
+              "count": 1
+            },
+            {
+              "id": "catalogs",
+              "label": "Raster catalogs and coverages",
+              "count": 8
+            },
+            {
+              "id": "local",
+              "label": "Local 2D files",
+              "count": 7
+            },
+            {
+              "id": "portals",
+              "label": "Public data portals",
+              "count": 5
+            }
+          ],
+          "status": {
+            "ready": 31,
+            "auth": 6,
+            "planned": 48
+          }
+        },
+        "horizontalOverflow": false,
+        "clippedCards": []
+      },
+      {
+        "locale": "zh-CN",
+        "width": 1280,
+        "height": 1786,
+        "filter": "thematic",
+        "visibleEntries": 21,
+        "productGroups": 8,
+        "file": "docs/images/data-source-board-zh-CN.png",
+        "sha256": "e8089fe472647132c29f45ff52d992d48e432730a7e241b1c7014b2cbd09d108",
+        "inventory": {
+          "total": 85,
+          "groups": [
+            {
+              "id": "optical",
+              "label": "Optical and aerial imagery",
+              "count": 18
+            },
+            {
+              "id": "radar",
+              "label": "SAR radar imagery",
+              "count": 2
+            },
+            {
+              "id": "elevation",
+              "label": "Elevation and bathymetry",
+              "count": 9
+            },
+            {
+              "id": "land-cover",
+              "label": "Land-cover products",
+              "count": 7
+            },
+            {
+              "id": "vegetation",
+              "label": "Vegetation and forest products",
+              "count": 2
+            },
+            {
+              "id": "hydrology",
+              "label": "Water and hydrology products",
+              "count": 3
+            },
+            {
+              "id": "population",
+              "label": "Population and settlement products",
+              "count": 2
+            },
+            {
+              "id": "soil",
+              "label": "Soil products",
+              "count": 1
+            },
+            {
+              "id": "climate",
+              "label": "Climate and precipitation products",
+              "count": 3
+            },
+            {
+              "id": "nightlights",
+              "label": "Nighttime light products",
+              "count": 1
+            },
+            {
+              "id": "vectors",
+              "label": "Vector datasets and services",
+              "count": 9
+            },
+            {
+              "id": "maps",
+              "label": "Map imagery and history",
+              "count": 7
+            },
+            {
+              "id": "tiles",
+              "label": "Offline map archives",
+              "count": 1
+            },
+            {
+              "id": "catalogs",
+              "label": "Raster catalogs and coverages",
+              "count": 8
+            },
+            {
+              "id": "local",
+              "label": "Local 2D files",
+              "count": 7
+            },
+            {
+              "id": "portals",
+              "label": "Public data portals",
+              "count": 5
+            }
+          ],
+          "status": {
+            "ready": 31,
+            "auth": 6,
+            "planned": 48
+          }
+        },
+        "horizontalOverflow": false,
+        "clippedCards": []
+      }
+    ],
+    "errors": []
+  },
+  "readmeRendering": {
+    "status": "passed",
+    "renderer": "GitHub Markdown API (GFM); local preview stylesheet, Mermaid remains a code block in this preview.",
+    "cases": [
+      {
+        "locale": "en",
+        "width": 1280,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1536,
+            "height": 1024
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "Agent mode: from a request to a local result",
+          "A growing 2D data directory",
+          "One native core, several interfaces",
+          "Quick start",
+          "Development status",
+          "Documentation & contributions",
+          "License"
+        ],
+        "expanded": {
+          "horizontalOverflow": false,
+          "boardImages": [
+            {
+              "width": 1280,
+              "height": 1988
+            }
+          ]
+        }
+      },
+      {
+        "locale": "en",
+        "width": 390,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1536,
+            "height": 1024
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "Agent mode: from a request to a local result",
+          "A growing 2D data directory",
+          "One native core, several interfaces",
+          "Quick start",
+          "Development status",
+          "Documentation & contributions",
+          "License"
+        ],
+        "expanded": {
+          "horizontalOverflow": false,
+          "boardImages": [
+            {
+              "width": 1280,
+              "height": 1988
+            }
+          ]
+        }
+      },
+      {
+        "locale": "zh-CN",
+        "width": 1280,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1536,
+            "height": 1024
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "Agent 模式：从一句需求，到本地成果",
+          "持续扩充的二维数据目录",
+          "同一个原生核心，多种使用方式",
+          "快速开始",
+          "开发进度",
+          "文档与参与",
+          "许可"
+        ],
+        "expanded": {
+          "horizontalOverflow": false,
+          "boardImages": [
+            {
+              "width": 1280,
+              "height": 1786
+            }
+          ]
+        }
+      },
+      {
+        "locale": "zh-CN",
+        "width": 390,
+        "horizontalOverflow": false,
+        "localImages": [
+          {
+            "width": 1536,
+            "height": 1024
+          },
+          {
+            "width": 1440,
+            "height": 960
+          }
+        ],
+        "headings": [
+          "Agent 模式：从一句需求，到本地成果",
+          "持续扩充的二维数据目录",
+          "同一个原生核心，多种使用方式",
+          "快速开始",
+          "开发进度",
+          "文档与参与",
+          "许可"
+        ],
+        "expanded": {
+          "horizontalOverflow": false,
+          "boardImages": [
+            {
+              "width": 1280,
+              "height": 1786
+            }
+          ]
+        }
+      }
+    ],
+    "visualReview": true,
+    "expandedSourceBoardImagesLoaded": true
+  },
+  "sha256": {
+    "README.md": "506827bb73ac6cb6b92dfde1959c53dc3f3903498f51dea6bbdb8f7f17840e00",
+    "README.zh-CN.md": "6c2c2d0c2ed5b0927d41c298c33edb295b0036f7d5c6d5c0ab61553bbae74b87",
+    "docs/images/README.md": "048bcd2445ea2c962370523c377ce51d5a1857ab5f3430a30b2fe4d69dd7eb3b",
+    "docs/images/agent-data-overview.png": "958f6bc5094c52a61b8eb60d66fb368b1faced2f504c9e5413d4e33285ec4b16",
+    "docs/images/agent-data-overview.prompt.txt": "e420d17299176a162b58cf2236413785b3cfc4a02ba018b577a86bc108640ffa",
+    "docs/images/data-source-board-en.png": "eb8f663395f2446188894fcf87a63cc8abb9c8141b6d27809e77ecefad60e7e6",
+    "docs/images/data-source-board-zh-CN.png": "e8089fe472647132c29f45ff52d992d48e432730a7e241b1c7014b2cbd09d108",
+    "prototype/src/source-directory.js": "9c73b444f0407ef33442aa117ec3b8c8436a3c163a72ef7f1d966e756791a70a",
+    "prototype/src/source-board.jsx": "f0ef05caf272e01daf23881256840a00e915c850cef596cd1f5724b5f82962f2",
+    "prototype/src/source-board.css": "3ed814437c0adec72356c1da66169bbd02c10d4b5d8b345cd8b6b80051bc65c1"
+  },
+  "newAdapters": 0,
+  "providerRequests": 0,
+  "productModelRequests": 0,
+  "imageGenerationRequests": 1,
+  "nativeDownloads": 0,
+  "nativeDesktopVisualAcceptance": false,
+  "installerCreated": false,
+  "releaseCreated": false
+}

@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="docs/images/readme-cover.svg" alt="GeoD Global — AI 驱动的二维空间数据工作区" width="100%">
+<img src="docs/images/agent-data-overview.png" alt="GeoD Global 两大亮点：丰富数据源与目标驱动 Agent。85 个目录入口、16 个分类，其中 31 项已接入、6 项需授权、48 项待接入。" width="100%">
 
-### 描述需求，审阅方案，拿到本地数据。
+### 丰富的数据源，目标驱动的 Agent。
 
-面向 Windows 的 AI 空间数据工作区：用自然语言查找、下载和准备 **二维地理数据**。
+在同一个 Windows 工作区里浏览丰富的 **二维数据目录**，用 **AI 对话**描述地点、时间和所需成果，让 Agent 准备可确认的下载与处理任务。
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-2563eb?style=flat-square)](src-tauri/README.md) [![开发中](https://img.shields.io/badge/status-in%20development-0f766e?style=flat-square)](docs/development-preview.md) [![协议](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE) [![检查](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
@@ -14,11 +14,17 @@
 
 </div>
 
+| **丰富的数据源聚合** | **围绕目标推进的 Agent** |
+| :--- | :--- |
+| **85 个入口、16 个分类**，涵盖卫星影像、地形、专题栅格、矢量、地图服务与本地文件。产品、供应平台、获取条件和接入状态分别展示。 | 自然语言描述需要的结果，**Codex 驱动的 Agent** 解析范围、检索支持的数据、通过选项卡询问决策，提交完整任务供确认，并跟踪本地任务直至文件校验。 |
+
+<sub>亮点总览为产品说明图，地图缩略图为装饰示意。目录包含产品、服务连接和本地格式。**31 项已接入 · 6 项需授权 · 48 项待接入。** [图片来源与生成提示词](docs/images/README.md#agent-data-overviewpng)。</sub>
+
 <img src="docs/images/agent-home-zh-CN.png" alt="当前开发版中文首页：自然语言任务输入框和按产品分类的紧凑数据源看板" width="100%">
 
 <sub>2026-10-07 当前开发界面，使用空的受控工作区状态拍摄，没有调用模型或开始下载。[截图来源](docs/images/README.md)。</sub>
 
-## 从一句需求，到本地成果
+## Agent 模式：从一句需求，到本地成果
 
 告诉 GeoD 地点、时间和需要的结果。Agent 帮你确定范围、检索支持的数据、预览选中的影像，准备完整任务供审阅。下载和支持的处理流程由本地 Rust 引擎执行，结果保留源身份、处理记录和校验值。
 
@@ -35,6 +41,24 @@
 ## 持续扩充的二维数据目录
 
 **85 个入口 · 16 个产品 / 连接分类 · 48 项待接入。** 目录同时列出具体产品、服务连接和本地格式，分别显示能力与状态。支持某个协议，不代表该平台所有数据都已接入。
+
+| 影像与地形 | 环境产品 | 专题与矢量产品 | 连接与文件 |
+| :--- | :--- | :--- | :--- |
+| 光学与航空影像 **18** | 土地覆盖 **7** | 人口与聚落 **2** | 离线地图归档 **1** |
+| SAR 雷达影像 **2** | 植被与森林 **2** | 土壤 **1** | 栅格目录与覆盖服务 **8** |
+| 高程与水深 **9** | 水体与水文 **3** | 夜间灯光 **1** | 本地二维文件 **7** |
+| 地图影像与历史 **7** | 气候与降水 **3** | 矢量数据与服务 **9** | 公共数据门户 **5** |
+
+<sub>统计来自当前[数据源目录](prototype/src/source-directory.js)，包括待接入项。四列仅方便阅读；每个列出的分类对应软件看板中的一个分组。</sub>
+
+<details>
+<summary><strong>展开真实数据源看板：8 个专题产品分类、21 个入口</strong></summary>
+
+<img src="docs/images/data-source-board-zh-CN.png" alt="软件真实数据源组件：选中专题栅格筛选，按土地覆盖、森林、水体、人口、土壤、气候和夜间灯光等产品分类展示，保留待接入与获取条件标签" width="100%">
+
+<sub>当前 SourceBoard 组件的本地截图，使用中文和专题栅格筛选。待接入项不能发起连接；截图过程未调用模型或数据提供商。[拍摄范围](docs/images/README.md#data-source-board-enpng--data-source-board-zh-cnpng)。</sub>
+
+</details>
 
 | 产品类别 | 当前开发范围 |
 | :--- | :--- |

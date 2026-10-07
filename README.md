@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="docs/images/readme-cover.svg" alt="GeoD Global — AI-powered 2D geospatial workspace" width="100%">
+<img src="docs/images/agent-data-overview.png" alt="GeoD Global: Many sources. One Agent. Eight example data families and a goal-driven workflow, with 85 directory entries in 16 groups: 31 available, 6 authorization required and 48 planned." width="100%">
 
-### Describe the place. Review the plan. Keep the data.
+### Rich data sources. Goal-driven Agent.
 
-An AI-assisted Windows workspace for finding, downloading and preparing **2D geospatial data**.
+Explore a growing **2D data directory** and let an **Agent** turn your place, time range and desired output into a reviewed download and processing task, in one Windows workspace.
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-2563eb?style=flat-square)](src-tauri/README.md) [![Development](https://img.shields.io/badge/status-in%20development-0f766e?style=flat-square)](docs/development-preview.md) [![License](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
@@ -14,11 +14,17 @@ English · [简体中文](README.zh-CN.md)
 
 </div>
 
+| **A rich data-source directory** | **An Agent that follows the goal** |
+| :--- | :--- |
+| **85 entries across 16 groups**, covering satellite imagery, terrain, thematic rasters, vectors, map services and local files. Product, platform, access conditions and integration status stay visible. | Describe the result in natural language. The **Codex-powered Agent** resolves the area, searches supported data, asks for decisions, prepares a task for confirmation and follows local jobs through file validation. |
+
+<sub>Feature illustration; map thumbnails are decorative. Directory totals include products, service connections and local formats. **31 available · 6 authorization required · 48 planned.** [Image provenance and generation prompt](docs/images/README.md#agent-data-overviewpng).</sub>
+
 <img src="docs/images/agent-home-en.png" alt="Current English development interface: natural-language task composer and compact product-grouped source directory" width="100%">
 
 <sub>Current development frontend, October 7, 2026. Captured with an empty controlled workspace; no model request or download is represented. [Visual provenance](docs/images/README.md).</sub>
 
-## From a request to a local result
+## Agent mode: from a request to a local result
 
 Ask for a place, time range and intended output. GeoD helps resolve the area, discover supported products, preview the selected scenes and prepare a complete task for review. Downloads and supported processing run in the local Rust engine; results retain their source identity and checksums.
 
@@ -35,6 +41,24 @@ When a goal is set, a side panel tracks its steps, pending decisions, jobs and v
 ## A growing 2D data directory
 
 **85 entries · 16 product/connection groups · 48 pending integration.** The directory includes concrete products, service connections and local file formats. These are different capabilities: a supported protocol does not make every dataset on a platform available.
+
+| Imagery & terrain | Environmental products | Thematic & vector products | Connections & files |
+| :--- | :--- | :--- | :--- |
+| Optical & aerial **18** | Land cover **7** | Population & settlements **2** | Offline map archives **1** |
+| SAR radar **2** | Vegetation & forest **2** | Soil **1** | Raster catalogs & coverages **8** |
+| Elevation & bathymetry **9** | Water & hydrology **3** | Nighttime lights **1** | Local 2D files **7** |
+| Map imagery & history **7** | Climate & precipitation **3** | Vector datasets & services **9** | Public data portals **5** |
+
+<sub>Entry counts, including planned items, from the current [source registry](prototype/src/source-directory.js). The four columns are a reading aid; each named group matches a product-board section.</sub>
+
+<details>
+<summary><strong>See the real data-source board — 21 thematic entries across 8 product groups</strong></summary>
+
+<img src="docs/images/data-source-board-en.png" alt="Actual product-grouped data-source board with the Thematic rasters filter selected, showing land cover, forest, water, population, soil, climate and nighttime-light products with their access and pending-integration labels" width="100%">
+
+<sub>Current SourceBoard component, captured locally in English with the thematic filter selected. Pending entries have no connection action. This capture makes no model or data-provider request. [Capture scope](docs/images/README.md#data-source-board-enpng--data-source-board-zh-cnpng).</sub>
+
+</details>
 
 | Product family | Current development scope |
 | :--- | :--- |

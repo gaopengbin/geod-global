@@ -1,0 +1,31 @@
+Use case: ads-marketing / infographic-diagram.
+Asset type: landscape GitHub README feature illustration for GeoD Global, an AI-assisted Windows workspace for 2D geospatial data. This is an editorial product illustration, not a fabricated software screenshot.
+Primary request: visually sell TWO equally important strengths: a rich product-grouped data-source directory and an Agent that carries a natural-language request through a reviewed local-data workflow.
+Composition: a polished landscape 3:2 infographic, flat front-facing, no device frame. Large confident headline across top. Lower composition is an airy compact data-source card dashboard occupying about 60% width and a connected Agent workflow panel about 40%. At least 8 clearly distinct source-family cards. A subtle flat 2D cartographic texture behind the design. Strong visual hierarchy, crisp readable English, generous spacing, premium technical editorial design.
+Palette: deep midnight blue background, vivid GeoD cobalt blue, mint accents for available products, muted amber for planned entries, high-contrast white typography, gentle restrained glow.
+Text EXACTLY:
+Brand small: "GeoD Global"
+Headline large: "Many sources. One Agent."
+Subheading: "2D geospatial data, from a conversation to local files."
+Stat line: "85 directory entries" and "16 product groups"
+Data-side section title: "Explore the data"
+Eight compact cards, with the indicated short secondary line and status:
+"Optical imagery" / "Sentinel-2 · Landsat" / "Available"
+"Radar" / "Sentinel-1 RTC" / "Available"
+"Elevation" / "Copernicus DEM" / "Available"
+"Land cover" / "WorldCover · Dynamic World" / "Planned"
+"Water" / "JRC Global Surface Water" / "Planned"
+"Climate" / "ERA5-Land · CHIRPS" / "Planned"
+"Population" / "WorldPop · GHSL" / "Planned"
+"Vector data" / "OGC API · WFS" / "Available"
+Agent-side section title: "Describe the goal"
+An example compact chat bubble: "Find recent imagery and crop it to the city boundary."
+Five connected workflow steps, from top to bottom:
+"Resolve the area"
+"Find supported data"
+"Preview & confirm"
+"Download & process"
+"Validate local files"
+A clear bottom status strip: "31 available · 6 authorization required · 48 planned"
+Small footer: "In development · Inventory includes products, services and local formats"
+Constraints: keep counts and labels exact. The inventory is NOT 85 integrated download adapters. Planned cards must show amber Planned, not a green check. Avoid official company logos or invented mission seals: use simple generic domain icons and small visual 2D map thumbnails. No 3D, globe render, point clouds, towers, robots, people, fake code, mock success counters, pricing, testimonials or fabricated download results. Make rich source aggregation and goal-driven dialogue obvious even at thumbnail scale. Use a clean sans-serif English typeface. No extra text or watermark.
