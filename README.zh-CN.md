@@ -14,6 +14,14 @@
 
 </div>
 
+## 观看 Agent 完整实操
+
+[![观看 GeoD Global 完整实操视频](docs/images/agent-demo-20261009.jpg)](https://geod-global.laogao.xyz/zh/index.html#demo)
+
+**[观看 3 分 10 秒完整演示](https://geod-global.laogao.xyz/zh/index.html#demo)**，中文配音与字幕。真实 Windows 开发版录屏：描述曼哈顿哨兵二号影像需求 → 检查行政区多边形与覆盖 → 确认任务 → 下载原文件 → 裁剪本地 GeoTIFF → 打开并核验这次新生成的成果。等待过程已压缩并标注。Copernicus Sentinel 数据（2026），通过 Earth Search 获取。
+
+视频展示当前开发版，不代表发布了新安装包。[录屏来源](docs/images/README.md#agent-demo-20261009jpg)。
+
 | **丰富的数据源聚合** | **围绕目标推进的 Agent** |
 | :--- | :--- |
 | **85 个入口、16 个分类**，涵盖卫星影像、地形、专题栅格、矢量、地图服务与本地文件。产品、供应平台、获取条件和接入状态分别展示。 | 自然语言描述需要的结果，**Codex 驱动的 Agent** 解析范围、检索支持的数据、通过选项卡询问决策，提交完整任务供确认，并跟踪本地任务直至文件校验。 |

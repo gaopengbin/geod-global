@@ -39,3 +39,9 @@ Copied byte-for-byte from the user-approved real English marketing capture. Orig
 The actual packaged Windows desktop displayed Earth Search Sentinel-2 L2A scene `S2A_10SEG_20260912_0_L2A` around San Francisco Bay after metadata loaded. It is a georeferenced remote preview, not proof of completed full-scene download or export. The capture predates the current release candidate, explicitly noted beside the image in both README languages.
 
 Visible attribution is retained: Copernicus Sentinel data (2026), Earth Search and Natural Earth overview. The existing GeoD brand's own notice is retained in `BRAND-LICENSE.txt`. Imagery, fonts and other third-party assets keep their own rights; project GPL licensing does not transfer those rights. No private credentials, client names or personal file paths are visible.
+
+## agent-demo-20261009.jpg
+
+Poster frame from the October 9, 2026 Recordly recording of the real Windows development app. The [3:10 video](https://geod-global.laogao.xyz/index.html#demo) follows one Manhattan / New York County administrative-polygon task from live Earth Search Sentinel-2 L2A search through user approvals, original download, polygon crop and inspection of the newly generated GeoTIFF. Source scene: `S2A_18TWL_20261008_1_L2A`; local output: 1211 × 2253 pixels, 10 m, EPSG:32618. Footprint coverage is distinct from cloud-free coverage.
+
+Recordly captured and edited the actual UI; local Qwen3-TTS provided the Chinese narration. Waiting periods are shortened and marked. Wide background framing, transparent subtitles and delivery labels are editorial decoration. The recording contains real development behavior, including recovery, and is not a mock workflow or a new installer announcement. Copernicus Sentinel data (2026), via Earth Search / Element 84. The MP4 is hosted by the official website rather than duplicated into Git history.

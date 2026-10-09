@@ -14,6 +14,14 @@ English · [简体中文](README.zh-CN.md)
 
 </div>
 
+## Watch a real Agent workflow
+
+[![Watch the complete GeoD Global demo](docs/images/agent-demo-20261009.jpg)](https://geod-global.laogao.xyz/index.html#demo)
+
+**[Watch the 3:10 walkthrough](https://geod-global.laogao.xyz/index.html#demo)** — Chinese narration and subtitles. A real Windows development recording: request Sentinel-2 imagery for Manhattan, inspect the administrative polygon and coverage, confirm the task, download the original, crop a local GeoTIFF, and inspect that same newly generated result. Waiting periods are shortened and marked. Copernicus Sentinel data (2026), via Earth Search.
+
+The recording shows a development build; it does not announce a new installer. [Recording provenance](docs/images/README.md#agent-demo-20261009jpg).
+
 | **A rich data-source directory** | **An Agent that follows the goal** |
 | :--- | :--- |
 | **85 entries across 16 groups**, covering satellite imagery, terrain, thematic rasters, vectors, map services and local files. Product, platform, access conditions and integration status stay visible. | Describe the result in natural language. The **Codex-powered Agent** resolves the area, searches supported data, asks for decisions, prepares a task for confirmation and follows local jobs through file validation. |
