@@ -424,6 +424,39 @@ def pinned_npm_license(package, destination):
     return texts
 
 
+def reviewed_agent_npm_license(package, destination):
+    """Reuse the pinned, unchanged runtime notices for npm tarballs lacking them."""
+    reviewed = {
+        '@ai-sdk/provider-utils': (['5.0.53'], 'Apache-2.0', [
+            'AI-provider-utils-v5.0.53-LICENSE.txt', 'Codex-v0.159.2-LICENSE.txt']),
+        '@openai/codex': (['0.159.2', '0.159.2-win32-x64'], 'Apache-2.0', [
+            'Codex-v0.159.2-LICENSE.txt', 'Codex-v0.159.2-NOTICE.txt']),
+        '@openai/codex-win32-x64': (['0.159.2-win32-x64'], 'Apache-2.0', [
+            'Codex-v0.159.2-LICENSE.txt', 'Codex-v0.159.2-NOTICE.txt']),
+    }.get(package['name'])
+    if not reviewed:
+        return []
+    versions, license_id, filenames = reviewed
+    if package['version'] not in versions or package.get('license') != license_id:
+        raise RuntimeError(f"Unreviewed Agent npm license/version: {package['name']}")
+    source = ROOT / 'licenses/agent-runtime'
+    inventory = json.loads((source / 'sources.json').read_text(encoding='utf-8'))
+    if inventory.get('schema') != 'geod-agent-runtime-notices/v1':
+        raise RuntimeError('Unreviewed Agent notice inventory')
+    records = {record['file']: record for record in inventory['records']}
+    texts = []
+    for filename in filenames:
+        record = records[filename]
+        original = source / filename
+        if record.get('license') != license_id or original.stat().st_size != record['bytes'] or digest(original) != record['sha256']:
+            raise RuntimeError(f'Agent npm notice checksum/metadata mismatch: {filename}')
+        target = destination / filename
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(original, target)
+        texts.append({'file': filename, 'source': record['source'], 'sha256': digest(target)})
+    return texts
+
+
 def collect_vendored_notices(payload):
     """Keep copied UI source notices distinct from installed npm dependencies."""
     root = ROOT / 'third-party'
@@ -566,7 +599,8 @@ def collect_notices(payload):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(original, target)
             copied.append({'file':relative(target, destination), 'source':'installed package', 'sha256':digest(target)})
-        parent_package = {'@rolldown/binding-win32-x64-msvc':'rolldown', '@tauri-apps/cli-win32-x64-msvc':'@tauri-apps/cli'}.get(package['name'])
+        parent_package = {'@rolldown/binding-win32-x64-msvc':'rolldown', '@tauri-apps/cli-win32-x64-msvc':'@tauri-apps/cli',
+                          '@esbuild/win32-x64':'esbuild', '@napi-rs/canvas-win32-x64-msvc':'@napi-rs/canvas'}.get(package['name'])
         if not copied and parent_package:
             parent_source = ROOT / 'node_modules' / parent_package
             parent_metadata = json.loads((parent_source / 'package.json').read_text(encoding='utf-8'))
@@ -579,6 +613,8 @@ def collect_notices(payload):
                 copied.append({'file':target.name, 'source':f"{parent_package}@{package['version']} parent package", 'sha256':digest(target)})
         if not copied:
             copied = pinned_npm_license(package, destination)
+        if not copied:
+            copied = reviewed_agent_npm_license(package, destination)
         if not copied and package['name'] == 'lerc' and package['license'] == 'Apache-2.0':
             copied = [standard_license('Apache-2.0',destination)]
             standard_terms = 'Apache-2.0'

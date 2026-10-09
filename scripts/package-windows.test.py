@@ -16,6 +16,33 @@ spec.loader.exec_module(packaging)
 
 
 class PackagingTests(unittest.TestCase):
+    def test_agent_npm_notices_preserve_attribution_and_reject_tampering(self):
+        real_root = packaging.ROOT
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / 'licenses/agent-runtime'
+            source.mkdir(parents=True)
+            for original in (real_root / 'licenses/agent-runtime').iterdir():
+                if original.is_file():
+                    (source / original.name).write_bytes(original.read_bytes())
+            with mock.patch.object(packaging, 'ROOT', root):
+                for name, version in [('@ai-sdk/provider-utils', '5.0.53'), ('@openai/codex', '0.159.2'),
+                                      ('@openai/codex', '0.159.2-win32-x64')]:
+                    package = {'name': name, 'version': version, 'license': 'Apache-2.0'}
+                    records = packaging.reviewed_agent_npm_license(package, root / 'notices')
+                    self.assertEqual(len(records), 2)
+                    for record in records:
+                        self.assertEqual((root / 'notices' / record['file']).read_bytes(), (source / record['file']).read_bytes())
+                    if name.startswith('@openai/'):
+                        self.assertTrue(any(record['file'].endswith('NOTICE.txt') for record in records))
+                    for key, changed in [('version', '99.0.0'), ('license', 'MIT')]:
+                        with self.assertRaisesRegex(RuntimeError, 'Unreviewed Agent npm'):
+                            packaging.reviewed_agent_npm_license({**package, key: changed}, root / 'bad')
+                (source / 'Codex-v0.159.2-NOTICE.txt').write_text('altered attribution', encoding='utf-8')
+                with self.assertRaisesRegex(RuntimeError, 'checksum/metadata mismatch'):
+                    packaging.reviewed_agent_npm_license({'name': '@openai/codex', 'version': '0.159.2',
+                                                         'license': 'Apache-2.0'}, root / 'bad')
+
     @staticmethod
     def first_party_source_fixture(root):
         (root / 'LICENSE').write_bytes((Path(__file__).resolve().parents[1] / 'LICENSE').read_bytes())
