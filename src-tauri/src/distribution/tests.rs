@@ -138,6 +138,9 @@ fn server(version: &str, signature: &str, payload: Vec<u8>, truncated: bool) -> 
         while !flag.load(Ordering::Acquire) {
             match listener.accept() {
                 Ok((mut stream, _)) => {
+                    // Winsock may inherit the listener's nonblocking mode.
+                    // Read the complete HTTP request under the bounded timeout.
+                    stream.set_nonblocking(false).unwrap();
                     stream
                         .set_read_timeout(Some(Duration::from_secs(2)))
                         .unwrap();
