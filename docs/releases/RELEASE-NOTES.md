@@ -1,4 +1,4 @@
-# GeoD Global 0.2.0-rc.1 — Agent Windows evaluation
+# GeoD Global 0.2.0-rc.2 — Agent Windows evaluation
 
 This Windows 10/11 x64 prerelease brings the conversational Agent into the packaged local workspace. Describe a place and the result you need; the Agent resolves supported boundaries, searches supported data, previews scenes and submits complete tasks for your confirmation. Local jobs retain sources, processing records and file validation.
 

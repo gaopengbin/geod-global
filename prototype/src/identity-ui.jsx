@@ -72,6 +72,6 @@ export function SignInPage({onContinue}){
    {error&&<div className="identity-error" role="alert"><p>{t(error)}</p><Button variant="quiet" size="sm" disabled={loading||waiting} onClick={()=>run('snapshot',{refresh:true})} icon={RefreshCw}>{t('Retry')}</Button></div>}
    {!snapshot.user&&<><div className="identity-divider"><span>{t('or')}</span></div><Button className="identity-guest" variant="secondary" onClick={proceed} icon={ArrowRight}>{t('Continue without an account')}</Button></>}
    <p className="identity-account-scope">{t('Global sign-in is separate from NASA Earthdata and Copernicus data authorization.')}</p>
-  </Surface><div className="identity-policy"><Button asChild variant="link" size="sm"><a href="https://geod-global.laogao.xyz/privacy.html" target="_blank" rel="noreferrer">{t('Privacy')}</a></Button><span>·</span><Button asChild variant="link" size="sm"><a href="https://geod-global.laogao.xyz/terms.html" target="_blank" rel="noreferrer">{t('Terms')}</a></Button></div></div>
+  </Surface><div className="identity-policy"><Button asChild variant="link" size="sm"><a href="https://geod-global.laogao.xyz/privacy.html" target="_blank" rel="noreferrer">{t('Privacy')}</a></Button></div></div>
  </section>;
 }

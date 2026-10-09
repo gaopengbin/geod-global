@@ -118,7 +118,7 @@ Codex 负责 Agent 循环，AI SDK 适配所选模型协议，原生 GeoD 工具
 
 ## 快速开始
 
-**[v0.2.0-rc.1 Windows 评估版](https://github.com/gaopengbin/geod-global/releases/tag/v0.2.0-rc.1)** 包含对话 Agent、数据源看板和 Global 独立账号入口，提供便携 ZIP 与当前用户安装包。它是未签名预发布版，具体范围和验收缺口见[发行记录](docs/releases/0.2.0-rc.1.md)。旧 rc.3 早于 Agent 接入。
+**[v0.2.0-rc.2 Windows 评估版](https://github.com/gaopengbin/geod-global/releases/tag/v0.2.0-rc.2)** 包含对话 Agent、数据源看板和 Global 独立账号入口，提供便携 ZIP 与当前用户安装包。它是未签名预发布版，具体范围和验收缺口见[发行记录](docs/releases/0.2.0-rc.2.md)。旧 rc.3 早于 Agent 接入。
 
 桌面开发需要 **Windows x64**、Node.js **22.13+**、npm **10+**、Rust **1.91.1+**、Visual Studio C++ Build Tools 和 WebView2。在仓库根目录运行：
 
