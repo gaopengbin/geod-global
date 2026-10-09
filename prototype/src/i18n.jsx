@@ -8,6 +8,7 @@ import workspaceChinese from './locales/workspace.zh-CN.js';
 import projectsChinese from './locales/projects.zh-CN.js';
 import proxyChinese from './locales/proxy.zh-CN.js';
 import accountsChinese from './locales/accounts.zh-CN.js';
+import identityChinese from './locales/identity.zh-CN.js';
 import elevationChinese from './locales/elevation.zh-CN.js';
 import modisChinese from './locales/modis.zh-CN.js';
 import vegetationChinese from './locales/vegetation.zh-CN.js';
@@ -35,6 +36,7 @@ const I18nContext = createContext(null);
 Object.assign(chinese, agentChinese);
 Object.assign(chinese, sourceDirectoryChinese);
 Object.assign(chinese, distributionChinese);
+Object.assign(chinese, identityChinese);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 
 export function I18nProvider({ children }) {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "GeoD Global",
-  "version": "0.1.0-rc.3",
+  "version": "0.2.0-rc.1",
   "identifier": "xyz.laogao.geod.global",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -40,7 +40,9 @@
       "pubkey": "",
       "requireSignedVersion": true,
       "dangerousInsecureTransportProtocol": false,
-      "windows": { "installMode": "quiet" }
+      "windows": {
+        "installMode": "quiet"
+      }
     }
   },
   "bundle": {

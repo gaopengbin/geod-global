@@ -4,6 +4,10 @@
   "description": "Only the bundled main window can inspect and control GeoD Global jobs.",
   "windows": ["main"],
   "permissions": [
+    "allow-identity-snapshot",
+    "allow-identity-begin",
+    "allow-identity-cancel",
+    "allow-identity-logout",
     "allow-distribution-snapshot",
     "allow-distribution-preferences",
     "allow-update-check",

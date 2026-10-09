@@ -14,7 +14,7 @@ export function GeoDBrand({ compact = false }) {
   </a>;
 }
 
-export function AppHeader({ theme, collapsed, onToggleNavigation, leading, context, actions }) {
+export function AppHeader({ theme, collapsed, onToggleNavigation, leading, context, actions, minimal = false }) {
   const { t, locale } = useI18n();
   const [mode, setMode] = useState(desktopAvailable() ? 'preparing' : 'web');
   const [error, setError] = useState('');
@@ -76,6 +76,16 @@ export function AppHeader({ theme, collapsed, onToggleNavigation, leading, conte
     return () => { window.removeEventListener('focus', focus); window.removeEventListener('blur', focus); };
   }, []);
   const drag = mode === 'custom' ? { 'data-tauri-drag-region': true } : {};
+  if (minimal) return <div className="app-window-frame" data-titlebar-mode={mode}>
+    <div className="app-window-frame-drag" {...drag} onMouseDown={event => {
+      if (mode === 'custom') handleDesktopTitlebarMouseDown(event).catch(failure => setError(String(failure)));
+    }} onContextMenu={event => {
+      if (!desktopAvailable()) return;
+      event.preventDefault();
+      showDesktopWindowMenu().catch(failure => setError(String(failure)));
+    }}/>
+    {error && <span className="app-header-error" role="status" title={error}>{t('Window control unavailable')}</span>}
+  </div>;
   return <header className="app-header" data-titlebar-mode={mode}>
     <div className="app-header-identity">
       <Button variant="quiet" size="icon" icon={collapsed ? PanelLeftOpen : PanelLeftClose}

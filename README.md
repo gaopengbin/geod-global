@@ -118,7 +118,7 @@ Codex owns the Agent loop; the AI SDK adapts the selected model protocol. Native
 
 ## Quick start
 
-The current Agent experience is in **source development**. The published [v0.1.0-rc.3 Windows candidate](https://github.com/gaopengbin/geod-global/releases/tag/v0.1.0-rc.3) predates these changes and does not include the new Agent. This source update does not publish a new installer.
+The **[v0.2.0-rc.1 Windows evaluation](https://github.com/gaopengbin/geod-global/releases/tag/v0.2.0-rc.1)** includes the conversational Agent, source board and independent Global account entry. It is an unsigned prerelease with portable ZIP and per-user installer; see the [release scope and acceptance gaps](docs/releases/0.2.0-rc.1.md). The earlier rc.3 predates the Agent.
 
 For the native app, use **Windows x64**, Node.js **22.13+**, npm **10+**, Rust **1.91.1+**, Visual Studio C++ Build Tools and WebView2. From the repository root:
 

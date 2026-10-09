@@ -1,80 +1,34 @@
-# GeoD Global 0.1.0-rc.3 — Windows release candidate
+# GeoD Global 0.2.0-rc.1 — Agent Windows evaluation
 
-Independent Windows 10/11 x64 geospatial desktop workspace with English and
-Simplified Chinese UI. This prerelease is available for evaluation; the complete
-product plan remains in development.
+This Windows 10/11 x64 prerelease brings the conversational Agent into the packaged local workspace. Describe a place and the result you need; the Agent resolves supported boundaries, searches supported data, previews scenes and submits complete tasks for your confirmation. Local jobs retain sources, processing records and file validation.
 
-## Included in this candidate
+## What is included
 
-- Search public Sentinel-2, Landsat, MODIS, Sentinel-1 RTC, NAIP and Copernicus
-  DEM catalogues. The source selector distinguishes original-file availability
-  from online previews, previews loaded after selection, and footprint-only
-  catalogues.
-- Preview MODIS NDVI/EVI, MODIS reflectance RGB, radar polarizations and public
-  GLO-30/GLO-90 elevation on the exploration map. Nine public source entries have
-  live catalogue and map-display checks in the documented test region. Preview
-  images are distinct from completed original-file downloads.
-- Create named multi-scene projects, add more scenes to an existing project,
-  download supported assets, and inspect files and original pixel values in the
-  local workspace. Compatible products support documented crop, mosaic,
-  scientific RGB and quality-filter workflows, with verified delivery bundles.
-- Use persistent thumbnail caching, compact file/task cards, resizable panels,
-  a GeoD-branded desktop header, light/dark themes and system-tray background
-  tasks. Closing the window keeps the application running; use the tray's
-  **Quit** action to stop it before upgrading.
-- Use the shared local CLI and MCP tools for supported jobs, projects, raster
-  inspection and recipes. MCP mutations require explicit write enablement.
-  An in-app conversational Agent is planned and is not included in this release.
+- Codex-powered Agent with streaming conversation, secure model connections and probes, option cards, task review, goal progress and bounded continuation. The bundled Node/Codex runtime is included; users supply their own supported model connection.
+- A compact 2D directory: **85 entries / 16 groups**, **31 available, 6 authorization required and 48 planned**. Counts include products, protocols and local formats, not 85 satellites or universally enabled provider collections.
+- Administrative-polygon defaults, scene-footprint coverage checks and a right-side map preview with multiple scenes. Verified district/county boundaries can refine a city without substituting an unrelated extent.
+- Original-file download, compatible-grid crop/mosaic and source-pixel inspection. Scientific/quality workflows retain documented product limits.
+- Independent Global email, Google and GitHub account entry, system-browser consent and native PKCE/loopback handoff. Guest use remains available; tokens stay in the native vault. Global identity does not authorize models or data-provider services and does not enable cloud sync.
+- Local projects, history, themes, settings, notification/update interfaces and system-tray background jobs. Production signed update/announcement channels are not enabled in this evaluation.
 
-The candidate also retains documented map-service, vector, offline-tile and
-bounded 3D workflows. Each has its own support and acceptance limits; these do
-not imply arbitrary GIS format or processing support.
+## Real workflow evidence
 
-## Fixes in this release
+The [3:10 recording](https://geod-global.laogao.xyz/zh/index.html#demo) follows one Manhattan / New York County task: live Earth Search Sentinel-2 L2A search, native polygon/footprint checks, human approvals, download of `S2A_18TWL_20261008_1_L2A`, polygon crop, and inspection of the same newly generated 1211 × 2253, 10 m, EPSG:32618 GeoTIFF. Download and crop jobs succeeded. Waiting periods are shortened and marked. Footprint coverage is not cloud-free coverage. Copernicus Sentinel data (2026), via Earth Search.
 
-- Compile Windows credential decoding only on Windows and in its portable tests,
-  keeping strict Linux checks clean without disabling diagnostics.
-- Restore clean Windows/Linux dependency installation with the complete locked
-  optional peer graph; existing dependency versions are unchanged.
-- Accept verified legacy NAIP catalogue identities and their matching 0.6 m
-  four-band aerial COGs.
-- Accept verified Sentinel-1 RTC platform and polarization identities, including
-  supported Sentinel-1C/1D catalogue records.
-- Retry temporary preview failures with bounded waits, cancel obsolete requests
-  when switching sources, and retain a visible retry action on persistent errors.
-- Keep scene-footprint fills transparent once imagery is displayed, preserving
-  the preview's actual colours and grayscale values.
+That recording used the development app before packaging. It proves that workflow, not every source, installation or account sign-in acceptance.
 
-## Downloads
+## Downloads and requirements
 
-Choose the portable `.zip` or the per-user `-setup.exe` installer. Both contain the desktop application, CLI, examples, documentation, provenance and third-party notices. Verify downloads against `SHA256SUMS.txt`; `artifacts.json` records the exact source commit and artifact sizes and hashes.
+Use the portable `.zip` or per-user `-setup.exe`. Both include desktop, CLI, Agent runtime, documentation, exact source archive and third-party notices. Extract the complete ZIP. Microsoft Edge WebView2 Evergreen Runtime is required; the installer checks but does not install it. No separately installed Node, Rust, Python or GDAL is required.
 
-First-party code is GPL-3.0-only. Both packages include the license and a source
-archive for the exact built commit, with build instructions and locked dependency
-manifests. Third-party components and data retain their own notices and terms.
+Check `SHA256SUMS.txt` and `artifacts.json`. First-party code is GPL-3.0-only; datasets and components retain their terms. These are **unsigned evaluation builds**, not the latest stable release. Quit through the system tray before manual upgrades; uninstall preserves data.
 
-Requires Windows 10/11 x64 and Microsoft Edge WebView2 Evergreen Runtime. The installer does not install WebView2. User data is retained on uninstall.
+## Acceptance gaps and limits
 
-## Evaluation status
+- Account endpoints and native protocol tests pass; real email delivery, human desktop consent and subsequent session restore need provider-by-provider human acceptance.
+- NASA Earthdata/Copernicus account setup and catalogs exist. HLS, SRTM, VIIRS and Sentinel-2 SAFE protected original downloads remain disabled pending real-account verification.
+- The 48 planned entries have no downloader. Commercial high-resolution entitlement is not included. Arbitrary cross-grid processing/general reprojection is outside the crop/mosaic scope.
+- Fresh-machine installation, interactive upgrade/uninstall and retention checks remain separate. Windows Authenticode signing, production signed updater and announcement channels are unfinished.
+- There is no paid checkout, subscription/credit balance, cloud storage or cross-device job sync. This is a local evaluation workflow, not a completed commercial billing lifecycle.
 
-These binaries and installer are **unsigned**. This is a prerelease and is not
-promoted to the latest stable release. The release workflow checks Linux/Windows
-tests, production compilation, packaged CLI startup, archive contents, source
-provenance and downloaded release asset hashes. Those checks do not establish
-native GUI or clean-machine installation, upgrade and uninstall acceptance.
-
-NASA Earthdata and Copernicus account setup is included. HLS, SRTM, VIIRS and
-Copernicus SAFE protected original downloads remain disabled pending real-account
-verification; their catalogues and footprints are available. No account is
-required for the documented public-source workflows.
-
-Processing is limited to supported products, coordinate systems and compatible
-grids. General raster reprojection, arbitrary science formats, automatic updates
-and the in-app Agent assistant are not included. Data use remains subject to each
-provider's terms. Source downloads, previews and provider-original archives are
-separate capabilities.
-
-The source commit and build run are linked below. The README, provider status and
-public-preview verification documentation at that commit describe the exact
-tested scope. No cloud service, payment integration or commercial data entitlement
-is implied.
+See [product-chain status](../product-chain-status.md), [account details](../desktop-account.md), [provider status](../provider-integration-status.md) and [update boundaries](../software-updates.md). Exact source commit and build run are appended by the publishing workflow.

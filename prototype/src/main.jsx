@@ -69,6 +69,7 @@ import { providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel
 import { imageryHrefs } from './explore-imagery.js';
 import { RELEASE_VERSION } from './release-policy.js';
 import { AgentPanel } from './agent-panel.jsx';
+import {IdentityProvider, IdentityEntry, SignInPage} from './identity-ui.jsx';
 import { agentMapContext, selectedSearchBounds } from './startup.js';
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
@@ -91,7 +92,7 @@ const pageFromHash = () => {
   try { requested = decodeURIComponent(location.hash.slice(1).split('?')[0]); }
   catch { return "Home"; }
   if (requested === "Recipes") return "My Data";
-  return [...nav.map(([name]) => name), "Settings"].includes(requested) ? requested : "Home";
+  return [...nav.map(([name]) => name), "Settings", "SignIn"].includes(requested) ? requested : "Home";
 };
 const projectFromHash = () => {
   if (!['My Data', 'Explore'].includes(pageFromHash())) return null;
@@ -127,7 +128,7 @@ function SceneThumbnail({ src, alt }) {
 }
 
 export function App() {
-  return <DistributionProvider><AppContent/></DistributionProvider>;
+  return <IdentityProvider><DistributionProvider><AppContent/></DistributionProvider></IdentityProvider>;
 }
 function AppContent() {
   const { t, date, number, locale } = useI18n();
@@ -306,10 +307,11 @@ function AppContent() {
     return () => window.removeEventListener("hashchange", change);
   }, []);
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    const appearance = page === 'SignIn' ? 'dark' : theme;
+    document.documentElement.dataset.theme = appearance;
+    document.documentElement.classList.toggle("dark", appearance === "dark");
     localStorage.setItem("geod-design-theme", JSON.stringify(theme));
-  }, [theme]);
+  }, [theme, page]);
   useEffect(() => {
     localStorage.setItem("geod-design-nav-collapsed", JSON.stringify(navCollapsed));
   }, [navCollapsed]);
@@ -463,7 +465,7 @@ function AppContent() {
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
   const home = page === "Home";
-  const agentVisible = home || agentOpen;
+  const agentVisible = page !== 'SignIn' && (home || agentOpen);
   const previewing=Boolean(mapPreview&&agentVisible);
   const workAreaVisible=!home&&!previewing;
   const workspace = page === "Explore" || page === "Workspace";
@@ -472,6 +474,10 @@ function AppContent() {
     ? 240 + (discoveryCollapsed ? 0 : 246) + (hasInspector ? 226 : 0)
     : 360;
   const resizeHint = t('Drag to resize · Double-click to reset · Arrow keys to adjust');
+  if (page === 'SignIn') return <div className="app app-sign-in">
+    <AppHeader theme="dark" minimal/>
+    <main className="identity-standalone"><SignInPage onContinue={()=>go('Home')}/></main>
+  </div>;
   return (
     <div className={`app ${home ? 'app-home' : ''}`}>
       <AppHeader theme={theme} collapsed={navCollapsed} onToggleNavigation={() => {
@@ -486,11 +492,11 @@ function AppContent() {
         leading={page === "Explore" && discoveryCollapsed && <Button variant="secondary" size="sm" icon={PanelLeftOpen} className="discovery-toggle" aria-label={t("Show scene list")} aria-controls="explore-discovery" aria-expanded={false} onClick={() => setDiscoveryCollapsed(false)}>{t("Imagery scenes")}</Button>}
         context={<div className="breadcrumb">
           <strong>{home ? t('AI workspace') : currentProject?.name || t("{source} workspace", { source: page === 'Explore' ? sourceProvider.name : 'GeoD Global' })}</strong>
-          <ChevronRight size={14} aria-hidden="true" /><span>{t(page)}</span>
+          <ChevronRight size={14} aria-hidden="true" /><span>{t(page==='SignIn'?'Sign in':page)}</span>
         </div>}
         actions={<>
           <NotificationCenter/>
-          {!home && <Button size="icon" variant="quiet" icon={MessageSquare} aria-label={t(agentOpen ? 'Close Agent' : 'Open Agent')} tooltip={t(agentOpen ? 'Close Agent' : 'Open Agent')}
+          {!home && page !=='SignIn' && <Button size="icon" variant="quiet" icon={MessageSquare} aria-label={t(agentOpen ? 'Close Agent' : 'Open Agent')} tooltip={t(agentOpen ? 'Close Agent' : 'Open Agent')}
             aria-controls="geod-agent-panel" aria-expanded={agentOpen} onClick={() => {
               if (agentOpen) { agentClose.current?.(); return; }
               setInspector(false);
@@ -527,7 +533,7 @@ function AppContent() {
           { id: "Settings", label: t("Settings"), icon: Settings, href: "#Settings", active: page === "Settings" },
           { id: "Help", label: t("Help"), icon: HelpCircle, onClick: () => setModal("about") },
         ]}
-        footer={<span className="sidebar-local-label"><ShieldCheck size={14} />{t("Local workspace")}</span>}
+        footer={<IdentityEntry onOpen={()=>go('SignIn')}/>}
       />
       </ResizablePanel>
       <ResizeHandle key="navigation-divider" label={t('Resize navigation panel')} hint={resizeHint} disabled={navCollapsed}/>

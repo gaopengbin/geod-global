@@ -126,8 +126,8 @@ Packaging fails for any other uncovered dependency. Exact published MPL crate so
 SCL legend attribution/license and sample-data provenance. This inventory also
 includes build-time and optional dependencies; it is not a binary linkage claim.
 
-First-party packages remain UNLICENSED/LicenseRef-Proprietary. The packaging
-workflow does not decide public or commercial licensing. No private workspace
+First-party packages use GPL-3.0-only with the exact source archive. The packaging
+workflow preserves that declared license. No private workspace
 paths, credentials, user runtime data or sibling checkout files are copied into
 the payload. Source provenance contains repository-relative paths and hashes.
 

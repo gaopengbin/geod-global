@@ -31,3 +31,26 @@ test('storage failures stop repeated geographic operations for this turn while a
   assert.equal(toolFailureCode(Error('Agent record directory was redirected.')),'record-storage');
   assert.equal(toolFailureCode(Error('https://private.test/?token=secret')),'tool-failed');
 });
+test('verified borough polygon inside the resolved city can be searched without accepting arbitrary subareas or a state',()=>{
+  const active={};const city=[-74.26,40.47,-73.70,40.92],borough=[-74.05,40.68,-73.90,40.89];
+  beforePlaceTool(active,'geod_place_search',{kind:'city'});
+  afterPlaceTool(active,'geod_place_search',{candidates:[{kind:'city',bounds:city}]});
+  beforePlaceTool(active,'geod_place_search',{kind:'place'});
+  afterPlaceTool(active,'geod_place_search',{candidates:[{kind:'district',bounds:borough}]});
+  assert.doesNotThrow(()=>beforePlaceTool(active,'geod_scene_search',{bounds:city}));
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:borough}));
+  const boundary={id:'native-boundary',sha256:'a'.repeat(64)};
+  afterPlaceTool(active,'geod_boundary_read',{boundary,geometryType:'MultiPolygon',bounds:borough});
+  assert.doesNotThrow(()=>beforePlaceTool(active,'geod_scene_search',{bounds:borough}));
+  const state=[-80,40,-70,45];
+  afterPlaceTool(active,'geod_boundary_read',{boundary,geometryType:'Polygon',bounds:state});
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:state}));
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:[-74,40.7,-73.99,40.8]}));
+});
+test('a verified administrative polygon cannot unlock a failed city lookup on its own',()=>{
+  const active={};const area=[-74.05,40.68,-73.90,40.89];
+  beforePlaceTool(active,'geod_place_search',{kind:'city'});
+  afterPlaceTool(active,'geod_place_search',{candidates:[]});
+  afterPlaceTool(active,'geod_boundary_read',{boundary:{id:'native',sha256:'a'.repeat(64)},geometryType:'Polygon',bounds:area});
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:area}));
+});

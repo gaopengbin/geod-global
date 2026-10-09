@@ -11,6 +11,7 @@ import { PROVIDERS } from './providers.js';
 import { originalsReleased } from './release-policy.js';
 import { SOURCE_DIRECTORY } from './source-directory.js';
 import { loadPlanPreviewScenes } from './agent-map-preview.js';
+import {signedOutIdentity} from './identity-client.js';
 
 vi.mock('./agent-client.js',()=>({agentRequest:vi.fn(),subscribeAgentUpdates:vi.fn().mockResolvedValue(()=>{})}));
 vi.mock('./runtime-client.js',async original=>({...await original(),desktopAvailable:()=>true,syncDesktopLocale:vi.fn().mockResolvedValue(undefined),runtimeRequest:vi.fn(async operation=>operation==='health'?{}:[])}));
@@ -26,13 +27,26 @@ beforeEach(()=>{
   vi.stubGlobal('localStorage',local);
   Object.defineProperty(window,'innerWidth',{configurable:true,value:720});
   vi.clearAllMocks();
-  window.__TAURI__={core:{invoke:vi.fn(async command=>command==='activate_desktop_frame'?'native':[])}};
+  window.__TAURI__={core:{invoke:vi.fn(async command=>command==='activate_desktop_frame'?'native':command==='identity_snapshot'?signedOutIdentity():[])}};
   search=vi.fn();createSearchRunner.mockReturnValue({cancel:vi.fn(),run:search});
   backend={version:1,revision:1,runtimeAvailable:true,configured:true,busy:false,mode:'review-first',model:{label:'Owned QA',model:'test-model',protocol:'openai-compatible'},selected:null,sessions:[],plans:[]};
   agentRequest.mockImplementation(async()=>structuredClone(backend));
 });
 afterEach(()=>{cleanup();delete window.__TAURI__;vi.unstubAllGlobals();});
 const mount=()=>render(<I18nProvider><RuntimeProvider><App/></RuntimeProvider></I18nProvider>);
+it('opens a dedicated account page from Home and returns to the local Agent as a guest',async()=>{
+  mount();await screen.findByRole('region',{name:'2D data source directory'});
+  await userEvent.click(screen.getByRole('button',{name:'Sign in',exact:true}));
+  await screen.findByRole('heading',{name:'Welcome to GeoD Global'});
+  expect(location.hash).toBe('#SignIn');expect(screen.queryByRole('button',{name:'Close Agent'})).toBeNull();expect(screen.queryByRole('textbox',{name:'Agent message'})).toBeNull();
+  expect(document.querySelector('.app-header')).toBeNull();expect(document.getElementById('primary-navigation')).toBeNull();
+  expect(document.documentElement.dataset.theme).toBe('dark');expect(JSON.parse(localStorage.getItem('geod-design-theme'))).toBe('light');
+  await userEvent.click(screen.getByRole('button',{name:'Continue without an account'}));
+  await screen.findByRole('region',{name:'2D data source directory'});expect(location.hash).toBe('#Home');
+  expect(document.querySelector('.app-header')).toBeTruthy();expect(document.getElementById('primary-navigation')).toBeTruthy();
+  expect(document.documentElement.dataset.theme).toBe('light');expect(JSON.parse(localStorage.getItem('geod-design-theme'))).toBe('light');
+  expect(agentRequest.mock.calls.some(([operation])=>operation==='send')).toBe(false);expect(search).not.toHaveBeenCalled();
+});
 it('opens a right map panel while keeping the same conversation, review and editable draft on the left',async()=>{
   const sessionId='a1234567-1234-1234-1234-123456789abc',planId='b1234567-1234-1234-1234-123456789abc';
   const plan={planId,planHash:'a'.repeat(64),kind:'download',status:'pending',source:'Earth Search',bounds:[-74.3,40.4,-73.7,41],files:[{itemId:'S2A_selected',assetKey:'visual',bytes:100}],expectedBytes:100,jobs:[],notes:[]};
@@ -240,7 +254,7 @@ it('opens each service card with its correct form and performs only local regist
   }
   const commands=window.__TAURI__.core.invoke.mock.calls.map(([command])=>command);
   expect(commands.length).toBeGreaterThan(0);
-  expect(commands.every(command=>command.startsWith('list_')||['distribution_snapshot','activate_desktop_frame','set_desktop_appearance'].includes(command))).toBe(true);
+  expect(commands.every(command=>command.startsWith('list_')||['identity_snapshot','distribution_snapshot','activate_desktop_frame','set_desktop_appearance'].includes(command))).toBe(true);
   expect(input.value).toBe('Keep this draft');expect(search).not.toHaveBeenCalled();
   expect(agentRequest.mock.calls.some(([operation])=>operation==='send')).toBe(false);
 },20000);
@@ -257,6 +271,6 @@ it.each([
   expect(screen.getByRole('radio',{name:view}).getAttribute('aria-checked')).toBe('true');
   expect(screen.queryByRole('radio',{name:'3D assets'})).toBeNull();
   expect(search).not.toHaveBeenCalled();
-  expect(window.__TAURI__.core.invoke.mock.calls.every(([command])=>command.startsWith('list_')||['distribution_snapshot','activate_desktop_frame','set_desktop_appearance'].includes(command))).toBe(true);
+  expect(window.__TAURI__.core.invoke.mock.calls.every(([command])=>command.startsWith('list_')||['identity_snapshot','distribution_snapshot','activate_desktop_frame','set_desktop_appearance'].includes(command))).toBe(true);
   expect(agentRequest.mock.calls.some(([operation])=>operation==='send')).toBe(false);
 });

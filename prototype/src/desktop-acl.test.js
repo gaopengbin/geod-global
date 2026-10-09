@@ -4,11 +4,11 @@ import { test } from 'node:test';
 import { verifyDesktopAclSources } from '../../scripts/verify-desktop-acl.mjs';
 
 test('packaged desktop registers and grants every local runtime command without remote access', async () => {
-  const [entry, build, rawCapability, rawConfig, distribution] = await Promise.all([
-    '../../src-tauri/src/main.rs', '../../src-tauri/build.rs', '../../src-tauri/capabilities/main-window.json', '../../src-tauri/tauri.conf.json', '../../src-tauri/src/distribution.rs',
+  const [entry, build, rawCapability, rawConfig, distribution, identity] = await Promise.all([
+    '../../src-tauri/src/main.rs', '../../src-tauri/build.rs', '../../src-tauri/capabilities/main-window.json', '../../src-tauri/tauri.conf.json', '../../src-tauri/src/distribution.rs', '../../src-tauri/src/identity.rs',
   ].map(file => readFile(new URL(file, import.meta.url), 'utf8')));
   const capability = JSON.parse(rawCapability);
-  const main = entry + '\n' + distribution;
+  const main = entry + '\n' + distribution + '\n' + identity;
   const config = JSON.parse(rawConfig);
   assert.equal(verifyDesktopAclSources(main, build, capability, config).desktopCommandAcl, 'passed');
   // The exact regression: handler compilation succeeded while the packaged UI

@@ -3,12 +3,16 @@
 mod agent;
 mod distribution;
 mod elevation_preview;
+mod identity;
 mod lifecycle;
 
 use agent::{DesktopAgent, ModelRequest};
 use distribution::{
     distribution_preferences, distribution_snapshot, notifications_read, notifications_refresh,
     update_cancel, update_check, update_download, update_install,
+};
+use identity::{
+    identity_begin, identity_cancel, identity_logout, identity_snapshot, DesktopIdentity,
 };
 use lifecycle::DesktopLifecycle;
 
@@ -1720,6 +1724,7 @@ fn main() {
         )
         .setup(|app| {
             app.manage(DesktopLifecycle::default());
+            app.manage(DesktopIdentity::open().map_err(std::io::Error::other)?);
             app.manage(DesktopFrameReady::default());
             let storage_root = app.path().app_local_data_dir()?.join("runtime");
             let manager = tauri::async_runtime::block_on(JobManager::open(storage_root))
@@ -1789,6 +1794,10 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            identity_snapshot,
+            identity_begin,
+            identity_cancel,
+            identity_logout,
             distribution_snapshot,
             distribution_preferences,
             update_check,

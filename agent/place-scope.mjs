@@ -10,12 +10,26 @@ const bounds=value=>Array.isArray(value)&&value.length===4&&value.every(Number.i
 export function beforePlaceTool(active,name,args){
   const scope=active.placeScope??={cityRequested:false,cityBounds:[],storageFailed:false};
   if(scope.storageFailed&&geographic.has(name))throw Error(STORAGE_SCOPE_ERROR);
-  if(name==='geod_scene_search'&&scope.cityRequested
-    &&(!bounds(args?.bounds)||!scope.cityBounds.some(extent=>extent.every((n,i)=>Math.abs(n-args.bounds[i])<=1e-6))))throw Error(CITY_SCOPE_ERROR);
+  if(name==='geod_scene_search'&&scope.cityRequested){
+    const exact=extent=>extent.every((n,i)=>Math.abs(n-args.bounds[i])<=1e-6);
+    const contained=area=>scope.cityBounds.some(city=>area[0]>=city[0]-1e-6&&area[1]>=city[1]-1e-6&&area[2]<=city[2]+1e-6&&area[3]<=city[3]+1e-6);
+    if(!bounds(args?.bounds)||!(scope.cityBounds.some(exact)
+      ||(scope.boundaryBounds??[]).some(area=>exact(area)&&contained(area))))throw Error(CITY_SCOPE_ERROR);
+  }
+  if(name==='geod_place_search')scope.lookupKind=args?.kind;
   if(name==='geod_place_search'&&args?.kind==='city'){scope.cityRequested=true;scope.cityBounds=[];}
 }
 export function afterPlaceTool(active,name,result){
+  if(name==='geod_boundary_read'&&active.placeScope&&bounds(result?.bounds)
+    &&['Polygon','MultiPolygon'].includes(result.geometryType)
+    &&typeof result.boundary?.id==='string'&&/^[a-f0-9]{64}$/i.test(result.boundary?.sha256??'')){
+    const areas=active.placeScope.boundaryBounds??=[];
+    if(!areas.some(a=>a.every((n,i)=>n===result.bounds[i])))areas.push([...result.bounds]);
+  }
   if(name!=='geod_place_search'||!active.placeScope?.cityRequested)return;
+  // Resolving a borough/POI after its parent city must not erase that city's
+  // successful native scope. Only a city lookup can replace the city results.
+  if(active.placeScope.lookupKind&&active.placeScope.lookupKind!=='city')return;
   active.placeScope.cityBounds=(result?.candidates??[]).filter(c=>c.kind==='city'&&bounds(c.bounds)).map(c=>[...c.bounds]);
 }
 export function failedPlaceTool(active,error){

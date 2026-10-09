@@ -1625,11 +1625,12 @@ dependencies = [
 
 [[package]]
 name = "geod-global-desktop"
-version = "0.1.0-rc.3"
+version = "0.2.0-rc.1"
 dependencies = [
  "base64 0.22.1",
  "chrono",
  "geod-runtime",
+ "getrandom 0.3.4",
  "image",
  "keyring",
  "lopdf",
@@ -1658,7 +1659,7 @@ dependencies = [
 
 [[package]]
 name = "geod-runtime"
-version = "0.1.0-rc.3"
+version = "0.2.0-rc.1"
 dependencies = [
  "axum",
  "base64 0.22.1",

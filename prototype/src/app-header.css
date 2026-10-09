@@ -37,6 +37,10 @@
 .app-header [data-tauri-drag-region] .breadcrumb * { pointer-events: none; }
 .app-header-actions .local-status { padding-inline: 4px; }
 .app-header-error { color: var(--orange); font-size: 12px; }
+.app-window-frame { position: absolute; inset: 0 0 auto; height: var(--app-header-height); z-index: 30; padding-right: var(--tauri-plugin-decoration-right-clearance, 174px); pointer-events: none; }
+.app-window-frame[data-titlebar-mode=web], .app-window-frame[data-titlebar-mode=native] { display: none; }
+.app-window-frame-drag { height: 100%; pointer-events: auto; }
+.app-window-frame .app-header-error { position: absolute; right: calc(12px + var(--tauri-plugin-decoration-right-clearance, 174px)); top: 14px; }
 :root[data-window-focused=false] .app-header .geod-brand,
 :root[data-window-focused=false] .app-header-context { opacity: .65; }
 

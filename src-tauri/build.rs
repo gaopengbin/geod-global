@@ -1,6 +1,10 @@
 fn main() {
     tauri_build::try_build(tauri_build::Attributes::new().app_manifest(
         tauri_build::AppManifest::new().commands(&[
+            "identity_snapshot",
+            "identity_begin",
+            "identity_cancel",
+            "identity_logout",
             "distribution_snapshot",
             "distribution_preferences",
             "update_check",

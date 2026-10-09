@@ -36,6 +36,6 @@ export function verifyDesktopAclSources(main, build, capability, config) {
 }
 
 export async function verifyDesktopAcl(root) {
-  const files = await Promise.all(['src-tauri/src/main.rs', 'src-tauri/build.rs', 'src-tauri/capabilities/main-window.json', 'src-tauri/tauri.conf.json','src-tauri/src/distribution.rs'].map(file => readFile(path.join(root, file), 'utf8')));
-  return verifyDesktopAclSources(files[0]+'\n'+files[4], files[1], JSON.parse(files[2]), JSON.parse(files[3]));
+  const files = await Promise.all(['src-tauri/src/main.rs', 'src-tauri/build.rs', 'src-tauri/capabilities/main-window.json', 'src-tauri/tauri.conf.json','src-tauri/src/distribution.rs','src-tauri/src/identity.rs'].map(file => readFile(path.join(root, file), 'utf8')));
+  return verifyDesktopAclSources(files[0]+'\n'+files[4]+'\n'+files[5], files[1], JSON.parse(files[2]), JSON.parse(files[3]));
 }

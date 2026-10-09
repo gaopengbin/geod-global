@@ -1,4 +1,4 @@
-const pages = new Set(['Home', 'Explore', 'Workspace', 'My Data', 'Tasks', 'Settings']);
+const pages = new Set(['Home', 'Explore', 'Workspace', 'My Data', 'Tasks', 'Settings', 'SignIn']);
 const validId = value => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value || '');
 
 export function normalizeNavigationHash(hash) {
