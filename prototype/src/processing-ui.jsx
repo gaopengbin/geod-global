@@ -5,12 +5,12 @@ import { useRuntime } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
 import { displayLocalPath } from './local-path.js';
 import { parseRecipeJSON, planMatches, processingRequest, RECIPE_SCHEMA, POLYGON_RECIPE_SCHEMA, validateRecipe } from './processing-client.js';
-import { Badge, Button, Disclosure, Input, Modal, Select, Spinner, Surface, Textarea } from './ui/index.jsx';
+import { InfoDetails, Badge, Button, Disclosure, Input, Modal, Select, Spinner, Surface, Textarea } from './ui/index.jsx';
 import './processing.css';
 
 function Failure({ error }) {
   const { t } = useI18n();
-  return <div className="runtime-error" role="alert"><p>{t('This operation could not finish. Check the local service and source file, then retry.')}</p><Disclosure summary={t('Technical details')}><p className="runtime-wrap">{t(error)}</p></Disclosure></div>;
+  return <div className="runtime-error bui-info-row" role="alert"><p>{t('This operation could not finish. Check the local service and source file, then retry.')}</p><InfoDetails closeLabel={t('Close')} presentation="popover" summary={t('Technical details')}><p className="runtime-wrap">{t(error)}</p></InfoDetails></div>;
 }
 
 function PlanDetails({ review, metadata }) {
@@ -187,5 +187,5 @@ function SavedClipSettings({ source, disabled, reloadKey, onApply }) {
 export function DerivedArtifactDetails({ job }) {
   const { t, number } = useI18n();
   if (job.kind !== 'raster_clip') return null;
-  return <div className="processing-derived"><Badge tone="blue">{t('Derived GeoTIFF')}</Badge>{job.crop && <p>{t('{width} × {height} pixels', { width: number(job.crop.width), height: number(job.crop.height) })} · {job.crop.crs}</p>}{Number.isSafeInteger(job.crop?.maskedPixels) && <p>{t('Pixels outside polygon')}: {number(job.crop.maskedPixels)}</p>}<p>{t('Parent job')}: <span className="mono runtime-wrap">{job.parentId || job.recipe?.source?.jobId}</span></p>{job.recipe?.source?.sha256 && <Disclosure summary={t('Pinned source checksum')}><p className="mono runtime-wrap">{job.recipe.source.sha256}</p></Disclosure>}{job.manifestPath && <Disclosure summary={t('Output provenance manifest')}><p>{t('Keep this JSON file with the GeoTIFF when moving or sharing the output.')}</p><p className="mono runtime-wrap">{displayLocalPath(job.manifestPath)}</p></Disclosure>}</div>;
+  return <div className="processing-derived"><Badge tone="blue">{t('Derived GeoTIFF')}</Badge>{job.crop && <p>{t('{width} × {height} pixels', { width: number(job.crop.width), height: number(job.crop.height) })} · {job.crop.crs}</p>}{Number.isSafeInteger(job.crop?.maskedPixels) && <p>{t('Pixels outside polygon')}: {number(job.crop.maskedPixels)}</p>}<p>{t('Parent job')}: <span className="mono runtime-wrap">{job.parentId || job.recipe?.source?.jobId}</span></p>{job.recipe?.source?.sha256 && <InfoDetails closeLabel={t('Close')} summary={t('Pinned source checksum')}><p className="mono runtime-wrap">{job.recipe.source.sha256}</p></InfoDetails>}{job.manifestPath && <InfoDetails closeLabel={t('Close')} summary={t('Output provenance manifest')}><p>{t('Keep this JSON file with the GeoTIFF when moving or sharing the output.')}</p><p className="mono runtime-wrap">{displayLocalPath(job.manifestPath)}</p></InfoDetails>}</div>;
 }

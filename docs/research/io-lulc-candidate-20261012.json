@@ -1,0 +1,296 @@
+{
+  "schema": "geod-public-channel-research/v1",
+  "checkedAt": "2026-10-12T04:17:19.040138+00:00",
+  "status": "research complete; original download verified; old native inspection limit reproduced",
+  "datasetPresetImplementedByThisReport": false,
+  "primaryDocuments": [
+    "https://registry.opendata.aws/io-lulc/",
+    "https://docs.impactobservatory.com/tutorials/aws-open-data-exchange/aws-open-data-exchange.html",
+    "https://docs.impactobservatory.com/lulc-maps/maps-for-good.html"
+  ],
+  "publisherCatalog": {
+    "url": "https://api.impactobservatory.com/stac-aws/",
+    "collectionId": "io-10m-annual-lulc",
+    "liveStatus": 200,
+    "rawCollectionLicense": "proprietary",
+    "reviewedLicense": "CC BY 4.0 (publisher registry, Maps for Good documentation and raw collection description)",
+    "licenseConflictPreserved": true,
+    "publicAccountRequired": false
+  },
+  "completeBucketListing": {
+    "keys": 5902,
+    "pages": 6,
+    "complete": true,
+    "yearCounts": {
+      "2017": 715,
+      "2018": 718,
+      "2019": 737,
+      "2020": 728,
+      "2021": 728,
+      "2022": 757,
+      "2023": 757,
+      "2024": 757,
+      "2025": 0,
+      "2026": 0
+    },
+    "pageDocuments": [
+      {
+        "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000",
+        "sha256": "dcf3224ab3366e1f0a9a3d3d2b04a34ee916a5f4190a0d8746e5274be5412890",
+        "bytes": 236939
+      },
+      {
+        "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000&continuation-token=1KW4WTucNCCsUwqztcrWKJ4yHYtOx0hLEN1z3AOlsRqeYXiumoFjH4GVN7VieoD0k",
+        "sha256": "5b55c03e74df27d22a9a720c8782f33d84c49b5c9fcf54b0d9aad3ae68824f03",
+        "bytes": 236701
+      },
+      {
+        "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000&continuation-token=1Ks7PXIqW09HAa4DhCB0NLGVAoEICequJYE%2FWF6aHcx1aYG6BVa8u00YYZj3blbpp",
+        "sha256": "a48780fce0091561318b27af34b013dcb0bac93e82b42e88397ffa75bb227c7c",
+        "bytes": 236691
+      },
+      {
+        "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000&continuation-token=1kV3HR%2BZfqDAC55sInYGCRjvxCv%2BugMiDqK8GrbBV2rLmsf0uplMB1SuHhuVZgSuj",
+        "sha256": "34c1aa4a59fb49c101ed0c554c371a49bf046b35f5b1acb6b37ca1e5469d6a49",
+        "bytes": 236874
+      },
+      {
+        "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000&continuation-token=1W4RJyTcf44%2BhO3%2FuF5Kvd3BQ7ww6LnECmgsQfXjH%2BxDV5QZoQSSR%2FeBaoU4D%2F%2FbD",
+        "sha256": "33ef47ab3dea2c99940e2c19c27a5a74ddbc3e701cebff072037836e9ce772c9",
+        "bytes": 236821
+      },
+      {
+        "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000&continuation-token=1MHL5rNZR%2FJAdGLPHzB1zrv4IAJI270F4y747dCNbgXcOb7GA4XAdRoyF0KYSm45E",
+        "sha256": "59b4c6a2319146ab9a18df1a38a6edc495a75007aeb452d3ef394ce579cc83af",
+        "bytes": 213488
+      }
+    ]
+  },
+  "classificationValues": {
+    "0": "NoData",
+    "1": "Water",
+    "2": "Trees",
+    "4": "Flooded vegetation",
+    "5": "Crops",
+    "7": "Built area",
+    "8": "Bare ground",
+    "9": "Snow/ice",
+    "10": "Clouds",
+    "11": "Rangeland"
+  },
+  "representativeOriginal": {
+    "url": "https://io-10m-annual-lulc.s3.us-west-2.amazonaws.com/29W_2024.tif",
+    "bytes": 12593521,
+    "sha256": "ed2f9bebdd374a1f725821db3981c4b8b4e0ec07a2200bbfc0cfba588d297ac9",
+    "externalResearchDownloadSeconds": 13.641,
+    "fullRaster": {
+      "width": 29338,
+      "height": 89448,
+      "count": 1,
+      "crs": "EPSG:32629",
+      "bounds": [
+        353310.0,
+        7097020.0,
+        646690.0,
+        7991500.0
+      ],
+      "transform": [
+        10.0,
+        0.0,
+        353310.0,
+        0.0,
+        -10.0,
+        7991500.0
+      ],
+      "resolution": [
+        10.0,
+        10.0
+      ],
+      "scales": [
+        1.0
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "bands": [
+        {
+          "index": 1,
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "allPixelsDecoded": 2624225424,
+          "validPixels": 15379549,
+          "validFraction": 0.005860605136794071,
+          "minimum": 1,
+          "maximum": 11,
+          "valueCounts": {
+            "1": 11738072,
+            "2": 114433,
+            "4": 21500,
+            "8": 508569,
+            "9": 1919328,
+            "10": 105144,
+            "11": 972503
+          },
+          "firstUsableSample": {
+            "column": 17919,
+            "row": 8533,
+            "value": 1
+          }
+        }
+      ],
+      "seconds": 3.266,
+      "completeDecode": true
+    },
+    "scope": "One published supercell with every original pixel independently decoded; not global class-accuracy or requested-area coverage validation"
+  },
+  "nativeGenericFlow": {
+    "binarySha256": "aae7ad3eaab3c87ac17a83600abb79edd5a41cf5d885d4246fa5895b6a4fdd1c",
+    "status": "native-original-download-passed; inspection-blocked-by-axis-limit",
+    "nativeDownloadSeconds": 15.531,
+    "jobId": "71f88751-8cf9-41b9-b941-e3e3a98ece66",
+    "originalSha256": "ed2f9bebdd374a1f725821db3981c4b8b4e0ec07a2200bbfc0cfba588d297ac9",
+    "sourceSnapshotId": "86db89d9c604d5850762252fc58d084299baec00947d188b03ab6cd0d47a1091",
+    "sourceItemId": "29W-2024",
+    "itemDocumentSha256": "7ff6792d52983dee15f04151687c2b96063a7742cc2c5e856f6df1593553892a",
+    "originalQueryProof": {
+      "documentUrl": "https://api.impactobservatory.com/stac-aws/search",
+      "documentRequest": {
+        "url": "https://api.impactobservatory.com/stac-aws/search",
+        "method": "POST",
+        "body": {
+          "bbox": [
+            -8.75,
+            70.9,
+            -8.65,
+            70.98
+          ],
+          "collections": [
+            "io-10m-annual-lulc"
+          ],
+          "datetime": "2024-01-02T00:00:00Z/2024-12-30T23:59:59Z",
+          "limit": 10
+        }
+      },
+      "metadataDocuments": [
+        {
+          "url": "https://api.impactobservatory.com/stac-aws/",
+          "sha256": "56391b4e528367a4d4a77a84aef16257b954076c01ce924b4d2c1706ca3846e7"
+        },
+        {
+          "url": "https://api.impactobservatory.com/stac-aws/collections",
+          "sha256": "7a19472a3cb1179444340a1079b7360d0897af2f8b4f178229e1fe7d1d05569c"
+        }
+      ],
+      "search": {
+        "connectionId": "8558a1a7-93a6-42bc-880e-02b56c2d6995",
+        "collectionId": "io-10m-annual-lulc",
+        "bounds": [
+          -8.75,
+          70.9,
+          -8.65,
+          70.98
+        ],
+        "datetime": "2024-01-02T00:00:00Z/2024-12-30T23:59:59Z",
+        "limit": 10,
+        "cursor": null
+      },
+      "collection": {
+        "description": "Time series of annual global maps of land use and land cover (LULC). It currently has data from 2017-2024. The maps are derived from ESA Sentinel-2 imagery at 10m resolution. Each map is a composite of LULC predictions for 9 classes throughout the year in order to generate a representative snapshot of each year. This dataset was generated by [Impact Observatory](http://impactobservatory.com/), who used billions of human-labeled pixels (curated by the National Geographic Society) to train a deep learning model for land classification. The global map was produced by applying this model to the Sentinel-2 annual scene collections on the Planetary Computer. Each of the maps has an assessed average accuracy of over 75%. All years are available under a Creative Commons BY-4.0.",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                -180,
+                -90,
+                180,
+                90
+              ]
+            ]
+          },
+          "temporal": {
+            "interval": [
+              [
+                "2017-01-01T00:00:00Z",
+                "2025-01-01T00:00:00Z"
+              ]
+            ]
+          }
+        },
+        "id": "io-10m-annual-lulc",
+        "license": "proprietary",
+        "links": [
+          {
+            "href": "https://api.impactobservatory.com/stac-aws/collections/io-10m-annual-lulc/items",
+            "rel": "items",
+            "type": "application/geo+json"
+          },
+          {
+            "href": "https://api.impactobservatory.com/stac-aws/",
+            "rel": "parent",
+            "type": "application/json"
+          },
+          {
+            "href": "https://api.impactobservatory.com/stac-aws/",
+            "rel": "root",
+            "type": "application/json"
+          },
+          {
+            "href": "https://api.impactobservatory.com/stac-aws/collections/io-10m-annual-lulc",
+            "rel": "self",
+            "type": "application/json"
+          },
+          {
+            "href": "https://api.impactobservatory.com/stac-aws/collections/io-10m-annual-lulc/queryables",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+            "title": "Queryables",
+            "type": "application/schema+json"
+          },
+          {
+            "href": "https://api.impactobservatory.com/stac-aws/collections/io-10m-annual-lulc/queryables",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+            "title": "Queryables",
+            "type": "application/schema+json"
+          }
+        ],
+        "stac_version": "1.1.0",
+        "title": "10m Annual Land Use Land Cover (9-class)",
+        "type": "Collection"
+      }
+    },
+    "discoveryStartedNoDownloads": true,
+    "reopenedOriginalProjectVerified": true,
+    "inspectionReceipt": {
+      "status": 400,
+      "body": "{\"error\":\"Generic raster dimensions exceed 65,536 pixels per side\"}"
+    },
+    "ownRuntimeStopped": true,
+    "nativeWindowTested": false
+  },
+  "proposedSafeReaderExpansion": {
+    "oldStrippedMaximumAxis": 65536,
+    "tiledMaximumAxis": 131072,
+    "maximumImagePixels": 8000000000,
+    "retainPerChunkWorstCaseDecodeBytes": 134217728,
+    "retainIntermediateBytes": 33554432,
+    "retainIfdValueBytes": 1048576,
+    "retainPreviewCumulativeBytes": 536870912,
+    "retainPreviewEdge": 768,
+    "retainPreviewSeconds": 30,
+    "scope": "Recommendation only at time of old native failure; final curated acceptance must use its own frozen new executable",
+    "svalbardSupercell134279HeightStillRejected": true,
+    "indexReview": "chunk_layout checked count bounds pixel/preview indices; coordinates already use u64; data chunks are clipped to image extents by tiff0.11.3"
+  },
+  "privateEvidenceRoot": ".verification/io-lulc-candidate-20261012",
+  "noClaims": [
+    "No thematic palette rendering accepted",
+    "No sensor-specific processing or cropping accepted",
+    "No exhaustive regional source capability accepted",
+    "No 2025 annual TIFF release assumed"
+  ]
+}

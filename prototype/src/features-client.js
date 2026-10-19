@@ -1,5 +1,6 @@
 import {desktopAvailable} from './runtime-client.js';
 import {validateVectorAsset,validateArcgisLayer,arcgisServiceRoot,validArcgisLayerId,validPublicFeatureUrl,validOverpassBounds,validOverpassEndpoint,validOsmCopyright,validateWfsLayer,validWfsQName,validWfsText,OVERPASS_PRESETS,OVERPASS_DESCRIPTION,OSM_LICENSE_URL} from './vector-client.js';
+import {validateGeoBoundariesService,GEOBOUNDARIES_SELECTION} from './geoboundaries-client.js';
 export {validOverpassBounds};
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const digest=/^[a-f0-9]{64}$/;
@@ -18,7 +19,9 @@ export function validateFeatureService(service) {
   const ids=new Set();
   const hasOverpass=service.overpass!==undefined&&service.overpass!==null;
   const hasWfs=service.wfs!==undefined&&service.wfs!==null;
-  if(['arcgis','overpass','wfs'].filter(key=>service[key]!==undefined&&service[key]!==null).length>1)throw new Error('Ambiguous data service protocol.');
+  const hasGeoBoundaries=service.geoboundaries!==undefined&&service.geoboundaries!==null;
+  if(['arcgis','overpass','wfs','geoboundaries'].filter(key=>service[key]!==undefined&&service[key]!==null).length>1)throw new Error('Ambiguous data service protocol.');
+  if(hasGeoBoundaries)validateGeoBoundariesService(service);
   if(hasWfs) {
     const meta=service.wfs;
     if(!plain(meta)||!validOverpassEndpoint(service.url)||meta.version!=='2.0.0'||!digest.test(meta.capabilitiesSha256)||!validWfsText(meta.fees)||!validWfsText(meta.accessConstraints)
@@ -38,8 +41,13 @@ export function validateFeatureService(service) {
   for(const c of service.collections) {
     if(!plain(c)||!clean(c.id,160)||ids.has(c.id)||!clean(c.title,240)||!bytes(c.description,16384)||!validServiceUrl(c.itemsUrl)||new URL(c.itemsUrl).origin!==new URL(service.url).origin||!Array.isArray(c.licenseLinks)||c.licenseLinks.length>16||c.licenseLinks.some(raw=>{try{const u=new URL(raw);return !bytes(raw,2048)||!['http:','https:'].includes(u.protocol)||u.username||u.password;}catch{return true;}}))throw new Error('Invalid saved feature collection.');
     ids.add(c.id);
+    if(!hasGeoBoundaries&&c.geoboundaries!==undefined&&c.geoboundaries!==null)throw new Error('Unexpected geoBoundaries layer metadata.');
     if(!hasWfs&&c.wfs!==undefined&&c.wfs!==null)throw new Error('Unexpected WFS feature type metadata.');
-    if(hasOverpass) {
+    if(hasGeoBoundaries) {
+      // The dedicated validator ties each complete country file to the
+      // discovery record and does not treat its API as an OGC items endpoint.
+      if(c.arcgis!==undefined&&c.arcgis!==null||c.overpass!==undefined&&c.overpass!==null)throw new Error('Ambiguous geoBoundaries collection protocol.');
+    }else if(hasOverpass) {
       if(c.id!==Object.keys(OVERPASS_PRESETS)[ids.size-1]||c.title!==OVERPASS_PRESETS[c.id]||c.description!==OVERPASS_DESCRIPTION||c.itemsUrl!==service.url||c.licenseLinks.length!==1||c.licenseLinks[0]!==OSM_LICENSE_URL||c.arcgis!==undefined&&c.arcgis!==null)throw new Error('Invalid saved OSM category.');
     }else if(hasWfs) {
       validateWfsLayer(c.wfs);
@@ -79,6 +87,6 @@ export async function featureRequest(operation,payload={},signal) {
   check();
   if(operation==='list'){if(!Array.isArray(value)||value.length>24)throw new Error('Invalid data service registry.');value.forEach(validateFeatureService);}
   if(operation==='connect')validateFeatureService(value);
-  if(operation==='query') {validateVectorAsset(value);if(!value.osmSource&&(!value.remoteSource||value.remoteSource.selection!==(value.remoteSource.wfs?'wfs-bbox-full-features':'bbox-full-features')||value.remoteSource.featureCount!==value.featureCount))throw new Error('Feature extraction has no complete query provenance.');}
+  if(operation==='query') {validateVectorAsset(value);if(!value.osmSource&&(!value.remoteSource||value.remoteSource.selection!==(value.remoteSource.geoboundaries?GEOBOUNDARIES_SELECTION:value.remoteSource.wfs?'wfs-bbox-full-features':'bbox-full-features')||value.remoteSource.featureCount!==value.featureCount))throw new Error('Feature extraction has no complete query provenance.');}
   return value;
 }

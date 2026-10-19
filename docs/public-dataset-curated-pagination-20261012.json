@@ -1,0 +1,128 @@
+{
+  "schema": "geod-curated-public-source-pagination/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-12T05:00:33.396544+00:00",
+  "binarySha256": "df0c681841690af165bc8956058b1bca00d349d10b2374e5fbb932193b45ec63",
+  "query": {
+    "connectionId": "08687c2c-5431-4fb4-bbc3-b2d1045de42f",
+    "collectionId": "CB4-WFI-L4-SR-1",
+    "bounds": [
+      -74,
+      -34,
+      -34,
+      6
+    ],
+    "datetime": "2026-09-01T00:00:00Z/2026-09-30T23:59:59.999999Z",
+    "limit": 2
+  },
+  "firstPage": {
+    "count": 2,
+    "complete": false,
+    "limitReached": false,
+    "nextCursorPresent": true
+  },
+  "secondPage": {
+    "count": 2,
+    "complete": false,
+    "limitReached": false,
+    "nextCursorPresent": true
+  },
+  "distinctItemsAcrossPages": true,
+  "originalQueryAndDocumentHashesVerified": true,
+  "metadataOnly": true,
+  "newDownloadJobIds": [],
+  "receipts": [
+    {
+      "page": 1,
+      "itemId": "CBERS_4_AWFI_20260930_167_111_L4",
+      "snapshotId": "8cb41324991c129dde5acdff6600d989f86f1b43471b080bbe540e46f49e4558",
+      "documentSha256": "f1d1e18373f62c356e62dfdf48c6be4fe7445bfcb60da8fb9cdf6f83571bffa4",
+      "savedSearch": {
+        "connectionId": "08687c2c-5431-4fb4-bbc3-b2d1045de42f",
+        "collectionId": "CB4-WFI-L4-SR-1",
+        "bounds": [
+          -74.0,
+          -34.0,
+          -34.0,
+          6.0
+        ],
+        "datetime": "2026-09-01T00:00:00Z/2026-09-30T23:59:59.999999Z",
+        "limit": 2,
+        "cursor": null
+      },
+      "originalRequest": {
+        "url": "https://data.inpe.br/bdc/stac/v1/search?collections=CB4-WFI-L4-SR-1&bbox=-74%2C-34%2C-34%2C6&limit=2&datetime=2026-09-01T00%3A00%3A00Z%2F2026-09-30T23%3A59%3A59.999999Z",
+        "method": "GET"
+      }
+    },
+    {
+      "page": 1,
+      "itemId": "CBERS_4_AWFI_20260930_167_099_L4",
+      "snapshotId": "a9b4eda9535dda53d4d4c330b6a8d15cf24e108d30fefe6529b19766a01f5ec5",
+      "documentSha256": "f1d1e18373f62c356e62dfdf48c6be4fe7445bfcb60da8fb9cdf6f83571bffa4",
+      "savedSearch": {
+        "connectionId": "08687c2c-5431-4fb4-bbc3-b2d1045de42f",
+        "collectionId": "CB4-WFI-L4-SR-1",
+        "bounds": [
+          -74.0,
+          -34.0,
+          -34.0,
+          6.0
+        ],
+        "datetime": "2026-09-01T00:00:00Z/2026-09-30T23:59:59.999999Z",
+        "limit": 2,
+        "cursor": null
+      },
+      "originalRequest": {
+        "url": "https://data.inpe.br/bdc/stac/v1/search?collections=CB4-WFI-L4-SR-1&bbox=-74%2C-34%2C-34%2C6&limit=2&datetime=2026-09-01T00%3A00%3A00Z%2F2026-09-30T23%3A59%3A59.999999Z",
+        "method": "GET"
+      }
+    },
+    {
+      "page": 2,
+      "itemId": "CBERS_4_AWFI_20260930_167_105_L4",
+      "snapshotId": "a1a5ac1c755ca9e3aca87aae4e7538c92817b3a5635901a870182e87f55e18f2",
+      "documentSha256": "98c3af68cc6572380d182a5361d601b6610999923c94dd137c1a883c8fb95b5d",
+      "savedSearch": {
+        "connectionId": "08687c2c-5431-4fb4-bbc3-b2d1045de42f",
+        "collectionId": "CB4-WFI-L4-SR-1",
+        "bounds": [
+          -74.0,
+          -34.0,
+          -34.0,
+          6.0
+        ],
+        "datetime": "2026-09-01T00:00:00Z/2026-09-30T23:59:59.999999Z",
+        "limit": 2,
+        "cursor": null
+      },
+      "originalRequest": {
+        "url": "https://data.inpe.br/bdc/stac/v1/search?collections=CB4-WFI-L4-SR-1&bbox=-74%2C-34%2C-34%2C6&limit=2&datetime=2026-09-01T00%3A00%3A00Z%2F2026-09-30T23%3A59%3A59.999999Z&page=2",
+        "method": "GET"
+      }
+    },
+    {
+      "page": 2,
+      "itemId": "CBERS_4_AWFI_20260929_150_111_L4",
+      "snapshotId": "f07ec65fe1628309292bf406af12c97d1974cc6648ffa43bcfa9364d23d992cd",
+      "documentSha256": "98c3af68cc6572380d182a5361d601b6610999923c94dd137c1a883c8fb95b5d",
+      "savedSearch": {
+        "connectionId": "08687c2c-5431-4fb4-bbc3-b2d1045de42f",
+        "collectionId": "CB4-WFI-L4-SR-1",
+        "bounds": [
+          -74.0,
+          -34.0,
+          -34.0,
+          6.0
+        ],
+        "datetime": "2026-09-01T00:00:00Z/2026-09-30T23:59:59.999999Z",
+        "limit": 2,
+        "cursor": null
+      },
+      "originalRequest": {
+        "url": "https://data.inpe.br/bdc/stac/v1/search?collections=CB4-WFI-L4-SR-1&bbox=-74%2C-34%2C-34%2C6&limit=2&datetime=2026-09-01T00%3A00%3A00Z%2F2026-09-30T23%3A59%3A59.999999Z&page=2",
+        "method": "GET"
+      }
+    }
+  ]
+}

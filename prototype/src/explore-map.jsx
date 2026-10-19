@@ -23,6 +23,7 @@ import { prepareAssetAccess } from './providers.js';
 import { imageryHrefs } from './explore-imagery.js';
 import { createImagerySource } from './explore-imagery-source.js';
 import { createCatalogPreviewSource } from './explore-preview-source.js';
+import { createProductRasterPreviewSource, hasProductRasterTilePixels } from './public-dataset-preview-source.js';
 import { catalogPreviewKind, catalogPreviewChannel } from './catalog-preview.js';
 import { CatalogPreviewLegend } from './catalog-preview-ui.jsx';
 import 'ol/ol.css';
@@ -91,7 +92,15 @@ function fitExtent(map, extent) {
   if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: 16, duration: 250 });
 }
 
-export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loadedScenes = EMPTY_SCENES, previewScenes = EMPTY_SCENES, selectedIds = [], focusedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, previewChannel, vegetationIndex, onFootprintsPick, onFootprintsChange }, ref) {
+function disposeProductEntry(entry) {
+  entry.active = false;
+  clearInterval(entry.clock);
+  entry.instance.removeLayer(entry.layer);
+  entry.layer.setSource(null);
+  entry.preview.dispose();
+}
+
+export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loadedScenes = EMPTY_SCENES, previewScenes = EMPTY_SCENES, productRasterLayers = EMPTY_SCENES, onProductRasterStatus, selectedIds = [], focusedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, previewChannel, vegetationIndex, onFootprintsPick, onFootprintsChange }, ref) {
   const { t } = useI18n();
   const target = useRef(null);
   const map = useRef(null);
@@ -105,6 +114,10 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   const sceneExtentRef = useRef(null);
   const areaExtentRef = useRef(null);
   const focusExtentRef = useRef(null);
+  const productExtentRef = useRef(null);
+  const productRegistry = useRef(new Map());
+  const onProductRasterStatusRef = useRef(onProductRasterStatus);
+  const [productStates, setProductStates] = useState({});
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState({ metadataReady: false, requested: 0, completed: 0, active: 0, elapsed: 0, stalled: false });
@@ -114,12 +127,14 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   const areaKey = area?.join(',');
   onFootprintsPickRef.current = onFootprintsPick;
   boxSelectRef.current = boxSelect;
+  onProductRasterStatusRef.current = onProductRasterStatus;
   const shouldLoad = loadedScenes.some(item => item.id === scene?.id) && (!activeDay || scene?.date?.slice(0, 10) === activeDay);
   const channel = previewChannel ?? vegetationIndex, previewKind = catalogPreviewKind(scene?.provider);
   const onlinePreview = !!channel && !!previewKind && (!activeDay || scene.date.slice(0, 10) === activeDay);
   const indexPreview = onlinePreview && previewKind === 'vegetation';
   const shouldRender = shouldLoad || onlinePreview;
-  const rasterBackdrop = shouldRender || [...loadedScenes,...previewScenes].some(item => !activeDay || item.date.slice(0, 10) === activeDay);
+  const rasterBackdrop = shouldRender || productRasterLayers.some(item => item.visible !== false)
+    || [...loadedScenes,...previewScenes].some(item => !activeDay || item.date.slice(0, 10) === activeDay);
   const retryMap = async () => {
     try {
       await prepareAssetAccess([...loadedScenes, reference].flatMap(imageryHrefs), { force: true });
@@ -130,12 +145,13 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   useImperativeHandle(ref, () => ({
     zoomIn() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.animate({ resolution: view.getResolution() / 2, duration: 240 }); } },
     zoomOut() { const view = map.current?.getView(); if (view) { view.cancelAnimations(); view.animate({ resolution: view.getResolution() * 2, duration: 240 }); } },
-    fit() { if (map.current && (footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current); },
+    fit() { if (map.current && (productExtentRef.current || footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current)) fitExtent(map.current, productExtentRef.current || footprintUnionRef.current || focusExtentRef.current || sceneExtentRef.current); },
     fitArea() { if (map.current && areaExtentRef.current) fitExtent(map.current, areaExtentRef.current); },
   }), []);
 
   useEffect(() => {
     setError(''); setReady(false);
+    setProductStates({});
     setLoading({ metadataReady: false, requested: 0, completed: 0, active: 0, elapsed: 0, stalled: false });
     if (!target.current) return;
     let cancelled = false;
@@ -241,6 +257,9 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     return () => {
       cancelled = true; clearInterval(loadingClock); resize?.disconnect();
       if (instance) {
+        for (const [id, entry] of productRegistry.current) {
+          if (entry.instance === instance) { disposeProductEntry(entry); productRegistry.current.delete(id); }
+        }
         if (fitted) savedViewRef.current = { areaKey, center: instance.getView().getCenter()?.slice(), resolution: instance.getView().getResolution() };
         instance.setTarget(undefined); instance.dispose();
       }
@@ -248,6 +267,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       else source?.dispose();
       map.current = null; areaLayer.current = null; footprintSource.current = null; referenceLayer.current = null;
       sceneExtentRef.current = null; areaExtentRef.current = null; focusExtentRef.current = null;
+      productExtentRef.current = null;
     };
   }, [scene?.id, areaKey, retry, shouldLoad, channel, onlinePreview]);
 
@@ -351,6 +371,114 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     };
   }, [scene?.id, areaKey, loadedScenes, previewScenes, activeDay, retry, shouldLoad, channel, onlinePreview]);
 
+  // Public products are independently keyed original TIFF layers. Selection,
+  // visibility and opacity do not reconstruct sources or re-read metadata.
+  useEffect(() => {
+    const instance = map.current;
+    if (!instance) return;
+    const registry = productRegistry.current;
+    const descriptors = new Map(productRasterLayers.slice(0, 4).map(item => [item.id, item]));
+    const union = () => {
+      const extents = [...registry.values()].filter(entry => entry.active && entry.visible && entry.status !== 'error')
+        .map(entry => entry.extent).filter(validExtent);
+      productExtentRef.current = extents.length ? extents.reduce((a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]) : null;
+    };
+    for (const [id, entry] of registry) {
+      const descriptor = descriptors.get(id);
+      if (!descriptor || descriptor.snapshotId !== entry.snapshotId || descriptor.assetKey !== entry.assetKey
+        || (descriptor.retry || 0) !== entry.retry || descriptor.generation !== entry.generation || entry.instance !== instance) {
+        disposeProductEntry(entry); registry.delete(id);
+      }
+    }
+    setProductStates(previous => Object.fromEntries(Object.entries(previous).filter(([id]) => registry.has(id))));
+    productRasterLayers.slice(0, 4).forEach((descriptor, index) => {
+      let entry = registry.get(descriptor.id);
+      const visible = descriptor.visible !== false;
+      const opacity = Number.isFinite(descriptor.opacity) ? Math.max(0, Math.min(1, descriptor.opacity)) : 1;
+      if (entry) {
+        entry.layer.setVisible(visible); entry.layer.setOpacity(opacity); entry.layer.setZIndex(8 + index * 0.25);
+        if (entry.visible !== visible || entry.title !== descriptor.title) {
+          if (!entry.visible && visible) entry.lastActivity = Date.now();
+          entry.visible = visible; entry.title = descriptor.title;
+          setProductStates(previous => ({ ...previous, [entry.id]: { ...previous[entry.id], visible, title: entry.title } }));
+        }
+        return;
+      }
+      try {
+        if (descriptor.id !== JSON.stringify([descriptor.snapshotId, descriptor.assetKey])) throw new Error('Choose a saved original raster asset to preview.');
+        const preview = createProductRasterPreviewSource(descriptor);
+        const layer = new WebGLTileLayer({ source: preview.source, style: preview.style, cacheSize: 32, className: 'explore-product-raster-layer',
+          zIndex: 8 + index * 0.25, visible, opacity });
+        entry = { id: descriptor.id, snapshotId: descriptor.snapshotId, assetKey: descriptor.assetKey,
+          retry: descriptor.retry || 0, generation: descriptor.generation, title: descriptor.title, visible, instance, preview, layer, active: true,
+          status: 'loading', metadata: null, extent: null, pixels: false, lastActivity: Date.now() };
+        registry.set(entry.id, entry);
+        const current = () => entry.active && registry.get(entry.id) === entry && map.current === instance;
+        const publish = (status, error) => {
+          if (!current()) return;
+          entry.status = status;
+          const payload = { status, generation: entry.generation, retry: entry.retry,
+            ...(error ? { error } : {}), ...(entry.metadata ? { metadata: entry.metadata } : {}) };
+          setProductStates(previous => ({ ...previous, [entry.id]: { ...payload, visible: entry.visible, title: entry.title } }));
+          onProductRasterStatusRef.current?.(entry.id, payload);
+          union();
+        };
+        const fail = error => {
+          if (!current() || entry.status === 'error') return;
+          clearInterval(entry.clock);
+          publish('error', error || 'The original raster preview could not be read. Retry this layer or download the original.');
+          // Stop the failed source's outstanding ranges. Retrying creates only
+          // this descriptor's new source; other product layers remain intact.
+          entry.layer.setSource(null); entry.preview.dispose();
+        };
+        const maybeReady = () => {
+          if (current() && entry.status !== 'error' && entry.metadata && entry.pixels && entry.status !== 'ready') {
+            clearInterval(entry.clock); publish('ready');
+          }
+        };
+        // Strip TIFF initialization can span several verified ranges before a
+        // tile exists. Reading progress keeps the stall clock honest; it never
+        // marks a layer ready without decoded, visible original pixels.
+        preview.source.on('rasterreadprogress', () => { if (current()) entry.lastActivity = Date.now(); });
+        preview.source.on('tileloadstart', () => { if (current()) entry.lastActivity = Date.now(); });
+        preview.source.on('tileloadend', event => {
+          if (!current() || entry.status === 'error') return;
+          entry.lastActivity = Date.now();
+          if (hasProductRasterTilePixels(event, { hasAlpha: preview.source.hasAlpha, bandCount: preview.source.bandCount })) entry.pixels = true;
+          maybeReady();
+        });
+        preview.source.on('tileloaderror', () => fail());
+        preview.source.on('error', () => fail(preview.source.getError()?.message));
+        preview.source.on('change', () => { if (preview.source.getState() === 'error') fail(preview.source.getError()?.message); });
+        entry.clock = setInterval(() => {
+          if (current() && entry.visible && entry.status === 'loading' && Date.now() - entry.lastActivity >= 45000)
+            fail('The original raster preview stopped responding. Retry this layer.');
+        }, 1000);
+        instance.addLayer(layer); publish('loading');
+        preview.source.getView().then(() => {
+          if (!current() || entry.status === 'error') return;
+          const metadata = preview.getMetadata();
+          const extent = transformExtent(metadata.bounds, metadata.crs, OVERVIEW_PROJECTION, 16);
+          if (!validExtent(extent)) throw new Error('This original has no supported north-up raster preview grid.');
+          entry.metadata = metadata; entry.extent = extent; entry.lastActivity = Date.now();
+          layer.setExtent(extent); layer.setStyle(preview.getStyle());
+          publish('loading'); maybeReady();
+        }).catch(error => fail(error.message));
+      } catch (error) {
+        const payload = { status: 'error', generation: descriptor.generation, retry: descriptor.retry || 0, error: error.message };
+        setProductStates(previous => ({ ...previous, [descriptor.id]: { ...payload, visible, title: descriptor.title } }));
+        onProductRasterStatusRef.current?.(descriptor.id, payload);
+      }
+    });
+    for (const descriptor of productRasterLayers.slice(4)) {
+      const payload = { status: 'error', generation: descriptor.generation, retry: descriptor.retry || 0,
+        error: 'Load up to 4 original raster previews at a time.' };
+      setProductStates(previous => ({ ...previous, [descriptor.id]: { ...payload, visible: descriptor.visible !== false, title: descriptor.title } }));
+      onProductRasterStatusRef.current?.(descriptor.id, payload);
+    }
+    union();
+  }, [productRasterLayers, scene?.id, areaKey, retry, shouldLoad, channel, onlinePreview]);
+
   useEffect(() => {
     const instance = map.current;
     if (!instance) return;
@@ -400,8 +528,10 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   const metadataReady = otherLoading.metadata + (shouldRender && loading.metadataReady ? 1 : 0) + (reference && referenceLoading.metadataReady ? 1 : 0);
   const metadataTotal = otherLoading.total + (shouldRender ? 1 : 0) + (reference ? 1 : 0);
   const imageryLayerCount=new Set([...loadedScenes,...previewScenes].map(item=>item.id).concat(onlinePreview?[scene.id]:[])).size;
-  return <div className="explore-map-root" data-imagery-layers={imageryLayerCount} data-map-ready={ready ? 'true' : 'false'} data-preview-kind={onlinePreview ? previewKind : undefined} data-preview-channel={onlinePreview ? channel : undefined} data-preview-index={indexPreview ? channel : undefined} data-preview-item={onlinePreview ? scene.id : undefined} data-reference-ready={reference && referenceLoading.ready ? 'true' : 'false'} data-box-select={boxSelect ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
-    <div className="explore-map-target" ref={target} aria-label={t(indexPreview ? 'Georeferenced vegetation index map' : onlinePreview ? 'Georeferenced map preview' : loadedScenes.length ? 'Georeferenced true-color imagery map' : 'Scene footprint map')} />
+  const productEntries = Object.values(productStates), visibleProducts = productEntries.filter(item => item.visible);
+  const productPending = visibleProducts.filter(item => item.status === 'loading'), productErrors = visibleProducts.filter(item => item.status === 'error');
+  return <div className="explore-map-root" data-imagery-layers={imageryLayerCount} data-product-raster-layers={productRegistry.current.size} data-product-raster-visible={visibleProducts.length} data-product-raster-ready={visibleProducts.filter(item => item.status === 'ready').length} data-map-ready={ready ? 'true' : 'false'} data-preview-kind={onlinePreview ? previewKind : undefined} data-preview-channel={onlinePreview ? channel : undefined} data-preview-index={indexPreview ? channel : undefined} data-preview-item={onlinePreview ? scene.id : undefined} data-reference-ready={reference && referenceLoading.ready ? 'true' : 'false'} data-box-select={boxSelect ? 'true' : 'false'} style={{ '--compare-mask-right': `${100 - split}%` }}>
+    <div className="explore-map-target" ref={target} aria-label={t(productRasterLayers.length ? 'Original first-band grayscale preview' : indexPreview ? 'Georeferenced vegetation index map' : onlinePreview ? 'Georeferenced map preview' : loadedScenes.length ? 'Georeferenced true-color imagery map' : 'Scene footprint map')} />
     {onlinePreview && <CatalogPreviewLegend scene={scene} channel={channel} />}
     {!error && ((shouldRender && !ready) || otherLoading.metadata < otherLoading.total || activeRequests > 0 || (reference && !referenceLoading.ready)) && <Surface className={`explore-map-message explore-map-progress${ready ? ' explore-map-progress-compact' : ''}${onlinePreview ? ' explore-map-progress-index' : ''}`}>
       <div className="explore-map-progress-heading"><Spinner size={17}/><strong>{t(onlinePreview ? 'Loading {index} preview…' : reference && !referenceLoading.ready ? 'Loading reference imagery…' : loadedScenes.length > 1 ? 'Loading selected COG layers · {count}' : 'Loading true-color COG', { index: previewKind === 'elevation' ? t('Height') : channel?.toUpperCase(), count: loadedScenes.length })}</strong><span>{t('Metadata {ready}/{total}', { ready: metadataReady, total: metadataTotal })}</span></div>
@@ -411,5 +541,10 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       {loading.stalled && <div className="explore-map-progress-stalled"><span>{t('Imagery source is responding slowly. You can keep waiting or retry.')}</span><Button size="xs" onClick={retryMap}><RefreshCw size={13}/>{t('Retry map')}</Button></div>}
     </Surface>}
     {error && <Surface className="explore-map-message explore-map-error" role="alert"><strong>{t('Map unavailable')}</strong><span>{t(error)}</span><Button onClick={retryMap}><RefreshCw size={14}/>{t('Retry map')}</Button></Surface>}
+    {typeof onProductRasterStatus !== 'function' && (productPending.length > 0 || productErrors.length > 0) && <Surface className="explore-map-message explore-map-progress explore-map-progress-compact" role={productErrors.length ? 'alert' : 'status'}>
+      <strong>{t('Original first-band grayscale preview')}</strong>
+      {productPending.length > 0 && <div className="explore-map-progress-heading"><Spinner size={17}/><span>{t('Loading original raster previews · {count}', { count: productPending.length })}</span></div>}
+      {productErrors.map((item, index) => <div key={index}><strong>{item.title || t('Original raster preview unavailable')}</strong><p>{t(item.error)}</p></div>)}
+    </Surface>}
   </div>;
 });

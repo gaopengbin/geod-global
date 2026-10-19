@@ -34,7 +34,7 @@ function styles(target) {
   };
 }
 
-export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
+export function AreaPicker({ initialBbox, onApply, onExport, onClose, applyLabel = 'Search this area' }) {
   const { t, number, locale } = useI18n();
   const [fields, setFields] = useState(() => initialBbox?.map(String) || ['', '', '', '']);
   const [drawing, setDrawing] = useState(false);
@@ -279,6 +279,6 @@ export function AreaPicker({ initialBbox, onApply, onExport, onClose }) {
         {parsed.bounds && <output className="aoi-summary mono">[{parsed.bounds.map(value => number(value, { maximumFractionDigits: 5 })).join(', ')}]</output>}
       </div>
     </div>
-    <div className="aoi-actions"><Button onClick={onClose}>{t('Cancel')}</Button><Button icon={Download} disabled={!parsed.bounds || waitingForPolygon} onClick={exportArea}>{t('Download area GeoJSON')}</Button><Button primary icon={Search} disabled={!parsed.bounds || waitingForPolygon} onClick={() => onApply(selectedArea())}>{t('Search this area')}</Button></div>
+    <div className="aoi-actions"><Button onClick={onClose}>{t('Cancel')}</Button><Button icon={Download} disabled={!parsed.bounds || waitingForPolygon} onClick={exportArea}>{t('Download area GeoJSON')}</Button><Button primary icon={Search} disabled={!parsed.bounds || waitingForPolygon} onClick={() => onApply(selectedArea())}>{t(applyLabel)}</Button></div>
   </div>;
 }

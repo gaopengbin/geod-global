@@ -1,7 +1,7 @@
 export const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 export const KEY = /^[a-z][a-z0-9_]{0,31}$/;
 export const HASH = /^[a-f0-9]{64}$/;
-export const KINDS = ['raster', 'rgb', 'stac', 'wcs', 'vector', 'project', 'metadata', 'unavailable'];
+export const KINDS = ['raster', 'rgb', 'stac', 'wcs', 'archive', 'vector', 'project', 'metadata', 'unavailable'];
 const STATES = ['active', 'waiting_input', 'waiting_confirmation', 'waiting_jobs', 'needs_attention', 'paused', 'complete', 'budget_limited'];
 const ENGINE_STATES = ['active', 'paused', 'blocked', 'usageLimited', 'budgetLimited', 'complete'];
 export const object = (value, keys) => value && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).every(key => keys.includes(key));

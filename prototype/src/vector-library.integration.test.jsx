@@ -2,12 +2,26 @@ import React from 'react';import {it,expect,vi,beforeEach} from 'vitest';
 import {render,screen,waitFor} from '@testing-library/react';import userEvent from '@testing-library/user-event';
 import {VectorLibrary} from './vector-library.jsx';
 import {vectorRequest,exportVector} from './vector-client.js';import {desktopAvailable} from './runtime-client.js';
+import official from './official-vector-native.fixture.json';import overture from './overture-native.fixture.json';
 vi.mock('./i18n.jsx',()=>({useI18n:()=>({t:(s,v)=>s.replace('{count}',v?.count??''),number:String})}));
 vi.mock('./runtime-client.js',()=>({desktopAvailable:vi.fn(()=>true)}));
 vi.mock('./vector-client.js',()=>({vectorRequest:vi.fn(),importVectorFile:vi.fn(),exportVector:vi.fn()}));
 const id='735f227b-5f95-473f-967b-077f3419bc68';
 const asset={id,name:'Local Berlin <script>.json',featureCount:247,coordinateCount:5400,format:'overpass-json',storageMode:'reference',crs:'EPSG:4326',sourceSha256:'a'.repeat(64),licenseUrl:'https://www.openstreetmap.org/copyright',attribution:'© OpenStreetMap contributors',dataTimestamp:'2026-10-02T00:00:00Z'};
 beforeEach(()=>{vi.clearAllMocks();desktopAvailable.mockReturnValue(true);vectorRequest.mockImplementation(async op=>op==='list'?[asset]:null);});
+it('Microsoft whole gzip originals retain their own bytes/hash/licence and export independently from converted GeoJSON',async()=>{
+  const source=official[0];vectorRequest.mockResolvedValue([source]);const user=userEvent.setup();render(<VectorLibrary/>);await screen.findByText(source.name);expect(screen.getByText(/GeoJSONL gzip/)).toBeTruthy();
+  await user.click(screen.getByRole('button',{name:'Export original GeoJSONL gzip'}));expect(exportVector).toHaveBeenCalledWith(source.id,true);
+  await user.click(screen.getByRole('button',{name:'Export GeoJSON'}));expect(exportVector).toHaveBeenCalledWith(source.id);
+  await user.click(screen.getByRole('button',{name:'Vector source details'}));expect(screen.getByText(source.sourceSha256)).toBeTruthy();expect(screen.getByText(source.geojsonSha256)).toBeTruthy();expect(screen.getByText(source.bytes+' B')).toBeTruthy();expect(screen.getByRole('link',{name:'CDLA Permissive 2.0'}).getAttribute('href')).toBe(source.licenseUrl);
+});
+it('Overture reopening labels the subset and preserves original/preview rows, bytes, hashes and exports separately',async()=>{
+  const source=overture.asset;vectorRequest.mockResolvedValue([source]);const user=userEvent.setup();render(<VectorLibrary/>);await screen.findByText(source.name);expect(screen.getByText(/area preview features.*GeoParquet original/)).toBeTruthy();
+  await user.click(screen.getByRole('button',{name:'Export complete original GeoParquet'}));expect(exportVector).toHaveBeenCalledWith(source.id,true);
+  await user.click(screen.getByRole('button',{name:'Export area preview GeoJSON'}));expect(exportVector).toHaveBeenCalledWith(source.id);
+  await user.click(screen.getByRole('button',{name:'Vector source details'}));expect(screen.getByText(source.geoParquet.originalSha256)).toBeTruthy();expect(screen.getByText(source.sourceSha256)).toBeTruthy();expect(screen.getByText(source.geoParquet.originalRows.toString())).toBeTruthy();expect(screen.getByText(source.geoParquet.originalBytes+' B')).toBeTruthy();expect(screen.getByText(source.bytes+' B')).toBeTruthy();expect(screen.queryByText('Source SHA-256')).toBeNull();
+  await user.keyboard('{Escape}');expect(screen.getByRole('link',{name:'Open in workspace'}).getAttribute('href')).toBe('#Workspace?vector='+source.id);
+});
 it('desktop opening references the selected source by default and keeps destructive actions separate from source files',async()=>{
   const user=userEvent.setup();render(<VectorLibrary/>);
   await screen.findByText(asset.name);expect(document.querySelector('script')).toBeNull();

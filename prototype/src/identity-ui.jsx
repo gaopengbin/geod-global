@@ -6,6 +6,7 @@ import {desktopAvailable} from './runtime-client.js';
 import {identityRequest,signedOutIdentity} from './identity-client.js';
 import {SOURCE_DIRECTORY,SOURCE_GROUPS} from './source-directory.js';
 import './identity.css';
+import './brand.css';
 const IdentityContext=createContext(null);
 const messages={
  'service-unavailable':'Account service is unavailable. Try again.',
@@ -40,7 +41,7 @@ export function AccountAvatar({user}){
 }
 export function IdentityEntry({onOpen}){
  const {t}=useI18n(),{snapshot}=useIdentity();
- return <Button variant="quiet" className="identity-entry" onClick={onOpen} aria-label={t(snapshot.user?'Your account':'Sign in')} tooltip={t(snapshot.user?'Your account':'Sign in')}><AccountAvatar user={snapshot.user}/><span className="identity-entry-label">{snapshot.user?.name||t('Sign in')}</span></Button>;
+ return <Button variant="quiet" className="identity-entry" onClick={()=>onOpen(snapshot.user?'Account':'SignIn')} aria-label={t(snapshot.user?'Your account':'Sign in')} tooltip={t(snapshot.user?'Your account':'Sign in')}><AccountAvatar user={snapshot.user}/><span className="identity-entry-label">{snapshot.user?.name||t('Sign in')}</span></Button>;
 }
 export function SignInPage({onContinue}){
  const {t,locale}=useI18n(),{snapshot,loading,error,run}=useIdentity(),[remember,setRemember]=useState(true);
@@ -50,7 +51,7 @@ export function SignInPage({onContinue}){
  const proceed=()=>{if(waiting||loading)void run('cancel');onContinue();};
  return <section className="identity-page dark" data-theme="dark" aria-label={t('GeoD Global account')}>
   <div className="identity-introduction">
-   <div className="identity-wordmark"><img src="/brand/geod-symbol.png" alt="" width="38" height="38"/><span>GeoD <strong>Global</strong></span></div>
+   <div className="identity-wordmark"><img src="/brand/geod-symbol.png" alt="" width="38" height="38"/><span><strong>GeoD</strong> <span className="geod-brand-gradient">Global</span></span></div>
    <div className="identity-pitch"><Badge tone="accent">{t('Many sources. One Agent.')}</Badge><h1>{t('Start with a place. Leave with useful data.')}</h1><p>{t('Find imagery, preview your area, review the plan and keep the result locally.')}</p>
     <div className="identity-workflow">{[[MessageSquare,'Describe your goal'],[Map,'Preview and review'],[FolderCheck,'Keep local results']].map(([Icon,label])=><div key={label}><Icon size={19} aria-hidden="true"/><span>{t(label)}</span></div>)}</div>
     <div className="identity-source-summary"><div><strong>{SOURCE_DIRECTORY.length}</strong><span>{t('Directory entries')}</span></div><div><strong>{SOURCE_GROUPS.length}</strong><span>{t('Product groups')}</span></div></div>

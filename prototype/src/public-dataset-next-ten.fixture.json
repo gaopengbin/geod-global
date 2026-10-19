@@ -1,0 +1,1469 @@
+{
+  "catalog": [
+    {
+      "id": "pc-hrea",
+      "title": "HREA · Settlement electricity access",
+      "category": "population",
+      "description": "HREA 2019 v1 Hong Kong settlement-level predicted likelihood of electrification, derived from nightly VIIRS comparisons with matched uninhabited areas. This is a model probability product, separate from a nighttime-radiance composite, a utility connection inventory, energy consumption or measured outages. Only the exact reviewed Hong Kong Item and lightscore original are indexed.",
+      "version": "HREA v1 · Hong Kong · 2019 reference year",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "HREA research team; Brian Min, University of Michigan; Microsoft Planetary Computer distribution. Cite HREA, the named 2019 v1 Hong Kong Item, the published methodology and Creative Commons BY 4.0; retain version, source links and access date.",
+      "documentationUrl": "https://planetarycomputer.microsoft.com/dataset/hrea",
+      "nominalResolution": "0.0002777778° WGS84 grid · nominal 1 arc-second; country Item bbox and actual TIFF outer bounds differ slightly",
+      "unit": "Dimensionless predicted probability",
+      "valueInterpretation": "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+      "years": [
+        2019
+      ],
+      "defaultYear": 2019,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "lightscore",
+          "title": "Probability of electrification",
+          "unit": "Dimensionless predicted probability",
+          "valueInterpretation": "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+          "scale": 1,
+          "offset": 0,
+          "nodata": -3.3999999521443642e+38
+        }
+      ],
+      "defaultLayer": "lightscore",
+      "discovery": "stac-items",
+      "warnings": [
+        "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+        "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+        "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+        "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+        "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+      ],
+      "limits": [
+        "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+        "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+      ]
+    },
+    {
+      "id": "pc-biodiversity",
+      "title": "Impact Observatory · Biodiversity intactness",
+      "category": "vegetation",
+      "description": "Impact Observatory and Vizzuality v1 2020 modeled terrestrial biodiversity intactness, on the unchanged published WGS84 original covering the reviewed Beijing-region tile. Its abundance and compositional-similarity model uses human-pressure covariates; it is independent of land-cover classes, forest height or a count of observed species.",
+      "version": "Biodiversity Intactness v1 · 2020 · one reviewed 7.18° regional tile",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Impact Observatory and Vizzuality; PREDICTS research data and named human-pressure covariates; Microsoft Planetary Computer distribution. Credit the product, white paper, 2020 v1 Item and CC BY 4.0; retain source links and access date.",
+      "documentationUrl": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pdfs/io-biodiversity/Biodiversity_Intactness_whitepaper.pdf",
+      "nominalResolution": "0.0008983152841195215° WGS84 original grid · 7,992 × 7,992 · nominal 100 m at the equator",
+      "unit": "Dimensionless model score",
+      "valueInterpretation": "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+      "years": [
+        2020
+      ],
+      "defaultYear": 2020,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "data",
+          "title": "Original biodiversity model score",
+          "unit": "Dimensionless model score",
+          "valueInterpretation": "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "data",
+      "discovery": "stac-items",
+      "warnings": [
+        "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+        "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+        "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+        "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+        "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+      ],
+      "limits": [
+        "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+        "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+      ]
+    },
+    {
+      "id": "noaa-ohc",
+      "title": "NOAA · Ocean heat content anomaly",
+      "category": "ocean",
+      "description": "NOAA Global Ocean Heat Content CDR 2020 Q4 seasonal 0–700 m integrated ocean heat-content anomaly relative to WOA09, distributed by Planetary Computer as a complete 1° COG derived from the source NetCDF. It is a historical ocean energy-content anomaly, not sea-surface temperature or current forecasts.",
+      "version": "NOAA OHC CDR · 2020 Q4 · 0–700 m · published COG derivative",
+      "license": "proprietary",
+      "licenseUrl": "https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Ocean_Heat_Content/UseAgreement_01B-41.pdf",
+      "attribution": "NOAA National Centers for Environmental Information Global Ocean Heat Content CDR, doi:10.7289/V53F4MVP; Microsoft Planetary Computer published COG derivative. Cite the specific quarterly interval, 0–700 m depth and access date; preserve the publisher Use Agreement rather than replacing proprietary metadata with a guessed CC license.",
+      "documentationUrl": "https://www.ncei.noaa.gov/products/climate-data-records/global-ocean-heat-content",
+      "nominalResolution": "1° WGS84 area grid · 360 × 180 global cells; nominal 1° is not coastal detail",
+      "unit": "10^18 joules",
+      "valueInterpretation": "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+      "years": [
+        2020
+      ],
+      "defaultYear": 2020,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "heat_content",
+          "title": "0–700 m ocean heat-content anomaly",
+          "unit": "10^18 joules",
+          "valueInterpretation": "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "heat_content",
+      "discovery": "stac-items",
+      "warnings": [
+        "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+        "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+        "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+        "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+        "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+      ],
+      "limits": [
+        "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+        "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+      ]
+    },
+    {
+      "id": "noaa-nclimgrid",
+      "title": "NOAA NClimGrid · Monthly climate observations",
+      "category": "climate",
+      "description": "NOAA NClimGrid September 2022 CONUS monthly average, maximum and minimum air-temperature statistics and precipitation, based on GHCN-D station observations and distributed as unchanged Planetary Computer COG derivatives. Four variables belong to one climate product, not four new imagery channels.",
+      "version": "NClimGrid Monthly · September 2022 · reviewed CONUS published COGs",
+      "license": "proprietary",
+      "licenseUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332",
+      "attribution": "Vose et al. (2014), NOAA Monthly U.S. Climate Gridded Dataset (NClimGrid), Version 1, doi:10.7289/V5SX6B56; NOAA NCEI; Microsoft Planetary Computer published COG derivatives. State September 2022 variable/subset and access date; preserve NOAA use and distribution constraints and original proprietary Collection field.",
+      "documentationUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332",
+      "nominalResolution": "0.04166667° WGS84 grid · 1,385 × 596 · nominal 5 km, not 5 arc-seconds or station-scale accuracy",
+      "unit": "degree Celsius",
+      "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+      "years": [
+        2022
+      ],
+      "defaultYear": 2022,
+      "months": [
+        9
+      ],
+      "defaultMonth": 9,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "tavg",
+          "title": "Monthly average air temperature",
+          "unit": "degree Celsius",
+          "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+          "scale": 1,
+          "offset": 0
+        },
+        {
+          "id": "tmax",
+          "title": "Monthly maximum-temperature statistic",
+          "unit": "degree Celsius",
+          "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+          "scale": 1,
+          "offset": 0
+        },
+        {
+          "id": "tmin",
+          "title": "Monthly minimum-temperature statistic",
+          "unit": "degree Celsius",
+          "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+          "scale": 1,
+          "offset": 0
+        },
+        {
+          "id": "prcp",
+          "title": "Monthly precipitation",
+          "unit": "mm",
+          "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "tavg",
+      "discovery": "stac-items",
+      "warnings": [
+        "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+        "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+        "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+        "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+        "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+      ],
+      "limits": [
+        "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+        "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+      ]
+    },
+    {
+      "id": "ghsl-built-surface",
+      "title": "GHSL · Built-up surface · 2020",
+      "category": "thematic",
+      "description": "Total built-up surface in square metres per cell from JRC GHS-BUILT-S R2023A, reference epoch 2020. The published model uses Landsat / Sentinel-2 evidence with temporal interpolation. This is an aggregate numerical surface quantity, not percentage cover, a 10 m scene, building footprints, non-residential-only area, volume or the connected SMOD settlement classes.",
+      "version": "GHS-BUILT-S R2023A V1.0 · EPSG:4326 30ss · reference epoch 2020",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Dataset : Pesaresi M., Politis P. (2023) : GHS-BUILT-S R2023A - GHS built-up surface grid, derived from Sentinel2 composite and Landsat, multitemporal (1975-2030) European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/9f06f36f-4b11-47ec-abb0-4f8b7b1d72ea , doi: 10.2905/9F06F36F-4B11-47EC-ABB0-4F8B7B1D72EA JRC-managed AWS distribution: https://registry.opendata.aws/ghs-built-s/. Reviewed V1.0 / WGS84 30ss / reference epoch 2020 original. Retain CC BY 4.0 attribution, selected quantity, release, access date and an indication of changes.",
+      "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_buS2023.php",
+      "nominalResolution": "30 arc-seconds (about 0.0083333333 degree), approximately 1 km at the equator; ground cell dimensions vary with latitude",
+      "unit": "m² per cell",
+      "valueInterpretation": "Original UInt32 square metres of total built-up surface per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–848108; keep the declaration and physical-file difference visible without inventing a mask or changing values. Cell area varies with latitude; no automatic percentage conversion is performed.",
+      "years": [
+        2020
+      ],
+      "defaultYear": 2020,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "built-surface",
+          "title": "GHSL · Built-up surface · 2020",
+          "unit": "m² per cell",
+          "valueInterpretation": "Original UInt32 square metres of total built-up surface per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–848108; keep the declaration and physical-file difference visible without inventing a mask or changing values. Cell area varies with latitude; no automatic percentage conversion is performed.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "built-surface",
+      "warnings": [
+        "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+        "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+        "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+        "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+        "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+        "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates."
+      ],
+      "limits": [
+        "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+        "Independently decoded original: 173085842 bytes, 43201 x 21384 UInt32, SHA256 c622f77878056a29f41496a0d8412bf381f4501c546ef07e7d5a76696cefbc5b. Raw outer bounds [-180.00124926466006, -89.10041610517223, 180.00708264275895, 89.0995831776456]; original affine transform [0.00833333330032682, 0.0, -180.00124926466006, 0.0, -0.008333333299795073, 89.0995831776456]. All 923810184 samples were independently decoded; 883683054 valid zeros remain; maximum raw value 848108. Publisher table missing-code declaration 4294967295, actual TIFF NoData None.",
+        "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance."
+      ]
+    },
+    {
+      "id": "ghsl-built-volume",
+      "title": "GHSL · Built-up volume · 2020",
+      "category": "thematic",
+      "description": "Total built-up volume in cubic metres per cell from JRC GHS-BUILT-V R2023A, reference epoch 2020. The model combines built-up surface and vertical information from imagery and global elevation models. This is an aggregate numerical volume quantity, not individual building height, floor area, a measured cadastral building model, non-residential-only volume or population.",
+      "version": "GHS-BUILT-V R2023A V1.0 · EPSG:4326 30ss · reference epoch 2020",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Dataset : Pesaresi M., Politis P. (2023) : GHS-BUILT-V R2023A - GHS built-up volume grids derived from joint assessment of Sentinel2, Landsat, and global DEM data, multitemporal (1975-2030). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/ab2f107a-03cd-47a3-85e5-139d8ec63283 , doi: 10.2905/AB2F107A-03CD-47A3-85E5-139D8EC63283 JRC-managed AWS distribution: https://registry.opendata.aws/ghs-built-v/. Reviewed V1.0 / WGS84 30ss / reference epoch 2020 original. Retain CC BY 4.0 attribution, selected quantity, release, access date and an indication of changes.",
+      "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_buV2023.php",
+      "nominalResolution": "30 arc-seconds (about 0.0083333333 degree), approximately 1 km at the equator; ground cell dimensions vary with latitude",
+      "unit": "m³ per cell",
+      "valueInterpretation": "Original UInt32 cubic metres of total built-up volume per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–16413999; preserve that difference without inventing a mask. Volume is not height or floor area; no automatic division by surface or elevation subtraction is performed.",
+      "years": [
+        2020
+      ],
+      "defaultYear": 2020,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "built-volume",
+          "title": "GHSL · Built-up volume · 2020",
+          "unit": "m³ per cell",
+          "valueInterpretation": "Original UInt32 cubic metres of total built-up volume per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–16413999; preserve that difference without inventing a mask. Volume is not height or floor area; no automatic division by surface or elevation subtraction is performed.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "built-volume",
+      "warnings": [
+        "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+        "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+        "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+        "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+        "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+        "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates."
+      ],
+      "limits": [
+        "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+        "Independently decoded original: 187376914 bytes, 43201 x 21384 UInt32, SHA256 5f61071d872b5877cb506fcc3fac6793487568428ef8e00e0b54d6e392793b06. Raw outer bounds [-180.00124926466006, -89.10041610513471, 180.00708264269574, 89.09958317764332]; original affine transform [0.008333333300325358, 0.0, -180.00124926466006, 0.0, -0.008333333299793211, 89.09958317764332]. All 923810184 samples were independently decoded; 883683054 valid zeros remain; maximum raw value 16413999. Publisher table missing-code declaration 4294967295, actual TIFF NoData None.",
+        "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance."
+      ]
+    },
+    {
+      "id": "ghsl-population",
+      "title": "GHSL · Residential population · 2020",
+      "category": "population",
+      "description": "Residential population estimates per cell from JRC GHS-POP R2023A, reference epoch 2020. Population census / administrative totals from CIESIN GPWv4.11 are spatially disaggregated using corresponding GHSL built-up surface, volume and classification. Preserve fractional model counts; this is not people per square kilometre, an individual count, a live population measurement, WorldPop or a 2025/2030 projection.",
+      "version": "GHS-POP R2023A V1.0 · EPSG:4326 30ss · reference epoch 2020",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Dataset : Schiavina M., Freire S., Carioli A., MacManus K. (2023) : GHS-POP R2023A - GHS population grid multitemporal (1975-2030). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/2ff68a52-5b5b-4a22-8f40-c41da8332cfe , doi: 10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE JRC-managed AWS distribution: https://registry.opendata.aws/ghs-pop/. Reviewed V1.0 / WGS84 30ss / reference epoch 2020 original. Retain CC BY 4.0 attribution, selected quantity, release, access date and an indication of changes.",
+      "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php",
+      "nominalResolution": "30 arc-seconds (about 0.0083333333 degree), approximately 1 km at the equator; ground cell dimensions vary with latitude",
+      "unit": "residents per cell",
+      "valueInterpretation": "Original Float64 modeled residents per cell, scale 1, offset 0 and no embedded TIFF NoData. Preserve fractional counts and valid zero; do not round to integers, downgrade to Float32 or report density without a separate area calculation. The publisher's table declares NoData -200, but this checked original lacks that tag and contains no negative values. Native scalar NoData therefore remains absent instead of applying an invented mask.",
+      "years": [
+        2020
+      ],
+      "defaultYear": 2020,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "population-count",
+          "title": "GHSL · Residential population · 2020",
+          "unit": "residents per cell",
+          "valueInterpretation": "Original Float64 modeled residents per cell, scale 1, offset 0 and no embedded TIFF NoData. Preserve fractional counts and valid zero; do not round to integers, downgrade to Float32 or report density without a separate area calculation. The publisher's table declares NoData -200, but this checked original lacks that tag and contains no negative values. Native scalar NoData therefore remains absent instead of applying an invented mask.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "population-count",
+      "warnings": [
+        "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+        "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+        "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+        "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+        "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+        "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates."
+      ],
+      "limits": [
+        "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+        "Independently decoded original: 424616290 bytes, 43202 x 21384 Float64, SHA256 b6eec24c613d0787c14166214865a3e0578b419ceebbaff00e46904e6a61e708. Raw outer bounds [-180.00791593130032, -89.10041610517223, 180.008749309419, 89.0995831776456]; original affine transform [0.00833333330032682, 0.0, -180.00791593130032, 0.0, -0.008333333299795073, 89.0995831776456]. All 923831568 samples were independently decoded; 881359774 valid zeros remain; maximum raw value 277608.74043127534. Publisher table missing-code declaration -200, actual TIFF NoData None.",
+        "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance."
+      ]
+    },
+    {
+      "id": "hydrosheds-accumulation",
+      "title": "HydroSHEDS v2 · Upstream accumulation",
+      "category": "hydrology",
+      "description": "HydroSHEDS v2r0 upstream accumulation from conditioned TanDEM-X drainage routing. ACC counts contributing cells; ACA gives the latitude-adjusted contributing area in square kilometres. This one product has two independent scientific layers, not two counted channels, observed river discharge, rainfall, D8 flow directions or river vectors.",
+      "version": "HydroSHEDS v2r0 · 40 ACC / 27 ACA header-reviewed originals · index 20260830",
+      "license": "CC BY 4.0; retain HydroSHEDS attribution and original redistribution request",
+      "licenseUrl": "https://www.hydrosheds.org/terms-of-use",
+      "attribution": "HydroSHEDS v2; Lehner, B., A. Roth, M. Huber, M. Anand and M. Thieme (2022), A sharper look at the world's rivers and catchments, Eos 103, doi:10.1029/2022EO220167. Retain release, selected ACC or ACA layer, original tile, HydroSHEDS / DLR / WWF / Confluvio attribution and access date. The v2 technical guide states CC BY 4.0 and asks users to obtain authors' written permission before mirroring whole unchanged originals on other websites; this connector reads the publisher distribution and does not create a hosted mirror.",
+      "documentationUrl": "https://www.hydrosheds.org/downloads-core-data-v2",
+      "nominalResolution": "1 arc-second (about 30 m at the equator); original 36000 x 36000 area grids",
+      "unit": "ACC: contributing cells; ACA: contributing area in km²",
+      "valueInterpretation": "Preserve original Float64 values, scale 1, offset 0 and embedded NoData 1.79e308. ACC includes the target cell, so a first upstream cell is 1; cell count is not km² because cell area varies with latitude. ACA includes the target cell's geodesic area and has fractional square-kilometre values. These derived drainage metrics are not measured flow rate or water volume. Original compressed overviews provide display only; raw-pixel inspection uses the unchanged base grid.",
+      "years": [],
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "acc",
+          "title": "Upstream accumulation · contributing cells (ACC)",
+          "unit": "cells",
+          "valueInterpretation": "Float64 original upstream cell count including the target cell; scale 1, offset 0, NoData 1.79e308. Do not interpret this as km², convert using a fixed 30 m cell area, cast to Float32 or substitute flow-direction codes.",
+          "scale": 1,
+          "offset": 0,
+          "nodata": 1.79e+308
+        },
+        {
+          "id": "aca",
+          "title": "Upstream accumulation · contributing area (ACA)",
+          "unit": "km²",
+          "valueInterpretation": "Float64 original latitude-adjusted upstream area including the target cell's own area; scale 1, offset 0, NoData 1.79e308. Preserve fractional square kilometres and do not substitute ACC counts, hectares, measured discharge or rainfall.",
+          "scale": 1,
+          "offset": 0,
+          "nodata": 1.79e+308
+        }
+      ],
+      "defaultLayer": "acc",
+      "warnings": [
+        "Only 40 ACC and 27 ACA v2r0 originals in the official Americas index are eligible: each real TIFF header, actual grid/footprint and exact byte count was checked under the unchanged 512 MiB limit. The other larger originals, v1, DIR, river vectors and future releases are not silently substituted. Complete downloads and science pixels were independently accepted for n00w050 only; a checked header does not certify every full original or map.",
+        "Both originals are 36000 x 36000 Float64 grids (about 10.4 GB uncompressed each). The app keeps existing bounded tile decoding and uses original internal overviews for PNG/map display; it does not decode the full array into memory, clip a small research file, resample a new product or alter original bytes.",
+        "The real n00w050 originals are 76,824,474 bytes (ACC) and 79,213,241 bytes (ACA) regardless of AOI. A footprint intersection or grayscale display does not establish valid land pixels everywhere, connected river quality or watershed correctness.",
+        "HydroSHEDS v2 is based on conditioned TanDEM-X topography and routing. The 2026 archive publication is not a 2026 observation of discharge or flooding. No date selector applies to these fixed original files."
+      ],
+      "limits": [
+        "At most 8 intersecting complete published files per selection; narrow larger areas. Files are downloaded without clipping, reprojection, resampling or a generated subset. Only the exact reviewed product, layer and intersecting original footprint is eligible.",
+        "Only the geographic query footprint is intersected with legal longitude/latitude bounds. Tiny original floating-point outer-edge excursions and the original TIFF transforms, values and bytes remain unchanged.",
+        "Existing 512 MiB original transfer, axis, grid-pixel, chunk, intermediate-buffer, memory and preview-deadline limits remain unchanged. Available metadata does not certify every online preview or network transfer."
+      ]
+    },
+    {
+      "id": "etopo-geoid",
+      "title": "NOAA ETOPO 2022 · Geoid height",
+      "category": "elevation",
+      "description": "ETOPO 2022 v1 published EGM2008 geoid-height grid, a vertical separation field used with WGS84 ellipsoidal elevations. This is an independent physical quantity from the connected ETOPO surface elevation: it is not terrain height, ocean depth, a new bathymetric survey or a computed elevation conversion.",
+      "version": "ETOPO 2022 v1 · 288 header-reviewed 15 arc-second geoid originals",
+      "license": "CC0 1.0; original NGA public-domain notice and NOAA citation retained",
+      "licenseUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ngdc.mgg.dem%3Aetopo_2022",
+      "attribution": "NOAA National Centers for Environmental Information (2022), ETOPO 2022 15 Arc-Second Global Relief Model, doi:10.25921/fd45-gt74. The numerical original retains its NGA Public Domain copyright notice and EGM2008 source description. NOAA metadata applies CC0 1.0 worldwide; retain source, release, selected geoid tile and access date.",
+      "documentationUrl": "https://www.ncei.noaa.gov/products/etopo-global-relief-model",
+      "nominalResolution": "15 arc-seconds (about 500 m at the equator); original 3600 x 3600 point grid",
+      "unit": "metres of EGM2008 geoid separation relative to WGS84 ellipsoid",
+      "valueInterpretation": "Preserve Float32 geoid separation in metres, scale 1, offset 0, Point registration and no embedded NoData tag. The original identifies WGS84 (EPSG:4979) to EGM2008 height (EPSG:3855), derived from egm08_25.gtx, but its horizontal grid is EPSG:4326. Positive and negative values are valid vertical offsets, not land/sea classifications. NOAA documents ETOPO orthometric elevation + this GEOID = WGS84 ellipsoidal elevation; this connector only delivers the geoid values and performs no automatic datum conversion.",
+      "years": [],
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "geoid",
+          "title": "EGM2008 geoid separation · original metres",
+          "unit": "m",
+          "valueInterpretation": "Original Float32 geoid separation, scale 1 and offset 0, no embedded NoData. Negative offsets remain valid; no terrain elevation, positive-depth conversion, assumed missing-zero mask or surface/bedrock substitution is applied.",
+          "scale": 1,
+          "offset": 0
+        }
+      ],
+      "defaultLayer": "geoid",
+      "warnings": [
+        "Only the 288 actual 15 arc-second geoid files in the official NOAA directory are eligible. Each real TIFF header, actual Point grid/footprint, absent NoData and exact byte count was independently checked. Complete download and all samples were accepted for N45E105 only; that does not certify every full file or online map. ETOPO surface/bedrock, SID classes and generated AOI subsets are not substituted.",
+        "The 19,941,002-byte original has no internal overviews and no NoData tag; all 12,960,000 checked samples are finite. Preserve the original Point registration, Float32 precision and signed metre values. A PNG or selected AOI does not change the complete-file download or establish survey precision.",
+        "This is a fixed EGM2008-based vertical-reference field distributed with ETOPO 2022. Its TIFF source dates (2018/2019) and 2022 publication are not an observation date or recent terrain update; year/month filters and automatic elevation conversions are unavailable.",
+        "The publisher excludes use of ETOPO for navigation. A geoid field is not a tide model, chart datum, local surveyed vertical-control network or real-time water level; users must validate vertical conventions before applying any external conversion."
+      ],
+      "limits": [
+        "At most 8 intersecting complete published files per selection; narrow larger areas. Files are downloaded without clipping, reprojection, resampling or a generated subset. Only the exact reviewed product, layer and intersecting original footprint is eligible.",
+        "Only the geographic query footprint is intersected with legal longitude/latitude bounds. Tiny original floating-point outer-edge excursions and the original TIFF transforms, values and bytes remain unchanged.",
+        "Existing 512 MiB original transfer, axis, grid-pixel, chunk, intermediate-buffer, memory and preview-deadline limits remain unchanged. Available metadata does not certify every online preview or network transfer."
+      ]
+    },
+    {
+      "id": "eth-canopy-height",
+      "title": "ETH global canopy height · 2020",
+      "category": "vegetation",
+      "description": "Author-published dense canopy top-height predictions for the reference year 2020, estimated from Sentinel-2 imagery by a probabilistic deep-learning ensemble trained with GEDI RH98 canopy top-height supervision. This is the ETH Global Canopy Height 2020 model product, separate from measured GEDI footprints, GEDI L3 mean RH100, forest classification, biomass and ground elevation.",
+      "version": "ETH Global Canopy Height 2020 v1 · fixed 2,651-file CHM tile-browser index",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Lang, N., Jetz, W., Schindler, K., and Wegner, J.D. (2023), A high-resolution canopy height model of the Earth, Nature Ecology & Evolution, doi:10.1038/s41559-023-02206-6; author-published ETH Global Canopy Height 2020, doi:10.3929/ethz-b-000609802. Retain authors, model reference year, selected original tile, CC BY 4.0, data and article citations, and access date.",
+      "documentationUrl": "https://langnico.github.io/globalcanopyheight/",
+      "nominalResolution": "Nominal 10 m ground sampling distance; published 0.3 arc-second (0.00008333333333333333 degree) EPSG:4326 grid",
+      "unit": "metres of predicted canopy top height",
+      "valueInterpretation": "Preserve the published single-band UInt8 height samples, scale 1 and offset 0, with embedded NoData 255. Zero is a valid stored prediction and must not be masked as missing. These are integer-metre model outputs, not one-metre measurement accuracy, optical reflectance, raw GEDI waveform heights or per-tree surveys.",
+      "years": [
+        2020
+      ],
+      "defaultYear": 2020,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "height",
+          "title": "Predicted canopy top height",
+          "unit": "m",
+          "valueInterpretation": "Original UInt8 model-predicted canopy top height in metres; scale 1, offset 0, NoData 255. Retain valid zero and the full published geographic grid; do not apply canopy-class masks, infer measurement uncertainty from height, convert RH98 predictions into RH100 measurements, or claim current-year tree heights.",
+          "scale": 1,
+          "offset": 0,
+          "nodata": 255
+        }
+      ],
+      "defaultLayer": "height",
+      "warnings": [
+        "Only the fixed 2020 CHM product is connected. The separately published STD/uncertainty files and other canopy products are not substituted or treated as additional observation dates. A reference year is not the acquisition date of every training or input image.",
+        "The author-provided 3-degree tiles are EPSG:4326 with 36,000 × 36,000 pixels, approximately 0.3 arc-second spacing. The nominal 10 m GSD does not make all geographic cells exactly 10 m square, and this delivery is not an untouched UTM Sentinel-2 tile. Original file grids and values remain unchanged.",
+        "The model predicts a wall-to-wall canopy top-height field from optical imagery with sparse GEDI supervision. A numerical pixel or grayscale preview does not establish measured laser coverage, individual-tree accuracy, correct water/non-forest classification or biomass. Retain the paper's prediction and uncertainty limitations.",
+        "The complete published tile is downloaded, not clipped to the requested area. Ocean tiles may be absent or contain only NoData.",
+        "Tile candidates use only the 2,651 actual CHM hrefs and declared geographic footprints extracted from the unchanged author tile browser https://langnico.github.io/globalcanopyheight/assets/tile_index.html; source HTML SHA-256 e140cda0253ab46cd268c27ed6122d39d116dbb0be0010419f3e9d65b4e01903. This is an application-reviewed client index, not publisher STAC or proof that every complete original has been accepted.",
+        "Downloads go directly to the authors' public ETH libdrive delivery. The original file and embedded metadata are preserved; no Google Earth Engine export, account credential, paid compute, generated AOI subset, mirror or new resampling is used."
+      ],
+      "limits": [
+        "At most 8 actual published original tiles per selection; larger requests fail instead of silently dropping candidates.",
+        "The existing 512 MiB complete-file transfer limit, 131,072-pixel tiled axis limit, 8-billion-pixel grid limit and bounded native decoder remain unchanged. Some published complete tiles may exceed transfer limits; a source listing is not proof of full-file acceptance."
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "ghsl-built-surface",
+      "request": {
+        "datasetId": "ghsl-built-surface",
+        "bounds": [
+          116.3,
+          39.8,
+          116.5,
+          40
+        ],
+        "year": 2020,
+        "layer": "built-surface"
+      },
+      "plan": {
+        "dataset": {
+          "id": "ghsl-built-surface",
+          "title": "GHSL · Built-up surface · 2020",
+          "category": "thematic",
+          "description": "Total built-up surface in square metres per cell from JRC GHS-BUILT-S R2023A, reference epoch 2020. The published model uses Landsat / Sentinel-2 evidence with temporal interpolation. This is an aggregate numerical surface quantity, not percentage cover, a 10 m scene, building footprints, non-residential-only area, volume or the connected SMOD settlement classes.",
+          "version": "GHS-BUILT-S R2023A V1.0 · EPSG:4326 30ss · reference epoch 2020",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "Dataset : Pesaresi M., Politis P. (2023) : GHS-BUILT-S R2023A - GHS built-up surface grid, derived from Sentinel2 composite and Landsat, multitemporal (1975-2030) European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/9f06f36f-4b11-47ec-abb0-4f8b7b1d72ea , doi: 10.2905/9F06F36F-4B11-47EC-ABB0-4F8B7B1D72EA JRC-managed AWS distribution: https://registry.opendata.aws/ghs-built-s/. Reviewed V1.0 / WGS84 30ss / reference epoch 2020 original. Retain CC BY 4.0 attribution, selected quantity, release, access date and an indication of changes.",
+          "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_buS2023.php",
+          "nominalResolution": "30 arc-seconds (about 0.0083333333 degree), approximately 1 km at the equator; ground cell dimensions vary with latitude",
+          "unit": "m² per cell",
+          "valueInterpretation": "Original UInt32 square metres of total built-up surface per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–848108; keep the declaration and physical-file difference visible without inventing a mask or changing values. Cell area varies with latitude; no automatic percentage conversion is performed.",
+          "years": [
+            2020
+          ],
+          "defaultYear": 2020,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "built-surface",
+              "title": "GHSL · Built-up surface · 2020",
+              "unit": "m² per cell",
+              "valueInterpretation": "Original UInt32 square metres of total built-up surface per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–848108; keep the declaration and physical-file difference visible without inventing a mask or changing values. Cell area varies with latitude; no automatic percentage conversion is performed.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "built-surface",
+          "warnings": [
+            "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+            "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+            "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+            "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+            "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+            "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates."
+          ],
+          "limits": [
+            "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+            "Independently decoded original: 173085842 bytes, 43201 x 21384 UInt32, SHA256 c622f77878056a29f41496a0d8412bf381f4501c546ef07e7d5a76696cefbc5b. Raw outer bounds [-180.00124926466006, -89.10041610517223, 180.00708264275895, 89.0995831776456]; original affine transform [0.00833333330032682, 0.0, -180.00124926466006, 0.0, -0.008333333299795073, 89.0995831776456]. All 923810184 samples were independently decoded; 883683054 valid zeros remain; maximum raw value 848108. Publisher table missing-code declaration 4294967295, actual TIFF NoData None.",
+            "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance."
+          ]
+        },
+        "request": {
+          "datasetId": "ghsl-built-surface",
+          "bounds": [
+            116.3,
+            39.8,
+            116.5,
+            40
+          ],
+          "year": 2020,
+          "layer": "built-surface"
+        },
+        "sources": [
+          {
+            "id": "GHS_BUILT_S_E2020_GLOBE_R2023A_4326_30ss_V1_0",
+            "title": "JRC GHS-BUILT-S V1.0 · total · reference epoch 2020",
+            "bounds": [
+              -180,
+              -89.10041610517223,
+              180,
+              89.0995831776456
+            ],
+            "stac": {
+              "name": "JRC GHS-BUILT-S V1.0 · total · reference epoch 2020",
+              "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-built-s/r2023a/4326/30asec/2020/GHS_BUILT_S_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+              "kind": "raster"
+            }
+          }
+        ],
+        "warnings": [
+          "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+          "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+          "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+          "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+          "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+          "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates.",
+          "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+          "Independently decoded original: 173085842 bytes, 43201 x 21384 UInt32, SHA256 c622f77878056a29f41496a0d8412bf381f4501c546ef07e7d5a76696cefbc5b. Raw outer bounds [-180.00124926466006, -89.10041610517223, 180.00708264275895, 89.0995831776456]; original affine transform [0.00833333330032682, 0.0, -180.00124926466006, 0.0, -0.008333333299795073, 89.0995831776456]. All 923810184 samples were independently decoded; 883683054 valid zeros remain; maximum raw value 848108. Publisher table missing-code declaration 4294967295, actual TIFF NoData None.",
+          "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance.",
+          "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+        ]
+      }
+    },
+    {
+      "id": "ghsl-built-volume",
+      "request": {
+        "datasetId": "ghsl-built-volume",
+        "bounds": [
+          116.3,
+          39.8,
+          116.5,
+          40
+        ],
+        "year": 2020,
+        "layer": "built-volume"
+      },
+      "plan": {
+        "dataset": {
+          "id": "ghsl-built-volume",
+          "title": "GHSL · Built-up volume · 2020",
+          "category": "thematic",
+          "description": "Total built-up volume in cubic metres per cell from JRC GHS-BUILT-V R2023A, reference epoch 2020. The model combines built-up surface and vertical information from imagery and global elevation models. This is an aggregate numerical volume quantity, not individual building height, floor area, a measured cadastral building model, non-residential-only volume or population.",
+          "version": "GHS-BUILT-V R2023A V1.0 · EPSG:4326 30ss · reference epoch 2020",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "Dataset : Pesaresi M., Politis P. (2023) : GHS-BUILT-V R2023A - GHS built-up volume grids derived from joint assessment of Sentinel2, Landsat, and global DEM data, multitemporal (1975-2030). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/ab2f107a-03cd-47a3-85e5-139d8ec63283 , doi: 10.2905/AB2F107A-03CD-47A3-85E5-139D8EC63283 JRC-managed AWS distribution: https://registry.opendata.aws/ghs-built-v/. Reviewed V1.0 / WGS84 30ss / reference epoch 2020 original. Retain CC BY 4.0 attribution, selected quantity, release, access date and an indication of changes.",
+          "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_buV2023.php",
+          "nominalResolution": "30 arc-seconds (about 0.0083333333 degree), approximately 1 km at the equator; ground cell dimensions vary with latitude",
+          "unit": "m³ per cell",
+          "valueInterpretation": "Original UInt32 cubic metres of total built-up volume per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–16413999; preserve that difference without inventing a mask. Volume is not height or floor area; no automatic division by surface or elevation subtraction is performed.",
+          "years": [
+            2020
+          ],
+          "defaultYear": 2020,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "built-volume",
+              "title": "GHSL · Built-up volume · 2020",
+              "unit": "m³ per cell",
+              "valueInterpretation": "Original UInt32 cubic metres of total built-up volume per cell, scale 1, offset 0 and no embedded TIFF NoData. Zero is a valid raw amount. The publisher's 30 arc-second table declares NoData 4294967295, but this checked original has no such tag and all decoded values are 0–16413999; preserve that difference without inventing a mask. Volume is not height or floor area; no automatic division by surface or elevation subtraction is performed.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "built-volume",
+          "warnings": [
+            "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+            "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+            "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+            "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+            "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+            "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates."
+          ],
+          "limits": [
+            "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+            "Independently decoded original: 187376914 bytes, 43201 x 21384 UInt32, SHA256 5f61071d872b5877cb506fcc3fac6793487568428ef8e00e0b54d6e392793b06. Raw outer bounds [-180.00124926466006, -89.10041610513471, 180.00708264269574, 89.09958317764332]; original affine transform [0.008333333300325358, 0.0, -180.00124926466006, 0.0, -0.008333333299793211, 89.09958317764332]. All 923810184 samples were independently decoded; 883683054 valid zeros remain; maximum raw value 16413999. Publisher table missing-code declaration 4294967295, actual TIFF NoData None.",
+            "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance."
+          ]
+        },
+        "request": {
+          "datasetId": "ghsl-built-volume",
+          "bounds": [
+            116.3,
+            39.8,
+            116.5,
+            40
+          ],
+          "year": 2020,
+          "layer": "built-volume"
+        },
+        "sources": [
+          {
+            "id": "GHS_BUILT_V_E2020_GLOBE_R2023A_4326_30ss_V1_0",
+            "title": "JRC GHS-BUILT-V V1.0 · total · reference epoch 2020",
+            "bounds": [
+              -180,
+              -89.10041610513471,
+              180,
+              89.09958317764332
+            ],
+            "stac": {
+              "name": "JRC GHS-BUILT-V V1.0 · total · reference epoch 2020",
+              "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-built-v/r2023a/4326/30asec/2020/GHS_BUILT_V_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+              "kind": "raster"
+            }
+          }
+        ],
+        "warnings": [
+          "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+          "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+          "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+          "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+          "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+          "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates.",
+          "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+          "Independently decoded original: 187376914 bytes, 43201 x 21384 UInt32, SHA256 5f61071d872b5877cb506fcc3fac6793487568428ef8e00e0b54d6e392793b06. Raw outer bounds [-180.00124926466006, -89.10041610513471, 180.00708264269574, 89.09958317764332]; original affine transform [0.008333333300325358, 0.0, -180.00124926466006, 0.0, -0.008333333299793211, 89.09958317764332]. All 923810184 samples were independently decoded; 883683054 valid zeros remain; maximum raw value 16413999. Publisher table missing-code declaration 4294967295, actual TIFF NoData None.",
+          "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance.",
+          "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+        ]
+      }
+    },
+    {
+      "id": "ghsl-population",
+      "request": {
+        "datasetId": "ghsl-population",
+        "bounds": [
+          116.3,
+          39.8,
+          116.5,
+          40
+        ],
+        "year": 2020,
+        "layer": "population-count"
+      },
+      "plan": {
+        "dataset": {
+          "id": "ghsl-population",
+          "title": "GHSL · Residential population · 2020",
+          "category": "population",
+          "description": "Residential population estimates per cell from JRC GHS-POP R2023A, reference epoch 2020. Population census / administrative totals from CIESIN GPWv4.11 are spatially disaggregated using corresponding GHSL built-up surface, volume and classification. Preserve fractional model counts; this is not people per square kilometre, an individual count, a live population measurement, WorldPop or a 2025/2030 projection.",
+          "version": "GHS-POP R2023A V1.0 · EPSG:4326 30ss · reference epoch 2020",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "Dataset : Schiavina M., Freire S., Carioli A., MacManus K. (2023) : GHS-POP R2023A - GHS population grid multitemporal (1975-2030). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/2ff68a52-5b5b-4a22-8f40-c41da8332cfe , doi: 10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE JRC-managed AWS distribution: https://registry.opendata.aws/ghs-pop/. Reviewed V1.0 / WGS84 30ss / reference epoch 2020 original. Retain CC BY 4.0 attribution, selected quantity, release, access date and an indication of changes.",
+          "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php",
+          "nominalResolution": "30 arc-seconds (about 0.0083333333 degree), approximately 1 km at the equator; ground cell dimensions vary with latitude",
+          "unit": "residents per cell",
+          "valueInterpretation": "Original Float64 modeled residents per cell, scale 1, offset 0 and no embedded TIFF NoData. Preserve fractional counts and valid zero; do not round to integers, downgrade to Float32 or report density without a separate area calculation. The publisher's table declares NoData -200, but this checked original lacks that tag and contains no negative values. Native scalar NoData therefore remains absent instead of applying an invented mask.",
+          "years": [
+            2020
+          ],
+          "defaultYear": 2020,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "population-count",
+              "title": "GHSL · Residential population · 2020",
+              "unit": "residents per cell",
+              "valueInterpretation": "Original Float64 modeled residents per cell, scale 1, offset 0 and no embedded TIFF NoData. Preserve fractional counts and valid zero; do not round to integers, downgrade to Float32 or report density without a separate area calculation. The publisher's table declares NoData -200, but this checked original lacks that tag and contains no negative values. Native scalar NoData therefore remains absent instead of applying an invented mask.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "population-count",
+          "warnings": [
+            "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+            "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+            "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+            "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+            "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+            "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates."
+          ],
+          "limits": [
+            "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+            "Independently decoded original: 424616290 bytes, 43202 x 21384 Float64, SHA256 b6eec24c613d0787c14166214865a3e0578b419ceebbaff00e46904e6a61e708. Raw outer bounds [-180.00791593130032, -89.10041610517223, 180.008749309419, 89.0995831776456]; original affine transform [0.00833333330032682, 0.0, -180.00791593130032, 0.0, -0.008333333299795073, 89.0995831776456]. All 923831568 samples were independently decoded; 881359774 valid zeros remain; maximum raw value 277608.74043127534. Publisher table missing-code declaration -200, actual TIFF NoData None.",
+            "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance."
+          ]
+        },
+        "request": {
+          "datasetId": "ghsl-population",
+          "bounds": [
+            116.3,
+            39.8,
+            116.5,
+            40
+          ],
+          "year": 2020,
+          "layer": "population-count"
+        },
+        "sources": [
+          {
+            "id": "GHS_POP_E2020_GLOBE_R2023A_4326_30ss_V1_0",
+            "title": "JRC GHS-POP V1.0 · total · reference epoch 2020",
+            "bounds": [
+              -180,
+              -89.10041610517223,
+              180,
+              89.0995831776456
+            ],
+            "stac": {
+              "name": "JRC GHS-POP V1.0 · total · reference epoch 2020",
+              "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-pop/r2023a/4326/30asec/2020/GHS_POP_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+              "kind": "raster"
+            }
+          }
+        ],
+        "warnings": [
+          "Only the independently decoded R2023A V1.0 / reference epoch 2020 / WGS84 30 arc-second total original for the selected quantity is connected. Other epochs, 2025/2030 projections, 2018 10 m observations, 3 arc-second files, Mollweide grids, non-residential-only variants and different GHSL products are not substituted.",
+          "2020 is a modeled reference epoch, not the acquisition date of one satellite scene. Census disaggregation and temporal modeling do not establish a contemporary observation or per-building truth. No artificial scene datetime or acquisition interval is assigned to the direct original.",
+          "The original global PixelIsArea grid extends slightly beyond longitude ±180 degrees. Only the recipe's legal query/display footprint is intersected with physical WGS84 bounds; the original full columns, TIFF transform, outer bounds, bytes and numerical samples remain unchanged. Map fitting is not scientific cropping or a new publisher extent.",
+          "The publisher's product-table NoData declaration and the absence of an embedded TIFF NoData tag are retained separately. All values of the checked originals are non-negative and below the declared missing code where applicable. Zero remains a valid raw number; lack of an embedded mask is not proof of observed coverage, accuracy or scientific quality everywhere.",
+          "Complete original files are downloaded regardless of the selected AOI, without clipping, reprojection, resampling, unit conversion or a generated subset. Published internal overviews are display layers, while original-pixel inspection uses the full-resolution grid; an averaged overview is not an exact original sample.",
+          "CC BY 4.0 is declared by the JRC-managed AWS registry. Public byte access does not remove attribution requirements. S3 multipart ETags are not whole-file MD5 checksums; independently measured SHA256 is retained separately from archive publication dates.",
+          "One complete reviewed historical global original per selected product; no country, named region, month or season parameter is supported.",
+          "Independently decoded original: 424616290 bytes, 43202 x 21384 Float64, SHA256 b6eec24c613d0787c14166214865a3e0578b419ceebbaff00e46904e6a61e708. Raw outer bounds [-180.00791593130032, -89.10041610517223, 180.008749309419, 89.0995831776456]; original affine transform [0.00833333330032682, 0.0, -180.00791593130032, 0.0, -0.008333333299795073, 89.0995831776456]. All 923831568 samples were independently decoded; 881359774 valid zeros remain; maximum raw value 277608.74043127534. Publisher table missing-code declaration -200, actual TIFF NoData None.",
+          "Existing 512 MiB transfer, native-axis/grid, chunk, intermediate-buffer, memory, PNG and deadline guards remain unchanged. A directory entry or successful connection is separate from actual original download, scientific inspection, online map and restart acceptance.",
+          "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+        ]
+      }
+    },
+    {
+      "id": "eth-canopy-height",
+      "request": {
+        "datasetId": "eth-canopy-height",
+        "bounds": [
+          5.1,
+          51.6,
+          5.3,
+          51.8
+        ],
+        "year": 2020,
+        "layer": "height"
+      },
+      "plan": {
+        "dataset": {
+          "id": "eth-canopy-height",
+          "title": "ETH global canopy height · 2020",
+          "category": "vegetation",
+          "description": "Author-published dense canopy top-height predictions for the reference year 2020, estimated from Sentinel-2 imagery by a probabilistic deep-learning ensemble trained with GEDI RH98 canopy top-height supervision. This is the ETH Global Canopy Height 2020 model product, separate from measured GEDI footprints, GEDI L3 mean RH100, forest classification, biomass and ground elevation.",
+          "version": "ETH Global Canopy Height 2020 v1 · fixed 2,651-file CHM tile-browser index",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "Lang, N., Jetz, W., Schindler, K., and Wegner, J.D. (2023), A high-resolution canopy height model of the Earth, Nature Ecology & Evolution, doi:10.1038/s41559-023-02206-6; author-published ETH Global Canopy Height 2020, doi:10.3929/ethz-b-000609802. Retain authors, model reference year, selected original tile, CC BY 4.0, data and article citations, and access date.",
+          "documentationUrl": "https://langnico.github.io/globalcanopyheight/",
+          "nominalResolution": "Nominal 10 m ground sampling distance; published 0.3 arc-second (0.00008333333333333333 degree) EPSG:4326 grid",
+          "unit": "metres of predicted canopy top height",
+          "valueInterpretation": "Preserve the published single-band UInt8 height samples, scale 1 and offset 0, with embedded NoData 255. Zero is a valid stored prediction and must not be masked as missing. These are integer-metre model outputs, not one-metre measurement accuracy, optical reflectance, raw GEDI waveform heights or per-tree surveys.",
+          "years": [
+            2020
+          ],
+          "defaultYear": 2020,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "height",
+              "title": "Predicted canopy top height",
+              "unit": "m",
+              "valueInterpretation": "Original UInt8 model-predicted canopy top height in metres; scale 1, offset 0, NoData 255. Retain valid zero and the full published geographic grid; do not apply canopy-class masks, infer measurement uncertainty from height, convert RH98 predictions into RH100 measurements, or claim current-year tree heights.",
+              "scale": 1,
+              "offset": 0,
+              "nodata": 255
+            }
+          ],
+          "defaultLayer": "height",
+          "warnings": [
+            "Only the fixed 2020 CHM product is connected. The separately published STD/uncertainty files and other canopy products are not substituted or treated as additional observation dates. A reference year is not the acquisition date of every training or input image.",
+            "The author-provided 3-degree tiles are EPSG:4326 with 36,000 × 36,000 pixels, approximately 0.3 arc-second spacing. The nominal 10 m GSD does not make all geographic cells exactly 10 m square, and this delivery is not an untouched UTM Sentinel-2 tile. Original file grids and values remain unchanged.",
+            "The model predicts a wall-to-wall canopy top-height field from optical imagery with sparse GEDI supervision. A numerical pixel or grayscale preview does not establish measured laser coverage, individual-tree accuracy, correct water/non-forest classification or biomass. Retain the paper's prediction and uncertainty limitations.",
+            "The complete published tile is downloaded, not clipped to the requested area. Ocean tiles may be absent or contain only NoData.",
+            "Tile candidates use only the 2,651 actual CHM hrefs and declared geographic footprints extracted from the unchanged author tile browser https://langnico.github.io/globalcanopyheight/assets/tile_index.html; source HTML SHA-256 e140cda0253ab46cd268c27ed6122d39d116dbb0be0010419f3e9d65b4e01903. This is an application-reviewed client index, not publisher STAC or proof that every complete original has been accepted.",
+            "Downloads go directly to the authors' public ETH libdrive delivery. The original file and embedded metadata are preserved; no Google Earth Engine export, account credential, paid compute, generated AOI subset, mirror or new resampling is used."
+          ],
+          "limits": [
+            "At most 8 actual published original tiles per selection; larger requests fail instead of silently dropping candidates.",
+            "The existing 512 MiB complete-file transfer limit, 131,072-pixel tiled axis limit, 8-billion-pixel grid limit and bounded native decoder remain unchanged. Some published complete tiles may exceed transfer limits; a source listing is not proof of full-file acceptance."
+          ]
+        },
+        "request": {
+          "datasetId": "eth-canopy-height",
+          "bounds": [
+            5.1,
+            51.6,
+            5.3,
+            51.8
+          ],
+          "year": 2020,
+          "layer": "height"
+        },
+        "sources": [
+          {
+            "id": "N51E003",
+            "title": "ETH canopy height 2020 N51E003 · original CHM",
+            "bounds": [
+              3,
+              51,
+              6,
+              54
+            ],
+            "stac": {
+              "name": "ETH canopy height 2020 N51E003 · original CHM",
+              "url": "https://libdrive.ethz.ch/index.php/s/cO8or7iOe5dT2Rt/download?path=%2F3deg_cogs&files=ETH_GlobalCanopyHeight_10m_2020_N51E003_Map.tif",
+              "kind": "raster"
+            }
+          }
+        ],
+        "warnings": [
+          "Only the fixed 2020 CHM product is connected. The separately published STD/uncertainty files and other canopy products are not substituted or treated as additional observation dates. A reference year is not the acquisition date of every training or input image.",
+          "The author-provided 3-degree tiles are EPSG:4326 with 36,000 × 36,000 pixels, approximately 0.3 arc-second spacing. The nominal 10 m GSD does not make all geographic cells exactly 10 m square, and this delivery is not an untouched UTM Sentinel-2 tile. Original file grids and values remain unchanged.",
+          "The model predicts a wall-to-wall canopy top-height field from optical imagery with sparse GEDI supervision. A numerical pixel or grayscale preview does not establish measured laser coverage, individual-tree accuracy, correct water/non-forest classification or biomass. Retain the paper's prediction and uncertainty limitations.",
+          "The complete published tile is downloaded, not clipped to the requested area. Ocean tiles may be absent or contain only NoData.",
+          "Tile candidates use only the 2,651 actual CHM hrefs and declared geographic footprints extracted from the unchanged author tile browser https://langnico.github.io/globalcanopyheight/assets/tile_index.html; source HTML SHA-256 e140cda0253ab46cd268c27ed6122d39d116dbb0be0010419f3e9d65b4e01903. This is an application-reviewed client index, not publisher STAC or proof that every complete original has been accepted.",
+          "Downloads go directly to the authors' public ETH libdrive delivery. The original file and embedded metadata are preserved; no Google Earth Engine export, account credential, paid compute, generated AOI subset, mirror or new resampling is used.",
+          "At most 8 actual published original tiles per selection; larger requests fail instead of silently dropping candidates.",
+          "The existing 512 MiB complete-file transfer limit, 131,072-pixel tiled axis limit, 8-billion-pixel grid limit and bounded native decoder remain unchanged. Some published complete tiles may exceed transfer limits; a source listing is not proof of full-file acceptance.",
+          "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+        ]
+      }
+    },
+    {
+      "id": "hydrosheds-accumulation",
+      "request": {
+        "datasetId": "hydrosheds-accumulation",
+        "bounds": [
+          -49.9,
+          0.2,
+          -49.4,
+          1
+        ],
+        "layer": "acc"
+      },
+      "plan": {
+        "dataset": {
+          "id": "hydrosheds-accumulation",
+          "title": "HydroSHEDS v2 · Upstream accumulation",
+          "category": "hydrology",
+          "description": "HydroSHEDS v2r0 upstream accumulation from conditioned TanDEM-X drainage routing. ACC counts contributing cells; ACA gives the latitude-adjusted contributing area in square kilometres. This one product has two independent scientific layers, not two counted channels, observed river discharge, rainfall, D8 flow directions or river vectors.",
+          "version": "HydroSHEDS v2r0 · 40 ACC / 27 ACA header-reviewed originals · index 20260830",
+          "license": "CC BY 4.0; retain HydroSHEDS attribution and original redistribution request",
+          "licenseUrl": "https://www.hydrosheds.org/terms-of-use",
+          "attribution": "HydroSHEDS v2; Lehner, B., A. Roth, M. Huber, M. Anand and M. Thieme (2022), A sharper look at the world's rivers and catchments, Eos 103, doi:10.1029/2022EO220167. Retain release, selected ACC or ACA layer, original tile, HydroSHEDS / DLR / WWF / Confluvio attribution and access date. The v2 technical guide states CC BY 4.0 and asks users to obtain authors' written permission before mirroring whole unchanged originals on other websites; this connector reads the publisher distribution and does not create a hosted mirror.",
+          "documentationUrl": "https://www.hydrosheds.org/downloads-core-data-v2",
+          "nominalResolution": "1 arc-second (about 30 m at the equator); original 36000 x 36000 area grids",
+          "unit": "ACC: contributing cells; ACA: contributing area in km²",
+          "valueInterpretation": "Preserve original Float64 values, scale 1, offset 0 and embedded NoData 1.79e308. ACC includes the target cell, so a first upstream cell is 1; cell count is not km² because cell area varies with latitude. ACA includes the target cell's geodesic area and has fractional square-kilometre values. These derived drainage metrics are not measured flow rate or water volume. Original compressed overviews provide display only; raw-pixel inspection uses the unchanged base grid.",
+          "years": [],
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "acc",
+              "title": "Upstream accumulation · contributing cells (ACC)",
+              "unit": "cells",
+              "valueInterpretation": "Float64 original upstream cell count including the target cell; scale 1, offset 0, NoData 1.79e308. Do not interpret this as km², convert using a fixed 30 m cell area, cast to Float32 or substitute flow-direction codes.",
+              "scale": 1,
+              "offset": 0,
+              "nodata": 1.79e+308
+            },
+            {
+              "id": "aca",
+              "title": "Upstream accumulation · contributing area (ACA)",
+              "unit": "km²",
+              "valueInterpretation": "Float64 original latitude-adjusted upstream area including the target cell's own area; scale 1, offset 0, NoData 1.79e308. Preserve fractional square kilometres and do not substitute ACC counts, hectares, measured discharge or rainfall.",
+              "scale": 1,
+              "offset": 0,
+              "nodata": 1.79e+308
+            }
+          ],
+          "defaultLayer": "acc",
+          "warnings": [
+            "Only 40 ACC and 27 ACA v2r0 originals in the official Americas index are eligible: each real TIFF header, actual grid/footprint and exact byte count was checked under the unchanged 512 MiB limit. The other larger originals, v1, DIR, river vectors and future releases are not silently substituted. Complete downloads and science pixels were independently accepted for n00w050 only; a checked header does not certify every full original or map.",
+            "Both originals are 36000 x 36000 Float64 grids (about 10.4 GB uncompressed each). The app keeps existing bounded tile decoding and uses original internal overviews for PNG/map display; it does not decode the full array into memory, clip a small research file, resample a new product or alter original bytes.",
+            "The real n00w050 originals are 76,824,474 bytes (ACC) and 79,213,241 bytes (ACA) regardless of AOI. A footprint intersection or grayscale display does not establish valid land pixels everywhere, connected river quality or watershed correctness.",
+            "HydroSHEDS v2 is based on conditioned TanDEM-X topography and routing. The 2026 archive publication is not a 2026 observation of discharge or flooding. No date selector applies to these fixed original files."
+          ],
+          "limits": [
+            "At most 8 intersecting complete published files per selection; narrow larger areas. Files are downloaded without clipping, reprojection, resampling or a generated subset. Only the exact reviewed product, layer and intersecting original footprint is eligible.",
+            "Only the geographic query footprint is intersected with legal longitude/latitude bounds. Tiny original floating-point outer-edge excursions and the original TIFF transforms, values and bytes remain unchanged.",
+            "Existing 512 MiB original transfer, axis, grid-pixel, chunk, intermediate-buffer, memory and preview-deadline limits remain unchanged. Available metadata does not certify every online preview or network transfer."
+          ]
+        },
+        "request": {
+          "datasetId": "hydrosheds-accumulation",
+          "bounds": [
+            -49.9,
+            0.2,
+            -49.4,
+            1
+          ],
+          "layer": "acc"
+        },
+        "sources": [
+          {
+            "id": "n00w050_ACC_1s_v2r0",
+            "title": "HydroSHEDS v2 n00w050 ACC original",
+            "bounds": [
+              -49.999999999999964,
+              1.7763568394002505e-14,
+              -39.99999999999996,
+              10.000000000000025
+            ],
+            "stac": {
+              "name": "HydroSHEDS v2 n00w050 ACC original",
+              "url": "https://data.hydrosheds.org/file/hydrosheds-v2/ACC/1s/n00w050_ACC_1s_v2r0.tif",
+              "kind": "raster"
+            }
+          }
+        ],
+        "warnings": [
+          "Only 40 ACC and 27 ACA v2r0 originals in the official Americas index are eligible: each real TIFF header, actual grid/footprint and exact byte count was checked under the unchanged 512 MiB limit. The other larger originals, v1, DIR, river vectors and future releases are not silently substituted. Complete downloads and science pixels were independently accepted for n00w050 only; a checked header does not certify every full original or map.",
+          "Both originals are 36000 x 36000 Float64 grids (about 10.4 GB uncompressed each). The app keeps existing bounded tile decoding and uses original internal overviews for PNG/map display; it does not decode the full array into memory, clip a small research file, resample a new product or alter original bytes.",
+          "The real n00w050 originals are 76,824,474 bytes (ACC) and 79,213,241 bytes (ACA) regardless of AOI. A footprint intersection or grayscale display does not establish valid land pixels everywhere, connected river quality or watershed correctness.",
+          "HydroSHEDS v2 is based on conditioned TanDEM-X topography and routing. The 2026 archive publication is not a 2026 observation of discharge or flooding. No date selector applies to these fixed original files.",
+          "At most 8 intersecting complete published files per selection; narrow larger areas. Files are downloaded without clipping, reprojection, resampling or a generated subset. Only the exact reviewed product, layer and intersecting original footprint is eligible.",
+          "Only the geographic query footprint is intersected with legal longitude/latitude bounds. Tiny original floating-point outer-edge excursions and the original TIFF transforms, values and bytes remain unchanged.",
+          "Existing 512 MiB original transfer, axis, grid-pixel, chunk, intermediate-buffer, memory and preview-deadline limits remain unchanged. Available metadata does not certify every online preview or network transfer.",
+          "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+        ]
+      }
+    },
+    {
+      "id": "etopo-geoid",
+      "request": {
+        "datasetId": "etopo-geoid",
+        "bounds": [
+          116.3,
+          39.8,
+          116.5,
+          40
+        ],
+        "layer": "geoid"
+      },
+      "plan": {
+        "dataset": {
+          "id": "etopo-geoid",
+          "title": "NOAA ETOPO 2022 · Geoid height",
+          "category": "elevation",
+          "description": "ETOPO 2022 v1 published EGM2008 geoid-height grid, a vertical separation field used with WGS84 ellipsoidal elevations. This is an independent physical quantity from the connected ETOPO surface elevation: it is not terrain height, ocean depth, a new bathymetric survey or a computed elevation conversion.",
+          "version": "ETOPO 2022 v1 · 288 header-reviewed 15 arc-second geoid originals",
+          "license": "CC0 1.0; original NGA public-domain notice and NOAA citation retained",
+          "licenseUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ngdc.mgg.dem%3Aetopo_2022",
+          "attribution": "NOAA National Centers for Environmental Information (2022), ETOPO 2022 15 Arc-Second Global Relief Model, doi:10.25921/fd45-gt74. The numerical original retains its NGA Public Domain copyright notice and EGM2008 source description. NOAA metadata applies CC0 1.0 worldwide; retain source, release, selected geoid tile and access date.",
+          "documentationUrl": "https://www.ncei.noaa.gov/products/etopo-global-relief-model",
+          "nominalResolution": "15 arc-seconds (about 500 m at the equator); original 3600 x 3600 point grid",
+          "unit": "metres of EGM2008 geoid separation relative to WGS84 ellipsoid",
+          "valueInterpretation": "Preserve Float32 geoid separation in metres, scale 1, offset 0, Point registration and no embedded NoData tag. The original identifies WGS84 (EPSG:4979) to EGM2008 height (EPSG:3855), derived from egm08_25.gtx, but its horizontal grid is EPSG:4326. Positive and negative values are valid vertical offsets, not land/sea classifications. NOAA documents ETOPO orthometric elevation + this GEOID = WGS84 ellipsoidal elevation; this connector only delivers the geoid values and performs no automatic datum conversion.",
+          "years": [],
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "geoid",
+              "title": "EGM2008 geoid separation · original metres",
+              "unit": "m",
+              "valueInterpretation": "Original Float32 geoid separation, scale 1 and offset 0, no embedded NoData. Negative offsets remain valid; no terrain elevation, positive-depth conversion, assumed missing-zero mask or surface/bedrock substitution is applied.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "geoid",
+          "warnings": [
+            "Only the 288 actual 15 arc-second geoid files in the official NOAA directory are eligible. Each real TIFF header, actual Point grid/footprint, absent NoData and exact byte count was independently checked. Complete download and all samples were accepted for N45E105 only; that does not certify every full file or online map. ETOPO surface/bedrock, SID classes and generated AOI subsets are not substituted.",
+            "The 19,941,002-byte original has no internal overviews and no NoData tag; all 12,960,000 checked samples are finite. Preserve the original Point registration, Float32 precision and signed metre values. A PNG or selected AOI does not change the complete-file download or establish survey precision.",
+            "This is a fixed EGM2008-based vertical-reference field distributed with ETOPO 2022. Its TIFF source dates (2018/2019) and 2022 publication are not an observation date or recent terrain update; year/month filters and automatic elevation conversions are unavailable.",
+            "The publisher excludes use of ETOPO for navigation. A geoid field is not a tide model, chart datum, local surveyed vertical-control network or real-time water level; users must validate vertical conventions before applying any external conversion."
+          ],
+          "limits": [
+            "At most 8 intersecting complete published files per selection; narrow larger areas. Files are downloaded without clipping, reprojection, resampling or a generated subset. Only the exact reviewed product, layer and intersecting original footprint is eligible.",
+            "Only the geographic query footprint is intersected with legal longitude/latitude bounds. Tiny original floating-point outer-edge excursions and the original TIFF transforms, values and bytes remain unchanged.",
+            "Existing 512 MiB original transfer, axis, grid-pixel, chunk, intermediate-buffer, memory and preview-deadline limits remain unchanged. Available metadata does not certify every online preview or network transfer."
+          ]
+        },
+        "request": {
+          "datasetId": "etopo-geoid",
+          "bounds": [
+            116.3,
+            39.8,
+            116.5,
+            40
+          ],
+          "layer": "geoid"
+        },
+        "sources": [
+          {
+            "id": "ETOPO_2022_v1_15s_N45E105_geoid",
+            "title": "NOAA ETOPO 2022 N45E105 geoid original",
+            "bounds": [
+              105,
+              30,
+              120,
+              45
+            ],
+            "stac": {
+              "name": "NOAA ETOPO 2022 N45E105 geoid original",
+              "url": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_geoid_gtif/ETOPO_2022_v1_15s_N45E105_geoid.tif",
+              "kind": "raster"
+            }
+          }
+        ],
+        "warnings": [
+          "Only the 288 actual 15 arc-second geoid files in the official NOAA directory are eligible. Each real TIFF header, actual Point grid/footprint, absent NoData and exact byte count was independently checked. Complete download and all samples were accepted for N45E105 only; that does not certify every full file or online map. ETOPO surface/bedrock, SID classes and generated AOI subsets are not substituted.",
+          "The 19,941,002-byte original has no internal overviews and no NoData tag; all 12,960,000 checked samples are finite. Preserve the original Point registration, Float32 precision and signed metre values. A PNG or selected AOI does not change the complete-file download or establish survey precision.",
+          "This is a fixed EGM2008-based vertical-reference field distributed with ETOPO 2022. Its TIFF source dates (2018/2019) and 2022 publication are not an observation date or recent terrain update; year/month filters and automatic elevation conversions are unavailable.",
+          "The publisher excludes use of ETOPO for navigation. A geoid field is not a tide model, chart datum, local surveyed vertical-control network or real-time water level; users must validate vertical conventions before applying any external conversion.",
+          "At most 8 intersecting complete published files per selection; narrow larger areas. Files are downloaded without clipping, reprojection, resampling or a generated subset. Only the exact reviewed product, layer and intersecting original footprint is eligible.",
+          "Only the geographic query footprint is intersected with legal longitude/latitude bounds. Tiny original floating-point outer-edge excursions and the original TIFF transforms, values and bytes remain unchanged.",
+          "Existing 512 MiB original transfer, axis, grid-pixel, chunk, intermediate-buffer, memory and preview-deadline limits remain unchanged. Available metadata does not certify every online preview or network transfer.",
+          "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+        ]
+      }
+    },
+    {
+      "id": "pc-hrea",
+      "request": {
+        "datasetId": "pc-hrea",
+        "bounds": [
+          114.1,
+          22.25,
+          114.35,
+          22.45
+        ],
+        "year": 2019,
+        "layer": "lightscore"
+      },
+      "plan": {
+        "dataset": {
+          "id": "pc-hrea",
+          "title": "HREA · Settlement electricity access",
+          "category": "population",
+          "description": "HREA 2019 v1 Hong Kong settlement-level predicted likelihood of electrification, derived from nightly VIIRS comparisons with matched uninhabited areas. This is a model probability product, separate from a nighttime-radiance composite, a utility connection inventory, energy consumption or measured outages. Only the exact reviewed Hong Kong Item and lightscore original are indexed.",
+          "version": "HREA v1 · Hong Kong · 2019 reference year",
+          "license": "CC-BY-4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "HREA research team; Brian Min, University of Michigan; Microsoft Planetary Computer distribution. Cite HREA, the named 2019 v1 Hong Kong Item, the published methodology and Creative Commons BY 4.0; retain version, source links and access date.",
+          "documentationUrl": "https://planetarycomputer.microsoft.com/dataset/hrea",
+          "nominalResolution": "0.0002777778° WGS84 grid · nominal 1 arc-second; country Item bbox and actual TIFF outer bounds differ slightly",
+          "unit": "Dimensionless predicted probability",
+          "valueInterpretation": "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+          "years": [
+            2019
+          ],
+          "defaultYear": 2019,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "lightscore",
+              "title": "Probability of electrification",
+              "unit": "Dimensionless predicted probability",
+              "valueInterpretation": "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+              "scale": 1,
+              "offset": 0,
+              "nodata": -3.3999999521443642e+38
+            }
+          ],
+          "defaultLayer": "lightscore",
+          "discovery": "stac-items",
+          "warnings": [
+            "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+            "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+            "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+            "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+            "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+          ],
+          "limits": [
+            "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+            "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+          ]
+        },
+        "request": {
+          "datasetId": "pc-hrea",
+          "bounds": [
+            114.1,
+            22.25,
+            114.35,
+            22.45
+          ],
+          "year": 2019,
+          "layer": "lightscore"
+        },
+        "sources": [
+          {
+            "id": "HREA_Hong_Kong_2019_v1",
+            "title": "HREA · Settlement electricity access · HREA_Hong_Kong_2019_v1",
+            "bounds": [
+              113.834587,
+              22.152917,
+              114.44292,
+              22.561251
+            ],
+            "stac": {
+              "name": "HREA · Settlement electricity access 2019",
+              "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea/items/HREA_Hong_Kong_2019_v1",
+              "kind": "item"
+            },
+            "startDatetime": "2019-12-31T00:00:00Z",
+            "endDatetime": "2019-12-31T00:00:00Z"
+          }
+        ],
+        "warnings": [
+          "Original Float32 model probability in [0,1], TIFF scale 1 / offset 0; the exact embedded scalar NoData is -3.3999999521443642e38. Valid zero is not NoData. Values exist at modeled settlement pixels, not throughout the country or across all empty land. The 2019-12-31 timestamp is the annual reference endpoint, not a single-night acquisition. Successful download does not verify real utility service or local model accuracy.",
+          "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+          "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+          "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+          "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling.",
+          "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+          "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used.",
+          "This product selects actual standalone publisher items using a fixed release index or a versioned projected-grid filename recipe. Connecting confirms fresh metadata and preserves its actual reference interval; a candidate address or bounding-box match is not proof of file availability, valid-area coverage or scientific accuracy. No original-file job or paid computation is started."
+        ]
+      }
+    },
+    {
+      "id": "pc-biodiversity",
+      "request": {
+        "datasetId": "pc-biodiversity",
+        "bounds": [
+          116.3,
+          39.8,
+          116.5,
+          40
+        ],
+        "year": 2020,
+        "layer": "data"
+      },
+      "plan": {
+        "dataset": {
+          "id": "pc-biodiversity",
+          "title": "Impact Observatory · Biodiversity intactness",
+          "category": "vegetation",
+          "description": "Impact Observatory and Vizzuality v1 2020 modeled terrestrial biodiversity intactness, on the unchanged published WGS84 original covering the reviewed Beijing-region tile. Its abundance and compositional-similarity model uses human-pressure covariates; it is independent of land-cover classes, forest height or a count of observed species.",
+          "version": "Biodiversity Intactness v1 · 2020 · one reviewed 7.18° regional tile",
+          "license": "CC-BY-4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "Impact Observatory and Vizzuality; PREDICTS research data and named human-pressure covariates; Microsoft Planetary Computer distribution. Credit the product, white paper, 2020 v1 Item and CC BY 4.0; retain source links and access date.",
+          "documentationUrl": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pdfs/io-biodiversity/Biodiversity_Intactness_whitepaper.pdf",
+          "nominalResolution": "0.0008983152841195215° WGS84 original grid · 7,992 × 7,992 · nominal 100 m at the equator",
+          "unit": "Dimensionless model score",
+          "valueInterpretation": "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+          "years": [
+            2020
+          ],
+          "defaultYear": 2020,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "data",
+              "title": "Original biodiversity model score",
+              "unit": "Dimensionless model score",
+              "valueInterpretation": "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "data",
+          "discovery": "stac-items",
+          "warnings": [
+            "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+            "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+            "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+            "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+            "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+          ],
+          "limits": [
+            "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+            "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+          ]
+        },
+        "request": {
+          "datasetId": "pc-biodiversity",
+          "bounds": [
+            116.3,
+            39.8,
+            116.5,
+            40
+          ],
+          "year": 2020,
+          "layer": "data"
+        },
+        "sources": [
+          {
+            "id": "bii_2020_41.9239854959007_114.35276577801187_cog",
+            "title": "Impact Observatory · Biodiversity intactness · bii_2020_41.9239854959007_114.35276577801187_cog",
+            "bounds": [
+              114.3527658,
+              34.7446497,
+              121.5321015,
+              41.9239855
+            ],
+            "stac": {
+              "name": "Impact Observatory · Biodiversity intactness 2020",
+              "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity/items/bii_2020_41.9239854959007_114.35276577801187_cog",
+              "kind": "item"
+            },
+            "startDatetime": "2020-01-01T00:00:00Z",
+            "endDatetime": "2020-12-31T23:59:59Z"
+          }
+        ],
+        "warnings": [
+          "Original Float32 model scores remain unchanged, with TIFF scale 1 / offset 0 and no embedded scalar NoData tag. The original has a separate internal 1-bit validity mask at every image level; masked finite raw values are not scientifically valid model scores. Raw scalar NoData flags remain distinct from this validity mask. Source NaN/nonfinite samples, if present, are not silently given a new scalar NoData declaration. The publisher default rendering declares 0.97*(data_b1**3.84); this visualization expression is retained as metadata but is not applied to the stored raster or asserted as an independent calibration. No species-count, field-survey, percentage or universal local-accuracy claim is inferred from a grayscale preview.",
+          "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+          "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+          "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+          "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling.",
+          "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+          "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used.",
+          "This product selects actual standalone publisher items using a fixed release index or a versioned projected-grid filename recipe. Connecting confirms fresh metadata and preserves its actual reference interval; a candidate address or bounding-box match is not proof of file availability, valid-area coverage or scientific accuracy. No original-file job or paid computation is started."
+        ]
+      }
+    },
+    {
+      "id": "noaa-ohc",
+      "request": {
+        "datasetId": "noaa-ohc",
+        "bounds": [
+          125,
+          30,
+          126,
+          31
+        ],
+        "year": 2020,
+        "layer": "heat_content"
+      },
+      "plan": {
+        "dataset": {
+          "id": "noaa-ohc",
+          "title": "NOAA · Ocean heat content anomaly",
+          "category": "ocean",
+          "description": "NOAA Global Ocean Heat Content CDR 2020 Q4 seasonal 0–700 m integrated ocean heat-content anomaly relative to WOA09, distributed by Planetary Computer as a complete 1° COG derived from the source NetCDF. It is a historical ocean energy-content anomaly, not sea-surface temperature or current forecasts.",
+          "version": "NOAA OHC CDR · 2020 Q4 · 0–700 m · published COG derivative",
+          "license": "proprietary",
+          "licenseUrl": "https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Ocean_Heat_Content/UseAgreement_01B-41.pdf",
+          "attribution": "NOAA National Centers for Environmental Information Global Ocean Heat Content CDR, doi:10.7289/V53F4MVP; Microsoft Planetary Computer published COG derivative. Cite the specific quarterly interval, 0–700 m depth and access date; preserve the publisher Use Agreement rather than replacing proprietary metadata with a guessed CC license.",
+          "documentationUrl": "https://www.ncei.noaa.gov/products/climate-data-records/global-ocean-heat-content",
+          "nominalResolution": "1° WGS84 area grid · 360 × 180 global cells; nominal 1° is not coastal detail",
+          "unit": "10^18 joules",
+          "valueInterpretation": "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+          "years": [
+            2020
+          ],
+          "defaultYear": 2020,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "heat_content",
+              "title": "0–700 m ocean heat-content anomaly",
+              "unit": "10^18 joules",
+              "valueInterpretation": "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "heat_content",
+          "discovery": "stac-items",
+          "warnings": [
+            "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+            "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+            "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+            "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+            "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+          ],
+          "limits": [
+            "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+            "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+          ]
+        },
+        "request": {
+          "datasetId": "noaa-ohc",
+          "bounds": [
+            125,
+            30,
+            126,
+            31
+          ],
+          "year": 2020,
+          "layer": "heat_content"
+        },
+        "sources": [
+          {
+            "id": "ocean-heat-content-2020-Q4-700m",
+            "title": "NOAA · Ocean heat content anomaly · ocean-heat-content-2020-Q4-700m",
+            "bounds": [
+              -180,
+              -90,
+              180,
+              90
+            ],
+            "stac": {
+              "name": "NOAA · Ocean heat content anomaly 2020",
+              "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content/items/ocean-heat-content-2020-Q4-700m",
+              "kind": "item"
+            },
+            "startDatetime": "2020-10-01T00:00:00Z",
+            "endDatetime": "2020-12-31T23:59:59Z"
+          }
+        ],
+        "warnings": [
+          "Original Float32 heat_content anomaly values in publisher unit 10^18 joules, embedded NaN NoData, scale 1 and offset 0. Signed anomalies and valid zero are retained. The actual 2020-10-01 through 2020-12-31 interval and noaa_cdr:max_depth 700 are immutable. No Celsius, heat flux, absolute heat content, per-area normalization or new anomaly baseline is substituted.",
+          "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+          "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+          "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+          "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling.",
+          "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+          "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used.",
+          "This product selects actual standalone publisher items using a fixed release index or a versioned projected-grid filename recipe. Connecting confirms fresh metadata and preserves its actual reference interval; a candidate address or bounding-box match is not proof of file availability, valid-area coverage or scientific accuracy. No original-file job or paid computation is started."
+        ]
+      }
+    },
+    {
+      "id": "noaa-nclimgrid",
+      "request": {
+        "datasetId": "noaa-nclimgrid",
+        "bounds": [
+          -74.1,
+          40.65,
+          -73.8,
+          40.85
+        ],
+        "year": 2022,
+        "layer": "tavg",
+        "month": 9
+      },
+      "plan": {
+        "dataset": {
+          "id": "noaa-nclimgrid",
+          "title": "NOAA NClimGrid · Monthly climate observations",
+          "category": "climate",
+          "description": "NOAA NClimGrid September 2022 CONUS monthly average, maximum and minimum air-temperature statistics and precipitation, based on GHCN-D station observations and distributed as unchanged Planetary Computer COG derivatives. Four variables belong to one climate product, not four new imagery channels.",
+          "version": "NClimGrid Monthly · September 2022 · reviewed CONUS published COGs",
+          "license": "proprietary",
+          "licenseUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332",
+          "attribution": "Vose et al. (2014), NOAA Monthly U.S. Climate Gridded Dataset (NClimGrid), Version 1, doi:10.7289/V5SX6B56; NOAA NCEI; Microsoft Planetary Computer published COG derivatives. State September 2022 variable/subset and access date; preserve NOAA use and distribution constraints and original proprietary Collection field.",
+          "documentationUrl": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332",
+          "nominalResolution": "0.04166667° WGS84 grid · 1,385 × 596 · nominal 5 km, not 5 arc-seconds or station-scale accuracy",
+          "unit": "degree Celsius",
+          "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+          "years": [
+            2022
+          ],
+          "defaultYear": 2022,
+          "months": [
+            9
+          ],
+          "defaultMonth": 9,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "tavg",
+              "title": "Monthly average air temperature",
+              "unit": "degree Celsius",
+              "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+              "scale": 1,
+              "offset": 0
+            },
+            {
+              "id": "tmax",
+              "title": "Monthly maximum-temperature statistic",
+              "unit": "degree Celsius",
+              "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+              "scale": 1,
+              "offset": 0
+            },
+            {
+              "id": "tmin",
+              "title": "Monthly minimum-temperature statistic",
+              "unit": "degree Celsius",
+              "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+              "scale": 1,
+              "offset": 0
+            },
+            {
+              "id": "prcp",
+              "title": "Monthly precipitation",
+              "unit": "mm",
+              "valueInterpretation": "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+              "scale": 1,
+              "offset": 0
+            }
+          ],
+          "defaultLayer": "tavg",
+          "discovery": "stac-items",
+          "warnings": [
+            "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+            "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+            "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+            "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+            "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling."
+          ],
+          "limits": [
+            "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+            "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used."
+          ]
+        },
+        "request": {
+          "datasetId": "noaa-nclimgrid",
+          "bounds": [
+            -74.1,
+            40.65,
+            -73.8,
+            40.85
+          ],
+          "year": 2022,
+          "month": 9,
+          "layer": "tavg"
+        },
+        "sources": [
+          {
+            "id": "nclimgrid-202209",
+            "title": "NOAA NClimGrid · Monthly climate observations · nclimgrid-202209",
+            "bounds": [
+              -124.708333,
+              24.541666,
+              -66.999995,
+              49.375001
+            ],
+            "stac": {
+              "name": "NOAA NClimGrid · Monthly climate observations 2022",
+              "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly/items/nclimgrid-202209",
+              "kind": "item"
+            },
+            "startDatetime": "2022-09-01T00:00:00Z",
+            "endDatetime": "2022-09-30T23:59:59Z"
+          }
+        ],
+        "warnings": [
+          "Original Float32 tavg/tmax/tmin are in degree Celsius; original prcp is in mm for the published monthly interval. NaN NoData, scale 1 and offset 0 remain unchanged. This is surface air temperature and precipitation inferred from stations, not satellite land-surface temperature, instantaneous weather or guaranteed final quality status. The 2022-09-01 through 2022-09-30 interval is retained, with no daily archive or Hawaii/Alaska expansion claim.",
+          "Only the exact named historical Item, reference interval and reviewed measurement assets are indexed. AOI filters the actual publisher bbox; it does not clip the original, replace the selected location, imply valid-pixel coverage or create unreviewed years/tiles.",
+          "The unchanged publisher Item and Collection retain every original asset and license declaration. Only the selected reviewed numerical layer receives transient anonymous Planetary Computer data access; unrelated assets are not granted broader transport permission.",
+          "Planetary Computer public anonymous SAS may be throttled. Temporary read-only capability URLs exist only during transfer and are not saved to Items, snapshots, settings or the code repository. Source URLs, downloaded bytes and local SHA-256 receipts remain canonical.",
+          "A complete transfer and visible preview are separate from scientific quality, calibration validation and useful local coverage. Original grids, masks, timestamps, NoData and raw values are preserved without reprojection, percentage conversion or modeled-data relabeling.",
+          "One exact reviewed publisher Item per independent product. Other archive countries, tiles, years, quarters, depths and daily products require independent acceptance before expansion.",
+          "Existing 512 MiB transfer, raster dimension, raw-pixel, preview network and decoder limits remain unchanged. No account, paid cloud processing, export generation or commercial-data procurement is used.",
+          "This product selects actual standalone publisher items using a fixed release index or a versioned projected-grid filename recipe. Connecting confirms fresh metadata and preserves its actual reference interval; a candidate address or bounding-box match is not proof of file availability, valid-area coverage or scientific accuracy. No original-file job or paid computation is started."
+        ]
+      }
+    }
+  ]
+}

@@ -1,35 +1,103 @@
-# Agent 上下文整理
+# Agent model context settings
 
-2026-10-06。Agent 对话栏增加“整理上下文”图标。它让当前模型生成较短的工作摘要，继续使用同一 Codex 线程；软件里的消息、图片引用和原生审核记录继续保留。整理过程中可以停止，输入框里的未发送草稿不会提交或清空。
+Each saved model connection has an optional `contextWindow` integer in tokens.
+An empty field means automatic. Explicit values from 8,192 through 4,194,304 are
+validated in the desktop registry, Node bridge and frontend. They must fit the
+actual model or gateway's limit; the setting does not increase provider capacity.
 
-## 实现与恢复
+The documented DeepSeek Flash / V4 Pro routes on `https://api.deepseek.com`
+(root or `/v1`) default to 1,048,576 tokens. Unknown models and gateway aliases
+retain a conservative 32,768-token fallback and the form explains how to override
+it. Presets were checked against [DeepSeek's model metadata](https://api-docs.deepseek.com/api/list-models/)
+on 2026-10-09. Endpoint and model both matter; a gateway's alias alone is not proof
+of its capacity. The source of this policy is `agent/model-context.mjs`.
 
-桌面入口 `agent_compact` 经过原生权限声明和现有内部通信，调用固定版本 Codex 的 `thread/compact/start`。Codex 仍是唯一编排循环，AI SDK 只转换协议；整理过程不执行业务工具。工作摘要留在 Codex 私有恢复记录中，不作为新的聊天回复展示。
+The native Codex configuration receives the resolved capacity. Automatic
+organization counts the **total** active context, including the instruction
+prefix, at up to 85% of capacity, with output and additional headroom reserved.
+The bridge's output budget is capped for small windows. Its former 2 MB text
+guard scales with capacity, while the independent 32 MB request bound remains.
+Context usage receivers support the same upper bound; they still show only
+observed native usage, not estimated percentages.
 
-固定运行时同时启用原生自动整理。应用记录原生整理开始、完成和中断状态；本地消息不因整理被删除。旧连接记录可以恢复新的适配能力，已有密钥引用保持不变。
+Capacity changes close and recreate the idle runtime on the next operation.
+Changing this setting alone keeps the connection identity, native thread,
+conversation history, pending reviews and task goal. Model changes remain blocked
+while a response is running. No API key needs to be reentered for a context-only
+change. Empty/omitted settings remain compatible with existing registry files.
 
-2026-10-07 修复旧对话反复整理后重复读取的问题：使用固定 Codex 0.159.2 支持的 `model_auto_compact_token_limit_scope = "body_after_prefix"`，按整理后新增的上下文增长计算自动整理门槛，保留原有窗口限制。同一轮的相同地图、地点、行政区、边界和影像目录只读请求复用本轮原生回执，不增加重复记录或消耗新的业务操作次数。权限、授权、任务、计划状态及任何写操作不复用；下一轮重新读取。预算耗尽与待选卡片、未注册工具分别报告。
+This setting is separate from per-response tool-call limits and upstream rate
+limits. Increasing it does not bypass permissions or approve a download.
 
-真实失败对话的隔离副本使用原保存连接和固定 Codex 重试，旧的缺少多边形问题由同一区域的原生多边形读取结果取代，生成待确认项目评审。新增 9 项业务记录、1 次整理；没有启动原文件下载或完成裁剪，不代表所有长对话均已验收。[本轮验收](../prototype/qa/agent-pending-boundary-verification.json)。
+## Request overhead and usage accounting
 
-手动和自动整理都会移除 Codex 旧历史中的图片内容。应用继续保留已明确选择的本地图片：发送下一轮时恢复图片，桥接层也在每次模型请求前补回本段对话缺失的图片，覆盖对话中途整理的情况。补回前重新检查引用、实际文件和 SHA-256，不接受模型提供的路径或地址，也不会串用其他对话的图片。图片是可视参考，不能授权工具执行或证明原始像元。
+As of 2026-10-11, new native threads begin with 11 core tool schemas instead of
+the complete 67-tool catalog. `geod_tools_load` exposes named, pinned native
+groups when needed. Native workflow continuations begin with 18 tools for
+project/job verification and download/processing; they can discover additional
+groups in the same way. This only changes model context: native permissions,
+scene scope, review hashes, coverage checks and output verification still apply.
+Existing native threads without the loader retain their original complete
+contract. Start a new conversation to obtain the initial discovery reduction.
 
-原生计划是独立记录，模型摘要不能改变确认权限、计划哈希、来源或下载状态。界面继续从原生核心读取实际记录；说明工程、任务或文件状态时仍需要新的业务查询。
+The shared application instructions are consolidated in `agent/instructions.mjs`.
+History and provider reasoning/tool pairs remain intact. Automatic organization
+still follows the configured context window, not an arbitrary low token cap.
+Tool results and continued history can still make later requests substantially
+larger than the first request; discovery is not a complete bound on task cost.
 
-## 开发验收
+The composer context popover separates the latest native context occupancy from
+**recorded cumulative model usage**. The provider bridge records input, output,
+total, cached input and reasoning output in the active session. Cached input is
+part of input, and reasoning is part of output: neither is added a second time.
+DeepSeek's separate `prompt_cache_hit_tokens` field is retained. Unreported
+details are unknown, not zero. These counters are not the provider's invoice.
 
-三种协议均经过固定 Codex、实际 SDK 和独立原生 CLI 工程库。手动整理后重启恢复同线程；自动整理另用明确标注的上游使用量触发，验证对话中途整理后图片仍进入每次请求。它没有伪装成自然增长的长对话或真实云端生成。
+Each session persists all-time totals since collection began and the most recent
+128 request records, including human/workflow origin and tool-schema character
+counts. The usage ledger does not contain request text, private reasoning or
+credentials. It cannot reconstruct old requests or usage omitted by a provider,
+including a disconnected stream that never delivered usage. Native goal-engine
+`tokensUsed` is separate and is not used as a cumulative billing counter.
 
-桌面内部通信的独立验收使用一份先前实际下载的 SCL 源文件，重新校验并预检裁剪计划。在手动整理、两次自动整理及重启后，源文件哈希、待确认计划编号和哈希保持一致；计划没有执行，任务数量保持一项。计划本身由原生预检生成，只有聊天中的引用被测试程序明确植入，不宣称为模型生成方案。该验收的上游和凭据存储使用受控数据，不替代云端或 Windows 凭据管理器验收。
+## Real-model regression evidence, 2026-10-11
 
-真实 GPT 网关路线已完成手动整理、重启续聊、两轮识图和实际工程查询。正确识别左侧红色圆形、右侧蓝色方形；本次工程库的实际总数为零。另一次自然增长测试使用明确标注的参考笔记增加对话长度，没有改写使用量：完成 13 轮、15 次实际原生读取，触发两次自动整理，随后流式请求失败。新运行时复测又在工具返回后遭接口拒绝（400）。两次整段测试都保留为失败，不从局部成功推断全部长对话可用。
+Same saved `deepseek-flash` connection and original task prompts; June 2025
+Sentinel-2 L2A SCL, native 20 m pixels, three native review confirmations per
+scenario, actual downloads and local clipping. The verification driver confirms
+only its own bounded SCL plans through the same native approval endpoint used
+by the UI. Browser rendering was inspected separately; this run does not claim
+native-window click coverage.
 
-上下文超限会保留结构化错误类型，覆盖 HTTP 错误和成功响应流中的错误事件，具体错误正文不会返回界面。两种受控超限均完成同线程再次发送、原生整理、图片恢复与实际工具读取；原失败回复保留为失败，不自动改写为成功。固定 SDK 的流式错误类型也进入只含类别和状态的验证诊断，完整接口错误、密钥和推理内容不写入诊断。
+| Scenario | Baseline total tokens | Optimized total tokens | Reduction | Requests, before → after |
+| --- | ---: | ---: | ---: | ---: |
+| Explore sidebar, San Francisco rectangle | 615,865 | 308,799 | 49.86% | 17 → 15 |
+| Home conversation, Manhattan administrative polygon | 716,212 | 502,453 | 29.85% | 18 → 20 |
+| Combined | 1,332,077 | 811,252 | 39.10% | 35 → 35 |
 
-中英文、深浅色隐藏浏览器检查整理过程、失败提示、停止入口、历史图片及草稿保留；它使用实际对话记录和明确标注的界面状态回放，不发起模型调用，不代替原生窗口人工检查。[验收索引](../prototype/qa/agent-context-verification.json)分别列出证据和限制。
+Both goals and all declared outputs were verified. Download hashes were checked;
+both clipped rasters have identical pixels, dimensions, CRS and transforms to
+the baseline. Manhattan's complete TIFF hash is also unchanged. The SF task
+chose the native mosaic path instead of the direct clip path, so its TIFF bytes
+differ while raster pixels and georeferencing match exactly. The two sessions
+retained independent scopes and file IDs.
 
-## 仍有的限制
+First-request input was 8,573 / 8,591 tokens. Native continuations carried 18 tool
+schemas. The final two sessions recorded 263,808 / 461,312 cached input tokens,
+already included in the totals above. Baseline cache data was not collected, so
+no cost-reduction percentage is asserted.
 
-整理减少发送给模型的工作上下文，不扩展应用历史的存储上限：最多 50 段会话，每段保存最多 200 项记录；发送新消息前保留 180 项和 700,000 字节的限额，总历史不超过 5,000,000 字节。达到上限需新建会话。固定运行时使用 32,768 的上下文配置和 26,000 的自动整理门槛，不表示任意所选模型都支持同样长度。
+This is one final run per scenario, not a statistical performance guarantee.
+The earlier full optimization pass consumed 320,183 / 736,379 tokens; it exposed
+unnecessary science-tool discovery and excessive pagination, prompting the
+second refinement. Manhattan still used more model requests than the baseline;
+remaining serial discovery and accumulating history should be measured before
+claiming that total task consumption is low.
 
-模型可能生成不完整摘要。多次整理后的业务结果必须重新查询原生状态；空白回复现在按失败处理。[OpenAI 原生 Responses 的加密推理恢复](agent-openai-responses.md)、[图片存储清理](agent-images.md)和[文本 / PDF / DOCX / XLSX / PPTX 附件](agent-documents.md)已实现。音视频按用户决定暂缓，保留局部实现与历史记录，不属于当前接入验收范围，不作完整可用声明。原生 OpenAI / Claude / Gemini 的云端成功调用、旧版 Office、干净安装环境、原生窗口及完整依赖分发审计继续按各自范围保留。
+Local evidence (ignored verification artifacts):
+
+- Baseline: `.verification/live-scene-ui-1791646428030924800/execution-token-audit.json`
+- Earlier pass: `.verification/live-scene-ui-1791700412132212000/optimization-report.json`
+- Final: `.verification/live-scene-ui-1791701532544308000/optimization-comparison.json`
+- Provider records and jobs: the final directory's `optimization-report.json`
+- Browser: the final directory's `usage-panel.png`

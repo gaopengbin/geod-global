@@ -5,7 +5,7 @@ import {render,screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {I18nProvider} from './i18n.jsx';
 import {RuntimeContext} from './runtime-context.js';
-// Deferred authorized-download workflow; the candidate wrapper is tested separately.
+// File/account review; the accepted-source wrapper is tested separately.
 import {OriginalDownloadWorkflow as DownloadAssetButton,RuntimeJobRows} from './runtime-ui.jsx';
 import {CatalogFilters} from './catalog-filters.jsx';
 import {ProjectsLibrary} from './projects-ui.jsx';
@@ -20,7 +20,7 @@ const job={id:'viirs-source',kind:'download',status:'succeeded',itemId:scene.id,
 const wrap=(children,runtimeJob=job,act=vi.fn())=>render(<I18nProvider><RuntimeContext.Provider value={{health:{},jobs:Array.isArray(runtimeJob)?runtimeJob:[runtimeJob],projects:[project],refresh:vi.fn(),act}}>{children}</RuntimeContext.Provider></I18nProvider>);
 beforeEach(()=>{vi.resetAllMocks();delete window.__TAURI__;Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:()=> 'en',setItem:vi.fn()}});});
 it('VIIRS filters use composite dates and omit the optical cloud filter',()=>{wrap(<CatalogFilters initialValues={{provider:scene.provider,bbox:project.bounds,start:'2025-06-01',end:'2025-06-30'}} onClose={vi.fn()} onApply={vi.fn()}/>);expect(screen.getByRole('button',{name:'Search start date'})).toBeTruthy();expect(screen.queryByLabelText('Minimum cloud cover')).toBeNull();});
-it('VIIRS download selects the full HDF5 and requires software authorization',async()=>{wrap(<DownloadAssetButton scene={scene} areaBounds={project.bounds} areaName="VIIRS"/>);await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('original HDF5');expect(screen.getByRole('link',{name:'Manage authorization'}).getAttribute('href')).toBe('#Settings?account=nasa-earthdata');expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(true);expect(screen.getByText(/prepare M5, M4 and M3 in the project/i)).toBeTruthy();});
+it('VIIRS download selects the full HDF5 and requires software authorization',async()=>{wrap(<DownloadAssetButton scene={scene} areaBounds={project.bounds} areaName="VIIRS"/>);await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('original HDF5');expect(screen.getByRole('link',{name:'Manage authorization'}).getAttribute('href')).toBe('#Settings?account=nasa-earthdata');expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(true);await userEvent.click(screen.getByRole('button',{name:'Download contents'}));expect(screen.getByText(/prepare M5, M4 and M3 in the project/i)).toBeTruthy();await userEvent.keyboard('{Escape}');});
 
 it('verified native fixture evidence shows precise science checks without enabling unimplemented map actions',async()=>{
   const s=JSON.parse(readFileSync('prototype/qa/viirs-science-summary-fixtures.json','utf8')).summaries[0];
@@ -38,17 +38,17 @@ it('failed VIIRS tasks link directly to the Earthdata authorization entry',()=>{
   wrap(<RuntimeJobRows jobs={[failed]}/>,failed);
   expect(screen.getByRole('link',{name:'Manage authorization'}).getAttribute('href')).toBe('#Settings?account=nasa-earthdata');
 });
-it('old VIIRS originals retain HDF5 provenance while candidate downloads remain deferred',async()=>{
+it('old unchecked VIIRS originals retain provenance and block preparation while the accepted source allows a verified replacement download',async()=>{
   const act=vi.fn();runtimeRequest.mockResolvedValue([project]);wrap(<ProjectsLibrary focusedProjectId={project.id}/>,job,act);
   await screen.findByRole('heading',{name:project.name});
-  const download=screen.getByRole('button',{name:'Download original product'});expect(download.disabled).toBe(true);
+  const download=screen.getByRole('button',{name:'Download original product'});expect(download.disabled).toBe(false);
   expect(screen.getByText(/An older VIIRS download has no science validation/)).toBeTruthy();
   expect(screen.getAllByRole('button',{name:'Clip band to project area'}).every(b=>b.disabled)).toBe(true);
   for(const band of ['M5','M4','M3'])expect(screen.getByRole('button',{name:`Prepare ${band}`}).disabled).toBe(true);
   expect(screen.queryByRole('link',{name:'Open in workspace'})).toBeNull();
   expect(screen.getByText('VIIRS original product · HDF5')).toBeTruthy();
-  await userEvent.click(download);expect(act).not.toHaveBeenCalled();
-  expect(screen.getByText(/Original downloads for this source are pending real-account verification/)).toBeTruthy();
+  await userEvent.click(download);expect(act).toHaveBeenCalledWith('downloadProject',{id:project.id,assetKey:'viirs'});
+  expect(screen.queryByText(/Original downloads for this source are pending real-account verification/)).toBeNull();
 });
 
 it('checked originals enable native band preparation in their own project',async()=>{

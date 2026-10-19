@@ -87,6 +87,7 @@ mod tests {
         let manager = JobManager::open(root.clone()).await.unwrap();
         let session = Uuid::new_v4().to_string();
         let review = manager.save_agent_plan(&session, Action::Download {
+            originals_only: false,
             acquisition: None,
             query: SearchQuery { provider:"earth-search".into(), bounds:[-74.3,40.4,-73.7,41.0], start:"2026-10-01".into(),end:"2026-10-07".into(),cloud_max:100.0,limit:5 },
             metadata_sha256:"a".repeat(64),project:None,

@@ -26,8 +26,8 @@ it('MODIS can queue all five original COGs together while explaining that decodi
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   await userEvent.click(screen.getByRole('combobox',{name:'Download content'}));
   await userEvent.click(screen.getByRole('option',{name:'RGB bands + quality + pixel state · 5 files'}));
-  expect(screen.getByText(/does not apply a cloud or quality mask/)).toBeTruthy();
-  await userEvent.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await userEvent.click(screen.getByRole('button',{name:'Download contents'}));expect(screen.getByText(/does not apply a cloud or quality mask/)).toBeTruthy();await userEvent.keyboard('{Escape}');
+  await userEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.slice(1).map(([,payload])=>payload.assetKey)).toEqual(['red','green','blue','modis_qc','modis_state']);
   expect(runtimeRequest.mock.calls[0][1].scenes[0].assets.modis_qc.rasterBand).toBeUndefined();

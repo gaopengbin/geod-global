@@ -2,9 +2,29 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { StreamProviderError } from 'ai';
-import { translateResponses, startBridge, safeError, contextLimitExceeded, validateModelConfig, BRIDGE_MODEL } from './protocol.mjs';
+import { translateResponses, startBridge, safeError, contextLimitExceeded, validateModelConfig, BRIDGE_MODEL, LIMITS, STEP_LIMIT_ERROR } from './protocol.mjs';
+
+test('failed provider attempts are accounted without fabricated zero usage, while rejected local input is not billed',async t=>{
+  const receipts=[];
+  const bridge=await startBridge({config,definitions,token:'usage-proof',onUsage:record=>receipts.push(record),stream:()=>({fullStream:(async function*(){throw Error('network');})()})});
+  t.after(()=>bridge.close());
+  const call=async body=>{const response=await fetch(bridge.baseUrl+'/responses',{method:'POST',headers:{Authorization:'Bearer usage-proof'},body:JSON.stringify(body)});return response.text();};
+  assert((await call({model:BRIDGE_MODEL,stream:true,input:[{role:'user',content:'Read'}]})).includes('response.failed'));
+  assert.equal(receipts.length,1);assert.equal(receipts[0].state,'failed');assert.equal(receipts[0].usage.total_tokens,null);
+  assert(Number.isSafeInteger(receipts[0].context.durationMs));
+  await call({model:'invalid',stream:true,input:[]});assert.equal(receipts.length,1);
+});
 const definitions=[{name:'geod_projects_list',description:'Read',inputSchema:{type:'object',properties:{},additionalProperties:false}}];
 const config={label:'Test',protocol:'openai-compatible',baseUrl:'https://example.com/v1',model:'test-model',apiKey:'private-test-key'};
+test('local step exhaustion reports a saved incomplete task instead of a model connection or upstream rate failure, and resets per turn',async t=>{
+  let calls=0,failure;
+  const stream=()=>{calls++;return {fullStream:(async function*(){yield {type:'text-delta',text:'Controlled response'};})(),finishReason:Promise.resolve('stop'),usage:Promise.resolve({})};};
+  const bridge=await startBridge({config,definitions,token:'local-limit',stream,onFailure:text=>{failure=text;}});t.after(()=>bridge.close());
+  const request=()=>fetch(bridge.baseUrl+'/responses',{method:'POST',headers:{Authorization:'Bearer local-limit'},body:JSON.stringify({model:BRIDGE_MODEL,stream:true,input:[{role:'user',content:'Read'}]})});
+  for(let i=0;i<LIMITS.modelSteps;i++) {const response=await request();assert.equal(response.status,200);await response.text();}
+  const denied=await request();assert.equal(denied.status,429);assert.equal((await denied.json()).error.code,'geod_step_limit');assert.equal(failure,STEP_LIMIT_ERROR);assert.equal(calls,LIMITS.modelSteps);
+  await bridge.resetBudget();const next=await request();assert.equal(next.status,200);await next.text();assert.equal(calls,LIMITS.modelSteps+1);
+});
 test('translation preserves tool pairs, merges adjacent assistant messages and removes built-ins',()=>{
   const value=translateResponses({input:[{role:'user',content:'Read projects'},{type:'function_call',call_id:'call',name:'geod_projects_list',arguments:'{}'},{type:'function_call_output',call_id:'call',output:'{"total":1}'},{role:'assistant',content:[{type:'output_text',text:'One project'}]},{role:'assistant',content:'Ready'}],tools:[{type:'function',name:'geod_projects_list'},{type:'function',name:'shell'}]},definitions);
   assert.equal(value.messages.length,4);assert.equal(value.messages[3].content.length,2);assert.deepEqual(Object.keys(value.tools),['geod_projects_list']);assert(!value.tools.geod_projects_list.execute);
@@ -121,7 +141,7 @@ test('actual compatible SDK reserves DeepSeek thinking budget and preserves long
   });
   await new Promise(resolve=>source.listen(0,'127.0.0.1',resolve));
   t.after(()=>new Promise(resolve=>{source.closeAllConnections();source.close(resolve);}));
-  const bridge=await startBridge({config:{...config,model:'deepseek-flash',baseUrl:`http://127.0.0.1:${source.address().port}/v1`},definitions,token:'owned-budget'});t.after(()=>bridge.close());
+  const bridge=await startBridge({config:{...config,model:'deepseek-flash',contextWindow:131_072,baseUrl:`http://127.0.0.1:${source.address().port}/v1`},definitions,token:'owned-budget'});t.after(()=>bridge.close());
   const post=async input=>{
     const response=await fetch(bridge.baseUrl+'/responses',{method:'POST',headers:{Authorization:'Bearer owned-budget'},body:JSON.stringify({model:BRIDGE_MODEL,stream:true,input,tools:[{type:'function',name:'geod_projects_list'}]})});
     const events=(await response.text()).split('\n').filter(line=>line.startsWith('data: ')).map(line=>JSON.parse(line.slice(6)));

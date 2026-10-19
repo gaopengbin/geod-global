@@ -1,0 +1,850 @@
+[
+  {
+    "datasetId": "pc-hrea",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea",
+    "document": {
+      "id": "hrea",
+      "type": "Collection",
+      "links": [
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea"
+        },
+        {
+          "rel": "license",
+          "href": "https://creativecommons.org/licenses/by/4.0/",
+          "title": "CC BY 4.0"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/schema+json",
+          "title": "Queryables",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea/queryables"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/hrea",
+          "title": "Human readable dataset overview and reference",
+          "type": "text/html"
+        }
+      ],
+      "title": "HREA: High Resolution Electricity Access",
+      "assets": {
+        "thumbnail": {
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/hrea.png",
+          "type": "image/png",
+          "roles": [
+            "thumbnail"
+          ],
+          "title": "HREA"
+        },
+        "geoparquet-items": {
+          "href": "abfs://items/hrea.parquet",
+          "type": "application/x-parquet",
+          "roles": [
+            "stac-items"
+          ],
+          "title": "GeoParquet STAC items",
+          "description": "Snapshot of the collection's STAC items exported to GeoParquet format.",
+          "msft:partition_info": {
+            "is_partitioned": false
+          },
+          "table:storage_options": {
+            "account_name": "pcstacitems"
+          }
+        }
+      },
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -117.413972,
+              -55.54235,
+              -53.092722,
+              32.718434
+            ],
+            [
+              -25.361528,
+              -34.838027,
+              50.759908,
+              37.552639
+            ],
+            [
+              34.957638,
+              -11.655904,
+              157.037723,
+              38.612083
+            ],
+            [
+              155.392502,
+              -20.251178,
+              172.171458,
+              14.721388
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2012-12-31T00:00:00Z",
+              "2019-12-31T00:00:00Z"
+            ]
+          ]
+        }
+      },
+      "license": "CC-BY-4.0",
+      "keywords": [
+        "HREA",
+        "Electricity",
+        "VIIRS"
+      ],
+      "providers": [
+        {
+          "url": "http://www-personal.umich.edu/~brianmin/HREA/index.html/",
+          "name": "University of Michigan",
+          "roles": [
+            "producer",
+            "licensor"
+          ]
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com",
+          "name": "Microsoft",
+          "roles": [
+            "host",
+            "processor"
+          ]
+        }
+      ],
+      "summaries": {
+        "gsd": [
+          30,
+          460
+        ]
+      },
+      "description": "The [HREA](http://www-personal.umich.edu/~brianmin/HREA/index.html) project aims to provide open access to new indicators of electricity access and reliability across the world. Leveraging satellite imagery with computational methods, these high-resolution data provide new tools to track progress toward reliable and sustainable energy access across the world.\n\nThis dataset includes settlement-level measures of electricity access, reliability, and usage for 89 nations, derived from nightly VIIRS satellite imagery. Specifically, this dataset provides the following annual values at country-level granularity:\n\n1. **Access**: Predicted likelihood that a settlement is electrified, based on night-by-night comparisons of each settlement against matched uninhabited areas over a calendar year.\n\n2. **Reliability**: Proportion of nights a settlement is statistically brighter than matched uninhabited areas. Areas with more frequent power outages or service interruptions have lower rates.\n\n3. **Usage**: Higher levels of brightness indicate more robust usage of outdoor lighting, which is highly correlated with overall energy consumption.\n\n4. **Nighttime Lights**: Annual composites of VIIRS nighttime light output.\n\nFor more information and methodology, please visit the [HREA website](http://www-personal.umich.edu/~brianmin/HREA/index.html).\n",
+      "item_assets": {
+        "lightscore": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Probability of electrification"
+        },
+        "light-composite": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Nighttime light annual composite"
+        },
+        "night-proportion": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Proportion of nights a settlement is brighter than uninhabited areas"
+        },
+        "estimated-brightness": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Estimated brightness levels"
+        }
+      },
+      "stac_version": "1.0.0",
+      "msft:container": "hrea",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+      ],
+      "msft:storage_account": "hreadatasa",
+      "msft:short_description": "Settlement-level measures of electricity access, reliability, and usage derived from VIIRS satellite imagery",
+      "msft:region": "westeurope"
+    }
+  },
+  {
+    "datasetId": "pc-biodiversity",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity",
+    "document": {
+      "id": "io-biodiversity",
+      "type": "Collection",
+      "links": [
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity"
+        },
+        {
+          "rel": "license",
+          "href": "https://creativecommons.org/licenses/by/4.0/",
+          "type": "text/html",
+          "title": "CC BY 4.0"
+        },
+        {
+          "rel": "about",
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pdfs/io-biodiversity/Biodiversity_Intactness_whitepaper.pdf",
+          "type": "application/pdf",
+          "title": "Technical White Paper"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/io-biodiversity",
+          "type": "text/html",
+          "title": "Human readable dataset overview and reference"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/schema+json",
+          "title": "Queryables",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity/queryables"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/io-biodiversity",
+          "title": "Human readable dataset overview and reference",
+          "type": "text/html"
+        }
+      ],
+      "title": "Biodiversity Intactness",
+      "assets": {
+        "thumbnail": {
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/io-biodiversity-thumb.png",
+          "title": "Biodiversity Intactness",
+          "media_type": "image/png"
+        },
+        "geoparquet-items": {
+          "href": "abfs://items/io-biodiversity.parquet",
+          "type": "application/x-parquet",
+          "roles": [
+            "stac-items"
+          ],
+          "title": "GeoParquet STAC items",
+          "description": "Snapshot of the collection's STAC items exported to GeoParquet format.",
+          "msft:partition_info": {
+            "is_partitioned": false
+          },
+          "table:storage_options": {
+            "account_name": "pcstacitems"
+          }
+        }
+      },
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2017-01-01T00:00:00Z",
+              "2020-12-31T23:59:59Z"
+            ]
+          ]
+        }
+      },
+      "license": "CC-BY-4.0",
+      "keywords": [
+        "Global",
+        "Biodiversity"
+      ],
+      "providers": [
+        {
+          "url": "https://www.impactobservatory.com/",
+          "name": "Impact Observatory",
+          "roles": [
+            "processor",
+            "producer",
+            "licensor"
+          ]
+        },
+        {
+          "url": "https://www.vizzuality.com/",
+          "name": "Vizzuality",
+          "roles": [
+            "processor"
+          ]
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com",
+          "name": "Microsoft",
+          "roles": [
+            "host"
+          ]
+        }
+      ],
+      "summaries": {
+        "version": [
+          "v1"
+        ]
+      },
+      "description": "Generated by [Impact Observatory](https://www.impactobservatory.com/), in collaboration with [Vizzuality](https://www.vizzuality.com/), these datasets estimate terrestrial Biodiversity Intactness as 100-meter gridded maps for the years 2017-2020.\n\nMaps depicting the intactness of global biodiversity have become a critical tool for spatial planning and management, monitoring the extent of biodiversity across Earth, and identifying critical remaining intact habitat. Yet, these maps are often years out of date by the time they are available to scientists and policy-makers. The datasets in this STAC Collection build on past studies that map Biodiversity Intactness using the [PREDICTS database](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.2579) of spatially referenced observations of biodiversity across 32,000 sites from over 750 studies. The approach differs from previous work by modeling the relationship between observed biodiversity metrics and contemporary, global, geospatial layers of human pressures, with the intention of providing a high resolution monitoring product into the future.\n\nBiodiversity intactness is estimated as a combination of two metrics: Abundance, the quantity of individuals, and Compositional Similarity, how similar the composition of species is to an intact baseline. Linear mixed effects models are fit to estimate the predictive capacity of spatial datasets of human pressures on each of these metrics and project results spatially across the globe. These methods, as well as comparisons to other leading datasets and guidance on interpreting results, are further explained in a methods [white paper](https://ai4edatasetspublicassets.blob.core.windows.net/assets/pdfs/io-biodiversity/Biodiversity_Intactness_whitepaper.pdf) entitled “Global 100m Projections of Biodiversity Intactness for the years 2017-2020.”\n\nAll years are available under a Creative Commons BY-4.0 license.\n",
+      "item_assets": {
+        "data": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Biodiversity Intactness",
+          "description": "Terrestrial biodiversity intactness at 100m resolution",
+          "raster:bands": [
+            {
+              "sampling": "area",
+              "data_type": "float32",
+              "spatial_resolution": 100
+            }
+          ]
+        }
+      },
+      "msft:region": "westeurope",
+      "stac_version": "1.0.0",
+      "msft:container": "impact",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "storage:schemes": {
+        "azure": {
+          "type": "ms-azure",
+          "region": "westeurope",
+          "account": "pcdata01euw",
+          "platform": "https://{account}.blob.core.windows.net",
+          "container": "impact"
+        }
+      },
+      "msft:storage_account": "pcdata01euw",
+      "msft:short_description": "Global terrestrial biodiversity intactness at 100m resolution for years 2017-2020"
+    }
+  },
+  {
+    "datasetId": "noaa-ohc",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content",
+    "document": {
+      "id": "noaa-cdr-ocean-heat-content",
+      "type": "Collection",
+      "links": [
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content"
+        },
+        {
+          "rel": "license",
+          "href": "https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Ocean_Heat_Content/UseAgreement_01B-41.pdf",
+          "type": "application/pdf",
+          "title": "NOAA CDR Ocean Heat Content Use Agreement"
+        },
+        {
+          "rel": "about",
+          "href": "https://www.ncei.noaa.gov/products/climate-data-records/global-ocean-heat-content",
+          "type": "text/html",
+          "title": "Global Ocean Heat Content CDR"
+        },
+        {
+          "rel": "cite-as",
+          "href": "https://doi.org/10.7289/v53f4mvp"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/noaa-cdr-ocean-heat-content",
+          "type": "text/html",
+          "title": "Human readable dataset overview and reference"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/schema+json",
+          "title": "Queryables",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content/queryables"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/noaa-cdr-ocean-heat-content",
+          "title": "Human readable dataset overview and reference",
+          "type": "text/html"
+        }
+      ],
+      "title": "Global Ocean Heat Content CDR",
+      "assets": {
+        "thumbnail": {
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/noaa-cdr-ocean-heat-content-thumb.png",
+          "type": "image/png",
+          "roles": [
+            "thumbnail"
+          ],
+          "title": "Global Ocean Heat Content CDR thumbnail"
+        },
+        "geoparquet-items": {
+          "href": "abfs://items/noaa-cdr-ocean-heat-content.parquet",
+          "type": "application/x-parquet",
+          "roles": [
+            "stac-items"
+          ],
+          "title": "GeoParquet STAC items",
+          "description": "Snapshot of the collection's STAC items exported to GeoParquet format",
+          "msft:partition_info": {
+            "is_partitioned": false
+          },
+          "table:storage_options": {
+            "account_name": "pcstacitems"
+          }
+        }
+      },
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "1972-03-01T00:00:00Z",
+              "2022-03-31T23:59:59Z"
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "sci:doi": "10.7289/v53f4mvp",
+      "keywords": [
+        "Global",
+        "Climate",
+        "NOAA",
+        "Temperature",
+        "Ocean"
+      ],
+      "providers": [
+        {
+          "url": "https://www.ncei.noaa.gov/",
+          "name": "National Centers for Environmental Information",
+          "roles": [
+            "producer",
+            "processor",
+            "licensor"
+          ],
+          "description": "NCEI is the Nation's leading authority for environmental data, and manage one of the largest archives of atmospheric, coastal, geophysical, and oceanic research in the world. NCEI contributes to the NESDIS mission by developing new products and services that span the science disciplines and enable better data discovery."
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com",
+          "name": "Microsoft",
+          "roles": [
+            "processor",
+            "host"
+          ]
+        }
+      ],
+      "summaries": {
+        "noaa_cdr:interval": [
+          "monthly",
+          "seasonal",
+          "yearly",
+          "pentadal"
+        ],
+        "noaa_cdr:max_depth": [
+          100,
+          700,
+          2000
+        ]
+      },
+      "description": "The Ocean Heat Content Climate Data Record (CDR) is a set of ocean heat content anomaly (OHCA) time-series for 1955-present on 3-monthly, yearly, and pentadal (five-yearly) scales. This CDR quantifies ocean heat content change over time, which is an essential metric for understanding climate change and the Earth's energy budget. It provides time-series for multiple depth ranges in the global ocean and each of the major basins (Atlantic, Pacific, and Indian) divided by hemisphere (Northern, Southern).\n\nThese Cloud Optimized GeoTIFFs (COGs) were created from NetCDF files which are delivered to Azure as part of the [NOAA Open Data Dissemination (NODD) Program](https://www.noaa.gov/information-technology/open-data-dissemination).\nFor the NetCDF files, see collection `noaa-cdr-ocean-heat-content-netcdf`.\n",
+      "item_assets": {
+        "heat_content": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Ocean Heat Content anomalies from WOA09",
+          "raster:bands": [
+            {
+              "unit": "10^18 joules",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_salinity": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Mean salinity anomalies from WOA09",
+          "raster:bands": [
+            {
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_temperature": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Mean temperature anomalies from WOA09",
+          "raster:bands": [
+            {
+              "unit": "degrees Celsius",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_halosteric_sea_level": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Mean halosteric sea level anomalies from WOA09",
+          "raster:bands": [
+            {
+              "unit": "millimeters",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_thermosteric_sea_level": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Mean thermosteric sea level anomalies from WOA09",
+          "raster:bands": [
+            {
+              "unit": "millimeters",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_total_steric_sea_level": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Mean total steric sea level anomalies from WOA09",
+          "raster:bands": [
+            {
+              "unit": "millimeters",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        }
+      },
+      "msft:region": "eastus",
+      "sci:citation": "Levitus, Sydney; Antonov, John I.; Boyer, Tim P.; Baranova, Olga K.; García, Hernán E.; Locarnini, Ricardo A.; Mishonov, Alexey V.; Reagan, James R.; [Seidov, Dan; Yarosh, Evgeney; Zweng, Melissa M. (2017). NCEI ocean heat content, temperature anomalies, salinity anomalies, thermosteric sea level anomalies, halosteric sea level anomalies, and total steric sea level anomalies from 1955 to present calculated from in situ oceanographic subsurface profile data (NCEI Accession 0164586). NOAA National Centers for Environmental Information. Dataset. https://doi.org/10.7289/v53f4mvp.",
+      "stac_version": "1.0.0",
+      "msft:group_id": "noaa-cdr",
+      "msft:container": "ocean-heat-content",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "storage:schemes": {
+        "azure": {
+          "type": "ms-azure",
+          "region": "eastus",
+          "account": "noaacdr",
+          "platform": "https://{account}.blob.core.windows.net",
+          "container": "ocean-heat-content"
+        }
+      },
+      "msft:storage_account": "noaacdr",
+      "msft:short_description": "The Ocean Heat Content Climate Data Record (CDR) is a set of ocean heat content anomaly (OHCA) time-series for 1955-present on 3-monthly, yearly, and pentadal (five-yearly) scales."
+    }
+  },
+  {
+    "datasetId": "noaa-nclimgrid",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly",
+    "document": {
+      "id": "noaa-nclimgrid-monthly",
+      "type": "Collection",
+      "links": [
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly"
+        },
+        {
+          "rel": "cite-as",
+          "href": "https://doi.org/10.7289/V5SX6B56",
+          "type": "text/html",
+          "title": "NOAA Monthly U.S. Climate Gridded Dataset (NClimGrid)"
+        },
+        {
+          "rel": "license",
+          "href": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332#Constraints",
+          "type": "text/html",
+          "title": "NClimGrid Data Use and Access Constraints"
+        },
+        {
+          "rel": "about",
+          "href": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332",
+          "type": "text/html",
+          "title": "Product Landing Page"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/noaa-nclimgrid-monthly",
+          "type": "text/html",
+          "title": "Human readable dataset overview and reference"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/schema+json",
+          "title": "Queryables",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly/queryables"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/noaa-nclimgrid-monthly",
+          "title": "Human readable dataset overview and reference",
+          "type": "text/html"
+        }
+      ],
+      "title": "Monthly NOAA U.S. Climate Gridded Dataset (NClimGrid)",
+      "assets": {
+        "thumbnail": {
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/noaa-nclimgrid-monthly-thumb.png",
+          "type": "image/png",
+          "roles": [
+            "thumbnail"
+          ],
+          "title": "Monthly NOAA NClimGrid Thumbnail"
+        },
+        "geoparquet-items": {
+          "href": "abfs://items/noaa-nclimgrid-monthly.parquet",
+          "type": "application/x-parquet",
+          "roles": [
+            "stac-items"
+          ],
+          "title": "GeoParquet STAC items",
+          "description": "Snapshot of the collection's STAC items exported to GeoParquet format.",
+          "msft:partition_info": {
+            "is_partitioned": false
+          },
+          "table:storage_options": {
+            "account_name": "pcstacitems"
+          }
+        }
+      },
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -124.708333,
+              24.541666,
+              -66.999995,
+              49.375001
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "1895-01-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "sci:doi": "10.7289/V5SX6B56",
+      "keywords": [
+        "United States",
+        "NOAA",
+        "NClimGrid",
+        "Climate",
+        "Precipitation",
+        "Temperature"
+      ],
+      "providers": [
+        {
+          "url": "https://www.ncei.noaa.gov/",
+          "name": "NOAA National Centers for Environmental Information",
+          "roles": [
+            "producer",
+            "licensor"
+          ]
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com",
+          "name": "Microsoft",
+          "roles": [
+            "processor",
+            "host"
+          ]
+        }
+      ],
+      "description": "The [NOAA U.S. Climate Gridded Dataset (NClimGrid)](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332) consists of four climate variables derived from the [Global Historical Climatology Network daily (GHCNd)](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily) dataset: maximum temperature, minimum temperature, average temperature, and precipitation. The data is provided in 1/24 degree lat/lon (nominal 5x5 kilometer) grids for the Continental United States (CONUS). \n\nNClimGrid data is available in monthly and daily temporal intervals, with the daily data further differentiated as \"prelim\" (preliminary) or \"scaled\". Preliminary daily data is available within approximately three days of collection. Once a calendar month of preliminary daily data has been collected, it is scaled to match the corresponding monthly value. Monthly data is available from 1895 to the present. Daily preliminary and daily scaled data is available from 1951 to the present. \n\nThis Collection contains **Monthly** data. See the journal publication [\"Improved Historical Temperature and Precipitation Time Series for U.S. Climate Divisions\"](https://journals.ametsoc.org/view/journals/apme/53/5/jamc-d-13-0248.1.xml) for more information about monthly gridded data.\n\nUsers of all NClimGrid data product should be aware that [NOAA advertises](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00332) that:\n>\"On an annual basis, approximately one year of 'final' NClimGrid data is submitted to replace the initially supplied 'preliminary' data for the same time period. Users should be sure to ascertain which level of data is required for their research.\"\n\nThe source NetCDF files are delivered to Azure as part of the [NOAA Open Data Dissemination (NODD) Program](https://www.noaa.gov/information-technology/open-data-dissemination).\n\n*Note*: The Planetary Computer currently has STAC metadata for just the monthly collection. We'll have STAC metadata for daily data in our next release. In the meantime, you can access the daily NetCDF data directly from Blob Storage using the storage container at `https://nclimgridwesteurope.blob.core.windows.net/nclimgrid`. See https://planetarycomputer.microsoft.com/docs/concepts/data-catalog/#access-patterns for more.*\n",
+      "item_assets": {
+        "prcp": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Precipitation (mm)",
+          "raster:bands": [
+            {
+              "unit": "mm",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tavg": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Average Temperature (degree Celsius)",
+          "raster:bands": [
+            {
+              "unit": "degree Celsius",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tmax": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Maximmum Temperature (degree Celsius)",
+          "raster:bands": [
+            {
+              "unit": "degree Celsius",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tmin": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Minimum Temperature (degree Celsius)",
+          "raster:bands": [
+            {
+              "unit": "degree Celsius",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        }
+      },
+      "msft:region": "westeurope",
+      "sci:citation": "Vose, Russell S., Applequist, Scott, Squires, Mike, Durre, Imke, Menne, Matthew J., Williams, Claude N. Jr., Fenimore, Chris, Gleason, Karin, and Arndt, Derek (2014): NOAA Monthly U.S. Climate Gridded Dataset (NClimGrid), Version 1. NOAA National Centers for Environmental Information. DOI:10.7289/V5SX6B56.",
+      "stac_version": "1.0.0",
+      "msft:group_id": "noaa-nclimgrid",
+      "msft:container": "nclimgrid-cogs",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "storage:schemes": {
+        "azure": {
+          "type": "ms-azure",
+          "region": "westeurope",
+          "account": "nclimgridwesteurope",
+          "platform": "https://{account}.blob.core.windows.net",
+          "container": "nclimgrid-cogs"
+        }
+      },
+      "sci:publications": [
+        {
+          "doi": "10.1175/JAMC-D-13-0248.1",
+          "citation": "Vose, R. S., Applequist, S., Squires, M., Durre, I., Menne, M. J., Williams, C. N., Jr., Fenimore, C., Gleason, K., & Arndt, D. (2014). Improved Historical Temperature and Precipitation Time Series for U.S. Climate Divisions, Journal of Applied Meteorology and Climatology, 53(5), 1232-1251."
+        }
+      ],
+      "msft:storage_account": "nclimgridwesteurope",
+      "msft:short_description": "Gridded surface observations of monthly temperature and precipitation for the continental United States"
+    }
+  }
+]

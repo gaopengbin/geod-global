@@ -52,14 +52,23 @@ describe('Settings preferences', () => {
     expect(screen.getByRole('heading', { name: 'Settings', level: 1 })).toBeTruthy();
   });
 
-  it('keeps detailed diagnostics collapsed and shows background behavior only in the desktop app', async () => {
+  it('opens diagnostics outside the settings grid and restores keyboard focus without expanding the page', async () => {
     const user = userEvent.setup();
     desktopAvailable.mockReturnValue(true);
-    render(<Preferences/>);
+    const {container}=render(<Preferences/>);
     expect(screen.getByText('Run in the background')).toBeTruthy();
     expect(screen.queryByText('Detailed local diagnostics')).toBeNull();
-    await user.click(screen.getByRole('button', { name: 'Local diagnostics · advanced' }));
-    expect(screen.getByText('Detailed local diagnostics')).toBeTruthy();
+    const trigger=screen.getByRole('button', { name: 'Local diagnostics · advanced' });
+    await user.click(trigger);
+    const details=screen.getByRole('dialog',{name:'Local diagnostics · advanced'});
+    expect(within(details).getByText('Detailed local diagnostics')).toBeTruthy();
+    expect(container.querySelector('.settings-page').contains(details)).toBe(false);
+    expect(container.querySelector('.bui-disclosure')).toBeNull();
+    await user.keyboard('{Escape}');
+    expect(document.activeElement).toBe(trigger);
+    expect(screen.queryByRole('dialog')).toBeNull();
+    await user.click(screen.getByRole('combobox',{name:'Appearance'}));
+    expect(screen.getByRole('option',{name:'Dark',exact:true})).toBeTruthy();
   });
 
   it('offers an explicit desktop exit in settings without exiting or hiding on entry', async () => {

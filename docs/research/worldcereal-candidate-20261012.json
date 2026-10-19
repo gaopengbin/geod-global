@@ -1,0 +1,120 @@
+{
+  "schema": "geod-public-channel-research/v1",
+  "status": "candidate; complete independent original decoded; native integration not accepted",
+  "primaryDocuments": [
+    "https://esa-worldcereal.org/en/products/global-maps",
+    "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html"
+  ],
+  "sample": {
+    "checkedAt": "2026-10-12T04:22:19.846419+00:00",
+    "status": "passed-full-original-independent-decode",
+    "researchOnly": true,
+    "originalPublisherHref": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-maize-main/9029/2021/9029_tc-maize-main_activecropland_2020-11-08_2021-05-07_classification.tif",
+    "publicRegionalEndpoint": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-maize-main/9029/2021/9029_tc-maize-main_activecropland_2020-11-08_2021-05-07_classification.tif",
+    "originalPublisherItemUnchanged": true,
+    "noNativePresetClaimed": true,
+    "scope": "One complete binary active-cropland original for one agro-ecological zone; no crop-type or global-coverage inference",
+    "fullDownload": {
+      "status": 200,
+      "bytes": 3714538,
+      "sha256": "92357b587f8ae61799fa72eebeef030eda78368ba79cf06164331a20022f6d84",
+      "seconds": 7.282,
+      "headers": {
+        "x-amz-id-2": "dB450gVQ270vwH54RfHBtd2OwbdWIQqPo2UkQ8sEpVgcqqHTqyIeAYqiDrbZNW1CyeWPyPFnjB2Uu9L5HehiuMXu/Ju+L+me",
+        "x-amz-request-id": "A5XG0RE1X1QXYN8Z",
+        "Date": "Mon, 12 Oct 2026 04:22:22 GMT",
+        "Last-Modified": "Fri, 16 May 2025 23:41:02 GMT",
+        "ETag": "\"aa8a47d8ae3d013cf0ee24c055dcd4eb\"",
+        "x-amz-server-side-encryption": "AES256",
+        "x-amz-version-id": "D0T2cpBebAdOsCAkLGjwqiGpFbug53Eg",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "image/tiff",
+        "Content-Length": "3714538",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      }
+    },
+    "independentRaster": {
+      "width": 48101,
+      "height": 44565,
+      "count": 1,
+      "crs": "EPSG:4326",
+      "bounds": [
+        38.0260500120128,
+        -23.598354935335376,
+        42.0344871177213,
+        -19.88460513719568
+      ],
+      "transform": [
+        8.33337582526038e-05,
+        0.0,
+        38.0260500120128,
+        0.0,
+        -8.333332880376293e-05,
+        -19.88460513719568
+      ],
+      "resolution": [
+        8.33337582526038e-05,
+        8.333332880376293e-05
+      ],
+      "scales": [
+        1.0
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "tags": {
+        "AEZ_ID": "9029",
+        "AREA_OR_POINT": "Area",
+        "copyright": "ESA WorldCereal project",
+        "creation_time": "2023-04-24 19:18:45",
+        "end_date": "2021-05-07",
+        "legend": "0  not active\n100  active\n254  No crop",
+        "license": "CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/",
+        "OVR_RESAMPLING_ALG": "NEAREST",
+        "product_version": "V1.0.0",
+        "provider": "VITO",
+        "reference": "https://esa-worldcereal.org/",
+        "start_date": "2020-11-08",
+        "title": "ESA-WorldCereal active cropland map for the 2021 tc-maize-main season."
+      },
+      "bands": [
+        {
+          "index": 1,
+          "dtype": "uint8",
+          "nodata": 255.0,
+          "allPixelsDecoded": 2143621065,
+          "validPixels": 1860684206,
+          "validFraction": 0.8680098532246883,
+          "minimum": 254,
+          "maximum": 254,
+          "valueCounts": {
+            "254": 1860684206
+          },
+          "firstUsableSample": {
+            "column": 219,
+            "row": 104,
+            "value": 254
+          }
+        }
+      ],
+      "seconds": 16.812,
+      "completeDecode": true
+    }
+  },
+  "publisherItemSha256": "5190d653603efc6f67a7975d888d2ddaa5318979de27bafbfc5be9a834d6b1b2",
+  "nativeApiBlockers": [
+    "Collections routes return HTTP200 HTML Internal error",
+    "Original STAC asset href uses s3 scheme; scoped regional-HTTPS adapter required"
+  ],
+  "nativeLimitsRemain": [
+    "512MiB per file",
+    "131072 tiled axis",
+    "8billion image pixels"
+  ],
+  "privateEvidenceRoot": ".verification\\worldcereal-candidate-20261012",
+  "nativeWindowTested": false
+}

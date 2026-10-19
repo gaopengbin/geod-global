@@ -1,0 +1,15 @@
+/* Approved GeoD Global 1.0 wordmark; interface controls retain their own tokens. */
+.geod-brand-gradient {
+  color: #087bea;
+  background: linear-gradient(90deg, #087bea 0%, #00bbdf 50%, #21c885 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (forced-colors: active) {
+  .geod-brand-gradient {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+  }
+}

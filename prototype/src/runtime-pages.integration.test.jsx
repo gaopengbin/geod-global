@@ -1,6 +1,6 @@
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RuntimeJobRows, RuntimeLibrary, RuntimeTasks } from './runtime-ui.jsx';
 import { RuntimeContext } from './runtime-context.js';
@@ -39,7 +39,7 @@ describe('File and task flows', () => {
 
   it('keeps file opening and its owning project visible, with inspection grouped under details', async () => {
     const user = userEvent.setup();
-    wrap(<RuntimeLibrary/>);
+    const {container}=wrap(<RuntimeLibrary/>);
     expect(screen.getAllByRole('link', { name: 'Open in workspace' })[0].getAttribute('href')).toBe(`#Workspace?file=${id}&project=project-1`);
     expect(screen.getByRole('link', { name: 'Open project' }).getAttribute('href')).toBe('#My%20Data?project=project-1');
     expect(screen.queryByRole('button', { name: 'Inspect raster' })).toBeNull();
@@ -47,11 +47,14 @@ describe('File and task flows', () => {
     await user.click(details);
     const inspect = screen.getByRole('button', { name: 'Inspect raster' });
     expect(document.getElementById(details.getAttribute('aria-controls')).contains(inspect)).toBe(true);
+    expect(container.querySelector('.runtime-jobs').contains(screen.getByRole('dialog',{name:'File details and provenance'}))).toBe(false);
+    expect(container.querySelector('.bui-task-expanded')).toBeNull();
     await user.tab();
     expect(document.activeElement).toBe(inspect);
     await user.tab({ shift: true });
+    expect(document.activeElement).toBe(screen.getByRole('button',{name:'Close',exact:true}));
+    await user.keyboard('{Escape}');
     expect(document.activeElement).toBe(details);
-    await user.keyboard(' ');
     expect(screen.queryByRole('button', { name: 'Inspect raster' })).toBeNull();
   });
 
@@ -92,7 +95,7 @@ describe('File and task flows', () => {
     const user = userEvent.setup();
     wrap(<RuntimeJobRows jobs={[{ ...rgb, kind: 'raster_prepare', status: 'failed', error: 'ZIP CRC mismatch' }]}/>);
     await user.click(screen.getByRole('button', { name: 'Task details' }));
-    expect(screen.getByText('SAFE preparation did not complete. Check the original product and retry.')).toBeTruthy();
+    expect(screen.getAllByText('SAFE preparation did not complete. Check the original product and retry.')).toHaveLength(2);
     expect(screen.queryByText('Raster processing did not complete. Check the source file and retry the clip.')).toBeNull();
   });
 
@@ -123,11 +126,15 @@ describe('File and task flows', () => {
     expect(screen.queryByRole('alert')).toBeNull();
     await user.click(screen.getByRole('button', { name: 'Task details' }));
     expect(screen.getByText(itemId)).toBeTruthy();
-    await user.click(screen.getByRole('button', { name: 'Task details' }));
+    await user.keyboard('{Escape}');
     await user.click(screen.getByRole('button', { name: 'Retry download' }));
     expect(act).toHaveBeenCalledWith('retry', { id: job.id });
-    expect(screen.getByRole('button', { name: 'Task details' }).getAttribute('aria-expanded')).toBe('true');
+    expect(screen.getByRole('button', { name: 'Task details' }).getAttribute('aria-expanded')).toBe('false');
+    expect(screen.getByRole('status').textContent).toContain('The task action failed.');
+    await user.click(screen.getByRole('button', { name: 'Task details' }));
     expect(screen.getAllByRole('alert').some(alert => alert.textContent.includes('The task action failed.'))).toBe(true);
+    await user.click(screen.getAllByRole('button',{name:'Technical details'}).at(-1));
+    expect(screen.getByText('Queue unavailable')).toBeTruthy();
   });
 
   it('reports indeterminate transfers without inventing progress and cancels the correct task', async () => {
@@ -137,7 +144,7 @@ describe('File and task flows', () => {
     const progress = screen.getByRole('progressbar', { name: 'Download progress' });
     expect(progress.getAttribute('aria-valuenow')).toBeNull();
     expect(screen.getAllByRole('progressbar')).toHaveLength(1);
-    await user.click(screen.getAllByRole('button', { name: 'Cancel download' })[0]);
+    await user.click(within(document.querySelector(`[data-item-id="${scl.id}"]`)).getByRole('button', { name: 'Cancel download' }));
     expect(act).toHaveBeenCalledWith('cancel', { id: scl.id });
   });
 });

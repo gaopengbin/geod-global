@@ -3,6 +3,20 @@ import assert from 'node:assert/strict';
 import { loadFileThumbnail } from './file-thumbnail.js';
 import { validateFileThumbnail } from './runtime-client.js';
 
+test('reviewed ZIP cards read the verified original member PNG instead of rejecting ZIP/TIFF dual hashes',async()=>{
+  const id='00000000-0000-4000-8000-000000000041',snapshotId='e'.repeat(64),href='https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip';
+  const selection={archiveBytes:21627700,archiveSha256:'be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe',member:'N09E050_FABDEM_V1-2.tif',memberBytes:16035307,memberSha256:'c8d2ffb9777dddabefa856636a072af81563eb9fed3bf3cfcfebfe95a9ed9928'};
+  const sourceBounds=[49.99986111111111,9.000138888888891,50.99986111111111,10.00013888888889],proof={schemaVersion:2,dataset:{id:'fabdem'},request:{datasetId:'fabdem',layer:'elevation'},layer:{id:'elevation',scale:1,offset:0,nodata:-9999},sourceId:'N09E050_FABDEM_V1-2',sourceBounds,declarationKind:'reviewed-client-preset; publisher file bytes and embedded metadata verified separately'};
+  const asset={key:'raster',href,mediaType:'application/zip',metadata:{kind:'reviewed-raster-archive',href,datasetPreset:proof,reviewedArchive:selection,'file:size':selection.archiveBytes,'file:checksum':'1220'+selection.archiveSha256}};
+  const job={id,status:'succeeded',href,mediaType:'application/zip',bytesDownloaded:selection.archiveBytes,sha256:selection.archiveSha256,stacSource:{snapshotId,assetKey:'raster'}};
+  const original={jobId:id,sha256:selection.memberSha256,width:3600,height:3600,storageLayout:'tile',bands:[{index:1,dataType:'Float32',nodata:-9999}],crs:'EPSG:4326',transform:[1/3600,0,sourceBounds[0],0,-1/3600,sourceBounds[3]],bounds:sourceBounds,pixelInterpretation:'point',displayBand:1,displayRange:[0,730],previewWidth:2,previewHeight:2,previewDataUrl:'data:image/png;base64,YQ==',limitations:[],archiveOriginal:{schemaVersion:1,jobId:id,sourcePin:job.stacSource,sourceProvenance:proof,archiveUrl:href,archiveFile:id+'.zip',memberFile:id+'.member.tif',selection}};
+  let genericCalls=0;const calls=[],sourceRequest=async(operation)=>{calls.push(operation);return operation==='snapshot'?{assets:[asset]}:original;};
+  const thumbnail=await loadFileThumbnail(job,async()=>{genericCalls++;throw Error('Legacy TIFF-only thumbnail route');},()=>true,sourceRequest);
+  assert.equal(thumbnail.sha256,selection.memberSha256);assert.equal(thumbnail.dataUrl,original.previewDataUrl);assert.equal(thumbnail.width,original.previewWidth);assert.equal(genericCalls,0);assert.deepEqual(calls,['snapshot','inspect']);
+  const changedId='00000000-0000-4000-8000-000000000042',changedJob={...job,id:changedId},changed=structuredClone(original);changed.jobId=changedId;changed.archiveOriginal.jobId=changedId;changed.archiveOriginal.archiveFile=changedId+'.zip';changed.archiveOriginal.memberFile=changedId+'.member.tif';changed.archiveOriginal.selection.memberSha256='f'.repeat(64);
+  await assert.rejects(loadFileThumbnail(changedJob,async()=>{},()=>true,async operation=>operation==='snapshot'?{assets:[asset]}:changed),/dual-checksum receipt/);
+});
+
 test('previews validate file identity, dimensions and PNG payload', () => {
   const valid = { jobId: 'test-file', sha256: 'a'.repeat(64), width: 160, height: 120, dataUrl: 'data:image/png;base64,iVBORw0KGgo=' };
   assert.equal(validateFileThumbnail(valid, 'test-file'), valid);

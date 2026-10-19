@@ -1,5 +1,6 @@
 // Native jobs own the work. This observer wakes the same Codex conversation
 // after a state change; it never polls the model while downloads are running.
+import {validScene} from './scenes.mjs';
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const STATES = ['waiting', 'ready', 'paused', 'failed', 'completed'];
 export const WORKFLOW_LIMITS = Object.freeze({ plans: 10, continuations: 8, intervalMs: 2500 });
@@ -15,13 +16,14 @@ function validReceipt(value) {
     && value.hasFailure === value.jobs.some(job => job.status !== 'succeeded');
 }
 export function validWorkflow(value) {
-  return keys(value, ['version', 'status', 'pendingPlans', 'receipts', 'context', 'continuations', 'updatedAt'])
+  return keys(value, ['version', 'status', 'pendingPlans', 'receipts', 'context', 'scene', 'continuations', 'updatedAt'])
+    && (value.scene===undefined || value.scene===null || validScene(value.scene))
     && value.version === 1 && STATES.includes(value.status)
     && Array.isArray(value.pendingPlans) && value.pendingPlans.length <= WORKFLOW_LIMITS.plans && value.pendingPlans.every(id => UUID.test(id))
     && new Set(value.pendingPlans).size === value.pendingPlans.length && Number.isSafeInteger(value.continuations)
     && value.continuations >= 0 && value.continuations <= WORKFLOW_LIMITS.continuations && timestamp(value.updatedAt)
     && Array.isArray(value.receipts) && value.receipts.length <= WORKFLOW_LIMITS.plans && value.receipts.every(validReceipt)
-    && (value.context === null || keys(value.context, ['page', 'provider', 'bounds', 'start', 'end', 'cloudMax', 'projectId', 'geometry'])
+    && (value.context === null || keys(value.context, ['page', 'provider', 'bounds', 'start', 'end', 'cloudMin', 'cloudMax', 'projectId', 'geometry', 'catalog', 'gscloud'])
       && JSON.stringify(value.context).length <= 100_000);
 }
 export function publicWorkflow(value) {
@@ -41,14 +43,16 @@ export class WorkflowMonitor {
     }, this.intervalMs);
     this.timer.unref?.();
   }
-  async register(session, plan, context) {
+  async register(session, plan, context, scene=null) {
     if (!UUID.test(plan?.planId) || plan.status !== 'submitted') return;
+    const pinned=session.planScopes?.[plan.planId];
+    if(pinned){context=pinned.context;scene=pinned.scene;}
     const workflow = session.workflow ?? { version: 1, status: 'waiting', pendingPlans: [], receipts: [], context: null, continuations: 0, updatedAt: new Date().toISOString() };
     if (!workflow.pendingPlans.includes(plan.planId)) {
       if (workflow.pendingPlans.length >= WORKFLOW_LIMITS.plans) throw Error('This workflow reached its task limit. Continue explicitly in chat.');
       workflow.pendingPlans.push(plan.planId);
     }
-    workflow.status = 'waiting'; workflow.context = structuredClone(context ?? workflow.context); workflow.updatedAt = new Date().toISOString(); session.workflow = workflow;
+    workflow.status = 'waiting'; workflow.context = structuredClone(context ?? workflow.context); workflow.scene = structuredClone(scene ?? workflow.scene ?? null); workflow.updatedAt = new Date().toISOString(); session.workflow = workflow;
     await this.service.save(); this.schedule();
   }
   async pause(session) {

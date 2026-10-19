@@ -5,6 +5,27 @@ import { genericMapMetadata, genericCoordinateToPixel, genericProjectionDefiniti
 import { jobsForProject } from './projects-client.js';
 import { stacConnection, stacSnapshot, stacInspection, stacJob, stacProject, sourceHash, jobId, snapshotId } from './stac-fixtures.js';
 
+test('visual JPEG encoding remains explicitly Y/Cb/Cr and rejects RGB or scientific calibration claims',()=>{
+  const sampleEncoding={kind:'jpeg-ycbcr-components',components:['Y','Cb','Cr'],codec:'JPEG',chromaSubsampling:[2,2],chromaUpsampling:'triangular fancy interpolation to the original pixel grid',previewComponent:'Y',scientificCalibration:false};
+  const visual={...stacInspection,bands:[1,2,3].map(index=>({index,dataType:'UInt8',nodata:null})),sampleEncoding};
+  assert.equal(validateStacInspection(visual,jobId),visual);
+  for(const change of [{components:['R','G','B']},{scientificCalibration:true},{chromaSubsampling:[1,1]},{previewComponent:'RGB'},{extra:true}])assert.throws(()=>validateStacInspection({...visual,sampleEncoding:{...sampleEncoding,...change}},jobId));
+  assert.throws(()=>validateStacInspection({...visual,bands:[{index:1,dataType:'UInt16',nodata:null}]},jobId));
+});
+
+test('known oversize originals cannot regain eligibility through a forged snapshot flag',()=>{
+  for(const key of ['file:size','bdc:size']) {
+    const copy=structuredClone(stacSnapshot),asset=copy.assets[0];
+    asset.metadata[key]=512*1024*1024+1;
+    asset.eligible=false;asset.reason='The declared original exceeds the 512 MiB download and preview limit.';
+    assert.equal(validateStacSnapshot(copy),copy);
+    asset.eligible=true;
+    assert.throws(()=>validateStacSnapshot(copy),/invalid item metadata/);
+    asset.metadata[key]=512*1024*1024;
+    assert.equal(validateStacSnapshot(copy),copy);
+  }
+});
+
 test('static directory selection preserves actual collection identity and rejects foreign branch or forged API capability', async () => {
   const key = 'e'.repeat(64), previous = globalThis.fetch;
   const connection = { ...stacConnection, kind: 'catalog', collections: [], searchUrl: null, capabilities: { searchGet: false, searchPost: false },
@@ -36,6 +57,11 @@ test('custom sources retain unknown assets, interval times and original metadata
 });
 test('generic file metadata supports raw float and mixed bands while rejecting unsafe previews and mismatched files', () => {
   assert.equal(validateStacInspection(stacInspection, jobId), stacInspection);
+  const vertical = { ...stacInspection, horizontalCrs: 'EPSG:4326', verticalCrs: 'EPSG:3855', sourceModelPixelScale: [0.5,0.5,1], sourceModelTiepoint: [0,0,0,10,21,0] };
+  assert.equal(validateStacInspection(vertical, jobId).verticalCrs, 'EPSG:3855');
+  assert.throws(() => validateStacInspection({ ...vertical, verticalCrs: 3855 }, jobId));
+  assert.throws(() => validateStacInspection({ ...vertical, sourceModelPixelScale: [0.5,0.5] }, jobId));
+  assert.throws(() => validateStacInspection({ ...vertical, sourceModelTiepoint: [0,0,0,10,21,Infinity] }, jobId));
   assert.equal(validateStacInspection({ ...stacInspection, bands: [{ index: 1, dataType: 'UInt64', nodata: '18446744073709551615' }] }, jobId).bands[0].nodata, '18446744073709551615');
   assert.equal(validateStacInspection({ ...stacInspection, crs: null, bounds: null, transform: null, previewDataUrl: null, previewWidth: null, previewHeight: null }, jobId).crs, null);
   assert.throws(() => validateStacInspection({ ...stacInspection, previewDataUrl: 'https://example.com/preview.png' }, jobId));
@@ -46,6 +72,15 @@ test('generic file metadata supports raw float and mixed bands while rejecting u
   assert.throws(() => validateStacPixel({ ...result, column: 0 }, request));
   assert.throws(() => validateStacPixel({ ...result, values: ['<script>'] }, request));
   assert.throws(() => validateStacPixel({ ...result, noData: [false] }, request));
+});
+
+test('large tiled metadata retains a bounded grid while oversized strips and polar supercells are rejected',()=>{
+  const large={...stacInspection,width:29338,height:89448,storageLayout:'tile'};
+  assert.equal(validateStacInspection(large,jobId),large);
+  assert.throws(()=>validateStacInspection({...large,storageLayout:'strip'},jobId));
+  assert.throws(()=>validateStacInspection({...large,storageLayout:undefined},jobId));
+  assert.throws(()=>validateStacInspection({...large,height:134279},jobId));
+  assert.throws(()=>validateStacInspection({...large,width:131072,height:131072},jobId));
 });
 test('generic map uses file transform and half-open pixel extents without classification assumptions', () => {
   assert.equal(genericMapMetadata(stacInspection), stacInspection);

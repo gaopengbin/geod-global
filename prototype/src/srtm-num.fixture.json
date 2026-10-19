@@ -1,0 +1,123 @@
+{
+  "type": "Feature",
+  "id": "N39E116.SRTMGL1N.num",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+  ],
+  "properties": {
+    "datetime": "2000-02-11T00:00:00.000Z",
+    "storage:schemes": {
+      "aws": {
+        "type": "aws-s3",
+        "platform": "https://{bucket}.s3.{region}.amazonaws.com",
+        "bucket": "lp-prod-protected",
+        "region": "us-west-2"
+      }
+    },
+    "start_datetime": "2000-02-11T00:00:00.000Z",
+    "end_datetime": "2000-02-21T23:59:59.000Z"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          115.9997222,
+          38.9997222
+        ],
+        [
+          117.0002778,
+          38.9997222
+        ],
+        [
+          117.0002778,
+          40.0002778
+        ],
+        [
+          115.9997222,
+          40.0002778
+        ],
+        [
+          115.9997222,
+          38.9997222
+        ]
+      ]
+    ]
+  },
+  "bbox": [
+    115.9997222,
+    38.9997222,
+    117.0002778,
+    40.0002778
+  ],
+  "assets": {
+    "num": {
+      "href": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/SRTMGL1N.003/N39E116.SRTMGL1N.num/N39E116.SRTMGL1N.num.zip",
+      "title": "Direct Download",
+      "description": "Download N39E116.SRTMGL1N.num.zip",
+      "roles": [
+        "data"
+      ]
+    },
+    "s3_num": {
+      "href": "s3://lp-prod-protected/SRTMGL1N.003/N39E116.SRTMGL1N.num/N39E116.SRTMGL1N.num.zip",
+      "title": "S3 Direct Download",
+      "description": "This link provides direct download access via S3 to the granule",
+      "roles": [
+        "data"
+      ],
+      "storage:refs": [
+        "aws"
+      ]
+    },
+    "metadata": {
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G2822658584-LPCLOUD.xml",
+      "title": "CMR XML metadata for G2822658584-LPCLOUD",
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/SRTMGL1N_003/items/N39E116.SRTMGL1N.num",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "parent",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/SRTMGL1N_003/",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/collections/SRTMGL1N_003/",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "root",
+      "href": "https://cmr.earthdata.nasa.gov/stac",
+      "type": "application/json"
+    },
+    {
+      "rel": "provider",
+      "href": "https://cmr.earthdata.nasa.gov/stac/LPCLOUD",
+      "type": "application/json"
+    },
+    {
+      "rel": "via",
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G2822658584-LPCLOUD.json",
+      "title": "CMR JSON metadata for item",
+      "type": "application/json"
+    },
+    {
+      "rel": "via",
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G2822658584-LPCLOUD.umm_json",
+      "title": "CMR UMM_JSON metadata for item",
+      "type": "application/vnd.nasa.cmr.umm+json"
+    }
+  ],
+  "collection": "SRTMGL1N_003"
+}

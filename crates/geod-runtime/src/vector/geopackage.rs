@@ -17,6 +17,7 @@ mod crs;
 #[cfg(test)]
 mod tests;
 mod wkb;
+pub(crate) use wkb::decode_wgs84 as decode_wgs84_wkb;
 
 pub const CONVERSION: u32 = 1;
 const MAX_LAYERS: usize = 32;

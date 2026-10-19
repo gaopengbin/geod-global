@@ -4,24 +4,24 @@
 .explore-scene-dragbox { border: 2px solid #f4b544; background: rgba(244, 181, 68, 0.14); }
 .explore-map-root[data-box-select="true"] .ol-viewport { cursor: crosshair; }
 .ol-viewport canvas.explore-reference-layer { clip-path: inset(0 var(--compare-mask-right) 0 0); }
-.explore-map-message { position: absolute; top: 46%; left: 50%; translate: -50% -50%; z-index: 1; padding: 12px 16px; border: 1px solid var(--line); box-shadow: var(--shadow-overlay); font-size: 13px; }
+.explore-map-message { position: absolute; top: 46%; left: 50%; translate: -50% -50%; z-index: 1; padding: 12px 16px; border: 1px solid var(--line); box-shadow: var(--shadow-overlay); font-size: var(--text-ui); line-height: var(--leading-ui); }
 .explore-map-progress { display: grid; gap: 9px; width: min(350px, calc(100% - 32px)); padding: 16px; }
 .explore-map-progress p { margin: 0; color: var(--ink-2); }
 .explore-map-progress-heading, .explore-map-progress-detail { display: flex; align-items: center; gap: 8px; }
 .explore-map-progress-heading strong { flex: 1; }
-.explore-map-progress-heading > span, .explore-map-progress-detail { color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+.explore-map-progress-heading > span, .explore-map-progress-detail { color: var(--ink-2); font-size: var(--text-caption); font-variant-numeric: tabular-nums; line-height: var(--leading-caption); }
 .explore-map-progress-detail { justify-content: space-between; }
-.explore-map-progress-stalled { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 2px; color: var(--orange); font-size: 12px; }
+.explore-map-progress-stalled { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 2px; color: var(--orange); font-size: var(--text-caption); line-height: var(--leading-caption); }
 .explore-map-progress-stalled [data-slot="button"] { flex-shrink: 0; }
 .explore-map-progress-compact { top: auto; bottom: 44px; padding: 11px 13px; }
 .explore-map-progress-index.explore-map-progress-compact { top: 112px; bottom: auto; right: 16px; left: auto; translate: none; width: min(300px, calc(100% - 32px)); }
 .explore-map-error { display: grid; gap: 8px; width: min(340px, 80%); }
 .explore-map-error [data-slot="button"] { justify-self: start; }
 .vegetation-preview-legend { position: absolute; bottom: calc(var(--map-attribution-height, 36px) + 12px); left: 16px; width: 230px; max-width: calc(100% - 32px); padding: 10px 12px; border: 1px solid var(--line); box-shadow: var(--shadow-overlay); pointer-events: none; }
-.vegetation-preview-caption, .vegetation-preview-ticks { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 11px; font-variant-numeric: tabular-nums; }
+.vegetation-preview-caption, .vegetation-preview-ticks { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: var(--text-caption); font-variant-numeric: tabular-nums; line-height: var(--leading-caption); }
 .vegetation-preview-caption { margin-bottom: 8px; }
-.vegetation-preview-caption strong { color: var(--ink); font-size: 12px; }
+.vegetation-preview-caption strong { color: var(--ink); font-size: var(--text-caption); line-height: var(--leading-caption); }
 .vegetation-preview-caption > span, .vegetation-preview-ticks, .vegetation-preview-legend p { color: var(--ink-2); }
 .vegetation-preview-ramp { height: 6px; border-radius: 3px; }
 .vegetation-preview-ticks { margin-top: 3px; }
-.vegetation-preview-legend p { margin: 5px 0 0; font-size: 11px; }
+.vegetation-preview-legend p { margin: 5px 0 0; font-size: var(--text-caption); line-height: var(--leading-caption); }

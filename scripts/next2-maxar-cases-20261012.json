@@ -1,0 +1,264 @@
+[
+  {
+    "datasetId": "maxar-open-legacy",
+    "bounds": [
+      -156.6647146,
+      20.9654519,
+      -156.6644146,
+      20.9657519
+    ],
+    "year": 2023,
+    "month": 8,
+    "layer": "ms_analytic",
+    "assetKey": "ms_analytic",
+    "assetContains": "10300100EB15FF00-ms.tif",
+    "expectedCollectionLicense": "CC-BY-NC-4.0",
+    "expectedShape": [
+      2583,
+      2583
+    ],
+    "expectedBytes": 12977165,
+    "expectedSha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ],
+      [
+        507,
+        2312
+      ],
+      [
+        1291,
+        1291
+      ],
+      [
+        1449,
+        2452
+      ],
+      [
+        2582,
+        2582
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "noData": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "column": 507,
+        "row": 2312,
+        "values": [
+          484,
+          800,
+          922,
+          448,
+          286,
+          163,
+          75,
+          23
+        ],
+        "noData": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "column": 1291,
+        "row": 1291,
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "noData": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "column": 1449,
+        "row": 2452,
+        "values": [
+          95,
+          296,
+          469,
+          512,
+          524,
+          1158,
+          1741,
+          1925
+        ],
+        "noData": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "column": 2582,
+        "row": 2582,
+        "values": [
+          37,
+          224,
+          394,
+          346,
+          205,
+          1496,
+          2530,
+          2755
+        ],
+        "noData": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "maxar-open-legacy",
+    "bounds": [
+      -156.6647146,
+      20.9654519,
+      -156.6644146,
+      20.9657519
+    ],
+    "year": 2023,
+    "month": 8,
+    "layer": "pan_analytic",
+    "assetKey": "pan_analytic",
+    "assetContains": "10300100EB15FF00-pan.tif",
+    "expectedCollectionLicense": "CC-BY-NC-4.0",
+    "expectedShape": [
+      10332,
+      10332
+    ],
+    "expectedBytes": 23460106,
+    "expectedSha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ],
+      [
+        3057,
+        9189
+      ],
+      [
+        5166,
+        5166
+      ],
+      [
+        5799,
+        9809
+      ],
+      [
+        10331,
+        10331
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 3057,
+        "row": 9189,
+        "values": [
+          1233
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 5166,
+        "row": 5166,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 5799,
+        "row": 9809,
+        "values": [
+          470
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 10331,
+        "row": 10331,
+        "values": [
+          608
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  }
+]

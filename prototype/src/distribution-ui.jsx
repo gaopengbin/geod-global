@@ -1,10 +1,11 @@
 import React,{createContext,useCallback,useContext,useEffect,useRef,useState} from 'react';
 import {Bell,CheckCheck,Download,RefreshCw,ShieldCheck,ArrowUpCircle,X,Clock,Inbox} from 'lucide-react';
-import {Badge,Button,Disclosure,EmptyState,Modal,Progress,SegmentedControl,Spinner,Surface,Switch,Toast} from './ui/index.jsx';
+import { InfoDetails,Badge,Button,EmptyState,Modal,Progress,SegmentedControl,Spinner,Surface,Switch,Toast} from './ui/index.jsx';
 import {useI18n} from './i18n.jsx';
 import {desktopAvailable} from './runtime-client.js';
 import {distributionRequest,emptyDistribution} from './distribution-client.js';
 import './distribution.css';
+import {useOfficialServices} from './official-ui.jsx';
 
 const Context=createContext(null);
 const fallback={data:emptyDistribution(),loading:false,error:'',refresh:async()=>{},request:distributionRequest};
@@ -68,8 +69,8 @@ export function UpdatesPanel() {
     <div className="update-status" role="status" aria-live="polite">{loading||transferring||phase==='checking'?<Spinner/>:phase==='ready'?<ShieldCheck size={18}/>:<ArrowUpCircle size={18}/>}<div><strong>{t(states[phase]||states.idle)}</strong>{update.version&&<span>{t('New version: {version}',{version:update.version})}</span>}</div></div>
     {!desktopAvailable()?<p className="distribution-help">{t('Updates and notifications are available in the desktop app.')}</p>:!data.updateConfigured?<p className="distribution-help">{t('No signed version has been published to this channel yet. This is not an up-to-date result.')}</p>:null}
     {transferring&&<div className="update-progress"><Progress value={progress}/><small>{progress===undefined?t('Receiving update files…'):t('{percent}% downloaded',{percent:number(Math.floor(progress))})}</small></div>}
-    {update.notes&&<Disclosure summary={t('Release notes')} defaultOpen><p className="release-notes">{update.notes}</p></Disclosure>}
     <div className="update-actions">
+    {update.notes&&<InfoDetails closeLabel={t('Close')} summary={t('Release notes')}><p className="release-notes">{update.notes}</p></InfoDetails>}
       <Button icon={RefreshCw} disabled={!desktopAvailable()||data.busy||Boolean(working)} onClick={()=>act('update_check')}>{t('Check for updates')}</Button>
       {phase==='available'&&<Button variant="primary" icon={Download} disabled={data.busy||Boolean(working)} onClick={download}>{t('Download update')}</Button>}
       {phase==='downloading'&&<Button icon={X} onClick={()=>distributionRequest('update_cancel').catch(()=>{})}>{t('Cancel download')}</Button>}
@@ -88,19 +89,23 @@ export function UpdatesPanel() {
 
 export function NotificationCenter() {
   const {t,locale,date,number}=useI18n();const {data,loading,error,request}=useDistribution();
+  const official=useOfficialServices();
   const [open,setOpen]=useState(false),[filter,setFilter]=useState('all'),[working,setWorking]=useState(false),[failure,setFailure]=useState('');
   const updateAvailable=['available','downloading','verifying','ready'].includes(data.update.state);
-  const count=data.unreadCount+(updateAvailable&&!data.updateRead?1:0),items=data.items.filter(item=>filter!=='unread'||!item.read);
+  const imagery=official.notifications.filter(item=>filter!=='unread'||!item.read);
+  const count=data.unreadCount+(updateAvailable&&!data.updateRead?1:0)+official.notifications.filter(item=>!item.read).length,items=data.items.filter(item=>filter!=='unread'||!item.read);
   const act=async(command,args={})=>{setWorking(true);setFailure('');try{await request(command,args);}catch(cause){setFailure(String(cause?.message||cause));}finally{setWorking(false);}};
   const navigate=page=>{setOpen(false);window.location.hash=page;};
+  const markAll=async()=>{setWorking(true);setFailure('');try{await Promise.all([request('notifications_read',{ids:data.items.filter(i=>!i.read).map(i=>i.id),seenOnly:false,...(updateAvailable?{updateVersion:data.update.version}:{})}),...(official.notifications.some(i=>!i.read)?[official.request('readNotifications',{ids:official.notifications.filter(i=>!i.read).map(i=>i.id)})]:[])]);}catch(cause){setFailure(cause.message);}finally{setWorking(false);}};
   return <><Button className="notification-trigger" size="icon" variant="quiet" icon={Bell} aria-label={t('Notifications · {count} unread',{count:number(count)})} tooltip={t('Notifications')} onClick={()=>setOpen(true)}>{count>0&&<span className="notification-dot" aria-hidden="true"/>}</Button>
     {open&&<Modal className="notifications-dialog" title={t('Notifications')} closeLabel={t('Close')} onClose={()=>setOpen(false)}>
-      <div className="notification-toolbar"><SegmentedControl value={filter} onValueChange={setFilter} items={[{value:'all',label:t('All notifications')},{value:'unread',label:t('Unread')}]}/><div><Button size="icon" variant="quiet" icon={RefreshCw} aria-label={t('Refresh notifications')} disabled={working||loading||!desktopAvailable()} onClick={()=>act('notifications_refresh')}/><Button size="sm" icon={CheckCheck} disabled={working||count===0} onClick={()=>act('notifications_read',{ids:data.items.filter(i=>!i.read).map(i=>i.id),seenOnly:false,...(updateAvailable?{updateVersion:data.update.version}:{})})}>{t('Mark all as read')}</Button></div></div>
+      <div className="notification-toolbar"><SegmentedControl value={filter} onValueChange={setFilter} items={[{value:'all',label:t('All notifications')},{value:'unread',label:t('Unread')}]}/><div><Button size="icon" variant="quiet" icon={RefreshCw} aria-label={t('Refresh notifications')} disabled={working||loading||!desktopAvailable()} onClick={()=>{void act('notifications_refresh');void official.refresh();}}/><Button size="sm" icon={CheckCheck} disabled={working||count===0} onClick={markAll}>{t('Mark all as read')}</Button></div></div>
       {(failure||error)&&<p className="distribution-error" role="alert">{t(failure||error)}</p>}
       <div className="notification-list">
+        {imagery.map(item=><Surface as="article" variant="inset" className="notification-card" data-unread={!item.read} key={item.id}><div className="notification-card-title"><h3>{t('{count} new imagery matches',{count:item.newCount})}</h3><Badge>{t('Imagery updates')}</Badge></div><p>{item.sourceId} · {date(item.created*1000)}</p><p>{t('Review the monitored area and prepare a separate download task.')}</p><Button size="sm" onClick={()=>navigate('Imagery monitoring')}>{t('Open monitoring')}</Button></Surface>)}
         {updateAvailable&&(filter==='all'||!data.updateRead)&&<Surface as="article" variant="inset" className="notification-card update-notification"><ArrowUpCircle size={20}/><div><strong>{t('GeoD Global {version} is available',{version:data.update.version})}</strong><p>{t(data.update.state==='ready'?'Update verified and ready to install.':'View the release notes and download the update in Settings.')}</p><Button size="sm" onClick={()=>{void act('notifications_read',{ids:[],seenOnly:false,updateVersion:data.update.version});navigate('Settings');}}>{t('Open updates')}</Button></div></Surface>}
         {items.map(item=><Surface as="article" variant="inset" className="notification-card" data-unread={!item.read} key={`${item.id}:${item.revision}`}><div className="notification-card-title"><h3>{item.title[locale]||item.title.en}</h3>{item.priority==='important'&&<Badge>{t('Important')}</Badge>}{!item.read&&<span className="notification-unread"/>}</div><time dateTime={item.publishedAt}>{date(item.publishedAt)}</time><p>{item.body[locale]||item.body.en}</p><div className="notification-card-actions">{item.action&&<Button size="sm" onClick={()=>{void act('notifications_read',{ids:[item.id],seenOnly:false});navigate(item.action==='updates'?'Settings':'Home');}}>{t(item.action==='updates'?'Open updates':'Browse data sources')}</Button>}{!item.read&&<Button size="sm" variant="quiet" disabled={working} onClick={()=>act('notifications_read',{ids:[item.id],seenOnly:false})}>{t('Mark as read')}</Button>}</div></Surface>)}
-        {!items.length&&(!updateAvailable||filter==='unread'&&data.updateRead)&&<EmptyState icon={Inbox} title={t(filter==='unread'?'No unread notifications':'No notifications yet')} description={t(data.messagesConfigured?'Product announcements and update reminders appear here.':'The announcement channel will open with the signed release channel.')}/>}
+        {!items.length&&!imagery.length&&(!updateAvailable||filter==='unread'&&data.updateRead)&&<EmptyState icon={Inbox} title={t(filter==='unread'?'No unread notifications':'No notifications yet')} description={t(data.messagesConfigured?'Product announcements and update reminders appear here.':'The announcement channel will open with the signed release channel.')}/>}
       </div>
       <p className="notification-footer"><Clock size={13}/>{data.lastMessagesCheck?t('Last refreshed: {date}',{date:date(data.lastMessagesCheck,{hour:'2-digit',minute:'2-digit'})}):t('Read status is saved locally. No login is required.')}</p>
     </Modal>}</>;

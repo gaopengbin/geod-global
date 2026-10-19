@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-09",
+  "scope": "Useful native execution observations and optional tool details, following GeoD Agent interaction patterns",
+  "reference": "GeoD Agent source and existing conversation activity evidence inspected read-only",
+  "checks": {
+    "agentPanelIntegrationTestsPassed": 78,
+    "nativeReceiptPersistenceAndClientValidationTests": "passed",
+    "frontendBuild": "passed",
+    "agentRuntimePrepared": "passed",
+    "developmentDesktopBuild": "passed",
+    "developmentDesktopStarted": true,
+    "installerCreated": false,
+    "isolationCheck": "passed",
+    "diffWhitespaceCheck": "passed"
+  },
+  "browserVerification": {
+    "methods": [
+      "Read-only replay of an existing completed user conversation through production Agent components",
+      "Explicitly labeled isolated UI test scenario using production Agent components and native-shaped safe receipts"
+    ],
+    "widths": [1280, 390],
+    "nativeObservationsVisibleWithoutOpeningDetails": true,
+    "intermediateNotesSeparatelyCollapsed": true,
+    "legacyEmptyRecordsHaveNoUselessDisclosure": true,
+    "parameterAndResultExcerptsScrollInternally": true,
+    "activityVisibleWhenToolGroupCollapsed": true,
+    "activityOutsideMessageScroller": true,
+    "allUserMessagesRemainOutsideCollapsedProcess": true,
+    "completedNativeResultsRetainedOnRight": true,
+    "horizontalOverflow": false,
+    "modelCallsOrTaskMutations": false
+  },
+  "limits": [
+    "Older records without retained native results cannot be reconstructed by this presentation change.",
+    "Receipt excerpts are bounded display data; they do not authorize operations or substitute for native plans and verified output files.",
+    "The isolated Berlin UI scenario is test data and is not a real imagery search or download.",
+    "Native app compilation and startup were verified; native window pixels were unavailable to the UI automation surface."
+  ]
+}

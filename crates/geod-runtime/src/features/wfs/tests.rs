@@ -427,6 +427,7 @@ fn bundle_fixture(empty: bool) -> (Value, Provenance) {
         feature_count: count,
         selection: "wfs-bbox-full-features".into(),
         arcgis: None,
+        geoboundaries: None,
         wfs: Some(Snapshot {
             version: "2.0.0".into(),
             layer: layer.clone(),

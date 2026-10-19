@@ -1,0 +1,42 @@
+{
+  "schema": "geod-classified-source-picker-ui/v1",
+  "date": "2026-10-12",
+  "status": "passed",
+  "scope": "Actual in-app browser on the local development Explore page, plus React integration tests and production build. This interaction change did not start downloads, invoke a model or change source availability.",
+  "directory": {"total": 99, "connected": 58, "ready": 52, "catalogOnly": 6, "planned": 41, "productCategories": 16},
+  "browserChecks": {
+    "classifiedDialogFromPersistentSourceButton": true,
+    "initialFocusOnSearch": true,
+    "chinesePermanentWaterSearch": true,
+    "mixedChineseEnglishSentinelEarthSearch": true,
+    "hydrologyCategoryShowsThreeConnectedProducts": true,
+    "datasetSelectionOpensExistingExplorer": true,
+    "providerSelectionOpensExistingImageryExplorer": true,
+    "selectionRetainsBounds": [36.84, -1.3, 36.86, -1.28],
+    "wcsSelectionHandsOffToExactlyOneServiceDialog": true,
+    "serviceCloseRestoresPersistentSourceButtonFocus": true,
+    "plannedSoilGridsCardDisabled": true,
+    "allViewShows99CardsWith41Disabled": true,
+    "emptySearchResetRestoresConnectedView": true,
+    "escapeRestoresSourceTriggerFocus": true,
+    "lightAndDarkScreenshotsInspected": true,
+    "themeRestored": "light",
+    "temporaryViewportReset": true
+  },
+  "responsive": {
+    "viewport": [620, 800],
+    "documentScrollWidth": 620,
+    "dialogWidth": 588,
+    "dialogScrollWidth": 588,
+    "categoryNavigation": "Intentional horizontal internal scrolling",
+    "cardGrid": "One column, 547 px",
+    "unexpectedDocumentHorizontalOverflow": false
+  },
+  "checks": {"fullUiTestsPassed": 453, "targetPickerInteractionTestsPassed": 9, "build": "passed", "repositoryIsolation": "passed"},
+  "screenshots": [
+    ".verification/public-datasets-ui-20261012/source-picker-light.png",
+    ".verification/public-datasets-ui-20261012/source-picker-dark.png",
+    ".verification/public-datasets-ui-20261012/source-picker-narrow.png"
+  ],
+  "nativeWindowTested": false
+}

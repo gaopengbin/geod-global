@@ -24,19 +24,19 @@
   padding-right: calc(12px + var(--tauri-plugin-decoration-right-clearance, 174px));
 }
 .app-header-identity, .app-header-actions, .geod-brand { display: flex; align-items: center; flex-shrink: 0; gap: 8px; }
-.geod-brand { color: var(--ink); font-size: 15px; font-weight: 650; letter-spacing: -.025em; }
+.geod-brand { color: var(--ink); font-size: var(--text-conversation); font-weight: var(--weight-semibold); letter-spacing: -.025em; line-height: var(--leading-conversation); }
 .geod-brand img { display: block; object-fit: contain; width: 32px; height: 32px; }
-.geod-brand-edition { color: var(--ink-2); font-weight: 450; }
+.geod-brand-edition { font-weight: 450; }
 .app-header-identity { padding-right: 16px; border-right: 1px solid var(--line); }
 .app-header-drag { flex: 1; min-width: 80px; height: 100%; display: flex; align-items: center; gap: 16px; }
 .app-header-context { min-width: 0; max-width: min(48vw, 560px); }
-.app-header-context .breadcrumb { gap: 8px; font-size: 13px; min-width: 0; }
+.app-header-context .breadcrumb { gap: 8px; font-size: var(--text-ui); min-width: 0; line-height: var(--leading-ui); }
 .app-header-context .breadcrumb strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .app-header-spacer { flex: 1; min-width: 24px; height: 100%; }
 .app-header [data-tauri-drag-region] .breadcrumb,
 .app-header [data-tauri-drag-region] .breadcrumb * { pointer-events: none; }
 .app-header-actions .local-status { padding-inline: 4px; }
-.app-header-error { color: var(--orange); font-size: 12px; }
+.app-header-error { color: var(--orange); font-size: var(--text-caption); line-height: var(--leading-caption); }
 .app-window-frame { position: absolute; inset: 0 0 auto; height: var(--app-header-height); z-index: 30; padding-right: var(--tauri-plugin-decoration-right-clearance, 174px); pointer-events: none; }
 .app-window-frame[data-titlebar-mode=web], .app-window-frame[data-titlebar-mode=native] { display: none; }
 .app-window-frame-drag { height: 100%; pointer-events: auto; }
@@ -50,8 +50,9 @@
   color: var(--ink);
   height: var(--app-header-height);
   width: 46px;
-  font-size: 12px;
+  font-size: var(--text-caption);
   transition: background-color var(--motion-fast), color var(--motion-fast);
+  line-height: var(--leading-caption);
 }
 :root [data-tauri-plugin-decoration-root] [data-tauri-decoration-platform] [data-tauri-decoration-control]:hover,
 :root [data-tauri-plugin-decoration-root] [data-tauri-decoration-platform] [data-tauri-decoration-control][data-tauri-decoration-hover] { background: var(--hover-2); }

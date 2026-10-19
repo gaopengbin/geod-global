@@ -3,7 +3,7 @@ import { CheckCircle2, RefreshCw } from 'lucide-react';
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
-import { Badge, Button, Input, Select, Spinner, Surface } from './ui/index.jsx';
+import { Badge, InfoDetails, Button, Input, Select, Spinner, Surface } from './ui/index.jsx';
 import './proxy.css';
 
 const initial = { mode: 'system', url: '' };
@@ -51,7 +51,7 @@ export function ProxySettingsPanel() {
   };
 
   return <Surface as="section" className="proxy-settings" aria-label={t('Source download proxy')}>
-    <div className="proxy-heading"><div className="proxy-title"><h2>{t('Source download proxy')}</h2>{connected && !loading && <Badge>{t(saved.mode === 'system' ? 'Follow system' : saved.mode === 'direct' ? 'Direct' : 'Custom proxy')}</Badge>}</div><p>{t('Choose how GeoD connects to original files and account services.')}</p></div>
+    <div className="proxy-heading"><div className="proxy-title"><h2>{t('Source download proxy')}</h2>{connected && !loading && <Badge>{t(saved.mode === 'system' ? 'Follow system' : saved.mode === 'direct' ? 'Direct' : 'Custom proxy')}</Badge>}</div><InfoDetails closeLabel={t('Close')} summary={t('Source download proxy')}><p>{t('Choose how GeoD connects to original files and account services.')}</p><p className="proxy-note">{t('This setting applies to new source-file downloads. Active transfers keep their current connection; catalog and map requests follow the browser network settings.')}</p></InfoDetails></div>
     {!connected ? <p className="proxy-note">{t('Connect the local task service to change proxy settings.')}</p> : loading ? <p className="proxy-note" role="status"><Spinner size={15}/>{t('Loading proxy settings…')}</p> : <>
       <div className="proxy-fields">
         <label>{t('Connection mode')}<Select aria-label={t('Connection mode')} value={draft.mode} onChange={event => { setDraft(previous => ({ ...previous, mode: event.target.value })); setMessage(null); }}>
@@ -63,7 +63,6 @@ export function ProxySettingsPanel() {
       </div>
       <div className="proxy-actions"><Button onClick={() => run('testProxy')} disabled={Boolean(busy)}>{busy === 'testProxy' ? <Spinner size={15}/> : <RefreshCw size={15}/>} {t('Test connection')}</Button><Button variant="primary" onClick={() => run('saveProxy')} disabled={Boolean(busy) || !dirty}>{busy === 'saveProxy' && <Spinner size={15}/>} {t('Save proxy settings')}</Button></div>
       {message && <p className={`proxy-message proxy-message-${message.type}`} role="status">{message.type === 'success' && <CheckCircle2 size={16}/>}<span>{message.type === 'error' ? t(message.text) : message.text}</span></p>}
-      <p className="proxy-note">{t('This setting applies to new source-file downloads. Active transfers keep their current connection; catalog and map requests follow the browser network settings.')}</p>
     </>}
   </Surface>;
 }

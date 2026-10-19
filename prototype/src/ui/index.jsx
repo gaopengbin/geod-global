@@ -23,7 +23,7 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import { Check, ChevronDown, CircleAlert, Clock3, LoaderCircle, X } from 'lucide-react';
+import { Check, ChevronDown, CircleAlert, Clock3, Info, LoaderCircle, X } from 'lucide-react';
 import './styles.css';
 import './motion.css';
 
@@ -50,7 +50,7 @@ export const buttonVariants = cva(
     size: {
       xs: 'h-7 rounded-full px-2.5 text-[12px] font-normal leading-none gap-1',
       sm: 'h-[27px] px-3 text-[13px] leading-none rounded-full gap-1.5',
-      md: 'px-4 py-[9px] text-sm leading-none rounded-full gap-2',
+      md: 'h-8 px-4 text-sm leading-none rounded-full gap-2',
       icon: 'size-8 p-0 rounded-control gap-0',
       row: 'w-full h-auto rounded-card px-3 py-2 text-sm gap-2 text-left',
     },
@@ -77,7 +77,7 @@ export function Badge({ tone, variant, className, asChild = false, ...props }) {
   return <Comp data-slot="badge" data-tone={tone || variant || 'neutral'} className={cn('bui-badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap', className)} {...props} />;
 }
 
-const fieldClasses = 'w-full min-w-0 rounded-control border border-line-strong bg-surface px-3 py-2 text-sm text-ink transition-[color,box-shadow] placeholder:text-ink-3 disabled:cursor-not-allowed disabled:opacity-50';
+const fieldClasses = 'w-full min-w-0 rounded-control border border-line-strong bg-surface px-3 py-[5px] text-sm text-ink transition-[color,box-shadow] placeholder:text-ink-3 disabled:cursor-not-allowed disabled:opacity-50';
 const changeEvent = (type, name, value, checked) => {
   const target = { type, name, value: String(value), valueAsNumber: Number(value), checked };
   return { target, currentTarget: target, type: 'change', preventDefault() {}, stopPropagation() {} };
@@ -172,6 +172,20 @@ export const DialogDescription = DialogPrimitive.Description;
 export const DialogContent = forwardRef(function DialogContent({ className, children, ...props }, ref) {
   return <DialogPrimitive.Portal><DialogPrimitive.Overlay data-slot="dialog-overlay" className="bui-dialog-overlay" /><DialogPrimitive.Content ref={ref} data-slot="dialog-content" className={cn('bui-dialog-content', className)} {...props}>{children}</DialogPrimitive.Content></DialogPrimitive.Portal>;
 });
+
+// Explanatory content lives in a separate surface, never expands the work panel.
+// Radix retains focus, dismissal and keyboard behavior for both presentations.
+export function InfoDetails({ summary, children, icon: Icon = Info, presentation = 'dialog', closeLabel = 'Close', className, contentClassName, disabled = false, embedded = false }) {
+  const [open, setOpen] = useState(false);
+  if (embedded) return <section className={cn('bui-info-section',contentClassName)}><h4>{summary}</h4>{children}</section>;
+  const trigger = <Button variant="quiet" size="icon" className="bui-info-trigger" disabled={disabled} aria-label={summary} tooltip={summary}><Icon size={15} aria-hidden="true"/></Button>;
+  return <span className={cn('bui-info-details',className)}>{presentation === 'popover'
+    ? <Popover open={open} onOpenChange={setOpen} trigger={trigger} className="bui-info-popover" aria-label={summary}><strong className="bui-info-heading">{summary}</strong><div className={cn('bui-info-copy', contentClassName)}>{children}</div></Popover>
+    : <DialogPrimitive.Root open={open} onOpenChange={setOpen}><DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger><DialogContent className="bui-info-dialog" aria-describedby={undefined}>
+      <header className="bui-dialog-header"><DialogPrimitive.Title className="bui-dialog-title">{summary}</DialogPrimitive.Title><DialogPrimitive.Close asChild><Button variant="quiet" size="icon" aria-label={closeLabel}><X size={18} aria-hidden="true"/></Button></DialogPrimitive.Close></header>
+      <div className={cn('bui-dialog-body bui-info-copy', contentClassName)}>{children}</div>
+    </DialogContent></DialogPrimitive.Root>}</span>;
+}
 export function Modal({ title, description, onClose, closeDisabled = false, closeLabel = 'Close', wide, footer, children, className, ...props }) {
   const returnFocus = useRef(typeof document === 'undefined' ? null : document.activeElement);
   const [open, setOpen] = useState(true);
@@ -240,12 +254,13 @@ export function TaskRows({ items = [], className, ariaLabel, layout = 'tasks' })
   return <div data-slot="task-rows" data-layout={layout} role="list" aria-label={ariaLabel} className={cn('bui-task-rows', className)}>{items.map(item => <TaskRow key={item.id} item={item} layout={layout} />)}</div>;
 }
 function TaskRow({ item, layout }) {
-  const { title, description, meta, status, statusLabel, statusTone, progress, progressLabel, details, actions, preview, icon: Icon } = item;
+  const { title, description, meta, notice, status, statusLabel, statusTone, progress, progressLabel, details, actions, preview, icon: Icon } = item;
   const compact = layout === 'tasks';
   const [detailContainer, setDetailContainer] = useState(null);
   // Details occupy a separate full-width region so expanding them cannot
   // stretch the thumbnail or move the summary's action strip.
   const cardDetails = React.isValidElement(details) && details.type === Disclosure ? React.cloneElement(details, { contentContainer: detailContainer }) : details;
+  const expandableDetails = React.isValidElement(details) && details.type === Disclosure;
   const StatusIcon = Icon || (status === 'succeeded' ? Check : ['failed', 'interrupted'].includes(status) ? CircleAlert : status === 'cancelled' ? X : Clock3);
   const tone = ['succeeded', 'running'].includes(status) ? 'blue' : status === 'failed' ? 'red' : 'neutral';
   const badge = statusLabel && <Badge tone={statusTone || tone}>{statusLabel}</Badge>;
@@ -256,12 +271,13 @@ function TaskRow({ item, layout }) {
       <div className="bui-task-copy">
         <strong title={!compact && typeof title === 'string' ? title : undefined}>{title}</strong>
         <div className="bui-task-info">{compact && badge}{description && <p title={!compact && typeof description === 'string' ? description : undefined}>{description}</p>}{meta && <span className="bui-task-meta">{meta}</span>}{!compact && badge}</div>
+        {notice && <p className="bui-task-notice" role="status" title={notice}>{notice}</p>}
         {compact && ['queued', 'running'].includes(status) && <div className="bui-task-progress" aria-hidden={status === 'queued' ? true : undefined}>{status === 'running' && <Progress value={progress} aria-label={progressLabel} />}</div>}
       </div>
     </div>
     {!compact && status === 'running' && <Progress value={progress} aria-label={progressLabel} />}
     {(details || actions) && <div className="bui-task-footer">{actions && <div className="bui-task-actions">{actions}</div>}{details && <div className="bui-task-details">{cardDetails}</div>}</div>}
     </div>
-    {details && <div className="bui-task-expanded" ref={setDetailContainer}/>}
+    {expandableDetails && <div className="bui-task-expanded" ref={setDetailContainer}/>}
   </article>;
 }

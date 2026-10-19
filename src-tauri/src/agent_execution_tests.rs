@@ -2,6 +2,135 @@ use super::*;
 use tempfile::tempdir;
 
 #[tokio::test]
+async fn explicit_original_review_is_bound_to_the_actual_human_request_and_never_grants_execution()
+{
+    let directory = tempdir().unwrap();
+    let policy = ExecutionPolicy::open(directory.path().to_path_buf())
+        .await
+        .unwrap();
+    let session = super::super::registry::new_id();
+    let binding = super::super::registry::new_id();
+    let request = policy
+        .begin_human_request(
+            &session,
+            &binding,
+            "只下载一景 SCL 原件，不裁剪、不拼接，先生成方案确认后执行",
+        )
+        .await;
+    assert!(
+        policy
+            .can_review_originals(
+                &session,
+                &binding,
+                TurnScope {
+                    request_id: Some(&request),
+                    read_only: false
+                }
+            )
+            .await
+    );
+    assert!(
+        !policy
+            .can_review_originals(
+                &session,
+                &binding,
+                TurnScope {
+                    request_id: Some(&request),
+                    read_only: true
+                }
+            )
+            .await
+    );
+    assert!(
+        !policy
+            .can_review_originals(
+                &session,
+                &binding,
+                TurnScope {
+                    request_id: None,
+                    read_only: false
+                }
+            )
+            .await
+    );
+    assert!(
+        !policy
+            .can_review_originals(
+                &super::super::registry::new_id(),
+                &binding,
+                TurnScope {
+                    request_id: Some(&request),
+                    read_only: false
+                }
+            )
+            .await
+    );
+    assert!(
+        !policy
+            .can_review_originals(
+                &session,
+                &super::super::registry::new_id(),
+                TurnScope {
+                    request_id: Some(&request),
+                    read_only: false
+                }
+            )
+            .await
+    );
+    assert_eq!(
+        policy.mode(Some(&session), &binding).await,
+        ExecutionMode::ConfirmEach
+    );
+    let retry = policy.begin_human_request(&session, &binding, "重试").await;
+    assert!(
+        policy
+            .can_review_originals(
+                &session,
+                &binding,
+                TurnScope {
+                    request_id: Some(&retry),
+                    read_only: false
+                }
+            )
+            .await
+    );
+    assert!(
+        !policy
+            .can_review_originals(
+                &session,
+                &binding,
+                TurnScope {
+                    request_id: Some(&request),
+                    read_only: false
+                }
+            )
+            .await
+    );
+    for text in [
+        "下载北京市影像并裁剪拼接",
+        "下载原件并裁剪",
+        "不要下载原件",
+        "download originals only then crop to the city",
+        "改成镶嵌影像",
+    ] {
+        let id = policy.begin_human_request(&session, &binding, text).await;
+        assert!(
+            !policy
+                .can_review_originals(
+                    &session,
+                    &binding,
+                    TurnScope {
+                        request_id: Some(&id),
+                        read_only: false
+                    }
+                )
+                .await,
+            "{text}"
+        );
+    }
+}
+
+#[tokio::test]
 async fn execution_permission_persists_but_never_leaks_to_another_conversation_or_connection() {
     let directory = tempdir().unwrap();
     let policy = ExecutionPolicy::open(directory.path().to_path_buf())

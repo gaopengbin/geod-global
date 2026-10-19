@@ -8,20 +8,35 @@ import {AgentService,validContextState} from './service.mjs';
 const config={label:'Controlled context test',protocol:'openai-compatible',baseUrl:'https://example.test/v1',model:'controlled-test',apiKey:'private-test-marker'};
 const definitions=[{name:'geod_download_plan',inputSchema:{type:'object'}}];
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-async function rig(t,home=null) {
+async function rig(t,home=null,model=config) {
   if(!home){home=await mkdtemp(join(tmpdir(),'geod-context-'));t.after(()=>rm(home,{recursive:true,force:true}));}
-  const calls=[],threadId=randomUUID();let emit;
+  const calls=[],hosts=[],threadId=randomUUID();let emit;
   const service=new AgentService({home,executable:'unit-test-only',callTool:async()=>({planId:randomUUID(),kind:'download',status:'pending'}),
     bridgeFactory:async()=>({baseUrl:'http://127.0.0.1:1/v1',resetBudget(){},async close(){}}),
-    hostFactory:async options=>{emit=options.onEvent;return {async rpc(method,params){calls.push({method,params});
+    hostFactory:async options=>{hosts.push(options);emit=options.onEvent;return {async rpc(method,params){calls.push({method,params});
       if(method==='thread/start')return {thread:{id:threadId}};
       if(method==='turn/start')return {turn:{id:randomUUID()}};
       if(method==='turn/interrupt')emit({method:'turn/completed',params:{threadId:service.active.session.threadId,turn:{status:'interrupted'}}});return {};},async close(){}};}});
-  await service.open();await service.configure(config,definitions);
-  return {service,home,calls,event(method,params={}){emit({method,params:{threadId:service.active?.session.threadId??threadId,...params}});}};
+  await service.open();await service.configure(model,definitions);
+  return {service,home,calls,hosts,event(method,params={}){emit({method,params:{threadId:service.active?.session.threadId??threadId,...params}});}};
 }
 async function started(r,text='Read my workspace',images=[]) {await r.service.send({text,images});await r.service.turnTask;}
 async function completed(r){r.event('turn/completed',{turn:{status:'completed'}});await tick();}
+test('changing only context capacity restarts the engine with that capacity and preserves the same conversation',async t=>{
+  const r=await rig(t,null,{...config,contextWindow:131_072});
+  await started(r);const sessionId=r.service.selectedId,threadId=r.service.active.session.threadId;
+  assert.equal(r.hosts[0].modelConfig.contextWindow,131_072);assert(!('apiKey' in r.hosts[0].modelConfig));
+  r.event('thread/tokenUsage/updated',{tokenUsage:{last:{totalTokens:1_100_000},modelContextWindow:1_900_000}});
+  assert.equal(r.service.snapshot().selected.contextState.windowTokens,1_900_000);
+  await completed(r);
+  await r.service.configure({...config,contextWindow:2_097_152},definitions);
+  assert(r.service.snapshot().sessions[0].compatible);
+  await r.service.send({sessionId,text:'Continue with the same goal'});await r.service.turnTask;
+  assert.equal(r.hosts[1].modelConfig.contextWindow,2_097_152);
+  assert(r.calls.some(call=>call.method==='thread/resume'&&call.params.threadId===threadId));
+  assert.equal(r.service.snapshot().sessions.length,1);
+  await completed(r);await r.service.close();
+});
 test('native context checkpoint preserves review entries and restores owned images after restart',async t=>{
   let r=await rig(t);
   const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jY1kAAAAASUVORK5CYII=','base64');

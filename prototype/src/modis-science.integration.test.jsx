@@ -37,8 +37,8 @@ it('Download entry can queue all twelve COGs with persisted source calibration',
   const user=userEvent.setup();runtimeRequest.mockImplementation(async(op,p)=>op==='createProject'?project:{jobs:[{id:p.assetKey}]});
   wrap(<DownloadAssetButton scene={scene} scenes={[scene]} areaBounds={project.bounds} areaName="MODIS"/>,{jobs:[],projects:[]});
   await user.click(screen.getByRole('button',{name:'Create project and download'}));await user.click(screen.getByRole('combobox',{name:'Download content'}));
-  await user.click(screen.getByRole('option',{name:'All MODIS science layers · 12 COGs'}));expect(screen.getByText(/no quality mask is applied/)).toBeTruthy();
-  await user.click(screen.getByRole('button',{name:'Create project and start download'}));await screen.findByRole('button',{name:'Open project'});
+  await user.click(screen.getByRole('option',{name:'All MODIS science layers · 12 COGs'}));await userEvent.click(screen.getByRole('button',{name:'Download contents'}));expect(screen.getByText(/no quality mask is applied/)).toBeTruthy();await userEvent.keyboard('{Escape}');
+  await user.click(screen.getByRole('button',{name:'Confirm and download'}));await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.filter(([op])=>op==='downloadProject').map(([,p])=>p.assetKey)).toEqual(['ndvi','evi',...MODIS_SCIENCE_KEYS]);
   expect(runtimeRequest.mock.calls[0][1].scenes[0].assets.vi_reliability.rasterBand).toEqual({dataType:'int8',scale:1,offset:0,nodata:-1,spatialResolution:250});
 });

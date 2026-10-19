@@ -53,6 +53,7 @@ fn service_fixture() -> FeatureService {
         collections: vec![collection_fixture()],
         connected_at: now(),
         overpass: None,
+        geoboundaries: None,
         wfs: None,
         arcgis: Some(Service {
             current_version: 11.3,
@@ -121,6 +122,7 @@ fn source_fixture(ids: &[u64]) -> Provenance {
         number_matched: Some(ids.len()),
         feature_count: ids.len(),
         selection: "bbox-full-features".into(),
+        geoboundaries: None,
         wfs: None,
         arcgis: Some(Snapshot {
             layer: layer_fixture(),

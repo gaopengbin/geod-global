@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "accepted": true,
+  "observedUtc": "2026-10-15T04:55:20.480011+00:00",
+  "sourceIds": [
+    "nasa-earthdata",
+    "nasa-srtm",
+    "nasa-viirs-npp",
+    "nasa-viirs-noaa20",
+    "nasa-viirs-noaa21"
+  ],
+  "directoryIdsAdded": 0,
+  "authIdsAccepted": 5,
+  "originalPlannedIdsClosed": 0,
+  "perUserNativeAuthorizationStillRequired": true,
+  "qaCredentialRemoved": true,
+  "jobs": 60,
+  "projects": 35,
+  "protectedOriginals": 7,
+  "preparedRgbBands": 9,
+  "fullHdfRgbSamplesMatched": 12960000,
+  "fullPreparedRgbSamplesMatched": 12960000,
+  "rawPositionsMatched": 67,
+  "normalReopenUnchanged": true,
+  "results": [
+    {
+      "id": "a90a5239-170e-47fc-a0aa-dd38829127f1",
+      "kind": "raster_prepare",
+      "assetKey": "blue",
+      "bytes": 2008118,
+      "sha256": "f11f6c791b2f603e655659734acee6719a060483ed2694bc69a923ee3bba3e2f",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "a3d573f6-4ae5-4d4d-9700-08dcfa353a2b",
+      "kind": "raster_prepare",
+      "assetKey": "green",
+      "bytes": 2120617,
+      "sha256": "aeae082ed5cd35b2730b164043b096c1576da83059a51f5cdbb6c23aeda9cd69",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "685b0037-0dcc-4892-b34f-37065ffa7e73",
+      "kind": "raster_prepare",
+      "assetKey": "red",
+      "bytes": 2186711,
+      "sha256": "1a7cd470d4812e008a7386ecff6350f68022e2f7cf1bf0f59463a31a196dd787",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "1c599650-ea3e-4b1e-99fc-ecc03bb8871b",
+      "kind": "raster_prepare",
+      "assetKey": "blue",
+      "bytes": 2001338,
+      "sha256": "9027352d55844fe622fcf2b08a2bba37a8112fb93c348adc11fd5ec045c097af",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "0ba878d7-c7d4-4cf3-a1d5-76fc167abd1e",
+      "kind": "raster_prepare",
+      "assetKey": "green",
+      "bytes": 2107503,
+      "sha256": "3d00c32578daa4bdb2f5c8ba8bfd83f0b83c89bf22d1a2cdce3f169bf536122d",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "809c46ff-c348-41e2-819e-ebed69c6ecb2",
+      "kind": "raster_prepare",
+      "assetKey": "red",
+      "bytes": 2179798,
+      "sha256": "3fe6aa7391b46bcafe4a707a8c81c01c02c99fa7faf154b8668644be19067553",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "efe8a825-df3f-425a-86d3-5160f017d4de",
+      "kind": "raster_prepare",
+      "assetKey": "blue",
+      "bytes": 2134214,
+      "sha256": "2daef8813a7d7a1f827a545e66f1175ed0f1a7e2743d52fbda31b29bad9054e3",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "bcae0b09-0fe4-44f9-96ba-354117c57e48",
+      "kind": "raster_prepare",
+      "assetKey": "green",
+      "bytes": 2217887,
+      "sha256": "6c6edc1ba69cddb52c9b3513c9f70c9167a467bac9db549d23d6b65752543cf9",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "4eadff49-b70e-46c4-81fc-ed31a0f59350",
+      "kind": "raster_prepare",
+      "assetKey": "red",
+      "bytes": 2271266,
+      "sha256": "36a0310929d3b1ab62ae59aeeef07d352b63b72ddb633f54a47542fad2612bb0",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 1440000
+    },
+    {
+      "id": "1a04a88e-730c-483f-979b-79b9ccf60d0a",
+      "kind": "download",
+      "assetKey": "blue",
+      "bytes": 21760801,
+      "sha256": "8e60bce23697104b4293a49d3fdf5c9b74f60f4b64093c73ed8ee0671bc9e76c",
+      "samplesMatched": 6,
+      "completePreparedSamplesMatched": 0
+    },
+    {
+      "id": "56a01cbc-896d-4da5-982b-e4c50428336b",
+      "kind": "download",
+      "assetKey": "green",
+      "bytes": 21315220,
+      "sha256": "1c57449707c5e0f1774a5b3766c77fb1cdee203b7509c1a9a42464c50e6853c1",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 0
+    },
+    {
+      "id": "adb4f4a7-bc09-45f2-b760-361faab8b743",
+      "kind": "whole HDF5 original",
+      "sha256": "624b278da29f53321a5b5868ff49d55ca2f90b0ae8190cfcd1819f79048cb0ef",
+      "bytes": 30187303,
+      "completeRgbSamplesMatched": 4320000
+    },
+    {
+      "id": "cd596feb-3bca-48d3-a5c8-740b5b16348d",
+      "kind": "whole HDF5 original",
+      "sha256": "fa370434de7196fb760a9e86d338688dc0cda61489803f2deaeda495490ffc70",
+      "bytes": 29712360,
+      "completeRgbSamplesMatched": 4320000
+    },
+    {
+      "id": "562fbc82-27df-4ab4-a883-83eaa45fbeef",
+      "kind": "download",
+      "assetKey": "red",
+      "bytes": 21210294,
+      "sha256": "2de06ed1d007003101fc28b3ff6a1549dc7a89437ecf3a87a9c7e1986785b3be",
+      "samplesMatched": 5,
+      "completePreparedSamplesMatched": 0
+    },
+    {
+      "id": "1a9be259-e33d-4f10-acfe-308b6972443e",
+      "kind": "download",
+      "assetKey": "srtm",
+      "bytes": 6102958,
+      "sha256": "6087c0d5b98174252060063664e39d73cbde8827fa0af3fe46505286017e2bd6",
+      "samplesMatched": 6,
+      "completePreparedSamplesMatched": 0
+    },
+    {
+      "id": "67f6bb0f-fc71-4bc6-9a92-2ac7b4b62265",
+      "kind": "whole HDF5 original",
+      "sha256": "b07292718bef6dcc91bf8c2177abe637c5653846624eacbf4209d7e4ed85ea78",
+      "bytes": 30961288,
+      "completeRgbSamplesMatched": 4320000
+    }
+  ]
+}

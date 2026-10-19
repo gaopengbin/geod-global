@@ -1,0 +1,502 @@
+{
+  "status": "candidate-native-original-raw-values-and-reopen-verified; planned; no event-aware dropdown preset",
+  "documents": [
+    {
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/collection.json",
+      "sha256": "0624323e04461b5446f9e1d46295da5ec76d620faa17d22da6c7166da5038cd7",
+      "bytes": 2226,
+      "status": 200,
+      "id": "Cyclone-Ditwah-Sri-Lanka-Nov-2025",
+      "license": "CC-BY-NC-4.0"
+    },
+    {
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/ard/acquisition_collections/102001011D2F3500_collection.json",
+      "sha256": "a1a2145f171bb0922a5d1ef82df7e64edba26929fb74117d815284a63ab61c2f",
+      "bytes": 28032,
+      "status": 200,
+      "id": "102001011D2F3500",
+      "license": "proprietary"
+    },
+    {
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/ard/44/033313300132/2025-12-05/102001011D2F3500.json",
+      "sha256": "2a09468afa2c568fd6f52e074ab45fb69f06d854588d781f6444a588d2064fc5",
+      "bytes": 2940,
+      "status": 200,
+      "id": "44/033313300132/102001011D2F3500",
+      "license": null
+    }
+  ],
+  "item": {
+    "id": "44/033313300132/102001011D2F3500",
+    "bbox": [
+      79.82741411377788,
+      7.053662458093282,
+      79.86963308036124,
+      7.08269186352128
+    ],
+    "properties": {
+      "datetime": "2025-12-05 08:00:38Z",
+      "platform": "WV01",
+      "gsd": 0.79,
+      "ard_metadata_version": "0.0.1",
+      "catalog_id": "102001011D2F3500",
+      "utm_zone": 44,
+      "quadkey": "033313300132",
+      "view:off_nadir": 39.2,
+      "view:azimuth": 121.6,
+      "view:incidence_angle": 47.0,
+      "view:sun_azimuth": 216.3,
+      "view:sun_elevation": 53.3,
+      "proj:epsg": 32644,
+      "proj:geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              370500.79345703125,
+              783053.5888671875
+            ],
+            [
+              370521.8505859375,
+              779843.75
+            ],
+            [
+              375156.25,
+              779843.75
+            ],
+            [
+              375156.25,
+              781942.138671875
+            ],
+            [
+              370500.79345703125,
+              783053.5888671875
+            ]
+          ]
+        ]
+      },
+      "grid:code": "MXRA-Z44-033313300132",
+      "proj:bbox": [
+        370500.79345703125,
+        779843.75,
+        375156.25,
+        783053.5888671875
+      ],
+      "tile:data_area": 12.3,
+      "tile:clouds_area": 0.0,
+      "tile:clouds_percent": 0
+    },
+    "assets": {
+      "data-mask": {
+        "type": "application/geopackage+sqlite3",
+        "title": "Data Mask",
+        "href": "./102001011D2F3500-data-mask.gpkg",
+        "roles": [
+          "data-mask"
+        ]
+      },
+      "pan_analytic": {
+        "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "title": "Panchromatic Image",
+        "href": "./102001011D2F3500-pan.tif",
+        "proj:bbox": [
+          369843.75,
+          779843.75,
+          375156.25,
+          785156.25
+        ],
+        "proj:shape": [
+          7493,
+          7493
+        ],
+        "proj:transform": [
+          0.7089950620579207,
+          0.0,
+          369843.75,
+          0.0,
+          -0.7089950620579207,
+          785156.25,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "eo:bands": [
+          {
+            "name": "BAND_P",
+            "description": "Pan"
+          }
+        ],
+        "roles": [
+          "data"
+        ]
+      },
+      "visual": {
+        "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "title": "Visual Image",
+        "href": "./102001011D2F3500-visual.tif",
+        "proj:bbox": [
+          369843.75,
+          779843.75,
+          375156.25,
+          785156.25
+        ],
+        "proj:shape": [
+          17408,
+          17408
+        ],
+        "proj:transform": [
+          0.30517578125,
+          0.0,
+          369843.75,
+          0.0,
+          -0.30517578125,
+          785156.25,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "eo:bands": [
+          {
+            "name": "BAND_P_V",
+            "description": "Pan Visual"
+          }
+        ],
+        "roles": [
+          "visual"
+        ]
+      }
+    }
+  },
+  "head": {
+    "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/ard/44/033313300132/2025-12-05/102001011D2F3500-visual.tif",
+    "headers": {
+      "x-amz-id-2": "TJHqqailbLawR6039ZiczNt8It8vY/1iP999YIUIXGSzk/uemFIRbRMt3En/sFxYn1mbmSOCK3T0mQL1W13lroTgQULhzOiI",
+      "x-amz-request-id": "8PH0G8FDEEFZVTD4",
+      "Server": "AmazonS3",
+      "Date": "Mon, 12 Oct 2026 05:58:08 GMT",
+      "Last-Modified": "Fri, 05 Dec 2025 10:05:07 GMT",
+      "ETag": "\"df5b72071086e5bfd273a470d4cd6afb-1\"",
+      "x-amz-storage-class": "INTELLIGENT_TIERING",
+      "x-amz-server-side-encryption": "AES256",
+      "Accept-Ranges": "bytes",
+      "Content-Length": "24418178",
+      "Content-Type": "binary/octet-stream",
+      "Connection": "close"
+    }
+  },
+  "original": {
+    "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/ard/44/033313300132/2025-12-05/102001011D2F3500-visual.tif",
+    "assetKey": "visual",
+    "bytes": 24418178,
+    "sha256": "e5a08af5b5b7407336f26c6255f884bfd46b935e6acd5e53a8f739963b695dd9",
+    "seconds": 3.969
+  },
+  "raster": {
+    "width": 17408,
+    "height": 17408,
+    "count": 1,
+    "crs": "EPSG:32644",
+    "bounds": [
+      369843.75,
+      779843.75,
+      375156.25,
+      785156.25
+    ],
+    "dtypes": [
+      "uint8"
+    ],
+    "nodata": null,
+    "colorInterpretation": [
+      "gray"
+    ],
+    "decoded": [
+      {
+        "band": 1,
+        "decodedPixels": 303038464,
+        "min": 0.0,
+        "max": 255.0
+      }
+    ]
+  },
+  "nativeCandidateProbe": {
+    "status": "candidate-only",
+    "binarySha256": "df0c681841690af165bc8956058b1bca00d349d10b2374e5fbb932193b45ec63",
+    "error": "400 {\"error\":\"STAC metadata must contain JSON or GeoJSON\"}",
+    "noPublicPreset": true,
+    "historical": true,
+    "supersededBy": "nativeOriginalValidation"
+  },
+  "nativeSourceReady": false,
+  "privateServiceStopped": true,
+  "nativeOriginalValidation": {
+    "status": "candidate-native-original-raw-values-and-reopen-verified; no dropdown preset",
+    "binarySha256": "32a0af3544b9ad7451ba267613f2bbb6990a6292d42a821f10252e9e449ef04d",
+    "connectionId": "c281eec3-4275-40fd-b361-52d01b445dc8",
+    "snapshotId": "8bb87f59e02203a7aa489fd9086d400e6e89102276b6296f19f24711597cf0ef",
+    "projectId": "646a1313-3bdd-40e9-88ee-eeedbc2a826b",
+    "sourceMetadataUnchanged": true,
+    "metadataDocuments": [
+      {
+        "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/ard/44/033313300132/2025-12-05/102001011D2F3500.json",
+        "sha256": "2a09468afa2c568fd6f52e074ab45fb69f06d854588d781f6444a588d2064fc5"
+      },
+      {
+        "url": "https://maxar-opendata.s3.amazonaws.com/events/Cyclone-Ditwah-Sri-Lanka-Nov-2025/ard/acquisition_collections/102001011D2F3500_collection.json",
+        "sha256": "a1a2145f171bb0922a5d1ef82df7e64edba26929fb74117d815284a63ab61c2f"
+      }
+    ],
+    "selectedAssetKey": "pan_analytic",
+    "job": {
+      "id": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+      "status": "succeeded",
+      "settled": true,
+      "bytesDownloaded": 41366369,
+      "totalBytes": 41366369,
+      "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+      "createdAt": "2026-10-12T06:24:29.138333500+00:00",
+      "updatedAt": "2026-10-12T06:25:18.334503+00:00",
+      "transfer": {
+        "mode": "fresh",
+        "resumedBytes": 0
+      },
+      "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation"
+    },
+    "inspection": {
+      "jobId": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+      "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+      "width": 7493,
+      "height": 7493,
+      "storageLayout": "tile",
+      "bands": [
+        {
+          "index": 1,
+          "dataType": "UInt16",
+          "nodata": null
+        }
+      ],
+      "crs": "EPSG:32644",
+      "horizontalCrs": "EPSG:32644",
+      "sourceModelPixelScale": [
+        0.7089950620579207,
+        0.7089950620579207,
+        0.0
+      ],
+      "sourceModelTiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        369843.75,
+        785156.25,
+        0.0
+      ],
+      "transform": [
+        0.7089950620579207,
+        0.0,
+        369843.75,
+        0.0,
+        -0.7089950620579207,
+        785156.25
+      ],
+      "bounds": [
+        369843.75,
+        779843.75,
+        375156.25,
+        785156.25
+      ],
+      "pixelInterpretation": "area",
+      "previewWidth": 768,
+      "previewHeight": 768,
+      "displayBand": 1,
+      "displayRange": [
+        0.0,
+        7404.0
+      ],
+      "limitations": [
+        "Preview is a first-band grayscale stretch of raw samples; no sensor calibration or scientific units are inferred.",
+        "COG layout conformance has not been validated.",
+        "Preview samples an embedded overview; raw pixel inspection always reads the original image."
+      ]
+    },
+    "independentRaster": {
+      "width": 7493,
+      "height": 7493,
+      "count": 1,
+      "crs": "EPSG:32644",
+      "bounds": [
+        369843.75,
+        779843.75,
+        375156.25,
+        785156.25
+      ],
+      "transform": [
+        0.7089950620579207,
+        0.0,
+        369843.75,
+        0.0,
+        -0.7089950620579207,
+        785156.25
+      ],
+      "resolution": [
+        0.7089950620579207,
+        0.7089950620579207
+      ],
+      "scales": [
+        1.0
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "bands": [
+        {
+          "index": 1,
+          "dtype": "uint16",
+          "nodata": null,
+          "allPixelsDecoded": 56145049,
+          "validPixels": 24511763,
+          "validFraction": 0.43657924316710456,
+          "minimum": 1,
+          "maximum": 10000,
+          "valueCounts": null,
+          "firstUsableSample": {
+            "column": 927,
+            "row": 2966,
+            "value": 172
+          }
+        }
+      ],
+      "seconds": 0.406,
+      "completeDecode": true
+    },
+    "rawSamples": [
+      {
+        "jobId": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+        "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+        "column": 0,
+        "row": 0,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "jobId": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+        "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+        "column": 3746,
+        "row": 3746,
+        "values": [
+          245
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "jobId": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+        "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+        "column": 2497,
+        "row": 2497,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "jobId": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+        "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+        "column": 4995,
+        "row": 4995,
+        "values": [
+          780
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "jobId": "2f51ee37-bb61-4d16-a76c-01e0b2f32a62",
+        "sha256": "8f5fe0f05e5b0f2ddb09c4499508522973e1ebd37425c8d0e5bb169bf38867e6",
+        "column": 7492,
+        "row": 7492,
+        "values": [
+          502
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ],
+    "rawSampleCount": 5,
+    "rawValuesMatchIndependentRasterio": true,
+    "reopenedVerified": true,
+    "reusedSettledOriginalForFinalInspection": true,
+    "preview": {
+      "path": ".verification/maxar-candidate-20261012/native-pan-preview.png",
+      "width": 768,
+      "height": 768,
+      "sha256": "b75633c42f2dd72734f2e418af674d95a0195ec3edbed48602b2ccb3ac54a38e"
+    },
+    "scope": "One unchanged publisher item, one analytic panchromatic original, native grayscale preview, five original raw coordinates and private runtime restart. No RGB, reflectance calibration, COG conformance, cropped result or valid-AOI coverage claimed."
+  },
+  "maskHandling": {
+    "originalTiffMaskFlags": [
+      "per_dataset"
+    ],
+    "scalarNoDataTag": null,
+    "nativeToolAppliesDatasetMask": false,
+    "datasetMaskRetainedInCompleteOriginal": true,
+    "gdalValidPixelCount": 24511763,
+    "originalGridPixelCount": 56145049,
+    "validityBasis": "GDAL per-dataset validity mask over the complete original, not scalar NoData, AOI coverage or cloud-quality verification.",
+    "observedDifferences": [
+      {
+        "column": 0,
+        "row": 0,
+        "nativeNoDataFromTag": false,
+        "gdalDatasetMaskValid": false
+      },
+      {
+        "column": 2497,
+        "row": 2497,
+        "nativeNoDataFromTag": false,
+        "gdalDatasetMaskValid": false
+      }
+    ],
+    "limitation": "Native noData reflects embedded scalar NoData tags. The original TIFF dataset validity mask remains in the complete file but is not applied by the current raw preview/pixel tool; raw tag NoData and GDAL full validity masks are distinct.",
+    "geopackageDataMaskAssetSupported": false
+  },
+  "licenseConflict": {
+    "eventCollection": "CC-BY-NC-4.0",
+    "acquisitionCollection": "proprietary",
+    "resolved": false,
+    "metadataRewritten": false,
+    "limitation": "Anonymous accessibility and native download success do not establish commercial-use permission."
+  },
+  "evidence": {
+    "independentVisualReport": {
+      "path": ".verification/maxar-candidate-20261012/report.json",
+      "sha256": "c1feac23e366d56e11463ec4cee23ffb51fae8789afa4a9a4c10c901947024fb"
+    },
+    "nativeAnalyticReport": {
+      "path": ".verification/maxar-candidate-20261012/native-report.json",
+      "sha256": "3dc234aabca9dadcbc21ddc9a8392160ec3c58b1038be7c905e92ce5707b783f"
+    },
+    "localOriginalHashesRechecked": true
+  },
+  "sourceDirectoryStatus": "planned",
+  "noPublicPreset": true,
+  "remainingRequirements": [
+    "Event/date/area-aware source preset in the original dropdown; no global on-demand coverage claim.",
+    "Preserve and disclose the unresolved event/acquisition license declarations.",
+    "Explain or apply the original per-dataset validity mask in result handling; do not equate native scalar noData=false with usable coverage."
+  ]
+}

@@ -3,9 +3,38 @@ import { describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Info, Layers } from 'lucide-react';
-import { Button, Input, Select, Switch, Modal, Progress, Disclosure, SegmentedControl } from './ui/index.jsx';
+import { Button, InfoDetails, Input, Select, Switch, Modal, Progress, Disclosure, SegmentedControl } from './ui/index.jsx';
 
 describe('Shared UI behavior used by catalog, recipes and workspace', () => {
+  it('opens explanatory content outside the work panel and returns focus after dismissal and reopening', async () => {
+    const user=userEvent.setup();
+    render(<section aria-label="Work panel"><InfoDetails summary="Product license" closeLabel="Close details"><p>Full attribution and numerical interpretation</p></InfoDetails><Button>Search</Button></section>);
+    const panel=screen.getByRole('region',{name:'Work panel'}),trigger=screen.getByRole('button',{name:'Product license'});
+    expect(trigger.textContent).toBe('');
+    expect(screen.queryByText('Full attribution and numerical interpretation')).toBeNull();
+    await user.tab();await user.keyboard('{Enter}');
+    const popup=screen.getByRole('dialog',{name:'Product license'});
+    expect(within(popup).getByText('Full attribution and numerical interpretation')).toBeTruthy();
+    expect(panel.contains(popup)).toBe(false);
+    expect(within(panel).queryByText('Full attribution and numerical interpretation')).toBeNull();
+    await user.keyboard('{Escape}');await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
+    expect(document.activeElement).toBe(trigger);
+    await user.click(trigger);await user.click(screen.getByRole('button',{name:'Close details'}));
+    await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
+    expect(document.activeElement).toBe(trigger);
+  });
+
+  it('allows short notes in an anchored popover without inserting an expanded panel section', async () => {
+    const user=userEvent.setup();
+    render(<section aria-label="Result row"><InfoDetails presentation="popover" summary="Preview note"><p>Display only; original pixels stay unchanged.</p></InfoDetails><Button>Load map</Button></section>);
+    const row=screen.getByRole('region',{name:'Result row'}),trigger=screen.getByRole('button',{name:'Preview note'});
+    await user.click(trigger);
+    expect(screen.getByRole('dialog',{name:'Preview note'})).toBeTruthy();
+    expect(within(row).queryByText('Display only; original pixels stay unchanged.')).toBeNull();
+    await user.click(screen.getByRole('button',{name:'Load map'}));
+    await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
+  });
+
   it('preserves labeled option groups, inherited disabled state and native form values', async () => {
     const user = userEvent.setup();
     const changed = vi.fn();

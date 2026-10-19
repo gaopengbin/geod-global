@@ -3,7 +3,7 @@ import { ExternalLink, KeyRound, LogOut, RefreshCw, ShieldCheck } from 'lucide-r
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { desktopAvailable, runtimeRequest } from './runtime-client.js';
-import { Badge, Button, Input, Modal, Spinner, Surface } from './ui/index.jsx';
+import { Badge, InfoDetails, Button, Input, Modal, Spinner, Surface } from './ui/index.jsx';
 import './accounts.css';
 
 const providers = [
@@ -67,7 +67,7 @@ export function ProviderAccountsPanel() {
     } finally { if (alive.current) setBusy(''); }
   };
   return <Surface as="section" className="provider-accounts" aria-label={t('Data source accounts')}>
-    <div className="accounts-heading"><div><h2>{t('Data source accounts')}</h2><p>{t('Authorize access to protected original products. Public catalogs remain available without signing in.')}</p></div><ShieldCheck size={20} aria-hidden="true"/></div>
+    <div className="accounts-heading"><div><h2>{t('Data source accounts')}</h2></div><InfoDetails closeLabel={t('Close')} summary={t('Data source accounts')}><p>{t('Authorize access to protected original products. Public catalogs remain available without signing in.')}</p><p className="accounts-note"><ShieldCheck size={14}/>{t('Tokens are saved in Windows Credential Manager. Passwords and two-step codes are never saved.')}</p></InfoDetails></div>
     {!native && <p className="accounts-note">{t('Open the desktop app to manage data source authorization.')}</p>}
     <p className="accounts-note">{t('Account setup is available. Protected original downloads are pending real-account verification and are unavailable in this candidate.')}</p>
     {loading && <p className="accounts-note" role="status"><Spinner size={15}/>{t('Loading account status…')}</p>}
@@ -84,7 +84,6 @@ export function ProviderAccountsPanel() {
         </div>
       </article>;
     })}</div>
-    <p className="accounts-note"><ShieldCheck size={14}/>{t('Tokens are saved in Windows Credential Manager. Passwords and two-step codes are never saved.')}</p>
     {error && <p className="account-error" role="alert">{error.text}<small>{t('Reference: {id}', { id: error.reference })}</small></p>}
     {target && <AccountConnectDialog provider={target} onClose={() => setTarget(null)} onConnected={value => { update(value); setError(null); setTarget(null); }}/>}
   </Surface>;

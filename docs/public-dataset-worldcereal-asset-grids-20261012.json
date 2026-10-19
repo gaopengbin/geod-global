@@ -1,0 +1,192 @@
+{
+  "schema": "geod-worldcereal-asset-specific-grid-acceptance/v1",
+  "checkedAt": "2026-10-12T06:32:15.555350+00:00",
+  "status": "passed",
+  "scope": "Comparison of unchanged asset-specific publisher JSON against complete originals decoded during the native acceptance; no new transfer or modified publisher metadata",
+  "cases": [
+    {
+      "layer": "activecropland",
+      "assetKey": "classification",
+      "snapshotId": "6395d03d1d6a2ff379141fef2f06c76f67435313025a4c1fa7cac2c64489dd3c",
+      "verified": true,
+      "originalDocumentSha256": "ad8e24d18d0090997f47ec51543e8953f27d9338244349003d3de747b0d78d7d",
+      "shape": [
+        44563,
+        73566
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.33335163618134e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333296881268452e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "maize-active",
+      "assetKey": "classification",
+      "snapshotId": "54db6458d4ede5ccf6a11883951b2a8c5f206a9abcf20a521b7aec3ccb276d1b",
+      "verified": true,
+      "originalDocumentSha256": "b233eccc09e5af6011d15e000a0f22ec92499b45ee60d285e6bd3d5ab2d53659",
+      "shape": [
+        44563,
+        73566
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.33335163618134e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333296881268452e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "maize-irrigation",
+      "assetKey": "classification",
+      "snapshotId": "895d85ff7156c5cb52bfc5cfee0c6d637206eee9fb53b2ff501ba6fc87e6cf68",
+      "verified": true,
+      "originalDocumentSha256": "20503bac74f8768db6aad861c96733093fde6f0f5307444e300868a129f9ae6e",
+      "shape": [
+        44563,
+        73566
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.33335163618134e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333296881268452e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "maize-main",
+      "assetKey": "classification",
+      "snapshotId": "52567e161e984b308faed416658cf592d71c01c68edb4b7d2c1275c6368c9edb",
+      "verified": true,
+      "originalDocumentSha256": "e46955bc2b03b98fe201344f1627dea25e618ebf675838bb2e8944b2ac0b618e",
+      "shape": [
+        44563,
+        73566
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.33335163618134e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333296881268452e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "temporarycrops",
+      "assetKey": "classification",
+      "snapshotId": "f9096c99ad11923c655f1b8b27d7c1b1f6d4a3c0cae352f8fc77ff0902a1f62c",
+      "verified": true,
+      "originalDocumentSha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d",
+      "shape": [
+        44563,
+        73567
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.333333333333334e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333333333333332e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "wintercereals",
+      "assetKey": "classification",
+      "snapshotId": "c03e60c5e8530f2f9b3c85af4eaceb9f1468ce2e9a518d43ba30ebbd31359368",
+      "verified": true,
+      "originalDocumentSha256": "cb7156edefd4c6f3bc0d96b3fbbb16b09794b836d56a7c39347fb03dc24af31d",
+      "shape": [
+        44563,
+        73566
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.33335163618134e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333296881268452e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "wintercereals-irrigation",
+      "assetKey": "classification",
+      "snapshotId": "3de1113137c9d33315695cd0eb4a3ffd3c11b5a594d58c90a221cd8cc27c1c4c",
+      "verified": true,
+      "originalDocumentSha256": "5c82b7d501c186a450a49a992030e8d7200eeabd1bc09d702c5c9401168eee32",
+      "shape": [
+        44563,
+        73566
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        8.33335163618134e-05,
+        0.0,
+        53.864516174824,
+        0.0,
+        -8.333296881268452e-05,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "layer": "temporarycrops",
+      "assetKey": "confidence",
+      "snapshotId": "e0d54f6d1ba60f4535246e6abb410edd151bf847839e4da70248914ec0804fef",
+      "verified": true,
+      "originalDocumentSha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d",
+      "shape": [
+        9284,
+        15326
+      ],
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0004,
+        0.0,
+        53.864516174824,
+        0.0,
+        -0.0004,
+        -18.981793161668282,
+        0.0,
+        0.0,
+        1.0
+      ]
+    }
+  ]
+}

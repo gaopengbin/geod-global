@@ -56,7 +56,8 @@ fn source_fingerprint(root: &Path, job: &Job) -> Result<SourceFingerprint> {
         return Err("Preview source checksum is invalid".into());
     }
     if crate::extension(&job.media_type)? != "tif"
-        && !(job.asset_key == "srtm" && crate::extension(&job.media_type)? == "zip")
+        && !(matches!(job.asset_key.as_str(), "srtm" | "srtm_num")
+            && crate::extension(&job.media_type)? == "zip")
     {
         return Err("Preview requires a completed managed SCL or RGB GeoTIFF".into());
     }

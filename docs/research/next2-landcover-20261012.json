@@ -1,0 +1,4093 @@
+{
+  "schemaVersion": 1,
+  "verifiedAtDate": "2026-10-12",
+  "scope": "Cross-platform public original land-cover / settlement channels; no fabricated publisher STAC, crops, samples or mirrored test products.",
+  "nativeAcceptance": {
+    "status": "passed-selected-originals-directory-enabled",
+    "products": [
+      {
+        "datasetId": "ghsl-smod",
+        "layerId": "settlement-class",
+        "referenceEpoch": 2020,
+        "directoryReady": true
+      },
+      {
+        "datasetId": "glad-landcover-2020",
+        "layerId": "land-cover",
+        "referenceEpoch": 2020,
+        "directoryReady": true
+      }
+    ],
+    "receipts": [
+      {
+        "path": "docs/next2-ghsl-native-acceptance-20261012.json",
+        "reportSha256": "ab609cfac122ed6423f92e0fba1c3dd8508e0dd195f23e4ad4fc5561629763df",
+        "status": "passed",
+        "checkedAt": "2026-10-12T13:14:46.155273+00:00",
+        "binarySha256": "2658678889cfd816c67eb775d2f7a8b214f47da5e84e5eadcacbfe60c92ce2cd",
+        "selectedCases": 1,
+        "nativeWindowTested": false,
+        "scope": "Selected complete original only; not all published catalog objects."
+      },
+      {
+        "path": "docs/next2-glad-native-acceptance-20261012.json",
+        "reportSha256": "94010122ae36c450fdb94f514029c1956885e19ab7e67c3ca790f3a85ca65f0f",
+        "status": "passed",
+        "checkedAt": "2026-10-12T13:14:46.168827+00:00",
+        "binarySha256": "2658678889cfd816c67eb775d2f7a8b214f47da5e84e5eadcacbfe60c92ce2cd",
+        "selectedCases": 1,
+        "nativeWindowTested": false,
+        "scope": "Selected complete original only; not all published catalog objects."
+      }
+    ],
+    "note": "Parent completed original runtime downloads, previews, physical/raw pixel checks, project/source recovery and repeat inspection. Browser/native-window visual acceptance is separately scoped and is not established by these receipts. Published 280-tile GLAD index selection does not certify every tile. This researcher ran no Cargo or service restart."
+  },
+  "products": [
+    {
+      "id": "ghsl-smod",
+      "publisher": "European Commission / JRC",
+      "distribution": "JRC-managed AWS public jrc-ghsl S3 eu-central-1",
+      "license": "CC BY 4.0",
+      "licenseSources": [
+        "https://registry.opendata.aws/ghs-smod/",
+        "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_SMOD_GLOBE_R2023A/copyright.txt"
+      ],
+      "documentation": "https://human-settlement.emergency.copernicus.eu/ghs_smod2023.php",
+      "machineMetadata": "https://human-settlement.emergency.copernicus.eu/data/ghs_smod2023.json",
+      "citation": "Schiavina M., Melchiorri M., Pesaresi M. (2023), GHS-SMOD R2023A. European Commission, Joint Research Centre. doi:10.2905/A0DF7A6F-49DE-46EA-9BDE-563437A6E2BA; reviewed original V2 / WGS84 / reference epoch 2020.",
+      "science": "Degree of Urbanisation stage I level-2 modeled settlement typology, integrating GHS-BUILT-S R2023 and GHS-POP R2023 / GPW v4.11. Not a satellite scene, generalized land cover, measured city boundary, building footprint or population count.",
+      "classLegend": {
+        "10": "water grid cell",
+        "11": "very low density rural",
+        "12": "low density rural",
+        "13": "rural cluster",
+        "21": "suburban or peri-urban",
+        "22": "semi-dense urban cluster",
+        "23": "dense urban cluster",
+        "30": "urban centre"
+      },
+      "period": {
+        "kind": "modeled reference epoch",
+        "epoch": 2020,
+        "notAcquisitionDate": true,
+        "publisherListedEpochs": [
+          1975,
+          1980,
+          1985,
+          1990,
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020,
+          2025,
+          2030
+        ],
+        "unreviewedOtherEpochsExcluded": true,
+        "2025And2030Excluded": true
+      },
+      "publishedIndex": {
+        "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/?list-type=2&prefix=ghs-smod/&max-keys=1000",
+        "records": [
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/1975/GHS_SMOD_E1975_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:01:10.000Z",
+            "ETag": "\"08ba93ce8863dfeb9a76bb98ac0927c1-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "17731073",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/1980/GHS_SMOD_E1980_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:01:32.000Z",
+            "ETag": "\"d803631cde255dde3c2931f22ee7d72f-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "18214124",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/1985/GHS_SMOD_E1985_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:01:46.000Z",
+            "ETag": "\"3c59a42bd8e65659ed17101028944d5b-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "18684002",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/1990/GHS_SMOD_E1990_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:00.000Z",
+            "ETag": "\"4b4b26145457f17bc1b6bfba456e6c0b-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "19096270",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/1995/GHS_SMOD_E1995_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:12.000Z",
+            "ETag": "\"96611d0597c06ad42833dd45aa41ced1-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "19340022",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2000/GHS_SMOD_E2000_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:27.000Z",
+            "ETag": "\"a927879a00731fb134dfd709e4e1e9ff-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "19511620",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2005/GHS_SMOD_E2005_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:40.000Z",
+            "ETag": "\"6b3fc524860cd8cde923cf319be47a99-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "19766662",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2010/GHS_SMOD_E2010_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:52.000Z",
+            "ETag": "\"f6c55ff6962bd8a4edadb5e1f2d488e3-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "20015549",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2015/GHS_SMOD_E2015_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:05.000Z",
+            "ETag": "\"0fce13daeba4ae59a89c7c920743f541-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "20271647",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2020/GHS_SMOD_E2020_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:18.000Z",
+            "ETag": "\"b3e16bda987e3f40546ef829f457c8b1-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "20566541",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2025/GHS_SMOD_E2025_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:32.000Z",
+            "ETag": "\"1cec924fc5ec5f18bef989f4d612d1c3-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "20762546",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/4326/30asec/2030/GHS_SMOD_E2030_GLOBE_R2023A_4326_30ss_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:48.000Z",
+            "ETag": "\"4f40decbfdfb3971de5a650fb31dcf4b-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "20959134",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/1975/GHS_SMOD_E1975_GLOBE_R2023A_54009_1000_V1_0.tif",
+            "LastModified": "2026-10-06T10:01:16.000Z",
+            "ETag": "\"40509e2dbc0966616e192052b6100cce-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "14210710",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/1975/GHS_SMOD_E1975_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:01:23.000Z",
+            "ETag": "\"7701085d9120b6950891e8672f0926ba-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "14225161",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/1980/GHS_SMOD_E1980_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:01:38.000Z",
+            "ETag": "\"b5123fa345e068e931d866d6f211a47e-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "14642448",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/1985/GHS_SMOD_E1985_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:01:52.000Z",
+            "ETag": "\"648ba1dabf150e309b521a6f5d8e77b2-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "15045333",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/1990/GHS_SMOD_E1990_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:05.000Z",
+            "ETag": "\"385b40ccec117772b72a0dc858854d68-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "15397570",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/1995/GHS_SMOD_E1995_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:19.000Z",
+            "ETag": "\"992d771fd666467ccf44a3020c9c0d3c-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "15614707",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2000/GHS_SMOD_E2000_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:32.000Z",
+            "ETag": "\"362170a5c350c0ea4e892ffbd9359fad-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "15775160",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2005/GHS_SMOD_E2005_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:45.000Z",
+            "ETag": "\"b6e96ff31b63427427241df22feea5ea-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "16004943",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2010/GHS_SMOD_E2010_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:02:58.000Z",
+            "ETag": "\"8cf90fcc3529fdedb847fd345936ad28-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "16230068",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2015/GHS_SMOD_E2015_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:10.000Z",
+            "ETag": "\"5bc07c582f87c5ea029346f1bf049539-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "16460753",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2020/GHS_SMOD_E2020_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:24.000Z",
+            "ETag": "\"91b88b0f1b975ea1e9226bee66d8b3da-2\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "16727742",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2025/GHS_SMOD_E2025_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:39.000Z",
+            "ETag": "\"f692259ffdb4290a5e1effd7ef4ece5e-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "16907486",
+            "StorageClass": "INTELLIGENT_TIERING"
+          },
+          {
+            "Key": "ghs-smod/r2023a/54009/1000m/2030/GHS_SMOD_E2030_GLOBE_R2023A_54009_1000_V2_0.tif",
+            "LastModified": "2026-10-06T10:03:54.000Z",
+            "ETag": "\"d5c86c25b3bd323413aed29b027f8cf2-3\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumType": "COMPOSITE",
+            "Size": "17084739",
+            "StorageClass": "INTELLIGENT_TIERING"
+          }
+        ],
+        "complete": true,
+        "privateArchive": ".verification/next2-landcover-20261012/ghs-smod-list.xml",
+        "bytes": 9612,
+        "sha256": "0b054ef093ec3619f03ea2dd05c0c461148c8440c1b23dc7e53a9edbfbab90f4"
+      },
+      "independentFullOriginalReceipt": {
+        "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-smod/r2023a/4326/30asec/2020/GHS_SMOD_E2020_GLOBE_R2023A_4326_30ss_V2_0.tif",
+        "finalUrl": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-smod/r2023a/4326/30asec/2020/GHS_SMOD_E2020_GLOBE_R2023A_4326_30ss_V2_0.tif",
+        "httpStatus": 200,
+        "headers": {
+          "x-amz-id-2": "RFa7cxPR0ORFpDCuvDFKHboMsq/sSDnlRI92Vq62ytaj8RoxOFgq7jnEq0/7qQv5xiA5YCUbRPrx+RLxj5OIFqoArYHAsQSl",
+          "x-amz-request-id": "W0STXBPYDW20VEY5",
+          "Server": "AmazonS3",
+          "Date": "Mon, 12 Oct 2026 12:21:28 GMT",
+          "Last-Modified": "Tue, 06 Oct 2026 10:03:18 GMT",
+          "ETag": "\"b3e16bda987e3f40546ef829f457c8b1-3\"",
+          "x-amz-storage-class": "INTELLIGENT_TIERING",
+          "x-amz-server-side-encryption": "AES256",
+          "Accept-Ranges": "bytes",
+          "Content-Type": "binary/octet-stream",
+          "Content-Length": "20566541",
+          "Connection": "close"
+        },
+        "bytes": 20566541,
+        "sha256": "20661ac0f98166bd2253ce1155e131d589b0100fc2d5eed9dc7c632228071416",
+        "downloadSeconds": 177.73400000017136,
+        "fullOriginal": true,
+        "independentDecoder": "Rasterio 1.3.9",
+        "crs": "EPSG:4326",
+        "epsg": 4326,
+        "width": 43202,
+        "height": 21384,
+        "count": 1,
+        "dtype": [
+          "int16"
+        ],
+        "bounds": [
+          -180.00791593130032,
+          -89.10041610517152,
+          180.00874930942342,
+          89.0995831776456
+        ],
+        "transform": [
+          0.008333333300326923,
+          0.0,
+          -180.00791593130032,
+          0.0,
+          -0.00833333329979504,
+          89.0995831776456,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "noData": -200.0,
+        "scales": [
+          1.0
+        ],
+        "offsets": [
+          0.0
+        ],
+        "unit": [
+          null
+        ],
+        "blockShapes": [
+          [
+            512,
+            512
+          ]
+        ],
+        "compression": "Compression.deflate",
+        "tags": {
+          "AREA_OR_POINT": "Area"
+        },
+        "imageStructure": {
+          "COMPRESSION": "DEFLATE",
+          "INTERLEAVE": "BAND",
+          "LAYOUT": "COG"
+        },
+        "fullDecodedPixels": 923831568,
+        "allBlockDecodeCompleted": true,
+        "rawValueCounts": {
+          "-200": 42597172,
+          "10": 593084422,
+          "11": 274392149,
+          "0": 10479,
+          "12": 8453572,
+          "13": 1036649,
+          "21": 2737211,
+          "22": 238302,
+          "23": 421003,
+          "30": 860609
+        },
+        "decodedBlockOrderSha256": "de5725c0952b32f4c0dd139febe36ddf00ec0299607f2ef61e701a18333a9d94",
+        "rawSamples": [
+          {
+            "row": 502,
+            "column": 0,
+            "rawValue": 10,
+            "longitude": -180.00374926465017,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 512,
+            "rawValue": 10,
+            "longitude": -175.73708261488278,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 1024,
+            "rawValue": 10,
+            "longitude": -171.4704159651154,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 1536,
+            "rawValue": 10,
+            "longitude": -167.203749315348,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 2048,
+            "rawValue": 10,
+            "longitude": -162.93708266558062,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 2560,
+            "rawValue": 10,
+            "longitude": -158.67041601581323,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 3072,
+            "rawValue": 10,
+            "longitude": -154.40374936604584,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 3584,
+            "rawValue": 10,
+            "longitude": -150.13708271627846,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 4096,
+            "rawValue": 10,
+            "longitude": -145.87041606651107,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 4608,
+            "rawValue": 10,
+            "longitude": -141.60374941674368,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 5120,
+            "rawValue": 10,
+            "longitude": -137.33708276697632,
+            "latitude": 84.91208319449859
+          },
+          {
+            "row": 502,
+            "column": 5632,
+            "rawValue": 10,
+            "longitude": -133.07041611720894,
+            "latitude": 84.91208319449859
+          }
+        ],
+        "decodeSecondsIncludingDownload": 185.23400000017136,
+        "tiffTags": {
+          "GeoKeyDirectoryTag": [
+            1,
+            1,
+            0,
+            7,
+            1024,
+            0,
+            1,
+            2,
+            1025,
+            0,
+            1,
+            1,
+            2048,
+            0,
+            1,
+            4326,
+            2049,
+            34737,
+            7,
+            0,
+            2054,
+            0,
+            1,
+            9102,
+            2057,
+            34736,
+            1,
+            1,
+            2059,
+            34736,
+            1,
+            0
+          ],
+          "GeoAsciiParamsTag": "WGS 84|",
+          "GeoDoubleParamsTag": [
+            298.257223563,
+            6378137.0
+          ],
+          "ModelPixelScaleTag": [
+            0.008333333300326923,
+            0.00833333329979504,
+            0.0
+          ],
+          "ModelTiepointTag": [
+            0.0,
+            0.0,
+            0.0,
+            -180.00791593130032,
+            89.0995831776456,
+            0.0
+          ],
+          "GDAL_NODATA": "-200",
+          "GDAL_METADATA": "<GDALMetadata>\n  <Item name=\"STATISTICS_COVARIANCES\" sample=\"0\">1.089969511493613</Item>\n  <Item name=\"STATISTICS_MAXIMUM\" sample=\"0\">30</Item>\n  <Item name=\"STATISTICS_MEAN\" sample=\"0\">10.397123189475</Item>\n  <Item name=\"STATISTICS_MEDIAN\" sample=\"0\">10.000000</Item>\n  <Item name=\"STATISTICS_MINIMUM\" sample=\"0\">0</Item>\n  <Item name=\"STATISTICS_SKIPFACTORX\" sample=\"0\">1</Item>\n  <Item name=\"STATISTICS_SKIPFACTORY\" sample=\"0\">1</Item>\n  <Item name=\"STATISTICS_STDDEV\" sample=\"0\">1.0440160494425</Item>\n  <Item name=\"STATISTICS_VALID_PERCENT\" sample=\"0\">95.39</Item>\n</GDALMetadata>",
+          "Compression": 8,
+          "TileWidth": 512,
+          "TileLength": 512,
+          "PhotometricInterpretation": 1,
+          "SamplesPerPixel": 1,
+          "BitsPerSample": 16,
+          "SampleFormat": 2
+        },
+        "geoTiffMetadata": {
+          "KeyDirectoryVersion": 1,
+          "KeyRevision": 1,
+          "KeyRevisionMinor": 0,
+          "GTModelTypeGeoKey": 2,
+          "GTRasterTypeGeoKey": 1,
+          "GeographicTypeGeoKey": 4326,
+          "GeogCitationGeoKey": "WGS 84",
+          "GeogAngularUnitsGeoKey": 9102,
+          "GeogSemiMajorAxisGeoKey": 6378137.0,
+          "GeogInvFlatteningGeoKey": 298.257223563,
+          "ModelPixelScale": [
+            0.008333333300326923,
+            0.00833333329979504,
+            0.0
+          ],
+          "ModelTiepoint": [
+            0.0,
+            0.0,
+            0.0,
+            -180.00791593130032,
+            89.0995831776456,
+            0.0
+          ]
+        },
+        "coordinateChecks": [
+          {
+            "longitude": 116.4,
+            "latitude": 39.9,
+            "row": 5903,
+            "column": 35568,
+            "rawValue": 30
+          },
+          {
+            "longitude": 0,
+            "latitude": 0,
+            "row": 10691,
+            "column": 21600,
+            "rawValue": 10
+          },
+          {
+            "longitude": -74,
+            "latitude": 40.7,
+            "row": 5807,
+            "column": 12720,
+            "rawValue": 30
+          },
+          {
+            "longitude": 2.35,
+            "latitude": 48.85,
+            "row": 4829,
+            "column": 21882,
+            "rawValue": 30
+          },
+          {
+            "longitude": 28,
+            "latitude": -2,
+            "row": 10931,
+            "column": 24960,
+            "rawValue": 11
+          },
+          {
+            "longitude": 0,
+            "latitude": 85,
+            "row": 491,
+            "column": 21600,
+            "rawValue": -200
+          }
+        ],
+        "embeddedPalette": false,
+        "supportedMapFootprint": false,
+        "mapFootprintBlocker": "Both longitude edges exceed the physical longitude domain by more than one half native cell; extreme cell centers exceed +/-180",
+        "classAndMaskChecks": [
+          {
+            "row": 0,
+            "column": 0,
+            "longitude": -180.00374926465017,
+            "latitude": 89.0954165109957,
+            "rawValue": -200
+          },
+          {
+            "row": 492,
+            "column": 0,
+            "longitude": -180.00374926465017,
+            "latitude": 84.99541652749654,
+            "rawValue": 10
+          },
+          {
+            "row": 963,
+            "column": 10204,
+            "longitude": -94.97041626811423,
+            "latitude": 81.07041654329308,
+            "rawValue": 11
+          },
+          {
+            "row": 1329,
+            "column": 1,
+            "longitude": -179.99541593134984,
+            "latitude": 78.02041655556809,
+            "rawValue": 0
+          },
+          {
+            "row": 2327,
+            "column": 23882,
+            "longitude": 19.012916613757426,
+            "latitude": 69.70374992237265,
+            "rawValue": 30
+          }
+        ],
+        "edgeColumnChecks": [
+          {
+            "row": 502,
+            "column": 0,
+            "longitude": -180.00374926465017,
+            "latitude": 84.91208319449859,
+            "rawValue": 10
+          },
+          {
+            "row": 502,
+            "column": 1,
+            "longitude": -179.99541593134984,
+            "latitude": 84.91208319449859,
+            "rawValue": 10
+          },
+          {
+            "row": 502,
+            "column": 43200,
+            "longitude": 179.99624930947294,
+            "latitude": 84.91208319449859,
+            "rawValue": 10
+          },
+          {
+            "row": 502,
+            "column": 43201,
+            "longitude": 180.00458264277324,
+            "latitude": 84.91208319449859,
+            "rawValue": 10
+          }
+        ]
+      },
+      "queryBounds": [
+        -180,
+        -89.10041610517152,
+        180,
+        89.0995831776456
+      ],
+      "originalGridPreserved": true,
+      "maskConflict": "Publisher machine JSON describes int8 and -200 NoData; original is actual Int16 with representable -200. Raw 0 (10,479 pixels) is not in the publisher legend and is not embedded NoData. No class or mask is invented.",
+      "extentHandling": "The original 43,202-column grid has two outer longitude-column centres beyond +/-180. Default generic footprint guard rejects it. Parent-authorized integration must pin this exact original/source/hash before fitting the map display to physical WGS84 bounds; full TIFF bytes, full original extent, geotransform, column samples, values and mask remain unchanged. Arbitrary overflowing rasters are not accepted.",
+      "palette": "No embedded TIFF color table. Preserve raw values; a grayscale preview is not the publisher categorical legend.",
+      "sourceRecipe": "Direct public raster client recipe, exact epoch 2020 / version 2 / WGS84 30ss URL. Not publisher STAC. Request bounds are preserved; source query bounds are the explicitly disclosed physical intersection. Other year/month/region/season/country/layer parameters rejected.",
+      "archives": {
+        "registry-ghs-smod.html": {
+          "privateArchive": ".verification/next2-landcover-20261012/registry-ghs-smod.html",
+          "bytes": 10406,
+          "sha256": "6cd97f44484f9ee99baabfba33d68cbdd11ce34b80c833cc17fb7bdb4299df9c"
+        },
+        "publisher-ghs-smod.html": {
+          "privateArchive": ".verification/next2-landcover-20261012/publisher-ghs-smod.html",
+          "bytes": 15043,
+          "sha256": "0e401de72a89eb8dc30a7da8fbeb32a208bfc45a054a15536de28b3da167e59f"
+        },
+        "ghs_smod2023.json": {
+          "privateArchive": ".verification/next2-landcover-20261012/ghs_smod2023.json",
+          "bytes": 4175,
+          "sha256": "7fb9f3cfbec5dbfd2c97d38b698acb794a712f248ff7e202423e941b08b4b6a3"
+        },
+        "datasetsGallery.json": {
+          "privateArchive": ".verification/next2-landcover-20261012/datasetsGallery.json",
+          "bytes": 47024,
+          "sha256": "40b89ad5c943825db11efcda319b98ba96e4460732d0d4778accab7c4d224e17"
+        },
+        "ghsl-copyright.txt": {
+          "privateArchive": ".verification/next2-landcover-20261012/ghsl-copyright.txt",
+          "bytes": 540,
+          "sha256": "f20723519a580fb35b3499870f0b1baea54f483195105416e547f0014f1610d2"
+        }
+      }
+    },
+    {
+      "id": "clcd",
+      "title": "The 30 m annual land cover datasets and its dynamics in China from 1985 to 2024",
+      "publisherRecord": "https://zenodo.org/records/15853565",
+      "api": "https://zenodo.org/api/records/15853565",
+      "license": "cc-by-4.0",
+      "actualFileCount": 74,
+      "files": [
+        {
+          "filename": "CLCD_v01_2024_albert_province.zip",
+          "bytes": 817555611,
+          "checksum": "md5:c9a777c3ee2e2ed9f3364076f8db077c",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2024_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2023_albert_province.zip",
+          "bytes": 830900102,
+          "checksum": "md5:5c186d05042f384e994417240a281791",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2023_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2022_albert_province.zip",
+          "bytes": 835844040,
+          "checksum": "md5:f76d6d7a6e844fcbc4ddd969e479c87a",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2022_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2022_albert.tif",
+          "bytes": 813199315,
+          "checksum": "md5:66780f8e2b9d1086fffda9ebae1e294d",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2022_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2023_albert.tif",
+          "bytes": 808242290,
+          "checksum": "md5:9a0baa624cad7f4eedd79da91b76c260",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2023_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2024_albert.tif",
+          "bytes": 794945897,
+          "checksum": "md5:cde28c902362e5ae971d6882a78331e9",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2024_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2021_albert_province.zip",
+          "bytes": 834981074,
+          "checksum": "md5:b32e6d4564eeb0b3b9bca7a5e6971fe4",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2021_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2007_albert_province.zip",
+          "bytes": 816136494,
+          "checksum": "md5:de765af3657a98c2dae2bbd0b527a33c",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2007_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2019_albert_province.zip",
+          "bytes": 834350524,
+          "checksum": "md5:b42e383248cf7ce07253c8128fd45900",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2019_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2020_albert_province.zip",
+          "bytes": 833415508,
+          "checksum": "md5:5843bcecfd75e2f00123fed8d9777b4a",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2020_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2018_albert_province.zip",
+          "bytes": 834461835,
+          "checksum": "md5:7b84feab63e41fe85d5452a0600a91a9",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2018_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2006_albert_province.zip",
+          "bytes": 814976524,
+          "checksum": "md5:2771e53d13da052722ad41826deb5205",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2006_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2001_albert_province.zip",
+          "bytes": 819507257,
+          "checksum": "md5:e6502bc71952a8451bfa82ca5f839355",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2001_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1990_albert_province.zip",
+          "bytes": 868633524,
+          "checksum": "md5:686bba33cdbab3c679466b1491164e16",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1990_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1991_albert_province.zip",
+          "bytes": 855589030,
+          "checksum": "md5:e8db7438aac70c07a3e40cb61dfdc76f",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1991_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1995_albert_province.zip",
+          "bytes": 826567348,
+          "checksum": "md5:6ab114493985c6fec431807ebb1e08da",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1995_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2013_albert_province.zip",
+          "bytes": 826794924,
+          "checksum": "md5:a4e649124611185c87a3942ffa45ce0d",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2013_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2000_albert_province.zip",
+          "bytes": 820718406,
+          "checksum": "md5:ef3b832f7b44cf15313bcfa26f14bc8a",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2000_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1996_albert_province.zip",
+          "bytes": 822119750,
+          "checksum": "md5:2de998f1198651df706ac4b9e0925eca",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1996_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1985_albert_province.zip",
+          "bytes": 903344195,
+          "checksum": "md5:d5dbe2b4bc6f3fd97da5d5ec9e825472",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1985_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1997_albert_province.zip",
+          "bytes": 820594760,
+          "checksum": "md5:c5229ced86c4ca4997cf0f3f1e969683",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1997_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1992_albert_province.zip",
+          "bytes": 844952635,
+          "checksum": "md5:2aa7a5780c195cd744494b05e67149f1",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1992_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1993_albert_province.zip",
+          "bytes": 835703060,
+          "checksum": "md5:f8937d4ff632acefad311ceea65a37ac",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1993_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1999_albert_province.zip",
+          "bytes": 821086198,
+          "checksum": "md5:e6fe1329de5a37df7a902196b815079e",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1999_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1994_albert_province.zip",
+          "bytes": 830297405,
+          "checksum": "md5:6c37362706658006ca4ef3fec03eae51",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1994_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1998_albert_province.zip",
+          "bytes": 819572740,
+          "checksum": "md5:0f0d3cd5d813079a008b37b8ae036beb",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1998_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2008_albert_province.zip",
+          "bytes": 817077274,
+          "checksum": "md5:0cc11ae14ce6792e1e2a0c96e45f80e6",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2008_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2009_albert_province.zip",
+          "bytes": 818474212,
+          "checksum": "md5:ffac7a0565cc300feea187015a18e865",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2009_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2003_albert_province.zip",
+          "bytes": 816673374,
+          "checksum": "md5:1ee2a9f0e96f6075886255b37e37f1c9",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2003_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2005_albert_province.zip",
+          "bytes": 814989285,
+          "checksum": "md5:a48f4e7aa05f14edab975597d406636a",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2005_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2017_albert_province.zip",
+          "bytes": 836618878,
+          "checksum": "md5:c0449cb2bbd683d917561d7396e5a90c",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2017_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2004_albert_province.zip",
+          "bytes": 814527374,
+          "checksum": "md5:d7e441193f8db51f446a736c812ab9a7",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2004_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2016_albert_province.zip",
+          "bytes": 834072377,
+          "checksum": "md5:8707d7ae6c3cfd2b8d25c2cc55bee024",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2016_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2015_albert_province.zip",
+          "bytes": 833157330,
+          "checksum": "md5:8a39d4e1d81c4be7dd16a7a5174c29b8",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2015_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2012_albert_province.zip",
+          "bytes": 820292721,
+          "checksum": "md5:495255391be69ed9ea10d5e589800855",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2012_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2011_albert_province.zip",
+          "bytes": 818634067,
+          "checksum": "md5:d5f8a9d79d4178f7459d1950bca8c4a6",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2011_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2010_albert_province.zip",
+          "bytes": 818711165,
+          "checksum": "md5:81dbfe1c54abc17e909a37e2678bfdee",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2010_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_classificationsystem.xlsx",
+          "bytes": 9440,
+          "checksum": "md5:928388273874350c8d06649761e6c87b",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_classificationsystem.xlsx/content"
+        },
+        {
+          "filename": "CLCD_v01_1995_albert.tif",
+          "bytes": 803840441,
+          "checksum": "md5:9d8520f2bd9451c49c34f86a547f2854",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1995_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2006_albert.tif",
+          "bytes": 792304599,
+          "checksum": "md5:9da1fadc336a2849ca169560a10d0a7e",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2006_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2014_albert_province.zip",
+          "bytes": 829907130,
+          "checksum": "md5:1e8700515e581ed3c1aa7cfef0c86a33",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2014_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_2001_albert.tif",
+          "bytes": 796811705,
+          "checksum": "md5:941ebb0af28d2fda0ceabc8f5cbdb081",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2001_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2002_albert_province.zip",
+          "bytes": 818328996,
+          "checksum": "md5:324977c4049ddd1feb005c15dc9ca95b",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2002_albert_province.zip/content"
+        },
+        {
+          "filename": "CLCD_v01_1990_albert.tif",
+          "bytes": 845850070,
+          "checksum": "md5:5cf62dbd07376a67f61c9c01f9043df2",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1990_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2018_albert.tif",
+          "bytes": 811773293,
+          "checksum": "md5:646127b8903e11cfba03e88ddfec73f2",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2018_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2019_albert.tif",
+          "bytes": 811657603,
+          "checksum": "md5:f83f751e4e01b66a5a2b2838ee31cca1",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2019_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2020_albert.tif",
+          "bytes": 810739687,
+          "checksum": "md5:1274285bb18f9b1d443a3cc906b1310c",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2020_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1994_albert.tif",
+          "bytes": 807549804,
+          "checksum": "md5:28c5264d5a7b6c03b7112dd62fb18feb",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1994_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2013_albert.tif",
+          "bytes": 804093118,
+          "checksum": "md5:df9592de7a44e8f79a16f71a93713fc1",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2013_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1996_albert.tif",
+          "bytes": 799371693,
+          "checksum": "md5:1f38200651dbfab75c065321bf65a461",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1996_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1985_albert.tif",
+          "bytes": 880502883,
+          "checksum": "md5:ba8dab8207ff2b64f0cf624be6114363",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1985_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2000_albert.tif",
+          "bytes": 798013972,
+          "checksum": "md5:5cbb66e295e2b1f505f898b9af9aa0d0",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2000_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1991_albert.tif",
+          "bytes": 832817337,
+          "checksum": "md5:10142c040ed39f7de7abca21166b1546",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1991_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1992_albert.tif",
+          "bytes": 822208829,
+          "checksum": "md5:2e82661784388954891d5ed6b3197320",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1992_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1993_albert.tif",
+          "bytes": 812986407,
+          "checksum": "md5:b8aef4b735dc664de5129e42b791276c",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1993_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1999_albert.tif",
+          "bytes": 798335475,
+          "checksum": "md5:cba47709944446d194db5588ea70af81",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1999_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1998_albert.tif",
+          "bytes": 796839780,
+          "checksum": "md5:8865c3a4d3c7f07f5e3aa12c7d02a049",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1998_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_1997_albert.tif",
+          "bytes": 797875216,
+          "checksum": "md5:66117a958310e2d23d183be77c297c98",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_1997_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2007_albert.tif",
+          "bytes": 793478688,
+          "checksum": "md5:2b23e1a798023e6f3cdce11064b7f9c4",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2007_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2008_albert.tif",
+          "bytes": 794401990,
+          "checksum": "md5:b0b32a42dc4c6fed6ef2c18d70ba6d16",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2008_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2005_albert.tif",
+          "bytes": 792345912,
+          "checksum": "md5:4f0cf4b9b2707e5d554a54a2d4ba94e1",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2005_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2017_albert.tif",
+          "bytes": 813926735,
+          "checksum": "md5:1d268d60afec65a5a3093fc4181c0c94",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2017_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2004_albert.tif",
+          "bytes": 791887020,
+          "checksum": "md5:842776ec3cbda29344344980c867cc72",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2004_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2016_albert.tif",
+          "bytes": 811384193,
+          "checksum": "md5:8bb73bacc99c08fe24122fa26c7f1d2e",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2016_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2012_albert.tif",
+          "bytes": 797611389,
+          "checksum": "md5:820389e6389f25c8ec83f2bec45c705f",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2012_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2015_albert.tif",
+          "bytes": 810512709,
+          "checksum": "md5:fc47b041b552893a7bb65222679ddb7c",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2015_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2011_albert.tif",
+          "bytes": 795940408,
+          "checksum": "md5:e69bc6c4ca6f87d204b96a438f001757",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2011_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2003_albert.tif",
+          "bytes": 794009006,
+          "checksum": "md5:30785b213fccfcbac8ceac04c5acea6f",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2003_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2010_albert.tif",
+          "bytes": 796024563,
+          "checksum": "md5:86f4f1c9d359a51a6eb7803ef9e5d840",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2010_albert.tif/content"
+        },
+        {
+          "filename": "CLCD.jpg",
+          "bytes": 1031238,
+          "checksum": "md5:7bfe06584f4c4fd3879849346bb9fd7d",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD.jpg/content"
+        },
+        {
+          "filename": "CLCD_v01_2002_albert.tif",
+          "bytes": 795636242,
+          "checksum": "md5:60a228e3b4f776ea01d1e55b285ee92d",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2002_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2009_albert.tif",
+          "bytes": 795813150,
+          "checksum": "md5:cc0e7a72549eeaf59e51e5ed03cd3e4a",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2009_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2014_albert.tif",
+          "bytes": 807235619,
+          "checksum": "md5:171538aff195316ad846d057e7d564e8",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2014_albert.tif/content"
+        },
+        {
+          "filename": "CLCD_v01_2021_albert.tif",
+          "bytes": 812300278,
+          "checksum": "md5:393299c7375c4261a738315380921251",
+          "url": "https://zenodo.org/api/records/15853565/files/CLCD_v01_2021_albert.tif/content"
+        }
+      ],
+      "status": "blocked-current-original-transfer-cap",
+      "reason": "The record publishes 74 annual mainland TIFF / provincial ZIP files. Bare mainland TIFF originals exceed 512 MiB. Province files are archive containers, not public standalone provincial TIFFs. No full raster was downloaded or decoded; no CRS/NoData is asserted as physically verified.",
+      "privateArchive": ".verification/next2-landcover-20261012/zenodo-15853565.json",
+      "bytes": 25174,
+      "sha256": "9d88a16e40163414072814eaf5df1805e3e77b9b58d088920f3a29b28ae65e5f"
+    },
+    {
+      "id": "glc-fcs30d",
+      "title": "GLC_FCS30D: the first global 30-m land-cover dynamic monitoring product with fine classification system from 1985 to 2022",
+      "publisherRecord": "https://zenodo.org/records/15063683",
+      "api": "https://zenodo.org/api/records/15063683",
+      "license": "cc-by-4.0",
+      "actualFileCount": 38,
+      "files": [
+        {
+          "filename": "GLC_FCS30D_19852022maps_E100-E105.zip",
+          "bytes": 6392836301,
+          "checksum": "md5:22e02aaca7d6396d96e95f2c5f945d4f",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E100-E105.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W55-W60.zip",
+          "bytes": 5019557235,
+          "checksum": "md5:f2b919e1e19b577e921a0744de327d4e",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W55-W60.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W65-W70.zip",
+          "bytes": 5596943746,
+          "checksum": "md5:f2e77d6543cdcc1077d0837b9a76d06a",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W65-W70.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D UserGuides.pdf",
+          "bytes": 427072,
+          "checksum": "md5:25cfd070e8a38ab0e534da939e99856f",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D%20UserGuides.pdf/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E0-E5.zip",
+          "bytes": 3559030174,
+          "checksum": "md5:a80c54e3a29b38c4c5abe8d197d5cebe",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E0-E5.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_legend.lyr",
+          "bytes": 15872,
+          "checksum": "md5:0c0f27bfb1197f830193532bf69d06a0",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_legend.lyr/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E10-E15.zip",
+          "bytes": 6085669414,
+          "checksum": "md5:76e8db8155ec47444f203cd6e1fc8f21",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E10-E15.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E130-E135.zip",
+          "bytes": 4785310944,
+          "checksum": "md5:c86a62d9f2e4de393fcd53e5e73fdf8a",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E130-E135.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E110-E115.zip",
+          "bytes": 6066118786,
+          "checksum": "md5:72bf2826c1a089a58fd8f212e86c4fcf",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E110-E115.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E120-E125.zip",
+          "bytes": 5363602229,
+          "checksum": "md5:ad9ac504218335975016e91108a5919c",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E120-E125.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W5-W10.zip",
+          "bytes": 3247168963,
+          "checksum": "md5:286db2a35a17feffd797e1dc0bd57604",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W5-W10.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W105-W110.zip",
+          "bytes": 5132570143,
+          "checksum": "md5:bf9306ef2187602f7ccb5f9033e65aae",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W105-W110.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W95-W100.zip",
+          "bytes": 5812117245,
+          "checksum": "md5:19b08eeeb260411e6085eedbc9fd623e",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W95-W100.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W85-W90.zip",
+          "bytes": 4470295404,
+          "checksum": "md5:a768ca6b86a88a4a028dcc7c452018d3",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W85-W90.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E160-E165.zip",
+          "bytes": 801343411,
+          "checksum": "md5:38abb61d7002d67b268816c983b2b3d4",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E160-E165.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E170-E175.zip",
+          "bytes": 779501674,
+          "checksum": "md5:a3427e4cf8588d526674e4552fa31510",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E170-E175.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E30-E35.zip",
+          "bytes": 7695422426,
+          "checksum": "md5:fccb2b8bfadf48fc9241c20e95b53a72",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E30-E35.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W15-W20.zip",
+          "bytes": 814966683,
+          "checksum": "md5:acd644cfcfa4686d88a54be19684b325",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W15-W20.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W135-W140.zip",
+          "bytes": 855913347,
+          "checksum": "md5:e45e41e777785990daa4c43d7f646005",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W135-W140.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W145-W150.zip",
+          "bytes": 867907817,
+          "checksum": "md5:29d47ea3e85966df4fa08779699067a7",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W145-W150.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W125-W130.zip",
+          "bytes": 2266000320,
+          "checksum": "md5:0dc6fb93c140863afd2813086d84c910",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W125-W130.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W25-W30.zip",
+          "bytes": 450464105,
+          "checksum": "md5:b0b967c8caa04d9f7cc3abd9a8cfe0c7",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W25-W30.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W155-W160.zip",
+          "bytes": 903661023,
+          "checksum": "md5:bc38e676946794349296c69ec324771a",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W155-W160.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W175-W180.zip",
+          "bytes": 178031961,
+          "checksum": "md5:c56c040e8119eb88f9db17aceab768fe",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W175-W180.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E50-E55.zip",
+          "bytes": 3958018257,
+          "checksum": "md5:90dde0de6347444fc8e60d1d7f89523a",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E50-E55.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E70-E75.zip",
+          "bytes": 6293668051,
+          "checksum": "md5:3601c57c0859796d20a5fd048d692dfe",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E70-E75.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E90-E95.zip",
+          "bytes": 4789310844,
+          "checksum": "md5:a632f7acf5209cc3ed4a653066739d08",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E90-E95.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W45-W50.zip",
+          "bytes": 3516023427,
+          "checksum": "md5:53bdc867e4f95645681c1078f2604029",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W45-W50.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E60-E65.zip",
+          "bytes": 5306602104,
+          "checksum": "md5:7da0ada04d4ffe55ec38bafa010269b3",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E60-E65.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E80-E85.zip",
+          "bytes": 5062883252,
+          "checksum": "md5:508de68da5acf3bd2c60db91c5dccf30",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E80-E85.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E140-E145.zip",
+          "bytes": 5071736454,
+          "checksum": "md5:84323c44d61e3be721d873f6b75573ca",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E140-E145.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E20-E25.zip",
+          "bytes": 7098960676,
+          "checksum": "md5:a30e7828a0417f3a8d09d2aceb41651e",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E20-E25.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W75-W80.zip",
+          "bytes": 5252447057,
+          "checksum": "md5:9bfb098fee803d6d8e30c2617de4ead3",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W75-W80.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E150-E155.zip",
+          "bytes": 1421113407,
+          "checksum": "md5:3edfe60efeb761845bb7ab35715132a0",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E150-E155.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W35-W40.zip",
+          "bytes": 703367927,
+          "checksum": "md5:1587cb26edfd832b25b49ff0a5492c59",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W35-W40.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_E40-E45.zip",
+          "bytes": 5458749712,
+          "checksum": "md5:8f511b173abd1fa7ff40d363541e55a4",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_E40-E45.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W115-W120.zip",
+          "bytes": 4303173836,
+          "checksum": "md5:2dde39c91d7af90cc0d1bd14b5aae29e",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W115-W120.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W165-W170.zip",
+          "bytes": 434197861,
+          "checksum": "md5:32227521c7d3b5f937109eea06689131",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W165-W170.zip/content"
+        }
+      ],
+      "smallArchiveCandidates": [
+        {
+          "filename": "GLC_FCS30D_19852022maps_W25-W30.zip",
+          "bytes": 450464105,
+          "checksum": "md5:b0b967c8caa04d9f7cc3abd9a8cfe0c7",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W25-W30.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W175-W180.zip",
+          "bytes": 178031961,
+          "checksum": "md5:c56c040e8119eb88f9db17aceab768fe",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W175-W180.zip/content"
+        },
+        {
+          "filename": "GLC_FCS30D_19852022maps_W165-W170.zip",
+          "bytes": 434197861,
+          "checksum": "md5:32227521c7d3b5f937109eea06689131",
+          "url": "https://zenodo.org/api/records/15063683/files/GLC_FCS30D_19852022maps_W165-W170.zip/content"
+        }
+      ],
+      "status": "blocked-current-native-container-support",
+      "reason": "Actual record has 36 geographic ZIP archives plus a PDF guide and LYR legend, no standalone GeoTIFF. The smallest W175-W180 full-container GET failed HTTP 504 before completing; no full download/decode/hash receipt was produced. CASEarth documents login-free FTP but current native HTTPS direct-raster workflow does not accept FTP or ZIP. This is a genuine candidate, not a ready connector.",
+      "alternatePublisherPage": "https://data.casearth.cn/thematic/glc_fcs30/314",
+      "privateArchive": ".verification/next2-landcover-20261012/zenodo-15063683.json",
+      "bytes": 15884,
+      "sha256": "62af860ec4ccc554b7215a07472f13dc8b55591ac8e922e7457de0d87a50a1a3"
+    },
+    {
+      "id": "glad-glcluc",
+      "publisher": "University of Maryland GLAD",
+      "distribution": "Author-linked Google public storage earthenginepartners-hansen/GLCLU2000-2020/v2",
+      "documentation": "https://glad.umd.edu/dataset/GLCLUC2020",
+      "exactLicensePage": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/download.html",
+      "license": "CC BY 4.0",
+      "citation": "Potapov et al. (2022), The global 2000-2020 land cover and land use change dataset derived from the Landsat archive: first results. doi:10.3389/frsen.2022.856903.",
+      "science": "Original GLCLUC v2 combined classified land cover/use at 0.00025-degree nominal resolution; distinct from existing Hansen forest-loss/tree-cover products. Published 2000,2005,2010,2015,2020 annual maps plus a separate 2000-2020 change layer. Correct per-code legend is required before production integration.",
+      "actualPublishedIndex": {
+        "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020.txt",
+        "count": 280,
+        "privateArchive": ".verification/next2-landcover-20261012/glad-2020.txt",
+        "bytes": 26320,
+        "sha256": "f68eaa40a51e144ee9aa0b4426ca9f668e54e6e96144894093573a47fbf9d6aa"
+      },
+      "headResults": [
+        {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/20N_010W.tif",
+          "tile": "20N_010W",
+          "status": 200,
+          "headers": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU80xVX_MHmIYWeIavnRVJJAFnXFZxgGA-Th5n7WJPkg6csyefVmdP389z4zfEPKuheOy",
+            "Expires": "Mon, 12 Oct 2026 13:26:41 GMT",
+            "Date": "Mon, 12 Oct 2026 12:26:41 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"d3806616be07136c3f4b7f98dda6c208\"",
+            "x-goog-generation": "1694440708574646",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "329625894",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=chzYxA==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Length": "329625894",
+            "Vary": "Origin",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          }
+        },
+        {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/20N_020E.tif",
+          "tile": "20N_020E",
+          "status": 200,
+          "headers": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU83iRtg88YnjRRZfL5p5riRqEW0oU3h2_o8lZXkLYfAanLDLIiO6YSHBYizzU1qOT0fdvgtr-cc",
+            "Expires": "Mon, 12 Oct 2026 13:26:41 GMT",
+            "Date": "Mon, 12 Oct 2026 12:26:41 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"ae794436996b44fbdbf6a45fa254b6f3\"",
+            "x-goog-generation": "1694440708565661",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "221549174",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=f1c3cg==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Length": "221549174",
+            "Vary": "Origin",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          }
+        },
+        {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/10N_030E.tif",
+          "tile": "10N_030E",
+          "status": 200,
+          "headers": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU802StTTvTJrhpSy8YcklM_dky1ieH4urzd68Aww-FO899kdBpPNlzoKlWQC_NHhov3n",
+            "Expires": "Mon, 12 Oct 2026 13:26:41 GMT",
+            "Date": "Mon, 12 Oct 2026 12:26:41 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"5fd17b37a77fc0f649d6fdcb3eb7082e\"",
+            "x-goog-generation": "1694440708313382",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "456145873",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=XjhwJQ==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Length": "456145873",
+            "Vary": "Origin",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          }
+        },
+        {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/40N_110E.tif",
+          "tile": "40N_110E",
+          "status": 200,
+          "headers": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU81dl5tqHE2MaFyGumT-wItpL3gflETQomc9wi_zKkFopkjfc9lDadzGTIUnSYyiE5nO25qMzlM",
+            "Expires": "Mon, 12 Oct 2026 13:26:41 GMT",
+            "Date": "Mon, 12 Oct 2026 12:26:41 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"c2fdbd2cbf8b291d9fe73e5960cb120a\"",
+            "x-goog-generation": "1694440708778785",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "412899556",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=gcrwfQ==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Length": "412899556",
+            "Vary": "Origin",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          }
+        },
+        {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/30N_030E.tif",
+          "tile": "30N_030E",
+          "status": 200,
+          "headers": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU83j61RCfgw5UoNWRmVblchR6PtqEnO-mi3VcL-xdqXluqVuXQhlAPYyL6dQeu71biuP2Wvb8-E",
+            "Expires": "Mon, 12 Oct 2026 13:26:42 GMT",
+            "Date": "Mon, 12 Oct 2026 12:26:42 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"6a5c47d302414cffb4c061cc5af0dd13\"",
+            "x-goog-generation": "1694440708683567",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "44495039",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=NLdlrg==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Length": "44495039",
+            "Vary": "Origin",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          }
+        },
+        {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/40N_080W.tif",
+          "tile": "40N_080W",
+          "status": 200,
+          "headers": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU819E5WEcgu5C0-0-zdHkkUBRZs0tCgtxIFpXncycqMfh3xPw3JkRTYtxlxI-jpee7Lw",
+            "Expires": "Mon, 12 Oct 2026 13:26:42 GMT",
+            "Date": "Mon, 12 Oct 2026 12:26:42 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"6ccad2d83ec9c30af0eef80134a97a87\"",
+            "x-goog-generation": "1694440708788855",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "174518342",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=B2XLBA==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Length": "174518342",
+            "Vary": "Origin",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          }
+        }
+      ],
+      "status": "scoped-native-module-selected-original-accepted-directory-enabled",
+      "candidateUrl": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/30N_030E.tif",
+      "candidateBytes": 44495039,
+      "ready": false,
+      "archives": {
+        "glad-product.html": {
+          "privateArchive": ".verification/next2-landcover-20261012/glad-product.html",
+          "bytes": 42995,
+          "sha256": "d42f86be471e040988d79f7c28db59c581d769b75d116fa2f7cab0f74758eb34"
+        },
+        "glad-download.html": {
+          "privateArchive": ".verification/next2-landcover-20261012/glad-download.html",
+          "bytes": 45339,
+          "sha256": "b0d8ee17fffd8cd71697803f31d5f79f016c66bad425384b9dd40d8da067c067"
+        },
+        "legend.xlsx": {
+          "privateArchive": ".verification/next2-landcover-20261012/glad-legend.xlsx",
+          "bytes": 29812,
+          "sha256": "435bef2313d1143dce95704c1c3e965068b52749bb6208fa929699aaef89b67f"
+        },
+        "object-api.json": {
+          "privateArchive": ".verification/next2-landcover-20261012/glad-object-metadata.json",
+          "bytes": 247,
+          "sha256": "328ba680cce244004f85450e0889da490cbff38c05d9e0d2027384e97cf6291a"
+        }
+      },
+      "independentFullOriginalReceipt": {
+        "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/30N_030E.tif",
+        "finalUrl": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/30N_030E.tif",
+        "bytes": 44495039,
+        "sha256": "87406f90ee15916222ddceef02f8b7088e32e9b528b808f5a35aed40de68fcd7",
+        "fullOriginal": true,
+        "transferReceipt": {
+          "url": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/v2/2020/30N_030E.tif",
+          "fullOriginalBytes": 44495039,
+          "sha256": "87406f90ee15916222ddceef02f8b7088e32e9b528b808f5a35aed40de68fcd7",
+          "wholeFileMd5": "6a5c47d302414cffb4c061cc5af0dd13",
+          "publisherMd5": "alxH0wJBTP+0wGHMWvDdEw==",
+          "wholeFileMd5Verified": true,
+          "publisherGeneration": "1694440708683567",
+          "initialFullGetStatus": 200,
+          "initialFullGetTransferredBytesBeforeTimeout": 44040192,
+          "exactIfMatchContinuationStatus": 206,
+          "continuationBytes": 454847,
+          "continuationSeconds": 4.155999999959022,
+          "continuationHeaders": {
+            "Content-Type": "image/tiff",
+            "X-GUploader-UploadID": "AP6rU83V88gmDZlj4YGzYGljIGQJLOVQP6HN6lfGTurX2aspbD5IHUBnFla0mv7llJuHPUVZNLJtdeg",
+            "Expires": "Mon, 12 Oct 2026 13:39:38 GMT",
+            "Date": "Mon, 12 Oct 2026 12:39:38 GMT",
+            "Cache-Control": "public, max-age=3600",
+            "Last-Modified": "Mon, 11 Sep 2023 13:58:28 GMT",
+            "ETag": "\"6a5c47d302414cffb4c061cc5af0dd13\"",
+            "x-goog-generation": "1694440708683567",
+            "x-goog-metageneration": "1",
+            "x-goog-stored-content-encoding": "identity",
+            "x-goog-stored-content-length": "44495039",
+            "Content-Language": "en",
+            "x-goog-hash": "crc32c=NLdlrg==",
+            "x-goog-storage-class": "STANDARD",
+            "Accept-Ranges": "bytes",
+            "Content-Range": "bytes 44040192-44495038/44495039",
+            "Content-Length": "454847",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Expose-Headers": "Content-Type",
+            "Server": "UploadServer",
+            "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+            "Connection": "close"
+          },
+          "notRangeOnlyAcceptance": true
+        },
+        "independentDecoder": "Rasterio 1.3.9",
+        "crs": "EPSG:4326",
+        "epsg": 4326,
+        "width": 40000,
+        "height": 40000,
+        "count": 1,
+        "dtype": [
+          "uint8"
+        ],
+        "bounds": [
+          30.0,
+          20.0,
+          40.0,
+          30.0
+        ],
+        "transform": [
+          0.00025,
+          0.0,
+          30.0,
+          0.0,
+          -0.00025,
+          30.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "noData": null,
+        "scales": [
+          1.0
+        ],
+        "offsets": [
+          0.0
+        ],
+        "units": [
+          null
+        ],
+        "blockShapes": [
+          [
+            1,
+            40000
+          ]
+        ],
+        "compression": "Compression.lzw",
+        "tags": {
+          "AREA_OR_POINT": "Area"
+        },
+        "imageStructure": {
+          "COMPRESSION": "LZW",
+          "INTERLEAVE": "BAND"
+        },
+        "fullDecodedPixels": 1600000000,
+        "allBlockDecodeCompleted": true,
+        "rawValueCounts": {
+          "0": 1214569470,
+          "1": 10291130,
+          "2": 3057467,
+          "3": 2204759,
+          "4": 914979,
+          "5": 449282,
+          "6": 371477,
+          "7": 351616,
+          "8": 322208,
+          "9": 269508,
+          "10": 278933,
+          "11": 619051,
+          "12": 270320,
+          "13": 233034,
+          "14": 201625,
+          "15": 191648,
+          "16": 226866,
+          "17": 305711,
+          "18": 274752,
+          "19": 127759,
+          "20": 94181,
+          "21": 76624,
+          "22": 72892,
+          "23": 99301,
+          "24": 185382,
+          "27": 32956,
+          "100": 1713041,
+          "101": 17247,
+          "102": 8242,
+          "103": 8488,
+          "105": 2973,
+          "106": 2602,
+          "108": 3628,
+          "121": 5929,
+          "123": 17369,
+          "124": 135899,
+          "200": 604832,
+          "201": 260861,
+          "202": 238664,
+          "203": 224559,
+          "204": 253547,
+          "205": 297116,
+          "206": 416729,
+          "207": 9899810,
+          "244": 16695828,
+          "250": 13198923,
+          "116": 4731,
+          "117": 6025,
+          "118": 4316,
+          "119": 4994,
+          "122": 8810,
+          "120": 5117,
+          "104": 5004,
+          "30": 6074,
+          "107": 4018,
+          "29": 15676,
+          "28": 26202,
+          "131": 1515,
+          "111": 21326,
+          "113": 7115,
+          "112": 7735,
+          "114": 6151,
+          "110": 6533,
+          "109": 3722,
+          "115": 4667,
+          "127": 22280,
+          "25": 131,
+          "254": 319702987,
+          "26": 422,
+          "125": 167,
+          "129": 7238,
+          "128": 10395,
+          "126": 588,
+          "133": 210,
+          "130": 3934,
+          "132": 384,
+          "32": 190,
+          "134": 56,
+          "31": 1935,
+          "33": 89,
+          "34": 23,
+          "36": 3,
+          "35": 5,
+          "135": 13,
+          "136": 1
+        },
+        "decodedBlockOrderSha256": "d3dffa1ff9f775747a4cb64ac32f7577d33c1d443d701410116c5dc8118d60b2",
+        "rawSamples": [
+          {
+            "row": 0,
+            "column": 0,
+            "longitude": 30.000125,
+            "latitude": 29.999875,
+            "rawValue": 0
+          },
+          {
+            "row": 0,
+            "column": 3498,
+            "longitude": 30.874625,
+            "latitude": 29.999875,
+            "rawValue": 1
+          },
+          {
+            "row": 0,
+            "column": 3497,
+            "longitude": 30.874375,
+            "latitude": 29.999875,
+            "rawValue": 2
+          },
+          {
+            "row": 0,
+            "column": 3496,
+            "longitude": 30.874125,
+            "latitude": 29.999875,
+            "rawValue": 3
+          },
+          {
+            "row": 0,
+            "column": 3491,
+            "longitude": 30.872875,
+            "latitude": 29.999875,
+            "rawValue": 4
+          },
+          {
+            "row": 0,
+            "column": 3493,
+            "longitude": 30.873375,
+            "latitude": 29.999875,
+            "rawValue": 5
+          },
+          {
+            "row": 0,
+            "column": 3503,
+            "longitude": 30.875875,
+            "latitude": 29.999875,
+            "rawValue": 6
+          },
+          {
+            "row": 0,
+            "column": 3482,
+            "longitude": 30.870625,
+            "latitude": 29.999875,
+            "rawValue": 7
+          },
+          {
+            "row": 0,
+            "column": 3521,
+            "longitude": 30.880375,
+            "latitude": 29.999875,
+            "rawValue": 8
+          },
+          {
+            "row": 0,
+            "column": 3798,
+            "longitude": 30.949625,
+            "latitude": 29.999875,
+            "rawValue": 9
+          },
+          {
+            "row": 0,
+            "column": 3486,
+            "longitude": 30.871625,
+            "latitude": 29.999875,
+            "rawValue": 10
+          },
+          {
+            "row": 0,
+            "column": 3483,
+            "longitude": 30.870875,
+            "latitude": 29.999875,
+            "rawValue": 11
+          },
+          {
+            "row": 0,
+            "column": 3484,
+            "longitude": 30.871125,
+            "latitude": 29.999875,
+            "rawValue": 12
+          },
+          {
+            "row": 0,
+            "column": 4184,
+            "longitude": 31.046125,
+            "latitude": 29.999875,
+            "rawValue": 13
+          },
+          {
+            "row": 0,
+            "column": 4240,
+            "longitude": 31.060125,
+            "latitude": 29.999875,
+            "rawValue": 14
+          },
+          {
+            "row": 0,
+            "column": 3799,
+            "longitude": 30.949875,
+            "latitude": 29.999875,
+            "rawValue": 15
+          },
+          {
+            "row": 0,
+            "column": 4158,
+            "longitude": 31.039625,
+            "latitude": 29.999875,
+            "rawValue": 16
+          },
+          {
+            "row": 0,
+            "column": 4175,
+            "longitude": 31.043875,
+            "latitude": 29.999875,
+            "rawValue": 17
+          },
+          {
+            "row": 0,
+            "column": 3800,
+            "longitude": 30.950125,
+            "latitude": 29.999875,
+            "rawValue": 18
+          },
+          {
+            "row": 0,
+            "column": 3806,
+            "longitude": 30.951625,
+            "latitude": 29.999875,
+            "rawValue": 19
+          },
+          {
+            "row": 0,
+            "column": 4404,
+            "longitude": 31.101125,
+            "latitude": 29.999875,
+            "rawValue": 20
+          },
+          {
+            "row": 0,
+            "column": 4409,
+            "longitude": 31.102375,
+            "latitude": 29.999875,
+            "rawValue": 21
+          },
+          {
+            "row": 0,
+            "column": 4424,
+            "longitude": 31.106125,
+            "latitude": 29.999875,
+            "rawValue": 22
+          },
+          {
+            "row": 0,
+            "column": 4448,
+            "longitude": 31.112125,
+            "latitude": 29.999875,
+            "rawValue": 23
+          },
+          {
+            "row": 0,
+            "column": 4518,
+            "longitude": 31.129625,
+            "latitude": 29.999875,
+            "rawValue": 24
+          },
+          {
+            "row": 0,
+            "column": 10224,
+            "longitude": 32.556125,
+            "latitude": 29.999875,
+            "rawValue": 27
+          },
+          {
+            "row": 0,
+            "column": 4547,
+            "longitude": 31.136875,
+            "latitude": 29.999875,
+            "rawValue": 100
+          },
+          {
+            "row": 0,
+            "column": 4538,
+            "longitude": 31.134625,
+            "latitude": 29.999875,
+            "rawValue": 101
+          },
+          {
+            "row": 0,
+            "column": 10397,
+            "longitude": 32.599375,
+            "latitude": 29.999875,
+            "rawValue": 102
+          },
+          {
+            "row": 0,
+            "column": 4908,
+            "longitude": 31.227125,
+            "latitude": 29.999875,
+            "rawValue": 103
+          },
+          {
+            "row": 0,
+            "column": 10418,
+            "longitude": 32.604625,
+            "latitude": 29.999875,
+            "rawValue": 105
+          },
+          {
+            "row": 0,
+            "column": 10419,
+            "longitude": 32.604875,
+            "latitude": 29.999875,
+            "rawValue": 106
+          },
+          {
+            "row": 0,
+            "column": 4573,
+            "longitude": 31.143375,
+            "latitude": 29.999875,
+            "rawValue": 108
+          },
+          {
+            "row": 0,
+            "column": 4456,
+            "longitude": 31.114125,
+            "latitude": 29.999875,
+            "rawValue": 121
+          },
+          {
+            "row": 0,
+            "column": 4454,
+            "longitude": 31.113625,
+            "latitude": 29.999875,
+            "rawValue": 123
+          },
+          {
+            "row": 0,
+            "column": 4883,
+            "longitude": 31.220875,
+            "latitude": 29.999875,
+            "rawValue": 124
+          },
+          {
+            "row": 0,
+            "column": 4892,
+            "longitude": 31.223125,
+            "latitude": 29.999875,
+            "rawValue": 200
+          },
+          {
+            "row": 0,
+            "column": 5024,
+            "longitude": 31.256125,
+            "latitude": 29.999875,
+            "rawValue": 201
+          },
+          {
+            "row": 0,
+            "column": 4187,
+            "longitude": 31.046875,
+            "latitude": 29.999875,
+            "rawValue": 202
+          },
+          {
+            "row": 0,
+            "column": 5552,
+            "longitude": 31.388125,
+            "latitude": 29.999875,
+            "rawValue": 203
+          },
+          {
+            "row": 0,
+            "column": 4186,
+            "longitude": 31.046625,
+            "latitude": 29.999875,
+            "rawValue": 204
+          },
+          {
+            "row": 0,
+            "column": 4860,
+            "longitude": 31.215125,
+            "latitude": 29.999875,
+            "rawValue": 205
+          },
+          {
+            "row": 0,
+            "column": 5005,
+            "longitude": 31.251375,
+            "latitude": 29.999875,
+            "rawValue": 206
+          },
+          {
+            "row": 0,
+            "column": 4884,
+            "longitude": 31.221125,
+            "latitude": 29.999875,
+            "rawValue": 207
+          },
+          {
+            "row": 0,
+            "column": 3801,
+            "longitude": 30.950375,
+            "latitude": 29.999875,
+            "rawValue": 244
+          },
+          {
+            "row": 0,
+            "column": 2159,
+            "longitude": 30.539875,
+            "latitude": 29.999875,
+            "rawValue": 250
+          },
+          {
+            "row": 1,
+            "column": 4457,
+            "longitude": 31.114375,
+            "latitude": 29.999625,
+            "rawValue": 116
+          },
+          {
+            "row": 1,
+            "column": 4911,
+            "longitude": 31.227875,
+            "latitude": 29.999625,
+            "rawValue": 117
+          },
+          {
+            "row": 1,
+            "column": 4912,
+            "longitude": 31.228125,
+            "latitude": 29.999625,
+            "rawValue": 118
+          },
+          {
+            "row": 1,
+            "column": 4456,
+            "longitude": 31.114125,
+            "latitude": 29.999625,
+            "rawValue": 119
+          },
+          {
+            "row": 1,
+            "column": 4454,
+            "longitude": 31.113625,
+            "latitude": 29.999625,
+            "rawValue": 122
+          },
+          {
+            "row": 2,
+            "column": 4872,
+            "longitude": 31.218125,
+            "latitude": 29.999375,
+            "rawValue": 120
+          },
+          {
+            "row": 5,
+            "column": 4702,
+            "longitude": 31.175625,
+            "latitude": 29.998625,
+            "rawValue": 104
+          },
+          {
+            "row": 7,
+            "column": 10239,
+            "longitude": 32.559875,
+            "latitude": 29.998125,
+            "rawValue": 30
+          },
+          {
+            "row": 8,
+            "column": 10072,
+            "longitude": 32.518125,
+            "latitude": 29.997875,
+            "rawValue": 107
+          },
+          {
+            "row": 12,
+            "column": 10247,
+            "longitude": 32.561875,
+            "latitude": 29.996875,
+            "rawValue": 29
+          },
+          {
+            "row": 16,
+            "column": 20361,
+            "longitude": 35.090375,
+            "latitude": 29.995875,
+            "rawValue": 28
+          },
+          {
+            "row": 19,
+            "column": 4872,
+            "longitude": 31.218125,
+            "latitude": 29.995125,
+            "rawValue": 131
+          },
+          {
+            "row": 21,
+            "column": 4520,
+            "longitude": 31.130125,
+            "latitude": 29.994625,
+            "rawValue": 111
+          },
+          {
+            "row": 22,
+            "column": 4665,
+            "longitude": 31.166375,
+            "latitude": 29.994375,
+            "rawValue": 113
+          },
+          {
+            "row": 24,
+            "column": 4673,
+            "longitude": 31.168375,
+            "latitude": 29.993875,
+            "rawValue": 112
+          },
+          {
+            "row": 40,
+            "column": 4634,
+            "longitude": 31.158625,
+            "latitude": 29.989875,
+            "rawValue": 114
+          },
+          {
+            "row": 43,
+            "column": 4913,
+            "longitude": 31.228375,
+            "latitude": 29.989125,
+            "rawValue": 110
+          },
+          {
+            "row": 44,
+            "column": 4659,
+            "longitude": 31.164875,
+            "latitude": 29.988875,
+            "rawValue": 109
+          },
+          {
+            "row": 71,
+            "column": 4806,
+            "longitude": 31.201625,
+            "latitude": 29.982125,
+            "rawValue": 115
+          },
+          {
+            "row": 113,
+            "column": 4701,
+            "longitude": 31.175375,
+            "latitude": 29.971625,
+            "rawValue": 127
+          },
+          {
+            "row": 147,
+            "column": 4866,
+            "longitude": 31.216625,
+            "latitude": 29.963125,
+            "rawValue": 25
+          },
+          {
+            "row": 163,
+            "column": 10233,
+            "longitude": 32.558375,
+            "latitude": 29.959125,
+            "rawValue": 254
+          },
+          {
+            "row": 164,
+            "column": 4913,
+            "longitude": 31.228375,
+            "latitude": 29.958875,
+            "rawValue": 26
+          },
+          {
+            "row": 164,
+            "column": 4911,
+            "longitude": 31.227875,
+            "latitude": 29.958875,
+            "rawValue": 125
+          },
+          {
+            "row": 171,
+            "column": 4926,
+            "longitude": 31.231625,
+            "latitude": 29.957125,
+            "rawValue": 129
+          },
+          {
+            "row": 173,
+            "column": 4927,
+            "longitude": 31.231875,
+            "latitude": 29.956625,
+            "rawValue": 128
+          },
+          {
+            "row": 344,
+            "column": 4991,
+            "longitude": 31.247875,
+            "latitude": 29.913875,
+            "rawValue": 126
+          },
+          {
+            "row": 345,
+            "column": 4987,
+            "longitude": 31.246875,
+            "latitude": 29.913625,
+            "rawValue": 133
+          },
+          {
+            "row": 346,
+            "column": 4985,
+            "longitude": 31.246375,
+            "latitude": 29.913375,
+            "rawValue": 130
+          },
+          {
+            "row": 346,
+            "column": 4986,
+            "longitude": 31.246625,
+            "latitude": 29.913375,
+            "rawValue": 132
+          },
+          {
+            "row": 572,
+            "column": 5049,
+            "longitude": 31.262375,
+            "latitude": 29.856875,
+            "rawValue": 32
+          },
+          {
+            "row": 650,
+            "column": 5014,
+            "longitude": 31.253625,
+            "latitude": 29.837375,
+            "rawValue": 134
+          },
+          {
+            "row": 658,
+            "column": 5005,
+            "longitude": 31.251375,
+            "latitude": 29.835375,
+            "rawValue": 31
+          },
+          {
+            "row": 686,
+            "column": 4998,
+            "longitude": 31.249625,
+            "latitude": 29.828375,
+            "rawValue": 33
+          },
+          {
+            "row": 701,
+            "column": 4958,
+            "longitude": 31.239625,
+            "latitude": 29.824625,
+            "rawValue": 34
+          },
+          {
+            "row": 9464,
+            "column": 26260,
+            "longitude": 36.565125,
+            "latitude": 27.633875,
+            "rawValue": 36
+          },
+          {
+            "row": 9465,
+            "column": 26089,
+            "longitude": 36.522375,
+            "latitude": 27.633625,
+            "rawValue": 35
+          },
+          {
+            "row": 15428,
+            "column": 10425,
+            "longitude": 32.606375,
+            "latitude": 26.142875,
+            "rawValue": 135
+          },
+          {
+            "row": 15565,
+            "column": 11014,
+            "longitude": 32.753625,
+            "latitude": 26.108625,
+            "rawValue": 136
+          }
+        ],
+        "secondsIncludingDecode": 12.188000000081956,
+        "embeddedColorMap": {
+          "0": [
+            254,
+            254,
+            204,
+            255
+          ],
+          "1": [
+            250,
+            250,
+            195,
+            255
+          ],
+          "2": [
+            247,
+            247,
+            187,
+            255
+          ],
+          "3": [
+            244,
+            244,
+            179,
+            255
+          ],
+          "4": [
+            241,
+            241,
+            171,
+            255
+          ],
+          "5": [
+            237,
+            237,
+            162,
+            255
+          ],
+          "6": [
+            234,
+            234,
+            154,
+            255
+          ],
+          "7": [
+            231,
+            231,
+            146,
+            255
+          ],
+          "8": [
+            228,
+            228,
+            138,
+            255
+          ],
+          "9": [
+            224,
+            224,
+            129,
+            255
+          ],
+          "10": [
+            221,
+            221,
+            121,
+            255
+          ],
+          "11": [
+            218,
+            218,
+            113,
+            255
+          ],
+          "12": [
+            215,
+            215,
+            105,
+            255
+          ],
+          "13": [
+            211,
+            211,
+            96,
+            255
+          ],
+          "14": [
+            208,
+            208,
+            88,
+            255
+          ],
+          "15": [
+            205,
+            205,
+            80,
+            255
+          ],
+          "16": [
+            202,
+            202,
+            72,
+            255
+          ],
+          "17": [
+            198,
+            198,
+            63,
+            255
+          ],
+          "18": [
+            195,
+            195,
+            55,
+            255
+          ],
+          "19": [
+            192,
+            192,
+            47,
+            255
+          ],
+          "20": [
+            189,
+            189,
+            39,
+            255
+          ],
+          "21": [
+            185,
+            185,
+            30,
+            255
+          ],
+          "22": [
+            182,
+            182,
+            22,
+            255
+          ],
+          "23": [
+            179,
+            179,
+            14,
+            255
+          ],
+          "24": [
+            176,
+            176,
+            6,
+            255
+          ],
+          "25": [
+            96,
+            156,
+            96,
+            255
+          ],
+          "26": [
+            92,
+            152,
+            92,
+            255
+          ],
+          "27": [
+            88,
+            149,
+            88,
+            255
+          ],
+          "28": [
+            84,
+            146,
+            84,
+            255
+          ],
+          "29": [
+            80,
+            142,
+            80,
+            255
+          ],
+          "30": [
+            76,
+            139,
+            76,
+            255
+          ],
+          "31": [
+            72,
+            136,
+            72,
+            255
+          ],
+          "32": [
+            68,
+            133,
+            68,
+            255
+          ],
+          "33": [
+            64,
+            129,
+            64,
+            255
+          ],
+          "34": [
+            60,
+            126,
+            60,
+            255
+          ],
+          "35": [
+            56,
+            123,
+            56,
+            255
+          ],
+          "36": [
+            52,
+            120,
+            52,
+            255
+          ],
+          "37": [
+            49,
+            116,
+            49,
+            255
+          ],
+          "38": [
+            45,
+            113,
+            45,
+            255
+          ],
+          "39": [
+            41,
+            110,
+            41,
+            255
+          ],
+          "40": [
+            37,
+            107,
+            37,
+            255
+          ],
+          "41": [
+            33,
+            103,
+            33,
+            255
+          ],
+          "42": [
+            29,
+            100,
+            29,
+            255
+          ],
+          "43": [
+            25,
+            97,
+            25,
+            255
+          ],
+          "44": [
+            21,
+            94,
+            21,
+            255
+          ],
+          "45": [
+            17,
+            90,
+            17,
+            255
+          ],
+          "46": [
+            13,
+            87,
+            13,
+            255
+          ],
+          "47": [
+            9,
+            84,
+            9,
+            255
+          ],
+          "48": [
+            6,
+            81,
+            6,
+            255
+          ],
+          "49": [
+            100,
+            55,
+            0,
+            255
+          ],
+          "50": [
+            100,
+            58,
+            0,
+            255
+          ],
+          "51": [
+            100,
+            61,
+            0,
+            255
+          ],
+          "52": [
+            100,
+            64,
+            0,
+            255
+          ],
+          "53": [
+            100,
+            67,
+            0,
+            255
+          ],
+          "54": [
+            100,
+            70,
+            0,
+            255
+          ],
+          "55": [
+            100,
+            73,
+            0,
+            255
+          ],
+          "56": [
+            101,
+            76,
+            0,
+            255
+          ],
+          "57": [
+            101,
+            79,
+            0,
+            255
+          ],
+          "58": [
+            101,
+            82,
+            0,
+            255
+          ],
+          "59": [
+            101,
+            85,
+            0,
+            255
+          ],
+          "60": [
+            101,
+            88,
+            0,
+            255
+          ],
+          "61": [
+            101,
+            90,
+            0,
+            255
+          ],
+          "62": [
+            101,
+            93,
+            0,
+            255
+          ],
+          "63": [
+            101,
+            96,
+            0,
+            255
+          ],
+          "64": [
+            101,
+            99,
+            0,
+            255
+          ],
+          "65": [
+            102,
+            102,
+            0,
+            255
+          ],
+          "66": [
+            102,
+            105,
+            0,
+            255
+          ],
+          "67": [
+            102,
+            108,
+            0,
+            255
+          ],
+          "68": [
+            102,
+            111,
+            0,
+            255
+          ],
+          "69": [
+            102,
+            114,
+            0,
+            255
+          ],
+          "70": [
+            102,
+            117,
+            0,
+            255
+          ],
+          "71": [
+            102,
+            120,
+            0,
+            255
+          ],
+          "72": [
+            102,
+            123,
+            0,
+            255
+          ],
+          "73": [
+            255,
+            153,
+            255,
+            255
+          ],
+          "74": [
+            252,
+            146,
+            252,
+            255
+          ],
+          "75": [
+            249,
+            139,
+            249,
+            255
+          ],
+          "76": [
+            246,
+            133,
+            246,
+            255
+          ],
+          "77": [
+            243,
+            126,
+            243,
+            255
+          ],
+          "78": [
+            240,
+            119,
+            240,
+            255
+          ],
+          "79": [
+            237,
+            113,
+            237,
+            255
+          ],
+          "80": [
+            234,
+            106,
+            234,
+            255
+          ],
+          "81": [
+            231,
+            99,
+            231,
+            255
+          ],
+          "82": [
+            228,
+            93,
+            228,
+            255
+          ],
+          "83": [
+            225,
+            86,
+            225,
+            255
+          ],
+          "84": [
+            222,
+            79,
+            222,
+            255
+          ],
+          "85": [
+            219,
+            73,
+            219,
+            255
+          ],
+          "86": [
+            216,
+            66,
+            216,
+            255
+          ],
+          "87": [
+            213,
+            59,
+            213,
+            255
+          ],
+          "88": [
+            210,
+            53,
+            210,
+            255
+          ],
+          "89": [
+            207,
+            46,
+            207,
+            255
+          ],
+          "90": [
+            204,
+            39,
+            204,
+            255
+          ],
+          "91": [
+            201,
+            33,
+            201,
+            255
+          ],
+          "92": [
+            198,
+            26,
+            198,
+            255
+          ],
+          "93": [
+            195,
+            19,
+            195,
+            255
+          ],
+          "94": [
+            192,
+            13,
+            192,
+            255
+          ],
+          "95": [
+            189,
+            6,
+            189,
+            255
+          ],
+          "96": [
+            187,
+            0,
+            187,
+            255
+          ],
+          "97": [
+            0,
+            0,
+            3,
+            255
+          ],
+          "98": [
+            0,
+            0,
+            4,
+            255
+          ],
+          "99": [
+            0,
+            0,
+            5,
+            255
+          ],
+          "100": [
+            191,
+            192,
+            192,
+            255
+          ],
+          "101": [
+            183,
+            189,
+            194,
+            255
+          ],
+          "102": [
+            175,
+            187,
+            196,
+            255
+          ],
+          "103": [
+            168,
+            184,
+            198,
+            255
+          ],
+          "104": [
+            160,
+            182,
+            201,
+            255
+          ],
+          "105": [
+            153,
+            179,
+            203,
+            255
+          ],
+          "106": [
+            145,
+            177,
+            205,
+            255
+          ],
+          "107": [
+            137,
+            175,
+            208,
+            255
+          ],
+          "108": [
+            130,
+            172,
+            210,
+            255
+          ],
+          "109": [
+            122,
+            170,
+            212,
+            255
+          ],
+          "110": [
+            115,
+            167,
+            214,
+            255
+          ],
+          "111": [
+            107,
+            165,
+            217,
+            255
+          ],
+          "112": [
+            100,
+            163,
+            219,
+            255
+          ],
+          "113": [
+            92,
+            160,
+            221,
+            255
+          ],
+          "114": [
+            84,
+            158,
+            224,
+            255
+          ],
+          "115": [
+            77,
+            155,
+            226,
+            255
+          ],
+          "116": [
+            69,
+            153,
+            228,
+            255
+          ],
+          "117": [
+            62,
+            150,
+            230,
+            255
+          ],
+          "118": [
+            54,
+            148,
+            233,
+            255
+          ],
+          "119": [
+            46,
+            146,
+            235,
+            255
+          ],
+          "120": [
+            39,
+            143,
+            237,
+            255
+          ],
+          "121": [
+            31,
+            141,
+            240,
+            255
+          ],
+          "122": [
+            24,
+            138,
+            242,
+            255
+          ],
+          "123": [
+            16,
+            136,
+            244,
+            255
+          ],
+          "124": [
+            9,
+            134,
+            247,
+            255
+          ],
+          "125": [
+            85,
+            165,
+            165,
+            255
+          ],
+          "126": [
+            83,
+            161,
+            162,
+            255
+          ],
+          "127": [
+            81,
+            158,
+            159,
+            255
+          ],
+          "128": [
+            79,
+            155,
+            156,
+            255
+          ],
+          "129": [
+            77,
+            152,
+            154,
+            255
+          ],
+          "130": [
+            75,
+            149,
+            151,
+            255
+          ],
+          "131": [
+            73,
+            146,
+            148,
+            255
+          ],
+          "132": [
+            71,
+            143,
+            145,
+            255
+          ],
+          "133": [
+            69,
+            139,
+            143,
+            255
+          ],
+          "134": [
+            67,
+            136,
+            140,
+            255
+          ],
+          "135": [
+            65,
+            133,
+            137,
+            255
+          ],
+          "136": [
+            63,
+            130,
+            134,
+            255
+          ],
+          "137": [
+            61,
+            127,
+            132,
+            255
+          ],
+          "138": [
+            59,
+            124,
+            129,
+            255
+          ],
+          "139": [
+            57,
+            121,
+            126,
+            255
+          ],
+          "140": [
+            55,
+            118,
+            123,
+            255
+          ],
+          "141": [
+            53,
+            114,
+            121,
+            255
+          ],
+          "142": [
+            51,
+            111,
+            118,
+            255
+          ],
+          "143": [
+            49,
+            108,
+            115,
+            255
+          ],
+          "144": [
+            47,
+            105,
+            112,
+            255
+          ],
+          "145": [
+            45,
+            102,
+            110,
+            255
+          ],
+          "146": [
+            43,
+            99,
+            107,
+            255
+          ],
+          "147": [
+            41,
+            96,
+            104,
+            255
+          ],
+          "148": [
+            40,
+            93,
+            102,
+            255
+          ],
+          "149": [
+            187,
+            147,
+            176,
+            255
+          ],
+          "150": [
+            183,
+            143,
+            172,
+            255
+          ],
+          "151": [
+            180,
+            140,
+            169,
+            255
+          ],
+          "152": [
+            177,
+            137,
+            166,
+            255
+          ],
+          "153": [
+            174,
+            133,
+            162,
+            255
+          ],
+          "154": [
+            170,
+            130,
+            159,
+            255
+          ],
+          "155": [
+            167,
+            127,
+            156,
+            255
+          ],
+          "156": [
+            164,
+            123,
+            153,
+            255
+          ],
+          "157": [
+            161,
+            120,
+            149,
+            255
+          ],
+          "158": [
+            158,
+            117,
+            146,
+            255
+          ],
+          "159": [
+            154,
+            113,
+            143,
+            255
+          ],
+          "160": [
+            151,
+            110,
+            140,
+            255
+          ],
+          "161": [
+            148,
+            107,
+            136,
+            255
+          ],
+          "162": [
+            145,
+            104,
+            133,
+            255
+          ],
+          "163": [
+            141,
+            100,
+            130,
+            255
+          ],
+          "164": [
+            138,
+            97,
+            127,
+            255
+          ],
+          "165": [
+            135,
+            94,
+            123,
+            255
+          ],
+          "166": [
+            132,
+            90,
+            120,
+            255
+          ],
+          "167": [
+            129,
+            87,
+            117,
+            255
+          ],
+          "168": [
+            125,
+            84,
+            114,
+            255
+          ],
+          "169": [
+            122,
+            80,
+            110,
+            255
+          ],
+          "170": [
+            119,
+            77,
+            107,
+            255
+          ],
+          "171": [
+            116,
+            74,
+            104,
+            255
+          ],
+          "172": [
+            113,
+            71,
+            101,
+            255
+          ],
+          "173": [
+            222,
+            124,
+            187,
+            255
+          ],
+          "174": [
+            218,
+            119,
+            183,
+            255
+          ],
+          "175": [
+            215,
+            114,
+            179,
+            255
+          ],
+          "176": [
+            212,
+            110,
+            175,
+            255
+          ],
+          "177": [
+            209,
+            105,
+            171,
+            255
+          ],
+          "178": [
+            206,
+            100,
+            168,
+            255
+          ],
+          "179": [
+            203,
+            96,
+            164,
+            255
+          ],
+          "180": [
+            200,
+            91,
+            160,
+            255
+          ],
+          "181": [
+            196,
+            87,
+            156,
+            255
+          ],
+          "182": [
+            193,
+            82,
+            152,
+            255
+          ],
+          "183": [
+            190,
+            77,
+            149,
+            255
+          ],
+          "184": [
+            187,
+            73,
+            145,
+            255
+          ],
+          "185": [
+            184,
+            68,
+            141,
+            255
+          ],
+          "186": [
+            181,
+            64,
+            137,
+            255
+          ],
+          "187": [
+            178,
+            59,
+            134,
+            255
+          ],
+          "188": [
+            175,
+            54,
+            130,
+            255
+          ],
+          "189": [
+            171,
+            50,
+            126,
+            255
+          ],
+          "190": [
+            168,
+            45,
+            122,
+            255
+          ],
+          "191": [
+            165,
+            41,
+            118,
+            255
+          ],
+          "192": [
+            162,
+            36,
+            115,
+            255
+          ],
+          "193": [
+            159,
+            31,
+            111,
+            255
+          ],
+          "194": [
+            156,
+            27,
+            107,
+            255
+          ],
+          "195": [
+            153,
+            22,
+            103,
+            255
+          ],
+          "196": [
+            150,
+            18,
+            100,
+            255
+          ],
+          "197": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "198": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "199": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "200": [
+            25,
+            100,
+            235,
+            255
+          ],
+          "201": [
+            21,
+            85,
+            228,
+            255
+          ],
+          "202": [
+            17,
+            71,
+            221,
+            255
+          ],
+          "203": [
+            14,
+            57,
+            214,
+            255
+          ],
+          "204": [
+            10,
+            42,
+            207,
+            255
+          ],
+          "205": [
+            7,
+            28,
+            200,
+            255
+          ],
+          "206": [
+            3,
+            14,
+            193,
+            255
+          ],
+          "207": [
+            0,
+            0,
+            186,
+            255
+          ],
+          "208": [
+            4,
+            4,
+            100,
+            255
+          ],
+          "209": [
+            0,
+            0,
+            255,
+            255
+          ],
+          "210": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "211": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "212": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "213": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "214": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "215": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "216": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "217": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "218": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "219": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "220": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "221": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "222": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "223": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "224": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "225": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "226": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "227": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "228": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "229": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "230": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "231": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "232": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "233": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "234": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "235": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "236": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "237": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "238": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "239": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "240": [
+            255,
+            40,
+            40,
+            255
+          ],
+          "241": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "242": [
+            208,
+            255,
+            255,
+            255
+          ],
+          "243": [
+            255,
+            224,
+            208,
+            255
+          ],
+          "244": [
+            255,
+            125,
+            0,
+            255
+          ],
+          "245": [
+            255,
+            255,
+            0,
+            255
+          ],
+          "246": [
+            200,
+            100,
+            0,
+            255
+          ],
+          "247": [
+            250,
+            200,
+            0,
+            255
+          ],
+          "248": [
+            175,
+            205,
+            150,
+            255
+          ],
+          "249": [
+            175,
+            205,
+            150,
+            255
+          ],
+          "250": [
+            100,
+            220,
+            220,
+            255
+          ],
+          "251": [
+            0,
+            255,
+            255,
+            255
+          ],
+          "252": [
+            0,
+            255,
+            255,
+            255
+          ],
+          "253": [
+            0,
+            255,
+            255,
+            255
+          ],
+          "254": [
+            17,
+            17,
+            51,
+            255
+          ],
+          "255": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        "tiffTags": {
+          "GeoKeyDirectoryTag": [
+            1,
+            1,
+            0,
+            7,
+            1024,
+            0,
+            1,
+            2,
+            1025,
+            0,
+            1,
+            1,
+            2048,
+            0,
+            1,
+            4326,
+            2049,
+            34737,
+            7,
+            0,
+            2054,
+            0,
+            1,
+            9102,
+            2057,
+            34736,
+            1,
+            1,
+            2059,
+            34736,
+            1,
+            0
+          ],
+          "GeoAsciiParamsTag": "WGS 84|",
+          "GeoDoubleParamsTag": [
+            298.257223563,
+            6378137.0
+          ],
+          "ModelPixelScaleTag": [
+            0.00025,
+            0.00025,
+            0.0
+          ],
+          "ModelTiepointTag": [
+            0.0,
+            0.0,
+            0.0,
+            30.0,
+            30.0,
+            0.0
+          ],
+          "Compression": 5,
+          "PhotometricInterpretation": 3,
+          "SamplesPerPixel": 1,
+          "BitsPerSample": 8,
+          "SampleFormat": 1,
+          "RowsPerStrip": 1
+        },
+        "geoTiffMetadata": {
+          "KeyDirectoryVersion": 1,
+          "KeyRevision": 1,
+          "KeyRevisionMinor": 0,
+          "GTModelTypeGeoKey": 2,
+          "GTRasterTypeGeoKey": 1,
+          "GeographicTypeGeoKey": 4326,
+          "GeogCitationGeoKey": "WGS 84",
+          "GeogAngularUnitsGeoKey": 9102,
+          "GeogSemiMajorAxisGeoKey": 6378137.0,
+          "GeogInvFlatteningGeoKey": 298.257223563,
+          "ModelPixelScale": [
+            0.00025,
+            0.00025,
+            0.0
+          ],
+          "ModelTiepoint": [
+            0.0,
+            0.0,
+            0.0,
+            30.0,
+            30.0,
+            0.0
+          ]
+        }
+      },
+      "implementation": "crates/geod-runtime/src/datasets/glad_landcover.rs",
+      "datasetId": "glad-landcover-2020",
+      "layerId": "land-cover",
+      "supportedReferenceYears": [
+        2020
+      ],
+      "nativeCase": "scripts/next2-glad-cases-20261012.json",
+      "scienceWarnings": [
+        "Legend 255 means No data, but the actual TIFF has no scalar NoData tag. The preset declaration is not silently imposed as the native file mask.",
+        "Code 0 is a valid annual-map desert / 3-percent short-vegetation class, not missing data. Code 254 is ocean, 244 cropland and 250 built-up; the full specific combined legend is required, not a continuous reflectance interpretation.",
+        "This original embeds a 256-entry palette. Raw indices, the actual palette and the unchanged map grid must be retained; do not replace class codes by RGB samples or imply statistical area validity from the map.",
+        "Initial full GET timed out only after 44,040,192 original bytes. A same-generation If-Match continuation supplied 454,847 remaining bytes. The entire 44,495,039-byte assembled original matches the publisher object API whole-file MD5 before all 1.6-billion original pixels were independently decoded. This is not Range-only/sample acceptance."
+      ]
+    }
+  ],
+  "guards": "No original clipping, test crops, Range-only acceptance, inferred CRS replacement, nominal-box substitution, rewritten samples, mask repair or archive-format expansion. Existing native transfer/grid budgets remain unchanged."
+}

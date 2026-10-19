@@ -1,0 +1,74 @@
+{
+  "schema": "geod-official-aggregation-verification/v1",
+  "date": "2026-10-09",
+  "status": "local-beta-not-deployed",
+  "identityBoundary": "Private requests validate the native session against the Global identity authority; synthetic accounts were used in service tests and live catalog probes.",
+  "tests": {
+    "officialServer": {
+      "passed": 20,
+      "identityAndPayments": "synthetic fixtures"
+    },
+    "frontend": {
+      "passed": 380,
+      "files": 45
+    },
+    "agent": {
+      "passed": 120
+    },
+    "nativeDesktop": {
+      "passed": 55,
+      "ignored": 26,
+      "ignoredReason": "Explicit live model, credentials or human acceptance required"
+    },
+    "repositoryChecks": "passed",
+    "clippyWarningsAsErrors": "passed",
+    "frontendBuild": "passed"
+  },
+  "realPublicCatalogChecks": [
+    {
+      "source": "Earth Search Sentinel-2 L2A",
+      "matches": 15,
+      "complete": true,
+      "pages": 2
+    },
+    {
+      "source": "Planetary Computer Landsat C2 L2",
+      "matches": 10,
+      "complete": true,
+      "pages": 1
+    }
+  ],
+  "liveCatalogEvidence": ".verification/official-service-live/report.json",
+  "ui": {
+    "actualBrowserGuestPage": "visually checked",
+    "proFormAndReview": "visually checked with clearly labelled synthetic account fixture",
+    "narrowViewport": {
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    "nativeWindowHumanAcceptance": "not performed",
+    "screenshot": ".verification/monitoring-presentation/imagery-monitoring.png",
+    "informationArchitecture": {
+      "monitoring": "Imagery monitoring sidebar feature",
+      "membership": "Signed-in avatar > Your account",
+      "sandboxControls": "Explicitly invited test accounts only",
+      "legacyRoute": "Official services redirects to Imagery monitoring"
+    }
+  },
+  "runningLocalService": {
+    "bind": "127.0.0.1:4319",
+    "unauthenticatedPrivateRequest": 401,
+    "checkoutAvailable": false,
+    "livePayments": false
+  },
+  "downloadsStartedByThisServiceVerification": false,
+  "realStripeCheckoutOrRefundPerformed": false,
+  "productionDeploymentPerformed": false,
+  "unimplemented": [
+    "Live payment collection",
+    "Automatic renewal",
+    "Hosted AI",
+    "Cloud raster processing",
+    "Additional advanced hosted source adapters"
+  ]
+}

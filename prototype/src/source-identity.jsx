@@ -15,6 +15,7 @@ export const sourceIdentity = {
   'copernicus-dem': { name:'Copernicus DEM · GLO-30', detail:'30 m surface elevation · Public AWS tiles', platform:'Earth Search', mark:'copernicus-dem' },
   'copernicus-dem-90': { name:'Copernicus DEM · GLO-90', detail:'90 m surface elevation · Public AWS tiles', platform:'Earth Search', mark:'copernicus-dem' },
   'nasa-srtm': { name:'SRTM · SRTMGL1', detail:'30 m surface elevation', platform:'NASA Earthdata', mark:'srtm' },
+  'srtm-num': { name:'SRTM NUM source codes', detail:'1 arc-second Point grid · raw UInt8 source codes', platform:'NASA Earthdata', mark:'srtm' },
   'nasa-earthdata': { name:'HLS · Landsat L30', detail:'30 m reflectance', platform:'NASA Earthdata', mark:'hls' },
   'nasa-viirs-noaa21': { name:'VIIRS · NOAA-21', detail:'1 km · 8-day reflectance', platform:'NASA Earthdata', mark:'viirs' },
   'nasa-viirs-noaa20': { name:'VIIRS · NOAA-20', detail:'1 km · 8-day reflectance', platform:'NASA Earthdata', mark:'viirs' },

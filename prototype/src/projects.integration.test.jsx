@@ -38,7 +38,7 @@ describe('Named project download and scoped processing flow', () => {
     expect(screen.queryByRole('textbox', { name: '工程名称' })).toBeNull();
     await user.click(screen.getByRole('combobox', { name: '下载内容' }));
     await user.click(screen.getByRole('option', { name: '真彩色 + SCL 分类栅格' }));
-    await user.click(screen.getByRole('button', { name: '加入工程并开始下载' }));
+    await user.click(screen.getByRole('button', { name: '确认并下载' }));
     await screen.findByRole('button', { name: '打开工程' });
     expect(runtimeRequest.mock.calls.map(([operation]) => operation)).toEqual(['addProjectScenes', 'downloadProject', 'downloadProject']);
     expect(runtimeRequest.mock.calls[0][1].id).toBe(project.id);
@@ -52,7 +52,7 @@ describe('Named project download and scoped processing flow', () => {
     const full = { ...project, scenes: Array.from({ length: 32 }, (_, index) => ({ ...project.scenes[0], itemId: `existing-${index}` })) };
     wrap(<DownloadAssetButton scene={scene} project={full}/>);
     await user.click(screen.getByRole('button', { name: '加入当前工程并下载 · 1 景' }));
-    expect(screen.getByRole('button', { name: '加入工程并开始下载' }).disabled).toBe(true);
+    expect(screen.getByRole('button', { name: '确认并下载' }).disabled).toBe(true);
     expect(screen.getByRole('alert').textContent).toContain('33');
     expect(runtimeRequest).not.toHaveBeenCalled();
   });
@@ -70,7 +70,7 @@ describe('Named project download and scoped processing flow', () => {
     await user.click(screen.getByRole('combobox', { name: '下载内容' }));
     await user.click(screen.getByRole('option', { name: '真彩色 + SCL 分类栅格' }));
     expect(screen.getByText('将下载 8 景影像 · 16 个源文件')).toBeTruthy();
-    await user.click(screen.getByRole('button', { name: '创建工程并开始下载' }));
+    await user.click(screen.getByRole('button', { name: '确认并下载' }));
     await screen.findByRole('button', { name: '打开工程' });
     expect(saved.scenes.map(item => item.itemId)).toEqual(scenes.map(item => item.id));
     expect(runtimeRequest.mock.calls.slice(1)).toEqual([
@@ -88,7 +88,7 @@ describe('Named project download and scoped processing flow', () => {
     await user.click(screen.getByRole('combobox', { name: '下载范围' }));
     await user.click(screen.getByRole('option', { name: '仅当前查看的影像 · 1 景' }));
     expect(screen.getByText('将下载 1 景影像 · 1 个源文件')).toBeTruthy();
-    await user.click(screen.getByRole('button', { name: '创建工程并开始下载' }));
+    await user.click(screen.getByRole('button', { name: '确认并下载' }));
     await screen.findByRole('button', { name: '打开工程' });
     expect(runtimeRequest.mock.calls[0][1].scenes.map(item => item.itemId)).toEqual([scenes[3].id]);
   });
@@ -104,8 +104,8 @@ describe('Named project download and scoped processing flow', () => {
     await user.clear(input); await user.type(input, '我的湾区影像');
     await user.click(screen.getByRole('combobox', { name: '下载内容' }));
     await user.click(screen.getByRole('option', { name: '真彩色 + SCL 分类栅格' }));
-    await user.click(screen.getByRole('button', { name: '创建工程并开始下载' }));
-    await screen.findByRole('heading', { name: '我的湾区影像' });
+    await user.click(screen.getByRole('button', { name: '确认并下载' }));
+    await screen.findByText('我的湾区影像', {exact:true});
     expect(runtimeRequest.mock.calls.map(([operation]) => operation)).toEqual(['createProject', 'downloadProject', 'downloadProject']);
     expect(runtimeRequest.mock.calls[0][1].name).toBe('我的湾区影像');
     expect(runtimeRequest.mock.calls[0][1].bounds).toEqual(scene.bbox);
@@ -125,7 +125,7 @@ describe('Named project download and scoped processing flow', () => {
     });
     wrap(<DownloadAssetButton scene={scene} areaBounds={scene.bbox} areaName="Bay"/>);
     await user.click(screen.getByRole('button', { name: '新建工程并下载' }));
-    await user.click(screen.getByRole('button', { name: '创建工程并开始下载' }));
+    await user.click(screen.getByRole('button', { name: '确认并下载' }));
     await screen.findByRole('button', { name: '重试下载' });
     await user.click(screen.getByRole('button', { name: '重试下载' }));
     await waitFor(() => expect(screen.queryByRole('button', { name: '重试下载' })).toBeNull());

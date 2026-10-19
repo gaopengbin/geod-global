@@ -1,0 +1,308 @@
+{
+  "schema": "geod-public-product-browser-acceptance/v1",
+  "checkedAt": "2026-10-12T09:12:43.340Z",
+  "status": "passed",
+  "scope": "Actual in-app browser controls against local Windows native service 4318. Five fresh complete-original downloads; no controlled completion fixtures, model calls, account credentials or Earth Engine requests. Browser reload reopening is separate from 18 isolated native runtime restart checks.",
+  "nativeBinarySha256": "8d77e502ce74928cf0df0d1c6704794cffd47bc80180b7f75126479abe67b542",
+  "curatedProducts": 20,
+  "layers": 52,
+  "directory": {
+    "total": 99,
+    "ready": 52,
+    "auth": 6,
+    "planned": 41
+  },
+  "originalExploreDropdownOptions": 35,
+  "cases": [
+    {
+      "datasetId": "deafrica-fractional-cover",
+      "productName": "年度绿植被 2025",
+      "projectId": "6ea7113c-5577-43db-993d-366d059c9439",
+      "assetKey": "pv_pc_50",
+      "pixel": {
+        "column": 117,
+        "row": 2285,
+        "value": 2,
+        "noData": false
+      },
+      "crs": "EPSG:6933",
+      "shape": [
+        3200,
+        3200
+      ],
+      "sha256": "ff7f3a266f4a216abf36546a179b628579e01bf65a1ecb0275539fd42b4a63ae",
+      "steps": [
+        "dropdown",
+        "resolve",
+        "real_metadata",
+        "select",
+        "save",
+        "explicit_download",
+        "local_preview",
+        "raw_pixel",
+        "original_metadata",
+        "page_reload_reopen"
+      ],
+      "screenshot": ".verification/public-datasets-ui-20261012/new-fc-map.png",
+      "backendVerification": {
+        "jobId": "9faeeaa6-c402-42ca-ac69-7cdd922bab45",
+        "snapshotId": "814e2f1ebde69960fcd6b4068e9810f65f96df2646d11b4f8a307ae5cc5a8318",
+        "bytes": 8340611,
+        "fresh": true,
+        "fileHashVerified": true,
+        "pixelsMatchedBrowserObservations": true,
+        "previewSha256": "a28c7879fb0036d0ec8f151db8f4d35ad83fdcbbeef15e708b90cdf2fbc04994",
+        "actualBands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": 255
+          }
+        ]
+      }
+    },
+    {
+      "datasetId": "deafrica-wofs-annual",
+      "projectId": "686bb4cb-15ac-4474-8784-2666487e7e33",
+      "assetKey": "frequency",
+      "pixels": [
+        {
+          "column": 2021,
+          "row": 617,
+          "value": 1,
+          "noData": false
+        },
+        {
+          "column": 710,
+          "row": 897,
+          "value": "NaN",
+          "noData": true
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "value": 0,
+          "noData": false
+        }
+      ],
+      "crs": "EPSG:6933",
+      "shape": [
+        3200,
+        3200
+      ],
+      "sha256": "7fe06cf06a4835c55fc83ed276f74137d7113dd625e77004f3b1ea809998ab72",
+      "steps": [
+        "dropdown",
+        "resolve",
+        "real_metadata",
+        "select",
+        "save",
+        "explicit_download",
+        "local_preview",
+        "raw_pixel",
+        "original_metadata",
+        "page_reload_reopen"
+      ],
+      "screenshot": ".verification/public-datasets-ui-20261012/new-wofs-nodata.png",
+      "backendVerification": {
+        "jobId": "9cf4b938-0867-4639-bd40-b0469e7b4284",
+        "snapshotId": "e090053aa560325e60e576ebce0580edda2fe44eaa24e657a0064706e4842356",
+        "bytes": 2152684,
+        "fresh": true,
+        "fileHashVerified": true,
+        "pixelsMatchedBrowserObservations": true,
+        "previewSha256": "3b484f416678e1e10dbd523669773b1bef73c299c9676f42fda7786e3ea93a40",
+        "actualBands": [
+          {
+            "index": 1,
+            "dataType": "Float32",
+            "nodata": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "datasetId": "wsf-settlements",
+      "projectId": "ca63182b-0c61-40bf-b53b-3f3d9e454148",
+      "assetKey": "wsf2019",
+      "pixels": [
+        {
+          "column": 9240,
+          "row": 14472,
+          "value": 255,
+          "noData": false
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "value": 0,
+          "noData": false
+        }
+      ],
+      "crs": "EPSG:4326",
+      "shape": [
+        22488,
+        22488
+      ],
+      "sha256": "ab2afef0121f1fc3691a3b27ee3985451af8a1af97502d409f69ad4c8b4948a8",
+      "actualNoData": null,
+      "steps": [
+        "dropdown",
+        "resolve",
+        "real_metadata",
+        "select",
+        "save",
+        "explicit_download",
+        "local_preview",
+        "raw_pixel",
+        "original_metadata",
+        "page_reload_reopen"
+      ],
+      "screenshot": ".verification/public-datasets-ui-20261012/new-wsf-positive.png",
+      "backendVerification": {
+        "jobId": "7ee87e4b-3c80-484c-b517-70a79f238d33",
+        "snapshotId": "176d0ed2f929484a96520638257d044520af07c8315bfdb5281106e1ff296727",
+        "bytes": 14197753,
+        "fresh": true,
+        "fileHashVerified": true,
+        "pixelsMatchedBrowserObservations": true,
+        "previewSha256": "4ef62e1a7abcdc003b6d60802dbd4d31bf5b6243162053ff8e03c4df73d3f43e",
+        "actualBands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": null
+          }
+        ]
+      }
+    },
+    {
+      "datasetId": "gmw-mangroves",
+      "projectId": "0c868fc7-3040-4d10-a4a8-1d8259b170ac",
+      "assetKey": "mangrove",
+      "pixels": [
+        {
+          "column": 483,
+          "row": 92,
+          "value": 1,
+          "noData": false
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "value": 0,
+          "noData": true
+        }
+      ],
+      "crs": "EPSG:4326",
+      "shape": [
+        4500,
+        4500
+      ],
+      "sha256": "ceb39b5bca28c0f9120fe34e0de0fa527130148275b1d24a1310de8f7bf23514",
+      "actualNoData": 0,
+      "steps": [
+        "dropdown",
+        "resolve",
+        "real_metadata",
+        "select",
+        "save",
+        "explicit_download",
+        "local_preview",
+        "raw_pixel",
+        "original_metadata",
+        "page_reload_reopen"
+      ],
+      "screenshot": ".verification/public-datasets-ui-20261012/new-gmw-positive.png",
+      "backendVerification": {
+        "jobId": "76337f28-db68-4fb8-9af9-fcbc883898a2",
+        "snapshotId": "20739d1bf35c9dfe18cf57941be00712e9f43e26dc3db25f1db2395afd8473d8",
+        "bytes": 123267,
+        "fresh": true,
+        "fileHashVerified": true,
+        "pixelsMatchedBrowserObservations": true,
+        "previewSha256": "902f669717a199bda18ecd84f8679da64c6285e4b19a76a000929fb16d8d5656",
+        "actualBands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": 0
+          }
+        ]
+      }
+    },
+    {
+      "datasetId": "cgls-landcover",
+      "projectId": "1ac3b776-48e4-4e2c-8ac6-c95780136888",
+      "assetKey": "permanentwater_cover_fraction",
+      "pixels": [
+        {
+          "column": 59734,
+          "row": 39060,
+          "value": 100,
+          "noData": false
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "value": 255,
+          "noData": true
+        }
+      ],
+      "crs": "EPSG:4326",
+      "shape": [
+        91587,
+        87011
+      ],
+      "sha256": "20e1f3dcff66955ac8444e2c17daabbf153835f811dcecbe4febce9fb39f75f3",
+      "actualNoData": 255,
+      "steps": [
+        "dropdown",
+        "resolve",
+        "real_metadata",
+        "select",
+        "save",
+        "explicit_download",
+        "local_preview",
+        "raw_pixel",
+        "original_metadata",
+        "page_reload_reopen"
+      ],
+      "screenshot": ".verification/public-datasets-ui-20261012/new-cgls-positive.png",
+      "narrowScreenshot": ".verification/public-datasets-ui-20261012/new-cgls-narrow.png",
+      "rawPublisherPath": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+      "downloadPath": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+      "backendVerification": {
+        "jobId": "f6084610-d6e7-4516-8b95-48b357a3b7a3",
+        "snapshotId": "a1d15ecb4ff17b3a83a3b60ddc044e504cc7b5a2e2fcb70a5d4d2699c120661e",
+        "bytes": 36681970,
+        "fresh": true,
+        "fileHashVerified": true,
+        "pixelsMatchedBrowserObservations": true,
+        "previewSha256": "61d9d8ac57869b21addbc5a837815d7c500d3b5cb0bab67d73ee5dfcfe80f563",
+        "actualBands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": 255
+          }
+        ]
+      }
+    }
+  ],
+  "responsive": {
+    "width": 768,
+    "height": 800,
+    "dialogWidth": 728,
+    "dialogScrollWidth": 728,
+    "bodyWidth": 768,
+    "horizontalOverflow": false,
+    "viewportRestored": true
+  },
+  "cglsOnlySupportedAsset": "permanentwater_cover_fraction",
+  "cglsUnsupportedAssets": 13,
+  "cglsFriendlyUnsupportedReasonVerified": true,
+  "nativeWindowTested": false,
+  "browserOriginalBytes": 61496285,
+  "backendVerificationPassed": true
+}

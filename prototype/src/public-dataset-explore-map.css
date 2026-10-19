@@ -1,0 +1,25 @@
+.public-dataset-map{position:relative;height:100%;min-height:240px;min-width:0;isolation:isolate;container-type:inline-size;container-name:public-dataset-map;}
+.public-dataset-map-actions{position:absolute;top:12px;left:12px;z-index:2;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 190px);}
+.public-dataset-map-controls{position:absolute;top:12px;right:12px;z-index:2;display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-control);box-shadow:var(--shadow-overlay);padding:2px;}
+.public-dataset-map-guidance{flex:0 0 100%;box-sizing:border-box;margin:0;padding:8px 12px;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface);color:var(--ink-2);font-size:var(--text-caption);line-height:var(--leading-caption);}
+.public-dataset-map-attribution{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:8px 12px;background:var(--surface);border-top:1px solid var(--line);color:var(--ink-2);font-size:var(--text-caption);line-height:var(--leading-caption);}
+.public-dataset-map-layers{position:absolute;z-index:3;bottom:54px;left:12px;width:min(290px,calc(100% - 24px));max-height:min(45%,420px);display:flex;flex-direction:column;overflow:hidden;background:var(--surface);box-shadow:var(--shadow-overlay);}
+.public-dataset-map-layers>header{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:var(--text-ui);flex:0 0 auto;line-height:var(--leading-ui);}
+.public-dataset-map-layers>header>strong{flex:1;}
+.public-dataset-map-layer-list{min-height:0;overflow:auto;scrollbar-width:none;}
+.public-dataset-map-layer-list::-webkit-scrollbar{display:none;}
+.public-dataset-map-layer{display:grid;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);}
+.public-dataset-map-layer-title{display:flex;align-items:center;gap:8px;min-width:0;font-size:var(--text-caption);line-height:var(--leading-caption);}
+.public-dataset-map-layer-title>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.public-dataset-map-layer-status{display:flex;align-items:center;gap:4px;}
+.public-dataset-map-layer-status>span{display:flex;align-items:center;gap:5px;flex:1;font-size:var(--text-caption);color:var(--ink-2);line-height:var(--leading-caption);}
+.public-dataset-map-layer-status button{height:24px;width:24px;}
+.public-dataset-map-layer-error{display:grid;gap:6px;}
+.public-dataset-map-layer-error p{font-size:var(--text-caption);color:var(--danger);margin:0;line-height:var(--leading-caption);overflow-wrap:anywhere;}
+.public-dataset-map-opacity{display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--ink-2);line-height:var(--leading-caption);}
+.public-dataset-map-opacity>span:not(.bui-slider){flex-shrink:0;white-space:nowrap;}
+.public-dataset-map-opacity>.bui-slider{flex:1;min-width:0;width:auto;}
+.public-dataset-map-layers>.bui-disclosure{padding:6px 12px;flex:0 0 auto;max-height:120px;overflow:auto;scrollbar-width:none;}
+.public-dataset-map-layers>.bui-disclosure p{font-size:var(--text-caption);color:var(--ink-2);line-height:var(--leading-caption);}
+@container public-dataset-map (max-width:520px){.public-dataset-map-actions{right:12px;max-width:none;top:56px;}.public-dataset-map-attribution{display:grid;}}
+@media(max-width:520px){.public-dataset-map-actions{right:12px;max-width:none;top:56px;}.public-dataset-map-attribution{display:grid;}}

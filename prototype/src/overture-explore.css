@@ -1,0 +1,9 @@
+.overture-original-result { display:flex; flex-direction:column; gap:9px; min-width:0; padding:12px 0; border-bottom:1px solid var(--line); }
+.overture-original-result > strong { font-size:var(--text-ui); line-height:var(--leading-ui); overflow-wrap:anywhere; }
+.overture-original-result .feature-help { margin:0; }
+.overture-original-actions { display:flex; flex-wrap:wrap; align-items:center; gap:7px; min-width:0; }
+.overture-original-actions > .bui-button { flex:0 1 auto; width:auto; max-width:100%; min-height:34px; height:auto; padding:8px 11px; white-space:normal; line-height:18px; }
+.overture-original-actions > .bui-button > svg { flex:none; }
+.overture-original-row { display:flex; flex-direction:column; gap:7px; min-width:0; padding:10px 0; border-bottom:1px solid var(--line); }
+.overture-original-row > strong { font-size:var(--text-caption); line-height:var(--leading-caption); overflow-wrap:anywhere; }
+.overture-original-row > pre { max-height:260px; overflow:auto; margin:0; font-size:var(--text-caption); line-height:var(--leading-caption); white-space:pre-wrap; overflow-wrap:anywhere; }

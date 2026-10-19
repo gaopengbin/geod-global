@@ -1,0 +1,293 @@
+{
+  "checkedAt": "2026-10-11",
+  "scope": "Limited anonymous full published-file and subset download tests; not app integration or same-file provider benchmark",
+  "passedChannels": 3,
+  "passedFiles": 4,
+  "completeC2L2OriginalAlternative": false,
+  "fileReceipts": [
+    {
+      "channel": "JAXA Earth AW3D30 v4.1",
+      "product": "DSM",
+      "file": "G:\\code\\geod-global\\.verification\\alternative-download-test-20261011\\jaxa\\beijing-aw3d30-v4.1-dsm.tif",
+      "bytes": 8418816,
+      "seconds": 1.2613591998815536,
+      "sha256": "c5eafee72fe18dffe03113d7dde4240d12a5c421cfc5ff4bc709476ebd69a189",
+      "fullFile": true,
+      "raster": {
+        "driver": "GTiff",
+        "crs": "EPSG:4326",
+        "epsg": 4326,
+        "width": 3600,
+        "height": 3600,
+        "count": 1,
+        "dtypes": [
+          "int16"
+        ],
+        "nodata": -9999.0,
+        "bounds": [
+          116.0,
+          39.0,
+          117.0,
+          40.0
+        ],
+        "resolution": [
+          0.0002777777777777778,
+          0.0002777777777777778
+        ],
+        "transform": [
+          0.0002777777777777778,
+          0.0,
+          116.0,
+          0.0,
+          -0.0002777777777777778,
+          40.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "blockShapes": [
+          [
+            256,
+            256
+          ]
+        ],
+        "overviews": [
+          2,
+          4
+        ],
+        "compression": "Compression.deflate",
+        "layout": "COG",
+        "decodedPixelsAllBands": 12960000,
+        "validPixelsBand1": 12956905,
+        "validFractionBand1": 0.999761188271605,
+        "minimum": -29,
+        "maximum": 991,
+        "mean": 30.58813327719853,
+        "percentile2And98": [
+          5.0,
+          146.0
+        ]
+      },
+      "independentSizeAndHashReadbackPassed": true
+    },
+    {
+      "channel": "JAXA Earth AW3D30 v4.1",
+      "product": "MSK",
+      "file": "G:\\code\\geod-global\\.verification\\alternative-download-test-20261011\\jaxa\\beijing-aw3d30-v4.1-msk.tif",
+      "bytes": 43231,
+      "seconds": 0.2971250000409782,
+      "sha256": "9317280ac89aaeec01f4be6227e80d60e7e7032fa8a28d2780f5c041df46e2a3",
+      "fullFile": true,
+      "raster": {
+        "driver": "GTiff",
+        "crs": "EPSG:4326",
+        "epsg": 4326,
+        "width": 3600,
+        "height": 3600,
+        "count": 1,
+        "dtypes": [
+          "uint8"
+        ],
+        "nodata": null,
+        "bounds": [
+          116.0,
+          39.0,
+          117.0,
+          40.0
+        ],
+        "resolution": [
+          0.0002777777777777778,
+          0.0002777777777777778
+        ],
+        "transform": [
+          0.0002777777777777778,
+          0.0,
+          116.0,
+          0.0,
+          -0.0002777777777777778,
+          40.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "blockShapes": [
+          [
+            256,
+            256
+          ]
+        ],
+        "overviews": [
+          2,
+          4
+        ],
+        "compression": "Compression.deflate",
+        "layout": "COG",
+        "decodedPixelsAllBands": 12960000,
+        "validPixelsBand1": 12960000,
+        "validFractionBand1": 1.0,
+        "minimum": 0,
+        "maximum": 48,
+        "mean": 0.07395555555555555,
+        "percentile2And98": [
+          0.0,
+          0.0
+        ]
+      },
+      "independentSizeAndHashReadbackPassed": true
+    },
+    {
+      "channel": "OpenTopography static COP90",
+      "product": "DSM",
+      "file": "G:\\code\\geod-global\\.verification\\alternative-download-test-20261011\\opentopography\\Copernicus_DSM_30_N40_00_E116_00_DEM.tif",
+      "bytes": 6545035,
+      "seconds": 6.328,
+      "sha256": "e47435025369366c6e942e4d76665c830bc16e64f1f55415a254129ac7e99e33",
+      "fullFile": true,
+      "raster": {
+        "driver": "GTiff",
+        "crs": "EPSG:4326",
+        "width": 1201,
+        "height": 1201,
+        "count": 1,
+        "dtypes": [
+          "float32"
+        ],
+        "bounds": [
+          115.99958333333333,
+          39.999583333333334,
+          117.00041666666667,
+          41.000416666666666
+        ],
+        "resolution": [
+          0.0008333333333333334,
+          0.0008333333333333334
+        ],
+        "nodata": null,
+        "valid_pixels": 1442401,
+        "min": 3.3484418392181396,
+        "max": 1765.994140625,
+        "mean": 469.4450988769531,
+        "full_decode": true,
+        "sample_values": [
+          [
+            1210.38232421875,
+            1097.620849609375,
+            963.0379638671875,
+            766.7457885742188,
+            483.032958984375
+          ],
+          [
+            1008.82470703125,
+            846.6055908203125,
+            716.4000244140625,
+            539.70654296875,
+            511.7151794433594
+          ],
+          [
+            506.6014709472656,
+            911.0072631835938,
+            1254.146240234375,
+            537.3237915039062,
+            135.5
+          ],
+          [
+            593.7642822265625,
+            227.72950744628906,
+            61.56354522705078,
+            39.29145050048828,
+            69.13188171386719
+          ],
+          [
+            313.9020080566406,
+            53.498958587646484,
+            37.41820526123047,
+            24.76953125,
+            20.668107986450195
+          ]
+        ]
+      },
+      "independentSizeAndHashReadbackPassed": true
+    },
+    {
+      "channel": "Esri Landsat8_Views",
+      "product": "C2 Level-1-derived red subset, not C2L2 SR",
+      "file": "G:\\code\\geod-global\\.verification\\alternative-download-test-20261011\\esri-landsat\\beijing-red-none.tif",
+      "bytes": 132216,
+      "seconds": 1.218,
+      "sha256": "30db5eddb70d5d1ddc407612eaef907c96d5b62cfa4e164db08e443b342aa880",
+      "full_file_download": true,
+      "fullFile": true,
+      "raster": {
+        "crs": "EPSG:32650",
+        "width": 143,
+        "height": 149,
+        "count": 1,
+        "dtypes": [
+          "int16"
+        ],
+        "bounds": [
+          444427.0540190104,
+          4415720.669219928,
+          448717.0540190104,
+          4420190.669219928
+        ],
+        "resolution": [
+          30.0,
+          30.0
+        ],
+        "nodata": null,
+        "valid_pixels": 21307,
+        "valid_fraction": 1.0,
+        "min": 290.0,
+        "max": 7692.0,
+        "mean": 983.7132397803539,
+        "full_decode": true
+      },
+      "scene": {
+        "OBJECTID": 5974848,
+        "Name": "LC08_L1TP_123032_20261007_20261007_02_RT",
+        "ProductName": "Level1",
+        "SensorName": "Landsat 8",
+        "AcquisitionDate": 1791341614000,
+        "CloudCover": 0.0004,
+        "LANDSAT_SCENE_ID": "LC81230322026280LGN00",
+        "LANDSAT_PRODUCT_ID": "LC08_L1TP_123032_20261007_20261007_02_RT"
+      },
+      "exportSeconds": 0.735,
+      "processing": {
+        "band_index_zero_based": 3,
+        "band_name": "Red",
+        "rendering_function": "None",
+        "resampling": "nearest",
+        "projected_pixel_size_requested": 30,
+        "output_crs": "EPSG:32650",
+        "locked_object_id": 5974848,
+        "scene_subset_not_original_mirror": true
+      },
+      "independentSizeAndHashReadbackPassed": true
+    }
+  ],
+  "c2l2EsriAnonymous": {
+    "channel": "Esri LandsatC2L2 ImageServer",
+    "url": "https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer",
+    "authentication": "anonymous",
+    "time_utc": "2026-10-11T14:51:07.803304+00:00",
+    "http_status": 200,
+    "seconds": 1.469,
+    "response_error": {
+      "code": 499,
+      "message": "Token Required",
+      "details": []
+    },
+    "service_name": null,
+    "pixel_type": null,
+    "band_count": null,
+    "status": "authorization_required",
+    "source": "https://github.com/Esri/imagery-explorer-apps/blob/master/README.md"
+  },
+  "domesticStatus": {
+    "gscloud": "Public directory accessible; browser page shows sign-in; filter interactions repeatedly timed out and no imagery download was completed. This is not proof of provider download failure.",
+    "aie": "Anonymous SDK STAC endpoints returned HTTP503 HTML; user authorization not obtained; prepared export script not run.",
+    "pie": "Public app shells reachable; no authorization or image export; prepared script not run."
+  }
+}

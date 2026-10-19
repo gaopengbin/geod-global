@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 pub(super) fn account(provider: &str) -> Option<AccountProvider> {
     match provider {
         "copernicus" => Some(AccountProvider::Copernicus),
-        "nasa-earthdata" | "nasa-srtm" | "nasa-viirs-suomi" | "nasa-viirs-noaa20"
+        "nasa-earthdata" | "nasa-srtm" | "srtm-num" | "nasa-viirs-suomi" | "nasa-viirs-noaa20"
         | "nasa-viirs-noaa21" => Some(AccountProvider::Nasa),
         _ => None,
     }
@@ -56,6 +56,7 @@ pub(super) fn format(provider: &str) -> &'static str {
     match provider {
         "copernicus" => "SAFE ZIP",
         "nasa-srtm" => "HGT ZIP",
+        "srtm-num" => "NUM ZIP",
         "nasa-viirs-suomi" | "nasa-viirs-noaa20" | "nasa-viirs-noaa21" => "HDF5",
         _ => "GeoTIFF",
     }
@@ -234,8 +235,25 @@ pub(super) fn normalize(value: &Value, query: &SearchQuery) -> Result<Vec<Candid
                 Some("composite period".into()),
                 Some("VIIRS:Sinusoidal".into()),
             )
-        } else if query.provider == "nasa-srtm" {
-            let [lon, lat] = p::srtm::cell(id).ok_or("Unsupported SRTM geocell.")?;
+        } else if matches!(query.provider.as_str(), "nasa-srtm" | "srtm-num") {
+            let num = query.provider == "srtm-num";
+            if num
+                && (!date.starts_with("2000-02-11T00:00:00")
+                    || !item["properties"]["end_datetime"]
+                        .as_str()
+                        .is_some_and(|d| d.starts_with("2000-02-21T23:59:59")))
+            {
+                return Err(
+                    "SRTM NUM mission observation period differs from its official v003 product."
+                        .into(),
+                );
+            }
+            let [lon, lat] = (if num {
+                p::srtm::num_cell(id)
+            } else {
+                p::srtm::cell(id)
+            })
+            .ok_or("Unsupported SRTM geocell.")?;
             // CMR envelopes may extend by one arc-second around the native
             // one-degree geocell (e.g. N37W123: -123.0002778..-121.9997222).
             // Retain that original envelope; it is not the HGT sample grid.
@@ -254,8 +272,19 @@ pub(super) fn normalize(value: &Value, query: &SearchQuery) -> Result<Vec<Candid
             }
             (
                 date.into(),
-                None,
-                Some("reference; not acquisition".into()),
+                if num {
+                    Some("2000-02-21T23:59:59Z".into())
+                } else {
+                    None
+                },
+                Some(
+                    if num {
+                        "SRTM mission observation period; source code, not elevation"
+                    } else {
+                        "reference; not acquisition"
+                    }
+                    .into(),
+                ),
                 Some("EPSG:4326".into()),
             )
         } else {
@@ -309,6 +338,8 @@ pub(super) fn normalize(value: &Value, query: &SearchQuery) -> Result<Vec<Candid
                     .as_str()
             } else if *key == "srtm" {
                 "hgt"
+            } else if *key == "srtm_num" {
+                "num"
             } else {
                 p::nasa::band(key).ok_or("Unsupported HLS band.")?
             };
@@ -317,7 +348,7 @@ pub(super) fn normalize(value: &Value, query: &SearchQuery) -> Result<Vec<Candid
                 .ok_or("Catalog original asset is missing.")?;
             let media = match *key {
                 "viirs" => "application/x-hdf5",
-                "srtm" => "application/zip",
+                "srtm" | "srtm_num" => "application/zip",
                 _ => "image/tiff; application=geotiff",
             };
             let request = crate::CreateJobRequest {
@@ -461,6 +492,7 @@ pub(super) async fn recheck(
                         .production
                 }
                 "srtm" => "hgt".into(),
+                "srtm_num" => "num".into(),
                 k => p::nasa::band(k).ok_or("Invalid HLS band.")?.into(),
             };
             if item["assets"][&key]["href"] != file.request.href

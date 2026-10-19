@@ -1,0 +1,492 @@
+{
+  "schema": "geod-sinolc-shanghai-original-acceptance/v1",
+  "accepted": true,
+  "datasetId": "sinolc-1",
+  "scope": "Only the unchanged fixed March 2023 East_Shanghai classification ZIP and whole TIFF: real software download, actual GUI, fresh Explore reuse, raw values and normal restart accepted. Browser/UI ZIP export remains unexecuted.",
+  "verifiedAt": "2026-10-14T14:17:04.161240+00:00",
+  "progress": {
+    "originalPlannedClearedThisBatch": 1,
+    "extraDirectoryIdsAddedThisBatch": 0,
+    "originalPlannedBaseline": 36,
+    "originalPlannedClearedBeforeThisBatch": 10,
+    "originalPlannedClearedCumulative": 11,
+    "originalPlannedRemaining": 25
+  },
+  "directory": {
+    "total": 133,
+    "groups": 17,
+    "ready": 102,
+    "auth": 6,
+    "planned": 25,
+    "plannedAndAuthRemaining": 31,
+    "connected": 108,
+    "nativeProducts": 66,
+    "nativeLayers": 105
+  },
+  "source": {
+    "archiveUrl": "https://zenodo.org/records/7709370/files/East_Shanghai.zip",
+    "publicationUrl": "https://zenodo.org/records/7709370",
+    "guideUrl": "https://zenodo.org/records/8214871",
+    "legendUrl": "https://essd.copernicus.org/articles/15/4749/2023/essd-15-4749-2023-t02.png",
+    "release": "East of China, March 2023 fixed original",
+    "publisherDeclaredArchiveMd5": "md5:c898994fa496d915f73b2ffd102d93ca",
+    "license": "CC BY 4.0",
+    "licenseScope": "Classification data only; no redistribution permission inferred for input Google Earth imagery"
+  },
+  "files": {
+    "archive": {
+      "name": "East_Shanghai.zip",
+      "bytes": 365818022,
+      "sha256": "f128cae66f38c546a850af767b42b85d29fd0c4d71ee3bb325e30b962d58d268",
+      "completeSoftwareDownload": true,
+      "allZipMemberCrcVerified": true
+    },
+    "member": {
+      "name": "East_Shanghai.tif",
+      "bytes": 427679242,
+      "sha256": "5cd5c24c414fdb3cadb89c53429d5987de70ea605e0100a9b4a83a2257b48830",
+      "crc32": "cabc1e88",
+      "unchangedWholeMember": true
+    },
+    "preview": {
+      "bytes": 811,
+      "sha256": "745d25905ebdb23da73965de9348b1138c451e20fedcd4a569c599f356f69eb4",
+      "grid": [
+        34,
+        30
+      ],
+      "kind": "low-detail categorical ColorMap display; not full-resolution original"
+    }
+  },
+  "job": {
+    "id": "5126af30-4d4e-49b4-a255-7fbb91e25727",
+    "projectId": "58084150-0d98-40eb-b0c2-887481366f96",
+    "sourcePin": {
+      "snapshotId": "b4c19eef5e4b049c9918fb6b92bc41828b54b498888252fbb8329454cf3a0765",
+      "assetKey": "raster"
+    },
+    "createdAt": "2026-10-14T12:12:43.435821500+00:00",
+    "completedAt": "2026-10-14T13:53:53.385347+00:00",
+    "status": "succeeded",
+    "attempts": 5,
+    "transfer": {
+      "mode": "resumed",
+      "resumedBytes": 216825356
+    },
+    "sameJobRecovered": true,
+    "freshResearchOriginalCopiedIntoStore": false,
+    "history": [
+      {
+        "attempts": 1,
+        "status": "failed",
+        "bytesDownloaded": 209837132,
+        "totalBytes": 365818022,
+        "error": "error decoding response body",
+        "createdAt": "2026-10-14T12:12:43.435821500+00:00",
+        "updatedAt": "2026-10-14T12:23:05.183559900+00:00",
+        "transfer": {
+          "mode": "fresh",
+          "resumedBytes": 0
+        }
+      },
+      {
+        "attempts": 2,
+        "status": "failed",
+        "bytesDownloaded": 212945780,
+        "totalBytes": 365818022,
+        "error": "error decoding response body",
+        "createdAt": "2026-10-14T12:12:43.435821500+00:00",
+        "updatedAt": "2026-10-14T12:25:46.178827600+00:00",
+        "transfer": {
+          "mode": "resumed",
+          "resumedBytes": 209837132
+        }
+      },
+      {
+        "attempts": 3,
+        "status": "failed",
+        "bytesDownloaded": 216825356,
+        "totalBytes": 365818022,
+        "error": "error decoding response body",
+        "createdAt": "2026-10-14T12:12:43.435821500+00:00",
+        "updatedAt": "2026-10-14T12:33:35.152113700+00:00",
+        "transfer": {
+          "mode": "resumed",
+          "resumedBytes": 212945780
+        }
+      },
+      {
+        "attempts": 4,
+        "status": "failed",
+        "bytesDownloaded": 216825356,
+        "totalBytes": 365818022,
+        "error": "Reviewed original segment has a changed range, total, length, ZIP type or encoding",
+        "createdAt": "2026-10-14T12:12:43.435821500+00:00",
+        "updatedAt": "2026-10-14T13:09:13.037099400+00:00",
+        "transfer": {
+          "mode": "resumed",
+          "resumedBytes": 216825356
+        }
+      },
+      {
+        "attempts": 5,
+        "status": "succeeded",
+        "bytesDownloaded": 365818022,
+        "totalBytes": 365818022,
+        "error": null,
+        "createdAt": "2026-10-14T12:12:43.435821500+00:00",
+        "updatedAt": "2026-10-14T13:53:53.385347+00:00",
+        "transfer": {
+          "mode": "resumed",
+          "resumedBytes": 216825356
+        }
+      }
+    ]
+  },
+  "transferPolicy": {
+    "maximumClosedRangeBytes": 8388608,
+    "maximumActiveOrReadySegments": 3,
+    "maximumAttemptsPerSegment": 3,
+    "onlyCompleteContiguousSegmentsCommitted": true,
+    "wholeOriginalBytesAndShaVerified": true,
+    "compiledOriginalIdentityOnly": true
+  },
+  "originalRaster": {
+    "grid": [
+      132000,
+      114000
+    ],
+    "gridPixels": 15048000000,
+    "bands": 1,
+    "dataType": "UInt8",
+    "crs": "EPSG:4326",
+    "registration": "area",
+    "bounds": [
+      120.85235595703125,
+      30.653743743896484,
+      122.26856231689453,
+      31.8768310546875
+    ],
+    "pixelScale": [
+      1.0728836059570312e-05,
+      1.0728836059570312e-05,
+      0.0
+    ],
+    "tileGrid": [
+      256,
+      256
+    ],
+    "chunkCount": 230136,
+    "compression": "LZW",
+    "overviews": [],
+    "nodata": 0,
+    "scale": 1,
+    "offset": 0,
+    "unit": "class code",
+    "nominalResolution": "1 m classification; original coordinate spacing is in degrees",
+    "uniformPerPixelObservationYearVerified": false,
+    "coarseCaptureTimeEvidenceYears": [
+      2019,
+      2020,
+      2021
+    ],
+    "declaredClasses": [
+      {
+        "code": 1,
+        "name": "Traffic route",
+        "rgb": [
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "code": 2,
+        "name": "Tree cover",
+        "rgb": [
+          0,
+          100,
+          0
+        ]
+      },
+      {
+        "code": 3,
+        "name": "Shrubland",
+        "rgb": [
+          255,
+          190,
+          35
+        ]
+      },
+      {
+        "code": 4,
+        "name": "Grassland",
+        "rgb": [
+          233,
+          255,
+          190
+        ]
+      },
+      {
+        "code": 5,
+        "name": "Cropland",
+        "rgb": [
+          255,
+          235,
+          175
+        ]
+      },
+      {
+        "code": 6,
+        "name": "Building",
+        "rgb": [
+          255,
+          170,
+          0
+        ]
+      },
+      {
+        "code": 7,
+        "name": "Barren and sparse vegetation",
+        "rgb": [
+          180,
+          180,
+          180
+        ]
+      },
+      {
+        "code": 8,
+        "name": "Snow and ice",
+        "rgb": [
+          240,
+          240,
+          240
+        ]
+      },
+      {
+        "code": 9,
+        "name": "Water",
+        "rgb": [
+          0,
+          100,
+          200
+        ]
+      },
+      {
+        "code": 10,
+        "name": "Wetland",
+        "rgb": [
+          0,
+          150,
+          160
+        ]
+      },
+      {
+        "code": 12,
+        "name": "Moss and lichen",
+        "rgb": [
+          250,
+          230,
+          160
+        ]
+      }
+    ],
+    "unlistedCodes": [
+      11,
+      250,
+      255
+    ],
+    "originalGridAndBytesUnchanged": true,
+    "originalEdgesRetained": true,
+    "laterAuthorEdgeFixApplied": false,
+    "ordinaryLimitsRetained": true
+  },
+  "independentCore": {
+    "accepted": true,
+    "scope": "Core-reader acceptance on immutable complete research originals; not a fresh software download, job, reopen or GUI acceptance",
+    "rawReferenceCount": 152,
+    "partialEdgeReferences": 8,
+    "pngPixelsCompared": 1020,
+    "previewConservativeCumulativeChunkBytes": 534773760,
+    "unknownShaOrdinaryDimensionsRejected": true,
+    "ordinaryChunkLimitUnchanged": true,
+    "wholeGridDecoded": false,
+    "shaMatchesSoftwareMember": true,
+    "pngShaMatchesSoftwarePreview": true,
+    "softwareGuiAcceptance": false
+  },
+  "softwareNative": {
+    "accepted": true,
+    "rawSampleCount": 7,
+    "rawSamples": [
+      {
+        "column": 5500,
+        "row": 4750,
+        "values": [
+          0
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 49500,
+        "row": 14250,
+        "values": [
+          1
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 60500,
+        "row": 14250,
+        "values": [
+          2
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 38500,
+        "row": 4750,
+        "values": [
+          5
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 93500,
+        "row": 33250,
+        "values": [
+          6
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 71500,
+        "row": 33250,
+        "values": [
+          9
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 131999,
+        "row": 113999,
+        "values": [
+          0
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  "gui": {
+    "accepted": true,
+    "myDataMapAndPixels": true,
+    "myDataSamples": [
+      {
+        "column": 49500,
+        "row": 14250,
+        "value": 1,
+        "noData": false
+      },
+      {
+        "column": 93500,
+        "row": 33250,
+        "value": 6,
+        "noData": false
+      },
+      {
+        "column": 131999,
+        "row": 113999,
+        "value": 0,
+        "noData": true
+      }
+    ],
+    "exploreFreshQueryReuse": true,
+    "exploreMapAndPixel": true,
+    "freshSnapshotId": "a7930488d76b52e2d94f0ae6a80305bc791f41490c174f9e9527bdb86fd9a816",
+    "newDownloadJobsOnReopen": 0,
+    "independentExploreMapClick": {
+      "scope": "Independent Rasterio/GDAL comparison of actual Explore map-click raw sample from the complete software member",
+      "column": 65999,
+      "row": 56815,
+      "value": 1,
+      "noData": false,
+      "memberSha256": "5cd5c24c414fdb3cadb89c53429d5987de70ea605e0100a9b4a83a2257b48830"
+    },
+    "browserOriginalZipExport": false,
+    "screenshots": [
+      "assets/sinolc-shanghai-original-value-20261014.png",
+      "assets/sinolc-shanghai-explore-20261014.png"
+    ]
+  },
+  "normalRestart": {
+    "accepted": true,
+    "sameCompleteJobSnapshotProject": true,
+    "inspectionIncludingPngUnchanged": true,
+    "allSevenNativeSamplesUnchanged": true,
+    "actualGuiMapAndClass6Reopened": true,
+    "verifiedAt": "2026-10-14T14:08:13.630205+00:00",
+    "forcedCrashAcceptance": false
+  },
+  "gebco": {
+    "status": "planned",
+    "partialAction": true,
+    "acceptedScope": "Official GEBCO 2026 generated regional numerical subsets only",
+    "wholeGlobalOriginalAccepted": false,
+    "originalPlannedClearedThisBatch": 0,
+    "extraDirectoryIdsAddedThisBatch": 0,
+    "acceptanceDocument": "gebco-regional-subsets-20261014.md"
+  },
+  "checks": {
+    "runtimeTests": {
+      "passed": 880,
+      "ignored": 38,
+      "scope": "All geod-runtime ordinary suites after finite original HTTP and checkpoint repair"
+    },
+    "nodeTests": {
+      "passed": 512,
+      "failed": 0
+    },
+    "targetedUiTests": {
+      "passed": 89,
+      "failed": 0,
+      "files": 5
+    },
+    "desktopBuild": {
+      "status": "passed",
+      "bundled": false,
+      "mode": "debug",
+      "exeSha256": "dfbfbb18df490ffc9065e8ee779f5b0fb597736ff901f43ebc196d1a9d192cf0",
+      "exeBytes": 157992448,
+      "nativeWindowVisualAcceptance": false
+    },
+    "repositoryIsolation": {
+      "status": "passed",
+      "registeredDesktopCommands": 156,
+      "remoteOrigins": false
+    },
+    "contracts": {
+      "status": "passed",
+      "acceptedFixtures": 6,
+      "rejectedFixtures": 14
+    }
+  },
+  "release": {
+    "installerAcceptance": false,
+    "nativeWindowVisualAcceptance": false,
+    "deploymentAcceptance": false
+  }
+}

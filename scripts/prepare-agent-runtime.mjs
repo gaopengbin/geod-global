@@ -37,11 +37,11 @@ export async function prepareRuntimeNotices({ repository = root, output, metafil
     pending.push({ filename, bytes });
     entries.push({ ...metadata, file: `licenses/${filename}`, sha256: digest(bytes), bytes: bytes.length });
   };
-  if (!Array.isArray(reviewed.records) || reviewed.records.length !== 6) throw new Error('Agent runtime notice inventory is incomplete.');
+  if (!Array.isArray(reviewed.records) || reviewed.records.length !== 7) throw new Error('Agent runtime notice inventory is incomplete.');
   for (const record of reviewed.records) {
     if (!/^[A-Za-z0-9.-]+\.txt$/.test(record.file ?? '') || record.file.includes('..')
         || !/^[a-f0-9]{64}$/.test(record.sha256 ?? '') || !Number.isInteger(record.bytes)
-        || !/^https:\/\/raw\.githubusercontent\.com\/(nodejs\/node|openai\/codex|ratatui\/ratatui|vercel\/ai)\//.test(record.source ?? '')) {
+        || !/^https:\/\/raw\.githubusercontent\.com\/(nodejs\/node|openai\/codex|ratatui\/ratatui|vercel\/ai|gaopengbin\/geod-agent)\//.test(record.source ?? '')) {
       throw new Error('Invalid Agent runtime notice source record.');
     }
     const bytes = await boundedNotice(join(sourceDirectory, record.file));
@@ -94,6 +94,7 @@ export async function prepareRuntimeNotices({ repository = root, output, metafil
     `OpenAI Codex ${versions.codex}: complete Apache-2.0 LICENSE and unchanged upstream NOTICE.`,
     'Ratatui and vendored WezTerm MIT terms are included.',
     'agent.mjs: GeoD Global GPL-3.0-only; actual npm dependencies and attributions are listed in licenses/inventory.json.',
+    'GeoD Agent 0.2.5 source adaptations: MIT; complete copyright and terms are in licenses/GeoD-Agent-v0.2.5-LICENSE.txt.',
     'Complete Apache-2.0 terms are in licenses/Codex-v0.159.2-LICENSE.txt.',
     'Shell/code-mode helper and voice binaries are not included.', '', inventory.scope, ''].join('\n');
   // Verify every input before writing any notice. A missing attribution must not

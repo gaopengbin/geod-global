@@ -1,0 +1,46 @@
+{
+  "schema": "geod-ui-verification/v1",
+  "date": "2026-10-10",
+  "scope": "Per-connection context capacity and native compaction policy",
+  "tests": {
+    "agent": { "passed": 132, "failed": 0 },
+    "agentPanel": { "passed": 82, "failed": 0 },
+    "snapshotReceiver": { "passed": 28, "failed": 0 },
+    "desktopRegistry": { "passed": 11, "failed": 0 }
+  },
+  "checks": {
+    "productionFrontendBuild": "passed",
+    "agentRuntimePreparation": "passed",
+    "repositoryIsolation": "passed",
+    "diffWhitespace": "passed",
+    "nativeDesktopBuildAndIdleRestart": "passed",
+    "nativeCodexConfigRead": {
+      "automaticOfficialWindow": 1048576,
+      "automaticCompactionLimit": 891289,
+      "customWindow": 131072,
+      "customCompactionLimit": 111411,
+      "compactionScope": "total",
+      "modelRequests": 0
+    }
+  },
+  "visual": {
+    "source": "Actual production components with a synthetic connection; no real model or credential changes",
+    "desktop": "1280 x 720 browser viewport",
+    "narrow": "390 x 720 same-origin iframe viewport, verified iframe dimensions",
+    "observed": [
+      "Automatic 1M capacity and derived compaction threshold are visible",
+      "Custom 128K value saves and restores through the test UI",
+      "Narrow dialog scrolls to the context field and retains accessible footer actions"
+    ],
+    "screenshots": [
+      ".verification/context-settings/automatic.png",
+      ".verification/context-settings/custom.png",
+      ".verification/context-settings/narrow.png"
+    ]
+  },
+  "limits": [
+    "Unknown models and gateway aliases use 32768 tokens until explicitly configured",
+    "Custom capacity must fit the actual provider limit; configuration does not increase upstream capacity",
+    "No new imagery workflow or paid model request was run for this settings change"
+  ]
+}

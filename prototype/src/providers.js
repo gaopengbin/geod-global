@@ -23,6 +23,7 @@ export const PROVIDERS = Object.freeze([
   ...Object.entries(VIIRS_PRODUCTS).map(([product, info]) => ({ id: info.provider, series: 'viirs', name: `NASA VIIRS · ${info.platform}`, collection: `${product}_002`, dataset: `VIIRS ${product} v002`, domain: 'composite', search: 'https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search', catalog: 'https://cmr.earthdata.nasa.gov/stac/LPCLOUD/', terms: `https://doi.org/10.5067/VIIRS/${product}.002`, download: true, map: false, account: 'nasa-earthdata' })),
   { id: 'planetary-modis', series: 'modis', name: 'MODIS · Planetary Computer', collection: 'modis-09A1-061', dataset: 'MODIS 8-day Surface Reflectance v6.1', domain: 'composite', search: 'https://planetarycomputer.microsoft.com/api/stac/v1/search', catalog: 'https://planetarycomputer.microsoft.com/api/stac/v1/', terms: 'https://planetarycomputer.microsoft.com/dataset/modis-09A1-061', download: true, map: false },
   { id: 'nasa-srtm', series: 'srtm', name: 'NASA Earthdata · SRTM', collection: 'SRTMGL1_003', dataset: 'NASA SRTMGL1 v003', domain: 'elevation', search: 'https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search', catalog: 'https://cmr.earthdata.nasa.gov/stac/LPCLOUD/', terms: 'https://doi.org/10.5067/MEASURES/SRTM/SRTMGL1.003', download: true, map: false, account: 'nasa-earthdata' },
+  { id: 'srtm-num', series: 'srtm', name: 'NASA Earthdata · SRTM NUM', collection: 'SRTMGL1N_003', dataset: 'NASA SRTMGL1N v003 source codes', domain: 'elevation', search: 'https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search', catalog: 'https://cmr.earthdata.nasa.gov/stac/LPCLOUD/', terms: 'https://doi.org/10.5067/MEASURES/SRTM/SRTMGL1N.003', download: true, map: false, account: 'nasa-earthdata' },
   { id: 'planetary-naip', series: 'naip', name: 'NAIP · Planetary Computer', collection: 'naip', dataset: 'USDA NAIP RGB + NIR', domain: 'aerial', search: 'https://planetarycomputer.microsoft.com/api/stac/v1/search', catalog: 'https://planetarycomputer.microsoft.com/api/stac/v1/', terms: 'https://registry.opendata.aws/naip/', download: true },
   { id: 'copernicus-dem', series: 'copernicus-dem', name: 'Copernicus DEM · GLO-30 Public', collection: 'cop-dem-glo-30', dataset: 'Copernicus DEM GLO-30 Public', domain: 'elevation', search: 'https://earth-search.aws.element84.com/v1/search', catalog: 'https://earth-search.aws.element84.com/v1/', terms: 'https://registry.opendata.aws/copernicus-dem/', download: true, map: false },
   { id: 'copernicus-dem-90', series: 'copernicus-dem', name: 'Copernicus DEM · GLO-90', collection: 'cop-dem-glo-90', dataset: 'Copernicus DEM GLO-90', domain: 'elevation', search: 'https://earth-search.aws.element84.com/v1/search', catalog: 'https://earth-search.aws.element84.com/v1/', terms: 'https://registry.opendata.aws/copernicus-dem/', download: true, map: false },
@@ -45,9 +46,10 @@ export const DEM_PRODUCTS = Object.freeze({
 });
 export const demProduct = id => demCell(id) ? DEM_PRODUCTS[id.split('_')[3]] : null;
 export const copDemLabel = items => [...new Set(items.map(item => demProduct(item.itemId || item.id)?.label).filter(Boolean))].join(' / ') || 'Copernicus DEM';
-export const SOURCE_ASSET_KEYS = ['visual', 'scl', 'red', 'green', 'blue', 'ndvi', 'evi', ...MODIS_SCIENCE_KEYS, 'modis_qc', 'modis_state', 'qa_pixel', 'qa_radsat', 'product', 'elevation', 'aerial', 'srtm', 'viirs', 'vv', 'vh', 'hh', 'hv'];
+export const SOURCE_ASSET_KEYS = ['visual', 'scl', 'red', 'green', 'blue', 'ndvi', 'evi', ...MODIS_SCIENCE_KEYS, 'modis_qc', 'modis_state', 'qa_pixel', 'qa_radsat', 'product', 'elevation', 'aerial', 'srtm', 'srtm_num', 'viirs', 'vv', 'vh', 'hh', 'hv'];
 export const LANDSAT_BANDS = ['red', 'green', 'blue'];
 export function assetLabel(key) {
+  if (key === 'srtm_num') return 'SRTM NUM source codes';
   if (MODIS_SCIENCE[key]) return MODIS_SCIENCE[key].label;
   if (key === 'ndvi') return 'NDVI vegetation index';
   if (key === 'evi') return 'EVI vegetation index';
@@ -65,6 +67,8 @@ export function srtmCell(id) {
   return lat >= -56 && lat < 60 && lon >= -180 && lon < 180 ? [lon, lat] : null;
 }
 export const srtmHref = id => `https://${NASA_HOST}/lp-prod-protected/SRTMGL1.003/${id}/${id}.zip`;
+export const numCell = id => typeof id === 'string' && id.endsWith('.SRTMGL1N.num') ? srtmCell(id.replace('.SRTMGL1N.num','.SRTMGL1.hgt')) : null;
+export const numHref = id => `https://${NASA_HOST}/lp-prod-protected/SRTMGL1N.003/${id}/${id}.zip`;
 function validNaipDate(value) {
   if (!/^\d{8}$/.test(value)) return false;
   const date = `${value.slice(0,4)}-${value.slice(4,6)}-${value.slice(6,8)}`;
@@ -126,6 +130,7 @@ export function scenePlatformLabel(scene) {
   if (scene.provider === 'planetary-modis') return `MODIS ${modisIdentity(scene.id)?.platform || ''}`;
   if (scene.provider === 'planetary-vegetation') return `MODIS ${vegetationIdentity(scene.id)?.platform || ''}`;
   if (scene.provider === 'nasa-srtm') return 'NASA SRTM';
+  if (scene.provider === 'srtm-num') return 'SRTM NUM';
   if (scene.provider === 'planetary-naip') return 'USDA NAIP';
   if (['copernicus-dem','copernicus-dem-90'].includes(scene.provider)) return 'Copernicus DEM';
   if (scene.provider === 'nasa-earthdata') return 'HLS Landsat L30';
@@ -158,6 +163,7 @@ export function isSupportedAsset(href, assetKey) {
         if (assetKey !== 'product') return false;
       } else if (url.hostname === NASA_HOST) {
         if (assetKey === 'srtm') return srtmCell(url.pathname.split('/')[3]) && href === srtmHref(url.pathname.split('/')[3]) ? true : false;
+        if (assetKey === 'srtm_num') return Boolean(numCell(url.pathname.split('/')[3]) && href === numHref(url.pathname.split('/')[3]));
         const band = { red: 'B04', green: 'B03', blue: 'B02' }[assetKey];
         if (!band || !url.pathname.endsWith(`.${band}.tif`)) return false;
       } else if (url.hostname === LANDSAT_HOST) {
@@ -175,6 +181,7 @@ export function isSupportedAsset(href, assetKey) {
         || (url.hostname === LANDSAT_HOST && url.pathname.startsWith('/landsat-c2/level-2/standard/oli-tirs/') && /_(SR_B[234]|QA_PIXEL|QA_RADSAT)\.TIF$/.test(url.pathname))
         || (url.hostname === NASA_HOST && /^\/lp-prod-protected\/HLSL30\.020\/(HLS\.L30\.T\d{2}[A-Z]{3}\.\d{7}T\d{6}\.v2\.0)\/\1\.B0[234]\.tif$/.test(url.pathname))
         || (url.hostname === NASA_HOST && srtmCell(url.pathname.split('/')[3]) && href === srtmHref(url.pathname.split('/')[3]))
+        || (url.hostname === NASA_HOST && numCell(url.pathname.split('/')[3]) && href === numHref(url.pathname.split('/')[3]))
         || (url.hostname === CDSE_HOST && /^\/odata\/v1\/Products\([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\)\/\$value$/.test(url.pathname)));
   } catch { return false; }
 }
@@ -184,6 +191,7 @@ export function providerForAssets(assets) {
   const viirs = viirsAssetIdentity(assets?.viirs?.href);
   if (viirs) return viirs.provider;
   if (Object.values(assets || {}).some(asset => isSupportedAsset(asset?.href, 'srtm'))) return 'nasa-srtm';
+  if (Object.values(assets || {}).some(asset => isSupportedAsset(asset?.href, 'srtm_num'))) return 'srtm-num';
   const hosts = Object.values(assets || {}).flatMap(asset => { try { return [new URL(asset.href).hostname]; } catch { return []; } });
   return hosts.includes(MODIS_HOST) ? 'planetary-modis' : hosts.includes(NAIP_HOST) ? 'planetary-naip' : hosts.includes(DEM90_HOST) ? 'copernicus-dem-90' : hosts.includes(DEM_HOST) ? 'copernicus-dem' : hosts.includes(CDSE_HOST) ? 'copernicus' : hosts.includes(NASA_HOST) ? 'nasa-earthdata' : hosts.includes(LANDSAT_HOST) ? 'planetary-landsat' : hosts.includes(PC_HOST) ? 'planetary-computer' : 'earth-search';
 }

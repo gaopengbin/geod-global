@@ -1,0 +1,1598 @@
+{
+  "schema": "geod-independent-public-cgls-isda-candidates/v1",
+  "checkedDate": "2026-10-12",
+  "status": "candidate-only; independent decoding does not establish native acceptance",
+  "cgls": {
+    "productFamily": "CGLS Collection3 land cover; permanent water is one layer, not a separate product",
+    "referenceYears": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "metadata": [
+      {
+        "year": 2015,
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2015/cgls_landcover_2015.stac-item.json",
+        "bytes": 5596,
+        "sha256": "0c1b87590518f8ca9d49ac2a02d35c303cd317a808023a78e1c30b04a8dc185d",
+        "itemId": "28efbc1c-8376-57ee-b9b1-4850f5ef4a57",
+        "bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "properties": {
+          "odc:product": "cgls_landcover",
+          "start_datetime": "2015-01-01T00:00:00Z",
+          "end_datetime": "2015-12-31T23:59:59Z",
+          "proj:epsg": 4326,
+          "proj:geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ]
+              ]
+            ]
+          },
+          "proj:bbox": [
+            -26.36011904761955,
+            -47.97023809523767,
+            64.49999999999919,
+            38.35019841269855
+          ],
+          "proj:shape": [
+            87011,
+            91587
+          ],
+          "proj:transform": [
+            0.0009920634920634888,
+            0.0,
+            -26.36011904761955,
+            0.0,
+            -0.0009920634920634888,
+            38.35019841269855,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": null
+        },
+        "links": [
+          {
+            "rel": "derived_from",
+            "href": "https://zenodo.org/record/3939038",
+            "type": "text/html",
+            "title": "Source"
+          }
+        ],
+        "selectedOriginalAsset": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      {
+        "year": 2016,
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2016/cgls_landcover_2016.stac-item.json",
+        "bytes": 5596,
+        "sha256": "85a15cf7f4a3856b58c6f8d308b9a1fa4d508e6526c607c54f6425f50ff02956",
+        "itemId": "1463c6c2-969d-5047-a754-06ae1675edcc",
+        "bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "properties": {
+          "odc:product": "cgls_landcover",
+          "start_datetime": "2016-01-01T00:00:00Z",
+          "end_datetime": "2016-12-31T23:59:59Z",
+          "proj:epsg": 4326,
+          "proj:geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ]
+              ]
+            ]
+          },
+          "proj:bbox": [
+            -26.36011904761955,
+            -47.97023809523767,
+            64.49999999999919,
+            38.35019841269855
+          ],
+          "proj:shape": [
+            87011,
+            91587
+          ],
+          "proj:transform": [
+            0.0009920634920634888,
+            0.0,
+            -26.36011904761955,
+            0.0,
+            -0.0009920634920634888,
+            38.35019841269855,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": null
+        },
+        "links": [
+          {
+            "rel": "derived_from",
+            "href": "https://zenodo.org/record/3518026",
+            "type": "text/html",
+            "title": "Source"
+          }
+        ],
+        "selectedOriginalAsset": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      {
+        "year": 2017,
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2017/cgls_landcover_2017.stac-item.json",
+        "bytes": 5596,
+        "sha256": "70a10bafa7f800ba6df82bc5388c6e7824f3a038632f6874023e27275745c4f0",
+        "itemId": "967c8ccc-328b-5d15-807c-7895a34ff9ca",
+        "bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "properties": {
+          "odc:product": "cgls_landcover",
+          "start_datetime": "2017-01-01T00:00:00Z",
+          "end_datetime": "2017-12-31T23:59:59Z",
+          "proj:epsg": 4326,
+          "proj:geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ]
+              ]
+            ]
+          },
+          "proj:bbox": [
+            -26.36011904761955,
+            -47.97023809523767,
+            64.49999999999919,
+            38.35019841269855
+          ],
+          "proj:shape": [
+            87011,
+            91587
+          ],
+          "proj:transform": [
+            0.0009920634920634888,
+            0.0,
+            -26.36011904761955,
+            0.0,
+            -0.0009920634920634888,
+            38.35019841269855,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": null
+        },
+        "links": [
+          {
+            "rel": "derived_from",
+            "href": "https://zenodo.org/record/3518036",
+            "type": "text/html",
+            "title": "Source"
+          }
+        ],
+        "selectedOriginalAsset": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      {
+        "year": 2018,
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2018/cgls_landcover_2018.stac-item.json",
+        "bytes": 5596,
+        "sha256": "279113b4565714f8001ba0c43bb17a768bf18be86e85b085f7c6a0266297df7a",
+        "itemId": "fe5e5783-cd73-5fec-aebb-018df493b0d2",
+        "bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "properties": {
+          "odc:product": "cgls_landcover",
+          "start_datetime": "2018-01-01T00:00:00Z",
+          "end_datetime": "2018-12-31T23:59:59Z",
+          "proj:epsg": 4326,
+          "proj:geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ]
+              ]
+            ]
+          },
+          "proj:bbox": [
+            -26.36011904761955,
+            -47.97023809523767,
+            64.49999999999919,
+            38.35019841269855
+          ],
+          "proj:shape": [
+            87011,
+            91587
+          ],
+          "proj:transform": [
+            0.0009920634920634888,
+            0.0,
+            -26.36011904761955,
+            0.0,
+            -0.0009920634920634888,
+            38.35019841269855,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": null
+        },
+        "links": [
+          {
+            "rel": "derived_from",
+            "href": "https://zenodo.org/record/3518038",
+            "type": "text/html",
+            "title": "Source"
+          }
+        ],
+        "selectedOriginalAsset": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      {
+        "year": 2019,
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2019/cgls_landcover_2019.stac-item.json",
+        "bytes": 5596,
+        "sha256": "bf636992f5fa36f0fa36c2d94c321899492c2e9cf9562dfc562830c2a0411217",
+        "itemId": "5bf5a96f-878f-599c-9cca-44a33df9f4f4",
+        "bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "properties": {
+          "odc:product": "cgls_landcover",
+          "start_datetime": "2019-01-01T00:00:00Z",
+          "end_datetime": "2019-12-31T23:59:59Z",
+          "proj:epsg": 4326,
+          "proj:geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  -47.97023809523767
+                ],
+                [
+                  64.49999999999919,
+                  38.35019841269855
+                ],
+                [
+                  -26.36011904761955,
+                  38.35019841269855
+                ]
+              ]
+            ]
+          },
+          "proj:bbox": [
+            -26.36011904761955,
+            -47.97023809523767,
+            64.49999999999919,
+            38.35019841269855
+          ],
+          "proj:shape": [
+            87011,
+            91587
+          ],
+          "proj:transform": [
+            0.0009920634920634888,
+            0.0,
+            -26.36011904761955,
+            0.0,
+            -0.0009920634920634888,
+            38.35019841269855,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": null
+        },
+        "links": [
+          {
+            "rel": "derived_from",
+            "href": "https://zenodo.org/record/3939050",
+            "type": "text/html",
+            "title": "Source"
+          }
+        ],
+        "selectedOriginalAsset": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    ],
+    "listings": [
+      {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/?list-type=2&prefix=cgls_landcover%2F2015%2F&max-keys=1000",
+        "sha256": "4482c2e45bcd38a8c98675e401b42f5ead71c2d96a6eaa5dc94d0af85658401b",
+        "truncated": "false",
+        "files": [
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015.stac-item.json",
+            "bytes": 5596
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_bare_cover_fraction.tif",
+            "bytes": 940951595
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_builtup_cover_fraction.tif",
+            "bytes": 126055349
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_classification.tif",
+            "bytes": 420007986
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_classification_probability.tif",
+            "bytes": 1866417221
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_crops_cover_fraction.tif",
+            "bytes": 783914758
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_data_density.tif",
+            "bytes": 1084768224
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_forest_type.tif",
+            "bytes": 226807041
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_grass_cover_fraction.tif",
+            "bytes": 1748120605
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_mosslichen_cover_fraction.tif",
+            "bytes": 16213017
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_permanentwater_cover_fraction.tif",
+            "bytes": 35638998
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_seasonalwater_cover_fraction.tif",
+            "bytes": 62070851
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_shrub_cover_fraction.tif",
+            "bytes": 1581347829
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_snow_cover_fraction.tif",
+            "bytes": 15972345
+          },
+          {
+            "key": "cgls_landcover/2015/cgls_landcover_2015_tree_cover_fraction.tif",
+            "bytes": 1290623683
+          }
+        ]
+      },
+      {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/?list-type=2&prefix=cgls_landcover%2F2016%2F&max-keys=1000",
+        "sha256": "4ab3262b903102dd0aba321379fd2a5ff4ec0a86966e49ce47bcb92fb0de10e9",
+        "truncated": "false",
+        "files": [
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016.stac-item.json",
+            "bytes": 5596
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_bare_cover_fraction.tif",
+            "bytes": 989217026
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_builtup_cover_fraction.tif",
+            "bytes": 129254338
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_classification.tif",
+            "bytes": 420704406
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_classification_probability.tif",
+            "bytes": 1866329688
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_crops_cover_fraction.tif",
+            "bytes": 859669817
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_data_density.tif",
+            "bytes": 1078097492
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_forest_type.tif",
+            "bytes": 223881833
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_grass_cover_fraction.tif",
+            "bytes": 1747297022
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_mosslichen_cover_fraction.tif",
+            "bytes": 16264159
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_permanentwater_cover_fraction.tif",
+            "bytes": 35859652
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_seasonalwater_cover_fraction.tif",
+            "bytes": 65839435
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_shrub_cover_fraction.tif",
+            "bytes": 1577791664
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_snow_cover_fraction.tif",
+            "bytes": 15962878
+          },
+          {
+            "key": "cgls_landcover/2016/cgls_landcover_2016_tree_cover_fraction.tif",
+            "bytes": 1290524748
+          }
+        ]
+      },
+      {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/?list-type=2&prefix=cgls_landcover%2F2017%2F&max-keys=1000",
+        "sha256": "329e80d1526bb0888d3156768407f476776657f03baedd1817f4f0e7c4225fe5",
+        "truncated": "false",
+        "files": [
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017.stac-item.json",
+            "bytes": 5596
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_bare_cover_fraction.tif",
+            "bytes": 1024373007
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_builtup_cover_fraction.tif",
+            "bytes": 132524033
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_classification.tif",
+            "bytes": 421713154
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_classification_probability.tif",
+            "bytes": 1870266972
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_crops_cover_fraction.tif",
+            "bytes": 885582870
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_data_density.tif",
+            "bytes": 1076129650
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_forest_type.tif",
+            "bytes": 229124894
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_grass_cover_fraction.tif",
+            "bytes": 1740818118
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_mosslichen_cover_fraction.tif",
+            "bytes": 16296609
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_permanentwater_cover_fraction.tif",
+            "bytes": 36213038
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_seasonalwater_cover_fraction.tif",
+            "bytes": 65564491
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_shrub_cover_fraction.tif",
+            "bytes": 1584466067
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_snow_cover_fraction.tif",
+            "bytes": 15968935
+          },
+          {
+            "key": "cgls_landcover/2017/cgls_landcover_2017_tree_cover_fraction.tif",
+            "bytes": 1298627825
+          }
+        ]
+      },
+      {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/?list-type=2&prefix=cgls_landcover%2F2018%2F&max-keys=1000",
+        "sha256": "c982534ad8d6733483625632eefae153ab6fac10cd497242a1687f31b7737400",
+        "truncated": "false",
+        "files": [
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018.stac-item.json",
+            "bytes": 5596
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_bare_cover_fraction.tif",
+            "bytes": 1028600069
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_builtup_cover_fraction.tif",
+            "bytes": 137092329
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_classification.tif",
+            "bytes": 425289900
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_classification_probability.tif",
+            "bytes": 1902521476
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_crops_cover_fraction.tif",
+            "bytes": 902449041
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_data_density.tif",
+            "bytes": 1046610873
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_forest_type.tif",
+            "bytes": 234655975
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_grass_cover_fraction.tif",
+            "bytes": 1759692300
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_mosslichen_cover_fraction.tif",
+            "bytes": 16370303
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_permanentwater_cover_fraction.tif",
+            "bytes": 36264213
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_seasonalwater_cover_fraction.tif",
+            "bytes": 67126829
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_shrub_cover_fraction.tif",
+            "bytes": 1605763447
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_snow_cover_fraction.tif",
+            "bytes": 15954106
+          },
+          {
+            "key": "cgls_landcover/2018/cgls_landcover_2018_tree_cover_fraction.tif",
+            "bytes": 1314798181
+          }
+        ]
+      },
+      {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/?list-type=2&prefix=cgls_landcover%2F2019%2F&max-keys=1000",
+        "sha256": "d425d4c6d3b42e0ca65d48257d5306955c3fb0a5df6a40d09969189ccfb353c2",
+        "truncated": "false",
+        "files": [
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019.stac-item.json",
+            "bytes": 5596
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_bare_cover_fraction.tif",
+            "bytes": 1087963914
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_builtup_cover_fraction.tif",
+            "bytes": 138841146
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_classification.tif",
+            "bytes": 426250299
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_classification_probability.tif",
+            "bytes": 1908245265
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_crops_cover_fraction.tif",
+            "bytes": 989444820
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_data_density.tif",
+            "bytes": 1055254336
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_forest_type.tif",
+            "bytes": 232290136
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_grass_cover_fraction.tif",
+            "bytes": 1795662545
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_mosslichen_cover_fraction.tif",
+            "bytes": 16332426
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+            "bytes": 36681970
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_seasonalwater_cover_fraction.tif",
+            "bytes": 68030642
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_shrub_cover_fraction.tif",
+            "bytes": 1671423414
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_snow_cover_fraction.tif",
+            "bytes": 15957531
+          },
+          {
+            "key": "cgls_landcover/2019/cgls_landcover_2019_tree_cover_fraction.tif",
+            "bytes": 1351317314
+          }
+        ]
+      }
+    ],
+    "declaredPathProbe": {
+      "name": "cgls-original-declared-gls-head",
+      "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/gls/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+      "method": "HEAD",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "actualDistributionProbe": {
+      "name": "cgls-correct-distribution-head",
+      "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+      "method": "HEAD",
+      "status": 200,
+      "headers": {
+        "x-amz-id-2": "8YxCoz7uhW0Vi5flqn0WiZ59y5nSa1Yl8+grbgD6NQLAp/7nVKS4y/xxMYEEYbeYQbh5NEO+0Ld1lzxc5WymF9gX7nvmwxCH",
+        "x-amz-request-id": "KMXH3QX4Y5ESE0P6",
+        "Date": "Mon, 12 Oct 2026 08:17:18 GMT",
+        "Last-Modified": "Wed, 01 Dec 2021 22:41:24 GMT",
+        "ETag": "\"62f1a077acb403b2ce070e75eb848775-5\"",
+        "x-amz-version-id": "XuKu0LzBlg5YLVefLFE0tCyyLcDSzdLe",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "image/tiff",
+        "Content-Length": "36681970",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      },
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "license": {
+      "value": "CC-BY-4.0",
+      "source": "DEAfrica ODC product definition; original standalone item has no license or collection link",
+      "url": "https://explorer.digitalearth.africa/products/cgls_landcover"
+    },
+    "original": {
+      "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+      "bytes": 36681970,
+      "sha256": "20e1f3dcff66955ac8444e2c17daabbf153835f811dcecbe4febce9fb39f75f3",
+      "seconds": 40.031,
+      "mode": "fresh",
+      "path": "G:\\code\\geod-global\\.verification\\new-channels-cgls-isda-20261012\\cgls-landcover-2019-permanentwater-original.tif",
+      "completeOriginal": true
+    },
+    "independentRaster": {
+      "width": 91587,
+      "height": 87011,
+      "bands": 1,
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0009920634920634888,
+        0.0,
+        -26.36011904761955,
+        0.0,
+        -0.0009920634920634888,
+        38.35019841269855
+      ],
+      "bounds": [
+        -26.36011904761955,
+        -47.97023809523767,
+        64.49999999999919,
+        38.35019841269855
+      ],
+      "resolution": [
+        0.0009920634920634888,
+        0.0009920634920634888
+      ],
+      "dtypes": [
+        "uint8"
+      ],
+      "nodata": 255.0,
+      "scales": [
+        1.0
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "tags": {
+        "archive_facility": "VITO NV",
+        "AREA_OR_POINT": "Area",
+        "copyright": "Copernicus Service information 2020",
+        "creator": "Dr. Marcel Buchhorn (VITO)",
+        "delivered_product_crs": "WGS84 (EPSG:4326)",
+        "doi": "10.5281/zenodo.3939050",
+        "file_creation": "Mon Jul 13 19:30:53 2020",
+        "history": "2020-07-10 Processing line LC100 v4.1",
+        "Info": "global for product PermanentWater-CoverFraction-layer of Copernicus Global Land Service LC100 layers for epoch 2019-nrt",
+        "institution": "VITO NV",
+        "long_name": "Land Cover",
+        "NODATA_value": "255",
+        "orbit_type": "LEO",
+        "OVR_RESAMPLING_ALG": "BILINEAR",
+        "platform": "Proba-V",
+        "processing_level": "L3",
+        "processing_mode": "Offline",
+        "production_crs": "UTM",
+        "production_grid": "MGRS (Sentinel-2 tiling grid)",
+        "product_version": "v3.0.1",
+        "references": "https://land.copernicus.eu/global/products/lc",
+        "region_name": "global",
+        "sensor": "VEGETATION",
+        "source": "Derived from EO satellite imagery",
+        "time_coverage_end": "2020-03-31T23:59:59Z",
+        "time_coverage_start": "2017-04-01T00:00:00Z",
+        "time_reference_year": "2019",
+        "title": "Dynamic Land Cover Map 100m 2019-nrt"
+      },
+      "maskFlags": [
+        [
+          "nodata"
+        ]
+      ],
+      "blockShapes": [
+        [
+          512,
+          512
+        ]
+      ],
+      "isTiled": true,
+      "overviews": [
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256
+      ],
+      "allPixelsDecoded": 7969076457,
+      "valueCounts": {
+        "0": 3147539498,
+        "1": 70165,
+        "2": 141741,
+        "3": 186347,
+        "4": 123661,
+        "5": 53985,
+        "6": 255807,
+        "7": 46696,
+        "8": 77375,
+        "9": 186363,
+        "10": 134580,
+        "11": 43547,
+        "12": 136147,
+        "13": 29133,
+        "14": 56320,
+        "15": 116989,
+        "16": 65329,
+        "17": 29800,
+        "18": 115821,
+        "19": 41584,
+        "20": 92362,
+        "21": 93901,
+        "22": 48606,
+        "23": 35274,
+        "24": 74720,
+        "25": 43060,
+        "26": 40875,
+        "27": 76537,
+        "28": 39044,
+        "29": 41296,
+        "30": 124016,
+        "31": 43187,
+        "32": 38190,
+        "33": 47699,
+        "34": 39628,
+        "35": 38261,
+        "36": 68565,
+        "37": 38079,
+        "38": 35571,
+        "39": 52470,
+        "40": 80396,
+        "41": 34336,
+        "42": 44331,
+        "43": 31212,
+        "44": 36569,
+        "45": 56413,
+        "46": 43510,
+        "47": 30218,
+        "48": 40726,
+        "49": 33258,
+        "50": 69688,
+        "51": 37890,
+        "52": 32501,
+        "53": 28216,
+        "54": 43307,
+        "55": 44011,
+        "56": 31470,
+        "57": 30466,
+        "58": 31780,
+        "59": 28861,
+        "60": 68523,
+        "61": 34146,
+        "62": 28340,
+        "63": 31215,
+        "64": 45953,
+        "65": 29003,
+        "66": 31149,
+        "67": 29359,
+        "68": 27938,
+        "69": 33751,
+        "70": 66280,
+        "71": 27904,
+        "72": 28491,
+        "73": 42919,
+        "74": 28037,
+        "75": 29160,
+        "76": 40425,
+        "77": 23003,
+        "78": 32498,
+        "79": 46246,
+        "80": 53587,
+        "81": 26597,
+        "82": 56047,
+        "83": 17389,
+        "84": 38756,
+        "85": 54293,
+        "86": 31618,
+        "87": 17447,
+        "88": 62355,
+        "89": 22457,
+        "90": 69732,
+        "91": 71897,
+        "92": 38926,
+        "93": 24092,
+        "94": 103494,
+        "95": 25119,
+        "96": 55404,
+        "97": 72073,
+        "98": 58519,
+        "99": 28706,
+        "100": 27578633,
+        "255": 4788473588
+      },
+      "validPixels": 3180602869,
+      "firstValidSample": {
+        "column": 508,
+        "row": 494,
+        "value": 100
+      },
+      "firstNonzeroSample": {
+        "column": 508,
+        "row": 494,
+        "value": 100
+      },
+      "rawSamples": [
+        {
+          "column": 0,
+          "row": 0,
+          "value": 255,
+          "scalarNoData": true,
+          "gdalMaskValid": false
+        },
+        {
+          "column": 45793,
+          "row": 43505,
+          "value": 0,
+          "scalarNoData": false,
+          "gdalMaskValid": true
+        },
+        {
+          "column": 91586,
+          "row": 87010,
+          "value": 255,
+          "scalarNoData": true,
+          "gdalMaskValid": false
+        },
+        {
+          "column": 508,
+          "row": 494,
+          "value": 100,
+          "scalarNoData": false,
+          "gdalMaskValid": true
+        },
+        {
+          "column": 59734,
+          "row": 39060,
+          "value": 100,
+          "scalarNoData": false,
+          "gdalMaskValid": true,
+          "location": {
+            "longitude": 32.9,
+            "latitude": -0.4
+          }
+        }
+      ],
+      "preview": "Independent first-band raw-value grayscale, no scientific styling or calibration"
+    },
+    "nativeAcceptancePerformed": false,
+    "scope": "One original independently downloaded and fully decoded; native preset acceptance and other-layer/year original validation remain separate work.",
+    "proposedAdapter": "deafrica-cgls-reviewed-distribution-path; only exact permanentwater/year original gls asset to fixed documented cgls_landcover HTTPS path; no raw JSON edits."
+  },
+  "isda": {
+    "status": "blocked-by-current-complete-original-size-and-grid-limits",
+    "catalog": {
+      "name": "isda-catalog",
+      "url": "https://isdasoil.s3.us-west-2.amazonaws.com/catalog.json",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "x-amz-request-id": "YW0ENRXP2VT54M06",
+        "x-amz-id-2": "xUjRxgOmIEZeC3BvgFltm/N1S6ovsefv0FjzopWF1g/eif2HYsF0ZUGB0KSwzjwqCmlbCyNjWZjO6I0ezZbkWbpV97tycEgM",
+        "Content-Length": "1648",
+        "Accept-Ranges": "bytes",
+        "Date": "Mon, 12 Oct 2026 08:17:13 GMT",
+        "Server": "AmazonS3",
+        "Last-Modified": "Tue, 27 Apr 2021 18:09:43 GMT",
+        "ETag": "\"4b3d39ff9c9778034c2b91f6575bf2b2\"",
+        "x-amz-version-id": "ga0Ko26p3Lj40LOuWpACvYQKrRuSL0AR",
+        "Content-Type": "binary/octet-stream",
+        "Connection": "close"
+      },
+      "bytes": 1648,
+      "sha256": "bde2d961199a2376c7f2506d0f9d1536b4a2b40c45646a37c8ae7d243c3e1a61",
+      "path": "G:\\code\\geod-global\\.verification\\new-channels-cgls-isda-20261012\\isda-catalog.json",
+      "document": {
+        "id": "isdasoil",
+        "stac_version": "1.0.0-beta.2",
+        "description": "\n![Image](https://isdasoil.s3-us-west-2.amazonaws.com/iSDAsoil_logo.jpg)\n\niSDAsoil is a soil resource created by [iSDA](https://isda-africa.com/), containing soil property predictions at 30m resolution for the entire African continent.\n\n Maps for over 20 different soil properties have been created at 2 different depths (0-20 and 20-50cm).  Soil property predictions were made using machine learning coupled with remote sensing data and a training set of over 100,000 analyzed soil samples. Included in this datset are images of predicted soil properties, model error and satellite covariates used in the mapping process.\n \n To explore the iSDAsoil data, it is recommended to visit the [iSDAsoil homepage](https://isda-africa.com/isdasoil). \n \n Further information can be found in our [FAQ section](https://www.isda-africa.com/isdasoil/faqs/), and [technical information documentation](https://www.isda-africa.com/isdasoil/technical-information/). ",
+        "links": [
+          {
+            "rel": "root",
+            "href": "./catalog.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "child",
+            "href": "./soil_data/collection.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "child",
+            "href": "./covariates/collection.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "self",
+            "href": "https://isdasoil.s3.amazonaws.com/catalog.json",
+            "type": "application/json"
+          }
+        ],
+        "title": "iSDAsoil"
+      }
+    },
+    "collection": {
+      "name": "isda-collection",
+      "url": "https://isdasoil.s3.us-west-2.amazonaws.com/soil_data/collection.json",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "x-amz-request-id": "YW09ES9HEAV4N15F",
+        "x-amz-id-2": "YMDK+I7n07UMI1tE36YjMk3XBbPbVbjXYeGrLgCA+/lUlsCje210SM5wjz6qhTzGLqrSAXXlU00vAorcen4lo3ycnYvnYkta",
+        "Content-Length": "4961",
+        "Accept-Ranges": "bytes",
+        "Date": "Mon, 12 Oct 2026 08:17:13 GMT",
+        "Server": "AmazonS3",
+        "Last-Modified": "Tue, 27 Apr 2021 18:09:58 GMT",
+        "ETag": "\"bb46259398328488c47d7c298c2bf772\"",
+        "x-amz-version-id": "mJ4rpfqkzYXTGwi3Zm71kIxbrCPO9gEI",
+        "Content-Type": "binary/octet-stream",
+        "Connection": "close"
+      },
+      "bytes": 4961,
+      "sha256": "9acd6b1c4e6f28a37272e8e984651da0adcbda72dd159cd70ac550257fdf6b0c",
+      "path": "G:\\code\\geod-global\\.verification\\new-channels-cgls-isda-20261012\\isda-collection.json",
+      "document": {
+        "id": "soil_data",
+        "stac_version": "1.0.0-beta.2",
+        "description": "iSDAsoil predictions of soil data",
+        "links": [
+          {
+            "rel": "root",
+            "href": "../catalog.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "cite-as",
+            "href": "https://doi.org/10.1038/s41598-021-85639-y"
+          },
+          {
+            "rel": "item",
+            "href": "./aluminium_extractable/aluminium_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./bedrock_depth/bedrock_depth.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./bulk_density/bulk_density.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./calcium_extractable/calcium_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./carbon_organic/carbon_organic.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./carbon_total/carbon_total.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./cation_exchange_capacity/cation_exchange_capacity.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./clay_content/clay_content.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./fcc/fcc.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./iron_extractable/iron_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./magnesium_extractable/magnesium_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./nitrogen_total/nitrogen_total.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./ph/ph.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./phosphorous_extractable/phosphorous_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./potassium_extractable/potassium_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./sand_content/sand_content.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./silt_content/silt_content.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./stone_content/stone_content.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./sulphur_extractable/sulphur_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./texture_class/texture_class.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "item",
+            "href": "./zinc_extractable/zinc_extractable.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "parent",
+            "href": "../catalog.json",
+            "type": "application/json"
+          }
+        ],
+        "stac_extensions": [
+          "scientific"
+        ],
+        "sci:citation": "Hengl, T., Miller, M.A.E., Križan, J. et al. African soil properties and nutrients mapped at 30 m spatial resolution using two-scale ensemble machine learning. Sci Rep 11, 6130 (2021)",
+        "sci:publications": [
+          {
+            "doi": "10.1038/s41598-021-85639-y",
+            "citation": "Hengl, T., Miller, M.A.E., Križan, J. et al. African soil properties and nutrients mapped at 30 m spatial resolution using two-scale ensemble machine learning. Sci Rep 11, 6130 (2021)"
+          }
+        ],
+        "title": "Soil data",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                -31.464236700000008,
+                -34.89121030686439,
+                57.081712708848684,
+                37.64980990000001
+              ]
+            ]
+          },
+          "temporal": {
+            "interval": [
+              [
+                "2001-01-01T00:00:00Z",
+                "2017-01-01T00:00:00Z"
+              ]
+            ]
+          }
+        },
+        "license": "CC-BY-4.0",
+        "providers": [
+          {
+            "name": "iSDA",
+            "roles": [
+              "producer",
+              "licensor"
+            ],
+            "url": "https://isda-africa.com/"
+          }
+        ]
+      }
+    },
+    "samplePhMetadata": {
+      "name": "isda-ph-item",
+      "url": "https://isdasoil.s3.us-west-2.amazonaws.com/soil_data/ph/ph.json",
+      "status": 200,
+      "mediaType": "binary/octet-stream",
+      "bytes": 3261,
+      "sha256": "d842d657981a97f63a3c7c20deed7bf62189ff5e221d6568177653a368b3ec14",
+      "path": "G:\\code\\geod-global\\.verification\\new-channels-cgls-isda-20261012\\isda-ph-item.json",
+      "document": {
+        "type": "Feature",
+        "stac_version": "1.0.0-beta.2",
+        "id": "ph",
+        "properties": {
+          "start_datetime": "2001-01-01T00:00:00Z",
+          "end_datetime": "2017-01-01T00:00:00Z",
+          "proj:epsg": 3857,
+          "proj:transform": [
+            30.0,
+            0.0,
+            -3502582.8076430312,
+            0.0,
+            -30.0,
+            4530073.13045243,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "proj:shape": [
+            289306,
+            328563
+          ],
+          "datetime": null
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                57.081712708848684,
+                -34.89121030686439
+              ],
+              [
+                57.081712708848684,
+                37.64980990000001
+              ],
+              [
+                -31.464236700000008,
+                37.64980990000001
+              ],
+              [
+                -31.464236700000008,
+                -34.89121030686439
+              ],
+              [
+                57.081712708848684,
+                -34.89121030686439
+              ]
+            ]
+          ]
+        },
+        "links": [
+          {
+            "rel": "root",
+            "href": "../../catalog.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "collection",
+            "href": "../collection.json",
+            "type": "application/json"
+          },
+          {
+            "rel": "parent",
+            "href": "../collection.json",
+            "type": "application/json"
+          }
+        ],
+        "assets": {
+          "image": {
+            "href": "https://isdasoil.s3.amazonaws.com/soil_data/ph/ph.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "pH",
+            "description": "pH at soil depths of 0-20cm and 20-50cm, predicted mean and standard deviation",
+            "eo:bands": [
+              {
+                "name": "mean_0_20",
+                "description": "pH, predicted mean at 0-20 cm depth"
+              },
+              {
+                "name": "mean_20_50",
+                "description": "pH, predicted mean at 20-50 cm depth"
+              },
+              {
+                "name": "stdev_0_20",
+                "description": "pH, standard deviation at 0-20 cm depth"
+              },
+              {
+                "name": "stdev_20_50",
+                "description": "pH, standard deviation at 20-50 cm depth"
+              }
+            ],
+            "roles": [
+              "data"
+            ]
+          },
+          "thumbnail": {
+            "href": "https://isdasoil.s3.amazonaws.com/soil_data/ph/ph_thumbnail.png",
+            "type": "image/png",
+            "title": "pH thumbnail",
+            "roles": [
+              "thumbnail"
+            ]
+          }
+        },
+        "bbox": [
+          -31.464236700000008,
+          -34.89121030686439,
+          57.081712708848684,
+          37.64980990000001
+        ],
+        "stac_extensions": [
+          "projection",
+          "eo"
+        ],
+        "collection": "soil_data",
+        "back-transformation": "x/10",
+        "unit": ""
+      }
+    },
+    "completeListing": {
+      "url": "https://isdasoil.s3.us-west-2.amazonaws.com/?list-type=2&prefix=soil_data%2F&max-keys=1000",
+      "sha256": "1d63c320281ab3971aad07b990ce4a0777a25b286f9ff541ee504f0d14fbbbe8",
+      "truncated": false,
+      "formalTiffCount": 21,
+      "formalTiffs": [
+        {
+          "key": "soil_data/aluminium_extractable/aluminium_extractable.tif",
+          "bytes": 22417157474,
+          "lastModified": "2021-04-22T14:39:24.000Z",
+          "etag": "\"457afbc65f996a92cc1f006ef5c09a7f-2673\""
+        },
+        {
+          "key": "soil_data/bedrock_depth/bedrock_depth.tif",
+          "bytes": 23567124430,
+          "lastModified": "2021-04-22T14:15:54.000Z",
+          "etag": "\"896362387fb4800be1b0759d9cc11898-2810\""
+        },
+        {
+          "key": "soil_data/bulk_density/bulk_density.tif",
+          "bytes": 45442813320,
+          "lastModified": "2021-04-22T14:32:24.000Z",
+          "etag": "\"77df30be893004b514f520a1518d2b54-5418\""
+        },
+        {
+          "key": "soil_data/calcium_extractable/calcium_extractable.tif",
+          "bytes": 29807281473,
+          "lastModified": "2021-04-22T14:46:40.000Z",
+          "etag": "\"6d1118087c72d7d03da0cbbc2bc3794d-3554\""
+        },
+        {
+          "key": "soil_data/carbon_organic/carbon_organic.tif",
+          "bytes": 22975198598,
+          "lastModified": "2021-04-22T15:16:06.000Z",
+          "etag": "\"08aa7b89b77fa8cc818dbb27b40992cd-2739\""
+        },
+        {
+          "key": "soil_data/carbon_total/carbon_total.tif",
+          "bytes": 25553126055,
+          "lastModified": "2021-04-22T14:42:58.000Z",
+          "etag": "\"f1700440cafbea94bd8b8dbc5cb476f0-3047\""
+        },
+        {
+          "key": "soil_data/cation_exchange_capacity/cation_exchange_capacity.tif",
+          "bytes": 26734360253,
+          "lastModified": "2021-04-22T14:50:57.000Z",
+          "etag": "\"2580b2091e1ea1190c643a71fbe32ca9-3187\""
+        },
+        {
+          "key": "soil_data/clay_content/clay_content.tif",
+          "bytes": 40384206720,
+          "lastModified": "2021-04-22T14:25:31.000Z",
+          "etag": "\"565f2e91e7598fed7678ec4c4269b6aa-4815\""
+        },
+        {
+          "key": "soil_data/fcc/fcc.tif",
+          "bytes": 3478108902,
+          "lastModified": "2021-04-22T15:51:30.000Z",
+          "etag": "\"c7790fd25b584b1d13922704e435bd29-415\""
+        },
+        {
+          "key": "soil_data/iron_extractable/iron_extractable.tif",
+          "bytes": 25210548828,
+          "lastModified": "2021-04-22T14:55:02.000Z",
+          "etag": "\"e0ceb225151ce3b1a76bdb20ea2b9643-3006\""
+        },
+        {
+          "key": "soil_data/magnesium_extractable/magnesium_extractable.tif",
+          "bytes": 28004014938,
+          "lastModified": "2021-04-22T15:03:12.000Z",
+          "etag": "\"79f9e1f9ef7937be2955d6ee327687d5-3339\""
+        },
+        {
+          "key": "soil_data/nitrogen_total/nitrogen_total.tif",
+          "bytes": 57228774240,
+          "lastModified": "2021-04-22T15:07:28.000Z",
+          "etag": "\"c6097dd82b5ee912ca962a11d5ca1d66-6823\""
+        },
+        {
+          "key": "soil_data/ph/ph.tif",
+          "bytes": 28204316963,
+          "lastModified": "2021-04-22T15:30:41.000Z",
+          "etag": "\"16efd051eda705e841d430f710f26e99-3363\""
+        },
+        {
+          "key": "soil_data/phosphorous_extractable/phosphorous_extractable.tif",
+          "bytes": 25258487973,
+          "lastModified": "2021-04-22T15:19:36.000Z",
+          "etag": "\"15ab79f129c57e09513983083c70cb84-3012\""
+        },
+        {
+          "key": "soil_data/potassium_extractable/potassium_extractable.tif",
+          "bytes": 28088791842,
+          "lastModified": "2021-04-22T14:58:57.000Z",
+          "etag": "\"521380b4dd724de765bd3b15b4df1645-3349\""
+        },
+        {
+          "key": "soil_data/sand_content/sand_content.tif",
+          "bytes": 51230673657,
+          "lastModified": "2021-04-22T15:35:02.000Z",
+          "etag": "\"41e110b16e2bc8156e4a683e30331225-6108\""
+        },
+        {
+          "key": "soil_data/silt_content/silt_content.tif",
+          "bytes": 27135945000,
+          "lastModified": "2021-04-22T15:42:25.000Z",
+          "etag": "\"8bcf07a135434f2a5d120899ebb1059a-3235\""
+        },
+        {
+          "key": "soil_data/stone_content/stone_content.tif",
+          "bytes": 32691123824,
+          "lastModified": "2021-04-22T15:46:35.000Z",
+          "etag": "\"5c393e86a2a30e907562447c3e7f2736-3898\""
+        },
+        {
+          "key": "soil_data/sulphur_extractable/sulphur_extractable.tif",
+          "bytes": 22196341747,
+          "lastModified": "2021-04-22T15:23:34.000Z",
+          "etag": "\"84ecd9cc2faab9090df4d9f48c6d02c3-2647\""
+        },
+        {
+          "key": "soil_data/texture_class/texture_class.tif",
+          "bytes": 4909526925,
+          "lastModified": "2021-04-22T14:31:31.000Z",
+          "etag": "\"c5d30f31c2c4c17872e8252f921733b1-586\""
+        },
+        {
+          "key": "soil_data/zinc_extractable/zinc_extractable.tif",
+          "bytes": 22648637988,
+          "lastModified": "2021-04-22T15:27:13.000Z",
+          "etag": "\"b7cc42fb0c40afde068cc662a3fb1a6a-2700\""
+        }
+      ],
+      "smallUnreviewedTestFile": {
+        "key": "soil_data/test.tif",
+        "bytes": 32559154,
+        "lastModified": "2021-04-16T21:24:42.000Z",
+        "etag": "\"2044dad4f58b913402423cdbcfaf5984-4\""
+      }
+    },
+    "formalSoilOriginalDownloaded": false,
+    "scope": "No formal soil original below512MiB found in complete soil_data listing; no test TIFF substitution, synthetic item or native readiness claim."
+  },
+  "primaryReferences": [
+    "https://docs.digitalearthafrica.org/en/latest/data_specs/CGLS_LULC_specs.html",
+    "https://explorer.digitalearth.africa/products/cgls_landcover",
+    "https://registry.opendata.aws/isdasoil/",
+    "https://www.isda-africa.com/isdasoil/isdasoil-on-aws/",
+    "https://docs.digitalearthafrica.org/en/latest/data_specs/iSDA_Soil_Data.html"
+  ],
+  "rawEvidence": [
+    {
+      "path": ".verification/new-channels-cgls-isda-20261012/discovery.json",
+      "sha256": "49b48e6f2bad0923572b568b84aa22460b17481f92819e2e8cc9cd17179a558b"
+    },
+    {
+      "path": ".verification/new-channels-cgls-isda-20261012/probe-report.json",
+      "sha256": "238baae9ba525fb29dba386adc2a8048d31c536082366a98e06d040cec9534aa"
+    },
+    {
+      "path": ".verification/new-channels-cgls-isda-20261012/cgls-permanentwater-preview.png",
+      "sha256": "4e7390ded17009388b1cb82018d3cf536328f181446e554c2457107b777c10cd"
+    }
+  ],
+  "accountsUsed": false,
+  "paidComputationStarted": false,
+  "userPreviewStoreMutated": false
+}

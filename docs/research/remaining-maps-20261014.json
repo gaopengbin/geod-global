@@ -1,0 +1,564 @@
+{
+  "observedAt": "2026-10-14T12:02:31.430798+00:00",
+  "statusChangesMade": false,
+  "originalIdCompletions": 0,
+  "budgetBytes": 536870912,
+  "products": [
+    {
+      "originalId": "enmap",
+      "status": "planned-blocked-original-member-budget",
+      "specificScope": "Official current L2A examples V010506",
+      "profiles": [
+        {
+          "location": "groningen_netherlands",
+          "url": "https://www.enmap.org/data/example_data/Groningen_Netherlands_L2A.zip",
+          "archiveBytes": 260905586,
+          "mainMember": {
+            "name": "ENMAP01-____L2A-DT0000002446_20220810T112429Z_002_V010506_20260529T083936Z/ENMAP01-____L2A-DT0000002446_20220810T112429Z_002_V010506_20260529T083936Z-SPECTRAL_IMAGE.BSQ",
+            "method": 8,
+            "crc32": "85de54f5",
+            "compressedBytes": 251839554,
+            "bytes": 770327040,
+            "localHeaderOffset": 9059596
+          },
+          "mainFits512MiB": false,
+          "wholeArchiveDownloaded": false,
+          "wholeMainDownloaded": false,
+          "width": 1335,
+          "height": 1288,
+          "bands": 224,
+          "type": "Int16",
+          "interleave": "BSQ",
+          "byteOrder": "little-endian",
+          "nodata": -32768,
+          "resolutionMeters": 30,
+          "mapInfo": "{UTM, 1, 1, 315705, 5942535, 30, 30, 32, North,WGS-84}",
+          "wavelengthUnit": "nm",
+          "wavelengthRange": [
+            418.127,
+            2445.53
+          ],
+          "fwhmRange": [
+            5.8022,
+            11.4329
+          ],
+          "gainValues": [
+            0.0001
+          ],
+          "offsetValues": [
+            0.0
+          ],
+          "hdrSha256": "339ebd7b85360fb493bfd9a12166ac79cff054bd10f1364a77de60969e04e4d3",
+          "crcVerifiedHdr": true,
+          "crcVerifiedMetadataXml": true
+        },
+        {
+          "location": "nevada_usa",
+          "url": "https://www.enmap.org/data/example_data/Nevada_USA_L2A.zip",
+          "archiveBytes": 367338178,
+          "mainMember": {
+            "name": "ENMAP01-____L2A-DT0000025905_20230707T192008Z_001_V010506_20260528T202617Z/ENMAP01-____L2A-DT0000025905_20230707T192008Z_001_V010506_20260528T202617Z-SPECTRAL_IMAGE.BSQ",
+            "method": 8,
+            "crc32": "e4e14b7e",
+            "compressedBytes": 360100388,
+            "bytes": 689625216,
+            "localHeaderOffset": 7231354
+          },
+          "mainFits512MiB": false,
+          "wholeArchiveDownloaded": false,
+          "wholeMainDownloaded": false,
+          "width": 1286,
+          "height": 1197,
+          "bands": 224,
+          "type": "Int16",
+          "interleave": "BSQ",
+          "byteOrder": "little-endian",
+          "nodata": -32768,
+          "resolutionMeters": 30,
+          "mapInfo": "{UTM, 1, 1, 465405, 4173705, 30, 30, 11, North,WGS-84}",
+          "wavelengthUnit": "nm",
+          "wavelengthRange": [
+            418.416,
+            2445.3
+          ],
+          "fwhmRange": [
+            5.8022,
+            11.4329
+          ],
+          "gainValues": [
+            0.0001
+          ],
+          "offsetValues": [
+            0.0
+          ],
+          "hdrSha256": "7072745cc10e4dba2339ab1fcf72abec8b4a1a9da024e1b506e4af93439eefd1",
+          "crcVerifiedHdr": true,
+          "crcVerifiedMetadataXml": true
+        },
+        {
+          "location": "tyrol_austria",
+          "url": "https://www.enmap.org/data/example_data/Tyrol_Austria_L2A.zip",
+          "archiveBytes": 387343458,
+          "mainMember": {
+            "name": "ENMAP01-____L2A-DT0000001049_20220612T105735Z_028_V010506_20260529T090933Z/ENMAP01-____L2A-DT0000001049_20220612T105735Z_028_V010506_20260529T090933Z-SPECTRAL_IMAGE.BSQ",
+            "method": 8,
+            "crc32": "1f398684",
+            "compressedBytes": 378243797,
+            "bytes": 685862912,
+            "localHeaderOffset": 9093241
+          },
+          "mainFits512MiB": false,
+          "wholeArchiveDownloaded": false,
+          "wholeMainDownloaded": false,
+          "width": 1259,
+          "height": 1216,
+          "bands": 224,
+          "type": "Int16",
+          "interleave": "BSQ",
+          "byteOrder": "little-endian",
+          "nodata": -32768,
+          "resolutionMeters": 30,
+          "mapInfo": "{UTM, 1, 1, 618165, 5235465, 30, 30, 32, North,WGS-84}",
+          "wavelengthUnit": "nm",
+          "wavelengthRange": [
+            418.199,
+            2445.54
+          ],
+          "fwhmRange": [
+            5.8022,
+            11.4329
+          ],
+          "gainValues": [
+            0.0001
+          ],
+          "offsetValues": [
+            0.0
+          ],
+          "hdrSha256": "692449b09639156da66b007bb296c52109ccd1c7bfcb41656c535a9bf69cf5a5",
+          "crcVerifiedHdr": true,
+          "crcVerifiedMetadataXml": true
+        }
+      ],
+      "licenseUrl": "https://www.enmap.org/data/resources/EnMAP_Data_License.pdf",
+      "noQuicklookOrL1CSubstitution": true
+    },
+    {
+      "originalId": "gebco",
+      "status": "planned-with-implemented-partial-action",
+      "staticWholeOriginals": [
+        {
+          "name": "gebco_2026_geotiff.zip",
+          "bytes": 4241629269,
+          "md5": "a7fe45eda345cb7d261a65f32ec2ae63",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_geotiff.zip?download=1"
+        },
+        {
+          "name": "gebco_2026_n0.0_s-90.0_w-180.0_e-90.0_geotiff.tif",
+          "bytes": 933257444,
+          "md5": "721c2694834cfae0d9143ddea275c605",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n0.0_s-90.0_w-180.0_e-90.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n0.0_s-90.0_w-90.0_e0.0_geotiff.tif",
+          "bytes": 933257440,
+          "md5": "055375ccfbafe89a7aaca3cb84b8a030",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n0.0_s-90.0_w-90.0_e0.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n0.0_s-90.0_w0.0_e90.0_geotiff.tif",
+          "bytes": 933257458,
+          "md5": "5b4641f991fc04bb7c0041bb4a1d11b3",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n0.0_s-90.0_w0.0_e90.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n0.0_s-90.0_w90.0_e180.0_geotiff.tif",
+          "bytes": 933257456,
+          "md5": "45498cf3c99d77b99a07567b3301a8d7",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n0.0_s-90.0_w90.0_e180.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n90.0_s0.0_w-180.0_e-90.0_geotiff.tif",
+          "bytes": 933257440,
+          "md5": "6d26468187c19c6cee7ae7586066694e",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n90.0_s0.0_w-180.0_e-90.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n90.0_s0.0_w-90.0_e0.0_geotiff.tif",
+          "bytes": 933257436,
+          "md5": "0494e25b6885dca9a6a3a60fb647bebe",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n90.0_s0.0_w-90.0_e0.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n90.0_s0.0_w0.0_e90.0_geotiff.tif",
+          "bytes": 933257454,
+          "md5": "17e347bcd87d4b62ecd2aa5335871275",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n90.0_s0.0_w0.0_e90.0_geotiff.tif?download=1"
+        },
+        {
+          "name": "gebco_2026_n90.0_s0.0_w90.0_e180.0_geotiff.tif",
+          "bytes": 933257450,
+          "md5": "78a1fc19d36f55378f0a7d62e67ebf53",
+          "url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/ice_surface_elevation/geotiff/gebco_2026_n90.0_s0.0_w90.0_e180.0_geotiff.tif?download=1"
+        }
+      ],
+      "partialScope": "GEBCO_2026 official service-generated numerical regional GeoTIFF subset",
+      "nativeAcceptance": {
+        "all576GridSamplesMatchIndependentReference": true,
+        "dualHashVerified": true,
+        "inspection": {
+          "bands": [
+            {
+              "dataType": "Int16",
+              "index": 1,
+              "nodata": -32767
+            }
+          ],
+          "bounds": [
+            -30.099999999999998,
+            39.999999999999986,
+            -30.0,
+            40.09999999999999
+          ],
+          "crs": "EPSG:4326",
+          "displayBand": 1,
+          "displayRange": [
+            -1941.0,
+            -1209.0
+          ],
+          "height": 24,
+          "horizontalCrs": "EPSG:4326",
+          "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+          "limitations": [
+            "Preview is a first-band grayscale stretch of raw samples; no sensor calibration or scientific units are inferred.",
+            "COG layout conformance has not been validated.",
+            "Official GEBCO service-generated regional numerical subset; this is not a static whole publisher original and does not complete the GEBCO original-file backlog item.",
+            "Signed Int16 elevations in meters; negative values indicate bathymetric depths and positive values indicate land elevations. Raw values, the 15 arc-second WGS84 grid, NoData -32767 and the complete official download are retained without reprojection or a TID substitution.",
+            "GEBCO compiles heterogeneous data generally assumed to refer to mean sea level; some shallow-water inputs use another vertical datum. A preview or numerical transfer does not verify local survey accuracy or a uniform vertical datum.",
+            "Regional selection is generated by the official service. Actual pixel-center coordinates and TIFF outer bounds are authoritative; requested coordinates may round to the 15 arc-second grid. First-band grayscale is for browsing."
+          ],
+          "pixelInterpretation": "area",
+          "previewDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADcklEQVR4nE3WOU40SxAE4GIYYNiHHSE8JDgHDud6B8PBxcNHGCAGiX3fl19f6gWipJru6q6MiFwqe7rb29s/X19fbXh4uI2Pj7e1tbV2c3PTJicn28bGRuv1em1qaqrt7++3o6OjNjIy0jqdTvv4+GjdbrfNzc211dXVtrm52XZ2dtrW1lY7ODhoe3t77fn5uXU+Pz+bMTQ01NwzfHt7a+/v7+3p6an9/PwU0OLiYt3b4717Y2xsrESMjo7W+uXlpZ2env6+61KfgeTx8bEUGg8PD21iYqJAefj9/f0LbA9vZmdn29LSUk2A7K+ursoGXiExQvT6+lovXQFQg8Q13mR4TzkBrkIK8Pz8vPYbhVMsnU4pdL29va0Nl5eXpebz87NIjo+PC4BKe4VNWBCsrKxUnoRuMBiUDTF3d3etm9AkccKAwCYhcJX0+/v7WgO2x5VyhOwkNKAJZRVCXPYgmyQ4Xhm8IWJ6errIARgIrYUF4fz8fImBk0KoJDM2PQTsGeUUAvNMOKyRK2dg8RqJ3LG7vr4uEljW3cQrLjFmiNCzEFPII8nMvf2SnxI/OzsrQYTwukLKnYAAlHkvKBRf6+QEGGP7U95yAyMh6/f7hUOAIikCiqliCCzPnFIE1oyJsMe9AUTIrE0VlSLhHduumyQzB8xIiF7/J6AMSPKVE20A9s5+Hv2NSNdPKuZv26AEsImEEHslm7eGkgSe0hVCE1by2vXSIRFTrDYiAKgyuDszM1PJT7uwF5GriciaQPuDWQcy7uYQAU6pAqMQAQPrNEJ72fEQKAGweBAxRQAsqlVIzkLG5ORkgWvj3qUUgaoSQgAidZ8KSuIrBwxzsNIllSi3GS8sLNR9lV23W3uEj7cGe2FCQJAOC8O6g5ma9H/36ZTIlSoP0i21C9+GJN1ep1f1pEgM4BXulClj8USUjsoL5YmAqnx8eGOmHNkIW/JnhLRykDJNrQtLxmAwqHacJucdw4uLiyrfCkOnU0QwEKf18+iXIO1X1QhHYtnv90shImC+DScnJ0ViGkk6D/MBQlLNLl8pBEKScJjK05WR2FO9u7tbgJIq6fmWpLUkX671+U3Tyr8KQFSrHKW5vr5e/xqQEeBfw+HhYcU4rSKnNp9WAsw6C71e7794kJ4P6O/MCQYgLH9PdZqdfan95eXl3172D7+OKeTjN9zmAAAAAElFTkSuQmCC",
+          "previewHeight": 24,
+          "previewWidth": 24,
+          "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+          "sourceModelPixelScale": [
+            0.004166666666666584,
+            0.004166666666666584,
+            0.0
+          ],
+          "sourceModelTiepoint": [
+            0.0,
+            0.0,
+            0.0,
+            -30.099999999999998,
+            40.09999999999999,
+            0.0
+          ],
+          "storageLayout": "strip",
+          "transform": [
+            0.004166666666666584,
+            0.0,
+            -30.099999999999998,
+            0.0,
+            -0.004166666666666584,
+            40.09999999999999
+          ],
+          "width": 24
+        },
+        "nativeGeneration": true,
+        "originalPlannedIdCompleted": false,
+        "pixels": [
+          {
+            "column": 0,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 0,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1755
+            ]
+          },
+          {
+            "column": 12,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 0,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1751
+            ]
+          },
+          {
+            "column": 23,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 0,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1554
+            ]
+          },
+          {
+            "column": 0,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 12,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1867
+            ]
+          },
+          {
+            "column": 12,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 12,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1705
+            ]
+          },
+          {
+            "column": 23,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 12,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1705
+            ]
+          },
+          {
+            "column": 0,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 23,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1890
+            ]
+          },
+          {
+            "column": 12,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 23,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1678
+            ]
+          },
+          {
+            "column": 23,
+            "jobId": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+            "noData": [
+              false
+            ],
+            "row": 23,
+            "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+            "values": [
+              -1673
+            ]
+          }
+        ],
+        "publisherStaticWholeOriginal": false,
+        "record": {
+          "archiveBytes": 421346,
+          "archiveSha256": "e12b32a39bb6c2a87a3b05eb0d6241acce03dd86694bae19bed5cd1ee43509a7",
+          "attribution": "GEBCO Bathymetric Compilation Group 2026 (2026), GEBCO_2026 Grid, doi:10.5285/4f68d5c7-45eb-f999-e063-7086abc036fa; official GEBCO regional download service. Public domain; retain the official terms and documentation included in the complete ZIP.",
+          "basketId": "GEBCO_14_Oct_2026_417a2e9b7576",
+          "bounds": [
+            -30.1,
+            40.0,
+            -30.0,
+            40.1
+          ],
+          "bytes": 8992,
+          "createdAt": "2026-10-14T11:45:58.723822500+00:00",
+          "dataSourceId": 1,
+          "dataSourceName": "gebco_2026",
+          "formatId": 2,
+          "formatsSha256": "0d07142aa11a366bbf98b92bd96f711f30c75afe988443622c5799696fbe4f7c",
+          "generationStatus": "finished",
+          "gridId": 1,
+          "gridName": "gebco_2026_global",
+          "gridsSha256": "8672ae0449c45a9daf91da9b820ff431041fcfdb78412c16106b807685524f8e",
+          "id": "da4cb554-8d77-49f2-8305-21d99f37a01c",
+          "limitations": [
+            "Official GEBCO service-generated regional numerical subset; this is not a static whole publisher original and does not complete the GEBCO original-file backlog item.",
+            "Signed Int16 elevations in meters; negative values indicate bathymetric depths and positive values indicate land elevations. Raw values, the 15 arc-second WGS84 grid, NoData -32767 and the complete official download are retained without reprojection or a TID substitution.",
+            "GEBCO compiles heterogeneous data generally assumed to refer to mean sea level; some shallow-water inputs use another vertical datum. A preview or numerical transfer does not verify local survey accuracy or a uniform vertical datum.",
+            "Regional selection is generated by the official service. Actual pixel-center coordinates and TIFF outer bounds are authoritative; requested coordinates may round to the 15 arc-second grid. First-band grayscale is for browsing."
+          ],
+          "memberName": "gebco_2026_n40.1_s40.0_w-30.1_e-30.0_geotiff.tif",
+          "name": "GEBCO 2026 North Atlantic numerical subset",
+          "officialRequestSha256": "706e4b2455dd2be9c447ddc4f5dee827c2e576609058a2e7e46fb843d81f523d",
+          "provenanceKind": "service-generated-regional-numerical-subset",
+          "publisherStaticWholeOriginal": false,
+          "queueResponseSha256": "0d79e491274243c372dc78f0dd4274bb56d18c71dab945d2b113cc27dea5d137",
+          "requestSha256": "dd3f198c618b2f82f7bf754bbf33830dfbb0fa48aa3590276a06bad3966acf58",
+          "resolutionArcSeconds": 15,
+          "sha256": "b418359817cd7bfe525ec301d37c74cc82610529f229e16e321e62422075a5b0",
+          "stages": [
+            {
+              "at": "2026-10-14T11:45:49.052064700+00:00",
+              "stage": "official_metadata_verified"
+            },
+            {
+              "at": "2026-10-14T11:45:49.614945600+00:00",
+              "stage": "official_queue_submitted"
+            },
+            {
+              "at": "2026-10-14T11:45:50.167981200+00:00",
+              "stage": "official_new"
+            },
+            {
+              "at": "2026-10-14T11:45:54.014320900+00:00",
+              "stage": "official_finished"
+            },
+            {
+              "at": "2026-10-14T11:45:58.718413500+00:00",
+              "stage": "whole_zip_downloaded"
+            },
+            {
+              "at": "2026-10-14T11:45:58.723782200+00:00",
+              "stage": "whole_zip_crc_and_numerical_tiff_verified"
+            }
+          ],
+          "verificationStatus": "verified"
+        },
+        "referencePointsMatch": true,
+        "reopenVerified": true,
+        "researchDataCopiedIntoStore": false,
+        "sourceMemberUnmodified": true,
+        "wholeOfficialZip": true
+      },
+      "nativePreviewProof": {
+        "width": 24,
+        "height": 24,
+        "opaquePixelCount": 576,
+        "transparentPixelCount": 0,
+        "distinctGrayscaleValues": 168,
+        "sha256": "e331484751c931c4b314d5b0c3dad10efeeec4571f2877eeaacef712717a0e77",
+        "nativeRasterPreview": true
+      },
+      "independentAll576Values": true,
+      "publisherStaticWholeOriginal": false
+    },
+    {
+      "originalId": "earth-search-more",
+      "status": "family-partial-not-completed",
+      "liveCollectionCount": 9,
+      "additionalCandidate": "NAIP RGBIR 60 cm 2022 California official Item",
+      "assetAccess": {
+        "canonicalUrl": "https://naip-analytic.s3.us-west-2.amazonaws.com/ca/2022/60cm/rgbir_cog/37122/m_3712256_nw_10_060_20220519.tif",
+        "anonymous": true,
+        "capabilityPersisted": false,
+        "status": 403,
+        "headers": {
+          "Content-Type": "application/xml"
+        }
+      },
+      "existingFiniteScope": "sentinel-2-c1-l2a only"
+    },
+    {
+      "originalId": "planetary-more",
+      "status": "family-planned-finite-candidate-researched",
+      "liveCollectionCount": 139,
+      "specificScope": "NOAA OISST v2.1 2020-09-01 daily SST published complete COG derivative",
+      "original": {
+        "url": "https://noaacdr.blob.core.windows.net/cogs/sea-surface-temperature-optimum-interpolation/202009/oisst-avhrr-v02r01.20200901-sst.tif",
+        "canonicalPublisherItem": "oisst-avhrr-v02r01.20200901",
+        "bytes": 1096226,
+        "sha256": "47b19bb75c95cdd302b1372a4d6a5a910c3e7213ccc013e6fee5f82f48646bfa",
+        "width": 1440,
+        "height": 720,
+        "bands": 1,
+        "dtype": [
+          "int16"
+        ],
+        "crs": "EPSG:4326",
+        "bounds": [
+          -180.0,
+          -90.0,
+          180.0,
+          90.0
+        ],
+        "nodata": -999.0,
+        "scales": [
+          1.0
+        ],
+        "offsets": [
+          0.0
+        ],
+        "embeddedTags": {
+          "AREA_OR_POINT": "Area"
+        },
+        "overviews": [
+          2,
+          4
+        ],
+        "samples": [
+          -178,
+          2538,
+          1543,
+          1558
+        ],
+        "stacRasterBands": [
+          {
+            "unit": "Celsius",
+            "scale": 0.009999999776482582,
+            "nodata": -999,
+            "data_type": "int16"
+          }
+        ],
+        "completeFileDownloaded": true,
+        "publisherNativeNetcdf": false,
+        "planetaryFamilyCompleted": false,
+        "capabilityPersisted": false,
+        "allPixelsMatchTifffile": true,
+        "collectionLicense": "proprietary",
+        "licenseUrl": "https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Sea_Surface_Temperature_Optimum_Interpolation/UseAgreement_01B-09.pdf",
+        "licenseInterpretation": "Preserve the original Collection proprietary field and NOAA CDR Use Agreement together; the linked NOAA policy states public unrestricted data use and requests proper scientific attribution. Do not silently rewrite the Collection license."
+      },
+      "adapterImplemented": false,
+      "familyCompleted": false
+    },
+    {
+      "originalId": "copernicus-more",
+      "status": "family-planned-metadata-and-access-blocker",
+      "liveCollectionCount": 10,
+      "specificScope": "CLMS global daily burnt-area V3.1 COG",
+      "assetAccess": {
+        "url": "https://stac.dataspace.copernicus.eu/v1/collections/clms_ba_global_300m_daily_v3_cog/items?limit=1",
+        "httpStatus": 200,
+        "contentBytes": 246,
+        "metadataJson": false,
+        "providerResponse": "HTML Request Rejected; no credentials created or access controls bypassed",
+        "collectionDeclaredAuthentication": [
+          "s3",
+          "openIdConnect"
+        ],
+        "originalDownloadVerified": false
+      },
+      "credentialsCreated": false,
+      "originalDownloadVerified": false
+    }
+  ]
+}

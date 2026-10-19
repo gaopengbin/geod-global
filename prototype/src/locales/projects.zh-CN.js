@@ -1,4 +1,5 @@
 export default {
+  'GEBCO regions': 'GEBCO 区域成果',
   'Project output exceeds 8 million pixels; choose a smaller area or process smaller groups': '此任务触发了旧版 800 万像元上限。请重试，现已支持按原分辨率分块拼接。',
   'This task hit the previous size limit. Retry with block processing; completed source files will be reused.': '此任务触发了旧版处理上限。重试将使用分块拼接，并复用已下载源文件。',
   'Free some space in the workspace drive, then retry. Completed source files will be reused.': '请释放工作空间所在磁盘的空间后重试，已下载源文件会继续复用。',
@@ -152,4 +153,5 @@ export default {
   'Prepare SAFE raster': '准备 SAFE 影像',
   'Prepared source': '已准备影像',
   'Original SAFE checksum and ZIP CRC verified. JP2 samples and XML geometry are retained in the prepared GeoTIFF.': '已校验原始 SAFE 的 SHA-256 和 ZIP CRC。生成的 GeoTIFF 保留 JP2 像元值及 XML 空间信息。',
+  'More collections':'更多分类',
 };

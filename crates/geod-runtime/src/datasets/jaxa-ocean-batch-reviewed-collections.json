@@ -1,0 +1,1977 @@
+[
+  {
+    "datasetId": "jaxa-amsr2-wind",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SSW.daytime.v4_global_monthly/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "collection",
+      "stac_version": "1.0.0",
+      "description": "Sea Surface Wind Speed product in GCOM-W AMSR2 Level-3 Standard product Version 4.",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "Sea Surface Wind Speed (Daytime/Monthly)"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "title": "Sea Surface Wind Speed (Daytime/Monthly)",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2012-07-03T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "SSW",
+        "AMSR2",
+        "GCOM-W",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "Japan Aerospace Exploration Agency (JAXA)",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "JAXA GCOM Project",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://suzaku.eorc.jaxa.jp/GCOM/index.html"
+        },
+        {
+          "name": "JAXA Earth Observation Research Center (EORC)",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/en/"
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "GCOM-W"
+        ],
+        "instrument": [
+          "AMSR2"
+        ],
+        "mission": [
+          "Global Change Observation Mission (GCOM)"
+        ],
+        "je:stac_version": [
+          "v1"
+        ],
+        "je:stac_date_format": [
+          "YYYY-MM"
+        ],
+        "je:cog_level_max": [
+          1
+        ],
+        "je:ppu_max": [
+          10
+        ],
+        "je:sources": [
+          {
+            "doi": "10.57746/EO.01gs73b1k5m335ah90vf89e3j6",
+            "citation": "Japan Aerospace Exploration Agency. 2012. GCOM-W/AMSR2 L3 Sea Surface Wind Speed (1-Month,0.1 deg).",
+            "version": "4"
+          }
+        ],
+        "je:epsg": [
+          4326
+        ]
+      },
+      "assets": {
+        "SSW": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff",
+          "title": "Sea Surface Wind Speed (Daytime/Monthly)",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "datasetId": "jaxa-amsr2-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds2/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SST.daytime.v4_global_daily/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SST.daytime.v4_global_daily",
+      "stac_version": "1.0.0",
+      "description": "Sea Surface Temperature (Daytime/Daily)",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "Sea Surface Temperature (Daytime/Daily)"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2013-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2014-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2015-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2016-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-10"
+        }
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+      ],
+      "sci:publications": [
+        {
+          "doi": null,
+          "citation": "Shibata, A., 2004: AMSR/AMSR-E SST algorithm developments: removal of ocean wind effect, Italian J. Remote Sensing, 30/31: 131-142."
+        },
+        {
+          "doi": null,
+          "citation": "Shibata, A., 2006: Features of ocean microwave emission changed by wind at 6 GHz, J. Oceanogr., 62(3), 321-330., doi: 10.1007/s10872-006-0057-3"
+        },
+        {
+          "doi": null,
+          "citation": "Shibata, A., 2007: Effect of air-sea temperature difference on ocean microwave brightness temperature estimated from AMSR, SeaWinds, and buoys, J. Oceanogr., 63(5), 863-872., doi: 10.1007/s10872-007-0073-y"
+        }
+      ],
+      "title": "Sea Surface Temperature (Daytime/Daily)",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2000-03-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "SST",
+        "AMSR2",
+        "GCOM-W",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "JAXA",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "JAXA EORC",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/"
+        },
+        {
+          "name": "JAXA GCOM Project",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://suzaku.eorc.jaxa.jp/GCOM/index.html"
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "GCOM-W"
+        ],
+        "instrument": [
+          "AMSR2"
+        ],
+        "je:epsg": [
+          4326
+        ],
+        "je:stac_date_format": [
+          "YYYY-MM/DD"
+        ],
+        "je:cog_level_max": [
+          0
+        ],
+        "je:ppu_max": [
+          5
+        ],
+        "je:stac_version": [
+          "v1.2"
+        ]
+      },
+      "assets": {
+        "SST": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Sea Surface Temperature (Daytime/Daily)",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "datasetId": "jaxa-gsmap-spi",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds2/cog/v1/JAXA.EORC_GSMaP_SPI.climate.gnrt6_monthly/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "JAXA.EORC_GSMaP_SPI.climate.gnrt6_monthly",
+      "stac_version": "1.0.0",
+      "description": "GSMaP has multi-satellite global precipitation map under the Global Precipitation Measurement (GPM) Mission, by using Dual-frequency Precipitation Radar (DPR) onboard GPM core satellites, other GPM constellation satellites, and Geostationary satellites.",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "SPI - Standardized Precipitation Index (Monthly Averaged)"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2021-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2022-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2023-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2024-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-09"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-10/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-10"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-11/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-11"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-12/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2025-12"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-01/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-01"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-02/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-02"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-03/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-03"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-04/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-04"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-05/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-05"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-06/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-06"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-07/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-07"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-08/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-08"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-09/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2026-09"
+        }
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+      ],
+      "sci:publications": [
+        {
+          "doi": null,
+          "citation": "Kubota, T., K. Aonashi, T. Ushio, S. Shige, Y. N. Takayabu, M. Kachi, Y. Arai, T. Tashima, T. Masaki, N. Kawamoto, T. Mega, M. K. Yamamoto, A. Hamada, M. Yamaji, G. Liu and R. Oki 2020: Global Satellite Mapping of Precipitation (GSMaP) products in the GPM era, Satellite precipitation measurement, Springer."
+        }
+      ],
+      "title": "SPI - Standardized Precipitation Index (Monthly Averaged)",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2019-06-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "SPI",
+        "DPR",
+        "GPM",
+        "GSMaP",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "JAXA",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "JAXA EORC",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/"
+        },
+        {
+          "name": "JAXA EORC GPM Group",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://www.eorc.jaxa.jp/GPM/en/index_e.html"
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "Multiple"
+        ],
+        "instrument": [
+          "Multiple"
+        ],
+        "je:epsg": [
+          4326
+        ],
+        "je:stac_date_format": [
+          "YYYY-MM"
+        ],
+        "je:cog_level_max": [
+          0
+        ],
+        "je:ppu_max": [
+          5
+        ],
+        "je:stac_version": [
+          "v1.2"
+        ]
+      },
+      "assets": {
+        "SPI": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Standardized Precipitation Index (Monthly Averaged)",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  }
+]

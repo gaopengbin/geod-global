@@ -264,6 +264,7 @@ async fn direct_and_loopback_reads_match_and_reopen_checks_changed_originals() {
             connected_at: crate::now(),
             arcgis: None,
             overpass: None,
+            geoboundaries: None,
             wfs: None,
             collections: vec![crate::features::Collection {
                 id: "lakes".into(),
@@ -272,6 +273,7 @@ async fn direct_and_loopback_reads_match_and_reopen_checks_changed_originals() {
                 items_url: "https://demo.pygeoapi.io/stable/collections/lakes/items".into(),
                 license_links: vec![],
                 arcgis: None,
+                geoboundaries: None,
                 wfs: None,
             }],
         },

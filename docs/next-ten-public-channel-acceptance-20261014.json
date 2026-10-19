@@ -1,0 +1,153 @@
+{
+  "completedUtc": "2026-10-14T06:34:59.678989+00:00",
+  "acceptanceScope": "Ten concrete products; only the eleven selected original files and stated representative locations. This does not certify every provider file, year, region, raw chunk or scientific QA condition.",
+  "originalCount": 11,
+  "concreteProductCount": 10,
+  "completeBytes": 1429629635,
+  "originals": [
+    {
+      "datasetId": "pc-hrea",
+      "layer": "lightscore",
+      "bytes": 343602,
+      "localCompleteSha256": "c3a8d91858e609e06dfb701901bfb9582b7d472b173f1ad4e3c413ee84237718",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "pc-biodiversity",
+      "layer": "data",
+      "bytes": 295765273,
+      "localCompleteSha256": "a76ee54f166d68ce8ad6d61b6a58f262e04460e0dc9618a9a723404d55d5e843",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "noaa-ohc",
+      "layer": "heat_content",
+      "bytes": 157352,
+      "localCompleteSha256": "f9892384908eeb92abcde4d8bcfa8805b23d584e380e1d34efd9da12a17b7c6d",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "noaa-nclimgrid",
+      "layer": "tavg",
+      "bytes": 1173286,
+      "localCompleteSha256": "cf3c7b6511ef8a3887a4c7d5c031d7a969a4b5afb8825395908e8219a346af19",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "ghsl-built-surface",
+      "layer": "built-surface",
+      "bytes": 173085842,
+      "localCompleteSha256": "c622f77878056a29f41496a0d8412bf381f4501c546ef07e7d5a76696cefbc5b",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "ghsl-built-volume",
+      "layer": "built-volume",
+      "bytes": 187376914,
+      "localCompleteSha256": "5f61071d872b5877cb506fcc3fac6793487568428ef8e00e0b54d6e392793b06",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "ghsl-population",
+      "layer": "population-count",
+      "bytes": 424616290,
+      "localCompleteSha256": "b6eec24c613d0787c14166214865a3e0578b419ceebbaff00e46904e6a61e708",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "eth-canopy-height",
+      "layer": "height",
+      "bytes": 171132359,
+      "localCompleteSha256": "2d1247ba652d858dd1152c418d5ccd9bcdf5f8d34ec307b0275899ded550e7ac",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "hydrosheds-accumulation",
+      "layer": "acc",
+      "bytes": 76824474,
+      "localCompleteSha256": "5a67c5fb2705b65117546dadc9437275a0d2ea9a2ecdd33b7eb59de3d35e14b4",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "hydrosheds-accumulation",
+      "layer": "aca",
+      "bytes": 79213241,
+      "localCompleteSha256": "f4dd75675c54c74656bca10bdf010500421b3c9fc286095090f24a299b0edf93",
+      "nativeRepresentativeSamples": 6
+    },
+    {
+      "datasetId": "etopo-geoid",
+      "layer": "geoid",
+      "bytes": 19941002,
+      "localCompleteSha256": "5664f943ad524f4415cbdb068962d4b26e9f3ae0364f0662ea592e9561fa2ff8",
+      "nativeRepresentativeSamples": 6
+    }
+  ],
+  "nativeRepresentativeSamples": 66,
+  "workflow": {
+    "actualExploreMaps": 11,
+    "actualSavedProjects": 11,
+    "actualCompleteDownloads": 11,
+    "actualBrowserReopenMapsAndValues": 11,
+    "sameNativeObjectsAndPngAfterRestart": true,
+    "newTransfersOnReopen": 0
+  },
+  "transferRecovery": [
+    {
+      "sha256": "5f61071d872b5877cb506fcc3fac6793487568428ef8e00e0b54d6e392793b06",
+      "attempts": 2,
+      "transfer": {
+        "mode": "resumed",
+        "resumedBytes": 56053305
+      }
+    },
+    {
+      "sha256": "a76ee54f166d68ce8ad6d61b6a58f262e04460e0dc9618a9a723404d55d5e843",
+      "attempts": 3,
+      "transfer": {
+        "mode": "resumed",
+        "resumedBytes": 220282880
+      }
+    }
+  ],
+  "knownLimitations": [
+    {
+      "datasetId": "pc-biodiversity",
+      "column": 7689,
+      "row": 4010,
+      "status": 400,
+      "error": "no lzw end code found",
+      "independentStoredValue": 0.7444648742675781,
+      "independentValidityMasked": true,
+      "scalarNoData": false,
+      "meaning": "Source LZW chunk is rejected rather than decoded tolerantly. This is an original-mask-excluded pixel; no claim that every base chunk is native-decodable."
+    },
+    {
+      "datasetId": "hydrosheds-accumulation",
+      "meaning": "The checked whole-tile grayscale previews are almost black because approximately 0.207 percent of the tile is valid land. Local Explore maps and checked values pass; this is not a claim of clear whole-tile visualization."
+    },
+    {
+      "datasetId": "pc-hrea",
+      "meaning": "Only this exact Hong Kong 2019 original uses its independently intact base image for preview. Broken reduced images and the source NoData declaration are preserved; this does not repair other files."
+    }
+  ],
+  "directory": {
+    "entries": 133,
+    "groups": 17,
+    "ready": 91,
+    "authRequired": 6,
+    "planned": 36,
+    "numericalConnectors": 58,
+    "numericalLayerOptions": 95
+  },
+  "runtimeSha256": "d53a94ef14b5d25b1328556ae3b3a984ddb274004cff2a4572859cf11576b992",
+  "frontendBundle": "index-Cw8AuK_M.js",
+  "desktop": {
+    "built": true,
+    "profile": "local development build",
+    "launchedForThisBatch": false,
+    "installerPublished": false,
+    "productionDeployed": false
+  },
+  "browserScreenshot": "images/next-ten-biodiversity-result-20261014.png"
+}

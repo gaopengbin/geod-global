@@ -14,6 +14,26 @@ pub(super) struct Scope {
     collection_title: String,
     protocol: String,
     name: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    geoboundaries: Option<Box<GeoBoundariesReview>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct GeoBoundariesReview {
+    layer: crate::features::geoboundaries::Layer,
+    discovery_receipt: crate::features::PageReceipt,
+}
+
+fn boundary_summary(
+    layer: &crate::features::geoboundaries::Layer,
+    receipt: &crate::features::PageReceipt,
+) -> Value {
+    // The original file is not queried before confirmation. These are saved
+    // publisher metadata fingerprints, never an invented file-content hash.
+    json!({"countryIso3":layer.country_iso3,"adminLevel":layer.admin_level,
+        "metadataSha256":layer.metadata_sha256,"releaseRef":layer.release_ref,
+        "discoverySha256":receipt.sha256})
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -28,7 +48,9 @@ pub(super) struct Args {
     use_attached_polygon: bool,
 }
 fn protocol(service: &FeatureService) -> &'static str {
-    if service.wfs.is_some() {
+    if service.geoboundaries.is_some() {
+        "geoBoundaries"
+    } else if service.wfs.is_some() {
         "WFS 2"
     } else if service.arcgis.is_some() {
         "ArcGIS"
@@ -49,8 +71,14 @@ impl Scope {
             || self.request.collection_id.is_empty()
             || self.request.collection_id.chars().count() > 160
             || self.request.collection_id.chars().any(char::is_control)
-            || !["WFS 2", "ArcGIS", "Overpass", "OGC API Features"]
-                .contains(&self.protocol.as_str())
+            || ![
+                "WFS 2",
+                "ArcGIS",
+                "Overpass",
+                "OGC API Features",
+                "geoBoundaries",
+            ]
+            .contains(&self.protocol.as_str())
             || self.name.is_empty()
             || self.name.trim() != self.name
             || self.name.chars().count() > 120
@@ -79,6 +107,29 @@ impl Scope {
                 return Err("Overpass extraction does not use page sizes".into());
             }
         }
+        if self.protocol == "geoBoundaries" && self.request.page_size.is_some() {
+            return Err(
+                "geoBoundaries downloads a complete country file without page sizes".into(),
+            );
+        }
+        match (&self.geoboundaries, self.protocol.as_str()) {
+            (Some(saved), "geoBoundaries") => {
+                crate::features::geoboundaries::validate_review(
+                    &saved.layer,
+                    &saved.discovery_receipt,
+                    &self.service_url,
+                )?;
+                if saved.layer.admin_level != self.request.collection_id {
+                    return Err("geoBoundaries review changed its administrative level".into());
+                }
+            }
+            (None, "geoBoundaries") | (Some(_), _) => {
+                return Err(
+                    "geoBoundaries review is missing its selected publisher metadata".into(),
+                );
+            }
+            _ => {}
+        }
         if self.protocol != "WFS 2" && self.request.response_format.is_some() {
             return Err("Response format selection requires WFS 2".into());
         }
@@ -103,6 +154,14 @@ impl Scope {
             .ok_or("Unknown saved feature collection")?;
         if collection.title != self.collection_title {
             return Err("Saved vector collection changed".into());
+        }
+        if let Some(saved) = &self.geoboundaries {
+            if collection.geoboundaries.as_ref() != Some(&saved.layer)
+                || service.geoboundaries.as_ref().map(|s| &s.discovery_receipt)
+                    != Some(&saved.discovery_receipt)
+            {
+                return Err("Saved geoBoundaries release changed. Create a new review".into());
+            }
         }
         if let Some(layer) = &collection.wfs {
             if !layer
@@ -194,7 +253,7 @@ pub(super) async fn prepare(
             collection_id: collection.id.clone(),
             bounds: args.bounds,
             area_geometry: geometry,
-            page_size: if service.overpass.is_some() {
+            page_size: if service.overpass.is_some() || service.geoboundaries.is_some() {
                 args.page_size
             } else {
                 Some(args.page_size.unwrap_or(200))
@@ -211,6 +270,14 @@ pub(super) async fn prepare(
             .unwrap_or_else(|| collection.title.chars().take(110).collect::<String>())
             .trim()
             .into(),
+        geoboundaries: match (&service.geoboundaries, &collection.geoboundaries) {
+            (Some(saved), Some(layer)) => Some(Box::new(GeoBoundariesReview {
+                layer: layer.clone(),
+                discovery_receipt: saved.discovery_receipt.clone(),
+            })),
+            (None, None) => None,
+            _ => return Err("Ambiguous selected geoBoundaries source metadata".into()),
+        },
     };
     scope.verify_service(&service)?;
     save(manager, session, scope).await
@@ -238,18 +305,31 @@ fn validate_result(plan: &Plan, asset: &crate::vector::VectorAsset) -> Result<()
     let (collection, bounds, geometry, url, name) = if let Some(s) = &asset.remote_source {
         let matches_protocol = match scope.protocol.as_str() {
             "OGC API Features" => {
-                s.wfs.is_none() && s.arcgis.is_none() && s.selection == "bbox-full-features"
+                s.wfs.is_none()
+                    && s.arcgis.is_none()
+                    && s.geoboundaries.is_none()
+                    && s.selection == "bbox-full-features"
             }
             "ArcGIS" => {
-                s.arcgis.is_some() && s.wfs.is_none() && s.selection == "bbox-full-features"
+                s.arcgis.is_some()
+                    && s.wfs.is_none()
+                    && s.geoboundaries.is_none()
+                    && s.selection == "bbox-full-features"
             }
             "WFS 2" => {
                 s.arcgis.is_none()
+                    && s.geoboundaries.is_none()
                     && s.selection == "wfs-bbox-full-features"
                     && s.wfs.as_ref().is_some_and(|w| {
                         Some(w.format.id.as_str()) == scope.request.response_format.as_deref()
                             && Some(w.page_size) == scope.request.page_size
                     })
+            }
+            "geoBoundaries" => {
+                s.arcgis.is_none()
+                    && s.wfs.is_none()
+                    && s.geoboundaries.is_some()
+                    && s.selection == "geoboundaries-full-administrative-level"
             }
             _ => false,
         };
@@ -258,6 +338,21 @@ fn validate_result(plan: &Plan, asset: &crate::vector::VectorAsset) -> Result<()
             || s.collection_title != scope.collection_title
         {
             return Err("Vector result protocol differs from its review".into());
+        }
+        if let Some(expected) = &scope.geoboundaries {
+            let actual = s
+                .geoboundaries
+                .as_ref()
+                .ok_or("Missing confirmed geoBoundaries publisher metadata")?;
+            if actual.layer != expected.layer
+                || actual.discovery_receipt != expected.discovery_receipt
+            {
+                return Err("geoBoundaries result source differs from its confirmed review".into());
+            }
+            // Also bind the fetched receipt's resolved Git commit to that
+            // exact saved release; self-consistent foreign releases cannot
+            // pass by retaining only the same country and ADM identifier.
+            s.validate(asset.feature_count)?;
         }
         (
             &s.collection_id,
@@ -316,9 +411,9 @@ pub(super) async fn status(manager: &JobManager, plan: &Plan) -> Result<Value> {
     let polygon = scope.request.area_geometry.as_ref().map(|g| Ok::<_, String>(json!({"bounds":g.bounds()?,"sha256":digest(&serde_json::to_vec(g).map_err(io_error)?)}))).transpose()?;
     Ok(
         json!({"planId":plan.id,"planHash":plan.hash,"kind":"vector","status":state,"source":scope.service_name,"bounds":scope.request.bounds,"boundsCrs":"EPSG:4326","polygon":polygon,
-        "replacedBy":replacement.map(|r|r.plan_id),"expiresAt":plan.expires_at,"approvalRequired":true,"expectedBytes":null,"jobs":[],"notes":["The server returns complete matching features; geometry is not clipped to the query area.","Feature count and byte size are known only after extraction."],
-        "vectorReview":{"serviceId":scope.request.service_id,"serviceSha256":scope.service_sha256,"collectionId":scope.request.collection_id,"collectionTitle":scope.collection_title,"protocol":scope.protocol,"name":scope.name,"pageSize":scope.request.page_size,"responseFormat":scope.request.response_format,"selection":if scope.protocol=="Overpass"{"overpass-bbox-full-geometry"}else if scope.protocol=="WFS 2"{"wfs-bbox-full-features"}else{"bbox-full-features"},"liveAvailabilityChecked":false,"clipped":false},
-        "vector":asset.as_ref().map(|a|json!({"id":a.id,"name":a.name,"format":a.format,"bytes":a.bytes,"featureCount":a.feature_count,"coordinateCount":a.coordinate_count,"sourceSha256":a.source_sha256,"geojsonSha256":a.geojson_sha256,"verified":true}))}),
+        "replacedBy":replacement.map(|r|r.plan_id),"expiresAt":plan.expires_at,"approvalRequired":true,"expectedBytes":null,"jobs":[],"notes":[if scope.protocol=="geoBoundaries"{"Downloads the complete published country administrative level; the map area is reference only, without filtering or clipping."}else{"The server returns complete matching features; geometry is not clipped to the query area."},"Feature count and byte size are known only after extraction."],
+        "vectorReview":{"serviceId":scope.request.service_id,"serviceSha256":scope.service_sha256,"collectionId":scope.request.collection_id,"collectionTitle":scope.collection_title,"protocol":scope.protocol,"name":scope.name,"pageSize":scope.request.page_size,"responseFormat":scope.request.response_format,"selection":if scope.protocol=="geoBoundaries"{"geoboundaries-full-administrative-level"}else if scope.protocol=="Overpass"{"overpass-bbox-full-geometry"}else if scope.protocol=="WFS 2"{"wfs-bbox-full-features"}else{"bbox-full-features"},"liveAvailabilityChecked":false,"clipped":false,"boundarySource":scope.geoboundaries.as_ref().map(|g|boundary_summary(&g.layer,&g.discovery_receipt))},
+        "vector":asset.as_ref().map(|a|json!({"id":a.id,"name":a.name,"format":a.format,"bytes":a.bytes,"featureCount":a.feature_count,"coordinateCount":a.coordinate_count,"sourceSha256":a.source_sha256,"geojsonSha256":a.geojson_sha256,"verified":true,"boundarySource":a.remote_source.as_ref().and_then(|s|s.geoboundaries.as_ref()).map(|g|boundary_summary(&g.layer,&g.discovery_receipt))}))}),
     )
 }
 pub(super) async fn commit(manager: &JobManager, plan: &Plan) -> Result<Value> {
@@ -393,6 +488,6 @@ pub(super) async fn revise(
     save(manager, session, scope).await
 }
 pub(super) fn definition() -> Value {
-    json!({"name":"geod_vector_extract_plan","description":"Prepare a native review for one actual collection of an already saved OGC API Features, ArcGIS, WFS 2 or Overpass service. Use geod_feature_services/collections to select real IDs. Pins saved service fingerprint and user-specified WGS84 bounds; useAttachedPolygon keeps the local polygon as provenance, does not clip geometry. No external query or file creation until the user confirms the plan card. Counts/bytes and current availability remain unknown. WFS uses an advertised responseFormat; Overpass uses a saved preset and requires pageSize to be omitted; never arbitrary QL or a default endpoint. Never approve or execute from chat.",
-        "inputSchema":{"type":"object","properties":{"serviceId":{"type":"string","pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"},"collectionId":{"type":"string","minLength":1,"maxLength":160},"bounds":{"type":"array","minItems":4,"maxItems":4,"items":{"type":"number"}},"name":{"type":"string","minLength":1,"maxLength":120},"pageSize":{"type":"integer","minimum":1,"maximum":200,"description":"OGC/ArcGIS/WFS only; omit for Overpass. Defaults to 200 for paged protocols."},"responseFormat":{"type":"string","maxLength":160},"useAttachedPolygon":{"type":"boolean","default":false}},"required":["serviceId","collectionId","bounds"],"additionalProperties":false}})
+    json!({"name":"geod_vector_extract_plan","description":"Prepare a native review for one actual collection of an already saved OGC API Features, ArcGIS, WFS 2, Overpass or geoBoundaries connection. Use geod_feature_services/collections to select real IDs. Pins saved service fingerprint and user-specified WGS84 bounds; useAttachedPolygon keeps the local polygon as provenance, does not clip geometry. No external query or file creation until the user confirms the plan card. Counts/bytes and current availability remain unknown. geoBoundaries downloads the complete pinned country administrative level: the supplied bounds are reference only, not a bbox selection or clip; omit pageSize. WFS uses an advertised responseFormat; Overpass uses a saved preset and requires pageSize to be omitted; never arbitrary QL or a default endpoint. Never approve or execute from chat.",
+        "inputSchema":{"type":"object","properties":{"serviceId":{"type":"string","pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"},"collectionId":{"type":"string","minLength":1,"maxLength":160},"bounds":{"type":"array","minItems":4,"maxItems":4,"items":{"type":"number"}},"name":{"type":"string","minLength":1,"maxLength":120},"pageSize":{"type":"integer","minimum":1,"maximum":200,"description":"OGC/ArcGIS/WFS only; omit for Overpass and geoBoundaries. Defaults to 200 for paged protocols."},"responseFormat":{"type":"string","maxLength":160},"useAttachedPolygon":{"type":"boolean","default":false}},"required":["serviceId","collectionId","bounds"],"additionalProperties":false}})
 }

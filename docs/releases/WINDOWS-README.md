@@ -1,6 +1,6 @@
 # GeoD Global for Windows
 
-Windows 10 / 11 x64 桌面版。此包为 **0.2.0-rc.4 发布候选**，供试用和反馈，
+Windows 10 / 11 x64 桌面版。此包为 **0.2.0-rc.5 Beta 候选**，供本地验收和反馈，
 尚非稳定正式版。文件未签名，Windows 可能显示未知发布者提示。
 本包的功能范围和限制见 [RELEASE-NOTES.md](RELEASE-NOTES.md)。
 
@@ -24,8 +24,10 @@ Windows 10 / 11 x64 桌面版。此包为 **0.2.0-rc.4 发布候选**，供试�
 文件卡片的图标按钮提供工作区、所属工程和来源详情入口，悬停可查看操作名称。
 
 “设置”提供界面语言、明暗主题、源文件下载代理及数据源授权。
-公开数据无需账号。NASA Earthdata / Copernicus 授权入口已提供，
-但这些来源的受保护原文件尚待真实账号验收，候选版暂不开放其下载。
+部分公开数据无需账号；NASA、GSCloud 等渠道仍需用户自己的有效授权。
+已验收的 NASA HLS、SRTM 和部分 VIIRS 原件路径可用；这不代表所有账号或产品均已开放。
+GSCloud 请通过软件中的官网登录窗口连接并验证。Copernicus 及目录中标注计划中的产品，
+以各自的实际支持范围为准。GEE 导出使用用户自己的项目，并可能消耗其配额。
 完整范围见 [数据源状态](docs/provider-integration-status.md)；渲染影像不等同于原始科学数据。
 
 Global 邮箱、Google、GitHub 登录通过系统浏览器完成，游客仍可使用本地功能。Global 账号不替代模型连接或 NASA / Copernicus 数据授权，也不提供云同步。
@@ -63,7 +65,9 @@ the entire portable ZIP. Run `geod-global-desktop.exe`; development tools and a
 companion server are unnecessary. Closing the window keeps tasks running in the
 system tray. Use **Quit** in the tray before upgrading or to stop the application.
 
-Public-source workflows are available within the documented limits. Earthdata
-and Copernicus account setup is included; protected original downloads remain
-unavailable pending real-account verification. Uninstall retains user data.
+Source workflows are available within the documented limits. Reviewed NASA
+original workflows require the user's own valid provider access. GSCloud uses
+its official sign-in window and verified session. Planned product families and
+Copernicus delivery retain their individual limits. GEE uses the user's project
+and may consume that project's quota. Uninstall is designed to retain user data.
 See the release notes and provider documentation for support boundaries.

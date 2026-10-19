@@ -195,13 +195,17 @@ it('describes interruption and cancellation as retained work, and separates mosa
   await userEvent.click(await screen.findByRole('radio', { name: '待处理 · 2' }));
   expect(screen.queryByRole('note')).toBeNull();
   expect(screen.queryByRole('alert')).toBeNull();
-  for (const button of screen.getAllByRole('button', { name: '任务详情' })) await userEvent.click(button);
+  const details=screen.getAllByRole('button', { name: '任务详情' });
+  await userEvent.click(details[0]);
   expect(screen.getByRole('note').textContent).toContain('下载已中断。重试时会检查已保存部分，数据源支持时从断点继续。');
+  await userEvent.keyboard('{Escape}');await userEvent.click(details[1]);
   expect(screen.getByRole('alert').textContent).toContain('拼接处理未完成，请检查源文件后重试。');
+  await userEvent.keyboard('{Escape}');
   expect(screen.queryByText('本次下载未完成。请在数据源与本地服务恢复可用后重新下载。')).toBeNull();
   await userEvent.click(screen.getByRole('radio', { name: '历史记录 · 1' }));
   await userEvent.click(screen.getByRole('button', { name: '任务详情' }));
   expect(screen.getByRole('note').textContent).toContain('这项任务已取消，可从头重试。');
+  await userEvent.keyboard('{Escape}');
   expect(screen.getByRole('button', { name: '重试下载' })).toBeTruthy();
 });
 
@@ -213,8 +217,11 @@ it('explains the old mosaic limit in Chinese and retries the same job without do
   await userEvent.click(screen.getByRole('button', { name: '任务详情' }));
   expect(screen.getByRole('alert').textContent).toContain('此任务触发了旧版处理上限。重试将使用分块拼接，并复用已下载源文件。');
   await userEvent.click(screen.getByRole('button', { name: '技术详情' }));
-  expect(screen.getByRole('alert').textContent).toContain('此任务触发了旧版 800 万像元上限。请重试，现已支持按原分辨率分块拼接。');
+  expect(screen.getByText('此任务触发了旧版 800 万像元上限。请重试，现已支持按原分辨率分块拼接。')).toBeTruthy();
   expect(screen.queryByText('拼接处理未完成，请检查源文件后重试。')).toBeNull();
+  await userEvent.keyboard('{Escape}');
+  await waitFor(()=>expect(screen.queryByText('此任务触发了旧版 800 万像元上限。请重试，现已支持按原分辨率分块拼接。')).toBeNull());
+  await userEvent.click(screen.getByRole('button',{name:'关闭',exact:true}));
   await userEvent.click(screen.getByRole('button', { name: '从头重试' }));
   await waitFor(() => expect(backend.submissions).toEqual(['large-mosaic']));
 });
@@ -227,5 +234,5 @@ it('shows actionable disk space information with readable sizes', async () => {
   await userEvent.click(screen.getByRole('button', { name: '任务详情' }));
   await userEvent.click(screen.getByRole('button', { name: '技术详情' }));
   expect(screen.getByRole('alert').textContent).toContain('请释放工作空间所在磁盘的空间后重试，已下载源文件会继续复用。');
-  expect(screen.getByRole('alert').textContent).toContain('工作空间剩余空间不足：预计需要 1.0 GiB，当前可用 512.0 MiB。');
+  expect(screen.getByText('工作空间剩余空间不足：预计需要 1.0 GiB，当前可用 512.0 MiB。')).toBeTruthy();
 });

@@ -83,6 +83,7 @@ fn service_fixture() -> FeatureService {
         collections: collections(&endpoint(ROOT).unwrap()),
         connected_at: TIMESTAMP.into(),
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
         overpass: Some(Service {
             generator: "Overpass API synthetic test fixture".into(),

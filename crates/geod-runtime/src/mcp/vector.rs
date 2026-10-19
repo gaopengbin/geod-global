@@ -126,7 +126,7 @@ pub(super) fn tools(id: &Value) -> Vec<(&'static str, &'static str, Value)> {
     node["properties"]["pointer"] = json!({"type":"string","maxLength":4096,"default":"","description":"JSON pointer within that feature, empty means the feature root. Follow returned read references for omitted values; never a file path."});
     node["required"] = json!(["id", "feature"]);
     vec![
-        ("geod_feature_services","Read paginated metadata of vector services already saved in the app (OGC API Features, ArcGIS, WFS 2 or Overpass). No external request, connection or extraction; saved metadata does not establish current server availability.",page.clone()),
+        ("geod_feature_services","Read paginated metadata of vector services already saved in the app (OGC API Features, ArcGIS, WFS 2, Overpass or geoBoundaries). No external request, connection or extraction; saved metadata does not establish current server availability.",page.clone()),
         ("geod_feature_collections","Read original saved collection declarations for an actual vector service ID; follow nextOffset. No service query or file creation.",id_page.clone()),
         ("geod_vectors_list","List registered local vector file summaries. Registry metadata is not verified content; use inspect/features/node to recheck original bytes and the native conversion.",page),
         ("geod_vector_inspect","Verify an actual registered vector original and its native WGS84 conversion; return metadata, source/conversion hashes and provenance. No full geometry dump, analysis, extraction or scientific accuracy claim.",id.clone()),

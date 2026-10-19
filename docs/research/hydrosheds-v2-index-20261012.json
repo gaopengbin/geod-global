@@ -1,0 +1,517 @@
+{
+  "schema": "geod-hydrosheds-v2-public-index/v1",
+  "publisherIndexUrl": "https://data.hydrosheds.org/file/hydrosheds-v2/download-index.json?v=20260830",
+  "readbackRecordedAt": "2026-10-12T03:26:46.820654+00:00",
+  "publisherIndexDocumentSha256": "28a3b61e2c6ade29fc4e8eed5c409a6704b73dad36e80324ca2d90934aecba6d",
+  "publisherIndexByteLength": 56569,
+  "kind": "public publisher metadata only; tile presence and rounded sizes do not prove complete downloads",
+  "documentationUrl": "https://www.hydrosheds.org/downloads-core-data-v2",
+  "product": "HydroSHEDS v2r0 flow direction 1 arc-second",
+  "publishedRegions": [
+    "north-america",
+    "south-america"
+  ],
+  "directionTileCount": 100,
+  "directionTiles": [
+    {
+      "tileId": "n00w050",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n00w050_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 7
+    },
+    {
+      "tileId": "n00w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n00w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 349
+    },
+    {
+      "tileId": "n00w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n00w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 602
+    },
+    {
+      "tileId": "n00w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n00w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 465
+    },
+    {
+      "tileId": "n00w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n00w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 38
+    },
+    {
+      "tileId": "n00w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n00w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "n10w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "n10w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 54
+    },
+    {
+      "tileId": "n10w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 85
+    },
+    {
+      "tileId": "n10w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 202
+    },
+    {
+      "tileId": "n10w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 213
+    },
+    {
+      "tileId": "n10w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 58
+    },
+    {
+      "tileId": "n10w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n10w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "n20w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n20w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 50
+    },
+    {
+      "tileId": "n20w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n20w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 117
+    },
+    {
+      "tileId": "n20w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n20w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 192
+    },
+    {
+      "tileId": "n20w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n20w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 432
+    },
+    {
+      "tileId": "n20w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n20w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 80
+    },
+    {
+      "tileId": "n30w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "n30w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 161
+    },
+    {
+      "tileId": "n30w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 587
+    },
+    {
+      "tileId": "n30w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 612
+    },
+    {
+      "tileId": "n30w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 567
+    },
+    {
+      "tileId": "n30w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 451
+    },
+    {
+      "tileId": "n30w130",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n30w130_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 76
+    },
+    {
+      "tileId": "n40w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 73
+    },
+    {
+      "tileId": "n40w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 196
+    },
+    {
+      "tileId": "n40w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 538
+    },
+    {
+      "tileId": "n40w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 485
+    },
+    {
+      "tileId": "n40w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 595
+    },
+    {
+      "tileId": "n40w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 571
+    },
+    {
+      "tileId": "n40w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 512
+    },
+    {
+      "tileId": "n40w130",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n40w130_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 229
+    },
+    {
+      "tileId": "n50w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 87
+    },
+    {
+      "tileId": "n50w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 438
+    },
+    {
+      "tileId": "n50w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 456
+    },
+    {
+      "tileId": "n50w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 312
+    },
+    {
+      "tileId": "n50w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 508
+    },
+    {
+      "tileId": "n50w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 568
+    },
+    {
+      "tileId": "n50w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 573
+    },
+    {
+      "tileId": "n50w130",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w130_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 472
+    },
+    {
+      "tileId": "n50w140",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w140_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 146
+    },
+    {
+      "tileId": "n50w150",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w150_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 9
+    },
+    {
+      "tileId": "n50w160",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w160_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 94
+    },
+    {
+      "tileId": "n50w170",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n50w170_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 35
+    },
+    {
+      "tileId": "n60w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 173
+    },
+    {
+      "tileId": "n60w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 271
+    },
+    {
+      "tileId": "n60w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 208
+    },
+    {
+      "tileId": "n60w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 423
+    },
+    {
+      "tileId": "n60w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 475
+    },
+    {
+      "tileId": "n60w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 468
+    },
+    {
+      "tileId": "n60w130",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w130_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 473
+    },
+    {
+      "tileId": "n60w140",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w140_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 430
+    },
+    {
+      "tileId": "n60w150",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w150_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 446
+    },
+    {
+      "tileId": "n60w160",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w160_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 485
+    },
+    {
+      "tileId": "n60w170",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n60w170_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 227
+    },
+    {
+      "tileId": "n70w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 11
+    },
+    {
+      "tileId": "n70w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 166
+    },
+    {
+      "tileId": "n70w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 336
+    },
+    {
+      "tileId": "n70w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 237
+    },
+    {
+      "tileId": "n70w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 187
+    },
+    {
+      "tileId": "n70w120",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w120_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 233
+    },
+    {
+      "tileId": "n70w130",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w130_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 96
+    },
+    {
+      "tileId": "n70w140",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w140_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 6
+    },
+    {
+      "tileId": "n70w150",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w150_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 14
+    },
+    {
+      "tileId": "n70w160",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w160_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 49
+    },
+    {
+      "tileId": "n70w170",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n70w170_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 10
+    },
+    {
+      "tileId": "n80w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n80w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 40
+    },
+    {
+      "tileId": "n80w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n80w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 87
+    },
+    {
+      "tileId": "n80w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n80w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 60
+    },
+    {
+      "tileId": "n80w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n80w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 25
+    },
+    {
+      "tileId": "n80w110",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/n80w110_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "s10w040",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w040_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 163
+    },
+    {
+      "tileId": "s10w050",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w050_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 497
+    },
+    {
+      "tileId": "s10w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 610
+    },
+    {
+      "tileId": "s10w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 627
+    },
+    {
+      "tileId": "s10w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 576
+    },
+    {
+      "tileId": "s10w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 34
+    },
+    {
+      "tileId": "s10w100",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s10w100_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 8
+    },
+    {
+      "tileId": "s20w040",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s20w040_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 83
+    },
+    {
+      "tileId": "s20w050",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s20w050_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 565
+    },
+    {
+      "tileId": "s20w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s20w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 596
+    },
+    {
+      "tileId": "s20w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s20w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 595
+    },
+    {
+      "tileId": "s20w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s20w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 235
+    },
+    {
+      "tileId": "s30w050",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s30w050_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 226
+    },
+    {
+      "tileId": "s30w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s30w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 582
+    },
+    {
+      "tileId": "s30w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s30w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 564
+    },
+    {
+      "tileId": "s30w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s30w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 37
+    },
+    {
+      "tileId": "s30w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s30w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "s40w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s40w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 280
+    },
+    {
+      "tileId": "s40w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s40w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 577
+    },
+    {
+      "tileId": "s40w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s40w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 128
+    },
+    {
+      "tileId": "s40w090",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s40w090_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "s50w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s50w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 250
+    },
+    {
+      "tileId": "s50w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s50w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 214
+    },
+    {
+      "tileId": "s60w040",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s60w040_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 7
+    },
+    {
+      "tileId": "s60w050",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s60w050_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 5
+    },
+    {
+      "tileId": "s60w060",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s60w060_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 12
+    },
+    {
+      "tileId": "s60w070",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s60w070_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 60
+    },
+    {
+      "tileId": "s60w080",
+      "url": "https://data.hydrosheds.org/file/hydrosheds-v2/DIR/1s/s60w080_DIR_1s_v2r0.tif",
+      "publisherSizeMbRounded": 89
+    }
+  ]
+}

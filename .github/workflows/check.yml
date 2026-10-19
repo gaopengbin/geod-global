@@ -61,6 +61,7 @@ jobs:
       - run: python scripts/release.test.py
       - run: cargo fmt --all --check
       - run: npm run verify
+      - run: npm run test:services
       - run: cargo test --locked -p geod-runtime
       - if: runner.os == 'Linux'
         run: cargo clippy --locked -p geod-runtime --all-targets -- -D warnings

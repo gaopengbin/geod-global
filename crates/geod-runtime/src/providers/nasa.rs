@@ -44,7 +44,7 @@ pub fn asset_path(path: &str) -> bool {
     if super::viirs::asset_path(path) {
         return true;
     }
-    if super::srtm::asset_path(path) {
+    if super::srtm::asset_path(path) || super::srtm::num_asset_path(path) {
         return true;
     }
     path.strip_prefix(PREFIX).is_some_and(|tail| {
@@ -58,6 +58,10 @@ pub fn asset_path(path: &str) -> bool {
     })
 }
 pub fn matches_item(url: &Url, id: &str, key: &str) -> bool {
+    if key == "srtm_num" {
+        return super::srtm::num_cell(id).is_some()
+            && url.path() == format!("{}{id}/{id}.zip", super::srtm::NUM_PREFIX);
+    }
     if key == "viirs" {
         return super::viirs::matches(url.path(), id);
     }
@@ -105,6 +109,9 @@ async fn verify_item(client: &Client, catalog: Url, job: &Job) -> Result<()> {
 }
 
 fn catalog_asset(job: &Job) -> Result<(&'static str, String)> {
+    if job.asset_key == "srtm_num" && super::srtm::num_cell(&job.item_id).is_some() {
+        return Ok((super::srtm::NUM_COLLECTION, "num".into()));
+    }
     if job.asset_key == "viirs" {
         let info = super::viirs::identity(&job.item_id).ok_or("Invalid VIIRS original product")?;
         return Ok((info.collection, info.production));
@@ -157,12 +164,22 @@ fn cdn_target(location: &str, original: &Url, now: i64) -> Result<Url> {
         || target.fragment().is_some()
         || target.query().is_none_or(|query| query.len() > 16384)
         || prefix.is_none_or(|prefix| {
-            !prefix.starts_with("/get-")
-                || prefix.len() > 128
-                || prefix[5..].is_empty()
-                || !prefix[5..]
-                    .bytes()
-                    .all(|b| b.is_ascii_alphanumeric() || b == b'-')
+            // Authenticated LP DAAC responses now use /s3-<32 lowercase hex>
+            // on the same signed CDN. Preserve legacy /get- routes. Neither
+            // form relaxes the exact original bucket/file suffix, host,
+            // expiry, signature checks or the no-bearer CDN request rule.
+            let legacy = prefix.strip_prefix("/get-").is_some_and(|id| {
+                !id.is_empty()
+                    && prefix.len() <= 128
+                    && id.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-')
+            });
+            let s3 = prefix.strip_prefix("/s3-").is_some_and(|id| {
+                id.len() == 32
+                    && id
+                        .bytes()
+                        .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            });
+            !legacy && !s3
         })
         || expiry.is_none_or(|expiry| expiry <= now || expiry > now + 86400)
         || ["Signature", "Key-Pair-Id"]

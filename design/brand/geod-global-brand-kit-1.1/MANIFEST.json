@@ -1,0 +1,616 @@
+{
+  "product": "GeoD Global",
+  "version": "1.1",
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1072,
+      "sha256": "f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5307,
+      "sha256": "3c1ba17ae84942d33e1e6be6a51886b2f09cedd14b37f01f672b46f8ce88ef78"
+    },
+    {
+      "path": "backgrounds/clean-light-1920x1080.png",
+      "bytes": 102979,
+      "sha256": "b5089537e2260b008773bfae5262239c3b8fb72d5565e0cf8019bb0544acc7b0"
+    },
+    {
+      "path": "backgrounds/clean-light-1920x1080.svg",
+      "bytes": 822,
+      "sha256": "9ca0bddaad77de9b9859c4dc57dab76cad154ecc0f4240ebb1c46b15448c377d"
+    },
+    {
+      "path": "backgrounds/clean-light-1920x1080.webp",
+      "bytes": 13980,
+      "sha256": "a57f4ccc795c296b3cf05ac4371d8577e2b5fb7cbabc28ae09f1a27ee9ca2715"
+    },
+    {
+      "path": "backgrounds/clean-space-original.png",
+      "bytes": 2259973,
+      "sha256": "c1171616770cfe833a8d6c37ebccd0e507e7eb4fb30c6a0987876de7ae3606c7"
+    },
+    {
+      "path": "backgrounds/clean-space-original.webp",
+      "bytes": 204686,
+      "sha256": "44bf22dac960380d1e75cfb10b90c3f464467fb52b9470bec2171d94fd02e8f6"
+    },
+    {
+      "path": "backgrounds/desktop-dark-1920x1080.png",
+      "bytes": 2729962,
+      "sha256": "a4426602363d414d00aad7c90827155a3ba42616d6f1127600a40c4ed126a1ad"
+    },
+    {
+      "path": "backgrounds/desktop-dark-1920x1080.svg",
+      "bytes": 4160624,
+      "sha256": "cbb6bbd346d2db52d14d6ca0593d55c7d373d75cfcab166de60ab9048db3e7bf"
+    },
+    {
+      "path": "backgrounds/desktop-dark-1920x1080.webp",
+      "bytes": 170258,
+      "sha256": "4dffd6d02d8e162533ecbcad41c0a60c85c2d9b386631d6d385afdcc86933121"
+    },
+    {
+      "path": "backgrounds/desktop-light-1920x1080.png",
+      "bytes": 128971,
+      "sha256": "b268ed3b5e8b609021d223ecd9b3b3488f2ef0bbde291277c26dabed55310b15"
+    },
+    {
+      "path": "backgrounds/desktop-light-1920x1080.svg",
+      "bytes": 1147663,
+      "sha256": "14d95643ba21097c5fbac05d02f592db5b11cb6b2bfe35e2e215753fea4c547f"
+    },
+    {
+      "path": "backgrounds/desktop-light-1920x1080.webp",
+      "bytes": 23062,
+      "sha256": "48baf52ecf0cfe086a2f8c706329c1761828119e1108f7dcfc6a56eb7df04a1f"
+    },
+    {
+      "path": "covers/github-social-1280x640.png",
+      "bytes": 1222222,
+      "sha256": "f844108fed60802ce098d96764251320b7d9e446d396f323f51e6aec697887af"
+    },
+    {
+      "path": "covers/github-social-1280x640.svg",
+      "bytes": 4160945,
+      "sha256": "150c17c4566514f2ddbdc1cdcd0d144f5238a6b154101c6f61a1e6b8a054e198"
+    },
+    {
+      "path": "covers/github-social-1280x640.webp",
+      "bytes": 106354,
+      "sha256": "0d54e680ee085b487803fc4b39b93683896def4be6b9834e56fd921b10338a4e"
+    },
+    {
+      "path": "covers/open-graph-1200x630.png",
+      "bytes": 1146856,
+      "sha256": "47a60892ec84a394baa3ba43cc691e48e84a4b436361760b5aaa56e59095f991"
+    },
+    {
+      "path": "covers/open-graph-1200x630.svg",
+      "bytes": 4160972,
+      "sha256": "1d67491a5e28793079e90d568eae781fe91644b68a979be96a286627de192e5c"
+    },
+    {
+      "path": "covers/open-graph-1200x630.webp",
+      "bytes": 103080,
+      "sha256": "43f98c399459ad9c13c8278bea6cf52a44f294fa3cb65174eb07fb1ab5090c42"
+    },
+    {
+      "path": "covers/readme-header-1600x520.png",
+      "bytes": 1209914,
+      "sha256": "5e6aaec39b1a2e43e4398d469651da2ea8745491cc722fc5e31b5eff66977fac"
+    },
+    {
+      "path": "covers/readme-header-1600x520.svg",
+      "bytes": 4160972,
+      "sha256": "77be8161a4d65032f9b43ed3e5c38a31bc2737c31aae5ab64574182a7bb7647b"
+    },
+    {
+      "path": "covers/readme-header-1600x520.webp",
+      "bytes": 98772,
+      "sha256": "0bd086c1b702430db878000ec6692d84a295bb7cbd45197518ba1166ce6fd058"
+    },
+    {
+      "path": "covers/social-landscape-1600x900.png",
+      "bytes": 2012093,
+      "sha256": "a989b87d15bd4efa5237576a337783160049334dd5e8070029ac11f8cc172b51"
+    },
+    {
+      "path": "covers/social-landscape-1600x900.svg",
+      "bytes": 4160954,
+      "sha256": "43f581d1457cad0a3ac2abec557564101c87bab79cfadad50890b59f2c6e974f"
+    },
+    {
+      "path": "covers/social-landscape-1600x900.webp",
+      "bytes": 156076,
+      "sha256": "ae53817ed7a214879fba997989aa6f0af1fd9fbaeaa51711a2e7a49b87db841b"
+    },
+    {
+      "path": "covers/website-hero-1920x1080.png",
+      "bytes": 2733343,
+      "sha256": "680783cf8fa8e0cbdbce066db9075bdc3a5e47c576a0a3482c28730a6bb01fbb"
+    },
+    {
+      "path": "covers/website-hero-1920x1080.svg",
+      "bytes": 4160979,
+      "sha256": "c339eadfaec965fe65572b789e32694c4faf54a6cef4311f61f8aeea53d78116"
+    },
+    {
+      "path": "covers/website-hero-1920x1080.webp",
+      "bytes": 192552,
+      "sha256": "2ca31f8802b1f5790e5cfe941a8ccdce8cd74a852a0550670b0e37b99fda733d"
+    },
+    {
+      "path": "guidelines/brand-tokens.css",
+      "bytes": 290,
+      "sha256": "9eb44db1f5162d39ca640a9e857a9f3f1cd3e04a6bca2d7e86e47ada45ba22b2"
+    },
+    {
+      "path": "guidelines/brand-tokens.json",
+      "bytes": 803,
+      "sha256": "ec3f28b84656e61db363b2d1f2665f2b0f12425d451bb130f8d0189dc4b49e29"
+    },
+    {
+      "path": "icons/apple-touch-icon-180.png",
+      "bytes": 24126,
+      "sha256": "c9e907dca79865d7cf62ef8837da7fc73870a48bea95e0d5301d8eeae131da65"
+    },
+    {
+      "path": "icons/favicon-32.png",
+      "bytes": 1670,
+      "sha256": "585295abcbe6d96309fc85f91a1ab82f035aab88e45813a1a8c6986a8e508a50"
+    },
+    {
+      "path": "icons/favicon.ico",
+      "bytes": 5475,
+      "sha256": "0c3cbf36852516ff48495e91e5d68eadca6f76d67455719466148ed516671134"
+    },
+    {
+      "path": "icons/macos/geod-global-app-dark.icns",
+      "bytes": 677068,
+      "sha256": "0fb22873ca103a9249f7fbcac4610df0a7b7942c72707bfe48a71089771fd06a"
+    },
+    {
+      "path": "icons/macos/geod-global-app-light.icns",
+      "bytes": 691675,
+      "sha256": "b9c9cf016f0484234e12bf9d1ebba62ddd28691e10e06d5ecc7f5349cea0bc15"
+    },
+    {
+      "path": "icons/png/app-dark-1024.png",
+      "bytes": 486565,
+      "sha256": "d80e7c8f09bfb4b53596210baf1a1dc5c1edc5d0096ddf717bcbd2f9e2e00f06"
+    },
+    {
+      "path": "icons/png/app-dark-128.png",
+      "bytes": 13840,
+      "sha256": "718abc6a5c8281265f8999b6ee2d4875161bed588dce8be63dc277ed4d7ef7eb"
+    },
+    {
+      "path": "icons/png/app-dark-16.png",
+      "bytes": 581,
+      "sha256": "a20f47c83a407aa6d9814c319cd5ce18598976fd1de7bef280546b06cf413632"
+    },
+    {
+      "path": "icons/png/app-dark-180.png",
+      "bytes": 24126,
+      "sha256": "c9e907dca79865d7cf62ef8837da7fc73870a48bea95e0d5301d8eeae131da65"
+    },
+    {
+      "path": "icons/png/app-dark-192.png",
+      "bytes": 27077,
+      "sha256": "a77ed19dddf944257728d7827142573258ab50abf4287fed7f61d76ebba41bbd"
+    },
+    {
+      "path": "icons/png/app-dark-24.png",
+      "bytes": 973,
+      "sha256": "ffc8d53cfdbfb0dec1d451284591b54ec96ace3181f059b79e4a22d8c3e4d7fb"
+    },
+    {
+      "path": "icons/png/app-dark-256.png",
+      "bytes": 44152,
+      "sha256": "3370edbd86942c0b1d48880ab4f343bfeb13c4b0e8601f6d4dcd8f90aa2df25c"
+    },
+    {
+      "path": "icons/png/app-dark-32.png",
+      "bytes": 1506,
+      "sha256": "61af4926757960fd4d9d755eab000e975870ec2ba5706b339117995918455500"
+    },
+    {
+      "path": "icons/png/app-dark-48.png",
+      "bytes": 2816,
+      "sha256": "6db0c9685419aeacb530d82830025e0214fe477f1e8c0e6022542b9fedca6683"
+    },
+    {
+      "path": "icons/png/app-dark-512.png",
+      "bytes": 146319,
+      "sha256": "73f1edb51a1063dc0e9ddeedf968bf937acc7484925956b2ac6ca5348061a847"
+    },
+    {
+      "path": "icons/png/app-dark-64.png",
+      "bytes": 4432,
+      "sha256": "a6340c294a41963f0fa3a3bf17e8c6797d364fbe99a9132f752baf0c4f4ab57d"
+    },
+    {
+      "path": "icons/png/app-dark-96.png",
+      "bytes": 8598,
+      "sha256": "0fd5d5eb6b23172eecb9c1386bd40c125bafc553d5568591a7d10ffd939b7039"
+    },
+    {
+      "path": "icons/png/app-light-1024.png",
+      "bytes": 497939,
+      "sha256": "4abb45da1c69c7a9d286505074f1e3ef0cbf05e0d44ad95d1d5eb148857c430d"
+    },
+    {
+      "path": "icons/png/app-light-128.png",
+      "bytes": 13983,
+      "sha256": "42efd4104bb2967c22d537baed3f51c66cb3a798182e3ab8f05972c298caccf2"
+    },
+    {
+      "path": "icons/png/app-light-16.png",
+      "bytes": 566,
+      "sha256": "1fc61ea67a3f91294ab58e1084fac9ff5bc1ef0c24b0cac7f9189ff1bfd75a64"
+    },
+    {
+      "path": "icons/png/app-light-180.png",
+      "bytes": 24420,
+      "sha256": "eef043727b61220bf5fed035b6c7af15b1791ff8186ef7427a52360b8bef5946"
+    },
+    {
+      "path": "icons/png/app-light-192.png",
+      "bytes": 27311,
+      "sha256": "3f6c287158347191c7ce2b129b371a743f134728451020a4e10300fa0eea67b5"
+    },
+    {
+      "path": "icons/png/app-light-24.png",
+      "bytes": 970,
+      "sha256": "5368bf188052c6046dce0ecec821bc1fddac8fb4d07fb59a65836edb490b749b"
+    },
+    {
+      "path": "icons/png/app-light-256.png",
+      "bytes": 44885,
+      "sha256": "d0f2bcff0be435d79ee11bd366808d341e590a8e97e89a4e58c699ea8a633258"
+    },
+    {
+      "path": "icons/png/app-light-32.png",
+      "bytes": 1509,
+      "sha256": "514ddc2ded696885eab801dc4a9a4f072bb7e3efe60c22771cd1ae5180f6ec42"
+    },
+    {
+      "path": "icons/png/app-light-48.png",
+      "bytes": 2825,
+      "sha256": "381f0edd54fe0d13517a4a1314964ad364488a005b10409faaaf45fd8a5da306"
+    },
+    {
+      "path": "icons/png/app-light-512.png",
+      "bytes": 148819,
+      "sha256": "00b569842170ddc6429493f32a5702c3207c98aa6eaa7f32a4f0abd9f142b09d"
+    },
+    {
+      "path": "icons/png/app-light-64.png",
+      "bytes": 4422,
+      "sha256": "2c7532e1828c00e2ad4d2bf9119fbc9b955718e0af7e0693a7c1b1a93eeaad99"
+    },
+    {
+      "path": "icons/png/app-light-96.png",
+      "bytes": 8666,
+      "sha256": "a1255bc73a77ac65ba22d5fa87891bed1c7f8abb5f11a7d5416ba74ef04b4755"
+    },
+    {
+      "path": "icons/png/symbol-1024.png",
+      "bytes": 622328,
+      "sha256": "e38f69da0a5f88b970fb56713db6c88bc5c3f8d927a58b5deaabd8bf4e11d16b"
+    },
+    {
+      "path": "icons/png/symbol-128.png",
+      "bytes": 16530,
+      "sha256": "644cb768861d6354ae8fc1cfac081a4bc8f4af8949e85b3699fd988374f992b9"
+    },
+    {
+      "path": "icons/png/symbol-16.png",
+      "bytes": 577,
+      "sha256": "867c5bcfc8b50364a0f2ea11a22f7d196e8da931533e1f2b7f07021b046fcb7b"
+    },
+    {
+      "path": "icons/png/symbol-180.png",
+      "bytes": 29541,
+      "sha256": "606c6bf1d2eb8bca5718080f49f17ea47b14af5e0bcc68b84aee60660de681ae"
+    },
+    {
+      "path": "icons/png/symbol-192.png",
+      "bytes": 33187,
+      "sha256": "585c0c9006909494fa666299f7d72c1229decb7fae0d48932610bc3625a20962"
+    },
+    {
+      "path": "icons/png/symbol-24.png",
+      "bytes": 1047,
+      "sha256": "3dcda7145cd3f92e924996b422b6c9def1d23c51c2ad641f4b17a6c991bf8945"
+    },
+    {
+      "path": "icons/png/symbol-256.png",
+      "bytes": 54860,
+      "sha256": "0207e0d9e9ca020de08b98aed0d0ce7013255927f8ed7c88aca404e2d4bd1960"
+    },
+    {
+      "path": "icons/png/symbol-32.png",
+      "bytes": 1670,
+      "sha256": "585295abcbe6d96309fc85f91a1ab82f035aab88e45813a1a8c6986a8e508a50"
+    },
+    {
+      "path": "icons/png/symbol-48.png",
+      "bytes": 3174,
+      "sha256": "7ee7d6beefe5e2d2e2f73dcdba389388bb7c8b4f46ea768d7be37a168fb55d6b"
+    },
+    {
+      "path": "icons/png/symbol-512.png",
+      "bytes": 183485,
+      "sha256": "79472c3789da5c91f75d7ec1a2cf7afdb51985e5976f502d65ea78d64eef14aa"
+    },
+    {
+      "path": "icons/png/symbol-64.png",
+      "bytes": 5106,
+      "sha256": "8b018c478f581e01ca871a6528773d71741154f410691bd005a40582f86c181e"
+    },
+    {
+      "path": "icons/png/symbol-96.png",
+      "bytes": 10174,
+      "sha256": "60b23e722b206fa07e71940abf56303ed74de0989c655585db38180df615f131"
+    },
+    {
+      "path": "icons/windows/geod-global-app-dark.ico",
+      "bytes": 68418,
+      "sha256": "0215aed827e870e4f10ef1b3422c7c92155eeb02bc5750afa753b7fbf1613d52"
+    },
+    {
+      "path": "icons/windows/geod-global-app-light.ico",
+      "bytes": 69278,
+      "sha256": "e8401ebc2377ec32a1ffe5c46883727d4bcd8c4eb59110b8250210936bc9f8fb"
+    },
+    {
+      "path": "icons/windows/geod-global-symbol.ico",
+      "bytes": 83082,
+      "sha256": "72dcbe0b23c6b9fcda90221f027752a460bf6329ee50fa71a06a6de9b58354b7"
+    },
+    {
+      "path": "logos/horizontal-on-dark.png",
+      "bytes": 46012,
+      "sha256": "edaaff27e8b355b8f2dd6d4f177668d3846baa0c5896c04a13a5dd49cf8efade"
+    },
+    {
+      "path": "logos/horizontal-on-dark.svg",
+      "bytes": 1147102,
+      "sha256": "c11c3d5356b5f5fb5859ef626dd2d2a31184696aef00109076c2bcd3f398c332"
+    },
+    {
+      "path": "logos/horizontal-on-dark.webp",
+      "bytes": 12222,
+      "sha256": "0b4c1789049d1c15fe18f68f0f90562939adfe17188c6ed286803020ae85084e"
+    },
+    {
+      "path": "logos/horizontal-on-dark@2x.png",
+      "bytes": 141875,
+      "sha256": "aacff4f46f88193ebdf29b847343a5760b6556e1732534303e4e49f56dd2d255"
+    },
+    {
+      "path": "logos/horizontal-on-dark@4x.png",
+      "bytes": 448557,
+      "sha256": "749073526c179a23691adb50a6a1304f636a7689f200ddbcf5e730bab347d791"
+    },
+    {
+      "path": "logos/horizontal-on-light.png",
+      "bytes": 45655,
+      "sha256": "248009e1785dd045fb33a74a5078c1f611f3cc8b150ec487cc0793cdfe75d343"
+    },
+    {
+      "path": "logos/horizontal-on-light.svg",
+      "bytes": 1147102,
+      "sha256": "08b00a35d3a199e873abd86f0b50271b0f0ea7aadeed6ba0bbb9bc9957942f51"
+    },
+    {
+      "path": "logos/horizontal-on-light.webp",
+      "bytes": 12782,
+      "sha256": "f22d51b93e2d5ab5817c3fe5b2e5f95d27696afa776b11e9322150279cd11c50"
+    },
+    {
+      "path": "logos/horizontal-on-light@2x.png",
+      "bytes": 140826,
+      "sha256": "53a9aad17d739f82a4288bb7f3098486af7198f2196d3600dbada54115845446"
+    },
+    {
+      "path": "logos/horizontal-on-light@4x.png",
+      "bytes": 446877,
+      "sha256": "ea81a679f1c3751dffd2de7aa2bdf7d5f9f7eedb71b047f195bdb0e0959aac69"
+    },
+    {
+      "path": "logos/stacked-on-dark.png",
+      "bytes": 100626,
+      "sha256": "a6e038cfc9603ca28739024124ee9aad6383555e3f2054cdc053e61093a5fc31"
+    },
+    {
+      "path": "logos/stacked-on-dark.svg",
+      "bytes": 1147063,
+      "sha256": "05f180f869caa37edb47c4695d21a3e00e1caa242a28b0a5183432820660ad03"
+    },
+    {
+      "path": "logos/stacked-on-dark.webp",
+      "bytes": 22230,
+      "sha256": "bf94df056dfde4103d4f99f49e249c4586aede11eff960b20163acf52ffea2c2"
+    },
+    {
+      "path": "logos/stacked-on-dark@2x.png",
+      "bytes": 328568,
+      "sha256": "3ec748745858dbd0a7a9c43b0e1971c9ceca09105d76041e7f1ad05105ceb453"
+    },
+    {
+      "path": "logos/stacked-on-light.png",
+      "bytes": 100258,
+      "sha256": "8477b8a3dc364da9be12d7aa2669c0eedef5680488bd110d9ea5295d638f829f"
+    },
+    {
+      "path": "logos/stacked-on-light.svg",
+      "bytes": 1147063,
+      "sha256": "8792799fc59f6922e80a79e953c3abdcbf36f53fa76e461d5b24231fc80ee641"
+    },
+    {
+      "path": "logos/stacked-on-light.webp",
+      "bytes": 22912,
+      "sha256": "1228a920002cad0e61f46875260bdb8f9b4753b185afdc28e11868bddbdee03e"
+    },
+    {
+      "path": "logos/stacked-on-light@2x.png",
+      "bytes": 327580,
+      "sha256": "b8e0c72fce69a99ebaca77686f31497a49aa6a6cae36dcede1f5d8eec3e4cf56"
+    },
+    {
+      "path": "logos/symbol.png",
+      "bytes": 906412,
+      "sha256": "6cd6c8f24852c4207901f5653bb14ebf3a6f47562cdaf1c09fe6684a27902a82"
+    },
+    {
+      "path": "logos/symbol.svg",
+      "bytes": 1146763,
+      "sha256": "c7c733596d1f35a65a6c4e1aacf56781ee8db5434b673734bfa04ac367e44b80"
+    },
+    {
+      "path": "logos/wordmark-on-dark.png",
+      "bytes": 11857,
+      "sha256": "8b6ab11b360f37e3bd4d6fb06e2d5030734e3bd6e8108feb284a3f5c87d5bb04"
+    },
+    {
+      "path": "logos/wordmark-on-dark.svg",
+      "bytes": 569,
+      "sha256": "e17044a4439d749ef759ca9ec2f6c1722ed811fc8f31c96872a4eca94bbcc589"
+    },
+    {
+      "path": "logos/wordmark-on-dark@2x.png",
+      "bytes": 27627,
+      "sha256": "aac9aa317e60545588b8676b1c9a379bd498ef9d941f589710baa24b6a3fc8db"
+    },
+    {
+      "path": "logos/wordmark-on-light.png",
+      "bytes": 11431,
+      "sha256": "ce4af0f363a75c82341f2cb80f00fb8a3bbda4681fec36adb80b1110ec84d89b"
+    },
+    {
+      "path": "logos/wordmark-on-light.svg",
+      "bytes": 569,
+      "sha256": "9450606e59e52349c53f9f33d385d076077738da1be2754ae0f05fa2aff07054"
+    },
+    {
+      "path": "logos/wordmark-on-light@2x.png",
+      "bytes": 26557,
+      "sha256": "07ea5e64091b66e968ab9c095184f4b5f753097b04c6ee67224c9d46da3393d7"
+    },
+    {
+      "path": "logos/wordmark-solid-ink.png",
+      "bytes": 8514,
+      "sha256": "1335839cdaacce65a6b8b598be30e337ae7a8b36a746d2d54888b35d1a72037a"
+    },
+    {
+      "path": "logos/wordmark-solid-ink.svg",
+      "bytes": 556,
+      "sha256": "2f96e73273e4a0275292fae266489e7413e5aaa45952eddc15db6054ece514a5"
+    },
+    {
+      "path": "logos/wordmark-solid-ink@2x.png",
+      "bytes": 17671,
+      "sha256": "6984f73373370da057a3238a710f3e3a0dcd2f39c7b49516359036c5a452a887"
+    },
+    {
+      "path": "logos/wordmark-solid-white.png",
+      "bytes": 9331,
+      "sha256": "753e74025c3ef62045179f80dd5a15c13f90c04b9f702e05b0e3486b5f79af10"
+    },
+    {
+      "path": "logos/wordmark-solid-white.svg",
+      "bytes": 556,
+      "sha256": "30461e8f8cea6f0fda6c1496909e3babac91820ac68745dd2d3c8b875e23bf40"
+    },
+    {
+      "path": "logos/wordmark-solid-white@2x.png",
+      "bytes": 20273,
+      "sha256": "93169ba9d1b03d3f5f036041aae682f7cae1c69134d52e2c105e1ca753b258f6"
+    },
+    {
+      "path": "overview.png",
+      "bytes": 1885037,
+      "sha256": "ec16c1ee9cfbc61a6c3cfc9cda937b89875efad4d614188a72f4750b8247e191"
+    },
+    {
+      "path": "overview.svg",
+      "bytes": 10533650,
+      "sha256": "db9076b84f74d6250910eef2a6a798be8ea40a87f92c5c9a130cf1bb0f13d849"
+    },
+    {
+      "path": "social/avatar-circle-dark.png",
+      "bytes": 422384,
+      "sha256": "90ce5d11eb59acf4229a469ed8c895a235a1c32023a021e73cba3a0842b70267"
+    },
+    {
+      "path": "social/avatar-circle-dark.svg",
+      "bytes": 1146815,
+      "sha256": "664c424ef2fcebcbb1b664c811dfa9619ee0d4f7c2baaa800a65e18a34c5410d"
+    },
+    {
+      "path": "social/avatar-circle-light.png",
+      "bytes": 431297,
+      "sha256": "ea03ac53be606d0addccfd7a9a7152009b0befc13117da1939cf1baa2784bcc7"
+    },
+    {
+      "path": "social/avatar-circle-light.svg",
+      "bytes": 1146815,
+      "sha256": "50614de505eb4daa5f446beb1931f79c85f3545cfc794db85bce5edb302d853d"
+    },
+    {
+      "path": "social/avatar-dark.png",
+      "bytes": 443499,
+      "sha256": "efad0fc00f7ea992aec019bcd9ddee321ad7e23f9529af9d1bcf2f625d6f2081"
+    },
+    {
+      "path": "social/avatar-dark.svg",
+      "bytes": 1146812,
+      "sha256": "b3ae1a709de8b101625214dbc094d9c742ead3fe44d3b2e48b273287e580bb20"
+    },
+    {
+      "path": "social/avatar-dark.webp",
+      "bytes": 31254,
+      "sha256": "8259f73dccb22e3a51a56b62df7cf50ac9de5dcd1b6f028266616a8e844a5cd8"
+    },
+    {
+      "path": "social/avatar-light.png",
+      "bytes": 454685,
+      "sha256": "a97d8f6fc37c2587db4d5c8e6251d6b6872e36878b42231875ea50aadf7e4846"
+    },
+    {
+      "path": "social/avatar-light.svg",
+      "bytes": 1146812,
+      "sha256": "2e09a28542056fcb33513f7b2477778a4b652e125065389d0c28b066d95f303a"
+    },
+    {
+      "path": "social/avatar-light.webp",
+      "bytes": 33678,
+      "sha256": "d48a433f3fffe7bb235d791c1cdec9db2bec718aa89098e07e504fe996f8bdba"
+    },
+    {
+      "path": "source/PROVENANCE.json",
+      "bytes": 7140,
+      "sha256": "7a3f31789b30071e5449bbdb96597b5d04797fac359e0f4fc925ffe435c95666"
+    },
+    {
+      "path": "source/approved-generation.json",
+      "bytes": 850,
+      "sha256": "6228e8d585c27003096470b95fda3c04badd3d4284299f824281d5ded22da676"
+    },
+    {
+      "path": "source/approved-symbol.png",
+      "bytes": 859810,
+      "sha256": "01d4f478243768226237aedac44290665b48be3920e5b9117df17d7de0a3c7fe"
+    },
+    {
+      "path": "source/background-generation.json",
+      "bytes": 1220,
+      "sha256": "158aa4fcdaed78cfe27980f2b03cb5a31631c4d0186326bd33cdf406d7e53957"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 export default {
+  'Local storage': '本地存储',
   'Downloads the complete original SAFE archive, including JP2 bands and metadata. Prepare the original TCI or SCL rasters in the project to view and process them locally.': '下载完整原始 SAFE 压缩包，包含 JP2 波段和元数据。可在工程中准备原始 TCI 或 SCL 栅格，进行本地显示与处理。',
   'HLS source bands keep their original Int16 values and reflectance scale. Open them in Workspace to inspect DN and reflectance. Clip or mosaic each original band in the project.': 'HLS 原始波段保留 Int16 值和反射率参数，可在工作空间检查 DN 与反射率，并在工程中分别裁剪或拼接原始波段。',
   'Landsat source bands keep their original UInt16 values. Open them in Workspace to inspect DN and reflectance. Clip or mosaic each original band in the project.': 'Landsat 原始波段保留 UInt16 值，可在工作空间检查 DN 与反射率，并在工程中分别裁剪或拼接原始波段。',

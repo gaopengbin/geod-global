@@ -1,0 +1,450 @@
+{
+  "checkedAt": "2026-10-11",
+  "candidateCount": 30,
+  "scope": "30 candidate channels and services; not 30 independent mirrors or implemented providers. Existing GEE route is included for comparison. No commercial imagery procurement.",
+  "channels": [
+    {
+      "id": "D01",
+      "group": "国内与光学替代",
+      "name": "地理空间数据云 GSCloud",
+      "priority": "优先同景下载测试",
+      "products": "Landsat、MODIS、DEM、部分 Sentinel/国产影像",
+      "mode": "原件/平台产品，逐集合核对",
+      "access": "用户账号；开放稳定 API 与当前 C2L2/Landsat9 完整度未确认",
+      "verified": "浏览器Landsat目录/实体表可读；页面显示登录/注册，筛选超时未得影像；当前C2L2与新数据覆盖仍未确认",
+      "refs": [
+        "C01",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "url": "https://www.gscloud.cn/sources",
+      "liveTestReport": "alternative-download-live-tests-20261011.md"
+    },
+    {
+      "id": "D02",
+      "group": "国内与光学替代",
+      "name": "阿里 AI Earth",
+      "priority": "优先用户账号导出测试",
+      "products": "Landsat、Sentinel、MODIS 分析/区域导出",
+      "mode": "平台处理/裁剪结果；是否可取得完全同源原件需核对",
+      "access": "阿里账号/SDK身份；有下载等增值用量，现行免费额度待登录核验",
+      "verified": "官方SDK匿名STAC实际HTTP503 HTML；没有授权，未执行导出，未下载影像",
+      "refs": [
+        "C02",
+        "C03"
+      ],
+      "url": "https://help.aliyun.com/zh/document_detail/128320.html",
+      "entry": "https://engine-aiearth.aliyun.com/",
+      "liveTestReport": "alternative-download-live-tests-20261011.md"
+    },
+    {
+      "id": "D03",
+      "group": "国内与光学替代",
+      "name": "PIE-Engine Studio",
+      "priority": "优先用户脚本导出测试",
+      "products": "Landsat、Sentinel、MODIS 等分析就绪数据",
+      "mode": "imageToCloud 等区域导出；可能重投影/采样",
+      "access": "用户账号；当前外部 SDK、下载额度与商用权限待确认，不沿用旧论文配额",
+      "verified": "入口/目录HTTP200 HTML壳；没有授权；C2SR小AOI脚本已准备但未执行",
+      "refs": [
+        "C04",
+        "C05"
+      ],
+      "url": "https://engine.piesat.cn/engine-studio/",
+      "liveTestReport": "alternative-download-live-tests-20261011.md"
+    },
+    {
+      "id": "D04",
+      "group": "国内与光学替代",
+      "name": "CNES GEODES / THEIA",
+      "priority": "优先 S1/S2 下载测试",
+      "products": "Sentinel-1/2、VENUS、SPOT历史、THEIA 产品",
+      "mode": "独立分发原产品与加工产品；THEIA Landsat 属历史集合",
+      "access": "目录匿名；下载用户账号/API Key；逐集合许可",
+      "verified": "本机 STAC collections HTTP 200；原件未下载；API返回 beta 扩展版本需兼容检查",
+      "refs": [
+        "C20"
+      ],
+      "url": "https://geodes.cnes.fr/support/api/",
+      "entry": "https://geodes-portal.cnes.fr/api/stac"
+    },
+    {
+      "id": "D05",
+      "group": "雷达与多云分发",
+      "name": "ASF Vertex / ASF 档案",
+      "priority": "优先原件替代测试",
+      "products": "Sentinel-1 GRD/SLC、ALOS、OPERA 等",
+      "mode": "真实独立分发；预制 RTC 与原始 GRD/SLC 分开",
+      "access": "Earthdata 认证及产品 EULA；asf_search 仅为客户端",
+      "verified": "当前下载文档/社区经历；本轮未下载",
+      "refs": [
+        "C06",
+        "C18",
+        "C19",
+        "C23",
+        "C28"
+      ],
+      "url": "https://docs.asf.alaska.edu/asf_search/downloading/",
+      "entry": "https://search.asf.alaska.edu/"
+    },
+    {
+      "id": "D06",
+      "group": "雷达与多云分发",
+      "name": "AWS Sentinel-1 GRD",
+      "priority": "优先匿名 COG 测试",
+      "products": "Sentinel-1 GRD COG",
+      "mode": "独立云拷贝；非 SLC、非 RTC",
+      "access": "注册页明确无 AWS 账号可读；eu-central-1",
+      "verified": "当前桶/格式文档；本轮未下载",
+      "refs": [
+        "C18"
+      ],
+      "url": "https://registry.opendata.aws/sentinel-1/"
+    },
+    {
+      "id": "D07",
+      "group": "雷达与多云分发",
+      "name": "Google Cloud 公共 Sentinel-2",
+      "priority": "补 S2 存储备份",
+      "products": "S2 公共数据；Google Landsat 公共档案仍为 C1",
+      "mode": "GCS 对象存储；和 GEE 计算服务分开",
+      "access": "公共对象 HTTPS API 无需认证；核对处理级别/基线/是否有同景",
+      "verified": "当前 Google 文档；本轮未下载",
+      "refs": [
+        "C16"
+      ],
+      "url": "https://docs.cloud.google.com/storage/docs/public-datasets"
+    },
+    {
+      "id": "D08",
+      "group": "雷达与多云分发",
+      "name": "WEkEO HDA",
+      "priority": "第二批认证测试",
+      "products": "Sentinel、EUMETSAT、Copernicus Land/Marine/ECMWF",
+      "mode": "联邦访问；并非所有底层存储独立于 CDSE",
+      "access": "免费用户账号、接受产品许可证；有请求/订单限制",
+      "verified": "HDA API 文档；本轮未下载",
+      "refs": [],
+      "url": "https://help.wekeo.eu/en/articles/6771578-how-to-use-the-harmonized-data-access-rest-api-with-curl",
+      "entry": "https://www.wekeo.eu/"
+    },
+    {
+      "id": "D09",
+      "group": "NASA与按需子集",
+      "name": "NASA LPCLOUD / Earthdata HTTPS",
+      "priority": "优先 MODIS/VIIRS/HLS 原件测试",
+      "products": "对应云集合 MODIS、VIIRS、HLS 等",
+      "mode": "NASA 云档案；earthaccess/CMR/STAC 不是多个独立镜像",
+      "access": "免费 Earthdata 用户身份；云内 S3 临时授权条件与跨网 HTTPS 分开",
+      "verified": "云迁移/认证文档；本轮未下载原件",
+      "refs": [
+        "C21",
+        "C22"
+      ],
+      "url": "https://github.com/nasa/MODIS-VIIRS-Data-Resources/blob/main/guides/after_datapool.md"
+    },
+    {
+      "id": "D10",
+      "group": "NASA与按需子集",
+      "name": "NASA LAADS DAAC",
+      "priority": "优先相关 MODIS/VIIRS 原件测试",
+      "products": "MODIS/VIIRS 辐射、陆地/大气等所列产品",
+      "mode": "不同 NASA 分发档案；产品覆盖不能与 LP DAAC 全部互换",
+      "access": "Earthdata 认证/Bearer token；不同 Collection/波段需要核对",
+      "verified": "下载脚本/社区文档；本轮未下载",
+      "refs": [
+        "C11",
+        "C28"
+      ],
+      "url": "https://ladsweb.modaps.eosdis.nasa.gov/tools-and-services/data-download-scripts/"
+    },
+    {
+      "id": "D11",
+      "group": "NASA与按需子集",
+      "name": "AppEEARS",
+      "priority": "优先小 AOI 导出测试",
+      "products": "所列 HLS、MODIS、VIIRS、SRTM 等",
+      "mode": "任务化裁剪/重投影/格式转换；非整景镜像",
+      "access": "Earthdata 账号；排队；产品清单逐项确认，HLS 30m 不替代 S2 10m",
+      "verified": "API/真实用户队列经历；本轮未提交任务",
+      "refs": [
+        "C22"
+      ],
+      "url": "https://appeears.earthdatacloud.nasa.gov/api/",
+      "entry": "https://www.earthdata.nasa.gov/data/tools/appeears"
+    },
+    {
+      "id": "D12",
+      "group": "NASA与按需子集",
+      "name": "ORNL TESViS",
+      "priority": "带数据新鲜度问题进入测试",
+      "products": "MODIS/VIIRS 等支持产品的小区域数值/时序",
+      "mode": "CSV/JSON 子集，不是完整 HDF/GeoTIFF 原件",
+      "access": "本轮数值 REST 请求匿名；普通 subset 最多10日期",
+      "verified": "目录46产品；北京2018 NDVI实际81像元；目录最新2026-09-14返空，未通过新鲜度",
+      "refs": [
+        "C08"
+      ],
+      "url": "https://modis.ornl.gov/data/modis_webservice.html",
+      "entry": "https://modis.ornl.gov/rst/api/v1"
+    },
+    {
+      "id": "D13",
+      "group": "NASA与按需子集",
+      "name": "CDSE Sentinel Hub Process / openEO",
+      "priority": "第二批小 AOI 同步测试",
+      "products": "S1/S2 等指定波段、指数、区域导出",
+      "mode": "加工路径；同步/批处理有不同延迟，不增加独立原件镜像",
+      "access": "CDSE/OAuth；独立请求、处理单元/计算额度",
+      "verified": "官方 API/用户同任务延迟比较；本轮未提交",
+      "refs": [
+        "C24"
+      ],
+      "url": "https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html"
+    },
+    {
+      "id": "D14",
+      "group": "NASA与按需子集",
+      "name": "Google Earth Engine（现有路线）",
+      "priority": "完善稳定授权与大任务导出",
+      "products": "平台收藏中的 Landsat、Sentinel、MODIS等",
+      "mode": "计算/区域导出；需保留产品/处理/采样记录",
+      "access": "用户项目；计算额度及商用规则；大任务异步导出",
+      "verified": "先前下载证据另存；今日原临时链接已过期；本轮未新增下载",
+      "refs": [
+        "C16",
+        "C17"
+      ],
+      "url": "https://developers.google.com/earth-engine/guides/exporting_images"
+    },
+    {
+      "id": "D15",
+      "group": "高程与专题开放生态",
+      "name": "OpenTopography",
+      "priority": "优先静态 STAC；商业 API 后置",
+      "products": "CopDEM、SRTM、NASADEM、AW3D30、区域 lidar DEM等",
+      "mode": "独立 DEM 分发/COG 与裁剪 API 分开",
+      "access": "目录可匿名；Global API个人Key有额度，商业软件集成需 Enterprise Key，不能共享免费Key",
+      "verified": "匿名完整北京北部COP90静态GeoTIFF 6,545,035B/6.328秒，全像元解码通过；COP30仅HEAD，软件接入链路未验收",
+      "refs": [
+        "C26"
+      ],
+      "url": "https://opentopography.org/developers/",
+      "entry": "https://portal.opentopography.org/stac/raster_catalog.json",
+      "liveTestReport": "alternative-download-live-tests-20261011.md"
+    },
+    {
+      "id": "D16",
+      "group": "高程与专题开放生态",
+      "name": "JAXA Earth API",
+      "priority": "优先匿名 STAC/COG样本测试",
+      "products": "AW3D30、森林、降水、温度、NDVI等公开转换产品",
+      "mode": "静态 STAC/COG；同名产品的分辨率/合成周期不一定相同",
+      "access": "当前官方说明免注册/Key且无调用次数限制；逐集合许可/署名",
+      "verified": "匿名完整北京AW3D30 v4.1 DSM 8,418,816B/1.261秒及MSK全解码通过；软件接入链路未验收",
+      "refs": [],
+      "url": "https://data.earth.jaxa.jp/en/",
+      "entry": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
+      "liveTestReport": "alternative-download-live-tests-20261011.md"
+    },
+    {
+      "id": "D17",
+      "group": "高程与专题开放生态",
+      "name": "JAXA G-Portal",
+      "priority": "第二批具体产品认证测试",
+      "products": "GCOM-C/W、GPM等任务产品",
+      "mode": "原任务产品通道；不等同 Earth API 转换版",
+      "access": "下载需用户注册；HTTPS/SFTP等",
+      "verified": "下载说明；本轮未下载",
+      "refs": [],
+      "url": "https://gportal.jaxa.jp/gpr/information/download"
+    },
+    {
+      "id": "D18",
+      "group": "高程与专题开放生态",
+      "name": "OpenLandMap / OpenGeoHub",
+      "priority": "优先匿名专题 COG 样本测试",
+      "products": "土壤、覆盖、夜光、FAPAR、地形等",
+      "mode": "很多为预测/融合/合成产品，非最新原始光学景",
+      "access": "公开 STAC/COG；许可逐集合核对",
+      "verified": "本机STAC HTTP200，104 child链接；原件未下载",
+      "refs": [
+        "C27"
+      ],
+      "url": "https://docs.openlandmap.org/020-stac.html",
+      "entry": "https://s3.eu-central-1.wasabisys.com/stac/openlandmap/catalog.json"
+    },
+    {
+      "id": "D19",
+      "group": "高程与专题开放生态",
+      "name": "USGS The National Map / 州级原始数据",
+      "priority": "第二批美国 DEM/NAIP测试",
+      "products": "3DEP、lidar、NAIP等美国数据",
+      "mode": "原数据下载索引与可视化 ImageServer 分开",
+      "access": "门户有公开下载路线；具体文件权限/格式核实；只覆盖相应美国区域",
+      "verified": "当前下载说明；本轮未下载",
+      "refs": [
+        "C25"
+      ],
+      "url": "https://www.usgs.gov/the-national-map-data-delivery/gis-data-download"
+    },
+    {
+      "id": "D20",
+      "group": "费用/保留期受限云存储",
+      "name": "AWS USGS Landsat C2",
+      "priority": "有费用归属后测试",
+      "products": "Landsat C2 L1/L2/L3/美国ARD所列产品",
+      "mode": "真实云对象/STAC，不是匿名免费镜像",
+      "access": "Requester Pays，AWS签名账号；请求/流量付费归属",
+      "verified": "当前USGS说明；本轮未产生费用/下载",
+      "refs": [
+        "C16"
+      ],
+      "url": "https://www.usgs.gov/landsat-missions/landsat-commercial-cloud-data-access"
+    },
+    {
+      "id": "D21",
+      "group": "费用/保留期受限云存储",
+      "name": "AWS NAIP",
+      "priority": "按产品及费用再测试",
+      "products": "source/analytic四波段，visualization三波段",
+      "mode": "原始/无损分析/有损可视化三桶不能互换",
+      "access": "三个桶均Requester Pays；当前多数产品2010–2023",
+      "verified": "当前注册页；本轮未下载",
+      "refs": [
+        "C25"
+      ],
+      "url": "https://registry.opendata.aws/naip/"
+    },
+    {
+      "id": "D22",
+      "group": "费用/保留期受限云存储",
+      "name": "NOAA JPSS AWS/GCS/Azure/CLASS",
+      "priority": "按VIIRS产品单独测试",
+      "products": "VIIRS SDR/EDR、DNB、火点等NOAA产品",
+      "mode": "多存储通道；不是NASA VNP13A1同源镜像",
+      "access": "AWS公共桶可匿名；2026-09-14起部分仅保留90天，其他长期保存；具体GCS/Azure权限另核实",
+      "verified": "当前保留策略/分发文档；本轮未下载",
+      "refs": [
+        "C09"
+      ],
+      "url": "https://registry.opendata.aws/noaa-jpss/"
+    },
+    {
+      "id": "D23",
+      "group": "国产/机构/研究候选",
+      "name": "中国资源卫星 CRESDA",
+      "priority": "第二批自有账号权限测试",
+      "products": "开放权限所覆盖GF、ZY、HJ等",
+      "mode": "原产品/申请订单，权限按产品和用户",
+      "access": "实名/审核/授权；注册不代表全部可下载；不涉及商业影像采购",
+      "verified": "社区实际GF1经历；当前权限下载未核验",
+      "refs": [
+        "C01",
+        "C12"
+      ],
+      "url": "https://data.cresda.cn/#/home"
+    },
+    {
+      "id": "D24",
+      "group": "国产/机构/研究候选",
+      "name": "风云 NSMC",
+      "priority": "第二批气象产品路线",
+      "products": "风云及服务清单所列气象产品",
+      "mode": "原产品/订购、官方客户端下载",
+      "access": "注册实名及用户级别/下载限额",
+      "verified": "当前FAQ/客户端文档；本轮未下载",
+      "refs": [
+        "C09",
+        "C11"
+      ],
+      "url": "https://data.nsmc.org.cn/DataPortal/cn/support/faq.html"
+    },
+    {
+      "id": "D25",
+      "group": "国产/机构/研究候选",
+      "name": "海洋卫星 NSOAS",
+      "priority": "第二批海洋专题路线",
+      "products": "海洋水色/动力环境所列产品",
+      "mode": "专题及原产品，不替代陆地10m光学影像",
+      "access": "用户账号/订单/逐产品许可；稳定外部API待确认",
+      "verified": "公众号转载线索/门户；本轮未下载",
+      "refs": [
+        "C11"
+      ],
+      "url": "https://osdds.nsoas.org.cn/"
+    },
+    {
+      "id": "D26",
+      "group": "国产/机构/研究候选",
+      "name": "NODA 遥感卫星地面站数据",
+      "priority": "候选，先解访问与权限",
+      "products": "Landsat及地面站开放档案",
+      "mode": "机构分发；历史CEODE入口须迁移核对",
+      "access": "账号/申请权限；当前可读性/API未确认",
+      "verified": "搜索目录线索；本轮网页抓取遇到拦截页，未下载",
+      "refs": [
+        "C09"
+      ],
+      "url": "https://www.noda.ac.cn/rsgs/datasharing/aboutEverybody"
+    },
+    {
+      "id": "D27",
+      "group": "国产/机构/研究候选",
+      "name": "CASEarth DataBank",
+      "priority": "候选，先许可/API核验",
+      "products": "长时序Landsat、全球/全国RTU镶嵌等",
+      "mode": "处理后RTU产品，非所有原始景",
+      "access": "公开介绍未证明外部免费API、商用许可或下载权益",
+      "verified": "CBAS介绍可读；本轮未验证下载入口",
+      "refs": [],
+      "url": "https://www.cbas.ac.cn/kypt/databank/",
+      "entry": "http://databank.casearth.cn/"
+    },
+    {
+      "id": "D28",
+      "group": "国产/机构/研究候选",
+      "name": "OGE 开放地球引擎",
+      "priority": "候选，先账号/API导出核验",
+      "products": "Landsat、MODIS、Sentinel、珞珈等页面所列数据",
+      "mode": "云处理/工作流平台",
+      "access": "登录后额度、稳定公开API、下载/商用许可未确认",
+      "verified": "本轮早期抓取曾见维护；最终web读取首页正常，不能判全站停用；未下载",
+      "refs": [],
+      "url": "https://openge.org.cn/"
+    },
+    {
+      "id": "D29",
+      "group": "国产/机构/研究候选",
+      "name": "AllenAI Satlas",
+      "priority": "专题成果扩展",
+      "products": "树冠、风机、太阳能设施等派生成果",
+      "mode": "AI专题产品；超分不能标成真实新增空间细节",
+      "access": "所列开源/开放产品许可，逐成果核对",
+      "verified": "维护者成果下载说明；本轮未下载",
+      "refs": [],
+      "url": "https://github.com/allenai/satlas/blob/main/GeospatialDataProducts.md"
+    },
+    {
+      "id": "D30",
+      "group": "国产/机构/研究候选",
+      "name": "Esri Living Atlas ImageServer",
+      "priority": "区域分析/可视化候选",
+      "products": "Landsat/Sentinel等服务对应产品",
+      "mode": "动态exportImage；不默认包含原始场景全部波段/QA/元数据",
+      "access": "部分服务可匿名，部分需订阅；核实该层使用条款/尺寸/分析权限",
+      "verified": "匿名Landsat C2 Level-1红波段小AOI TIFF全下载/解码通过；真正C2L2服务JSON499需要Token，不能标匿名C2L2镜像",
+      "refs": [
+        "C16"
+      ],
+      "url": "https://developers.arcgis.com/rest/services-reference/enterprise/export-image/",
+      "entry": "https://landsat2.arcgis.com/arcgis/rest/services/Landsat8_PanSharpened/ImageServer",
+      "liveTestReport": "alternative-download-live-tests-20261011.md",
+      "c2l2Entry": "https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer"
+    }
+  ],
+  "latestLiveTest": "alternative-download-live-tests-20261011.md",
+  "latestExpansionResearch": "multisource-channel-research-20261011.json",
+  "latestExpansionLiveTests": "multisource-live-tests-20261011.md"
+}

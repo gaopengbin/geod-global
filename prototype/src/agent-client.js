@@ -1,9 +1,15 @@
+import {GSCloudOriginalProducts,originalTile} from './gscloud-client.js';
+import { validUsageLedger } from './agent-usage.js';
 import { desktopAvailable } from './runtime-client.js';
+import {validScene} from '../../agent/scenes.mjs';
 import { MODEL_CAPABILITIES, MODEL_PROVIDERS, validProviderProtocol, validModelId, modelCapabilities } from './agent-model-registry.js';
 import {officeExtension,audioExtension,audioSignature,videoExtension,videoSignature} from '../../agent/file-types.mjs';
 import { validDecision, validTaskContext } from '../../agent/decisions.mjs';
 import { validGoal } from '../../agent/goal-contract.mjs';
+import { validToolRecord } from '../../agent/tool-record.mjs';
 import { validatePlanMapPreview } from './agent-map-preview.js';
+import { MAX_CONTEXT_WINDOW, validContextWindow } from '../../agent/model-context.mjs';
+import { validGeoBoundariesCountry, GEOBOUNDARIES_SELECTION } from './geoboundaries-client.js';
 // Change notifications are hints. All displayed state still passes through
 // the native snapshot validator and its permission-checked result cards.
 export async function subscribeAgentUpdates(callback) {
@@ -14,7 +20,7 @@ export async function subscribeAgentUpdates(callback) {
 }
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const STATUSES = ['starting', 'running', 'stopping', 'completed', 'failed', 'interrupted'];
-const ASSET_KEYS = ['scl','visual','red','green','blue','elevation','srtm','aerial','vv','vh','hh','hv','ndvi','evi','vi_quality','vi_reliability','vi_doy','vi_red','vi_nir','vi_blue','vi_mir','vi_view_zenith','vi_sun_zenith','vi_relative_azimuth','modis_qc','modis_state','qa_pixel','qa_radsat','product','viirs'];
+const ASSET_KEYS = ['scl','visual','red','green','blue','elevation','srtm','srtm_num','aerial','vv','vh','hh','hv','ndvi','evi','vi_quality','vi_reliability','vi_doy','vi_red','vi_nir','vi_blue','vi_mir','vi_view_zenith','vi_sun_zenith','vi_relative_azimuth','modis_qc','modis_state','qa_pixel','qa_radsat','product','viirs'];
 export function validAgentImage(value) {
   return value && Object.keys(value).every(key=>['id','name','mimeType','bytes','width','height'].includes(key))
     && /^[a-f0-9]{64}$/.test(value.id) && typeof value.name==='string' && value.name.trim() && [...value.name].length<=80 && !/[\u0000-\u001f\u007f/\\]/.test(value.name)
@@ -25,8 +31,8 @@ export function validAgentContext(value) {
   return value && Object.keys(value).every(key=>['status','count','lastCompletedAt','usedTokens','windowTokens'].includes(key))
     && ['idle','organizing','ready','failed','interrupted'].includes(value.status) && Number.isSafeInteger(value.count) && value.count>=0 && value.count<=10000
     && (value.lastCompletedAt===null || typeof value.lastCompletedAt==='string' && value.lastCompletedAt.length<=64 && Number.isFinite(Date.parse(value.lastCompletedAt)))
-    && (value.usedTokens===null || Number.isSafeInteger(value.usedTokens) && value.usedTokens>=0 && value.usedTokens<=1000000)
-    && (value.windowTokens===null || Number.isSafeInteger(value.windowTokens) && value.windowTokens>0 && value.windowTokens<=1000000);
+    && (value.usedTokens===null || Number.isSafeInteger(value.usedTokens) && value.usedTokens>=0 && value.usedTokens<=MAX_CONTEXT_WINDOW)
+    && (value.windowTokens===null || Number.isSafeInteger(value.windowTokens) && value.windowTokens>0 && value.windowTokens<=MAX_CONTEXT_WINDOW);
 }
 export function validateAgentImage(value) {
   if (!validAgentImage(value)) throw new Error('Agent returned invalid image data.');
@@ -107,11 +113,19 @@ export function validateAgentSnapshot(value) {
     || !Array.isArray(value.sessions) || value.sessions.length > 50 || !Number.isSafeInteger(value.revision)
     || value.sessions.some(session => !UUID.test(session.id) || typeof session.title !== 'string' || !STATUSES.includes(session.status))
     || JSON.stringify(value).length > 1_000_000 || /"(?:apiKey|password|credential|secret)"\s*:/.test(JSON.stringify(value))) throw new Error('Agent returned invalid conversation data.');
+  if(value.activity!=null&&(!value.busy||!UUID.test(value.activity.sessionId)||!value.sessions.some(s=>s.id===value.activity.sessionId)
+    || !['turn','compaction'].includes(value.activity.kind)||Object.keys(value.activity).some(k=>!['sessionId','kind','turnId'].includes(k))
+    || value.activity.turnId!==null&&(typeof value.activity.turnId!=='string'||!/^[a-zA-Z0-9_.:-]{1,128}$/.test(value.activity.turnId))
+    || value.activity.kind==='compaction'&&value.activity.turnId!==null))throw Error('Agent returned invalid activity data.');
   if (value.selected && (!UUID.test(value.selected.id) || !STATUSES.includes(value.selected.status) || !Array.isArray(value.selected.entries)
+    || value.selected.usage!==undefined && !validUsageLedger(value.selected.usage)
     || value.selected.contextState!==undefined && !validAgentContext(value.selected.contextState)
     || value.selected.entries.length > 200 || value.selected.entries.some(entry => !['user', 'assistant', 'tool', 'system'].includes(entry.type)
+      || entry.phase!==undefined && (entry.type!=='assistant'||!['progress','final'].includes(entry.phase))
+      || entry.turnId!==undefined && (!['assistant','tool'].includes(entry.type)||typeof entry.turnId!=='string'||!/^[a-zA-Z0-9_.:-]{1,128}$/.test(entry.turnId))
       || entry.decision!==undefined && (entry.type!=='tool' || entry.name!=='geod_request_decision' || !validDecision(entry.decision))
       || entry.taskContext!==undefined && (entry.type!=='tool' || !validTaskContext(entry.taskContext))
+      || entry.record!==undefined && (entry.type!=='tool' || !validToolRecord(entry.record))
       || entry.type==='system' && (entry.origin!=='desktop' || entry.status!=='completed' || typeof entry.text!=='string' || entry.text.length>400)
       || !['running', 'completed', 'failed', 'interrupted'].includes(entry.status)
       || (entry.type !== 'tool' && typeof entry.text !== 'string')
@@ -128,6 +142,8 @@ export function validateAgentSnapshot(value) {
     || value.execution.scope!=='managed-projects-and-files'||value.execution.modelCanChangePermission!==false))throw Error('Agent returned invalid execution permission.');
   if([...value.sessions,...(value.selected?[value.selected]:[])].some(session=>session.workflow!==undefined&&!validAgentWorkflow(session.workflow)))throw Error('Agent returned invalid workflow state.');
   if([...value.sessions,...(value.selected?[value.selected]:[])].some(session=>session.goal!==undefined&&!validGoal(session.goal)))throw Error('Agent returned invalid goal state.');
+  if([...value.sessions,...(value.selected?[value.selected]:[])].some(session=>[session.scene,session.lastScene].some(scene=>scene!==undefined&&!validScene(scene)))
+    || value.selected?.entries.some(entry=>entry.scene!==undefined&&!validScene(entry.scene)))throw Error('Agent returned invalid entry-point data.');
   if(value.selected?.workspaceView!==undefined&&!validWorkspaceView(value.selected.workspaceView))throw Error('Agent returned invalid workspace view request.');
   if (value.registry !== undefined) {
     const registry = value.registry;
@@ -136,7 +152,7 @@ export function validateAgentSnapshot(value) {
       || new Set(registry.connections.map(connection => connection.id)).size !== registry.connections.length
       || registry.selectedId !== null && !registry.connections.some(connection => connection.id === registry.selectedId)
       || value.model != null && (!validConnection(value.model) || value.model.id !== registry.selectedId
-        || ['provider','label','protocol','baseUrl','model','verification'].some(key => value.model[key] !== registry.connections.find(connection => connection.id === registry.selectedId)?.[key]))) throw new Error('Agent returned invalid connection data.');
+        || ['provider','label','protocol','baseUrl','model','verification','contextWindow'].some(key => (value.model[key] ?? null) !== (registry.connections.find(connection => connection.id === registry.selectedId)?.[key] ?? null)))) throw new Error('Agent returned invalid connection data.');
   }
   return value;
 }
@@ -147,12 +163,12 @@ function validAgentWorkflow(value){
     && Number.isSafeInteger(value.continuations)&&value.continuations>=0&&value.continuations<=8
     && typeof value.updatedAt==='string'&&value.updatedAt.length<=64&&Number.isFinite(Date.parse(value.updatedAt));
 }
-function validWorkspaceView(value){return value&&Object.keys(value).every(key=>['requestId','kind','id','verified','acknowledged'].includes(key))&&UUID.test(value.requestId)&&UUID.test(value.id)&&['raster','vector'].includes(value.kind)&&value.verified===true&&typeof value.acknowledged==='boolean';}
+function validWorkspaceView(value){return value&&Object.keys(value).every(key=>['requestId','kind','id','verified','acknowledged'].includes(key))&&UUID.test(value.requestId)&&UUID.test(value.id)&&['raster','vector','archive'].includes(value.kind)&&value.verified===true&&typeof value.acknowledged==='boolean';}
 function validConnection(value) {
-  if (!value || Object.keys(value).some(key => !['id','provider','label','protocol','baseUrl','model','capabilities','verification'].includes(key))
+  if (!value || Object.keys(value).some(key => !['id','provider','label','protocol','baseUrl','model','capabilities','verification','contextWindow'].includes(key))
     || !UUID.test(value.id) || !MODEL_PROVIDERS.some(provider => provider.id === value.provider)
     || !validProviderProtocol(value.provider,value.protocol) || typeof value.label !== 'string' || !value.label.trim() || value.label.length > 80
-    || !validModelId(value.protocol,value.model)
+    || !validModelId(value.protocol,value.model) || !validContextWindow(value.contextWindow)
     || typeof value.baseUrl !== 'string' || value.baseUrl.length > 1000 || value.verification !== 'not-verified'
     || !value.capabilities || Object.keys(value.capabilities).length !== Object.keys(MODEL_CAPABILITIES).length
     || Object.entries(modelCapabilities(value.protocol)).some(([key,enabled]) => value.capabilities[key] !== enabled)) return false;
@@ -194,13 +210,15 @@ function validPlan(plan) {
     && (plan.areaCoverage == null || validAreaCoverage(plan.areaCoverage))
     && projectValid && (!['project','mosaic'].includes(plan.kind) || plan.project != null)
     && Array.isArray(plan.files) && plan.files.length >= 1 && plan.files.length <= 32
+    && (plan.archive !== true || plan.kind==='download' && plan.format==='Original ZIP' && plan.expectedBytes===null && plan.files.length<=4
+      && plan.files.every(file=>GSCloudOriginalProducts[file.productId]?.key===file.assetKey && originalTile(file.productId,file.itemId)))
     && (plan.authorization == null || plan.kind === 'download' && validSourceAuthorization(plan.authorization)
       && plan.expectedBytes === null && plan.files.every(file => file.bytes === null)
       && (plan.authorization.provider === 'copernicus'
         ? plan.format === 'SAFE ZIP' && plan.files.every(file => file.assetKey === 'product')
-        : ['GeoTIFF','HGT ZIP','HDF5'].includes(plan.format) && plan.files.every(file =>
-          (plan.format === 'GeoTIFF' ? ['red','green','blue'] : plan.format === 'HGT ZIP' ? ['srtm'] : ['viirs']).includes(file.assetKey))))
-    && plan.files.every(file => typeof file.itemId === 'string' && (plan.kind === 'project' ? file.assetKey === 'scene' : ASSET_KEYS.includes(file.assetKey) || plan.kind === 'download' && (file.assetKey === 'stac_asset' && validCustomFile(file) || file.assetKey === 'wcs_coverage' && validCoverageFile(file))) && (file.bytes === null || Number.isSafeInteger(file.bytes) && file.bytes > 0)
+        : ['GeoTIFF','HGT ZIP','NUM ZIP','HDF5'].includes(plan.format) && plan.files.every(file =>
+          (plan.format === 'GeoTIFF' ? ['red','green','blue'] : plan.format === 'HGT ZIP' ? ['srtm'] : plan.format === 'NUM ZIP' ? ['srtm_num'] : ['viirs']).includes(file.assetKey))))
+    && plan.files.every(file => typeof file.itemId === 'string' && (plan.kind === 'project' ? file.assetKey === 'scene' : ASSET_KEYS.includes(file.assetKey) || plan.archive===true && plan.kind==='download' && plan.format==='Original ZIP' && GSCloudOriginalProducts[file.productId]?.key===file.assetKey || plan.kind === 'download' && (file.assetKey === 'stac_asset' && validCustomFile(file) || file.assetKey === 'wcs_coverage' && validCoverageFile(file))) && (file.bytes === null || Number.isSafeInteger(file.bytes) && file.bytes > 0)
       && (file.referenceId === undefined || validCustomFile(file) || validCoverageFile(file))
       && (!['clip','mosaic','rgb'].includes(plan.kind) || Number.isInteger(file.width) && file.width > 0 && Number.isInteger(file.height) && file.height > 0))
     && (plan.kind !== 'rgb' || plan.files.length === 3 && plan.files.every((file,index) => file.assetKey === ['red','green','blue'][index] && file.width === plan.files[0].width && file.height === plan.files[0].height) && plan.processing?.channels === 3)
@@ -233,6 +251,14 @@ function validSourceAuthorization(value) {
     && typeof value.downloadEnabled === 'boolean'
     && (!value.downloadEnabled || ['saved','connected'].includes(value.status) && value.expiresAt != null && value.verifiedAt != null);
 }
+function validBoundaryReview(source,collectionId) {
+  const fields=['countryIso3','adminLevel','metadataSha256','releaseRef','discoverySha256'];
+  return source!==null && typeof source==='object' && !Array.isArray(source)
+    && Object.keys(source).length===fields.length && Object.keys(source).every(key=>fields.includes(key))
+    && validGeoBoundariesCountry(source.countryIso3) && /^ADM[0-5]$/.test(source.adminLevel) && source.adminLevel===collectionId
+    && typeof source.releaseRef==='string' && /^[a-f0-9]{7,40}$/.test(source.releaseRef)
+    && ['metadataSha256','discoverySha256'].every(key=>typeof source[key]==='string' && /^[a-f0-9]{64}$/.test(source[key]));
+}
 function validVectorPlan(plan) {
   const hash=value=>typeof value==='string' && /^[a-f0-9]{64}$/.test(value);
   const bounds=value=>Array.isArray(value) && value.length===4 && value.every(Number.isFinite) && value[0]<value[2] && value[1]<value[3] && value[0]>=-180 && value[2]<=180 && value[1]>=-90 && value[3]<=90;
@@ -244,17 +270,19 @@ function validVectorPlan(plan) {
     && (plan.polygon==null || hash(plan.polygon.sha256) && bounds(plan.polygon.bounds))
     && typeof plan.expiresAt==='string' && Number.isFinite(Date.parse(plan.expiresAt)) && plan.expectedBytes===null
     && Array.isArray(plan.jobs) && plan.jobs.length===0 && Array.isArray(plan.notes) && plan.notes.every(note=>typeof note==='string')
-    && review && Object.keys(review).every(key=>['serviceId','serviceSha256','collectionId','collectionTitle','protocol','name','pageSize','responseFormat','selection','liveAvailabilityChecked','clipped'].includes(key))
+    && review && Object.keys(review).every(key=>['serviceId','serviceSha256','collectionId','collectionTitle','protocol','name','pageSize','responseFormat','selection','liveAvailabilityChecked','clipped','boundarySource'].includes(key))
     && UUID.test(review.serviceId) && hash(review.serviceSha256) && typeof review.collectionId==='string' && review.collectionId.length>0 && review.collectionId.length<=160
     && typeof review.collectionTitle==='string' && review.collectionTitle.length<=480 && typeof review.name==='string' && review.name.trim().length>0 && review.name.length<=240
-    && ['OGC API Features','ArcGIS','WFS 2','Overpass'].includes(review.protocol)
-    && (review.protocol==='Overpass' ? review.pageSize===null : Number.isInteger(review.pageSize) && review.pageSize>=1 && review.pageSize<=200)
+    && ['OGC API Features','ArcGIS','WFS 2','Overpass','geoBoundaries'].includes(review.protocol)
+    && (['Overpass','geoBoundaries'].includes(review.protocol) ? review.pageSize===null : Number.isInteger(review.pageSize) && review.pageSize>=1 && review.pageSize<=200)
     && (review.responseFormat==null || review.protocol==='WFS 2' && typeof review.responseFormat==='string' && review.responseFormat.length>0 && review.responseFormat.length<=512)
-    && review.selection===({Overpass:'overpass-bbox-full-geometry','WFS 2':'wfs-bbox-full-features'}[review.protocol] || 'bbox-full-features') && review.liveAvailabilityChecked===false && review.clipped===false
-    && (plan.status==='submitted' ? result && Object.keys(result).every(key=>['id','name','format','bytes','featureCount','coordinateCount','sourceSha256','geojsonSha256','verified'].includes(key))
+    && review.selection===({Overpass:'overpass-bbox-full-geometry','WFS 2':'wfs-bbox-full-features',geoBoundaries:GEOBOUNDARIES_SELECTION}[review.protocol] || 'bbox-full-features') && review.liveAvailabilityChecked===false && review.clipped===false
+    && (review.protocol==='geoBoundaries' ? validBoundaryReview(review.boundarySource,review.collectionId) : review.boundarySource==null)
+    && (plan.status==='submitted' ? result && Object.keys(result).every(key=>['id','name','format','bytes','featureCount','coordinateCount','sourceSha256','geojsonSha256','verified','boundarySource'].includes(key))
       && UUID.test(result.id) && result.name===review.name && ['geojson','wfs-snapshot','overpass-json'].includes(result.format) && result.verified===true && hash(result.sourceSha256) && hash(result.geojsonSha256)
       && Number.isInteger(result.bytes) && result.bytes>0 && result.bytes<=20971520 && Number.isInteger(result.featureCount) && result.featureCount>=0 && result.featureCount<=50000
-      && Number.isInteger(result.coordinateCount) && result.coordinateCount>=0 && result.coordinateCount<=500000 : result===null);
+      && Number.isInteger(result.coordinateCount) && result.coordinateCount>=0 && result.coordinateCount<=500000
+      && (review.protocol==='geoBoundaries' ? result.format==='geojson' && validBoundaryReview(result.boundarySource,review.collectionId) && Object.keys(review.boundarySource).every(key=>result.boundarySource[key]===review.boundarySource[key]) : result.boundarySource==null) : result===null);
 }
 function validCustomFile(file) {
   return /^[a-f0-9]{64}$/.test(file.referenceId) && /^[a-f0-9]{64}$/.test(file.snapshotId)
@@ -288,7 +316,7 @@ export function validateConnectionTest(value) {
   if (!value || Object.keys(value).some(key=>!['version','status','text','functionCalls','latencyMs','checkedAt','message'].includes(key))
     || value.version!==1 || !['passed','failed'].includes(value.status)
     || typeof value.text!=='boolean' || typeof value.functionCalls!=='boolean'
-    || !Number.isSafeInteger(value.latencyMs) || value.latencyMs<0 || value.latencyMs>30_000
+    || !Number.isSafeInteger(value.latencyMs) || value.latencyMs<0 || value.latencyMs>90_000
     || typeof value.checkedAt!=='string' || value.checkedAt.length>64 || !Number.isFinite(Date.parse(value.checkedAt))
     || value.status==='passed' && (!value.text || !value.functionCalls || value.message!==undefined)
     || value.status==='failed' && (value.functionCalls || typeof value.message!=='string' || !value.message.trim() || value.message.length>240)) {

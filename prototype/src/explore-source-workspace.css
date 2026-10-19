@@ -1,0 +1,35 @@
+.explore-source-workspace{height:100%;min-height:0;min-width:0;display:grid;grid-template-columns:minmax(0,1fr);background:var(--surface);}
+.explore-source-standalone{grid-template-columns:minmax(340px,360px) minmax(0,1fr);}
+.explore-source-sidebar{display:flex;flex-direction:column;height:100%;min-height:0;min-width:0;overflow:hidden;}
+.explore-source-heading{display:flex;align-items:center;min-height:var(--panel-header-height);padding:4px 12px;}.explore-source-heading h1{font-size:var(--text-section);margin:0;line-height:var(--leading-section);font-weight:var(--weight-semibold);}
+.explore-source-body{flex:1;min-height:0;min-width:0;overflow:auto;scrollbar-width:none;padding:0 12px 8px;}
+.explore-source-body::-webkit-scrollbar{display:none;}
+.explore-source-actions{flex:0 0 auto;border-top:1px solid var(--line);background:var(--surface);}
+.explore-source-actions .public-dataset-selection-bar{border-top:0;}
+.explore-source-body :is(.stac-source-body,.feature-service-body,.wms-source-body,.tiles-source-body,.gee-body){display:grid;gap:8px;min-width:0;padding:0;}
+.explore-source-body :is(.stac-row,.stac-grid,.gee-fields,.feature-service-row,.wms-fields){grid-template-columns:minmax(0,1fr);gap:8px;}
+.explore-source-body :is(.stac-connect,.stac-search,.stac-save,.stac-project,.wcs-review,.gee-fields){min-width:0;}
+.explore-source-body :is(.stac-field,.stac-details,.stac-source-body>*,.gee-body>*){min-width:0;}
+.explore-source-body :is(input,select){width:100%;min-width:0;}
+.explore-source-body .stac-check input,.explore-source-body input[type=checkbox]{width:auto;}
+.explore-source-body :is(.stac-help,.gee-note){line-height:1.6;margin:0;overflow-wrap:anywhere;}
+.explore-source-body :is(.stac-item,.stac-review,.public-dataset-review){padding:6px 0;border-radius:0;border-width:0 0 1px;background:transparent;box-shadow:none;}
+.explore-source-body .bui-disclosure-trigger{padding-block:5px;min-height:26px;}
+.explore-source-body .stac-field{gap:4px;}
+.explore-source-body .stac-field>span{font-size:var(--text-caption);line-height:var(--leading-caption);}
+.explore-source-body :is(.stac-field,.feature-field,.wms-field)>[data-slot=select-wrapper]{min-width:0;width:100%;}
+.explore-source-body :is([data-slot=input],[data-slot=select-trigger]){min-height:32px;height:32px;font-size:var(--text-ui);line-height:var(--leading-ui);}
+.explore-source-body :is(.stac-check,.feature-row-title){min-width:0;}
+.explore-source-body .stac-check>span{min-width:0;}
+.explore-source-actions :is(.service-explore-footer,.public-dataset-selection-bar){padding:8px 12px;gap:6px;}
+.explore-source-body .stac-details{grid-template-columns:minmax(0,1fr);}
+.explore-source-body :is(pre,.mono,.stac-item-id){overflow-wrap:anywhere;white-space:pre-wrap;max-width:100%;}
+.explore-source-body :is(.stac-actions,.vector-map-actions){flex-wrap:wrap;}
+.explore-source-body .gee-script{max-height:220px;overflow:auto;scrollbar-width:none;}
+.explore-source-canvas{height:100%;min-height:0;min-width:0;position:relative;overflow:hidden;}
+.explore-source-canvas>.public-dataset-map{height:100%;}
+.explore-map-empty{position:absolute;inset:0;display:grid;place-items:center;background:var(--page);color:var(--ink);pointer-events:none;z-index:1;}
+.explore-map-empty>.bui-empty-state{max-width:min(460px,100%);}
+.explore-source-capability{position:absolute;left:16px;bottom:40px;max-width:min(460px,calc(100% - 32px));padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius,10px);background:var(--surface);font-size:var(--text-caption);line-height:var(--leading-caption);color:var(--ink-2);z-index:10;}
+.explore-source-map-note{position:absolute;left:16px;bottom:42px;max-width:calc(100% - 32px);padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;z-index:10;font-size:var(--text-caption);line-height:var(--leading-caption);}
+@media(max-width:650px){.explore-source-standalone{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(240px,1fr);}.explore-source-body{padding:8px 12px 12px;}}

@@ -1,0 +1,513 @@
+{
+  "observedAt": "2026-10-12",
+  "status": "planned-independent-reference-pass-native-not-accepted",
+  "nativeAccepted": false,
+  "exASourcesReviewed": 10,
+  "exASearchWorkstreams": 2,
+  "credentialsUsed": false,
+  "earthEngineComputeRequests": 0,
+  "researchRoot": ".verification/next2-nightlights-20261012/",
+  "planetaryComputer": {
+    "liveCollectionCount": 138,
+    "nightlightsMatches": 0,
+    "viirsNighttimeStatus": 404
+  },
+  "jaxa": {
+    "liveChildCollections": 112,
+    "nighttimeVisibleLightEstablished": false
+  },
+  "eog": {
+    "testedDirectories": [
+      "annual/v22",
+      "monthly_notile",
+      "nightly/rade9d"
+    ],
+    "allRedirectToLogin": true,
+    "license": "VNL covered by EOG CC BY4.0 publication; login still required"
+  },
+  "blackMarble": {
+    "product": "VNP46A4.002",
+    "format": "HDF5",
+    "anonymousCOGEstablished": false,
+    "actualGranuleRedirectToEarthdataLogin": true
+  },
+  "olm2021": {
+    "task": {
+      "name": "olm-ceph-2021",
+      "url": "https://ceph.opengeohub.org/arco/socecon/viirs_nlightav_m_500m_sg_20210101_20211231_go01_epsg4326_v1.0.0_srl03.tif",
+      "expectedBytes": 83922780,
+      "expectedMD5": "f9e0b5f18781b54dac6e1a3adc0163a3",
+      "recordUrl": "https://stac.opengeohub.org/v1/cat/openlandmap/collections/nightlights.average_viirs.v21_go/items/nightlights.average_viirs.v21_go_20210101_20211231"
+    },
+    "nativeAccepted": false,
+    "observedAt": "2026-10-12",
+    "transfer": {
+      "url": "https://ceph.opengeohub.org/arco/socecon/viirs_nlightav_m_500m_sg_20210101_20211231_go01_epsg4326_v1.0.0_srl03.tif",
+      "finalUrl": "https://ceph.opengeohub.org/arco/socecon/viirs_nlightav_m_500m_sg_20210101_20211231_go01_epsg4326_v1.0.0_srl03.tif",
+      "status": 200,
+      "headers": {
+        "Content-Length": "83922780",
+        "Content-Type": "image/tiff",
+        "Etag": "\"1fd3cd64c695ec1d0ec96f896bfaecf0-6\"",
+        "Last-Modified": "Fri, 25 Sep 2026 11:54:21 GMT"
+      },
+      "bytes": 83922780,
+      "sha256": "2332fd3e7d3f846915b02d9da964c212279a82b575b63023423a1b66139899a0",
+      "md5": "6b09c5def35b59e0897106f0f4cf01c5",
+      "seconds": 44.969,
+      "completeDeclaredSize": true,
+      "publisherMD5Match": false
+    },
+    "file": "G:\\code\\geod-global\\.verification\\next2-nightlights-20261012\\olm-ceph-2021-original.tif.part",
+    "raster": {
+      "width": 86400,
+      "height": 35849,
+      "pixels": 3097353600,
+      "bands": 1,
+      "dtypes": [
+        "int16"
+      ],
+      "epsg": 4326,
+      "wkt": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4326\"]]",
+      "bounds": [
+        -180.0,
+        -62.000833333333446,
+        180.00000000000028,
+        87.37
+      ],
+      "transform": [
+        0.00416666666666667,
+        0.0,
+        -180.0,
+        0.0,
+        -0.00416666666666667,
+        87.37,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "nodata": -32768.0,
+      "scales": [
+        1.0
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "isTiled": true,
+      "blockShapes": [
+        [
+          512,
+          512
+        ]
+      ],
+      "overviews": [
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256
+      ],
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "bandTags": {},
+      "maskFlags": [
+        [
+          "nodata"
+        ]
+      ]
+    },
+    "fitsCurrentNativeGridLimits": true,
+    "fullDecode": {
+      "decodedPixels": 3097353600,
+      "nonNoDataPixels": 2840918400,
+      "embeddedNoDataPixels": 256435200,
+      "minimum": -32766,
+      "maximum": 32760,
+      "seconds": 21.703
+    },
+    "independentSamples": [
+      {
+        "place": "Beijing",
+        "column": 71135,
+        "row": 11392,
+        "raw": 1230,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          116.3979166666669,
+          39.90124999999997
+        ]
+      },
+      {
+        "place": "Shanghai",
+        "column": 72359,
+        "row": 13480,
+        "raw": 620,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          121.49791666666692,
+          31.20124999999996
+        ]
+      },
+      {
+        "place": "New York",
+        "column": 25439,
+        "row": 11200,
+        "raw": 780,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -74.00208333333325,
+          40.701249999999966
+        ]
+      },
+      {
+        "place": "Atlantic",
+        "column": 35999,
+        "row": 20968,
+        "raw": 0,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -30.002083333333218,
+          0.0012499999999278089
+        ]
+      },
+      {
+        "place": "Amazon",
+        "column": 28799,
+        "row": 21688,
+        "raw": 460,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -60.00208333333323,
+          -2.998750000000072
+        ]
+      }
+    ],
+    "originalValuesRetained": true,
+    "noScientificConversionApplied": true,
+    "status": "research-only-checksum-conflict"
+  },
+  "zenodo2024": {
+    "doi": "10.5281/zenodo.17294744",
+    "version": "v0.4",
+    "year": 2024,
+    "excludedExtrapolatedYears": [
+      2000,
+      2011
+    ],
+    "recordExportSha256": "6642934bf144159da8c24b06f6c107b10b71f99a25fc760bddc0502561c2fa09",
+    "fileListSha256": "17d36cb8d9f4424ae2053f0dae2718822287d3169384c41da6ca01a88afd8c6b",
+    "license": "CC-BY-4.0",
+    "declaredBytes": 63713625,
+    "declaredMD5": "0b976892d40c2d0d99177c727289eaf2",
+    "completeOriginalVerified": true,
+    "scaleConflict": "Author record says source 0-200 converted to 0-2000; nominal inverse 0.1 conflicts with original TIFF embedded scale 10. No physical radiance conversion or normalized unit inferred.",
+    "raster": {
+      "width": 86400,
+      "height": 35849,
+      "pixels": 3097353600,
+      "bands": 1,
+      "dtypes": [
+        "int16"
+      ],
+      "epsg": 4326,
+      "wkt": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4326\"]]",
+      "bounds": [
+        -180.0,
+        -62.000833333333446,
+        180.00000000000028,
+        87.37
+      ],
+      "transform": [
+        0.00416666666666667,
+        0.0,
+        -180.0,
+        0.0,
+        -0.00416666666666667,
+        87.37,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "nodata": -32768.0,
+      "scales": [
+        10.0
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "isTiled": true,
+      "blockShapes": [
+        [
+          512,
+          512
+        ]
+      ],
+      "overviews": [
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256
+      ],
+      "tags": {
+        "AREA_OR_POINT": "Area",
+        "TIFFTAG_DATETIME": "2025:04:03 14:16:11",
+        "TIFFTAG_DOCUMENTNAME": "./VNL_npp_2024_global_vcmslcfg_v2_c202502261200.average_masked.dat.tif",
+        "TIFFTAG_IMAGEDESCRIPTION": "IDL TIFF file",
+        "TIFFTAG_RESOLUTIONUNIT": "2 (pixels/inch)",
+        "TIFFTAG_SOFTWARE": "IDL 8.7.2, Harris Geospatial Solutions, Inc.",
+        "TIFFTAG_XRESOLUTION": "100",
+        "TIFFTAG_YRESOLUTION": "100"
+      },
+      "bandTags": {},
+      "maskFlags": [
+        [
+          "nodata"
+        ]
+      ]
+    },
+    "fullDecode": {
+      "decodedPixels": 3097353600,
+      "embeddedNoDataPixels": 256435200,
+      "nonNoDataPixels": 2840918400,
+      "minimum": -11,
+      "maximum": 32767,
+      "zeroNonNoDataPixels": 2765917660,
+      "negativeNonNoDataPixels": 3299,
+      "nonNoDataAbove2000": 3032,
+      "seconds": 24.735
+    },
+    "independentSamples": [
+      {
+        "place": "Beijing",
+        "longitude": 116.4,
+        "latitude": 39.9,
+        "column": 71135,
+        "row": 11392,
+        "raw": 150,
+        "mask": 255,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          116.3979166666669,
+          39.90124999999997
+        ]
+      },
+      {
+        "place": "Shanghai",
+        "longitude": 121.5,
+        "latitude": 31.2,
+        "column": 72359,
+        "row": 13480,
+        "raw": 64,
+        "mask": 255,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          121.49791666666692,
+          31.20124999999996
+        ]
+      },
+      {
+        "place": "New York",
+        "longitude": -74.0,
+        "latitude": 40.7,
+        "column": 25439,
+        "row": 11200,
+        "raw": 61,
+        "mask": 255,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -74.00208333333325,
+          40.701249999999966
+        ]
+      },
+      {
+        "place": "Atlantic",
+        "longitude": -30.0,
+        "latitude": 0.0,
+        "column": 35999,
+        "row": 20968,
+        "raw": 0,
+        "mask": 255,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -30.002083333333218,
+          0.0012499999999278089
+        ]
+      },
+      {
+        "place": "Amazon",
+        "longitude": -60.0,
+        "latitude": -3.0,
+        "column": 28799,
+        "row": 21688,
+        "raw": 56,
+        "mask": 255,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -60.00208333333323,
+          -2.998750000000072
+        ]
+      },
+      {
+        "place": "Arctic",
+        "longitude": 0.0,
+        "latitude": 86.0,
+        "column": 43199,
+        "row": 328,
+        "raw": -32768,
+        "mask": 0,
+        "embeddedNoData": true,
+        "pixelCenter": [
+          -0.00208333333318933,
+          86.00125
+        ]
+      },
+      {
+        "place": "Antarctic edge",
+        "longitude": 0.0,
+        "latitude": -61.0,
+        "column": 43199,
+        "row": 35608,
+        "raw": 0,
+        "mask": 255,
+        "embeddedNoData": false,
+        "pixelCenter": [
+          -0.00208333333318933,
+          -60.998750000000115
+        ]
+      }
+    ],
+    "completeOriginalReceipt": {
+      "observedAt": "2026-10-12",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "bytes": 63713625,
+      "md5": "0b976892d40c2d0d99177c727289eaf2",
+      "sha256": "e6edde68952052f8c53050e2ce7082bab08ddd0e15a696f999215e2d57194c53",
+      "publisherMD5": "0b976892d40c2d0d99177c727289eaf2",
+      "publisherMD5Match": true,
+      "nativeAccepted": false,
+      "singleWholeGET": false,
+      "prefixBytes": 23068672,
+      "prefixSHA256": "1c5fc587cf458e91eae7ef603a94b7f612e2b49675b602b9dfff0c2fabbd68ad",
+      "recoverySegments": 10,
+      "segmentRanges": [
+        {
+          "start": 23068672,
+          "end": 27262975
+        },
+        {
+          "start": 27262976,
+          "end": 31457279
+        },
+        {
+          "start": 31457280,
+          "end": 35651583
+        },
+        {
+          "start": 35651584,
+          "end": 39845887
+        },
+        {
+          "start": 39845888,
+          "end": 44040191
+        },
+        {
+          "start": 44040192,
+          "end": 48234495
+        },
+        {
+          "start": 48234496,
+          "end": 52428799
+        },
+        {
+          "start": 52428800,
+          "end": 56623103
+        },
+        {
+          "start": 56623104,
+          "end": 60817407
+        },
+        {
+          "start": 60817408,
+          "end": 63713624
+        }
+      ],
+      "receiptChain": [
+        "zenodo-2024-full-retry-2-probe-report.json",
+        "zenodo-2024-range-receipt.json",
+        "zenodo-2024-range-parallel-receipt.json",
+        "zenodo-2024-range-holes-receipt.json"
+      ],
+      "status": "independent-byte-identical-reference-pass",
+      "file": "G:\\code\\geod-global\\.verification\\next2-nightlights-20261012\\zenodo-2024-range-complete-reference.tif"
+    },
+    "publisherRecordTitle": "Annual time series of global VIIRS nighttime lights for 2000-2024 at 500-m spatial resolution extrapolated using logistic regression",
+    "publicationDate": "2025-10-08",
+    "originalNumericValuesRetained": true,
+    "noScientificConversionApplied": true
+  },
+  "zenodo2024IncompleteGET": {
+    "task": {
+      "name": "zenodo-2024-full-retry-2",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "expectedBytes": 63713625,
+      "expectedMD5": "0b976892d40c2d0d99177c727289eaf2",
+      "publisherMetadataAccess": "original live Zenodo file-list and published-record export bytes",
+      "recordUrl": "https://zenodo.org/records/17294744/export/json",
+      "fileListUrl": "https://zenodo.org/api/records/17294744/files"
+    },
+    "nativeAccepted": false,
+    "observedAt": "2026-10-12",
+    "transfer": {
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "finalUrl": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "status": 200,
+      "headers": {
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625"
+      }
+    },
+    "error": "('Connection broken: IncompleteRead(19497168 bytes read, 44216457 more expected)', IncompleteRead(19497168 bytes read, 44216457 more expected))",
+    "status": "blocked",
+    "writtenPartialBytes": 18874368,
+    "receivedBytesBeforeEOF": 19497168,
+    "publisherMD5Verified": false
+  },
+  "officialRangeRecovery": "byte-identical independent reference from the same canonical public API file-content URL; exact Range receipts; not a single whole GET or native acceptance",
+  "fixedClientRecipe": {
+    "module": "crates/geod-runtime/src/datasets/nightlights.rs",
+    "datasetId": "openlandmap-nightlights",
+    "layer": "annual-dn",
+    "year": 2024,
+    "nativeAccepted": false,
+    "frontendReady": false,
+    "availability": "planned",
+    "compiledFor": "cfg(test) candidate only; excluded from production dataset list",
+    "sourceUrl": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+    "apiContentNativeAcceptStatus": 406,
+    "sourceStartDatetime": null,
+    "sourceEndDatetime": null,
+    "temporalMeaning": "2024 reference year in client proof; no published scene acquisition interval",
+    "formatted": true,
+    "concurrentCargoRun": false,
+    "sourceId": "nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904",
+    "sourceKind": "raster",
+    "publisherSTACCreated": false,
+    "publisherChecksumEnforcedByNativeDirectContract": false,
+    "acceptanceCases": "scripts/next2-nightlights-cases-20261012.json"
+  },
+  "nativeAcceptanceGate": "Parent must perform actual fresh native transfer, compare complete hash, preview and raw original samples, and reopen; independent Range reference cannot replace native transfer evidence."
+}

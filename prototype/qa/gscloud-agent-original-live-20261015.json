@@ -1,0 +1,239 @@
+{
+  "schema": "geod-gscloud-agent-original-live/v1",
+  "date": "2026-10-15",
+  "model": "deepseek-flash",
+  "provider": "DeepSeek official saved connection",
+  "contextTokens": 300000,
+  "syntheticModelOutput": false,
+  "scenario": "Home independent conversation, real native account and provider download, browser confirmation card",
+  "request": {
+    "productId": "421",
+    "itemId": "ASTGTM2_N40E116",
+    "bounds": [
+      116.2,
+      40.1,
+      116.4,
+      40.3
+    ],
+    "start": "1980-01-01",
+    "end": "2026-10-15"
+  },
+  "confirmation": {
+    "beforeJobs": 0,
+    "afterJobs": 1,
+    "replayCreatedJobs": 0,
+    "browserCardClicked": true,
+    "planId": "7bd845f2-bcc5-495f-88d0-a3545047f7e2",
+    "planHash": "0ff14c74476a939ae5a8cb34e15c3fcc71a94b9eadc1e2a1ce3531d7f2793079"
+  },
+  "job": {
+    "id": "0fe4a3ee-726d-4416-bf2e-b3bec5f14a67",
+    "itemId": "ASTGTM2_N40E116",
+    "assetKey": "gscloud_aster30v2",
+    "source": "Geospatial Data Cloud · ASTER GDEM V2 30m original ZIP",
+    "status": "succeeded",
+    "bytesDownloaded": 17773361,
+    "totalBytes": 17773361,
+    "sha256": "4cd6a954023925a3334ccf0bbfdd8c2d8f63a7511316d672c081130c2887fc93",
+    "createdAt": "2026-10-15T11:03:20.659025400+00:00",
+    "updatedAt": "2026-10-15T11:03:43.219232500+00:00"
+  },
+  "inspection": {
+    "bytes": 17773361,
+    "format": "Original ZIP",
+    "itemId": "ASTGTM2_N40E116",
+    "jobId": "0fe4a3ee-726d-4416-bf2e-b3bec5f14a67",
+    "kind": "archive",
+    "members": [
+      {
+        "bytes": 25963722,
+        "crc32": "7e6916f3",
+        "name": "ASTGTM2_N40E116_dem.tif"
+      },
+      {
+        "bytes": 25963722,
+        "crc32": "9c684520",
+        "name": "ASTGTM2_N40E116_num.tif"
+      },
+      {
+        "bytes": 272463,
+        "crc32": "1c3af8c0",
+        "name": "README.pdf"
+      }
+    ],
+    "productId": "421",
+    "rasterPreview": false,
+    "sha256": "4cd6a954023925a3334ccf0bbfdd8c2d8f63a7511316d672c081130c2887fc93",
+    "source": "Geospatial Data Cloud · ASTER GDEM V2 30m original ZIP",
+    "title": "GSCloud ASTER GDEM V2 30m · ASTGTM2_N40E116",
+    "verified": true
+  },
+  "independentZipCrc": "passed",
+  "manifest": [
+    {
+      "name": "ASTGTM2_N40E116_dem.tif",
+      "bytes": 25963722,
+      "crc32": "7e6916f3"
+    },
+    {
+      "name": "ASTGTM2_N40E116_num.tif",
+      "bytes": 25963722,
+      "crc32": "9c684520"
+    },
+    {
+      "name": "README.pdf",
+      "bytes": 272463,
+      "crc32": "1c3af8c0"
+    }
+  ],
+  "goal": {
+    "status": "complete",
+    "outputs": [
+      {
+        "id": "gscloud_zip",
+        "kind": "archive",
+        "state": "verified"
+      },
+      {
+        "id": "archive_verify",
+        "kind": "metadata",
+        "state": "verified"
+      }
+    ],
+    "continuations": 1
+  },
+  "workspaceView": {
+    "acknowledged": true,
+    "id": "0fe4a3ee-726d-4416-bf2e-b3bec5f14a67",
+    "kind": "archive",
+    "requestId": "f43308f3-8152-b3d6-f80b-d90d606bf4e6",
+    "verified": true
+  },
+  "usage": {
+    "requests": 11,
+    "totals": {
+      "cachedInput": 165504,
+      "input": 196727,
+      "output": 2639,
+      "reasoningOutput": 1131,
+      "total": 199366
+    }
+  },
+  "tools": [
+    {
+      "name": "geod_tools_load",
+      "status": "completed"
+    },
+    {
+      "name": "geod_workspace_context",
+      "status": "completed"
+    },
+    {
+      "name": "geod_execution_policy",
+      "status": "completed"
+    },
+    {
+      "name": "geod_sources_list",
+      "status": "completed"
+    },
+    {
+      "name": "geod_goal_define",
+      "status": "completed"
+    },
+    {
+      "name": "geod_gscloud_products",
+      "status": "completed"
+    },
+    {
+      "name": "geod_gscloud_search",
+      "status": "completed"
+    },
+    {
+      "name": "geod_gscloud_detail",
+      "status": "completed"
+    },
+    {
+      "name": "geod_gscloud_download_plan",
+      "status": "completed"
+    },
+    {
+      "name": "geod_goal_bind",
+      "status": "completed"
+    },
+    {
+      "name": "geod_plan_execute",
+      "status": "completed"
+    },
+    {
+      "name": "geod_job_status",
+      "status": "completed"
+    },
+    {
+      "name": "geod_gscloud_archive_inspect",
+      "status": "completed"
+    },
+    {
+      "name": "geod_goal_bind",
+      "status": "completed"
+    },
+    {
+      "name": "geod_workspace_open",
+      "status": "completed"
+    },
+    {
+      "name": "geod_goal_check",
+      "status": "completed"
+    }
+  ],
+  "finalReply": "已完成并通过核验：\n\n- **成果**：GSCloud 421 GDEMV2 `ASTGTM2_N40E116` 原件 ZIP，已成功下载（约 17.0 MB，1 次尝试）\n- **完整性**：原生校验通过 —— 产品/瓦片一致、ZIP 成员签名与字节数、成员 CRC、整体 SHA-256 均验证\n- **文件清单**：`ASTGTM2_N40E116_dem.tif`、`ASTGTM2_N40E116_num.tif`、`README.pdf`（共 3 个）\n- **展示**：已在右侧工作区打开该档案\n- 按要求未裁剪、未拼接、未换源、未预约采购\n\n说明：数据云原件为整包 ZIP，原生不支持包内栅格解码与地图预览，因此右侧展示的是档案清单，而非 DEM 渲染图。",
+  "boundaries": {
+    "originalZipManifestDisplayed": true,
+    "archiveRasterPixelsDecoded": false,
+    "all124ProductsDownloadable": false,
+    "reviewedDownloadProducts": 6,
+    "nativeWindowVisuallyTested": false
+  },
+  "checks": {
+    "gscloudNativeTestsPassed": 14,
+    "gscloudNativeIgnored": 5,
+    "archiveGoalClientTestsPassed": 37,
+    "existingAgentAndGscloudUiTestsPassed": 92,
+    "archiveResultUiTestsPassed": 2,
+    "agentNodeTestsPassed": 160,
+    "dependencyIsolation": "passed",
+    "registeredCommands": 166,
+    "scopedDiffCheck": "passed"
+  },
+  "postFixReplay": {
+    "attempts": 2,
+    "createdJobs": 0,
+    "additionalModelRequests": 0,
+    "additionalTranscriptEntries": 0,
+    "afterSidecarRestart": true,
+    "passed": true
+  },
+  "preFixReplayRegression": {
+    "additionalModelRequests": 1,
+    "additionalTokens": 24032,
+    "fixed": true
+  },
+  "ui": {
+    "browser": "Codex in-app browser",
+    "page": "Home",
+    "archiveManifestObserved": true,
+    "resultReopenedAfterRestart": true,
+    "narrowLayoutTwoPanes": true,
+    "screenshot": "gscloud-agent-result-20261015.jpg",
+    "testBridgeDesktopFrameControls": "unavailable; native window not visually tested"
+  },
+  "desktopBuild": {
+    "passed": true,
+    "binarySha256": "f004a81ea71665148d057e2c705ddb7e60049ac25213e97f81e69b1b40c47846",
+    "agentBundleSha256": "3a500a7093a1198f5dc72385db64b6a028d06fa88e9b8d76543c5377ccfe009b",
+    "startedProcessId": 121464,
+    "observedRunning": true,
+    "processResponding": true,
+    "startupStderrBytes": 0,
+    "privateQaPagesEmbedded": false
+  }
+}

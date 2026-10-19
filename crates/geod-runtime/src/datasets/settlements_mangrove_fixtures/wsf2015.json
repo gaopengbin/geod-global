@@ -1,0 +1,148 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "42a975ad-023e-5f3c-95b3-6f07b1ef0f22",
+  "properties": {
+    "odc:product": "wsf_2015",
+    "odc:region_code": "36_-2",
+    "start_datetime": "2015-01-01T00:00:00Z",
+    "end_datetime": "2015-12-31T23:59:59Z",
+    "proj:epsg": 4326,
+    "proj:geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            35.989923879907685,
+            -2.010070279745841
+          ],
+          [
+            38.010055290835666,
+            -2.010070279745841
+          ],
+          [
+            38.010055290835666,
+            0.01006113118213864
+          ],
+          [
+            35.989923879907685,
+            0.01006113118213864
+          ],
+          [
+            35.989923879907685,
+            -2.010070279745841
+          ]
+        ]
+      ]
+    },
+    "proj:bbox": [
+      35.989923879907685,
+      -2.010070279745841,
+      38.010055290835666,
+      0.01006113118213864
+    ],
+    "proj:shape": [
+      22488,
+      22488
+    ],
+    "proj:transform": [
+      8.983152841195215e-05,
+      0.0,
+      35.989923879907685,
+      0.0,
+      -8.983152841195215e-05,
+      0.01006113118213864,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "proj:projjson": {
+      "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
+      "type": "GeographicCRS",
+      "name": "WGS 84",
+      "datum": {
+        "type": "GeodeticReferenceFrame",
+        "name": "World Geodetic System 1984",
+        "ellipsoid": {
+          "name": "WGS 84",
+          "semi_major_axis": 6378137,
+          "inverse_flattening": 298.257223563
+        }
+      },
+      "coordinate_system": {
+        "subtype": "ellipsoidal",
+        "axis": [
+          {
+            "name": "Geodetic latitude",
+            "abbreviation": "Lat",
+            "direction": "north",
+            "unit": "degree"
+          },
+          {
+            "name": "Geodetic longitude",
+            "abbreviation": "Lon",
+            "direction": "east",
+            "unit": "degree"
+          }
+        ]
+      },
+      "id": {
+        "authority": "EPSG",
+        "code": 4326
+      }
+    },
+    "datetime": null
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          35.989923879907685,
+          -2.010070279745841
+        ],
+        [
+          38.010055290835666,
+          -2.010070279745841
+        ],
+        [
+          38.010055290835666,
+          0.01006113118213864
+        ],
+        [
+          35.989923879907685,
+          0.01006113118213864
+        ],
+        [
+          35.989923879907685,
+          -2.010070279745841
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "s3://deafrica-input-datasets/wsf_2015/36_-2/WSF2015_v2_36_-2.stac-item.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "wsf2015": {
+      "href": "s3://deafrica-input-datasets/wsf_2015/36_-2/WSF2015_v2_36_-2.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    35.989923879907685,
+    -2.010070279745841,
+    38.010055290835666,
+    0.01006113118213864
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+  ]
+}

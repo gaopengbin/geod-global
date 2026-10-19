@@ -1,0 +1,38 @@
+.explore-result-row{display:flex;align-items:center;gap:8px;min-width:0;padding:7px 4px;border-bottom:1px solid var(--line);border-radius:0;background:transparent;}
+.explore-result-row[data-selected=true]{background:var(--accent-tint);}
+.explore-result-row>[data-slot=checkbox]{flex:none;margin-inline:3px;}
+.explore-result-thumbnail{flex:none;width:36px;height:36px;overflow:hidden;border-radius:5px;}
+.explore-result-thumbnail :is(img,.catalog-thumbnail,.catalog-elevation-tile){width:36px!important;height:36px!important;border-radius:5px;}
+.explore-result-copy{flex:1;min-width:0;}
+.explore-result-focus.bui-button,.discovery .explore-result-focus.bui-button{display:block;text-align:left;padding:0!important;min-height:20px!important;height:auto!important;width:100%;border-radius:3px;font-size:var(--text-ui);line-height:var(--leading-ui);font-weight:var(--weight-medium);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.explore-result-focus.bui-button:disabled{opacity:1;color:var(--ink);}
+.explore-result-meta{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--text-caption);line-height:var(--leading-caption);color:var(--ink-2);}
+.explore-result-actions{display:flex;align-items:center;flex:none;gap:2px;}
+.discovery .explore-result-actions .bui-button{padding:0!important;width:26px;height:26px!important;min-height:26px!important;}
+.explore-selection-bar{flex:none;display:grid;gap:6px;padding:8px 12px;border-top:1px solid var(--line);background:var(--surface);}
+.explore-selection-heading{display:flex;align-items:center;gap:6px;min-width:0;}
+.explore-selection-heading>strong{flex:1;font-size:var(--text-caption);line-height:var(--leading-caption);font-weight:var(--weight-medium);}
+.explore-selection-buttons{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;min-width:0;}
+.explore-selection-buttons>.bui-button{flex:1;min-width:0;white-space:nowrap;padding-inline:8px;}
+.explore-selection-bar>.stac-help{margin:0;font-size:var(--text-caption);line-height:var(--leading-caption);color:var(--ink-2);}
+.delivery-receipt{display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:var(--radius-control);min-width:0;}
+.delivery-receipt-heading{display:flex;align-items:center;gap:6px;min-width:0;flex-wrap:wrap;}
+.delivery-receipt-heading>strong{flex:1;min-width:100px;font-size:var(--text-ui);line-height:var(--leading-ui);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.delivery-receipt>p{margin:0;font-size:var(--text-caption);line-height:var(--leading-caption);color:var(--ink-2);}
+.delivery-receipt-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.delivery-receipt-compact{padding:8px 0;border:0;border-top:1px solid var(--line);border-radius:0;}
+.tasks-project-filter{display:flex;align-items:center;gap:8px;min-width:0;max-width:360px;}
+.tasks-project-filter>[data-slot=select-wrapper]{min-width:0;flex:1;}
+.task-project-group{margin-top:12px;}.task-project-group>header{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:var(--text-ui);line-height:var(--leading-ui);}.task-project-group>header strong{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.background-work-link{font-size:var(--text-caption);}
+.download-review{display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:20px}
+.download-review p{margin:0}
+.download-review-files{max-height:160px;overflow:auto;margin:0;padding-left:20px;overflow-wrap:anywhere}
+.download-review .delivery-receipt{margin:0}
+.download-review .stac-actions{display:flex;gap:8px;align-items:center}
+.stac-items .stac-item{border-radius:0;border:0;border-bottom:1px solid var(--border);padding:8px 0;box-shadow:none;background:transparent}
+.service-explore-footer .delivery-receipt{margin-top:8px}
+.explore-selection-buttons>p{flex:1 0 100%;margin:0;font-size:var(--text-caption);line-height:var(--leading-caption);color:var(--ink-2)}
+.explore-selection-buttons>section[aria-label]{display:contents}
+.explore-selection-buttons>section[aria-label]>.bui-button{flex:1;min-width:0}
+.explore-selection-buttons>section[aria-label]>.delivery-receipt{flex:1 0 100%}

@@ -1,0 +1,27 @@
+# CGLS land-cover family and iSDA soil · candidate verification · 2026-10-12
+
+This is independent public-source research. One CGLS original was downloaded and completely decoded; native integration, download, preview, pixel and restore acceptance are separate work. No account, shared Earth Engine project or paid computation was used.
+
+## CGLS land-cover family
+
+[DE Africa's product specification](https://docs.digitalearthafrica.org/en/latest/data_specs/CGLS_LULC_specs.html) describes its African distribution of Copernicus Collection 3 land-cover releases for 2015–2019. The [actual product definition](https://explorer.digitalearth.africa/products/cgls_landcover) declares CC BY 4.0. This is one land-cover product family: permanent-water fraction is a layer within it, not an additional standalone hydrology product or satellite platform.
+
+All five original annual publisher items and five complete S3 year listings returned HTTP 200. The raw items are under `https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/<year>/cgls_landcover_<year>.stac-item.json`. Their raw asset references incorrectly use `s3://deafrica-input-datasets/gls/<year>/…`; the 2019 permanent-water file at that declared path returned HTTP 404. Actual complete listings and the product specification agree on `cgls_landcover/<year>/`. A connector therefore needs an explicit, exact reviewed distribution-path receipt, while preserving the original JSON and S3 asset references. The items contain only a Zenodo `derived_from` link, no self or collection link; revalidation must request the exact publisher item URL without inventing either link.
+
+The reviewed first layer is **permanent-water cover fraction**: original percentages 0–100, with original scalar NoData 255. It is distinct from categorical land-cover classification, seasonal-water fraction and water-observation counts. In all five year listings this original is 35.6–36.7 MB. Other listed layers include classification, forest type, built-up, snow, moss/lichen and seasonal water under 512 MiB; several further layers exceed that cap. Metadata visibility or a suitable listed size is not file validation of those other layers.
+
+The complete 2019 permanent-water original downloaded fresh in **40.031 seconds**: **36,681,970 bytes**, SHA-256 `20e1f3dcff66955ac8444e2c17daabbf153835f811dcecbe4febce9fb39f75f3`. Rasterio decoded all **7,969,076,457** original samples: 91,587 × 87,011, one UInt8 band, EPSG:4326, tiled 512 × 512, eight overview levels and a 0.0009920634920634888° grid. It has 3,180,602,869 non-NoData samples and 4,788,473,588 original 255 samples; zero is valid zero-percent permanent water. These full-file counts do not establish useful coverage or scientific accuracy for an arbitrary requested area.
+
+Five distinct raw coordinates were checked: `(0,0)=255`, `(45793,43505)=0`, `(91586,87010)=255`, `(508,494)=100`, and `(59734,39060)=100`. The last coordinate corresponds to approximately `(32.9°E, 0.4°S)` in Lake Victoria. Scalar NoData and GDAL's nodata-derived mask agree for these samples. The private preview is an independently generated grayscale image, not a native software preview or calibrated science visualization.
+
+Actual TIFF tags identify **v3.0.1, 2019-nrt, reference year 2019**, but input coverage is **2017-04-01 through 2020-03-31**. The publisher item declares the 2019 calendar interval. Both declarations are retained; the map is not claimed to be a single-year acquisition or daily scene. The full grid is only 30,923,543 pixels below the existing 8-billion tiled-grid cap, so all native review limits still apply. The proposed preset requires the actual AOI to lie inside the finite published bbox; it cannot silently switch a global or overseas request to Africa.
+
+## iSDA soil
+
+[iSDA's publisher guide](https://www.isda-africa.com/isdasoil/isdasoil-on-aws/) describes single files covering Africa, usually four bands for predicted means and uncertainty at two soil depths. [The AWS entry](https://registry.opendata.aws/isdasoil/) and the actual `soil_data/collection.json` declare CC BY 4.0. Anonymous `us-west-2` catalog, collection, pH item and complete nontruncated soil listing succeeded.
+
+The 21 formal soil TIFFs in that listing range from **3,478,108,902 to 57,228,774,240 bytes**. The pH file is 28,204,316,963 bytes; its original item is STAC `1.0.0-beta.2`, declares 328,563 × 289,306, EPSG:3857, four bands and a `x/10` back-transformation. Both file size and axes exceed current native limits. The small 32,559,154-byte `soil_data/test.tif` has no corresponding formal product item and was not substituted or counted as an accepted soil product. [DE Africa's iSDA specification](https://docs.digitalearthafrica.org/en/latest/data_specs/iSDA_Soil_Data.html) still points to the same large public originals; a smaller formal regional distribution was not established here.
+
+iSDA remains blocked for current complete-original downloads. A future explicit COG window or publisher regional-file adapter must retain original metadata, band/depth/back-transformation meaning and label any resulting subset accurately. No large soil file was downloaded and no synthetic publisher STAC document was created.
+
+Raw metadata, complete listings, HTTP receipts, the CGLS original and full decoding report are in `.verification/new-channels-cgls-isda-20261012/`. The companion JSON records their hashes and source URLs. This research did not mutate the user preview store, launch/restart a service or change any UI.

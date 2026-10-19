@@ -1,0 +1,817 @@
+{
+  "schemaVersion": 1,
+  "completedUtc": "2026-10-14T10:21:26.504Z",
+  "acceptanceScope": "Ten original Planned source IDs, within the exact reviewed scope and selected full originals stated here. Other archive members, countries, years, science QA and account permissions are not implied.",
+  "accepted": true,
+  "baseline": {
+    "directoryEntries": 133,
+    "ready": 91,
+    "auth": 6,
+    "planned": 36
+  },
+  "current": {
+    "directoryEntries": 133,
+    "groups": 17,
+    "ready": 101,
+    "auth": 6,
+    "planned": 26,
+    "verification": 0
+  },
+  "originalBacklogClosed": 10,
+  "additionalExpandedIds": 0,
+  "acceptedStableIds": [
+    "worldclim",
+    "fabdem",
+    "glc-fcs10",
+    "glc-fcs30d",
+    "soilgrids",
+    "vantor-open",
+    "ms-buildings",
+    "geofabrik",
+    "overture-maps",
+    "local-raster"
+  ],
+  "remainingOriginalPlannedIds": [
+    "usgs-landsat",
+    "modis-more",
+    "viirs-more",
+    "nasa-more",
+    "srtm-num",
+    "earth-search-more",
+    "planetary-more",
+    "copernicus-more",
+    "wayback",
+    "commercial-imagery",
+    "esa-tpm",
+    "enmap",
+    "piesat-open-samples",
+    "dynamic-world",
+    "clcd",
+    "sinolc-1",
+    "irsamap",
+    "merit-hydro",
+    "gebco",
+    "era5-land",
+    "eog-nightlights",
+    "jaxa-earth",
+    "geodata-china",
+    "tpdc",
+    "resdc-cnlucc",
+    "gscloud"
+  ],
+  "baselineOriginalPlannedIds": [
+    "usgs-landsat",
+    "modis-more",
+    "viirs-more",
+    "nasa-more",
+    "commercial-imagery",
+    "vantor-open",
+    "enmap",
+    "piesat-open-samples",
+    "srtm-num",
+    "fabdem",
+    "gebco",
+    "dynamic-world",
+    "glc-fcs30d",
+    "glc-fcs10",
+    "clcd",
+    "sinolc-1",
+    "resdc-cnlucc",
+    "merit-hydro",
+    "soilgrids",
+    "era5-land",
+    "worldclim",
+    "eog-nightlights",
+    "irsamap",
+    "ms-buildings",
+    "overture-maps",
+    "geofabrik",
+    "wayback",
+    "earth-search-more",
+    "planetary-more",
+    "copernicus-more",
+    "local-raster",
+    "esa-tpm",
+    "jaxa-earth",
+    "geodata-china",
+    "tpdc",
+    "gscloud"
+  ],
+  "nativeCatalog": {
+    "products": 65,
+    "layers": 104,
+    "evidence": "Root final read-only native GET /datasets; different from directory entry count"
+  },
+  "entries": [
+    {
+      "id": "worldclim",
+      "status": "ready",
+      "name": "WorldClim 2.1 · Nepal climate normals",
+      "nameZh": "WorldClim 2.1 · 尼泊尔气候平均值",
+      "coverage": "Reviewed Nepal NPL original files only",
+      "period": "1970–2000 monthly climate normals, not annual observations",
+      "formats": "Two complete original 12-band GeoTIFFs at 30 arc-seconds: Float32 temperature °C and Int16 precipitation mm",
+      "license": "WorldClim noncommercial terms; redistribution or commercial use requires prior permission",
+      "notes": "Only Nepal tavg and prec originals are connected. Bands 1–12 represent January–December; other countries, resolutions, variables and observation years are not substituted.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "fabdem",
+      "status": "ready",
+      "name": "FABDEM V1-2 · N08E050 / N09E050",
+      "nameZh": "FABDEM V1-2 · N08E050 / N09E050",
+      "coverage": "Only the two reviewed Somalia-region tiles in the N00E050-N10E060 V1-2 archive",
+      "period": "Fixed FABDEM V1-2 derived terrain model; not current observations",
+      "formats": "Complete original ZIP and two whole 3600 × 3600 Float32 elevation GeoTIFF members in metres",
+      "license": "CC BY-NC-SA 4.0; commercial use requires a separate licence",
+      "notes": "Only N08E050 and N09E050 are enabled. Point-centre registration, negative elevations and valid zero values are retained. Original ZIP and complete member TIFF have separate checksums.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "glc-fcs10",
+      "status": "ready",
+      "name": "GLC_FCS10",
+      "nameZh": "GLC_FCS10 全球 10 米精细地类",
+      "coverage": "Six reviewed legal-coordinate W175 tiles only; publisher W180 edge tiles are not normalized or substituted",
+      "period": "2023 地图；2025-01-24 v1 发布",
+      "formats": "36 个 ZIP 分区包及分类说明",
+      "license": "按 Zenodo 作者记录许可、指南和论文引用核对",
+      "notes": "The map uses a coarse first-band display within the decode budget. The complete original tile grid and class values remain available.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "glc-fcs30d",
+      "status": "ready",
+      "name": "GLC_FCS30D · 1985 / 1990 / 1995",
+      "nameZh": "GLC_FCS30D · 1985 / 1990 / 1995",
+      "coverage": "Eight reviewed W175/W180 tiles from one complete published ZIP",
+      "period": "1985, 1990 and 1995 original class bands only; 2000–2022 annual 23-band files remain unsupported",
+      "formats": "Whole ZIP and complete original three-band UInt8 GeoTIFF members",
+      "license": "按作者 Zenodo 记录许可与引用要求核对",
+      "notes": "The three original bands are years, not RGB. The map displays 1985 classes at coarse resolution; original bands, codes 0/250 and grid are preserved.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "soilgrids",
+      "status": "ready",
+      "name": "SoilGrids · corrected WRB 2017",
+      "nameZh": "SoilGrids · 2017 WRB 订正版",
+      "coverage": "Only reviewed original tiles 530 and 531 for each of two layers",
+      "period": "Corrected SG2017 WRB inputs; no date or depth selection",
+      "formats": "Four whole 4096 × 4096 UInt8 EPSG:4326 GeoTIFFs; NoData 255 and valid zero preserved",
+      "license": "SoilGrids 2017 ODbL 1.0; later product licences do not replace this release",
+      "notes": "Class 0 is valid Acrisols. Acrisols scores retain the raw byte; percent/probability calibration is unverified. This scope does not include current depth-property SoilGrids products or global discovery.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "vantor-open",
+      "status": "ready",
+      "name": "Vantor · Nepal visual original",
+      "nameZh": "Vantor · 尼泊尔视觉原件",
+      "coverage": "Only reviewed acquisition B120001101250A10; publisher cloud cover 93%",
+      "period": "Exact 2026-09-07 acquisition, not the event name date or all archive events",
+      "formats": "Complete JPEG-compressed YCbCr visual GeoTIFF; decoded Y/Cb/Cr components at the original grid",
+      "license": "CC BY-NC 4.0 for the reviewed original; public access does not grant commercial reuse",
+      "notes": "The grayscale preview displays decoded Y. Values are JPEG visual components with interpolation and possible decoder rounding, not RGB, reflectance or calibrated scientific measurements. Original source bytes are preserved.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "ms-buildings",
+      "status": "ready",
+      "name": "Microsoft · reviewed building partitions",
+      "nameZh": "微软 · 已核查建筑分区",
+      "coverage": "All partitions in the pinned publisher index can be searched; individual complete downloads are budget-limited",
+      "period": "2026-08-13 distribution version; imagery dates and model quality vary",
+      "formats": "Complete original gzip GeoJSONL country / LOD9 quadkey partitions",
+      "license": "CDLA Permissive 2.0; retain Microsoft publisher and partition attribution",
+      "notes": "A query area selects whole partitions, without clipping or simplification. Original, expanded and converted data each stay within 20 MiB, 50,000 features and 500,000 coordinates. Large intersecting partitions can fail; no partial file substitutes for an original.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "geofabrik",
+      "status": "ready",
+      "name": "Geofabrik · Monaco free GIS bundle",
+      "nameZh": "Geofabrik · 摩纳哥免费 GIS 文件包",
+      "coverage": "Only the pinned Monaco 2026-10-11 free GIS bundle",
+      "period": "Dated original extract 2026-10-11; no daily refresh guarantee",
+      "formats": "Complete original .shp.zip with published geometry and DBF members",
+      "license": "ODbL 1.0; retain Geofabrik and OpenStreetMap attribution",
+      "notes": "This is the derived free GIS Shapefile bundle. Raw OSM PBF remains unsupported; all OSM tags, paid extended bundles and other regions are not substituted.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "overture-maps",
+      "status": "ready",
+      "name": "Overture · original bathymetry part",
+      "nameZh": "Overture · 水深原始分片",
+      "coverage": "Reviewed 2026-09-23.1 base/bathymetry part-00000 only",
+      "period": "Pinned 2026-09-23.1 distribution; not every theme or part",
+      "formats": "Complete original GeoParquet with 16 row groups; separate bounded GeoJSON area preview",
+      "license": "ODbL 1.0; retain Overture and ETOPO/GLOBathy source attribution",
+      "notes": "The map is an area-selected GeoJSON preview. Original GeoParquet bytes, row groups, schema and WKB are retained and exported separately.",
+      "actualGuiAccepted": true
+    },
+    {
+      "id": "local-raster",
+      "status": "ready",
+      "name": "Local GeoTIFF / COG files",
+      "actualGuiAccepted": true
+    }
+  ],
+  "originals": [
+    {
+      "datasetId": "worldclim",
+      "role": "complete original GeoTIFF",
+      "variable": "tavg",
+      "bytes": 6827324,
+      "sha256": "68363b342d56bb60066c372875c0a09fd931885f429a2138b2cad7dffec0eaff",
+      "checkedReferenceLocations": 4,
+      "previewSize": [
+        768,
+        407
+      ]
+    },
+    {
+      "datasetId": "worldclim",
+      "role": "complete original GeoTIFF",
+      "variable": "prec",
+      "bytes": 4524406,
+      "sha256": "f6707d2169193e53d86b084f8122a1c6885fa1a1e76435490f0d4fe146c0b7fb",
+      "checkedReferenceLocations": 4,
+      "previewSize": [
+        768,
+        407
+      ]
+    },
+    {
+      "datasetId": "fabdem",
+      "role": "complete original ZIP",
+      "bytes": 21627700,
+      "sha256": "be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+      "members": [
+        {
+          "name": "N08E050_FABDEM_V1-2.tif",
+          "bytes": 5592127,
+          "sha256": "6a8988122a922f0f11a059829c4ecfc5451364eca1b38708d02bf789668b7837",
+          "checkedReferenceLocations": 4,
+          "previewSize": [
+            768,
+            768
+          ]
+        },
+        {
+          "name": "N09E050_FABDEM_V1-2.tif",
+          "bytes": 16035307,
+          "sha256": "c8d2ffb9777dddabefa856636a072af81563eb9fed3bf3cfcfebfe95a9ed9928",
+          "checkedReferenceLocations": 4,
+          "previewSize": [
+            768,
+            768
+          ]
+        }
+      ]
+    },
+    {
+      "datasetId": "glc-fcs10",
+      "role": "complete original ZIP",
+      "bytes": 117500101,
+      "sha256": "60ad302c2e103fb828e2afed348826226db1417704a0902e5e854eaa55a4fae2",
+      "wholeSelectedMember": {
+        "bytes": 47037152,
+        "sha256": "3e70e7329591c26a90554ec67d4079181260162ce35b1d6df206fcff38c35503"
+      },
+      "checkedReferenceLocations": 8,
+      "previewSize": [
+        32,
+        32
+      ],
+      "freshOfficialSoftwareTransfer": true,
+      "researchOriginalCopied": false,
+      "sampleYears": [
+        2023
+      ]
+    },
+    {
+      "datasetId": "glc-fcs30d",
+      "role": "complete original ZIP",
+      "bytes": 220928112,
+      "sha256": "776db9239579e2f954621d8fb028be1f1e2bc7b13f4ae02292220459eab81e7f",
+      "wholeSelectedMember": {
+        "bytes": 13919236,
+        "sha256": "0f5f30202efdd1cfa5e8add2c5869f67f8ca529d70aee0b58a44beb9940fddd9"
+      },
+      "checkedReferenceLocations": 8,
+      "previewSize": [
+        18,
+        18
+      ],
+      "freshOfficialSoftwareTransfer": true,
+      "researchOriginalCopied": false,
+      "sampleYears": [
+        1985,
+        1990,
+        1995
+      ]
+    },
+    {
+      "datasetId": "ms-buildings",
+      "role": "complete original vector source",
+      "bytes": 662138,
+      "sha256": "6087ce77db125c9c9e09743924f43379500e3d8d2669569e9e7672be4442b7da",
+      "format": "geojsonl-gzip",
+      "sourceUrl": "https://bfppub.z5.web.core.windows.net/2026-08-13/global-buildings.geojsonl/RegionName=Andorra/quadkey=120222212/part-00154-110f5303-ff85-4c71-a2bf-c6070024fec8.c000.csv.gz",
+      "packageId": "Andorra-120222212",
+      "managedGeoJson": {
+        "bytes": 2274242,
+        "sha256": "c456e96296b93b41cdf21f1815b4e06334981cc0b0cf2ab4b0df17b6e85f18a6",
+        "featureCount": 5437,
+        "coordinateCount": 40668
+      },
+      "previewSubset": false
+    },
+    {
+      "datasetId": "geofabrik",
+      "role": "complete original vector source",
+      "bytes": 746384,
+      "sha256": "33611b0f8fd1fbc6562ce6a2c93b35371d26da9e38f3015a889fb9e527e08ccd",
+      "format": "shapefile",
+      "sourceUrl": "https://download.geofabrik.de/europe/monaco-261011-free.shp.zip",
+      "packageId": "monaco-261011-free-shp",
+      "managedGeoJson": {
+        "bytes": 3161845,
+        "sha256": "5132687dcac0d1d80efe4d62ccc4d676178406f2b1b7c65304506d24fa63b26d",
+        "featureCount": 8672,
+        "coordinateCount": 48914
+      },
+      "previewSubset": false
+    },
+    {
+      "datasetId": "ms-buildings",
+      "role": "complete original vector source",
+      "bytes": 218965,
+      "sha256": "6fd8cabe2689532388ed37dfba9f1c5e4e9c326a8d8d01874dde76faae41c604",
+      "format": "geojsonl-gzip",
+      "sourceUrl": "https://bfppub.z5.web.core.windows.net/2026-08-13/global-buildings.geojsonl/RegionName=Andorra/quadkey=120222210/part-00061-110f5303-ff85-4c71-a2bf-c6070024fec8.c000.csv.gz",
+      "packageId": "Andorra-120222210",
+      "managedGeoJson": {
+        "bytes": 767584,
+        "sha256": "29eb5a9008b081a943b6ba1b04e9c2a56ad130bfeb72ccbf0d9970c3a93fa745",
+        "featureCount": 1932,
+        "coordinateCount": 13416
+      },
+      "previewSubset": false
+    },
+    {
+      "datasetId": "overture-maps",
+      "role": "complete original vector source",
+      "bytes": 52018294,
+      "sha256": "cfaf02a15f70713a52ed2f4367858d1b3d3be0dadba2a9aa4ee7faf0267ea23d",
+      "format": "GeoParquet",
+      "rows": 407277,
+      "rowGroups": 16,
+      "sourceUrl": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=base/type=bathymetry/part-00000-304001d2-9e92-5aeb-8db5-60be5bd09d96-c000.zstd.parquet",
+      "managedGeoJson": {
+        "bytes": 22907,
+        "sha256": "1a4fa0d9d77bef2f541cd80d62bc2e0fb006e7395081d4b2b58bb675eb45a048",
+        "featureCount": 11,
+        "coordinateCount": 554
+      },
+      "previewSubset": true
+    },
+    {
+      "datasetId": "soilgrids",
+      "role": "complete original GeoTIFF",
+      "bytes": 2583826,
+      "sha256": "a559810afbd14ceb1e7b5cdbfca645797ac71c30f36a6a0a0d4487faee58e840",
+      "sourceUrl": "https://files.isric.org/soilgrids/latest/data/wrb/MostProbable/530.tif"
+    },
+    {
+      "datasetId": "soilgrids",
+      "role": "complete original GeoTIFF",
+      "bytes": 2430344,
+      "sha256": "5455e644c75cfe06fa9dcca03e7f0d2216d65d984d4fe8cde437b019d892df50",
+      "sourceUrl": "https://files.isric.org/soilgrids/latest/data/wrb/MostProbable/531.tif"
+    },
+    {
+      "datasetId": "soilgrids",
+      "role": "complete original GeoTIFF",
+      "bytes": 8042970,
+      "sha256": "46fe919ae7045e1442c18077796147fe26612969d842b4e86e156b810b09b571",
+      "sourceUrl": "https://files.isric.org/soilgrids/latest/data/wrb/Acrisols/531.tif"
+    },
+    {
+      "datasetId": "soilgrids",
+      "role": "complete original GeoTIFF",
+      "bytes": 4917543,
+      "sha256": "34a45bc93fceecbdec0e38c0a54d4bec6022c353e8b75b994e517c1af5b227b0",
+      "sourceUrl": "https://files.isric.org/soilgrids/latest/data/wrb/Acrisols/530.tif"
+    },
+    {
+      "datasetId": "vantor-open",
+      "role": "complete original visual GeoTIFF",
+      "bytes": 29534465,
+      "sha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+      "sourceUrl": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif",
+      "previewComponent": "Y",
+      "sampleComponents": [
+        "Y",
+        "Cb",
+        "Cr"
+      ],
+      "scientificCalibration": false
+    },
+    {
+      "datasetId": "local-raster",
+      "role": "complete user original import/export; same original as WorldClim prec, not an extra publisher product",
+      "bytes": 4524406,
+      "sha256": "f6707d2169193e53d86b084f8122a1c6885fa1a1e76435490f0d4fe146c0b7fb",
+      "assetId": "10dba1e0-4870-40fc-9c32-8ccdd23a1823",
+      "exportedBytes": 4524406,
+      "exportedSha256": "f6707d2169193e53d86b084f8122a1c6885fa1a1e76435490f0d4fe146c0b7fb",
+      "referenceNativePixelValues": [
+        19,
+        21,
+        49,
+        84,
+        193,
+        345,
+        469,
+        407,
+        275,
+        75,
+        8,
+        11
+      ]
+    }
+  ],
+  "finalReadOnlyNativeCheck": {
+    "jobs": 27,
+    "allSucceededAndSettled": true,
+    "noResearchOriginalCopied": true,
+    "guiDownloadedProjectsReadBack": [
+      {
+        "datasetId": "fabdem",
+        "projectId": "7208fd83-2ebf-4acb-94f8-0dadcf8ee7ad",
+        "jobId": "f04196ce-919d-49a9-93fc-8884c400cd1d",
+        "bytes": 21627700,
+        "originalSha256": "be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+        "inspectedRasterSha256": "c8d2ffb9777dddabefa856636a072af81563eb9fed3bf3cfcfebfe95a9ed9928",
+        "sample": {
+          "jobId": "f04196ce-919d-49a9-93fc-8884c400cd1d",
+          "sha256": "c8d2ffb9777dddabefa856636a072af81563eb9fed3bf3cfcfebfe95a9ed9928",
+          "column": 1800,
+          "row": 1800,
+          "values": [
+            275.6700134277344
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "reopened": true
+      },
+      {
+        "datasetId": "fabdem",
+        "projectId": "7208fd83-2ebf-4acb-94f8-0dadcf8ee7ad",
+        "jobId": "1dba055f-1f22-48cf-9f30-db7c02069bfd",
+        "bytes": 21627700,
+        "originalSha256": "be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+        "inspectedRasterSha256": "6a8988122a922f0f11a059829c4ecfc5451364eca1b38708d02bf789668b7837",
+        "sample": {
+          "jobId": "1dba055f-1f22-48cf-9f30-db7c02069bfd",
+          "sha256": "6a8988122a922f0f11a059829c4ecfc5451364eca1b38708d02bf789668b7837",
+          "column": 1800,
+          "row": 1800,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "reopened": true
+      },
+      {
+        "datasetId": "vantor-open",
+        "projectId": "0df6628c-3eeb-4aa0-a047-d6a6523b5fd0",
+        "jobId": "7720dd2f-e1c1-4cdc-b552-19ea53b085b3",
+        "bytes": 29534465,
+        "originalSha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+        "inspectedRasterSha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+        "sample": {
+          "jobId": "7720dd2f-e1c1-4cdc-b552-19ea53b085b3",
+          "sha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+          "column": 10000,
+          "row": 10000,
+          "values": [
+            116,
+            126,
+            125
+          ],
+          "noData": [
+            false,
+            false,
+            false
+          ]
+        },
+        "reopened": true
+      },
+      {
+        "datasetId": "soilgrids",
+        "projectId": "a318409f-6527-4aa1-8236-ed60791216c7",
+        "jobId": "5b73bdc5-67ab-48d7-9ed0-83f3df3e54f4",
+        "bytes": 2430344,
+        "originalSha256": "5455e644c75cfe06fa9dcca03e7f0d2216d65d984d4fe8cde437b019d892df50",
+        "inspectedRasterSha256": "5455e644c75cfe06fa9dcca03e7f0d2216d65d984d4fe8cde437b019d892df50",
+        "sample": {
+          "jobId": "5b73bdc5-67ab-48d7-9ed0-83f3df3e54f4",
+          "sha256": "5455e644c75cfe06fa9dcca03e7f0d2216d65d984d4fe8cde437b019d892df50",
+          "column": 2048,
+          "row": 2048,
+          "values": [
+            17
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "reopened": true
+      },
+      {
+        "datasetId": "soilgrids",
+        "projectId": "a318409f-6527-4aa1-8236-ed60791216c7",
+        "jobId": "cb5db8f8-7d5f-4cd9-9041-928e97ecc5bd",
+        "bytes": 2583826,
+        "originalSha256": "a559810afbd14ceb1e7b5cdbfca645797ac71c30f36a6a0a0d4487faee58e840",
+        "inspectedRasterSha256": "a559810afbd14ceb1e7b5cdbfca645797ac71c30f36a6a0a0d4487faee58e840",
+        "sample": {
+          "jobId": "cb5db8f8-7d5f-4cd9-9041-928e97ecc5bd",
+          "sha256": "a559810afbd14ceb1e7b5cdbfca645797ac71c30f36a6a0a0d4487faee58e840",
+          "column": 1820,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        "reopened": true
+      },
+      {
+        "datasetId": "worldclim",
+        "projectId": "eeb823b8-aded-4f2e-8a04-c21bbc6df4d1",
+        "jobId": "23b4b198-2f2c-4c03-8af8-79921a90afd5",
+        "bytes": 4524406,
+        "originalSha256": "f6707d2169193e53d86b084f8122a1c6885fa1a1e76435490f0d4fe146c0b7fb",
+        "inspectedRasterSha256": "f6707d2169193e53d86b084f8122a1c6885fa1a1e76435490f0d4fe146c0b7fb",
+        "sample": {
+          "jobId": "23b4b198-2f2c-4c03-8af8-79921a90afd5",
+          "sha256": "f6707d2169193e53d86b084f8122a1c6885fa1a1e76435490f0d4fe146c0b7fb",
+          "column": 510,
+          "row": 270,
+          "values": [
+            19,
+            21,
+            49,
+            84,
+            193,
+            345,
+            469,
+            407,
+            275,
+            75,
+            8,
+            11
+          ],
+          "noData": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "reopened": true
+      }
+    ]
+  },
+  "glc30GuiStoreRestoration": {
+    "bothOriginalServicesRestored": true,
+    "allDataUnchanged": true,
+    "downloadOrPostCount": 0,
+    "dataCopyCount": 0
+  },
+  "partialFamiliesRemainPlanned": [
+    "wayback",
+    "earth-search-more"
+  ],
+  "validation": {
+    "native": {
+      "passed": 845,
+      "ignored": 31
+    },
+    "desktopBridgeCheck": "passed",
+    "productionBuildBeforeStatusUpdate": "passed",
+    "finalStatusBuildAndBrowserCountReadback": "passed",
+    "desktopDebugBuild": "passed",
+    "repositoryChecks": "passed",
+    "desktopCommandAcl": {
+      "passed": true,
+      "registeredCommands": 148,
+      "window": "main",
+      "remoteOrigins": false
+    },
+    "browserCounts": {
+      "total": 133,
+      "ready": 101,
+      "auth": 6,
+      "planned": 26,
+      "verification": 0,
+      "displayedConnected": 107
+    },
+    "browserEvidence": ".verification/original-backlog-20261014/ui/final-directory-counts.png",
+    "browserEvidenceSha256": "2a8bc7d1197beb3649ae5e5bc1d6ad7b1343af10efbb93b10dbfa576c8a6cdab"
+  },
+  "publication": {
+    "installerBuilt": false,
+    "nativeWindowPickerAccepted": false,
+    "committed": false,
+    "pushed": false,
+    "deployed": false
+  },
+  "evidence": [
+    {
+      "privateEvidencePath": "native-originals/acceptance.json",
+      "bytes": 1875,
+      "sha256": "ce5f14243c6c1dfc1970595f40b7fb08f2d4033d30382a240b22224b7db49a2f"
+    },
+    {
+      "privateEvidencePath": "vector-research/native-download-reopen.json",
+      "bytes": 72068,
+      "sha256": "55659aaf57a0110c57fadd2a047d9a54d82ac4e6a622ce176772ad6413a0792a"
+    },
+    {
+      "privateEvidencePath": "vector-research/overture-native-download-reopen.json",
+      "bytes": 77468,
+      "sha256": "924d0d21495eeb58d69862e5d29e6e5a49e5a4339d9a3285f867a88fa82a6b17"
+    },
+    {
+      "privateEvidencePath": "vector-research/fresh-soil-vantor-acceptance-report.json",
+      "bytes": 21044,
+      "sha256": "5a1614f98ca060c1abb51a978b26b7a9713c479dc371cd4e0f9d767f0f55067e"
+    },
+    {
+      "privateEvidencePath": "maps-research/root-glc10-acceptance/acceptance.json",
+      "bytes": 704,
+      "sha256": "95f49a8608e0de9c4fc6e27b2a75f3bfbaf452aa5ff96f2cf56f3b005d4ae3b7"
+    },
+    {
+      "privateEvidencePath": "maps-research/fresh-native-glc30d/acceptance.json",
+      "bytes": 732,
+      "sha256": "d6689fbcc6a9624ec1fb6473c0b45cb82dd4b2ca4c5509d6b4e3cb93a1913e5a"
+    },
+    {
+      "privateEvidencePath": "ui/ms-buildings-export.json",
+      "bytes": 238,
+      "sha256": "48c164373d13461b074ba9043b546bd72f0f8a7afc72ebef6f38e8a119be14f1"
+    },
+    {
+      "privateEvidencePath": "ui/overture-export.json",
+      "bytes": 303,
+      "sha256": "35a818facfc37891e1b3dba9bc4fc0ffe2ebe54a98d0e3455f95f45e208b1fa6"
+    },
+    {
+      "privateEvidencePath": "ui/geofabrik-export.json",
+      "bytes": 218,
+      "sha256": "c08535f8bb9b43f2dd110a32fe422c43f031e7f3e085f4f5ab76231fb7ee67f3"
+    },
+    {
+      "privateEvidencePath": "ui/local-raster-import-export.json",
+      "bytes": 611,
+      "sha256": "445b2f89f43fa41598ff6edcb7c9a3937e9fa5bc871f1d4920f9b1da2cb6a7ff"
+    },
+    {
+      "privateEvidencePath": "climate-archives/archive-connections-actual.json",
+      "bytes": 92633,
+      "sha256": "46be1fd4c9ec1ecf4b192a2502cfa2d79217c31b1139e1b28ef29196f0889df7"
+    },
+    {
+      "privateEvidencePath": "final-native-readback.json",
+      "bytes": 82155,
+      "sha256": "2149ea50bc44f28b44587e2ecc59335d443e7e87efb387b45e4a7729943e762a"
+    },
+    {
+      "privateEvidencePath": "private/glc30-ui-active/restore-result.json",
+      "bytes": 1184,
+      "sha256": "dd0c0aac00b423617770d9c017cc7cecf42c076caa3a36d137c8c37bdab7982d"
+    },
+    {
+      "privateEvidencePath": "ui/worldclim-map.png",
+      "bytes": 72208,
+      "sha256": "90c13f2cc7cd8ef0d791d788632f61a79e102f8a1dd68b10acbd5bc121f9a21a"
+    },
+    {
+      "privateEvidencePath": "ui/worldclim-reopened-pixels.png",
+      "bytes": 51638,
+      "sha256": "ce1ed5b2d5ccca6571d9d7d8666e55a21c004051fd6436162925bb24f01cbcb7"
+    },
+    {
+      "privateEvidencePath": "ui/fabdem-combined-confirmed.png",
+      "bytes": 67650,
+      "sha256": "7f4f9f1208f5cd681ef451d67c7e7d0654e1e74e2ee965f6d2cf5e3cfbaeeebe"
+    },
+    {
+      "privateEvidencePath": "ui/fabdem-combined-downloaded-reopened.png",
+      "bytes": 50927,
+      "sha256": "349be4396382ce1eabd9c3f0fe716b5b4fe0989c4edd1f912f88ac9ab7d75235"
+    },
+    {
+      "privateEvidencePath": "ui/glc10-discovery-confirmed.png",
+      "bytes": 65936,
+      "sha256": "16eab1a81ae0ac7e3904ebb0b965673f1d6e0380418c2bb72fdc491a4644d1b6"
+    },
+    {
+      "privateEvidencePath": "ui/glc10-reopened-native-pixel.png",
+      "bytes": 42277,
+      "sha256": "1e731e8b607b15baefd8bddde3c6b4297aed7501545522f8a80839e88c3e37c0"
+    },
+    {
+      "privateEvidencePath": "ui/glc30d-discovery-confirmed.png",
+      "bytes": 66424,
+      "sha256": "fe7871a99a947e9813f90749e7f3934f2263f95f07eefd83f1e8be643e4268fc"
+    },
+    {
+      "privateEvidencePath": "ui/glc30d-reopened-years-pixels.png",
+      "bytes": 41816,
+      "sha256": "b790045d2f1eb61be42be265d880c1bfd6e012bb5363ee8706f6518e592947f6"
+    },
+    {
+      "privateEvidencePath": "ui/soilgrids-two-preview.png",
+      "bytes": 200330,
+      "sha256": "3d3202f6261602d9d2322f7e9a2801e3b14a38593b2d291590ebcc1e0caf980e"
+    },
+    {
+      "privateEvidencePath": "ui/soilgrids-reopened-zero.png",
+      "bytes": 67607,
+      "sha256": "eac323ea6a2bb1f18d28bc9a9f1d7e1d63f50491a67a6578e57c44be17e0050b"
+    },
+    {
+      "privateEvidencePath": "ui/vantor-selected-confirmed.png",
+      "bytes": 69171,
+      "sha256": "348c5d2fc471bcafc4db87fbeb600ca5444ab4a30902673d553390f3011b9031"
+    },
+    {
+      "privateEvidencePath": "ui/vantor-gui-download-reopened.png",
+      "bytes": 48872,
+      "sha256": "8d5e2db81223169fbb518736043b7ca338e4fba4763efa6b3a377052164d6ae1"
+    },
+    {
+      "privateEvidencePath": "ui/ms-buildings-two-layers.png",
+      "bytes": 108027,
+      "sha256": "216310c9a54330f7034cfbffb62f37787de8c802d5fd258a7f7e68ad2014441e"
+    },
+    {
+      "privateEvidencePath": "ui/ms-buildings-reopened.png",
+      "bytes": 44230,
+      "sha256": "dd32fbd4c5730f73c5a80e45bfde403fd75d527e7aa5c36fc76993c10c09fed3"
+    },
+    {
+      "privateEvidencePath": "ui/geofabrik-original-map.png",
+      "bytes": 108350,
+      "sha256": "d5806e7eb01d9acc321bcc7746765a419da2cebdf5882ada4054b966367382a4"
+    },
+    {
+      "privateEvidencePath": "ui/geofabrik-reopened.png",
+      "bytes": 47591,
+      "sha256": "3b26d57bef9ff73c98aac0ef537a33c1a0eddf71e26c888e1853a56c304bba97"
+    },
+    {
+      "privateEvidencePath": "ui/overture-fixed-original-map.png",
+      "bytes": 91294,
+      "sha256": "4124fa078bc5033a30bb288e68f6156f4a8d75e99e590bdf78e8ea51956ed5ad"
+    },
+    {
+      "privateEvidencePath": "ui/overture-library-reopened.png",
+      "bytes": 67024,
+      "sha256": "3e392748dc6e748c5ffb0d80645bfefcc137495f51a1950b21498863297fd912"
+    },
+    {
+      "privateEvidencePath": "ui/local-raster-pixels-map.png",
+      "bytes": 86713,
+      "sha256": "36b72fc38fed1a79f1cbbd669c752286e1ba22d55a60e912aa388f65bf9c2c19"
+    },
+    {
+      "privateEvidencePath": "ui/local-raster-library-reopened.png",
+      "bytes": 62877,
+      "sha256": "9cdd3752541dc41bb20a4570e02b9d382c9e034760e7291ca9aa4a8a09698dd9"
+    }
+  ]
+}

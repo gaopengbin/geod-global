@@ -9,6 +9,13 @@ use axum::{
     Json, Router,
 };
 use serde_json::json;
+mod datasets;
+mod earth_engine;
+mod gebco;
+mod gscloud;
+mod local_rasters;
+mod official_parquet;
+mod official_vectors;
 mod stac;
 mod three_d;
 mod tiles;
@@ -224,17 +231,7 @@ async fn vector_original(
         .vector_original_bytes(&id)
         .await
         .map_err(api_error)?;
-    let mime = if bytes.starts_with(b"SQLite format 3\0") {
-        "application/geopackage+sqlite3"
-    } else if bytes.starts_with(b"PK\x03\x04") {
-        "application/zip"
-    } else if crate::vector::local_osm::is_xml(&bytes) {
-        "application/xml"
-    } else if crate::vector::local_osm::is_pbf(&bytes) {
-        "application/vnd.openstreetmap.data+pbf"
-    } else {
-        "application/json"
-    };
+    let mime = crate::vector::original_content_type(&bytes);
     Ok(([(header::CONTENT_TYPE, mime)], bytes).into_response())
 }
 async fn map_services(State(m): State<JobManager>) -> Json<Vec<crate::wms::MapService>> {
@@ -732,9 +729,16 @@ pub fn router(manager: JobManager) -> Router {
         .route("/recipes/plan", post(plan_recipe))
         .route("/recipes/run", post(run_recipe))
         .merge(stac::routes())
+        .merge(datasets::routes())
+        .merge(earth_engine::routes())
+        .merge(gebco::routes())
+        .merge(gscloud::routes())
         .merge(wcs::routes())
         .merge(tiles::routes())
         .merge(vector::routes())
+        .merge(official_vectors::routes())
+        .merge(official_parquet::routes())
+        .merge(local_rasters::routes())
         .merge(three_d::routes())
         .layer(DefaultBodyLimit::max(2 * 1024 * 1024))
         .layer(middleware::from_fn(browser_boundary))

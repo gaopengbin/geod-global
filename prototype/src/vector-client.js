@@ -2,6 +2,9 @@ import {desktopAvailable} from './runtime-client.js';
 import {validateGeoPackage} from './geopackage-client.js';
 import {validateShapefile} from './shapefile-client.js';
 import {validateLocalOsm,validateLocalOsmFeatures} from './osm-local-client.js';
+import {validateGeoBoundariesProvenance,validateGeoBoundariesFeatures} from './geoboundaries-client.js';
+import {validateOfficialVectorProvenance} from './official-vector-client.js';
+import {validateOvertureProvenance,validateOvertureInspection,exportOvertureOriginal} from './overture-client.js';
 export const VECTOR_MAX_BYTES=20*1024*1024;
 const idPattern=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const hashPattern=/^[a-f0-9]{64}$/;
@@ -157,6 +160,8 @@ export function validateWfsProvenance(source,count) {
 export function validateFeatureProvenance(source,count) {
   const publicUrl=raw=>{try{const u=new URL(raw);return typeof raw==='string'&&raw.length<=2048&&u.protocol==='https:'&&(!u.port||u.port==='443')&&!u.username&&!u.password&&!u.hash;}catch{return false;}};
   const bounds=source?.requestedBounds;
+  if(['arcgis','wfs','geoboundaries'].filter(key=>source?.[key]!==undefined&&source[key]!==null).length>1||source?.overpass!==undefined&&source.overpass!==null)throw new Error('Ambiguous feature query protocol.');
+  if(source?.geoboundaries!==undefined&&source.geoboundaries!==null)return validateGeoBoundariesProvenance(source,count);
   if(source?.wfs!==undefined&&source.wfs!==null)return validateWfsProvenance(source,count);
   if(source?.arcgis!==undefined&&source.arcgis!==null) {
     const a=source.arcgis;
@@ -200,7 +205,7 @@ export function validateFeatureProvenance(source,count) {
 export function validateVectorAsset(asset) {
   const integer=(n,max)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
   if(!asset||!idPattern.test(asset.id)||typeof asset.name!=='string'||asset.name!==asset.name.trim()||!asset.name||Array.from(asset.name).length>120||/[\u0000-\u001f\u007f-\u009f]/.test(asset.name)
-    ||!['geojson','overpass-json','wfs-snapshot','geopackage','shapefile','osm-xml','osm-pbf'].includes(asset.format)||!['managed','reference'].includes(asset.storageMode)
+    ||!['geojson','overpass-json','wfs-snapshot','geopackage','shapefile','osm-xml','osm-pbf','geojsonl-gzip','geoparquet-preview'].includes(asset.format)||!['managed','reference'].includes(asset.storageMode)
     ||asset.crs!=='EPSG:4326'||!hashPattern.test(asset.sourceSha256)||!hashPattern.test(asset.geojsonSha256)
     ||!integer(asset.bytes,VECTOR_MAX_BYTES)||!asset.bytes||!integer(asset.featureCount,50000)||!integer(asset.coordinateCount,500000)
     ||!asset.geometryCounts||typeof asset.geometryCounts!=='object'||Array.isArray(asset.geometryCounts)
@@ -210,10 +215,17 @@ export function validateVectorAsset(asset) {
     ||(asset.coordinateCount>0)!==(asset.bounds!==null)||!Number.isFinite(Date.parse(asset.createdAt))
     ||(asset.dataTimestamp!==null&&!Number.isFinite(Date.parse(asset.dataTimestamp)))
     ||(asset.attribution!==null&&typeof asset.attribution!=='string')
-    ||(['overpass-json','osm-xml','osm-pbf'].includes(asset.format)?(asset.attribution!=='© OpenStreetMap contributors'||asset.licenseUrl!=='https://www.openstreetmap.org/copyright'||asset.format==='overpass-json'&&asset.dataTimestamp===null)
+    ||(asset.geoParquet?(asset.attribution!==asset.geoParquet.attribution||asset.licenseUrl!==asset.geoParquet.licenseUrl||asset.dataTimestamp!==null):asset.officialPackage?(asset.attribution!==asset.officialPackage.package?.attribution||asset.licenseUrl!==asset.officialPackage.package?.licenseUrl||asset.dataTimestamp!==asset.officialPackage.package?.dataTimestamp):['overpass-json','osm-xml','osm-pbf'].includes(asset.format)?(asset.attribution!=='© OpenStreetMap contributors'||asset.licenseUrl!=='https://www.openstreetmap.org/copyright'||asset.format==='overpass-json'&&asset.dataTimestamp===null)
       :(asset.attribution!==null||asset.licenseUrl!==null||asset.dataTimestamp!==null))) {
     throw new Error('The vector service returned invalid source or geometry metadata.');
   }
+  if(asset.officialPackage!=null) {
+    if(asset.geoParquet||asset.remoteSource||asset.osmSource||asset.osmConversion||asset.geoPackage||asset.localOsm||!['geojsonl-gzip','shapefile'].includes(asset.format))throw new Error('Official vector original files require distinct provenance.');
+    validateOfficialVectorProvenance(asset.officialPackage,asset);
+  }
+  if(asset.format==='geojsonl-gzip'&&!asset.officialPackage)throw new Error('Gzip GeoJSONL requires official source provenance.');
+  if((asset.format==='geoparquet-preview')!==Boolean(asset.geoParquet))throw new Error('Missing or unexpected original GeoParquet provenance.');
+  if(asset.geoParquet)validateOvertureProvenance(asset.geoParquet,asset);
   if(asset.remoteSource!==undefined&&asset.remoteSource!==null) {
     if(asset.format!==(asset.remoteSource.wfs!==undefined&&asset.remoteSource.wfs!==null?'wfs-snapshot':'geojson')||asset.storageMode!=='managed')throw new Error('Invalid feature query storage.');
     validateFeatureProvenance(asset.remoteSource,asset.featureCount);
@@ -244,6 +256,7 @@ export function validateVectorInspection(data,id) {
     ||data.asset.osmSource&&JSON.stringify(canonical(data.geojson.geodOsmSource))!==JSON.stringify(canonical(data.asset.osmSource))) {
     throw new Error('The vector content does not match the selected file.');
   }
+  if(data.asset.geoParquet)validateOvertureInspection(data);
   if(data.asset.geoPackage) {
     if(JSON.stringify(canonical(data.geojson.geodGeoPackage))!==JSON.stringify(canonical(data.asset.geoPackage)))throw new Error('GeoPackage conversion does not match its saved source.');
     const layers=new Map(data.asset.geoPackage.layers.map(l=>[l.table,0]));
@@ -257,6 +270,10 @@ export function validateVectorInspection(data,id) {
     if(data.asset.shapefile.layers.some(l=>{const n=layers.get(l.table);return n.count!==l.featureCount||n.deleted!==l.deletedCount||n.empty!==l.nullGeometryCount;}))throw new Error('Shapefile record counts differ from the selected file.');
   }
   if(data.asset.localOsm){if(JSON.stringify(canonical(data.geojson.geodLocalOsm))!==JSON.stringify(canonical(data.asset.localOsm)))throw new Error('Local OSM conversion does not match its saved source.');validateLocalOsmFeatures(data.geojson.features,data.asset.localOsm);}
+  if(data.asset.remoteSource?.geoboundaries) {
+    if(Object.hasOwn(data.geojson,'crs'))throw new Error('geoBoundaries display geometry must retain the recorded source CRS separately.');
+    validateGeoBoundariesFeatures(data.geojson.features,data.asset.remoteSource);
+  }
   return data;
 }
 export async function vectorRequest(operation,payload={},signal) {
@@ -296,15 +313,17 @@ export async function importVectorFile(file) {
 export async function exportVector(id,original=false) {
   if(desktopAvailable())return vectorRequest('export',original?{id,original:true}:{id});
   const data=await vectorRequest('inspect',{id});
+  if(original&&data.asset.geoParquet)return exportOvertureOriginal(data.asset);
   let blob,suffix='geojson';
   if(original) {
     const r=await fetch(`http://127.0.0.1:4318/vectors/${id}/source`,{signal:AbortSignal.timeout(190000)});if(!r.ok)throw new Error((await r.json()).error||'Original vector export failed.');
-    const expected=data.asset.format==='geopackage'?'application/geopackage+sqlite3':data.asset.format==='shapefile'?'application/zip':data.asset.format==='osm-xml'?'application/xml':data.asset.format==='osm-pbf'?'application/vnd.openstreetmap.data+pbf':'application/json';if(r.headers.get('content-type')!==expected)throw new Error('Original vector file format changed.');
+    const expected=data.asset.format==='geojsonl-gzip'?'application/gzip':data.asset.format==='geopackage'?'application/geopackage+sqlite3':data.asset.format==='shapefile'?'application/zip':data.asset.format==='osm-xml'?'application/xml':data.asset.format==='osm-pbf'?'application/vnd.openstreetmap.data+pbf':'application/json';if(r.headers.get('content-type')!==expected)throw new Error('Original vector file format changed.');
     const bytes=new Uint8Array(await r.arrayBuffer()),hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');
     if(bytes.length!==data.asset.bytes||hash!==data.asset.sourceSha256)throw new Error('Original vector file checksum changed.');
-    blob=new Blob([bytes],{type:expected});suffix=data.asset.format==='geopackage'?'gpkg':data.asset.format==='shapefile'?'zip':data.asset.format==='osm-xml'?'osm':data.asset.format==='osm-pbf'?'pbf':'json';
+    blob=new Blob([bytes],{type:expected});suffix=data.asset.format==='geojsonl-gzip'?'csv.gz':data.asset.format==='geopackage'?'gpkg':data.asset.format==='shapefile'?'zip':data.asset.format==='osm-xml'?'osm':data.asset.format==='osm-pbf'?'pbf':'json';
   }else{blob=new Blob([JSON.stringify(data.geojson)],{type:'application/geo+json'});}
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download=data.asset.name.replace(/\.[^.]+$/,'').replace(/[<>:"/\\|?*]/g,'_')+'.'+suffix;
+  const base=data.asset.name.replace(data.asset.format==='geojsonl-gzip'?/(?:\.csv)?\.gz$/i:/\.[^.]+$/,'');
+  const a=document.createElement('a');a.href=url;a.download=base.replace(/[<>:"/\\|?*]/g,'_')+'.'+suffix;
   document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);return true;
 }

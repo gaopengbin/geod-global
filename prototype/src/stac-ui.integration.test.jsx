@@ -1,6 +1,6 @@
 import React from 'react';
 import { it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StacSourceDialog, StacRasterInspection, StacProjectAssets } from './stac-ui.jsx';
 import { ProjectsLibrary } from './projects-ui.jsx';
@@ -9,6 +9,8 @@ import { RuntimeContext } from './runtime-context.js';
 import { stacRequest } from './stac-client.js';
 import { runtimeRequest } from './runtime-client.js';
 import { stacConnection, stacSnapshot, stacInspection, stacJob, stacProject, snapshotId, sourceHash } from './stac-fixtures.js';
+import { worldcerealSnapshot } from './public-dataset-worldcereal-fixtures.js';
+import { deafricaCases } from './public-dataset-deafrica-fixtures.js';
 vi.mock('./i18n.jsx', () => ({ useI18n: () => ({ t: (s, v={}) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? ''), date: s => s || '—', number: String, locale: 'en' }) }));
 vi.mock('./stac-client.js', async original => ({ ...await original(), stacRequest: vi.fn() }));
 vi.mock('./runtime-client.js', async original => ({ ...await original(), runtimeRequest: vi.fn() }));
@@ -17,8 +19,66 @@ vi.mock('./stac-map.jsx', () => ({ default: ({ onPixel }) => <div aria-label="Ge
 const refresh = vi.fn(async () => {});
 const runtime = { jobs: [stacJob], projects: [stacProject], health: {}, refresh, act: vi.fn() };
 const renderDialog = props => render(<RuntimeContext.Provider value={runtime}><StacSourceDialog areaBounds={[10,20,11,21]} onClose={() => {}} {...props}/></RuntimeContext.Provider>);
-beforeEach(() => { vi.clearAllMocks(); stacRequest.mockImplementation(async op => op === 'list' ? [stacConnection] : op === 'snapshot' ? stacSnapshot : op === 'connect' ? stacConnection : op === 'project' ? stacProject : op === 'inspect' ? stacInspection : { items: [stacSnapshot], nextCursor: null, complete: true, limitReached: false }); runtimeRequest.mockResolvedValue([stacProject]); });
+beforeEach(() => { vi.clearAllMocks(); stacRequest.mockImplementation(async op => op === 'list' ? [stacConnection] : op === 'snapshot' ? stacSnapshot : op === 'connect' ? stacConnection : op === 'project' ? stacProject : op === 'inspect' ? stacInspection : op==='downloads'?{jobs:[{...stacJob,status:'queued'}]}:{ items: [stacSnapshot], nextCursor: null, complete: true, limitReached: false }); runtimeRequest.mockResolvedValue([stacProject]); });
+it('a native categorical display uses its original legend and never advertises a grayscale stretch',async()=>{
+  // Presentation-only mock; actual source and codec acceptance are separate.
+  const data={...stacInspection,categoricalEncoding:{classes:[{code:9,name:'Water'}]}};
+  stacRequest.mockImplementation(async op=>op==='inspect'?data:stacSnapshot);
+  const user=userEvent.setup();render(<StacRasterInspection job={stacJob} onClose={()=>{}}/>);
+  await user.click(await screen.findByRole('button',{name:'File metadata and display'}));
+  expect(screen.getByText('Preview colors follow the original class ColorMap. Raw class codes remain unchanged; this preview has no numerical stretch.')).toBeTruthy();
+  expect(screen.queryByText(/The stretch affects this preview only/)).toBeNull();
+  expect(screen.getByRole('img',{name:'Original class-color preview'})).toBeTruthy();
+  expect(screen.getByRole('heading',{name:'Original classification legend'})).toBeTruthy();
+  expect(screen.getByText('Water')).toBeTruthy();
+  expect(screen.getByText(/Codes 11, 250 and 255 retain/)).toBeTruthy();
+});
 async function selectSource(user) { await waitFor(() => expect(screen.getByRole('combobox', { name: 'Saved raster source' }).disabled).toBe(false)); await user.click(screen.getByRole('combobox', { name: 'Saved raster source' })); await user.click(screen.getByRole('option', { name: 'Local test catalog' })); }
+it.each(['qa','count_valid','frequency'])('displays actual $0 file missing-data tags and raw samples separately from preset declarations', async layer => {
+  const c=deafricaCases.find(c=>c.layer===layer),p=c.pixels.find(p=>layer==='frequency'?p.values[0]==='NaN':p.column===117&&p.row===2285),user=userEvent.setup();
+  stacRequest.mockImplementation(async operation=>operation==='inspect'?c.inspection:operation==='pixel'?p:c.snapshot);
+  render(<StacRasterInspection job={c.job} onClose={vi.fn()}/>);
+  await user.click(await screen.findByRole('button',{name:'File metadata and display'}));
+  const row=screen.getByRole('table').querySelector('tbody tr');
+  expect(within(row).getAllByRole('cell').map(cell=>cell.textContent)).toEqual(['1',c.inspection.bands[0].dataType,layer==='frequency'?'NaN':'Not declared']);
+  expect(screen.getByText('CRS from file').nextElementSibling.textContent).toBe('EPSG:6933');
+  await user.keyboard('{Escape}');await user.click(screen.getByRole('button',{name:'Original item metadata'}));
+  const declaration=screen.getByText('GeoD product declaration').nextElementSibling.textContent;
+  expect(declaration).toContain('reviewed-client-preset; publisher file bytes and embedded metadata verified separately');
+  if(layer!=='frequency') expect(declaration).toContain('"nodata": 255');
+  await user.keyboard('{Escape}');
+  await user.clear(screen.getByRole('textbox',{name:'Pixel column'}));await user.type(screen.getByRole('textbox',{name:'Pixel column'}),String(p.column));
+  await user.clear(screen.getByRole('textbox',{name:'Pixel row'}));await user.type(screen.getByRole('textbox',{name:'Pixel row'}),String(p.row));
+  await user.click(screen.getByRole('button',{name:'Read raw pixel'}));
+  await waitFor(()=>expect(document.querySelector('.stac-pixel-result strong').textContent).toBe(`${p.values[0]}${p.noData[0]?' · NoData':''}`));
+  expect(stacRequest.mock.calls.find(([operation])=>operation==='pixel')[1]).toEqual({id:c.job.id,column:p.column,row:p.row});
+});
+it('inspection keeps the actual seasonal interval, original S3 metadata and separate client transport proof visible', async () => {
+  const asset=worldcerealSnapshot.assets[0],job={...stacJob,href:asset.href,stacSource:{snapshotId:worldcerealSnapshot.id,assetKey:asset.key}};
+  stacRequest.mockImplementation(async operation=>operation==='inspect'?stacInspection:worldcerealSnapshot);
+  const user=userEvent.setup();render(<StacRasterInspection job={job} onClose={vi.fn()}/>);
+  await user.click(await screen.findByRole('button',{name:'Original item metadata'}));
+  expect(screen.getByText('Actual product period').nextElementSibling.textContent).toBe(`${worldcerealSnapshot.startDatetime} / ${worldcerealSnapshot.endDatetime}`);
+  expect(screen.getByText('Original publisher URL').nextElementSibling.textContent).toBe(asset.originalHref);
+  expect(screen.getByText('Public download URL').nextElementSibling.textContent).toBe(asset.href);
+  expect(screen.getByText('GeoD product declaration').nextElementSibling.textContent).toContain('"declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately"');
+  expect(screen.getByText('Public asset transport receipt').nextElementSibling.textContent).toContain(asset.originalHref);
+  expect(screen.getByText('Original properties').nextElementSibling.textContent).not.toContain('reviewedDataset');
+  expect(screen.queryByText('Original collection metadata')).toBeNull();
+});
+it('shows separate horizontal and vertical authority codes and preserves the original Z tags without inferring a compound CRS', async () => {
+  const inspection = { ...stacInspection, horizontalCrs: 'EPSG:4326', verticalCrs: 'EPSG:3855', sourceModelPixelScale: [0.5, 0.5, 1], sourceModelTiepoint: [0,0,0,10,21,0] };
+  stacRequest.mockImplementation(async operation => operation === 'inspect' ? inspection : stacSnapshot);
+  const user = userEvent.setup(); render(<StacRasterInspection job={stacJob} onClose={vi.fn()}/>);
+  await user.click(await screen.findByRole('button', { name: 'File metadata and display' }));
+  expect(screen.getByText('Horizontal CRS from file').nextElementSibling.textContent).toBe('EPSG:4326');
+  expect(screen.getByText('Vertical CRS from file').nextElementSibling.textContent).toBe('EPSG:3855');
+  expect(screen.queryByText('CRS from file')).toBeNull(); expect(screen.queryByText('EPSG:9518')).toBeNull();
+  await user.click(screen.getByRole('button', { name: 'Original GeoTIFF scale and tiepoint tags' }));
+  expect(screen.getByText('ModelPixelScale').nextElementSibling.textContent).toBe('0.5, 0.5, 1');
+  expect(screen.getByText('ModelTiepoint').nextElementSibling.textContent).toBe('0, 0, 0, 10, 21, 0');
+  expect(screen.getByText('These are original file tags, including declared Z components. Map bounds use their horizontal components; raw height samples and the vertical datum are not transformed.')).toBeTruthy();
+});
 it('static catalog scans explicit directories, continues an empty page, and uses native branch keys without claiming API search', async () => {
   const key = 'e'.repeat(64), child = 'f'.repeat(64);
   const connection = { ...stacConnection, kind: 'catalog', collections: [], searchUrl: null, capabilities: { searchGet: false, searchPost: false },
@@ -143,7 +203,7 @@ it('file inspection separates source metadata and file geometry, supports exact 
   const user = userEvent.setup(); render(<StacRasterInspection job={stacJob} onClose={() => {}}/>);
   await user.click(await screen.findByRole('button', { name: 'File metadata and display' }));
   await screen.findByText('Float32'); expect(screen.getByText('NaN')).toBeTruthy();
-  await user.click(await screen.findByRole('button', { name: 'Sample map pixel' }));
+  await user.keyboard('{Escape}');await user.click(await screen.findByRole('button', { name: 'Sample map pixel' }));
   await screen.findByText('9007199254740993');
   expect(stacRequest).toHaveBeenCalledWith('pixel', { id: stacJob.id, column: 1, row: 1 });
   expect(screen.getByRole('textbox', { name: 'Pixel column' }).value).toBe('1');

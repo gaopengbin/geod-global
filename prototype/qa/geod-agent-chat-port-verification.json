@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-09",
+  "scope": "Port GeoD Agent's chat presentation, per-turn execution timeline, animations and reader-owned scrolling",
+  "upstream": {
+    "version": "0.2.4",
+    "baseRevision": "ecd93b7f0981fc8f7e5eadb3dba7e49d2e0fec98",
+    "includesCapturedLocalWorkingTreeChanges": true,
+    "snapshotInventory": "third-party/geod-agent-chat/UPSTREAM.json",
+    "licenseNotice": "licenses/GeoD-Agent-Chat-MIT.txt",
+    "runtimeSiblingDependency": false
+  },
+  "checks": {
+    "uiTestsPassed": 387,
+    "agentPanelIntegrationTestsPassed": 79,
+    "relatedNodeTestsPassed": 65,
+    "frontendBuild": "passed",
+    "agentRuntimePreparation": "passed",
+    "developmentDesktopBuild": "passed",
+    "developmentDesktopStarted": true,
+    "guiSubsystem": 2,
+    "isolationCheck": "passed",
+    "diffWhitespaceCheck": "passed",
+    "installerCreated": false
+  },
+  "browserVerification": {
+    "viewportWidth": 1280,
+    "narrowPanelWidth": 390,
+    "narrowPanelContentWidth": 390,
+    "narrowDetailsHeight": 240,
+    "narrowDetailsContentHeight": 532,
+    "narrowDetailsKeyboardScrollTop": 40,
+    "completedConversation": "Read-only replay of a persisted real conversation with verified local output thumbnails",
+    "runningAndDetails": "Explicitly labeled isolated UI test scenario; no model invocation or download",
+    "assistantBodyFontPx": 16,
+    "userAndToolFontPx": 14,
+    "oneTimelinePerTurn": true,
+    "commentaryInChronologicalTimeline": true,
+    "formalRepliesOutsideTimeline": true,
+    "userMessagesOutsideCompletedProcess": true,
+    "nativeApprovalsOutsideToolDisclosure": true,
+    "verifiedResultsRemainOnRight": true,
+    "activityVisibleWhenProcessCollapsed": true,
+    "nativeModelCallsOrTaskMutations": false
+  },
+  "limits": [
+    "The browser viewport override did not take effect; narrow layout was checked using an actual 390px-wide production Agent panel inside the test harness.",
+    "Native app compilation and startup were verified; native window pixels were unavailable to the UI automation surface.",
+    "Historical records without phase metadata use a bounded compatibility rule; new native records retain actual turn and reply phases.",
+    "This is presentation verification, not a new end-to-end imagery download."
+  ]
+}

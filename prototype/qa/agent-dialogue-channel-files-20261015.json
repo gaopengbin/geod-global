@@ -1,0 +1,116 @@
+[
+  {
+    "run": "dialogue-channels-20261015",
+    "case": "chirps",
+    "id": "382e1721-e800-40d9-8335-a745766a34a4",
+    "bytes": 21628766,
+    "sha256": "499e780f65a88e91e6fc8b337e165b249396a98b2ea4d51ae0cde946ef5d0ec6",
+    "width": 7200,
+    "height": 2400,
+    "bands": 1,
+    "dtypes": [
+      "float32"
+    ],
+    "crs": "EPSG:4326",
+    "nodata": null,
+    "decodedSamples": 17280000,
+    "unmaskedSamples": 17280000,
+    "localFile": "\\\\?\\G:\\code\\geod-global\\.verification\\dialogue-channels-20261015\\core\\assets\\382e1721-e800-40d9-8335-a745766a34a4.tif",
+    "freshTransfer": "fresh"
+  },
+  {
+    "run": "dialogue-channels-20261015",
+    "case": "earth-search",
+    "id": "7efbae07-af28-41f7-848e-3281e3bf4150",
+    "bytes": 2633064,
+    "sha256": "1fc6f032960bc6c8608b8dcfbc3259d9e476e18a341cc1205159bf50c98a5ada",
+    "width": 5490,
+    "height": 5490,
+    "bands": 1,
+    "dtypes": [
+      "uint8"
+    ],
+    "crs": "EPSG:32610",
+    "nodata": 0.0,
+    "decodedSamples": 30140100,
+    "unmaskedSamples": 30140100,
+    "localFile": "\\\\?\\G:\\code\\geod-global\\.verification\\dialogue-channels-20261015\\core\\assets\\7efbae07-af28-41f7-848e-3281e3bf4150.tif",
+    "freshTransfer": "fresh"
+  },
+  {
+    "run": "dialogue-channels-20261015",
+    "case": "jaxa",
+    "id": "8cd2bf64-82f5-403d-aeee-e6bbc175f442",
+    "bytes": 140042,
+    "sha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1",
+    "width": 900,
+    "height": 900,
+    "bands": 1,
+    "dtypes": [
+      "int16"
+    ],
+    "crs": "EPSG:4326",
+    "nodata": -32768.0,
+    "decodedSamples": 810000,
+    "unmaskedSamples": 228330,
+    "localFile": "\\\\?\\G:\\code\\geod-global\\.verification\\dialogue-channels-20261015\\core\\assets\\8cd2bf64-82f5-403d-aeee-e6bbc175f442.tif",
+    "freshTransfer": "fresh"
+  },
+  {
+    "run": "dialogue-channels-v2-20261015",
+    "case": "worldpop",
+    "id": "d70f9bd8-2ebb-4c32-a576-68fde2e4ec6b",
+    "bytes": 156803,
+    "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+    "width": 214,
+    "height": 245,
+    "bands": 1,
+    "dtypes": [
+      "float32"
+    ],
+    "crs": "EPSG:4326",
+    "nodata": -99999.0,
+    "decodedSamples": 52430,
+    "unmaskedSamples": 33446,
+    "localFile": "\\\\?\\G:\\code\\geod-global\\.verification\\dialogue-channels-v2-20261015\\core\\assets\\d70f9bd8-2ebb-4c32-a576-68fde2e4ec6b.tif",
+    "freshTransfer": "fresh"
+  },
+  {
+    "run": "dialogue-channels-v3-20261015",
+    "case": "dem90",
+    "id": "59aec314-7f10-43ea-aa30-6bd283af9d97",
+    "bytes": 5315373,
+    "sha256": "6c5a5815874946143f5bf84a20d6c3a15535436e5d870ab8264d6dfc06d79a65",
+    "width": 1200,
+    "height": 1200,
+    "bands": 1,
+    "dtypes": [
+      "float32"
+    ],
+    "crs": "EPSG:4326",
+    "nodata": null,
+    "decodedSamples": 1440000,
+    "unmaskedSamples": 1440000,
+    "localFile": "\\\\?\\G:\\code\\geod-global\\.verification\\dialogue-channels-v3-20261015\\core\\assets\\59aec314-7f10-43ea-aa30-6bd283af9d97.tif",
+    "freshTransfer": "fresh"
+  },
+  {
+    "run": "dialogue-channels-v3-20261015",
+    "case": "worldpop",
+    "id": "9bef8fe5-bac2-436e-b5e1-40b95a4310d8",
+    "bytes": 156803,
+    "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+    "width": 214,
+    "height": 245,
+    "bands": 1,
+    "dtypes": [
+      "float32"
+    ],
+    "crs": "EPSG:4326",
+    "nodata": -99999.0,
+    "decodedSamples": 52430,
+    "unmaskedSamples": 33446,
+    "localFile": "\\\\?\\G:\\code\\geod-global\\.verification\\dialogue-channels-v3-20261015\\core\\assets\\9bef8fe5-bac2-436e-b5e1-40b95a4310d8.tif",
+    "freshTransfer": "fresh"
+  }
+]

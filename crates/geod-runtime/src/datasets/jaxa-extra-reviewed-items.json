@@ -1,0 +1,1173 @@
+[
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS_HRLULC.v25.04_japan/2024/1/E090.00-E180.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS_HRLULC.v25.04_japan/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              0.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              180.0,
+              90.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        90.0,
+        0.0,
+        180.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2024-01-01T00:00:00+00:00",
+        "end_datetime": "2024-12-31T23:59:59+00:00",
+        "created": "2026-05-26T14:24:08.782356Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.EORC_ALOS_HRLULC.v25.04_japan",
+        "constellation": [
+          "Sentinel-2",
+          "Landsat-8",
+          "ALOS-2",
+          "ALOS"
+        ],
+        "instrument": [
+          "MSI",
+          "OLI",
+          "PALSAR-2",
+          "PRISM"
+        ],
+        "mission": "ALOS-2/ALOS Science Project",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:code": "EPSG:4326"
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "High-Resolution Land-Use and Land-Cover Map of Japan [2024, 2022, 2020] (Released in April 2025 / Version 25.04)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "High-Resolution Land-Use and Land-Cover Map of Japan [2024, 2022, 2020] (Released in April 2025 / Version 25.04)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files on 2024 over E090.00-E180.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "HRLULC": {
+          "href": "./E090.00-N00.00-E180.00-N90.00-HRLULC.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.EORC_ALOS_HRLULC.v25.04_japan",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "N/A"
+            },
+            "dn2value": {
+              "slope": 1.0,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "nodata": 0,
+              "error": [
+                0
+              ]
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "name": "No data",
+              "color_hint": "000000",
+              "nodata": true
+            },
+            {
+              "value": 1,
+              "name": " Water bodies",
+              "color_hint": "000064"
+            },
+            {
+              "value": 2,
+              "name": "Built-up",
+              "color_hint": "ff0000"
+            },
+            {
+              "value": 3,
+              "name": "Paddy field",
+              "color_hint": "0080ff"
+            },
+            {
+              "value": 4,
+              "name": "Cropland",
+              "color_hint": "ffc1bf"
+            },
+            {
+              "value": 5,
+              "name": "Grassland",
+              "color_hint": "ffff00"
+            },
+            {
+              "value": 6,
+              "name": "DBF (Deciduous broad-leaf forest)",
+              "color_hint": "80ff00"
+            },
+            {
+              "value": 7,
+              "name": "DNF (Deciduous needle-leaf forest)",
+              "color_hint": "00ff80"
+            },
+            {
+              "value": 8,
+              "name": "EBF (Evergreen broad-leaf forest)",
+              "color_hint": "56ac00"
+            },
+            {
+              "value": 9,
+              "name": "ENF (Evergreen needle-leaf forest)",
+              "color_hint": "00ac56"
+            },
+            {
+              "value": 10,
+              "name": "Bare",
+              "color_hint": "806400"
+            },
+            {
+              "value": 11,
+              "name": "Bamboo_forest",
+              "color_hint": "d9f005"
+            },
+            {
+              "value": 12,
+              "name": "Solar_panel",
+              "color_hint": "a12977"
+            },
+            {
+              "value": 13,
+              "name": "Wetland",
+              "color_hint": "0096a0"
+            },
+            {
+              "value": 14,
+              "name": "Greenhouse",
+              "color_hint": "ffffff"
+            },
+            {
+              "value": 15,
+              "name": "Rock reef and Tidal flat",
+              "color_hint": "74cee3"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.EORC_ALOS_HRLULC.v25.04_japan"
+    },
+    "datasetId": "jaxa-hrlulc-japan"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/E000.00-E090.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              0.0,
+              90.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        0.0,
+        0.0,
+        90.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.060576Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E000.00-E090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./E000.00-N00.00-E090.00-N90.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/E000.00-E090.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0,
+              -90.0
+            ],
+            [
+              90.0,
+              -90.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        0.0,
+        -90.0,
+        90.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.459332Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E000.00-E090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./E000.00-S90.00-E090.00-N00.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/E090.00-E180.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              0.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              180.0,
+              90.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        90.0,
+        0.0,
+        180.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.153248Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E090.00-E180.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./E090.00-N00.00-E180.00-N90.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/E090.00-E180.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              -90.0
+            ],
+            [
+              180.0,
+              -90.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              90.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        90.0,
+        -90.0,
+        180.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.543707Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E090.00-E180.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./E090.00-S90.00-E180.00-N00.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/W090.00-E000.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              90.0
+            ],
+            [
+              -90.0,
+              90.0
+            ],
+            [
+              -90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -90.0,
+        0.0,
+        0.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.333804Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W090.00-E000.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./W090.00-N00.00-E000.00-N90.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/W090.00-E000.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -90.0,
+              -90.0
+            ],
+            [
+              0.0,
+              -90.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -90.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -90.0,
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.746586Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W090.00-E000.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./W090.00-S90.00-E000.00-N00.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/W180.00-W090.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -180.0,
+              0.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -90.0,
+              90.0
+            ],
+            [
+              -180.0,
+              90.0
+            ],
+            [
+              -180.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -180.0,
+        0.0,
+        -90.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.241632Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W180.00-W090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./W180.00-N00.00-W090.00-N90.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  },
+  {
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/2026-09/1/W180.00-W090.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -180.0,
+              -90.0
+            ],
+            [
+              -90.0,
+              -90.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -180.0,
+              0.0
+            ],
+            [
+              -180.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -180.0,
+        -90.0,
+        -90.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:00:00.000000Z",
+        "end_datetime": "2026-09-15T23:59:59.999999Z",
+        "created": "2026-10-01T00:48:04.658428Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+        "platform": "Terra",
+        "instrument": [
+          "MODIS"
+        ],
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": null,
+          "level-1": "raster",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Shortwave Radiation (Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W180.00-W090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "swr": {
+          "href": "./W180.00-S90.00-W090.00-N00.00-swr.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "W/m^2"
+            },
+            "dn2value": {
+              "slope": 0.01,
+              "offset": 0.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 0.0,
+              "max": 33139.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.JASMES_Terra.MODIS_swr.v811_global_monthly"
+    },
+    "datasetId": "jaxa-modis-swr"
+  }
+]

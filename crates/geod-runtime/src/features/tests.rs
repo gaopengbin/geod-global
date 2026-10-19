@@ -139,6 +139,7 @@ async fn snapshot_persists_provenance_and_untrusted_import_cannot_promote_it() {
         feature_count: 1,
         selection: "bbox-full-features".into(),
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
     };
     let data =
@@ -195,6 +196,7 @@ async fn registry_and_query_validate_before_network_and_removal_retains_files() 
         collections: vec![],
         connected_at: now(),
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
         overpass: None,
     };

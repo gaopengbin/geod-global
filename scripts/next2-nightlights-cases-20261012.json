@@ -1,0 +1,125 @@
+[
+  {
+    "datasetId": "openlandmap-nightlights",
+    "bounds": [
+      116.3,
+      39.8,
+      116.5,
+      40.0
+    ],
+    "year": 2024,
+    "layer": "annual-dn",
+    "assetKey": "raster",
+    "assetContains": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+    "expectedShape": [
+      35849,
+      86400
+    ],
+    "expectedBytes": 63713625,
+    "expectedSha256": "e6edde68952052f8c53050e2ce7082bab08ddd0e15a696f999215e2d57194c53",
+    "expectedMd5": "0b976892d40c2d0d99177c727289eaf2",
+    "sampleCoordinates": [
+      [
+        71135,
+        11392
+      ],
+      [
+        72359,
+        13480
+      ],
+      [
+        25439,
+        11200
+      ],
+      [
+        35999,
+        20968
+      ],
+      [
+        28799,
+        21688
+      ],
+      [
+        43199,
+        328
+      ],
+      [
+        43199,
+        35608
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 71135,
+        "row": 11392,
+        "values": [
+          150
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 72359,
+        "row": 13480,
+        "values": [
+          64
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 25439,
+        "row": 11200,
+        "values": [
+          61
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 35999,
+        "row": 20968,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 28799,
+        "row": 21688,
+        "values": [
+          56
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 43199,
+        "row": 328,
+        "values": [
+          -32768
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 43199,
+        "row": 35608,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  }
+]

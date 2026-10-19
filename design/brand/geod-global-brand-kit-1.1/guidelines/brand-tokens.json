@@ -1,0 +1,42 @@
+{
+  "name": "GeoD Global",
+  "version": "1.1",
+  "colors": {
+    "blue": "#087BEA",
+    "cyan": "#00BBDF",
+    "green": "#21C885",
+    "ink": "#102A43",
+    "space": "#071423",
+    "paper": "#F3FAFF"
+  },
+  "gradient": {
+    "angle": 90,
+    "stops": [
+      {
+        "color": "#087BEA",
+        "position": 0
+      },
+      {
+        "color": "#00BBDF",
+        "position": 0.5
+      },
+      {
+        "color": "#21C885",
+        "position": 1
+      }
+    ]
+  },
+  "fonts": {
+    "primary": "Segoe UI",
+    "fallbacks": [
+      "Arial",
+      "sans-serif"
+    ]
+  },
+  "usage": {
+    "minimumSymbolPx": 24,
+    "minimumHorizontalLogoHeightPx": 32,
+    "minimumClearSpace": "12% of the symbol canvas width",
+    "gradientText": "Decorative brand wordmark only; use solid ink/white for body text"
+  }
+}

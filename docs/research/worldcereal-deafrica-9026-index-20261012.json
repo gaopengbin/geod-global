@@ -1,0 +1,437 @@
+{
+  "schema": "geod-reviewed-worldcereal-deafrica-regional-index/v1",
+  "checkedAt": "2026-10-12T06:06:52.622990+00:00",
+  "scope": "Seven explicitly reviewed public regional publisher STAC items for AEZ9026/reference year2021; not a global source availability claim",
+  "bucket": "deafrica-input-datasets",
+  "region": "af-south-1",
+  "prefix": "esa_worldcereal/",
+  "publisherItemJsonUnchanged": true,
+  "listing": {
+    "completePrefixListing": true,
+    "objects": 368,
+    "classificationFiles": 135,
+    "confidenceFiles": 97,
+    "pages": [
+      {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/?list-type=2&prefix=esa_worldcereal%2F&max-keys=1000",
+        "status": 200,
+        "sha256": "a02371d95e9f248306917a3b3c7f8bbfbe3fc00dad089f3bb0181d456a5b1a2f",
+        "bytes": 150075,
+        "stored": "listing-1.xml"
+      }
+    ]
+  },
+  "primaryDocumentation": [
+    "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+    "https://esa-worldcereal.org/en/products/global-maps"
+  ],
+  "licenseDeclaration": "CC BY 4.0 from the primary distribution documentation and independently inspected original TIFF license tag; not a fabricated STAC collection declaration",
+  "classificationSelection": "Classification originals only in the acceptance scope; confidence assets are separate products with their original grid metadata",
+  "transportRule": "Exact public bucket/prefix/region mapping for reviewed sources only; original s3 href remains unchanged in publisher asset metadata",
+  "entries": [
+    {
+      "collectionId": "esa_worldcereal_activecropland",
+      "publisherItemId": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+      "publisherItemSha256": "ad8e24d18d0090997f47ec51543e8953f27d9338244349003d3de747b0d78d7d",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-wintercereals",
+      "productFolder": "activecropland",
+      "startDatetime": "2021-04-03T00:00:00Z",
+      "endDatetime": "2021-11-09T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.695360250867942,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+          "bytes": 6498381,
+          "shape": [
+            44563,
+            73566
+          ],
+          "transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    },
+    {
+      "collectionId": "esa_worldcereal_maize_active",
+      "publisherItemId": "bf4db2c1-e328-5a33-be67-52343b3f63b7",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08.stac-item.json",
+      "publisherItemSha256": "b233eccc09e5af6011d15e000a0f22ec92499b45ee60d285e6bd3d5ab2d53659",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-maize-main",
+      "productFolder": "activecropland",
+      "startDatetime": "2020-11-11T00:00:00Z",
+      "endDatetime": "2021-05-08T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.695360250867942,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08_classification.tif",
+          "bytes": 6424508,
+          "shape": [
+            44563,
+            73566
+          ],
+          "transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    },
+    {
+      "collectionId": "esa_worldcereal_maize_irrigation",
+      "publisherItemId": "87d2a884-20c2-568c-aee4-fd76a7658c41",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08.stac-item.json",
+      "publisherItemSha256": "20503bac74f8768db6aad861c96733093fde6f0f5307444e300868a129f9ae6e",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-maize-main",
+      "productFolder": "irrigation",
+      "startDatetime": "2020-11-11T00:00:00Z",
+      "endDatetime": "2021-05-08T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08_classification.tif",
+          "bytes": 5745232,
+          "shape": [
+            44563,
+            73566
+          ],
+          "transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        },
+        {
+          "key": "confidence",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08_confidence.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08_confidence.tif",
+          "bytes": 426276,
+          "shape": [
+            9284,
+            15326
+          ],
+          "transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    },
+    {
+      "collectionId": "esa_worldcereal_maize_main",
+      "publisherItemId": "7a941045-16a8-5603-92d2-715e661ec926",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08.stac-item.json",
+      "publisherItemSha256": "e46955bc2b03b98fe201344f1627dea25e618ebf675838bb2e8944b2ac0b618e",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-maize-main",
+      "productFolder": "maize",
+      "startDatetime": "2020-11-11T00:00:00Z",
+      "endDatetime": "2021-05-08T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08_classification.tif",
+          "bytes": 6400120,
+          "shape": [
+            44563,
+            73566
+          ],
+          "transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        },
+        {
+          "key": "confidence",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08_confidence.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08_confidence.tif",
+          "bytes": 699482,
+          "shape": [
+            9284,
+            15326
+          ],
+          "transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    },
+    {
+      "collectionId": "esa_worldcereal_temporarycrops",
+      "publisherItemId": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+      "publisherItemSha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-annual",
+      "productFolder": "temporarycrops",
+      "startDatetime": "2020-11-09T00:00:00Z",
+      "endDatetime": "2021-11-09T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99509950815733,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+          "bytes": 6310865,
+          "shape": [
+            44563,
+            73567
+          ],
+          "transform": [
+            8.333333333333334e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333333333333332e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        },
+        {
+          "key": "confidence",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+          "bytes": 2038416,
+          "shape": [
+            9284,
+            15326
+          ],
+          "transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    },
+    {
+      "collectionId": "esa_worldcereal_wintercereals",
+      "publisherItemId": "a77aee1b-5296-5d57-be6a-44b43673529d",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09.stac-item.json",
+      "publisherItemSha256": "cb7156edefd4c6f3bc0d96b3fbbb16b09794b836d56a7c39347fb03dc24af31d",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-wintercereals",
+      "productFolder": "wintercereals",
+      "startDatetime": "2021-04-03T00:00:00Z",
+      "endDatetime": "2021-11-09T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09_classification.tif",
+          "bytes": 6391243,
+          "shape": [
+            44563,
+            73566
+          ],
+          "transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        },
+        {
+          "key": "confidence",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09_confidence.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09_confidence.tif",
+          "bytes": 692075,
+          "shape": [
+            9284,
+            15326
+          ],
+          "transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    },
+    {
+      "collectionId": "esa_worldcereal_wintercereals_irrigation",
+      "publisherItemId": "59c7d13c-4659-522e-9d4b-8c243397cab6",
+      "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09.stac-item.json",
+      "publisherItemSha256": "5c82b7d501c186a450a49a992030e8d7200eeabd1bc09d702c5c9401168eee32",
+      "aez": "9026",
+      "referenceYear": 2021,
+      "season": "tc-wintercereals",
+      "productFolder": "irrigation",
+      "startDatetime": "2021-04-03T00:00:00Z",
+      "endDatetime": "2021-11-09T23:59:59Z",
+      "publisherBbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "assets": [
+        {
+          "key": "classification",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09_classification.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09_classification.tif",
+          "bytes": 5777336,
+          "shape": [
+            44563,
+            73566
+          ],
+          "transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        },
+        {
+          "key": "confidence",
+          "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09_confidence.tif",
+          "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09_confidence.tif",
+          "bytes": 426472,
+          "shape": [
+            9284,
+            15326
+          ],
+          "transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "crs": "EPSG:4326"
+        }
+      ]
+    }
+  ]
+}

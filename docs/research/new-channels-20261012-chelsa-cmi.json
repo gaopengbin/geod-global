@@ -1,0 +1,813 @@
+{
+  "date": "2026-10-12",
+  "status": "candidate-CMI-mean-independent-original-full-decode-valid-typed-NoData-verified; native-lifecycle-not-yet-accepted",
+  "productId": "chelsa-climate",
+  "layerId": "cmi-mean",
+  "fixedReferencePeriod": {
+    "start": "1981-01-01T00:00:00Z",
+    "end": "2010-12-31T23:59:59Z"
+  },
+  "selectors": {
+    "year": null,
+    "month": null,
+    "region": null,
+    "season": null
+  },
+  "original": {
+    "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_cmi_mean_1981-2010_V.2.1.tif",
+    "httpStatus": 200,
+    "originalPath": ".verification/next-channels-20261012-climate/CHELSA_cmi_mean_1981-2010_V.2.1.tif",
+    "bytes": 244959851,
+    "sha256": "5aa9f5f1aa14f8671807a73181c13aa55217ab1a653081111e691fa89c6cd283",
+    "md5": "a79afdb5ec75747b8fdf2551ac1482b9",
+    "downloadSeconds": 288.4529999999795,
+    "responseHeaders": {
+      "Server": "nginx",
+      "Date": "Mon, 12 Oct 2026 10:24:10 GMT",
+      "Content-Type": "image/tiff",
+      "Content-Length": "244959851",
+      "Connection": "close",
+      "Accept-Ranges": "bytes",
+      "Last-Modified": "Fri, 13 Sep 2024 01:13:59 GMT",
+      "x-rgw-object-type": "Normal",
+      "ETag": "\"7fa1bffbcc7b62a2311e7d81f1cd0908-47\"",
+      "x-amz-meta-md5chksum": "p5r9tex1dHuP3yVRrBSCuQ==",
+      "x-amz-meta-mtime": "1643878428.74681",
+      "x-amz-request-id": "tx00000208206666edcb01f-006accb54a-2ba7f7edc-default",
+      "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+    },
+    "raster": {
+      "width": 43200,
+      "height": 20880,
+      "bands": 1,
+      "dtypes": [
+        "int16"
+      ],
+      "crs": "EPSG:4326",
+      "epsg": 4326,
+      "bounds": [
+        -180.00013888885002,
+        -90.00013888884999,
+        179.99985967115003,
+        83.99986041515001
+      ],
+      "transform": [
+        0.0083333333,
+        0.0,
+        -180.00013888885002,
+        0.0,
+        -0.0083333333,
+        83.99986041515001,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "blockShapes": [
+        [
+          1,
+          43200
+        ]
+      ],
+      "tiled": false,
+      "compression": "Compression.deflate",
+      "nodata": 32767.0,
+      "maskFlags": [
+        [
+          "8"
+        ]
+      ],
+      "scales": [
+        0.1
+      ],
+      "offsets": [
+        0.0
+      ],
+      "units": [
+        null
+      ],
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "bandTags": {},
+      "fullDecodedPixels": 902016000,
+      "validPixels": 224368589,
+      "missingPixels": 677647411,
+      "minimumRaw": -3349.0,
+      "maximumRaw": 17393.0,
+      "samples": [
+        {
+          "label": "Beijing",
+          "column": 35568,
+          "row": 5291,
+          "rawValue": -323,
+          "noData": false,
+          "longitude": 116.40402659220001,
+          "latitude": 39.90402725820001
+        },
+        {
+          "label": "Zurich",
+          "column": 22624,
+          "row": 4395,
+          "rawValue": 260,
+          "noData": false,
+          "longitude": 8.537360356999983,
+          "latitude": 47.37069389500001
+        },
+        {
+          "label": "NewYork",
+          "column": 12720,
+          "row": 5195,
+          "rawValue": 69,
+          "noData": false,
+          "longitude": -73.99597264620002,
+          "latitude": 40.70402725500001
+        },
+        {
+          "label": "ocean",
+          "column": 21600,
+          "row": 10079,
+          "rawValue": 32767,
+          "noData": true,
+          "longitude": 0.004027057799987688,
+          "latitude": 0.0040274178000032634
+        },
+        {
+          "label": "north-outside",
+          "outsideRaster": true,
+          "longitude": 0,
+          "latitude": 85
+        }
+      ],
+      "reader": "Rasterio1.3.9/GDAL3.6.4",
+      "decodeSeconds": 7.233999999938533
+    },
+    "multipartETagIsNotAnMD5": true,
+    "publisherMetadataMD5MatchesCompleteOriginal": true,
+    "publisherMetadataMD5": "a79afdb5ec75747b8fdf2551ac1482b9"
+  },
+  "rawTIFFTags": {
+    "rasterType": "PixelIsArea",
+    "rasterTypeCode": 1,
+    "geographicTypeCode": 4326,
+    "geogCitation": "WGS 84",
+    "modelTransformationPresent": false,
+    "dtype": "int16",
+    "declaredNoDataText": "32767",
+    "declaredNoDataFitsSampleType": true,
+    "rawTags": {
+      "33550": [
+        0.0083333333,
+        0.0083333333,
+        0.0
+      ],
+      "33922": [
+        0.0,
+        0.0,
+        0.0,
+        -180.00013888885002,
+        83.99986041515001,
+        0.0
+      ],
+      "34735": [
+        1,
+        1,
+        0,
+        7,
+        1024,
+        0,
+        1,
+        2,
+        1025,
+        0,
+        1,
+        1,
+        2048,
+        0,
+        1,
+        4326,
+        2049,
+        34737,
+        7,
+        0,
+        2054,
+        0,
+        1,
+        9102,
+        2057,
+        34736,
+        1,
+        1,
+        2059,
+        34736,
+        1,
+        0
+      ],
+      "34736": [
+        298.257223563,
+        6378137.0
+      ],
+      "34737": "WGS 84|",
+      "42112": "<GDALMetadata>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">0</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">0.100000000000000006</Item>\n</GDALMetadata>",
+      "42113": "32767"
+    }
+  },
+  "license": {
+    "id": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "authorDeclarationURL": "https://www.chelsa-climate.org/datasets/chelsa_climatologies",
+    "pageBytes": 218272,
+    "pageSHA256": "22e61673fe68bbfaf5fcd20c60596fbd47a8131961d086678421f0590ac76e57",
+    "declaredInTIFF": false
+  },
+  "scientificDefinition": {
+    "authorPaper": "https://essd.copernicus.org/articles/14/5573/2022/#section2_2_4",
+    "definition": "CMI = precipitation - potential evapotranspiration",
+    "unit": "kg m^-2 month^-1",
+    "rawInterpretation": "Int16 raw × embedded0.1 + offset0; no automatic calibration. 32767 is original NoData, never scale a missing sample.",
+    "descriptionConflict": "Currentauthorclimatologiespageuseswordratio,buttheauthorsdatasetpaperdefinesdifferenceandunitsarenondimensionless. Preserveanddiscloseinconsistency;donotpretendthedataareatemperatureoradimensionlessratio."
+  },
+  "geometry": {
+    "originalOuterBounds": [
+      -180.00013888885002,
+      -90.00013888884999,
+      179.99985967115003,
+      83.99986041515001
+    ],
+    "originalTransform": [
+      0.0083333333,
+      0.0,
+      -180.00013888885002,
+      0.0,
+      -0.0083333333,
+      83.99986041515001,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "effectivePhysicalQueryBounds": [
+      -180.0,
+      -90.0,
+      179.99985967115003,
+      83.99986041515001
+    ],
+    "originalGridChanged": false,
+    "purpose": "Theclientquery/displayfootprintistheintersectionoftheoriginalPixelIsAreaouteredgeswithphysicalWGS84.Theoriginalfile,ImageStaticextent,transformandclickgridremainunchanged. All original cell centres are physically legal.",
+    "doesNotClaimValidPixelCoverage": true
+  },
+  "acceptanceSamples": [
+    {
+      "label": "Beijing",
+      "column": 35568,
+      "row": 5291,
+      "rawValue": -323,
+      "noData": false,
+      "longitude": 116.40402659220001,
+      "latitude": 39.90402725820001
+    },
+    {
+      "label": "Zurich",
+      "column": 22624,
+      "row": 4395,
+      "rawValue": 260,
+      "noData": false,
+      "longitude": 8.537360356999983,
+      "latitude": 47.37069389500001
+    },
+    {
+      "label": "NewYork",
+      "column": 12720,
+      "row": 5195,
+      "rawValue": 69,
+      "noData": false,
+      "longitude": -73.99597264620002,
+      "latitude": 40.70402725500001
+    },
+    {
+      "label": "ocean",
+      "column": 21600,
+      "row": 10079,
+      "rawValue": 32767,
+      "noData": true,
+      "longitude": 0.004027057799987688,
+      "latitude": 0.0040274178000032634
+    },
+    {
+      "label": "north-outside",
+      "outsideRaster": true,
+      "longitude": 0,
+      "latitude": 85
+    }
+  ],
+  "coreLimitsUnchanged": true,
+  "rejectedOtherOriginals": {
+    "BIO1": "UInt16 physicalNoData -99999 is unrepresentable; GDAL effectiveNone cannot justify native support.",
+    "BIO12": "655151886bytesexceeds512MiB;UInt16NoData -99999 unrepresentable.",
+    "monthlyTAS": "UInt16NoData -2147483647 unrepresentable.",
+    "monthlyPR": "UInt16NoData -2147483647 unrepresentable."
+  },
+  "triageOnly": [
+    {
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_bio12_1981-2010_V.2.1.tif",
+      "method": "HEAD plus bounded Range metadata triage only; NOT full-original acceptance",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Mon, 12 Oct 2026 10:22:39 GMT",
+        "Content-Type": "image/tiff",
+        "Content-Length": "655151886",
+        "Connection": "close",
+        "Accept-Ranges": "bytes",
+        "Last-Modified": "Fri, 13 Sep 2024 01:13:23 GMT",
+        "x-rgw-object-type": "Normal",
+        "ETag": "\"8d4f0130e23a16158c1a50460ce50bc7-125\"",
+        "x-amz-meta-md5chksum": "ug21FXj94D2fJQ5RlP+TMw==",
+        "x-amz-meta-mtime": "1607524403",
+        "x-amz-request-id": "tx000000afb81eee0312900-006accb4ef-2ba874a2a-default",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+      },
+      "status": 200,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1048575/655151886",
+      "width": 43200,
+      "height": 20880,
+      "dtype": "uint16",
+      "tiled": false,
+      "rawTags": {
+        "33550": [
+          0.0083333333,
+          0.0083333333,
+          0.0
+        ],
+        "33922": [
+          0.0,
+          0.0,
+          0.0,
+          -180.00013888885002,
+          83.99986041515001,
+          0.0
+        ],
+        "34735": [
+          1,
+          1,
+          0,
+          7,
+          1024,
+          0,
+          1,
+          2,
+          1025,
+          0,
+          1,
+          1,
+          2048,
+          0,
+          1,
+          4326,
+          2049,
+          34737,
+          7,
+          0,
+          2054,
+          0,
+          1,
+          9102,
+          2057,
+          34736,
+          1,
+          1,
+          2059,
+          34736,
+          1,
+          0
+        ],
+        "34736": [
+          298.257223563,
+          6378137.0
+        ],
+        "34737": "WGS 84|",
+        "42112": "<GDALMetadata>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">0</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">0.100000000000000006</Item>\n</GDALMetadata>",
+        "42113": "-99999"
+      },
+      "typedNoDataCompatible": false,
+      "elapsedSeconds": 11.625
+    },
+    {
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_cmi_mean_1981-2010_V.2.1.tif",
+      "method": "HEAD plus bounded Range metadata triage only; NOT full-original acceptance",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Mon, 12 Oct 2026 10:22:38 GMT",
+        "Content-Type": "image/tiff",
+        "Content-Length": "244959851",
+        "Connection": "close",
+        "Accept-Ranges": "bytes",
+        "Last-Modified": "Fri, 13 Sep 2024 01:13:59 GMT",
+        "x-rgw-object-type": "Normal",
+        "ETag": "\"7fa1bffbcc7b62a2311e7d81f1cd0908-47\"",
+        "x-amz-meta-md5chksum": "p5r9tex1dHuP3yVRrBSCuQ==",
+        "x-amz-meta-mtime": "1643878428.74681",
+        "x-amz-request-id": "tx0000015152b006d2006eb-006accb4ee-2ba849dce-default",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+      },
+      "status": 200,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1048575/244959851",
+      "width": 43200,
+      "height": 20880,
+      "dtype": "int16",
+      "tiled": false,
+      "rawTags": {
+        "33550": [
+          0.0083333333,
+          0.0083333333,
+          0.0
+        ],
+        "33922": [
+          0.0,
+          0.0,
+          0.0,
+          -180.00013888885002,
+          83.99986041515001,
+          0.0
+        ],
+        "34735": [
+          1,
+          1,
+          0,
+          7,
+          1024,
+          0,
+          1,
+          2,
+          1025,
+          0,
+          1,
+          1,
+          2048,
+          0,
+          1,
+          4326,
+          2049,
+          34737,
+          7,
+          0,
+          2054,
+          0,
+          1,
+          9102,
+          2057,
+          34736,
+          1,
+          1,
+          2059,
+          34736,
+          1,
+          0
+        ],
+        "34736": [
+          298.257223563,
+          6378137.0
+        ],
+        "34737": "WGS 84|",
+        "42112": "<GDALMetadata>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">0</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">0.100000000000000006</Item>\n</GDALMetadata>",
+        "42113": "32767"
+      },
+      "typedNoDataCompatible": true,
+      "elapsedSeconds": 10.219000000040978
+    },
+    {
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/bio/CHELSA_swb_1981-2010_V.2.1.tif",
+      "method": "HEAD plus bounded Range metadata triage only; NOT full-original acceptance",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Mon, 12 Oct 2026 10:22:38 GMT",
+        "Content-Type": "image/tiff",
+        "Content-Length": "235292124",
+        "Connection": "close",
+        "Accept-Ranges": "bytes",
+        "Last-Modified": "Fri, 13 Sep 2024 01:15:44 GMT",
+        "x-rgw-object-type": "Normal",
+        "ETag": "\"5e787faeff3c4975dda7035442ea6621-45\"",
+        "x-amz-meta-md5chksum": "KYsftTTH+DzSMwdtCqioSg==",
+        "x-amz-meta-mtime": "1647512072.119463",
+        "x-amz-request-id": "tx00000f36b3e693df3d2d1-006accb4ee-2baef2087-default",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+      },
+      "status": 200,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1048575/235292124",
+      "width": 43200,
+      "height": 20880,
+      "dtype": "int16",
+      "tiled": false,
+      "rawTags": {
+        "33550": [
+          0.0083333333,
+          0.0083333333,
+          0.0
+        ],
+        "33922": [
+          0.0,
+          0.0,
+          0.0,
+          -180.00013888885002,
+          83.99986041515001,
+          0.0
+        ],
+        "34735": [
+          1,
+          1,
+          0,
+          7,
+          1024,
+          0,
+          1,
+          2,
+          1025,
+          0,
+          1,
+          1,
+          2048,
+          0,
+          1,
+          4326,
+          2049,
+          34737,
+          7,
+          0,
+          2054,
+          0,
+          1,
+          9102,
+          2057,
+          34736,
+          1,
+          1,
+          2059,
+          34736,
+          1,
+          0
+        ],
+        "34736": [
+          298.257223563,
+          6378137.0
+        ],
+        "34737": "WGS 84|",
+        "42113": "-32768"
+      },
+      "typedNoDataCompatible": true,
+      "elapsedSeconds": 10.188000000081956
+    },
+    {
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/tas/CHELSA_tas_01_1981-2010_V.2.1.tif",
+      "method": "HEAD plus bounded Range metadata triage only; NOT full-original acceptance",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Mon, 12 Oct 2026 10:22:38 GMT",
+        "Content-Type": "image/tiff",
+        "Content-Length": "112746573",
+        "Connection": "close",
+        "Accept-Ranges": "bytes",
+        "Last-Modified": "Fri, 13 Sep 2024 06:25:31 GMT",
+        "x-rgw-object-type": "Normal",
+        "ETag": "\"81efd7ead23caf6872982e4161b8bbe0\"",
+        "x-amz-meta-mtime": "1598103354",
+        "x-amz-request-id": "tx000008d34c80d53a318c9-006accb4ee-2ba874a2a-default",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+      },
+      "status": 200,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1048575/112746573",
+      "width": 43200,
+      "height": 20880,
+      "dtype": "uint16",
+      "tiled": false,
+      "rawTags": {
+        "33550": [
+          0.0083333333,
+          0.0083333333,
+          0.0
+        ],
+        "33922": [
+          0.0,
+          0.0,
+          0.0,
+          -180.00013888885002,
+          83.99986041515001,
+          0.0
+        ],
+        "34735": [
+          1,
+          1,
+          0,
+          7,
+          1024,
+          0,
+          1,
+          2,
+          1025,
+          0,
+          1,
+          1,
+          2048,
+          0,
+          1,
+          4326,
+          2049,
+          34737,
+          7,
+          0,
+          2054,
+          0,
+          1,
+          9102,
+          2057,
+          34736,
+          1,
+          1,
+          2059,
+          34736,
+          1,
+          0
+        ],
+        "34736": [
+          298.257223563,
+          6378137.0
+        ],
+        "34737": "WGS 84|",
+        "42112": "<GDALMetadata>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">-273.149999999999977</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">0.100000000000000006</Item>\n</GDALMetadata>",
+        "42113": "-2147483647"
+      },
+      "typedNoDataCompatible": false,
+      "elapsedSeconds": 10.625
+    },
+    {
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/pr/CHELSA_pr_01_1981-2010_V.2.1.tif",
+      "method": "HEAD plus bounded Range metadata triage only; NOT full-original acceptance",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Mon, 12 Oct 2026 10:22:48 GMT",
+        "Content-Type": "image/tiff",
+        "Content-Length": "229542124",
+        "Connection": "close",
+        "Accept-Ranges": "bytes",
+        "Last-Modified": "Fri, 13 Sep 2024 05:12:05 GMT",
+        "x-rgw-object-type": "Normal",
+        "ETag": "\"afc680c44961196b153d2e058f12a97b-44\"",
+        "x-amz-meta-md5chksum": "KqF+HMOY2kaJLRlaSvb2Rg==",
+        "x-amz-meta-mtime": "1598103397",
+        "x-amz-request-id": "tx00000935a27c4ba6bb0a2-006accb4f8-2ba8754ac-default",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+      },
+      "status": 200,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1048575/229542124",
+      "width": 43200,
+      "height": 20880,
+      "dtype": "uint16",
+      "tiled": false,
+      "rawTags": {
+        "33550": [
+          0.0083333333,
+          0.0083333333,
+          0.0
+        ],
+        "33922": [
+          0.0,
+          0.0,
+          0.0,
+          -180.00013888885002,
+          83.99986041515001,
+          0.0
+        ],
+        "34735": [
+          1,
+          1,
+          0,
+          7,
+          1024,
+          0,
+          1,
+          2,
+          1025,
+          0,
+          1,
+          1,
+          2048,
+          0,
+          1,
+          4326,
+          2049,
+          34737,
+          7,
+          0,
+          2054,
+          0,
+          1,
+          9102,
+          2057,
+          34736,
+          1,
+          1,
+          2059,
+          34736,
+          1,
+          0
+        ],
+        "34736": [
+          298.2572236000039,
+          6378137.0
+        ],
+        "34737": "WGS 84|",
+        "42112": "<GDALMetadata>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">0</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">0.100000000000000006</Item>\n</GDALMetadata>",
+        "42113": "-2147483647"
+      },
+      "typedNoDataCompatible": false,
+      "elapsedSeconds": 6.686999999918044
+    },
+    {
+      "url": "https://os.zhdk.cloud.switch.ch/chelsav2/GLOBAL/climatologies/1981-2010/cmi/CHELSA_cmi_01_1981-2010_V.2.1.tif",
+      "method": "HEAD plus bounded Range metadata triage only; NOT full-original acceptance",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Mon, 12 Oct 2026 10:22:48 GMT",
+        "Content-Type": "image/tiff",
+        "Content-Length": "220590952",
+        "Connection": "close",
+        "Accept-Ranges": "bytes",
+        "Last-Modified": "Fri, 13 Sep 2024 03:18:18 GMT",
+        "x-rgw-object-type": "Normal",
+        "ETag": "\"af0c232da385a67b32b762a527b73de4-43\"",
+        "x-amz-meta-md5chksum": "bniPAWO06dt9xncSFkReAg==",
+        "x-amz-meta-mtime": "1643878385.217773",
+        "x-amz-request-id": "tx00000b55c24b5136e0289-006accb4f8-2ba8754ac-default",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains"
+      },
+      "status": 200,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1048575/220590952",
+      "width": 43200,
+      "height": 20880,
+      "dtype": "int16",
+      "tiled": false,
+      "rawTags": {
+        "33550": [
+          0.0083333333,
+          0.0083333333,
+          0.0
+        ],
+        "33922": [
+          0.0,
+          0.0,
+          0.0,
+          -180.00013888885002,
+          83.99986041515001,
+          0.0
+        ],
+        "34735": [
+          1,
+          1,
+          0,
+          7,
+          1024,
+          0,
+          1,
+          2,
+          1025,
+          0,
+          1,
+          1,
+          2048,
+          0,
+          1,
+          4326,
+          2049,
+          34737,
+          7,
+          0,
+          2054,
+          0,
+          1,
+          9102,
+          2057,
+          34736,
+          1,
+          1,
+          2059,
+          34736,
+          1,
+          0
+        ],
+        "34736": [
+          298.257223563,
+          6378137.0
+        ],
+        "34737": "WGS 84|",
+        "42112": "<GDALMetadata>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">0</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">0.100000000000000006</Item>\n</GDALMetadata>",
+        "42113": "32767"
+      },
+      "typedNoDataCompatible": true,
+      "elapsedSeconds": 6.655999999959022
+    }
+  ],
+  "sourceRightsBoundaries": "WorldClim/EOG/GEBCOseeothernew-channelsclimatereport;onlyCMImeanismodulecandidate."
+}

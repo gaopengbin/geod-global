@@ -4,7 +4,7 @@ import { useI18n } from './i18n.jsx';
 import { MODIS_SCIENCE, MODIS_SCIENCE_KEYS } from './modis-science-layers.js';
 import { projectSourceJobs } from './projects-client.js';
 import { QualityPixelDetails } from './quality-ui.jsx';
-import { Button, Disclosure, Progress, Select, Surface } from './ui/index.jsx';
+import { InfoDetails, Button, Progress, Select, Surface } from './ui/index.jsx';
 
 export function ModisScienceControls({ project, jobs, health, busy, onAction }) {
   const { t, number } = useI18n();
@@ -34,10 +34,10 @@ export function ModisScienceControls({ project, jobs, health, busy, onAction }) 
   </Surface>;
 }
 
-export function ScienceDetails({ metadata }) {
+export function ScienceDetails({ metadata, embedded = false }) {
   const { t, number } = useI18n(), info = metadata?.science;
   if (!info) return null;
-  return <Disclosure className="wm-legend" summary={t(MODIS_SCIENCE[info.band].label)}>
+  return <InfoDetails embedded={embedded} closeLabel={t('Close')} contentClassName="wm-legend" summary={t(MODIS_SCIENCE[info.band].label)}>
     <dl className="runtime-details"><dt>{t('Unit')}</dt><dd>{t(info.unit)}</dd><dt>{t('Original value conversion')}</dt><dd>DN × {info.scale}</dd>
       <dt>{t('Product valid range')}</dt><dd>{info.validRange.map(v=>number(v*info.scale,{maximumFractionDigits:4})).join(' – ')}</dd>
       {info.calendarYear && <><dt>{t('Calendar year')}</dt><dd>{info.calendarYear}</dd></>}
@@ -46,7 +46,7 @@ export function ScienceDetails({ metadata }) {
     {metadata.classes.length > 0 && <ul>{metadata.classes.map(item=><li key={item.value}><i style={{background:item.color}}/><span>{t(item.label)} · {number(item.count)}</span></li>)}</ul>}
     <p>{t('Counts describe sampled preview pixels. Colors do not change original values or apply a quality mask.')}</p>
     <a href={info.definition} target="_blank" rel="noreferrer">{t('NASA science layer definitions')}</a>
-  </Disclosure>;
+  </InfoDetails>;
 }
 
 export function SciencePixelReadout({ pixel, metadata }) {

@@ -1,0 +1,40 @@
+[
+  {
+    "datasetId": "usgs-3dep", "bounds": [-73.994, 40.71, -73.99, 40.714], "layer": "elevation", "assetKey": "raster",
+    "assetContains": "USGS_1_n41w074_20260917.tif", "expectedShape": [3612, 3612], "expectedBytes": 20582281,
+    "expectedSha256": "4f23a1a0801a74b1d1e9b4e83c09a41ee371010cbdca7bff0a1a92c05f0dc3dd",
+    "sampleCoordinates": [[0,0],[356,0],[282,445],[8,3606]], "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {"column":0,"row":0,"values":[13.575018882751465],"noData":[false]},
+      {"column":356,"row":0,"values":[-0.016024990007281303],"noData":[false]},
+      {"column":282,"row":445,"values":[0],"noData":[false]},
+      {"column":8,"row":3606,"values":[-999999],"noData":[true]}
+    ]
+  },
+  {
+    "datasetId": "chelsa-climate", "bounds": [116.3,39.8,116.5,40], "layer": "cmi-mean", "assetKey": "raster",
+    "assetContains": "CHELSA_cmi_mean_1981-2010_V.2.1.tif", "expectedShape": [20880,43200], "expectedBytes": 244959851,
+    "expectedSha256": "5aa9f5f1aa14f8671807a73181c13aa55217ab1a653081111e691fa89c6cd283",
+    "sampleCoordinates": [[35568,5291],[0,0]], "requireAOIUsable": true,
+    "expectedPixelValues": [{"column":35568,"row":5291,"values":[-323],"noData":[false]}]
+  },
+  {
+    "datasetId": "jaxa-amsr2-soil-moisture", "bounds": [116,39,117,40], "year": 2025, "month": 12, "layer": "smc", "assetKey": "SMC",
+    "expectedShape": [900,900], "expectedBytes": 140042, "expectedSha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1",
+    "sampleCoordinates": [[264,500],[850,600],[0,4]], "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {"column":264,"row":500,"values":[31],"noData":[false]},
+      {"column":850,"row":600,"values":[-32768],"noData":[true]},
+      {"column":0,"row":4,"values":[-32767],"noData":[false]}
+    ]
+  },
+  {
+    "datasetId": "jaxa-sgli-lst", "bounds": [116,39,117,40], "year": 2025, "month": 12, "layer": "lst", "assetKey": "LST",
+    "expectedShape": [3600,3600], "expectedBytes": 3679954, "expectedSha256": "8172496fa42359cc8ba0f38ab79a2eb586bfaec9085a9d0839f54f2bd41093a5",
+    "sampleCoordinates": [[1056,2000],[3400,2400],[0,0]], "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {"column":1056,"row":2000,"values":[13811],"noData":[false]},
+      {"column":3400,"row":2400,"values":[65535],"noData":[true]}
+    ]
+  }
+]

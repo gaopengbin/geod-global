@@ -1,0 +1,9 @@
+{
+  "method": "Built-in image_gen",
+  "prompt": "Use case: ads-marketing. Asset type: clean GeoD Global login and website decorative background, landscape 16:9 at 2560x1440 or higher. A cinematic orbital view of PART OF Earth: a very large half globe / curved planetary horizon entering from the lower-left, cropped beyond the bottom and left frame, not a full floating sphere. Deep near-black navy universe dominates the upper half and upper-right, few tiny subtle stars, Earth oceans in deep blue, wispy realistic white clouds and subtly lit land, razor-thin electric cyan atmospheric rim, restrained sunlight from the left. Luxury scientific geospatial product mood, calm and credible. Broad dark negative space across the top and right for interface text and login controls. Complement the GeoD blue/cyan ribbon G brand; no literal logo, no lettering, no interface, no satellites, no network nodes, no geometric overlays, no neon grids, no purple nebula, no watermark. Space background must extend to every edge. Beautiful physically plausible Earth texture, intentionally decorative artwork not a downloadable geospatial dataset.",
+  "originalDimensions": [
+    1672,
+    941
+  ],
+  "decorativeOnly": true
+}

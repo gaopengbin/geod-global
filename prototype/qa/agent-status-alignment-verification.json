@@ -1,0 +1,39 @@
+{
+  "schema": "geod-global-agent-status-alignment-qa/v1",
+  "checkedOn": "2026-10-10",
+  "changes": {
+    "processHeading": "Thinking and execution; does not repeat current activity",
+    "liveStatus": "Inside the centered composer area, aligned with its input",
+    "liveStatusAfterCompletion": "Removed",
+    "manualProcessFold": "Preserved during active tool and reply updates"
+  },
+  "validation": {
+    "agentPanelIntegrationTests": {"passed": 82, "failed": 0},
+    "frontendBuild": "passed",
+    "desktopBuild": "passed",
+    "diffWhitespaceCheck": "passed"
+  },
+  "browser": {
+    "surface": "Production AgentPanel in an isolated, labelled fixture; no real model calls",
+    "desktopViewport": {"width": 1280, "height": 720},
+    "historyOpen": {"statusX": 332, "composerX": 332, "contentWidth": 840},
+    "historyClosed": {"statusX": 220, "composerX": 220, "contentWidth": 840},
+    "narrowSidebarFrame": {"width": 390, "statusX": 24, "composerX": 24, "contentWidth": 342},
+    "waitingLabelCount": 1,
+    "workHeading": "思考与执行",
+    "foldedToolStatus": "核验整区覆盖",
+    "foldedWritingStatus": "正在整理回复…",
+    "liveStatusCountAfterCompletion": 0,
+    "screenshots": [
+      ".verification/agent-status-alignment/waiting-centered.png",
+      ".verification/agent-status-alignment/narrow.png"
+    ],
+    "nativeWindowVisualAcceptance": false
+  },
+  "localRuntime": {
+    "restartedAfterTasksStopped": true,
+    "settingsAndHistoryPreserved": true,
+    "installerCreated": false,
+    "published": false
+  }
+}

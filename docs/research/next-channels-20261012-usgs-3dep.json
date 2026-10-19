@@ -1,0 +1,1233 @@
+{
+  "schemaVersion": 1,
+  "researchDate": "2026-10-12",
+  "status": "research-originals-verified; native integration pending",
+  "recommendedNewProduct": {
+    "datasetId": "usgs-3dep",
+    "layer": "elevation",
+    "discovery": "catalog-raster",
+    "publisher": "U.S. Geological Survey / The National Map",
+    "queryDataset": "National Elevation Dataset (NED) 1 arc-second Current",
+    "queryEndpoint": "https://tnmaccess.nationalmap.gov/api/v1/products",
+    "anonymousPublicGet": true,
+    "catalogFormat": "Real TNM JSON, not STAC",
+    "publicationIsAcquisitionDate": false,
+    "license": "Public domain · USGS 3DEP",
+    "resolution": "1 arc-second, approximately 30 m",
+    "rawUnits": "metres",
+    "horizontalCRS": "EPSG:4269 · NAD83 geographic",
+    "verticalReference": "NAVD88 in the selected CONUS original XML; publisher says other regions can vary",
+    "requiredBoundary": "Archive whole exact catalog bytes, retain record membership and actual source fields. Fresh current-only metadata and declared size; no credentials, guess, exported crop or historical fallback."
+  },
+  "nativeCase": {
+    "request": {
+      "datasetId": "usgs-3dep",
+      "bounds": [
+        -73.994,
+        40.71,
+        -73.99,
+        40.714
+      ],
+      "layer": "elevation"
+    },
+    "receipt": {
+      "url": "https://tnmaccess.nationalmap.gov/api/v1/products?datasets=National+Elevation+Dataset+%28NED%29+1+arc-second+Current&bbox=-73.994%2C40.71%2C-73.99%2C40.714&max=100&offset=0&outputFormat=JSON",
+      "status": 200,
+      "contentType": "application/json",
+      "bytes": 8448,
+      "sha256": "a313b4b403f4c634d8cfbb50df15218081ac748488717a76a9f8a571b935d6bd",
+      "seconds": 1.1622466000262648
+    },
+    "document": {
+      "total": 2,
+      "items": [
+        {
+          "title": "USGS 1 Arc Second n41w074 20260917",
+          "moreInfo": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new [...]",
+          "sourceId": "6aac9d7f1ba49b6a17baded8",
+          "sourceName": "ScienceBase",
+          "sourceOriginId": null,
+          "sourceOriginName": "gda",
+          "metaUrl": "https://www.sciencebase.gov/catalog/item/6aac9d7f1ba49b6a17baded8",
+          "vendorMetaUrl": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_arc-second/geotiff/NJ_NE6County_B23/USGS_1_n41w074_20260917.xml",
+          "publicationDate": "2026-09-17",
+          "lastUpdated": "2026-09-17T20:10:08.406-06:00",
+          "dateCreated": "2026-09-17T20:10:07.007-06:00",
+          "sizeInBytes": 20582281,
+          "extent": "1 x 1 degree",
+          "format": "GeoTIFF",
+          "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif",
+          "downloadURLRaster": null,
+          "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.jpg",
+          "downloadLazURL": null,
+          "urls": {
+            "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif"
+          },
+          "datasets": [],
+          "boundingBox": {
+            "minX": -74.00166666718229,
+            "maxX": -72.99833333291633,
+            "minY": 39.99833333341752,
+            "maxY": 41.00166666678416
+          },
+          "bestFitIndex": 0.0,
+          "body": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new data become available. Seamless 3DEP data are derived from diverse source data that are processed to a common coordinate system and unit of vertical measure. These data are distributed in geographic coordinates in units of decimal degrees, and in conformance with the North American Datum of 1983 (NAD 83). All elevation values are in meters and, over the conterminous United States, are referenced to the North American Vertical Datum of 1988 (NAVD 88). The vertical reference will vary in other areas. Seamless 3DEP data are available nationally (except for Alaska) at resolutions of 1 arc-second (approximately 30 meters) and 1/3 arc-second (approximately 10 meters). In most of Alaska, only lower resolution source data are available. As a result, most seamless 3DEP data for Alaska are at 2 arc-second (approximately 60 meters) grid spacing. Part of Alaska is available at the 1 and 1/3 arc-second resolutions from interferometric synthetic aperture radar (ifsar) collections starting in 2010. Plans are in place for collection of statewide ifsar in Alaska. All 3DEP products are public domain.",
+          "processingUrl": "processingUrl",
+          "modificationInfo": "2026-09-17"
+        },
+        {
+          "title": "USGS 1 Arc Second n41w075 20260917",
+          "moreInfo": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new [...]",
+          "sourceId": "6aac9d7e1ba49b6a17baded6",
+          "sourceName": "ScienceBase",
+          "sourceOriginId": null,
+          "sourceOriginName": "gda",
+          "metaUrl": "https://www.sciencebase.gov/catalog/item/6aac9d7e1ba49b6a17baded6",
+          "vendorMetaUrl": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_arc-second/geotiff/NJ_NE6County_B23/USGS_1_n41w075_20260917.xml",
+          "publicationDate": "2026-09-17",
+          "lastUpdated": "2026-09-17T20:10:08.154-06:00",
+          "dateCreated": "2026-09-17T20:10:06.648-06:00",
+          "sizeInBytes": 59627104,
+          "extent": "1 x 1 degree",
+          "format": "GeoTIFF",
+          "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w075/USGS_1_n41w075_20260917.tif",
+          "downloadURLRaster": null,
+          "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w075/USGS_1_n41w075_20260917.jpg",
+          "downloadLazURL": null,
+          "urls": {
+            "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w075/USGS_1_n41w075_20260917.tif"
+          },
+          "datasets": [],
+          "boundingBox": {
+            "minX": -75.00166666698243,
+            "maxX": -73.99833333361579,
+            "minY": 39.99833333341752,
+            "maxY": 41.00166666678416
+          },
+          "bestFitIndex": 0.0,
+          "body": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new data become available. Seamless 3DEP data are derived from diverse source data that are processed to a common coordinate system and unit of vertical measure. These data are distributed in geographic coordinates in units of decimal degrees, and in conformance with the North American Datum of 1983 (NAD 83). All elevation values are in meters and, over the conterminous United States, are referenced to the North American Vertical Datum of 1988 (NAVD 88). The vertical reference will vary in other areas. Seamless 3DEP data are available nationally (except for Alaska) at resolutions of 1 arc-second (approximately 30 meters) and 1/3 arc-second (approximately 10 meters). In most of Alaska, only lower resolution source data are available. As a result, most seamless 3DEP data for Alaska are at 2 arc-second (approximately 60 meters) grid spacing. Part of Alaska is available at the 1 and 1/3 arc-second resolutions from interferometric synthetic aperture radar (ifsar) collections starting in 2010. Plans are in place for collection of statewide ifsar in Alaska. All 3DEP products are public domain.",
+          "processingUrl": "processingUrl",
+          "modificationInfo": "2026-09-17"
+        }
+      ],
+      "errors": [],
+      "messages": [
+        "Retrieved 2 item(s) Retrieved (1 through 100)"
+      ],
+      "sciencebaseQuery": "https://www.sciencebase.gov/catalog/items?filter=tagslq%3Dtags.scheme%3A%22The+National+Map+Collection+Thesaurus%22+AND+%28tags.name%3A+%22National+Elevation+Dataset+%28NED%29+1+arc-second+Current%22%29&filter=spatialQuery%3D%7B%22wkt%22%3A%22POLYGON%28%28-73.994+40.71%2C-73.99+40.71%2C-73.99+40.714%2C-73.994+40.714%2C-73.994+40.71%29%29%22%2C%22relation%22%3A%22intersects%22%7D&max=100&offset=0&fields=id%2Ctitle%2Csummary%2Cbody%2Ctags%2CwebLinks%2Cdates%2Cspatial%2Cidentifiers&format=json&sort=title&order=asc",
+      "filteredOut": 0
+    },
+    "actualBboxMatchedSourceId": "6aac9d7f1ba49b6a17baded8",
+    "apiReturnedRecords": 2,
+    "actualDeclaredBboxMatchedRecords": 1,
+    "bboxFilterExplanation": "The API geometry returned an extra n41w075 tile whose published bbox does not intersect this smaller AOI. Local filtering uses exact raw declared bounds; no sample AOI is substituted."
+  },
+  "currentQueryReceipt": {
+    "url": "https://tnmaccess.nationalmap.gov/api/v1/products?datasets=National+Elevation+Dataset+%28NED%29+1+arc-second+Current&bbox=-74.03%2C40.70%2C-73.98%2C40.75&max=100&outputFormat=JSON",
+    "status": 200,
+    "contentType": "application/json",
+    "bytes": 8443,
+    "sha256": "89f932961df40d283f2b2795baeb67a7d9e82a89f7a05100b23a7eb3b6ed59af",
+    "seconds": 1.2314388998784125
+  },
+  "oneMeterCurrentQuery": {
+    "receipt": {
+      "url": "https://tnmaccess.nationalmap.gov/api/v1/products?datasets=Digital+Elevation+Model+%28DEM%29+1+meter+Current&bbox=-74.03%2C40.70%2C-73.98%2C40.75&max=100&outputFormat=JSON",
+      "status": 200,
+      "contentType": "application/json",
+      "bytes": 691,
+      "sha256": "174b9bd43f4d6f3b5843179ac76b44cf9340a44e6f9b6fd2f9fe51235ad7f6a1",
+      "seconds": 1.1369251001160592
+    },
+    "document": {
+      "total": 0,
+      "items": [],
+      "errors": [],
+      "messages": [
+        "The offset is greater than the total number of results for this query. No items returned."
+      ],
+      "sciencebaseQuery": "https://www.sciencebase.gov/catalog/items?filter=tagslq%3Dtags.scheme%3A%22The+National+Map+Collection+Thesaurus%22+AND+%28tags.name%3A+%22Digital+Elevation+Model+%28DEM%29+1+meter+Current%22%29&filter=spatialQuery%3D%7B%22wkt%22%3A%22POLYGON%28%28-74.03+40.70%2C-73.98+40.70%2C-73.98+40.75%2C-74.03+40.75%2C-74.03+40.70%29%29%22%2C%22relation%22%3A%22intersects%22%7D&max=100&offset=0&fields=id%2Ctitle%2Csummary%2Cbody%2Ctags%2CwebLinks%2Cdates%2Cspatial%2Cidentifiers&format=json&sort=title&order=asc",
+      "filteredOut": 0
+    },
+    "acceptance": "Not offered in initial Current connector. The actual Current-suffixed 1-m tag returned no items; the catalog one-meter tag has no addCurrent flag."
+  },
+  "wholeOriginalVerification": {
+    "checkedAt": "2026-10-12T10:17:03Z",
+    "method": "Independent Rasterio whole base-resolution grid read block by block; no remote VSI, no overviews used for acceptance.",
+    "records": [
+      {
+        "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\USGS_1M_18_x58y451_NJ_NE6County_B23.tif",
+        "bytes": 45328865,
+        "sha256": "2d37a51d9de6e72a052bf128ea793671eeac9f4a417f70908c263b6940da39e8",
+        "independentHashMatches": true,
+        "originalUrl": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/TIFF/USGS_1M_18_x58y451_NJ_NE6County_B23.tif",
+        "publisherRecord": {
+          "title": "USGS 1 Meter 18 x58y451 NJ_NE6County_B23",
+          "moreInfo": "This is a tile of the standard one-meter resolution digital elevation model (DEM) produced through the 3D Elevation Program (3DEP) . The elevations in this DEM represent the topographic bare-earth surface. USGS standard one-meter DEMs are produced exclusively from high resolution light detection and ranging (lidar) source data of one-meter or higher resolution. One-meter DEM surfaces are seamless within collection projects, but, not necessarily seamless across projects. The spatial reference used for tiles of the one-meter DEM within the conterminous United States (CONUS) is Universal Transverse Mercator (UTM) in units of meters, and in conformance with the North American Datum of 1983 (NAD83). All bare earth elevation values are in [...]",
+          "sourceId": "6aac9d8b1ba49b6a17badefa",
+          "sourceName": "ScienceBase",
+          "sourceOriginId": null,
+          "sourceOriginName": "gda",
+          "metaUrl": "https://www.sciencebase.gov/catalog/item/6aac9d8b1ba49b6a17badefa",
+          "vendorMetaUrl": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_meter/geotiff/NJ_NE6County_B23/USGS_1M_18_x58y451_NJ_NE6County_B23.xml",
+          "publicationDate": "2026-09-17",
+          "lastUpdated": "2026-09-17T20:10:21.280-06:00",
+          "dateCreated": "2026-09-17T20:10:19.293-06:00",
+          "sizeInBytes": 45328865,
+          "extent": "10000 x 10000 meter",
+          "format": "GeoTIFF",
+          "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/TIFF/USGS_1M_18_x58y451_NJ_NE6County_B23.tif",
+          "downloadURLRaster": null,
+          "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/browse/USGS_1M_18_x58y451_NJ_NE6County_B23.jpg",
+          "downloadLazURL": null,
+          "urls": {
+            "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/TIFF/USGS_1M_18_x58y451_NJ_NE6County_B23.tif"
+          },
+          "datasets": [],
+          "boundingBox": {
+            "minX": -74.05380579399997,
+            "maxX": -73.93411540899996,
+            "minY": 40.645950318000075,
+            "maxY": 40.73705480600006
+          },
+          "bestFitIndex": 0.0,
+          "body": "This is a tile of the standard one-meter resolution digital elevation model (DEM) produced through the 3D Elevation Program (3DEP) . The elevations in this DEM represent the topographic bare-earth surface. USGS standard one-meter DEMs are produced exclusively from high resolution light detection and ranging (lidar) source data of one-meter or higher resolution. One-meter DEM surfaces are seamless within collection projects, but, not necessarily seamless across projects. The spatial reference used for tiles of the one-meter DEM within the conterminous United States (CONUS) is Universal Transverse Mercator (UTM) in units of meters, and in conformance with the North American Datum of 1983 (NAD83). All bare earth elevation values are in meters and are referenced to the North American Vertical Datum of 1988 (NAVD88). Each tile is distributed in the UTM Zone in which it lies. If a tile crosses two UTM zones, it is delivered in both zones. The one-meter DEM is the highest resolution standard DEM offered in the 3DEP product suite. Other 3DEP products are nationally seamless DEMs in resolutions of 1/3, 1, and 2 arc seconds. These seamless DEMs were referred to as the National Elevation Dataset (NED) from about 2000 through 2015 at which time they became the seamless DEM layers under the 3DEP program and lost the NED branding. Other 3DEP products include five-meter DEMs in Alaska as well as various source datasets including the lidar point cloud and interferometric synthetic aperture radar (Ifsar) digital surface models and intensity images. All 3DEP products are public domain.",
+          "processingUrl": "processingUrl",
+          "modificationInfo": "2026-09-17"
+        },
+        "driver": "GTiff",
+        "width": 10012,
+        "height": 10012,
+        "pixelCount": 100240144,
+        "bands": 1,
+        "dtype": "float32",
+        "epsg": 26918,
+        "crsWkt": "PROJCS[\"NAD83 / UTM zone 18N\",GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",-75],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"26918\"]]",
+        "boundsNative": [
+          579993.9999588705,
+          4499994.000000671,
+          590005.9999588705,
+          4510006.000000671
+        ],
+        "bounds4326": [
+          -74.05387751281287,
+          40.64589562061708,
+          -73.93404349964537,
+          40.73710943375435
+        ],
+        "transform": [
+          1.0,
+          0.0,
+          579993.9999588705,
+          0.0,
+          -1.0,
+          4510006.000000671
+        ],
+        "resolution": [
+          1.0,
+          1.0
+        ],
+        "isTiled": true,
+        "blockShapes": [
+          [
+            512,
+            512
+          ]
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "embeddedNoData": -999999.0,
+        "maskFlags": [
+          "8"
+        ],
+        "tags": {
+          "AREA_OR_POINT": "Area"
+        },
+        "imageStructure": {
+          "COMPRESSION": "LZW",
+          "INTERLEAVE": "BAND",
+          "LAYOUT": "COG",
+          "PREDICTOR": "3"
+        },
+        "nativeCapsWithinLimit": true,
+        "wholeGridDecode": true,
+        "statistics": {
+          "decodedPixels": 100240144,
+          "validPixels": 17215330,
+          "noDataPixels": 83024814,
+          "validZeroPixels": 0,
+          "validPositivePixels": 7740666,
+          "validNegativePixels": 9474664,
+          "nonFiniteUnmaskedPixels": 0,
+          "minimum": -4.808831691741943,
+          "maximum": 35.89037322998047,
+          "blockCount": 400
+        },
+        "rawExamples": {
+          "validPositive": {
+            "row": 0,
+            "column": 0,
+            "rawValue": 32.44863510131836,
+            "isNoData": false,
+            "nativePixelCenter": [
+              579994.4999588705,
+              4510005.500000671
+            ],
+            "wgs84PixelCenter": [
+              -74.05259507817121,
+              40.7371048814431
+            ]
+          },
+          "validNegative": {
+            "row": 287,
+            "column": 468,
+            "rawValue": -0.10568944364786148,
+            "isNoData": false,
+            "nativePixelCenter": [
+              580462.4999588705,
+              4509718.500000671
+            ],
+            "wgs84PixelCenter": [
+              -74.04708999512474,
+              40.73447413093421
+            ]
+          },
+          "noData": {
+            "row": 0,
+            "column": 3877,
+            "rawValue": -999999.0,
+            "isNoData": true,
+            "nativePixelCenter": [
+              583871.4999588705,
+              4510005.500000671
+            ],
+            "wgs84PixelCenter": [
+              -74.00668472803535,
+              40.73671888483737
+            ]
+          }
+        },
+        "xmlMetadata": {
+          "publication": [
+            "20260917"
+          ],
+          "timePeriodStart": [
+            "20230413"
+          ],
+          "timePeriodEnd": [
+            "20250409"
+          ],
+          "currentReference": [
+            "publication date"
+          ],
+          "horizontalDatum": [
+            "North_American_Datum_1983"
+          ],
+          "gridSystem": [
+            "NAD83 / UTM zone 18N"
+          ],
+          "ellipsoid": [
+            "GRS 1980"
+          ],
+          "metadataDate": [
+            "20260917"
+          ],
+          "accessConstraints": [
+            "None. Any downloading and use of these data signifies a user's agreement to comprehension and compliance of the USGS Standard Disclaimer. Insure all portions of metadata are read and clearly understood before using these data in order to protect both user and USGS interests."
+          ],
+          "useConstraints": [
+            "There is no guarantee or warranty concerning the accuracy of the data. Users should be aware that temporal changes may have occurred since these data were collected and that some parts of these data may no longer represent actual surface conditions. Users should not use these data for critical applications without a full awareness of its limitations. Acknowledgement of the originating agencies would be appreciated in products derived from these data. Any user who modifies the data is obligated to describe the types of modifications they perform. User specifically agrees not to misrepresent the data, nor to imply that changes made were approved or endorsed by the USGS. Please refer to http://www.usgs.gov/privacy.html for the USGS disclaimer."
+          ],
+          "fees": [
+            "None. No fees are applicable for obtaining the data set."
+          ]
+        },
+        "verificationSeconds": 1.7583016999997199
+      },
+      {
+        "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\USGS_1_n41w074_20211109.tif",
+        "bytes": 20761575,
+        "sha256": "96f4f78f88019aed2d12ef47ffde6f623252a0655736f28a9887b08430e255fa",
+        "independentHashMatches": true,
+        "originalUrl": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.tif",
+        "publisherRecord": {
+          "title": "USGS 1 Arc Second n41w074 20211109",
+          "moreInfo": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new [...]",
+          "sourceId": "619348fbd34eb622f68e863b",
+          "sourceName": "ScienceBase",
+          "sourceOriginId": null,
+          "sourceOriginName": "gda",
+          "metaUrl": "https://www.sciencebase.gov/catalog/item/619348fbd34eb622f68e863b",
+          "vendorMetaUrl": "https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/metadata/CT_Statewide_C16/CT_Statewide_B7_2016",
+          "publicationDate": "2021-11-09",
+          "lastUpdated": "2023-02-27T23:00:46.412-07:00",
+          "dateCreated": "2021-11-15T23:00:27.906-07:00",
+          "sizeInBytes": 20496942,
+          "extent": "1 x 1 degree",
+          "format": "GeoTIFF",
+          "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.tif",
+          "downloadURLRaster": null,
+          "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.jpg",
+          "downloadLazURL": null,
+          "urls": {
+            "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.tif"
+          },
+          "datasets": [],
+          "boundingBox": {
+            "minX": -74.00166666718229,
+            "maxX": -72.99833333291633,
+            "minY": 39.99833333341752,
+            "maxY": 41.00166666678416
+          },
+          "bestFitIndex": 0.0,
+          "body": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new data become available. Seamless 3DEP data are derived from diverse source data that are processed to a common coordinate system and unit of vertical measure. These data are distributed in geographic coordinates in units of decimal degrees, and in conformance with the North American Datum of 1983 (NAD 83). All elevation values are in meters and, over the conterminous United States, are referenced to the North American Vertical Datum of 1988 (NAVD 88). The vertical reference will vary in other areas. Seamless 3DEP data are available nationally (except for Alaska) at resolutions of 1 arc-second (approximately 30 meters) and 1/3 arc-second (approximately 10 meters). In most of Alaska, only lower resolution source data are available. As a result, most seamless 3DEP data for Alaska are at 2 arc-second (approximately 60 meters) grid spacing. Part of Alaska is available at the 1 and 1/3 arc-second resolutions from interferometric synthetic aperture radar (ifsar) collections starting in 2010. Plans are in place for collection of statewide ifsar in Alaska. All 3DEP products are public domain.",
+          "processingUrl": "processingUrl",
+          "modificationInfo": "2023-02-28"
+        },
+        "driver": "GTiff",
+        "width": 3612,
+        "height": 3612,
+        "pixelCount": 13046544,
+        "bands": 1,
+        "dtype": "float32",
+        "epsg": 4269,
+        "crsWkt": "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101004,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4269\"]]",
+        "boundsNative": [
+          -74.00166666718229,
+          39.99833333296786,
+          -72.99833333336599,
+          41.00166666678416
+        ],
+        "bounds4326": [
+          -74.00166666718229,
+          39.99833333296786,
+          -72.99833333336599,
+          41.00166666678416
+        ],
+        "transform": [
+          0.00027777777791148956,
+          0.0,
+          -74.00166666718229,
+          0.0,
+          -0.00027777777791148956,
+          41.00166666678416
+        ],
+        "resolution": [
+          0.00027777777791148956,
+          0.00027777777791148956
+        ],
+        "isTiled": true,
+        "blockShapes": [
+          [
+            512,
+            512
+          ]
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "embeddedNoData": -999999.0,
+        "maskFlags": [
+          "8"
+        ],
+        "tags": {
+          "AREA_OR_POINT": "Area",
+          "BandDefinitionKeyword": "NONE",
+          "DataType": "Elevation"
+        },
+        "imageStructure": {
+          "COMPRESSION": "LZW",
+          "INTERLEAVE": "BAND",
+          "LAYOUT": "COG",
+          "PREDICTOR": "3"
+        },
+        "nativeCapsWithinLimit": true,
+        "wholeGridDecode": true,
+        "statistics": {
+          "decodedPixels": 13046544,
+          "validPixels": 13024920,
+          "noDataPixels": 21624,
+          "validZeroPixels": 8984291,
+          "validPositivePixels": 4002998,
+          "validNegativePixels": 37631,
+          "nonFiniteUnmaskedPixels": 0,
+          "minimum": -2.34478497505188,
+          "maximum": 169.04666137695312,
+          "blockCount": 64
+        },
+        "rawExamples": {
+          "validPositive": {
+            "row": 0,
+            "column": 0,
+            "rawValue": 13.162328720092773,
+            "isNoData": false,
+            "nativePixelCenter": [
+              -74.00152777829334,
+              41.001527777895205
+            ],
+            "wgs84PixelCenter": [
+              -74.00152777829334,
+              41.001527777895205
+            ]
+          },
+          "validNegative": {
+            "row": 0,
+            "column": 356,
+            "rawValue": -0.7988492250442505,
+            "isNoData": false,
+            "nativePixelCenter": [
+              -73.90263888935685,
+              41.001527777895205
+            ],
+            "wgs84PixelCenter": [
+              -73.90263888935685,
+              41.001527777895205
+            ]
+          },
+          "validZero": {
+            "row": 0,
+            "column": 378,
+            "rawValue": 0.0,
+            "isNoData": false,
+            "nativePixelCenter": [
+              -73.8965277782428,
+              41.001527777895205
+            ],
+            "wgs84PixelCenter": [
+              -73.8965277782428,
+              41.001527777895205
+            ]
+          },
+          "noData": {
+            "row": 3606,
+            "column": 8,
+            "rawValue": -999999.0,
+            "isNoData": true,
+            "nativePixelCenter": [
+              -73.99930555607004,
+              39.99986111074637
+            ],
+            "wgs84PixelCenter": [
+              -73.99930555607004,
+              39.99986111074637
+            ]
+          }
+        },
+        "xmlMetadataError": "mismatched tag: line 29, column 2",
+        "verificationSeconds": 0.3229668999556452
+      },
+      {
+        "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\USGS_1_n41w074_20260917.tif",
+        "bytes": 20582281,
+        "sha256": "4f23a1a0801a74b1d1e9b4e83c09a41ee371010cbdca7bff0a1a92c05f0dc3dd",
+        "independentHashMatches": true,
+        "originalUrl": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif",
+        "publisherRecord": {
+          "title": "USGS 1 Arc Second n41w074 20260917",
+          "moreInfo": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new [...]",
+          "sourceId": "6aac9d7f1ba49b6a17baded8",
+          "sourceName": "ScienceBase",
+          "sourceOriginId": null,
+          "sourceOriginName": "gda",
+          "metaUrl": "https://www.sciencebase.gov/catalog/item/6aac9d7f1ba49b6a17baded8",
+          "vendorMetaUrl": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_arc-second/geotiff/NJ_NE6County_B23/USGS_1_n41w074_20260917.xml",
+          "publicationDate": "2026-09-17",
+          "lastUpdated": "2026-09-17T20:10:08.406-06:00",
+          "dateCreated": "2026-09-17T20:10:07.007-06:00",
+          "sizeInBytes": 20582281,
+          "extent": "1 x 1 degree",
+          "format": "GeoTIFF",
+          "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif",
+          "downloadURLRaster": null,
+          "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.jpg",
+          "downloadLazURL": null,
+          "urls": {
+            "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif"
+          },
+          "datasets": [],
+          "boundingBox": {
+            "minX": -74.00166666718229,
+            "maxX": -72.99833333291633,
+            "minY": 39.99833333341752,
+            "maxY": 41.00166666678416
+          },
+          "bestFitIndex": 0.0,
+          "body": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new data become available. Seamless 3DEP data are derived from diverse source data that are processed to a common coordinate system and unit of vertical measure. These data are distributed in geographic coordinates in units of decimal degrees, and in conformance with the North American Datum of 1983 (NAD 83). All elevation values are in meters and, over the conterminous United States, are referenced to the North American Vertical Datum of 1988 (NAVD 88). The vertical reference will vary in other areas. Seamless 3DEP data are available nationally (except for Alaska) at resolutions of 1 arc-second (approximately 30 meters) and 1/3 arc-second (approximately 10 meters). In most of Alaska, only lower resolution source data are available. As a result, most seamless 3DEP data for Alaska are at 2 arc-second (approximately 60 meters) grid spacing. Part of Alaska is available at the 1 and 1/3 arc-second resolutions from interferometric synthetic aperture radar (ifsar) collections starting in 2010. Plans are in place for collection of statewide ifsar in Alaska. All 3DEP products are public domain.",
+          "processingUrl": "processingUrl",
+          "modificationInfo": "2026-09-17"
+        },
+        "driver": "GTiff",
+        "width": 3612,
+        "height": 3612,
+        "pixelCount": 13046544,
+        "bands": 1,
+        "dtype": "float32",
+        "epsg": 4269,
+        "crsWkt": "GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101004,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4269\"]]",
+        "boundsNative": [
+          -74.00166666718229,
+          39.99833333341752,
+          -72.99833333291633,
+          41.00166666678416
+        ],
+        "bounds4326": [
+          -74.00166666718229,
+          39.99833333341752,
+          -72.99833333291633,
+          41.00166666678416
+        ],
+        "transform": [
+          0.00027777777803598015,
+          0.0,
+          -74.00166666718229,
+          0.0,
+          -0.000277777777786999,
+          41.00166666678416
+        ],
+        "resolution": [
+          0.00027777777803598015,
+          0.000277777777786999
+        ],
+        "isTiled": true,
+        "blockShapes": [
+          [
+            512,
+            512
+          ]
+        ],
+        "overviews": [
+          2,
+          4,
+          8
+        ],
+        "embeddedNoData": -999999.0,
+        "maskFlags": [
+          "8"
+        ],
+        "tags": {
+          "AREA_OR_POINT": "Area",
+          "BandDefinitionKeyword": "*",
+          "DataType": "*"
+        },
+        "imageStructure": {
+          "COMPRESSION": "LZW",
+          "INTERLEAVE": "BAND",
+          "LAYOUT": "COG",
+          "PREDICTOR": "3"
+        },
+        "nativeCapsWithinLimit": true,
+        "wholeGridDecode": true,
+        "statistics": {
+          "decodedPixels": 13046544,
+          "validPixels": 13024920,
+          "noDataPixels": 21624,
+          "validZeroPixels": 8511764,
+          "validPositivePixels": 3793724,
+          "validNegativePixels": 719432,
+          "nonFiniteUnmaskedPixels": 0,
+          "minimum": -17.564453125,
+          "maximum": 168.40380859375,
+          "blockCount": 64
+        },
+        "rawExamples": {
+          "validPositive": {
+            "row": 0,
+            "column": 0,
+            "rawValue": 13.575018882751465,
+            "isNoData": false,
+            "nativePixelCenter": [
+              -74.00152777829328,
+              41.00152777789527
+            ],
+            "wgs84PixelCenter": [
+              -74.00152777829328,
+              41.00152777789527
+            ]
+          },
+          "validNegative": {
+            "row": 0,
+            "column": 356,
+            "rawValue": -0.016024990007281303,
+            "isNoData": false,
+            "nativePixelCenter": [
+              -73.90263888931247,
+              41.00152777789527
+            ],
+            "wgs84PixelCenter": [
+              -73.90263888931247,
+              41.00152777789527
+            ]
+          },
+          "validZero": {
+            "row": 445,
+            "column": 282,
+            "rawValue": 0.0,
+            "isNoData": false,
+            "nativePixelCenter": [
+              -73.92319444488713,
+              40.87791666678005
+            ],
+            "wgs84PixelCenter": [
+              -73.92319444488713,
+              40.87791666678005
+            ]
+          },
+          "noData": {
+            "row": 3606,
+            "column": 8,
+            "rawValue": -999999.0,
+            "isNoData": true,
+            "nativePixelCenter": [
+              -73.99930555606899,
+              39.99986111119535
+            ],
+            "wgs84PixelCenter": [
+              -73.99930555606899,
+              39.99986111119535
+            ]
+          }
+        },
+        "xmlMetadata": {
+          "publication": [
+            "20260917"
+          ],
+          "timePeriodStart": [
+            "19310101"
+          ],
+          "timePeriodEnd": [
+            "20250409"
+          ],
+          "currentReference": [
+            "publication date"
+          ],
+          "horizontalDatum": [
+            "North American Datum of 1983"
+          ],
+          "gridSystem": [],
+          "ellipsoid": [
+            "Geodetic Reference System 80"
+          ],
+          "metadataDate": [
+            "20260917"
+          ],
+          "accessConstraints": [
+            "None. Any downloading and use of these data signifies a user's agreement to comprehension and compliance of the USGS Standard Disclaimer. Insure all portions of metadata are read and clearly understood before using these data in order to protect both user and USGS interests."
+          ],
+          "useConstraints": [
+            "There is no guarantee or warranty concerning the accuracy of the data. Users should be aware that temporal changes may have occurred since these data were collected and that some parts of these data may no longer represent actual surface conditions. Users should not use these data for critical applications without a full awareness of their limitations. Acknowledgement of the originating agencies would be appreciated in products derived from these data. Any user who modifies the data is obligated to describe the types of modifications they perform. User specifically agrees not to misrepresent the data, nor to imply that changes made were approved or endorsed by the USGS. Please refer to https://www.usgs.gov/privacy.html for the USGS disclaimer."
+          ],
+          "fees": [
+            "NONE"
+          ]
+        },
+        "verificationSeconds": 0.3067546000238508
+      },
+      {
+        "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\ETOPO_2022_v1_15s_N00E030_surface.tif",
+        "bytes": 25179967,
+        "sha256": "975c87680ad0dffb759cfa6c85385323b5dc94ab23e9dffc95483a5f1d944bb7",
+        "independentHashMatches": true,
+        "originalUrl": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00E030_surface.tif",
+        "publisherRecord": null,
+        "driver": "GTiff",
+        "width": 3600,
+        "height": 3600,
+        "pixelCount": 12960000,
+        "bands": 1,
+        "dtype": "float32",
+        "epsg": 9518,
+        "crsWkt": "COMPD_CS[\"WGS 84 + EGM2008 height\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4326\"]],VERT_CS[\"EGM2008 height\",VERT_DATUM[\"EGM2008 geoid\",2005,AUTHORITY[\"EPSG\",\"1027\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"3855\"]]]",
+        "boundsNative": [
+          30.0,
+          -15.0,
+          45.0,
+          0.0
+        ],
+        "bounds4326": [
+          30.0,
+          -15.0,
+          45.0,
+          0.0
+        ],
+        "transform": [
+          0.004166666666666667,
+          0.0,
+          30.0,
+          0.0,
+          -0.004166666666666667,
+          0.0
+        ],
+        "resolution": [
+          0.004166666666666667,
+          0.004166666666666667
+        ],
+        "isTiled": true,
+        "blockShapes": [
+          [
+            256,
+            256
+          ]
+        ],
+        "overviews": [],
+        "embeddedNoData": -99999.0,
+        "maskFlags": [
+          "8"
+        ],
+        "tags": {
+          "AREA_OR_POINT": "Area",
+          "NC_GLOBAL#node_offset": "1",
+          "TIFFTAG_COPYRIGHT": "DOC/NOAA/NESDIS/NCEI > National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce",
+          "TIFFTAG_DATETIME": "20220929130858",
+          "TIFFTAG_IMAGEDESCRIPTION": "Topography-Bathymetry; EGM2008 height",
+          "tos#node_offset": "1"
+        },
+        "imageStructure": {
+          "COMPRESSION": "DEFLATE",
+          "INTERLEAVE": "BAND",
+          "PREDICTOR": "3"
+        },
+        "nativeCapsWithinLimit": true,
+        "wholeGridDecode": true,
+        "statistics": {
+          "decodedPixels": 12960000,
+          "validPixels": 12960000,
+          "noDataPixels": 0,
+          "validZeroPixels": 0,
+          "validPositivePixels": 8866356,
+          "validNegativePixels": 4093644,
+          "nonFiniteUnmaskedPixels": 0,
+          "minimum": -4616.0,
+          "maximum": 5828.8203125,
+          "blockCount": 225
+        },
+        "rawExamples": {
+          "validPositive": {
+            "row": 0,
+            "column": 0,
+            "rawValue": 940.8566284179688,
+            "isNoData": false,
+            "nativePixelCenter": [
+              30.002083333333335,
+              -0.0020833333333333333
+            ],
+            "wgs84PixelCenter": [
+              30.002083333333335,
+              -0.0020833333333333333
+            ]
+          },
+          "validNegative": {
+            "row": 24,
+            "column": 3070,
+            "rawValue": -1.0,
+            "isNoData": false,
+            "nativePixelCenter": [
+              42.79375,
+              -0.10208333333333333
+            ],
+            "wgs84PixelCenter": [
+              42.79375,
+              -0.10208333333333333
+            ]
+          }
+        },
+        "verificationSeconds": 0.3597254999913275
+      }
+    ],
+    "passed": true
+  },
+  "httpTransferEvidence": [
+    {
+      "publisherRecord": {
+        "title": "USGS 1 Meter 18 x58y451 NJ_NE6County_B23",
+        "moreInfo": "This is a tile of the standard one-meter resolution digital elevation model (DEM) produced through the 3D Elevation Program (3DEP) . The elevations in this DEM represent the topographic bare-earth surface. USGS standard one-meter DEMs are produced exclusively from high resolution light detection and ranging (lidar) source data of one-meter or higher resolution. One-meter DEM surfaces are seamless within collection projects, but, not necessarily seamless across projects. The spatial reference used for tiles of the one-meter DEM within the conterminous United States (CONUS) is Universal Transverse Mercator (UTM) in units of meters, and in conformance with the North American Datum of 1983 (NAD83). All bare earth elevation values are in [...]",
+        "sourceId": "6aac9d8b1ba49b6a17badefa",
+        "sourceName": "ScienceBase",
+        "sourceOriginId": null,
+        "sourceOriginName": "gda",
+        "metaUrl": "https://www.sciencebase.gov/catalog/item/6aac9d8b1ba49b6a17badefa",
+        "vendorMetaUrl": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_meter/geotiff/NJ_NE6County_B23/USGS_1M_18_x58y451_NJ_NE6County_B23.xml",
+        "publicationDate": "2026-09-17",
+        "lastUpdated": "2026-09-17T20:10:21.280-06:00",
+        "dateCreated": "2026-09-17T20:10:19.293-06:00",
+        "sizeInBytes": 45328865,
+        "extent": "10000 x 10000 meter",
+        "format": "GeoTIFF",
+        "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/TIFF/USGS_1M_18_x58y451_NJ_NE6County_B23.tif",
+        "downloadURLRaster": null,
+        "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/browse/USGS_1M_18_x58y451_NJ_NE6County_B23.jpg",
+        "downloadLazURL": null,
+        "urls": {
+          "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/TIFF/USGS_1M_18_x58y451_NJ_NE6County_B23.tif"
+        },
+        "datasets": [],
+        "boundingBox": {
+          "minX": -74.05380579399997,
+          "maxX": -73.93411540899996,
+          "minY": 40.645950318000075,
+          "maxY": 40.73705480600006
+        },
+        "bestFitIndex": 0.0,
+        "body": "This is a tile of the standard one-meter resolution digital elevation model (DEM) produced through the 3D Elevation Program (3DEP) . The elevations in this DEM represent the topographic bare-earth surface. USGS standard one-meter DEMs are produced exclusively from high resolution light detection and ranging (lidar) source data of one-meter or higher resolution. One-meter DEM surfaces are seamless within collection projects, but, not necessarily seamless across projects. The spatial reference used for tiles of the one-meter DEM within the conterminous United States (CONUS) is Universal Transverse Mercator (UTM) in units of meters, and in conformance with the North American Datum of 1983 (NAD83). All bare earth elevation values are in meters and are referenced to the North American Vertical Datum of 1988 (NAVD88). Each tile is distributed in the UTM Zone in which it lies. If a tile crosses two UTM zones, it is delivered in both zones. The one-meter DEM is the highest resolution standard DEM offered in the 3DEP product suite. Other 3DEP products are nationally seamless DEMs in resolutions of 1/3, 1, and 2 arc seconds. These seamless DEMs were referred to as the National Elevation Dataset (NED) from about 2000 through 2015 at which time they became the seamless DEM layers under the 3DEP program and lost the NED branding. Other 3DEP products include five-meter DEMs in Alaska as well as various source datasets including the lidar point cloud and interferometric synthetic aperture radar (Ifsar) digital surface models and intensity images. All 3DEP products are public domain.",
+        "processingUrl": "processingUrl",
+        "modificationInfo": "2026-09-17"
+      },
+      "originalUrl": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/Projects/NJ_NE6County_B23/TIFF/USGS_1M_18_x58y451_NJ_NE6County_B23.tif",
+      "localFile": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\USGS_1M_18_x58y451_NJ_NE6County_B23.tif",
+      "requestedArea": [
+        -74.03,
+        40.7,
+        -73.98,
+        40.75
+      ],
+      "vendorMetadata": {
+        "url": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_meter/geotiff/NJ_NE6County_B23/USGS_1M_18_x58y451_NJ_NE6County_B23.xml",
+        "status": 200,
+        "bytes": 13730,
+        "sha256": "3c201a40214b29c2634242c8f851f94e2e5875d11bd202c296ae540c75fb25f7",
+        "contentType": "application/xml"
+      },
+      "transfer": {
+        "completeOriginal": true,
+        "rangeRequest": false,
+        "generatedExport": false,
+        "bytes": 45328865,
+        "sha256": "2d37a51d9de6e72a052bf128ea793671eeac9f4a417f70908c263b6940da39e8",
+        "seconds": 3.650627499911934,
+        "headers": {
+          "x-amz-id-2": "v1XQbJPEqEQow6q/jWQQvTxxsWLt1uekHtMUfGBqmXTpTEwDQOC+nu3f//9aTu7B6wQBSSFVzb8=",
+          "x-amz-request-id": "MDZ4D4AXGSJ1XEDN",
+          "Date": "Mon, 12 Oct 2026 10:10:40 GMT",
+          "Last-Modified": "Thu, 17 Sep 2026 20:26:08 GMT",
+          "ETag": "\"c3654f458585029d2103d9a1d382ea59\"",
+          "x-amz-server-side-encryption": "AES256",
+          "x-amz-meta-mtime": "1789653215.066073",
+          "Accept-Ranges": "bytes",
+          "Content-Type": "image/tiff",
+          "Content-Length": "45328865",
+          "Server": "AmazonS3",
+          "Connection": "close"
+        }
+      }
+    },
+    {
+      "originalUrl": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.tif",
+      "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\USGS_1_n41w074_20211109.tif",
+      "status": 200,
+      "completeOriginal": true,
+      "rangeRequest": false,
+      "generatedExport": false,
+      "bytes": 20761575,
+      "sha256": "96f4f78f88019aed2d12ef47ffde6f623252a0655736f28a9887b08430e255fa",
+      "seconds": 2.802497699856758,
+      "responseHeaders": {
+        "x-amz-id-2": "ycrAy3/lRym4aEtV9uPVFzUbUXZWUdBV3GLEHqi+WmwyP4fJha+I5hNPjvWbko6MTGixGQvo93U=",
+        "x-amz-request-id": "0FF8SD0DPH025F1M",
+        "Date": "Mon, 12 Oct 2026 10:15:47 GMT",
+        "Last-Modified": "Sat, 03 Dec 2022 23:22:31 GMT",
+        "ETag": "\"76f6b609bd0d0d753e813332766281d9\"",
+        "x-amz-meta-mtime": "1643175308.276353",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "image/tiff",
+        "Content-Length": "20761575",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      },
+      "publisherCatalogBytes": 20496942,
+      "publisherCatalogBytesMatch": false,
+      "publisherRecord": {
+        "title": "USGS 1 Arc Second n41w074 20211109",
+        "moreInfo": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new [...]",
+        "sourceId": "619348fbd34eb622f68e863b",
+        "sourceName": "ScienceBase",
+        "sourceOriginId": null,
+        "sourceOriginName": "gda",
+        "metaUrl": "https://www.sciencebase.gov/catalog/item/619348fbd34eb622f68e863b",
+        "vendorMetaUrl": "https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/metadata/CT_Statewide_C16/CT_Statewide_B7_2016",
+        "publicationDate": "2021-11-09",
+        "lastUpdated": "2023-02-27T23:00:46.412-07:00",
+        "dateCreated": "2021-11-15T23:00:27.906-07:00",
+        "sizeInBytes": 20496942,
+        "extent": "1 x 1 degree",
+        "format": "GeoTIFF",
+        "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.tif",
+        "downloadURLRaster": null,
+        "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.jpg",
+        "downloadLazURL": null,
+        "urls": {
+          "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20211109.tif"
+        },
+        "datasets": [],
+        "boundingBox": {
+          "minX": -74.00166666718229,
+          "maxX": -72.99833333291633,
+          "minY": 39.99833333341752,
+          "maxY": 41.00166666678416
+        },
+        "bestFitIndex": 0.0,
+        "body": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new data become available. Seamless 3DEP data are derived from diverse source data that are processed to a common coordinate system and unit of vertical measure. These data are distributed in geographic coordinates in units of decimal degrees, and in conformance with the North American Datum of 1983 (NAD 83). All elevation values are in meters and, over the conterminous United States, are referenced to the North American Vertical Datum of 1988 (NAVD 88). The vertical reference will vary in other areas. Seamless 3DEP data are available nationally (except for Alaska) at resolutions of 1 arc-second (approximately 30 meters) and 1/3 arc-second (approximately 10 meters). In most of Alaska, only lower resolution source data are available. As a result, most seamless 3DEP data for Alaska are at 2 arc-second (approximately 60 meters) grid spacing. Part of Alaska is available at the 1 and 1/3 arc-second resolutions from interferometric synthetic aperture radar (ifsar) collections starting in 2010. Plans are in place for collection of statewide ifsar in Alaska. All 3DEP products are public domain.",
+        "processingUrl": "processingUrl",
+        "modificationInfo": "2023-02-28"
+      }
+    },
+    {
+      "originalUrl": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif",
+      "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\USGS_1_n41w074_20260917.tif",
+      "status": 200,
+      "completeOriginal": true,
+      "rangeRequest": false,
+      "generatedExport": false,
+      "bytes": 20582281,
+      "sha256": "4f23a1a0801a74b1d1e9b4e83c09a41ee371010cbdca7bff0a1a92c05f0dc3dd",
+      "seconds": 2.2855245999526232,
+      "responseHeaders": {
+        "x-amz-id-2": "aHqgYIfZ9BM7RMXxFq/u++SAocY444g6MYPVJcGyfqiz6raT40PeQp+s8n9TtrQRpZBje2wEfoE=",
+        "x-amz-request-id": "22X07H7W9CAXGSEZ",
+        "Date": "Mon, 12 Oct 2026 10:15:50 GMT",
+        "Last-Modified": "Thu, 17 Sep 2026 20:25:55 GMT",
+        "ETag": "\"af292b4c03d8a6a784182a8e687c6f1c\"",
+        "x-amz-server-side-encryption": "AES256",
+        "x-amz-meta-mtime": "1789663845.581888",
+        "Accept-Ranges": "bytes",
+        "Content-Type": "image/tiff",
+        "Content-Length": "20582281",
+        "Server": "AmazonS3",
+        "Connection": "close"
+      },
+      "publisherCatalogBytes": 20582281,
+      "publisherCatalogBytesMatch": true,
+      "publisherRecord": {
+        "title": "USGS 1 Arc Second n41w074 20260917",
+        "moreInfo": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new [...]",
+        "sourceId": "6aac9d7f1ba49b6a17baded8",
+        "sourceName": "ScienceBase",
+        "sourceOriginId": null,
+        "sourceOriginName": "gda",
+        "metaUrl": "https://www.sciencebase.gov/catalog/item/6aac9d7f1ba49b6a17baded8",
+        "vendorMetaUrl": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_arc-second/geotiff/NJ_NE6County_B23/USGS_1_n41w074_20260917.xml",
+        "publicationDate": "2026-09-17",
+        "lastUpdated": "2026-09-17T20:10:08.406-06:00",
+        "dateCreated": "2026-09-17T20:10:07.007-06:00",
+        "sizeInBytes": 20582281,
+        "extent": "1 x 1 degree",
+        "format": "GeoTIFF",
+        "downloadURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif",
+        "downloadURLRaster": null,
+        "previewGraphicURL": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.jpg",
+        "downloadLazURL": null,
+        "urls": {
+          "TIFF": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/historical/n41w074/USGS_1_n41w074_20260917.tif"
+        },
+        "datasets": [],
+        "boundingBox": {
+          "minX": -74.00166666718229,
+          "maxX": -72.99833333291633,
+          "minY": 39.99833333341752,
+          "maxY": 41.00166666678416
+        },
+        "bestFitIndex": 0.0,
+        "body": "This tile of the 3D Elevation Program (3DEP) seamless products is 1 Arc Second resolution. 3DEP data serve as the elevation layer of The National Map, and provide basic elevation information for Earth science studies and mapping applications in the United States. Scientists and resource managers use 3DEP data for global change research, hydrologic modeling, resource monitoring, mapping and visualization, and many other applications. 3DEP data compose an elevation dataset that consists of seamless layers and a high resolution layer. Each of these layers consists of the best available raster elevation data of the conterminous United States, Alaska, Hawaii, territorial islands, Mexico and Canada. 3DEP data are updated continually as new data become available. Seamless 3DEP data are derived from diverse source data that are processed to a common coordinate system and unit of vertical measure. These data are distributed in geographic coordinates in units of decimal degrees, and in conformance with the North American Datum of 1983 (NAD 83). All elevation values are in meters and, over the conterminous United States, are referenced to the North American Vertical Datum of 1988 (NAVD 88). The vertical reference will vary in other areas. Seamless 3DEP data are available nationally (except for Alaska) at resolutions of 1 arc-second (approximately 30 meters) and 1/3 arc-second (approximately 10 meters). In most of Alaska, only lower resolution source data are available. As a result, most seamless 3DEP data for Alaska are at 2 arc-second (approximately 60 meters) grid spacing. Part of Alaska is available at the 1 and 1/3 arc-second resolutions from interferometric synthetic aperture radar (ifsar) collections starting in 2010. Plans are in place for collection of statewide ifsar in Alaska. All 3DEP products are public domain.",
+        "processingUrl": "processingUrl",
+        "modificationInfo": "2026-09-17"
+      },
+      "vendorMetadata": {
+        "url": "https://thor-f5.er.usgs.gov/ngtoc/metadata/waf/elevation/1_arc-second/geotiff/NJ_NE6County_B23/USGS_1_n41w074_20260917.xml",
+        "bytes": 13080,
+        "sha256": "246342b579f4fd930af4a5f79f9203c8eab7334ced11b6ba79e7d813f6987e71",
+        "headers": {
+          "Date": "Mon, 12 Oct 2026 10:15:52 GMT",
+          "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+          "Last-Modified": "Fri, 18 Sep 2026 02:10:06 GMT",
+          "ETag": "\"3318-65bb866316e84\"",
+          "Accept-Ranges": "bytes",
+          "Vary": "Accept-Encoding",
+          "Content-Type": "application/xml",
+          "Connection": "close"
+        }
+      }
+    },
+    {
+      "originalUrl": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/data/15s/15s_surface_elev_gtif/ETOPO_2022_v1_15s_N00E030_surface.tif",
+      "file": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs\\ETOPO_2022_v1_15s_N00E030_surface.tif",
+      "status": 200,
+      "completeOriginal": true,
+      "rangeRequest": false,
+      "generatedExport": false,
+      "bytes": 25179967,
+      "sha256": "975c87680ad0dffb759cfa6c85385323b5dc94ab23e9dffc95483a5f1d944bb7",
+      "seconds": 27.878954000072554,
+      "responseHeaders": {
+        "date": "Mon, 12 Oct 2026 10:15:56 GMT",
+        "server": "Apache",
+        "strict-transport-security": "max-age=31536000;",
+        "last-modified": "Tue, 04 Oct 2022 21:50:49 GMT",
+        "accept-ranges": "bytes",
+        "content-length": "25179967",
+        "x-frame-options": "SAMEORIGIN",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "X-Requested-With, Content-Type",
+        "content-type": "image/tiff",
+        "connection": "close"
+      },
+      "publisherCatalogBytes": null,
+      "publisherCatalogBytesMatch": null
+    }
+  ],
+  "originalGeoKeys": {
+    "ETOPO_2022_v1_15s_N00E030_surface.tif": {
+      "KeyDirectoryVersion": 1,
+      "KeyRevision": 1,
+      "KeyRevisionMinor": 1,
+      "GTModelTypeGeoKey": 2,
+      "GTRasterTypeGeoKey": 1,
+      "GTCitationGeoKey": "WGS 84 + EGM2008 height",
+      "GeographicTypeGeoKey": 4326,
+      "VerticalCSTypeGeoKey": 3855,
+      "ModelPixelScale": [
+        0.004166666666666667,
+        0.004166666666666667,
+        1.0
+      ],
+      "ModelTiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        30.0,
+        0.0,
+        0.0
+      ]
+    },
+    "USGS_1M_18_x58y451_NJ_NE6County_B23.tif": {
+      "KeyDirectoryVersion": 1,
+      "KeyRevision": 1,
+      "KeyRevisionMinor": 0,
+      "GTModelTypeGeoKey": 1,
+      "GTRasterTypeGeoKey": 1,
+      "GTCitationGeoKey": "NAD83 / UTM zone 18N",
+      "GeogCitationGeoKey": "NAD83",
+      "GeogAngularUnitsGeoKey": 9102,
+      "ProjectedCSTypeGeoKey": 26918,
+      "ProjLinearUnitsGeoKey": 9001,
+      "ModelPixelScale": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "ModelTiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        579993.9999588705,
+        4510006.000000671,
+        0.0
+      ]
+    },
+    "USGS_1_n41w074_20211109.tif": {
+      "KeyDirectoryVersion": 1,
+      "KeyRevision": 1,
+      "KeyRevisionMinor": 0,
+      "GTModelTypeGeoKey": 2,
+      "GTRasterTypeGeoKey": 1,
+      "GeographicTypeGeoKey": 4269,
+      "GeogCitationGeoKey": "NAD83",
+      "GeogAngularUnitsGeoKey": 9102,
+      "GeogSemiMajorAxisGeoKey": 6378137.0,
+      "GeogInvFlatteningGeoKey": 298.257222101004,
+      "ModelPixelScale": [
+        0.00027777777791148956,
+        0.00027777777791148956,
+        0.0
+      ],
+      "ModelTiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        -74.00166666718229,
+        41.00166666678416,
+        0.0
+      ]
+    },
+    "USGS_1_n41w074_20260917.tif": {
+      "KeyDirectoryVersion": 1,
+      "KeyRevision": 1,
+      "KeyRevisionMinor": 0,
+      "GTModelTypeGeoKey": 2,
+      "GTRasterTypeGeoKey": 1,
+      "GeographicTypeGeoKey": 4269,
+      "GeogCitationGeoKey": "NAD83",
+      "GeogAngularUnitsGeoKey": 9102,
+      "GeogSemiMajorAxisGeoKey": 6378137.0,
+      "GeogInvFlatteningGeoKey": 298.257222101004,
+      "ModelPixelScale": [
+        0.00027777777803598015,
+        0.000277777777786999,
+        0.0
+      ],
+      "ModelTiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        -74.00166666718229,
+        41.00166666678416,
+        0.0
+      ]
+    }
+  },
+  "observedHistoricalSizeMismatch": {
+    "file": "USGS_1_n41w074_20211109.tif",
+    "catalogBytes": 20496942,
+    "actualHTTPContentLength": 20761575,
+    "actualBytes": 20761575,
+    "sha256": "96f4f78f88019aed2d12ef47ffde6f623252a0655736f28a9887b08430e255fa",
+    "result": "Initial strict size check stopped. A new complete HTTP200 re-download matched exact current Content-Length and decoded all pixels. This is independent research evidence, not acceptance into the Current connector."
+  },
+  "supplementaryNoaaOriginal": {
+    "datasetId": "etopo",
+    "alreadyPresentInCurrentCatalog": true,
+    "countsAsAnotherNewProduct": false,
+    "original": "ETOPO_2022_v1_15s_N00E030_surface.tif",
+    "license": "CC0-1.0",
+    "release": "2022 v1; catalog publication2022-10-01",
+    "sourcePeriod": "1998-01-01 to2022-09-01; fused model, not one observation",
+    "horizontalCRS": "EPSG:4326",
+    "verticalCRS": "EPSG:3855 EGM2008 height",
+    "rasterioCompoundAuthority": "EPSG:9518",
+    "embeddedNoData": -99999,
+    "actualNoDataPixels": 0,
+    "negativeBathymetryIsValid": true,
+    "metadataReceipt": {
+      "url": "https://data.noaa.gov/waf/NOAA/NESDIS/NGDC/MGG/DEM//iso/xml/etopo_2022.xml",
+      "status": 200,
+      "bytes": 165746,
+      "sha256": "08c1976b2587db27430cc64f60d147e25a38f4fc93f071ecb76a2167933c71d2",
+      "headers": {
+        "Date": "Mon, 12 Oct 2026 10:18:59 GMT",
+        "Server": "Apache",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Last-Modified": "Wed, 01 Jan 2025 09:28:01 GMT",
+        "ETag": "\"28772-62aa1a96fd9fe\"",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "165746",
+        "Content-Type": "text/xml",
+        "Connection": "close"
+      }
+    }
+  },
+  "privateEvidenceRoot": "G:\\code\\geod-global\\.verification\\next-channels-20261012-usgs",
+  "officialSources": [
+    "https://www.usgs.gov/the-national-map-data-delivery/gis-data-download",
+    "https://www.usgs.gov/3d-elevation-program/about-3dep-products-services",
+    "https://tnmaccess.nationalmap.gov/api/v1/docs",
+    "https://www.ncei.noaa.gov/products/etopo-global-relief-model",
+    "https://data.noaa.gov/metaview/page?header=none&view=getDataView&xml=NOAA/NESDIS/NGDC/MGG/DEM//iso/xml/etopo_2022.xml",
+    "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO2022/docs/1.2%20ETOPO%202022%20User%20Guide.pdf"
+  ]
+}

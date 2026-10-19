@@ -1,0 +1,29 @@
+[
+  {
+    "itemId": "Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+    "sha256": "977e99bc16ecdc9d65e0d2bc0920ffe483f554ee4c8659d95b4189e377924787",
+    "decodedSamples": 1440000,
+    "crs": "EPSG:4326",
+    "bands": 1,
+    "width": 1200,
+    "height": 1200
+  },
+  {
+    "itemId": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+    "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5",
+    "decodedSamples": 12960000,
+    "crs": "EPSG:4326",
+    "bands": 1,
+    "width": 3600,
+    "height": 3600
+  },
+  {
+    "itemId": "S2C_10SEG_20250627_0_L2A",
+    "sha256": "3491bcc41b21fb9cca934c1046a4462a5fbfd2621fcad5fe034acfcfc94b3f5a",
+    "decodedSamples": 361681200,
+    "crs": "EPSG:32610",
+    "bands": 3,
+    "width": 10980,
+    "height": 10980
+  }
+]

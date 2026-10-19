@@ -1,0 +1,285 @@
+[
+  {
+    "datasetId": "maxar-open-legacy",
+    "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+    "collectionUrl": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/acquisition_collections/10300100EB15FF00_collection.json",
+    "eventUrl": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/grid/v1.0.0/schema.json"
+      ],
+      "id": "4/122000312222/10300100EB15FF00",
+      "properties": {
+        "datetime": "2023-08-12 21:12:49Z",
+        "platform": "WV02",
+        "gsd": 0.53,
+        "ard_metadata_version": "0.0.1",
+        "catalog_id": "10300100EB15FF00",
+        "utm_zone": 4,
+        "quadkey": "122000312222",
+        "view:off_nadir": 21.8,
+        "view:azimuth": 202.8,
+        "view:incidence_angle": 65.4,
+        "view:sun_azimuth": 104.3,
+        "view:sun_elevation": 70.3,
+        "proj:epsg": 32604,
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                745156.25,
+                2319843.75
+              ],
+              [
+                740398.903221335,
+                2319843.75
+              ],
+              [
+                740591.9003037951,
+                2320381.2200105297
+              ],
+              [
+                745155.0108709247,
+                2320656.618673428
+              ],
+              [
+                745156.25,
+                2319843.75
+              ]
+            ]
+          ]
+        },
+        "grid:code": "MXRA-Z4-122000312222",
+        "proj:bbox": [
+          740398.903221335,
+          2319843.75,
+          745156.25,
+          2320656.618673428
+        ],
+        "tile:data_area": 3.1,
+        "tile:clouds_area": 0.0,
+        "tile:clouds_percent": 1
+      },
+      "bbox": [
+        -156.68792052300424,
+        20.96287019085091,
+        -156.642091971835,
+        20.97020234128532
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -156.64219508913249,
+              20.96287019085091
+            ],
+            [
+              -156.68792052300424,
+              20.963496032042123
+            ],
+            [
+              -156.685991,
+              20.968324
+            ],
+            [
+              -156.642091971835,
+              20.97020234128532
+            ],
+            [
+              -156.64219508913249,
+              20.96287019085091
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../acquisition_collections/10300100EB15FF00_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "parent",
+          "href": "../../../acquisition_collections/10300100EB15FF00_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "root",
+          "href": "../../../order_collections/6252266402030965071_root_collection.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "data-mask": {
+          "type": "application/geopackage+sqlite3",
+          "title": "Data Mask",
+          "href": "./10300100EB15FF00-data-mask.gpkg",
+          "roles": [
+            "data-mask"
+          ]
+        },
+        "ms_analytic": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Multispectral Image",
+          "href": "./10300100EB15FF00-ms.tif",
+          "proj:bbox": [
+            739843.75,
+            2319843.75,
+            745156.25,
+            2325156.25
+          ],
+          "proj:shape": [
+            2583,
+            2583
+          ],
+          "proj:transform": [
+            2.056716995741386,
+            0.0,
+            739843.75,
+            0.0,
+            -2.056716995741386,
+            2325156.25,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eo:bands": [
+            {
+              "name": "BAND_C",
+              "common_name": "coastal",
+              "description": "Coastal Blue"
+            },
+            {
+              "name": "BAND_B",
+              "common_name": "blue",
+              "description": "Blue"
+            },
+            {
+              "name": "BAND_G",
+              "common_name": "green",
+              "description": "Green"
+            },
+            {
+              "name": "BAND_Y",
+              "common_name": "yellow",
+              "description": "Yellow"
+            },
+            {
+              "name": "BAND_R",
+              "common_name": "red",
+              "description": "Red"
+            },
+            {
+              "name": "BAND_RE",
+              "common_name": "rededge",
+              "description": "Red Edge 1"
+            },
+            {
+              "name": "BAND_N",
+              "common_name": "nir08",
+              "description": "Near Infrared 1"
+            },
+            {
+              "name": "BAND_N2",
+              "common_name": "nir09",
+              "description": "Near Infrared 2"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "pan_analytic": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Panchromatic Image",
+          "href": "./10300100EB15FF00-pan.tif",
+          "proj:bbox": [
+            739843.75,
+            2319843.75,
+            745156.25,
+            2325156.25
+          ],
+          "proj:shape": [
+            10332,
+            10332
+          ],
+          "proj:transform": [
+            0.5141792489353465,
+            0.0,
+            739843.75,
+            0.0,
+            -0.5141792489353465,
+            2325156.25,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eo:bands": [
+            {
+              "name": "BAND_P",
+              "description": "Pan"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "visual": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Visual Image",
+          "href": "./10300100EB15FF00-visual.tif",
+          "proj:bbox": [
+            739843.75,
+            2319843.75,
+            745156.25,
+            2325156.25
+          ],
+          "proj:shape": [
+            17408,
+            17408
+          ],
+          "proj:transform": [
+            0.30517578125,
+            0.0,
+            739843.75,
+            0.0,
+            -0.30517578125,
+            2325156.25,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "eo:bands": [
+            {
+              "name": "BAND_R",
+              "common_name": "red",
+              "description": "Red"
+            },
+            {
+              "name": "BAND_G",
+              "common_name": "green",
+              "description": "Green"
+            },
+            {
+              "name": "BAND_B",
+              "common_name": "blue",
+              "description": "Blue"
+            }
+          ],
+          "roles": [
+            "visual"
+          ]
+        }
+      },
+      "collection": "10300100EB15FF00"
+    }
+  }
+]

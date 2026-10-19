@@ -84,6 +84,7 @@ pub const SOURCE_ASSET_KEYS: &[&str] = &[
     "elevation",
     "aerial",
     "srtm",
+    "srtm_num",
     "viirs",
     "vv",
     "vh",
@@ -280,7 +281,7 @@ pub fn matches_item(url: &Url, item_id: &str, asset_key: &str) -> bool {
     if asset_key == "viirs" {
         return url.host_str() == Some(nasa::HOST) && viirs::matches(url.path(), item_id);
     }
-    if asset_key == "srtm" {
+    if matches!(asset_key, "srtm" | "srtm_num") {
         return url.host_str() == Some(nasa::HOST) && nasa::matches_item(url, item_id, asset_key);
     }
     if url.host_str() == Some(modis::HOST) {
@@ -391,6 +392,9 @@ pub fn source_name(href: &str) -> &'static str {
         return "Copernicus Data Space; ESA Sentinel-2 L2A SAFE original product";
     }
     if Url::parse(href).is_ok_and(|url| url.host_str() == Some(nasa::HOST)) {
+        if Url::parse(href).is_ok_and(|url| srtm::num_asset_path(url.path())) {
+            return "NASA LP DAAC; SRTMGL1N v003 original UInt8 NUM source codes; not elevation or an accuracy score";
+        }
         if Url::parse(href).is_ok_and(|url| viirs::asset_path(url.path())) {
             return "NASA/NOAA VIIRS VNP09A1 / VJ109A1 / VJ209A1 v002 8-day 1 km surface reflectance; original HDF5";
         }

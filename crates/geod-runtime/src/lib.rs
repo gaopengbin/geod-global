@@ -5,8 +5,13 @@ pub mod accounts;
 pub mod agent_actions;
 pub mod artifact;
 pub mod crop;
+pub mod datasets;
 pub mod diagnostics;
+pub mod earth_engine;
 pub mod features;
+pub mod gebco;
+pub mod gscloud;
+pub mod local_raster;
 pub mod mcp;
 pub mod mosaic;
 mod prepared;
@@ -50,6 +55,17 @@ use fs2::FileExt;
 use futures_util::StreamExt;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
+
+/// Both transfer strategies share the same full-file validation and publish
+/// transaction. Finite ranges do not themselves establish a completed asset.
+pub(crate) struct CompletedDownload {
+    pub(crate) file: tokio::fs::File,
+    pub(crate) hasher: Sha256,
+    pub(crate) bytes: u64,
+    pub(crate) header: Vec<u8>,
+    pub(crate) total: Option<u64>,
+    pub(crate) validator: Option<transfer::Validator>,
+}
 use std::{
     collections::BTreeMap,
     io::Read,
@@ -280,7 +296,7 @@ fn extension(media_type: &str) -> Result<&'static str> {
 }
 
 fn source_transfer_limit(job: &Job) -> u64 {
-    if job.asset_key == "srtm" {
+    if matches!(job.asset_key.as_str(), "srtm" | "srtm_num") {
         providers::srtm::MAX_ZIP_BYTES
     } else if job.asset_key == "product" && extension(&job.media_type) == Ok("zip") {
         providers::copernicus::MAX_PRODUCT_BYTES
@@ -293,10 +309,23 @@ fn source_transfer_limit(job: &Job) -> u64 {
     }
 }
 
-// Protected and server-generated adapters have their own response contracts.
-// Until those contracts accept conditional ranges, their retry is a fresh GET.
+/// Ordinary/provider limits remain unchanged. The one reviewed raw original
+/// receives only its exact full-file length after immutable source validation.
+pub(crate) fn source_transfer_limit_at(root: &Path, job: &Job) -> Result<u64> {
+    if gscloud::original::is_key(&job.asset_key) {
+        return gscloud::original::transfer_limit(job);
+    }
+    if let Some(policy) = stac::reviewed_raw_original(root, job)? {
+        return Ok(policy.bytes);
+    }
+    Ok(source_transfer_limit(job))
+}
+
+// Public STAC assets revalidate their immutable selection before every request,
+// then share the conditional-range contract. Protected and server-generated
+// adapters retain their own response contracts and retry with a fresh GET.
 fn supports_partial_transfer(job: &Job) -> bool {
-    job.stac_source.is_none()
+    !gscloud::original::is_key(&job.asset_key)
         && job.wcs_source.is_none()
         && Url::parse(&job.href).is_ok_and(|url| {
             !matches!(
@@ -311,7 +340,9 @@ pub fn validate_asset_url(href: &str) -> Result<Url> {
 }
 
 fn validate_request(request: &CreateJobRequest, fixture_origin: Option<&str>) -> Result<()> {
-    if matches!(request.asset_key.as_str(), "stac_asset" | "wcs_coverage") {
+    if matches!(request.asset_key.as_str(), "stac_asset" | "wcs_coverage")
+        || request.asset_key.starts_with("gscloud_")
+    {
         return Err("Custom raster downloads require a saved source selection".into());
     }
     for (value, limit) in [(&request.item_id, 200), (&request.asset_key, 80)] {
@@ -353,7 +384,7 @@ fn validate_request(request: &CreateJobRequest, fixture_origin: Option<&str>) ->
     if (request.asset_key == "viirs") != (ext == "h5") {
         return Err("VIIRS original products require HDF5 mediaType".into());
     }
-    if request.asset_key == "srtm" && ext != "zip" {
+    if matches!(request.asset_key.as_str(), "srtm" | "srtm_num") && ext != "zip" {
         return Err("SRTMGL1 original files require ZIP mediaType".into());
     }
     if url.host_str() == Some(providers::copernicus::HOST) {
@@ -419,6 +450,9 @@ impl JobManager {
             }
             if let Some(info) = &job.transfer {
                 info.validate(job)?;
+            }
+            if gscloud::original::is_key(&job.asset_key) {
+                gscloud::original::validate_job(job)?;
             }
             if job.stac_source.is_some() {
                 stac::validate_job(&root, job)?;
@@ -526,7 +560,8 @@ impl JobManager {
                 && job.status != JobStatus::Succeeded
                 && (job.status == JobStatus::Cancelled
                     || !supports_partial_transfer(job)
-                    || !transfer::candidate(&root, job, source_transfer_limit(job)))
+                    || !source_transfer_limit_at(&root, job)
+                        .is_ok_and(|limit| transfer::candidate(&root, job, limit)))
             {
                 transfer::discard(&root, id).await?;
             }
@@ -881,6 +916,8 @@ impl JobManager {
             }) {
                 return Err("This source already has a queued, running or completed task; use that task or download it from its project".into());
             }
+        } else if gscloud::original::is_key(&old.asset_key) {
+            gscloud::original::validate_job(&old)?;
         } else if old.wcs_source.is_some() {
             wcs::validate_job(&self.inner.root, &old)?;
             if store.jobs.values().any(|job| {
@@ -1007,7 +1044,8 @@ impl JobManager {
                     job.kind == "download"
                         && job.status != JobStatus::Cancelled
                         && supports_partial_transfer(job)
-                        && transfer::candidate(&manager.inner.root, job, source_transfer_limit(job))
+                        && source_transfer_limit_at(&manager.inner.root, job)
+                            .is_ok_and(|limit| transfer::candidate(&manager.inner.root, job, limit))
                 });
                 if !retain {
                     let _ = transfer::discard(&manager.inner.root, &id).await;
@@ -1107,8 +1145,21 @@ impl JobManager {
         job: &Job,
         checkpoint: Option<&transfer::Checkpoint>,
     ) -> Result<reqwest::Response> {
-        if job.stac_source.is_some() {
-            stac::asset_response(settings, job, &self.inner.root).await
+        if gscloud::original::is_key(&job.asset_key) {
+            gscloud::original::response(self, client, job).await
+        } else if job.stac_source.is_some() {
+            #[cfg(test)]
+            if let Some(origin) = &self.inner.fixture_origin {
+                return stac::fixture_asset_response(
+                    settings,
+                    job,
+                    &self.inner.root,
+                    checkpoint,
+                    origin,
+                )
+                .await;
+            }
+            stac::asset_response(settings, job, &self.inner.root, checkpoint).await
         } else if job.wcs_source.is_some() {
             wcs::asset_response(settings, job, &self.inner.root).await
         } else if Url::parse(&job.href)
@@ -1143,7 +1194,7 @@ impl JobManager {
         };
         self.progress(id, 0, None).await?;
         let job = self.get(id).await.ok_or("Unknown job")?;
-        let limit = source_transfer_limit(&job);
+        let limit = source_transfer_limit_at(&self.inner.root, &job)?;
         let resumable = supports_partial_transfer(&job);
         let mut prepared = if resumable {
             transfer::prepare(&self.inner.root, &job, limit, token).await?
@@ -1153,6 +1204,12 @@ impl JobManager {
         };
         let proxy_settings = self.proxy_settings().await;
         let client = proxy::download_client(&proxy_settings)?;
+        if let Some(completed) =
+            transfer::finite_original::download(self, &proxy_settings, &job, &mut prepared, token)
+                .await?
+        {
+            return self.finish_download(&job, token, completed).await;
+        }
         let mut response = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
             response = self.download_response(&client, &proxy_settings, &job, prepared.checkpoint.as_ref()) => response?,
@@ -1172,7 +1229,7 @@ impl JobManager {
                 status => {
                     return Err(format!(
                         "Asset server returned HTTP {status}; partial download was retained"
-                    ))
+                    ));
                 }
             }
             drop(prepared.file.take());
@@ -1219,13 +1276,12 @@ impl JobManager {
                 );
             }
         }
-        let validator = prepared
-            .checkpoint
-            .as_ref()
-            .map(|pin| (pin.etag.clone(), pin.total))
-            .or_else(|| transfer::validator(&response, resumable));
+        let validator = match prepared.checkpoint.as_ref() {
+            Some(pin) => Some(pin.validator()),
+            None => transfer::validator(&response, resumable, &self.inner.root, &job)?,
+        };
         let archive = job.asset_key == "product" && extension(&job.media_type)? == "zip";
-        let srtm = job.asset_key == "srtm";
+        let srtm = matches!(job.asset_key.as_str(), "srtm" | "srtm_num");
         let radar = providers::radar::KEYS.contains(&job.asset_key.as_str());
         let limit_error = if srtm {
             "SRTM ZIP exceeds the 64 MiB local transfer limit"
@@ -1235,6 +1291,8 @@ impl JobManager {
             "Radar COG exceeds the 4 GiB local transfer limit"
         } else if job.asset_key == "aerial" {
             "NAIP COG exceeds the 4 GiB local transfer limit"
+        } else if limit > MAX_ASSET_BYTES {
+            "Reviewed CLCD original exceeds its exact compiled complete file length"
         } else {
             "Asset exceeds the 512 MiB local transfer limit"
         };
@@ -1261,11 +1319,6 @@ impl JobManager {
         self.transfer_progress(id, prepared.bytes, total, info)
             .await?;
         let partial = self.inner.root.join("assets").join(format!("{id}.part"));
-        let final_path =
-            self.inner
-                .root
-                .join("assets")
-                .join(format!("{}.{}", id, extension(&job.media_type)?));
         let mut file = match prepared.file.take() {
             Some(file) => file,
             None => tokio::fs::OpenOptions::new()
@@ -1328,10 +1381,48 @@ impl JobManager {
             }
             return Err(error);
         }
+        self.finish_download(
+            &job,
+            token,
+            CompletedDownload {
+                file,
+                hasher,
+                bytes,
+                header,
+                total,
+                validator,
+            },
+        )
+        .await
+    }
+
+    async fn finish_download(
+        &self,
+        job: &Job,
+        token: &CancellationToken,
+        completed: CompletedDownload,
+    ) -> Result<()> {
+        let CompletedDownload {
+            mut file,
+            hasher,
+            bytes,
+            header,
+            total,
+            validator,
+        } = completed;
+        let id = job.id.as_str();
+        let partial = self.inner.root.join("assets").join(format!("{id}.part"));
+        let final_path =
+            self.inner
+                .root
+                .join("assets")
+                .join(format!("{}.{}", id, extension(&job.media_type)?));
+        let archive = job.asset_key == "product" && extension(&job.media_type)? == "zip";
+        let srtm = matches!(job.asset_key.as_str(), "srtm" | "srtm_num");
         if bytes == 0 || total.is_some_and(|expected| expected != bytes) {
             transfer::checkpoint(
                 &self.inner.root,
-                &job,
+                job,
                 &file,
                 validator.as_ref(),
                 bytes,
@@ -1343,9 +1434,24 @@ impl JobManager {
         }
         // Full-file validation failures must not become resumable candidates.
         transfer::discard_checkpoint(&self.inner.root, id).await?;
+        if bytes > source_transfer_limit_at(&self.inner.root, job)? {
+            return Err("Completed source bytes differ from their bounded local file".into());
+        }
         verify_signature(&header, &job.media_type)?;
+        file.flush().await.map_err(io_error)?;
         file.sync_all().await.map_err(io_error)?;
+        if file.metadata().await.map_err(io_error)?.len() != bytes {
+            return Err("Completed source bytes differ from their bounded local file".into());
+        }
         drop(file);
+        if gscloud::original::is_key(&job.asset_key) {
+            let path = partial.clone();
+            let check = job.clone();
+            let cancel = token.clone();
+            tokio::task::spawn_blocking(move || gscloud::original::verify(&path, &check, &cancel))
+                .await
+                .map_err(io_error)??;
+        }
         if archive {
             let path = partial.clone();
             let item = job.item_id.clone();
@@ -1356,14 +1462,24 @@ impl JobManager {
         if srtm {
             let path = partial.clone();
             let item = job.item_id.clone();
-            tokio::task::spawn_blocking(move || providers::srtm::verify_hgt(&path, &item))
-                .await
-                .map_err(io_error)??;
+            let num = job.asset_key == "srtm_num";
+            tokio::task::spawn_blocking(move || {
+                if num {
+                    providers::srtm::verify_grid(&path, &item, true)
+                } else {
+                    providers::srtm::verify_hgt(&path, &item)
+                }
+            })
+            .await
+            .map_err(io_error)??;
         }
         let sha256 = format!("{:x}", hasher.finalize());
         if job.stac_source.is_some() {
-            stac::verify_transfer(&self.inner.root, &job, bytes, &sha256)?;
+            stac::verify_transfer(&self.inner.root, job, bytes, &sha256)?;
         }
+        let reviewed_archive =
+            stac::archive_original::prepare_download(&self.inner.root, job, &partial, token)
+                .await?;
         if job.wcs_source.is_some() {
             let root = self.inner.root.clone();
             let check = job.clone();
@@ -1418,15 +1534,20 @@ impl JobManager {
         record.output_path = Some(final_path.to_string_lossy().into_owned());
         record.updated_at = now();
         record.error = None;
-        record.validation = if job.wcs_source.is_some() {
+        record.validation = if gscloud::original::is_key(&job.asset_key) {
+            "Complete GSCloud original ZIP: selected product and tile, member format signatures, member byte count, ZIP CRC and SHA-256 verified. Native archive raster decoding and preview are not supported."
+        } else if job.wcs_source.is_some() {
             "Passed coverage response byte count, SHA-256, declared grid and raster layout checks; retained server-generated subset without scientific calibration"
+        } else if job.asset_key == "srtm_num" {
+            "Passed official SRTMGL1N identity, ZIP CRC, 3601 × 3601 UInt8 NUM byte count and SHA-256; raw source codes retained without an elevation or accuracy interpretation"
         } else if srtm {
             "Passed official SRTMGL1 identity, ZIP member CRC, 3601 × 3601 Int16 HGT byte count and SHA-256 checks; terrain accuracy was not assessed"
         } else if job.asset_key == "viirs" {
             "Passed VIIRS v002 embedded identity, period, sinusoidal tile geometry and calibration; all M5/M4/M3 Int16 samples decoded and checksummed; QA masks and other science layers were not decoded"
         } else if archive {
             "Passed official product identity, SAFE ZIP directory, byte count and SHA-256 checks; JP2 pixels were not decoded"
-        } else { "Passed file signature, byte count and SHA-256 checks; no scientific raster validation" }.into();
+        } else if reviewed_archive { "Verified the complete original ZIP and selected TIFF member with independent lengths, SHA-256 and CRC; original archive and member are retained unchanged" }
+        else { "Passed file signature, byte count and SHA-256 checks; no scientific raster validation" }.into();
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.insert(id.to_owned(), before_commit);
             let _ = tokio::fs::remove_file(&final_path).await;

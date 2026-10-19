@@ -34,8 +34,8 @@ it('defaults to both original indices in one named project and keeps scientific 
   expect(screen.getAllByRole('option')).toHaveLength(3);
   expect(screen.queryByRole('option',{name:/True-color|SCL|reflectance/i})).toBeNull();
   await user.keyboard('{Escape}');
-  expect(screen.getByText(/full NASA HDF and QA layers are not included/)).toBeTruthy();
-  await user.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await userEvent.click(screen.getByRole('button',{name:'Download contents'}));expect(screen.getByText(/full NASA HDF and QA layers are not included/)).toBeTruthy();await userEvent.keyboard('{Escape}');
+  await user.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.map(([operation])=>operation)).toEqual(['createProject','downloadProject','downloadProject']);
   expect(runtimeRequest.mock.calls.slice(1).map(([,payload])=>payload.assetKey)).toEqual(['ndvi','evi']);

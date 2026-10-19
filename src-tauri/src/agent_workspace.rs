@@ -14,6 +14,7 @@ pub async fn open(manager: JobManager, session: &str, args: Value) -> Result<Val
     let name = match request.kind.as_str() {
         "raster" => "geod_raster_inspect",
         "vector" => "geod_vector_inspect",
+        "archive" => "geod_gscloud_archive_inspect",
         _ => return Err("Choose a managed raster or vector file to open.".into()),
     };
     // Inspection verifies actual file availability and the persisted checksum.
@@ -24,5 +25,5 @@ pub async fn open(manager: JobManager, session: &str, args: Value) -> Result<Val
     )
 }
 pub fn definition() -> Value {
-    json!({"name":"geod_workspace_open","description":"Open an actual completed managed raster job or verified vector file in the application's map workspace when the human asks to view the result. Native inspection checks the file first. This requests UI navigation, not an export or proof that the rendered pixels were observed. No file paths, URLs, downloads, browser automation or external programs are accepted.","inputSchema":{"type":"object","properties":{"kind":{"type":"string","enum":["raster","vector"]},"id":{"type":"string"}},"required":["kind","id"],"additionalProperties":false}})
+    json!({"name":"geod_workspace_open","description":"Open an actual completed managed raster job, verified GSCloud original archive or vector file in the application's map workspace when the human asks to view the result. Native inspection checks the file first. This requests UI navigation, not an export or proof that the rendered pixels were observed. No file paths, URLs, downloads, browser automation or external programs are accepted.","inputSchema":{"type":"object","properties":{"kind":{"type":"string","enum":["raster","vector","archive"]},"id":{"type":"string"}},"required":["kind","id"],"additionalProperties":false}})
 }

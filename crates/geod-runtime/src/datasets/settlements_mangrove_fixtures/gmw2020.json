@@ -1,0 +1,155 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "91259ca9-521e-5886-a032-eede2de1f73e",
+  "properties": {
+    "odc:product": "gmw",
+    "odc:region_code": "S05E039",
+    "start_datetime": "2020-01-01T00:00:00Z",
+    "end_datetime": "2020-12-31T23:59:59Z",
+    "proj:epsg": 4326,
+    "proj:geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            39.0,
+            -5.999999999999
+          ],
+          [
+            39.999999999999,
+            -5.999999999999
+          ],
+          [
+            39.999999999999,
+            -5.0
+          ],
+          [
+            39.0,
+            -5.0
+          ],
+          [
+            39.0,
+            -5.999999999999
+          ]
+        ]
+      ]
+    },
+    "proj:bbox": [
+      39.0,
+      -5.999999999999,
+      39.999999999999,
+      -5.0
+    ],
+    "proj:shape": [
+      4500,
+      4500
+    ],
+    "proj:transform": [
+      0.000222222222222,
+      0.0,
+      39.0,
+      0.0,
+      -0.000222222222222,
+      -5.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "proj:projjson": {
+      "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
+      "type": "GeographicCRS",
+      "name": "WGS 84",
+      "datum": {
+        "type": "GeodeticReferenceFrame",
+        "name": "World Geodetic System 1984",
+        "ellipsoid": {
+          "name": "WGS 84",
+          "semi_major_axis": 6378137,
+          "inverse_flattening": 298.257223563
+        }
+      },
+      "coordinate_system": {
+        "subtype": "ellipsoidal",
+        "axis": [
+          {
+            "name": "Geodetic latitude",
+            "abbreviation": "Lat",
+            "direction": "north",
+            "unit": "degree"
+          },
+          {
+            "name": "Geodetic longitude",
+            "abbreviation": "Lon",
+            "direction": "east",
+            "unit": "degree"
+          }
+        ]
+      },
+      "id": {
+        "authority": "EPSG",
+        "code": 4326
+      }
+    },
+    "datetime": "2020-12-31T00:00:00Z"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          39.0,
+          -5.999999999999
+        ],
+        [
+          39.999999999999,
+          -5.999999999999
+        ],
+        [
+          39.999999999999,
+          -5.0
+        ],
+        [
+          39.0,
+          -5.0
+        ],
+        [
+          39.0,
+          -5.999999999999
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "s3://deafrica-input-datasets/gmw/2020/S05E039/GMW_S05E039_2020_v3.stac-item.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "derived_from",
+      "href": "https://zenodo.org/records/6894273/files/gmw_v3_2020_gtiff.zip",
+      "type": "application/zip",
+      "title": "Source file"
+    }
+  ],
+  "assets": {
+    "mangrove": {
+      "href": "s3://deafrica-input-datasets/gmw/2020/S05E039/GMW_S05E039_2020_v3.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "gmw-v3.0",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    39.0,
+    -5.999999999999,
+    39.999999999999,
+    -5.0
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+  ]
+}

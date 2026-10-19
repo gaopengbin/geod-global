@@ -29,6 +29,7 @@ async fn receipt(
         c.footprint = Some(super::super::footprint::rectangle(c.bounds));
     }
     let record = SearchReceipt {
+        selection_scope: None,
         id: Uuid::new_v4().to_string(),
         session_id: session.into(),
         query,
@@ -139,6 +140,28 @@ fn account_availability_is_not_product_entitlement() {
     status.expires_at = Some((Utc::now() + chrono::Duration::minutes(30)).to_rfc3339());
     status.verified_at = None;
     assert!(!usable(&status));
+}
+
+#[test]
+fn num_original_agent_catalog_and_plan_format_do_not_become_heights() {
+    let mut item: Value = serde_json::from_str(include_str!(
+        "../../../../../prototype/src/srtm-num.fixture.json"
+    ))
+    .unwrap();
+    let mut q = query("srtm-num");
+    q.bounds = [116.3, 39.8, 116.5, 40.0];
+    let value = json!({"type":"FeatureCollection","features":[item.clone()]});
+    let candidates = normalize(&value, &q).unwrap();
+    assert_eq!(candidates.len(), 1);
+    assert_eq!(
+        catalog::provider(&candidates[0].assets[0]).unwrap(),
+        "srtm-num"
+    );
+    assert_eq!(candidates[0].assets[0].asset_key, "srtm_num");
+    assert_eq!(format("srtm-num"), "NUM ZIP");
+    assert_eq!(account("srtm-num"), Some(AccountProvider::Nasa));
+    item["assets"]["num"]["href"]=json!("https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/SRTMGL1.003/N39E116.SRTMGL1.hgt/N39E116.SRTMGL1.hgt.zip");
+    assert!(normalize(&json!({"type":"FeatureCollection","features":[item]}), &q).is_err());
 }
 #[tokio::test]
 async fn protected_completed_file_reuse_rehashes_without_requesting_authorization() {

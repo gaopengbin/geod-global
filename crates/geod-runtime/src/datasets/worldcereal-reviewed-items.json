@@ -1,0 +1,1025 @@
+[
+  {
+    "layer": "maize-irrigation",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "87d2a884-20c2-568c-aee4-fd76a7658c41",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.994916174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.695360250867942
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              59.994916174824,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.69539316166828
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2020-11-11T00:00:00Z",
+        "end_datetime": "2021-05-08T23:59:59Z",
+        "created": "2023-04-24T16:41:32Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_maize_irrigation",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73566
+        ],
+        "proj:transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2020-11-11T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "confidence": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-maize-main/9026/2021/9026_tc-maize-main_irrigation_2020-11-11_2021-05-08_confidence.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "confidence",
+          "eo:bands": [
+            {
+              "name": "confidence"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            9284,
+            15326
+          ],
+          "proj:transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_maize_irrigation"
+    }
+  },
+  {
+    "layer": "wintercereals-irrigation",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "59c7d13c-4659-522e-9d4b-8c243397cab6",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.994916174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.695360250867942
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              59.994916174824,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.69539316166828
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2021-04-03T00:00:00Z",
+        "end_datetime": "2021-11-09T23:59:59Z",
+        "created": "2023-04-25T00:44:58Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_wintercereals_irrigation",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73566
+        ],
+        "proj:transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2021-04-03T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "confidence": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/9026/2021/9026_tc-wintercereals_irrigation_2021-04-03_2021-11-09_confidence.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "confidence",
+          "eo:bands": [
+            {
+              "name": "confidence"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            9284,
+            15326
+          ],
+          "proj:transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_wintercereals_irrigation"
+    }
+  },
+  {
+    "layer": "temporarycrops",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.994916174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.695376495001614
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              59.994916174824,
+              -18.981793161668282
+            ],
+            [
+              59.99509950815733,
+              -18.981793161668282
+            ],
+            [
+              59.99509950815733,
+              -22.695376495001614
+            ],
+            [
+              59.994916174824,
+              -22.695376495001614
+            ],
+            [
+              59.994916174824,
+              -22.69539316166828
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99509950815733,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2020-11-09T00:00:00Z",
+        "end_datetime": "2021-11-09T23:59:59Z",
+        "created": "2023-04-12T10:17:08Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_temporarycrops",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73567
+        ],
+        "proj:transform": [
+          8.333333333333334e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333333333333332e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2020-11-09T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73567
+          ],
+          "proj:transform": [
+            8.333333333333334e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333333333333332e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "confidence": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "confidence",
+          "eo:bands": [
+            {
+              "name": "confidence"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            9284,
+            15326
+          ],
+          "proj:transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_temporarycrops"
+    }
+  },
+  {
+    "layer": "wintercereals",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "a77aee1b-5296-5d57-be6a-44b43673529d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.994916174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.695360250867942
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              59.994916174824,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.69539316166828
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2021-04-03T00:00:00Z",
+        "end_datetime": "2021-11-09T23:59:59Z",
+        "created": "2023-04-24T21:57:32Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_wintercereals",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73566
+        ],
+        "proj:transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2021-04-03T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "confidence": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/wintercereals/tc-wintercereals/9026/2021/9026_tc-wintercereals_wintercereals_2021-04-03_2021-11-09_confidence.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "confidence",
+          "eo:bands": [
+            {
+              "name": "confidence"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            9284,
+            15326
+          ],
+          "proj:transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_wintercereals"
+    }
+  },
+  {
+    "layer": "maize-main",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "7a941045-16a8-5603-92d2-715e661ec926",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.994916174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.695360250867942
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              59.994916174824,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -18.981793161668282
+            ],
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.695360250867942
+            ],
+            [
+              59.994916174824,
+              -22.69539316166828
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2020-11-11T00:00:00Z",
+        "end_datetime": "2021-05-08T23:59:59Z",
+        "created": "2023-04-21T16:01:00Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_maize_main",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73566
+        ],
+        "proj:transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2020-11-11T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        },
+        "confidence": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/maize/tc-maize-main/9026/2021/9026_tc-maize-main_maize_2020-11-11_2021-05-08_confidence.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "confidence",
+          "eo:bands": [
+            {
+              "name": "confidence"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            9284,
+            15326
+          ],
+          "proj:transform": [
+            0.0004,
+            0.0,
+            53.864516174824,
+            0.0,
+            -0.0004,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_maize_main"
+    }
+  },
+  {
+    "layer": "maize-active",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "bf4db2c1-e328-5a33-be67-52343b3f63b7",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ],
+            [
+              59.99502963949716,
+              -18.981793161668282
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              53.864516174824,
+              -22.695360250867942
+            ],
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.695360250867942,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2020-11-11T00:00:00Z",
+        "end_datetime": "2021-05-08T23:59:59Z",
+        "created": "2023-04-24T19:17:32Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_maize_active",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73566
+        ],
+        "proj:transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2020-11-11T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_maize_active"
+    }
+  },
+  {
+    "layer": "activecropland",
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+      ],
+      "id": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ],
+            [
+              59.99502963949716,
+              -18.981793161668282
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              53.864516174824,
+              -22.695360250867942
+            ],
+            [
+              59.99502963949716,
+              -22.695360250867942
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        53.864516174824,
+        -22.695360250867942,
+        59.99502963949716,
+        -18.981793161668282
+      ],
+      "properties": {
+        "odc:dataset_version": "v1.0.0",
+        "platform": "esa worldcereal project",
+        "odc:producer": "https://vito.be/",
+        "odc:product_family": "esa_worldcereal",
+        "start_datetime": "2021-04-03T00:00:00Z",
+        "end_datetime": "2021-11-09T23:59:59Z",
+        "created": "2023-04-25T03:20:10Z",
+        "odc:file_format": "GeoTIFF",
+        "odc:product": "esa_worldcereal_activecropland",
+        "odc:region_code": "9026",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73566
+        ],
+        "proj:transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": "2021-04-03T00:00:00Z"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "classification": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "esa_worldcereal_activecropland"
+    }
+  }
+]

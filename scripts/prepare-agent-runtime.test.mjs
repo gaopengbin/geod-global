@@ -45,6 +45,7 @@ test('actual Agent bundle gets every published dependency notice and the reviewe
   assert.equal((await readFile(join(output, 'licenses', 'Node-v24.14.0-LICENSE.txt'))).length, 156926);
   assert.match(await readFile(join(output, 'licenses', 'Codex-v0.159.2-NOTICE.txt'), 'utf8'), /Ratatui/);
   assert.match(await readFile(join(output, 'licenses', 'Codex-v0.159.2-LICENSE.txt'), 'utf8'), /TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION/);
+  assert.match(await readFile(join(output, 'licenses', 'GeoD-Agent-v0.2.5-LICENSE.txt'), 'utf8'), /MIT License/);
 });
 
 test('changed or incomplete upstream notices fail before any successful inventory is written', async t => {

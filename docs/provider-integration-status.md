@@ -1,5 +1,10 @@
 # 数据源接入状态与剩余工作
 
+2026-10-19 首版候选核对：当前为 **133 个入口 / 17 类 / 110 Ready / 2 Auth / 21 Planned**，对应 132 个产品选择项。GSCloud 和 Copernicus 保留账号条件；部分 Planned 家族仅开放有限动作。[可复现范围清单](releases/source-scope.json)来自实际目录；以下按日期保留的旧批次统计属于历史记录，不代表当前数量。各渠道实测范围、账号权限和可下载原件须分别核对，不能用入口数量替代。
+
+
+2026-10-15 更新：NASA HLS L30、SRTMGL1 与三类 VIIRS 的真实账号完整原件、独立数值和普通重开已通过；另接入独立 SRTM NUM 来源码和 GEBCO 2026 全球 TID。详见 [NASA 验收](nasa-original-acceptance-20261015.md)、[NUM 验收](srtm-num-original-acceptance-20261015.md)、[TID 验收](gebco-tid-originals-20261015.md)。每个用户的新下载仍需自己的原生账号；Copernicus 继续待验收。当前目录为 133 / 110 Ready / 1 Auth / 22 Planned；后文较早批次的模型、地图和合成协议证据不替代本次原件证据。
+
 2026-10-07。以[当前二维产品范围](product-scope.md)与[完整目标目录](../GeoD-Global-Spec/01-Product-Market-GTM-Spec.md)为范围，按具体产品验收。首页来源目录列出 85 个产品、服务连接和本地导入入口，并明确显示待接入项；探索页的十五个固定入口是其中的具体产品。本页与[来源验收](providers.md)共同记录实际进度。
 
 ## 本轮开放数据源候选（2026-10-07）
@@ -50,7 +55,7 @@
 
 三维已于 2026-10-07 撤出当前产品范围。旧[三维资产验收](three-d-assets.md)仅为历史记录，保留原有文件和用户资产，不再展示三维入口或列入后续接入队列。
 
-NASA / Copernicus 没有可用于正向测试的账号，按用户已确认的选择先做好软件内入口。现在不要求在聊天里提供凭据，也不将 HLS、SRTM、VIIRS 或 SAFE 标为原文件验收完成。
+此前缺少账号时仅完成了入口和负向校验。2026-10-15 已通过本机既有 NASA 授权完成 HLS、SRTM、三类 VIIRS 和 NUM 原件验收；没有在仓库中保存访问凭据。Copernicus 访问令牌已过期，SAFE 仍未验收，不以 NASA 或公共 COG 的成功代替。
 
 ## 高程数据接入约束
 

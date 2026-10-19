@@ -1,0 +1,724 @@
+[
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "pv_pc_10",
+    "assetKey": "pv_pc_10",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 5807653,
+    "expectedSha1": "389156f78bcddacc8f935185ada0a49fd102f14b",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "pv_pc_50",
+    "assetKey": "pv_pc_50",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 8340611,
+    "expectedSha1": "c786e61b9e36ceed21d914ec3451f42bee09f0c3",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedSha256": "ff7f3a266f4a216abf36546a179b628579e01bf65a1ecb0275539fd42b4a63ae",
+    "expectedPixelValues": [
+      {
+        "column": 117,
+        "row": 2285,
+        "values": [
+          2
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "pv_pc_90",
+    "assetKey": "pv_pc_90",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 8023584,
+    "expectedSha1": "7237d6e12d4f48ac856e506b1469e18351e21057",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "bs_pc_10",
+    "assetKey": "bs_pc_10",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 6518598,
+    "expectedSha1": "053e90cd20c0d1f03cf83889598241f15cc4bbe8",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "bs_pc_50",
+    "assetKey": "bs_pc_50",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 8628069,
+    "expectedSha1": "5468394437130301bb1c2869c409aa8aa4813c3c",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "bs_pc_90",
+    "assetKey": "bs_pc_90",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 8039343,
+    "expectedSha1": "6f42516177612e96c43beb28ba08c469c5ceeece",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "npv_pc_10",
+    "assetKey": "npv_pc_10",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 1027337,
+    "expectedSha1": "0516ecf1c4d9cb4fadad89f8bfd30903a441d746",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "npv_pc_50",
+    "assetKey": "npv_pc_50",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 5942042,
+    "expectedSha1": "cd18e46fd46138c9d1cda0e38111bdebe9133e45",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "npv_pc_90",
+    "assetKey": "npv_pc_90",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 7583093,
+    "expectedSha1": "fc92ca026282cd7ea5c45427ff027dc42dfb70e2",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "qa",
+    "assetKey": "qa",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 102327,
+    "expectedSha1": "f3621290512c3aea59e863a1e33abe6d633f45e8",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-fractional-cover",
+    "year": 2025,
+    "bounds": [
+      36.84,
+      -1.3,
+      36.86,
+      -1.28
+    ],
+    "layer": "count_valid",
+    "assetKey": "count_valid",
+    "itemContains": "e0f0cc4d-c84d-530f-9dc2-8d054cf3f8c9",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 3868050,
+    "expectedSha1": "28ab33ffbef9f4fac1f4f5007da3d53a4e335c72",
+    "sampleCoordinates": [
+      [
+        117,
+        2285
+      ]
+    ],
+    "requireAOIUsable": true
+  },
+  {
+    "datasetId": "deafrica-wofs-annual",
+    "year": 2025,
+    "bounds": [
+      37.441,
+      -0.899,
+      37.443,
+      -0.896
+    ],
+    "layer": "count_wet",
+    "assetKey": "count_wet",
+    "itemContains": "ba1e962e-8f82-55ec-89a3-ed0b2a517cee",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 355667,
+    "expectedSha256": "8413faccf023730402caf9690eb93dfc80e9df24e266d4b8001c6e35716f2187",
+    "expectedSha1": "f9ae7a6325fc836f1f06017ce95c563afbb4eaac",
+    "sampleCoordinates": [
+      [
+        2021,
+        617
+      ],
+      [
+        710,
+        897
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 2021,
+        "row": 617,
+        "values": [
+          18.0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 710,
+        "row": 897,
+        "values": [
+          0.0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0.0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "deafrica-wofs-annual",
+    "year": 2025,
+    "bounds": [
+      37.441,
+      -0.899,
+      37.443,
+      -0.896
+    ],
+    "layer": "count_clear",
+    "assetKey": "count_clear",
+    "itemContains": "ba1e962e-8f82-55ec-89a3-ed0b2a517cee",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 4225860,
+    "expectedSha256": "422de1a7829ff1d1af3aba3d964f8263dee7e890e129535e6765a9312747981d",
+    "expectedSha1": "0c7f0d658f14c314a09c6cbe4f42f046163dc89f",
+    "sampleCoordinates": [
+      [
+        2021,
+        617
+      ],
+      [
+        710,
+        897
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 2021,
+        "row": 617,
+        "values": [
+          18.0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 710,
+        "row": 897,
+        "values": [
+          0.0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          16.0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "deafrica-wofs-annual",
+    "year": 2025,
+    "bounds": [
+      37.441,
+      -0.899,
+      37.443,
+      -0.896
+    ],
+    "layer": "frequency",
+    "assetKey": "frequency",
+    "itemContains": "ba1e962e-8f82-55ec-89a3-ed0b2a517cee",
+    "expectedShape": [
+      3200,
+      3200
+    ],
+    "expectedBytes": 2152684,
+    "expectedSha256": "7fe06cf06a4835c55fc83ed276f74137d7113dd625e77004f3b1ea809998ab72",
+    "expectedSha1": "74a32a8a5d1b80c97fb6735a3112cd33291cd9ed",
+    "sampleCoordinates": [
+      [
+        2021,
+        617
+      ],
+      [
+        710,
+        897
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 2021,
+        "row": 617,
+        "values": [
+          1.0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 710,
+        "row": 897,
+        "values": [
+          "NaN"
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0.0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "wsf-settlements",
+    "year": 2015,
+    "bounds": [
+      36.818012118198325,
+      -1.2920256637598388,
+      36.82201211819833,
+      -1.2880256637598388
+    ],
+    "layer": "settlement",
+    "assetKey": "wsf2015",
+    "itemContains": "42a975ad-023e-5f3c-95b3-6f07b1ef0f22",
+    "expectedShape": [
+      22488,
+      22488
+    ],
+    "expectedBytes": 23464870,
+    "expectedSha256": "5c0ecae92d1a9f68e33651679507e884c0c5c1f8ebc7ce3693cd49ab00f560d7",
+    "sampleCoordinates": [
+      [
+        9240,
+        14472
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 9240,
+        "row": 14472,
+        "values": [
+          255
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "wsf-settlements",
+    "year": 2019,
+    "bounds": [
+      36.818012118198325,
+      -1.2920256637598388,
+      36.82201211819833,
+      -1.2880256637598388
+    ],
+    "layer": "settlement",
+    "assetKey": "wsf2019",
+    "itemContains": "16dd01fa-da7b-52d7-9589-973ce6a00153",
+    "expectedShape": [
+      22488,
+      22488
+    ],
+    "expectedBytes": 14197753,
+    "expectedSha256": "ab2afef0121f1fc3691a3b27ee3985451af8a1af97502d409f69ad4c8b4948a8",
+    "sampleCoordinates": [
+      [
+        9240,
+        14472
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 9240,
+        "row": 14472,
+        "values": [
+          255
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "gmw-mangroves",
+    "year": 2020,
+    "bounds": [
+      39.10544444444434,
+      -5.022555555555535,
+      39.10944444444434,
+      -5.018555555555535
+    ],
+    "layer": "mangrove",
+    "assetKey": "mangrove",
+    "itemContains": "91259ca9-521e-5886-a032-eede2de1f73e",
+    "expectedShape": [
+      4500,
+      4500
+    ],
+    "expectedBytes": 123267,
+    "expectedSha256": "ceb39b5bca28c0f9120fe34e0de0fa527130148275b1d24a1310de8f7bf23514",
+    "sampleCoordinates": [
+      [
+        483,
+        92
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 483,
+        "row": 92,
+        "values": [
+          1
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          0
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "cgls-landcover",
+    "year": 2019,
+    "bounds": [
+      32.85,
+      -0.45,
+      32.95,
+      -0.35
+    ],
+    "layer": "permanentwater",
+    "assetKey": "permanentwater_cover_fraction",
+    "itemContains": "5bf5a96f-878f-599c-9cca-44a33df9f4f4",
+    "expectedShape": [
+      87011,
+      91587
+    ],
+    "expectedBytes": 36681970,
+    "expectedSha256": "20e1f3dcff66955ac8444e2c17daabbf153835f811dcecbe4febce9fb39f75f3",
+    "sampleCoordinates": [
+      [
+        59734,
+        39060
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        45793,
+        43505
+      ]
+    ],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {
+        "column": 59734,
+        "row": 39060,
+        "values": [
+          100
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 45793,
+        "row": 43505,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  }
+]

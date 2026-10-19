@@ -1,0 +1,51 @@
+import React from 'react';
+import {fireEvent,render,screen,waitFor,within} from '@testing-library/react';
+import {beforeEach,expect,it,vi} from 'vitest';
+import {I18nProvider} from './i18n.jsx';
+import {GSCloudOriginalDownloads} from './gscloud-download-ui.jsx';
+import {downloadGSCloudOriginal} from './gscloud-client.js';
+import {runtimeRequest} from './runtime-client.js';
+vi.mock('./gscloud-client.js',async original=>({...await original(),downloadGSCloudOriginal:vi.fn()}));
+vi.mock('./runtime-client.js',async original=>({...await original(),desktopAvailable:()=>true,runtimeRequest:vi.fn()}));
+const job={id:'619674d3-4507-4be8-aa80-312bd58010ea',kind:'download',assetKey:'gscloud_srtm90',itemId:'srtm_60_04',href:'https://bjdl.gscloud.cn/sources/download/305/srtm_60_04',mediaType:'application/zip',status:'succeeded',bytesDownloaded:34890696,totalBytes:34890696,sha256:'a'.repeat(64)};
+const props={items:[{id:'srtm_60_04',presence:'available'}],selectedIds:['srtm_60_04'],account:{status:'connected'}};
+beforeEach(()=>{Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:()=> 'en',setItem:vi.fn()}});runtimeRequest.mockReset().mockResolvedValue([]);downloadGSCloudOriginal.mockReset().mockResolvedValue(job);});
+const view=p=>render(<I18nProvider><GSCloudOriginalDownloads {...props} {...p}/></I18nProvider>);
+it('opening the review stays read-only; confirmation submits originals and links to their exact task',async()=>{
+  runtimeRequest.mockImplementation(async()=>downloadGSCloudOriginal.mock.calls.length?[job]:[]);view();
+  fireEvent.click(screen.getByRole('button',{name:'Save and download'}));
+  const review=screen.getByRole('dialog',{name:'Confirm download'});
+  expect(downloadGSCloudOriginal).not.toHaveBeenCalled();
+  expect(within(review).getByText(/archive raster preview is unavailable/)).toBeTruthy();
+  fireEvent.click(within(review).getByRole('button',{name:'Confirm and download'}));
+  const link=await within(review).findByRole('link',{name:'View download tasks'});
+  expect(link.getAttribute('href')).toBe('#Tasks?job='+job.id);
+  expect(downloadGSCloudOriginal).toHaveBeenCalledExactlyOnceWith({productId:'305',itemId:'srtm_60_04'});
+  expect(within(review).getByText('Files ready')).toBeTruthy();
+});
+it('switching selected items does not show another item as its download receipt',async()=>{
+  runtimeRequest.mockResolvedValue([job]);const rendered=view();
+  fireEvent.click(screen.getByRole('button',{name:'Save and download'}));fireEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
+  await screen.findAllByRole('link',{name:'View download tasks'});
+  rendered.rerender(<I18nProvider><GSCloudOriginalDownloads {...props} items={[{id:'srtm_61_04',presence:'available'}]} selectedIds={['srtm_61_04']}/></I18nProvider>);
+  expect(screen.queryByRole('link',{name:'View download tasks'})).toBeNull();
+});
+it.each([{presence:'reservation'},{presence:'available',account:{status:'disconnected'}}])('does not order a reservation or use a disconnected account: %j',async value=>{
+  view({items:[{id:'srtm_60_04',presence:value.presence}],...(value.account?{account:value.account}:{})});
+  expect(screen.getByRole('button',{name:'Save and download'}).disabled).toBe(true);
+  fireEvent.click(screen.getByRole('button',{name:'Save and download'}));
+  expect(downloadGSCloudOriginal).not.toHaveBeenCalled();
+});
+it('retains the first submission after a partial failure and retries only the missing original',async()=>{
+  const next={...job,id:'719674d3-4507-4be8-aa80-312bd58010ea',itemId:'srtm_61_04',href:job.href.replace('60_04','61_04')};
+  let started=[];
+  runtimeRequest.mockImplementation(async()=>started);
+  downloadGSCloudOriginal.mockImplementation(async({itemId})=>{if(itemId===job.itemId){started=[job];return job;}if(downloadGSCloudOriginal.mock.calls.length===2)throw Error('Second file unavailable');started=[job,next];return next;});
+  view({items:[...props.items,{id:next.itemId,presence:'available'}],selectedIds:[job.itemId,next.itemId]});
+  fireEvent.click(screen.getByRole('button',{name:'Save and download'}));fireEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
+  await waitFor(()=>expect(screen.getAllByRole('alert').some(node=>node.textContent.includes('Second file unavailable'))).toBe(true));
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(false));
+  fireEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
+  await waitFor(()=>expect(downloadGSCloudOriginal).toHaveBeenCalledTimes(3));
+  expect(downloadGSCloudOriginal.mock.calls.map(([request])=>request.itemId)).toEqual([job.itemId,next.itemId,next.itemId]);
+});

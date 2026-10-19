@@ -1,0 +1,431 @@
+[
+  {
+    "datasetId": "planetary-more",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation/items/oisst-avhrr-v02r01.20200901",
+    "collectionUrl": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation",
+    "document": {
+      "id": "oisst-avhrr-v02r01.20200901",
+      "bbox": [
+        -180,
+        -90.0,
+        180,
+        90.0
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation/items/oisst-avhrr-v02r01.20200901"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=noaa-cdr-sea-surface-temperature-optimum-interpolation&item=oisst-avhrr-v02r01.20200901",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "err": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/sea-surface-temperature-optimum-interpolation/202009/oisst-avhrr-v02r01.20200901-err.tif",
+          "title": "Estimated error standard deviation of analysed_sst",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "Celsius",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "ice": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/sea-surface-temperature-optimum-interpolation/202009/oisst-avhrr-v02r01.20200901-ice.tif",
+          "title": "Sea ice concentration",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "%",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "sst": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/sea-surface-temperature-optimum-interpolation/202009/oisst-avhrr-v02r01.20200901-sst.tif",
+          "title": "Daily sea surface temperature",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "Celsius",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "anom": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/sea-surface-temperature-optimum-interpolation/202009/oisst-avhrr-v02r01.20200901-anom.tif",
+          "title": "Daily sea surface temperature anomalies",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "Celsius",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "netcdf": {
+          "href": "https://noaacdr.blob.core.windows.net/sea-surface-temp-optimum-interpolation/data/v2.1/avhrr/202009/oisst-avhrr-v02r01.20200901.nc",
+          "title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final NetCDF",
+          "created": "2020-09-16T09:13:00Z",
+          "updated": "2020-09-16T09:13:00Z",
+          "description": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+          "type": "application/x-netcdf",
+          "roles": [
+            "data"
+          ]
+        },
+        "tilejson": {
+          "title": "TileJSON with default rendering",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=noaa-cdr-sea-surface-temperature-optimum-interpolation&item=oisst-avhrr-v02r01.20200901&assets=sst&tile_format=png&colormap_name=rdylbu_r&rescale=-1000,3500&format=png",
+          "type": "application/json",
+          "roles": [
+            "tiles"
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=noaa-cdr-sea-surface-temperature-optimum-interpolation&item=oisst-avhrr-v02r01.20200901&assets=sst&tile_format=png&colormap_name=rdylbu_r&rescale=-1000,3500&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              180,
+              -90
+            ],
+            [
+              180,
+              90
+            ],
+            [
+              -180,
+              90
+            ],
+            [
+              -180,
+              -90
+            ],
+            [
+              180,
+              -90
+            ]
+          ]
+        ]
+      },
+      "collection": "noaa-cdr-sea-surface-temperature-optimum-interpolation",
+      "properties": {
+        "datetime": null,
+        "proj:epsg": 4326,
+        "proj:shape": [
+          720,
+          1440
+        ],
+        "end_datetime": "2020-09-01T23:59:59Z",
+        "proj:transform": [
+          0.25,
+          0.0,
+          -180.0,
+          0.0,
+          -0.25,
+          90.0
+        ],
+        "start_datetime": "2020-09-01T00:00:00Z",
+        "processing:level": "L4"
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/processing/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  },
+  {
+    "datasetId": "modis-more",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061/items/MCD64A1.A2020245.h27v05.061.2021309112113",
+    "collectionUrl": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061",
+    "document": {
+      "id": "MCD64A1.A2020245.h27v05.061.2021309112113",
+      "bbox": [
+        103.70080551,
+        29.82981565,
+        130.56448312,
+        40.08494842
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061/items/MCD64A1.A2020245.h27v05.061.2021309112113"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=modis-64A1-061&item=MCD64A1.A2020245.h27v05.061.2021309112113",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "QA": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_QA.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Quality Assurance Indicators",
+          "raster:bands": [
+            {
+              "data_type": "uint8",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "hdf": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113.hdf",
+          "type": "application/x-hdf",
+          "roles": [
+            "data"
+          ],
+          "title": "Source data containing all bands"
+        },
+        "Last_Day": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_Last_Day.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Last day of the year of reliable change detection",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "int16",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "metadata": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113.hdf.xml",
+          "type": "application/xml",
+          "roles": [
+            "metadata"
+          ],
+          "title": "Federal Geographic Data Committee (FGDC) Metadata"
+        },
+        "Burn_Date": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_Burn_Date.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Burn day of year",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "int16",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "First_Day": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_First_Day.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "First day of the year of reliable change detection",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "int16",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "Burn_Date_Uncertainty": {
+          "href": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_Burn_Date_Uncertainty.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Estimated uncertainty in burn day",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "uint8",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "tilejson": {
+          "title": "TileJSON with default rendering",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=modis-64A1-061&item=MCD64A1.A2020245.h27v05.061.2021309112113&assets=Burn_Date&tile_format=png&colormap_name=modis-64A1&format=png",
+          "type": "application/json",
+          "roles": [
+            "tiles"
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=modis-64A1-061&item=MCD64A1.A2020245.h27v05.061.2021309112113&assets=Burn_Date&tile_format=png&colormap_name=modis-64A1&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.7008055,
+              29.906324
+            ],
+            [
+              117.3564228,
+              40.0849484
+            ],
+            [
+              130.5644831,
+              39.9984912
+            ],
+            [
+              115.3880764,
+              29.8298157
+            ],
+            [
+              103.7008055,
+              29.906324
+            ]
+          ]
+        ]
+      },
+      "collection": "modis-64A1-061",
+      "properties": {
+        "created": "2021-11-05T15:21:13Z",
+        "updated": "2021-11-06T01:20:26.942000Z",
+        "datetime": null,
+        "platform": "terra,aqua",
+        "proj:epsg": null,
+        "proj:wkt2": "PROJCS[\"unnamed\",GEOGCS[\"Unknown datum based upon the custom spheroid\",DATUM[\"Not specified (based on custom spheroid)\",SPHEROID[\"Custom spheroid\",6371007.181,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Sinusoidal\"],PARAMETER[\"longitude_of_center\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"Meter\",1],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+        "proj:shape": [
+          2400,
+          2400
+        ],
+        "instruments": [
+          "modis"
+        ],
+        "end_datetime": "2020-09-30T23:59:59Z",
+        "modis:tile-id": "51027005",
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                11119505.196682,
+                3335851.558997
+              ],
+              [
+                11119505.196682,
+                4447802.078664
+              ],
+              [
+                10007554.677014,
+                4447802.078664
+              ],
+              [
+                10007554.677014,
+                3335851.558997
+              ],
+              [
+                11119505.196682,
+                3335851.558997
+              ]
+            ]
+          ]
+        },
+        "proj:transform": [
+          463.3127165283333,
+          0.0,
+          10007554.677014,
+          0.0,
+          -463.3127165279167,
+          4447802.078664
+        ],
+        "start_datetime": "2020-09-01T00:00:00Z",
+        "modis:vertical-tile": 5,
+        "modis:horizontal-tile": 27
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  }
+]

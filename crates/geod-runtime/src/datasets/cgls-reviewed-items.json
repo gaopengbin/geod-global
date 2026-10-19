@@ -1,0 +1,1042 @@
+[
+  {
+    "year": 2015,
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2015/cgls_landcover_2015.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "28efbc1c-8376-57ee-b9b1-4850f5ef4a57",
+      "properties": {
+        "odc:product": "cgls_landcover",
+        "start_datetime": "2015-01-01T00:00:00Z",
+        "end_datetime": "2015-12-31T23:59:59Z",
+        "proj:epsg": 4326,
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ]
+            ]
+          ]
+        },
+        "proj:bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "proj:shape": [
+          87011,
+          91587
+        ],
+        "proj:transform": [
+          0.0009920634920634888,
+          0.0,
+          -26.36011904761955,
+          0.0,
+          -0.0009920634920634888,
+          38.35019841269855,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "derived_from",
+          "href": "https://zenodo.org/record/3939038",
+          "type": "text/html",
+          "title": "Source"
+        }
+      ],
+      "assets": {
+        "bare_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_bare_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "crops_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_crops_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "builtup_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_builtup_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "grass_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_grass_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "mosslichen_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_mosslichen_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "permanentwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "seasonalwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_seasonalwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "shrub_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_shrub_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "snow_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_snow_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "tree_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_tree_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "data_density": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_data_density.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification_probability": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_classification_probability.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "forest_type": {
+          "href": "s3://deafrica-input-datasets/gls/2015/cgls_landcover_2015_forest_type.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -26.36011904761955,
+        -47.97023809523767,
+        64.49999999999919,
+        38.35019841269855
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ]
+    }
+  },
+  {
+    "year": 2016,
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2016/cgls_landcover_2016.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "1463c6c2-969d-5047-a754-06ae1675edcc",
+      "properties": {
+        "odc:product": "cgls_landcover",
+        "start_datetime": "2016-01-01T00:00:00Z",
+        "end_datetime": "2016-12-31T23:59:59Z",
+        "proj:epsg": 4326,
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ]
+            ]
+          ]
+        },
+        "proj:bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "proj:shape": [
+          87011,
+          91587
+        ],
+        "proj:transform": [
+          0.0009920634920634888,
+          0.0,
+          -26.36011904761955,
+          0.0,
+          -0.0009920634920634888,
+          38.35019841269855,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "derived_from",
+          "href": "https://zenodo.org/record/3518026",
+          "type": "text/html",
+          "title": "Source"
+        }
+      ],
+      "assets": {
+        "bare_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_bare_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "crops_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_crops_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "builtup_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_builtup_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "grass_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_grass_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "mosslichen_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_mosslichen_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "permanentwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "seasonalwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_seasonalwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "shrub_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_shrub_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "snow_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_snow_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "tree_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_tree_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "data_density": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_data_density.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification_probability": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_classification_probability.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "forest_type": {
+          "href": "s3://deafrica-input-datasets/gls/2016/cgls_landcover_2016_forest_type.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -26.36011904761955,
+        -47.97023809523767,
+        64.49999999999919,
+        38.35019841269855
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ]
+    }
+  },
+  {
+    "year": 2017,
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2017/cgls_landcover_2017.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "967c8ccc-328b-5d15-807c-7895a34ff9ca",
+      "properties": {
+        "odc:product": "cgls_landcover",
+        "start_datetime": "2017-01-01T00:00:00Z",
+        "end_datetime": "2017-12-31T23:59:59Z",
+        "proj:epsg": 4326,
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ]
+            ]
+          ]
+        },
+        "proj:bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "proj:shape": [
+          87011,
+          91587
+        ],
+        "proj:transform": [
+          0.0009920634920634888,
+          0.0,
+          -26.36011904761955,
+          0.0,
+          -0.0009920634920634888,
+          38.35019841269855,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "derived_from",
+          "href": "https://zenodo.org/record/3518036",
+          "type": "text/html",
+          "title": "Source"
+        }
+      ],
+      "assets": {
+        "bare_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_bare_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "crops_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_crops_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "builtup_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_builtup_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "grass_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_grass_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "mosslichen_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_mosslichen_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "permanentwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "seasonalwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_seasonalwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "shrub_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_shrub_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "snow_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_snow_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "tree_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_tree_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "data_density": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_data_density.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification_probability": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_classification_probability.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "forest_type": {
+          "href": "s3://deafrica-input-datasets/gls/2017/cgls_landcover_2017_forest_type.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -26.36011904761955,
+        -47.97023809523767,
+        64.49999999999919,
+        38.35019841269855
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ]
+    }
+  },
+  {
+    "year": 2018,
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2018/cgls_landcover_2018.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "fe5e5783-cd73-5fec-aebb-018df493b0d2",
+      "properties": {
+        "odc:product": "cgls_landcover",
+        "start_datetime": "2018-01-01T00:00:00Z",
+        "end_datetime": "2018-12-31T23:59:59Z",
+        "proj:epsg": 4326,
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ]
+            ]
+          ]
+        },
+        "proj:bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "proj:shape": [
+          87011,
+          91587
+        ],
+        "proj:transform": [
+          0.0009920634920634888,
+          0.0,
+          -26.36011904761955,
+          0.0,
+          -0.0009920634920634888,
+          38.35019841269855,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "derived_from",
+          "href": "https://zenodo.org/record/3518038",
+          "type": "text/html",
+          "title": "Source"
+        }
+      ],
+      "assets": {
+        "bare_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_bare_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "crops_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_crops_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "builtup_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_builtup_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "grass_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_grass_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "mosslichen_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_mosslichen_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "permanentwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "seasonalwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_seasonalwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "shrub_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_shrub_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "snow_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_snow_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "tree_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_tree_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "data_density": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_data_density.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification_probability": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_classification_probability.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "forest_type": {
+          "href": "s3://deafrica-input-datasets/gls/2018/cgls_landcover_2018_forest_type.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -26.36011904761955,
+        -47.97023809523767,
+        64.49999999999919,
+        38.35019841269855
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ]
+    }
+  },
+  {
+    "year": 2019,
+    "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/cgls_landcover/2019/cgls_landcover_2019.stac-item.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "5bf5a96f-878f-599c-9cca-44a33df9f4f4",
+      "properties": {
+        "odc:product": "cgls_landcover",
+        "start_datetime": "2019-01-01T00:00:00Z",
+        "end_datetime": "2019-12-31T23:59:59Z",
+        "proj:epsg": 4326,
+        "proj:geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                -47.97023809523767
+              ],
+              [
+                64.49999999999919,
+                38.35019841269855
+              ],
+              [
+                -26.36011904761955,
+                38.35019841269855
+              ]
+            ]
+          ]
+        },
+        "proj:bbox": [
+          -26.36011904761955,
+          -47.97023809523767,
+          64.49999999999919,
+          38.35019841269855
+        ],
+        "proj:shape": [
+          87011,
+          91587
+        ],
+        "proj:transform": [
+          0.0009920634920634888,
+          0.0,
+          -26.36011904761955,
+          0.0,
+          -0.0009920634920634888,
+          38.35019841269855,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              -47.97023809523767
+            ],
+            [
+              64.49999999999919,
+              38.35019841269855
+            ],
+            [
+              -26.36011904761955,
+              38.35019841269855
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "derived_from",
+          "href": "https://zenodo.org/record/3939050",
+          "type": "text/html",
+          "title": "Source"
+        }
+      ],
+      "assets": {
+        "bare_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_bare_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "crops_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_crops_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "builtup_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_builtup_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "grass_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_grass_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "mosslichen_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_mosslichen_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "permanentwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_permanentwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "seasonalwater_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_seasonalwater_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "shrub_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_shrub_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "snow_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_snow_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "tree_cover_fraction": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_tree_cover_fraction.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "data_density": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_data_density.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "classification_probability": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_classification_probability.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        },
+        "forest_type": {
+          "href": "s3://deafrica-input-datasets/gls/2019/cgls_landcover_2019_forest_type.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -26.36011904761955,
+        -47.97023809523767,
+        64.49999999999919,
+        38.35019841269855
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ]
+    }
+  }
+]

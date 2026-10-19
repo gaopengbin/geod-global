@@ -1,0 +1,10 @@
+:root {
+  --geod-blue: #087BEA;
+  --geod-cyan: #00BBDF;
+  --geod-green: #21C885;
+  --geod-ink: #102A43;
+  --geod-space: #071423;
+  --geod-paper: #F3FAFF;
+  --geod-gradient: linear-gradient(90deg, #087BEA 0%, #00BBDF 50%, #21C885 100%);
+  --geod-brand-font: "Segoe UI", Arial, sans-serif;
+}

@@ -22,7 +22,7 @@
 .bui-tooltip { transform-origin: var(--radix-tooltip-content-transform-origin); }
 .bui-tooltip[data-state=delayed-open], .bui-tooltip[data-state=instant-open] { animation: pop-in var(--motion-fast) var(--motion-ease); }
 .bui-tooltip[data-state=closed] { animation: bui-pop-out var(--motion-fast) ease-in; }
-.bui-select-item { transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease; }
+.bui-select-item { transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease; font-size: var(--text-ui); line-height: var(--leading-ui); }
 .bui-select[data-state=open] svg { rotate: 180deg; }
 .bui-select svg { transition: rotate var(--motion-normal) var(--motion-ease); }
 .bui-dialog-overlay[data-state=open] { animation: fade-in var(--motion-normal) ease; }

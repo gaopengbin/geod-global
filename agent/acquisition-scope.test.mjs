@@ -4,6 +4,19 @@ import {afterAcquisitionTool,prepareAcquisitionTool,ADMIN_BOUNDARY_ERROR,AREA_PR
 const bounds=[115.4,39.4,117.5,41.1],reference={id:'a1234567-1234-1234-1234-123456789abc',sha256:'a'.repeat(64)};
 function active(text='下载北京影像，云量小于5%',mode='confirm-each') {return {session:{executionMode:mode,entries:[{type:'user',text}]},context:null};}
 function search(a){afterAcquisitionTool(a,'geod_region_search',{candidates:[{bounds,boundarySource:{provider:'natural-earth',candidateId:'native-beijing',countryCode:'CHN',adminLevel:1}}]});afterAcquisitionTool(a,'geod_scene_search',{searchId:'search',query:{bounds}});}
+test('a model flag cannot turn an area request into selected originals; explicit originals retain the UI receipt',()=>{
+  const a=active();assert.throws(()=>prepareAcquisitionTool(a,'geod_download_plan',{searchId:'selected',originalsOnly:true}),{message:AREA_PROJECT_ERROR});
+  const b=active('只下载选中影像的原始文件，准备下载方案，不裁剪。');
+  afterAcquisitionTool(b,'geod_catalog_selection',{searchId:'selected',query:{bounds}});
+  assert.deepEqual(prepareAcquisitionTool(b,'geod_download_plan',{searchId:'selected',originalsOnly:true}),{searchId:'selected',originalsOnly:true});
+  for(const text of ['下载选中的影像','Download the selected scenes.']){
+    const c=active(text);afterAcquisitionTool(c,'geod_catalog_selection',{searchId:'selected',selectionScope:'selected',query:{bounds}});
+    assert.deepEqual(prepareAcquisitionTool(c,'geod_download_plan',{searchId:'selected',originalsOnly:true}),{searchId:'selected',originalsOnly:true});
+    assert.throws(()=>prepareAcquisitionTool(c,'geod_download_plan',{searchId:'another',originalsOnly:true}),{message:AREA_PROJECT_ERROR});
+  }
+  const d=active('下载选中的影像并裁剪完整行政区');afterAcquisitionTool(d,'geod_catalog_selection',{searchId:'selected',selectionScope:'selected',query:{bounds}});
+  assert.throws(()=>prepareAcquisitionTool(d,'geod_download_plan',{searchId:'selected',originalsOnly:true}),{message:AREA_PROJECT_ERROR});
+});
 test('administrative downloads default to the native polygon with no crop keyword, in both approval modes',()=>{
   for(const mode of ['confirm-each','full-access']){
     const a=active(undefined,mode);search(a);

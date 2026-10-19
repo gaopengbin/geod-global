@@ -1,0 +1,432 @@
+[
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-wintercereals",
+    "layer": "activecropland",
+    "itemContains": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73566
+    ],
+    "expectedBytes": 6498381,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-maize-main",
+    "layer": "maize-active",
+    "itemContains": "bf4db2c1-e328-5a33-be67-52343b3f63b7",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73566
+    ],
+    "expectedBytes": 6424508,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ],
+      [
+        26220,
+        99
+      ],
+      [
+        44678,
+        12210
+      ],
+      [
+        44853,
+        12094
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 26220,
+        "row": 99,
+        "values": [
+          254
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 44678,
+        "row": 12210,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 44853,
+        "row": 12094,
+        "values": [
+          100
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-maize-main",
+    "layer": "maize-irrigation",
+    "itemContains": "87d2a884-20c2-568c-aee4-fd76a7658c41",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73566
+    ],
+    "expectedBytes": 5745232,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-maize-main",
+    "layer": "maize-main",
+    "itemContains": "7a941045-16a8-5603-92d2-715e661ec926",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73566
+    ],
+    "expectedBytes": 6400120,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-annual",
+    "layer": "temporarycrops",
+    "itemContains": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73567
+    ],
+    "expectedBytes": 6310865,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ],
+      [
+        26220,
+        99
+      ],
+      [
+        44343,
+        12268
+      ],
+      [
+        45065,
+        12882
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 26220,
+        "row": 99,
+        "values": [
+          0
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 44343,
+        "row": 12268,
+        "values": [
+          100
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 45065,
+        "row": 12882,
+        "values": [
+          100
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-wintercereals",
+    "layer": "wintercereals",
+    "itemContains": "a77aee1b-5296-5d57-be6a-44b43673529d",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73566
+    ],
+    "expectedBytes": 6391243,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-wintercereals",
+    "layer": "wintercereals-irrigation",
+    "itemContains": "59c7d13c-4659-522e-9d4b-8c243397cab6",
+    "assetKey": "classification",
+    "expectedShape": [
+      44563,
+      73566
+    ],
+    "expectedBytes": 5777336,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "region": "9026",
+    "season": "tc-annual",
+    "layer": "temporarycrops",
+    "itemContains": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+    "assetKey": "confidence",
+    "expectedShape": [
+      9284,
+      15326
+    ],
+    "expectedBytes": 2038416,
+    "sampleCoordinates": [
+      [
+        0,
+        0
+      ],
+      [
+        5460,
+        479
+      ],
+      [
+        10409,
+        18
+      ],
+      [
+        9337,
+        2519
+      ]
+    ],
+    "expectedPixelValues": [
+      {
+        "column": 0,
+        "row": 0,
+        "values": [
+          255
+        ],
+        "noData": [
+          true
+        ]
+      },
+      {
+        "column": 5460,
+        "row": 479,
+        "values": [
+          100
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 10409,
+        "row": 18,
+        "values": [
+          254
+        ],
+        "noData": [
+          false
+        ]
+      },
+      {
+        "column": 9337,
+        "row": 2519,
+        "values": [
+          50
+        ],
+        "noData": [
+          false
+        ]
+      }
+    ]
+  }
+]

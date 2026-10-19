@@ -1,0 +1,317 @@
+{
+  "schema": "geod-next2-real-browser-ui-acceptance/v1",
+  "status": "passed",
+  "checkedAt": "2026-10-12T14:32:32.767111+00:00",
+  "scope": "Three selected products / four original files, actual CUA browser actions. Not all catalog tiles, all disaster events or native desktop-window acceptance.",
+  "evidenceMethod": "CUA observed UI states and screenshots; read-only native GET records verify files and persistence separately. This summary script does not drive or simulate UI actions.",
+  "binarySha256": "ede39ccc8ed06c7029c3dabf4495d2269293e1714aef000421a67160c4dfe651",
+  "finalLocalPreview": "http://127.0.0.1:4317/#Explore",
+  "nativeWindowTested": false,
+  "installedDesktopUpdated": false,
+  "deployed": false,
+  "committed": false,
+  "uiSteps": [
+    "classified product card",
+    "fill AOI and reference period/layer",
+    "review original source",
+    "connect metadata",
+    "explicit asset selection",
+    "save named project",
+    "explicit download",
+    "view original raster map",
+    "read original pixel",
+    "restart settled native preview",
+    "reopen project and original pixel"
+  ],
+  "mauiLayerSwitchInvalidatedPriorSelection": true,
+  "sourceOnlyGhslPhysicalFitKeepsAllOriginalColumns": true,
+  "oldRecordsPreserved": {
+    "jobs": 16,
+    "projects": 14,
+    "fullRecordEquality": true
+  },
+  "finalRecords": {
+    "jobs": 20,
+    "projects": 18,
+    "noActiveTransfers": true
+  },
+  "catalogue": {
+    "directoryEntries": 106,
+    "categories": 16,
+    "ready": 59,
+    "authOrCatalogue": 6,
+    "planned": 41,
+    "connectedFilter": 65,
+    "nativePublicRasterProducts": 27,
+    "nativeAnalysisLayers": 60
+  },
+  "limitations": [
+    "Maui finite WV02 2023-08-12 tile is CC-BY-NC-4.0; not global commercial procurement.",
+    "Maui independent validity mask retained in original; scalar TIFF NoData labels and first-band preview do not apply that separate mask.",
+    "GHSL undocumented zero is not TIFF NoData; GLAD zero is valid; publisher GLAD 255 legend is separate from absent scalar TIFF NoData.",
+    "Nightlights DN calibration and full native transfer acceptance unresolved; remains planned and excluded from production dataset resolver.",
+    "Vantor 2026 YCbCr originals remain planned; no native decode acceptance claim."
+  ],
+  "tests": {
+    "nativePassed": 721,
+    "nativeIgnored": 15,
+    "clippy": "passed",
+    "frontendUnitPassed": 409,
+    "frontendUiPassed": 492,
+    "frontendUiWorkers": 4,
+    "selectedFinalFixtureUnitPassed": 14,
+    "selectedFinalFixtureUiPassed": 14,
+    "productionFrontendBuild": "passed before receipt refresh; no production frontend code changed afterward",
+    "repositoryCheck": "passed"
+  },
+  "cases": [
+    {
+      "datasetId": "ghsl-smod",
+      "layer": "settlement-class",
+      "projectId": "12530be3-9dac-4177-b83f-8cb996b65f7a",
+      "jobId": "21853a56-8ef4-43e8-8737-84ab471039e3",
+      "actualUiSaveDownloadAndInspection": true,
+      "finalRestartReopenedInUi": true,
+      "coordinate": [
+        35568,
+        5903
+      ],
+      "rawValues": [
+        30
+      ],
+      "bytes": 20566541,
+      "sha256": "20661ac0f98166bd2253ce1155e131d589b0100fc2d5eed9dc7c632228071416",
+      "transfer": {
+        "mode": "fresh",
+        "resumedBytes": 0
+      },
+      "attempts": 2,
+      "proofDocuments": [],
+      "artifacts": [
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/ghsl.ax.txt",
+          "sha256": "ec278b95a44d543b7874e1681c403890f3896cc00a2b1fc20d4400140241f1c9",
+          "bytes": 1644
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/ghsl-zero.ax.txt",
+          "sha256": "200532bb23c2974ec99ace5d1abec4aaaecb584dda2d26c367cd6386c81c3606",
+          "bytes": 1639
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/ghsl-nodata.ax.txt",
+          "sha256": "abdfe85a83b32c25844ccf605006aba361647e90fbf00b32a96740f0127e0617",
+          "bytes": 1665
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/ghsl-nodata.jpg",
+          "sha256": "96d1eaf572e4f981b24d27ea2a9dd3d95a6e8960cc6fc54b65225a1c6a2cc0e9",
+          "bytes": 57391
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/ghsl-reopen.ax.txt",
+          "sha256": "bee10c418629eabccbb2d449c52ca9121fc2288f1eaf7f0e7ef36fa90a79788a",
+          "bytes": 1644
+        }
+      ]
+    },
+    {
+      "datasetId": "glad-landcover-2020",
+      "layer": "land-cover",
+      "projectId": "1b370462-6150-4c25-ab0e-3f309700c0c3",
+      "jobId": "478bcf1d-d1d0-4adc-9cee-a37f67db4e28",
+      "actualUiSaveDownloadAndInspection": true,
+      "finalRestartReopenedInUi": true,
+      "coordinate": [
+        3801,
+        0
+      ],
+      "rawValues": [
+        244
+      ],
+      "bytes": 44495039,
+      "sha256": "87406f90ee15916222ddceef02f8b7088e32e9b528b808f5a35aed40de68fcd7",
+      "transfer": {
+        "mode": "fresh",
+        "resumedBytes": 0
+      },
+      "attempts": 2,
+      "proofDocuments": [],
+      "artifacts": [
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/glad.ax.txt",
+          "sha256": "ed835c05e7f384f080321bb82da5590c52ca108f39ed64ed0369630dbcbce2ed",
+          "bytes": 1482
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/glad-zero.ax.txt",
+          "sha256": "bf9e197307d153799e3fa981b50244da1e8504a86a8fce90c0b2bc645a1a0661",
+          "bytes": 1477
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/glad.jpg",
+          "sha256": "52988036e11f0d75915afd6d738a2809d7c2bea072d5082db7962eaa41b4659a",
+          "bytes": 52584
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/glad-reopen.ax.txt",
+          "sha256": "3074a04c7cfefaf9184302d1571145d1fe64e71680ea31869be15404bf6d7b65",
+          "bytes": 1482
+        }
+      ]
+    },
+    {
+      "datasetId": "maxar-open-legacy",
+      "layer": "pan_analytic",
+      "projectId": "7926a0df-d56d-4d43-855c-aa6317ecdec2",
+      "jobId": "60903d5f-539e-432f-a77b-1d305a8e9299",
+      "actualUiSaveDownloadAndInspection": true,
+      "finalRestartReopenedInUi": true,
+      "coordinate": [
+        5799,
+        9809
+      ],
+      "rawValues": [
+        470
+      ],
+      "bytes": 23460106,
+      "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+      "transfer": {
+        "mode": "fresh",
+        "resumedBytes": 0
+      },
+      "attempts": 1,
+      "proofDocuments": [
+        {
+          "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+          "sha256": "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca"
+        },
+        {
+          "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/acquisition_collections/10300100EB15FF00_collection.json",
+          "sha256": "ea7968af0aad150299a6244c9607f784390eba24dac5f4af602d64b231a05f40"
+        },
+        {
+          "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/collection.json",
+          "sha256": "69fa03e33734cc2b42932e24071dd6cd554e08077b3fd464a60ba9178207c1bb"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-pan.ax.txt",
+          "sha256": "87097b9cdce3d3dafd35f52748e1fb59b9e03ee0792174bd3aca7930d9f4d874",
+          "bytes": 1619
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-pan-zero.ax.txt",
+          "sha256": "b482fe5e14fd2f53d57e0a0e3f27c4073e62a77913e1aa3db88bd247d12ea90c",
+          "bytes": 1611
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-pan.jpg",
+          "sha256": "15c5fc7198926bdf99c31baf56b0d3e6b69e73a299d1f83a572f6ab7c23e2945",
+          "bytes": 45709
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-pan-reopen.ax.txt",
+          "sha256": "62e697e6a463fb0d181d0465bfcbf77014f83bc8e22b86e3b4ca6d9e71bd617b",
+          "bytes": 1619
+        }
+      ]
+    },
+    {
+      "datasetId": "maxar-open-legacy",
+      "layer": "ms_analytic",
+      "projectId": "2369d5f3-17a1-4e7b-be97-9cdab20b92d3",
+      "jobId": "92c23359-3413-4d72-8c4c-f15938d18d79",
+      "actualUiSaveDownloadAndInspection": true,
+      "finalRestartReopenedInUi": true,
+      "coordinate": [
+        1449,
+        2452
+      ],
+      "rawValues": [
+        95,
+        296,
+        469,
+        512,
+        524,
+        1158,
+        1741,
+        1925
+      ],
+      "bytes": 12977165,
+      "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+      "transfer": {
+        "mode": "resumed",
+        "resumedBytes": 782896
+      },
+      "attempts": 5,
+      "proofDocuments": [
+        {
+          "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+          "sha256": "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca"
+        },
+        {
+          "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/acquisition_collections/10300100EB15FF00_collection.json",
+          "sha256": "ea7968af0aad150299a6244c9607f784390eba24dac5f4af602d64b231a05f40"
+        },
+        {
+          "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/collection.json",
+          "sha256": "69fa03e33734cc2b42932e24071dd6cd554e08077b3fd464a60ba9178207c1bb"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-ms.ax.txt",
+          "sha256": "40d8ec748ba080c2b43c06ac550f2c88c01eb7ba745f1867374949026ec36520",
+          "bytes": 1885
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-ms-zero.ax.txt",
+          "sha256": "1eecad775160ca7563f7c4a9420aca0c8dd9dd4a4b3dae5814c6a3bf0e5cc3f1",
+          "bytes": 1861
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-ms.jpg",
+          "sha256": "881cbd51f202a7ea68c1c7fe0f0f666693a8b9ffa68ca45d8d0e81096350d06c",
+          "bytes": 50930
+        },
+        {
+          "path": "prototype/qa/next2-public-channels-20261012/maui-ms-reopen.ax.txt",
+          "sha256": "4d62ea52d3624cb74a1f97270d12f594175e08b62ebcb0e2aec41850a4a9c994",
+          "bytes": 1883
+        }
+      ]
+    }
+  ],
+  "actualResume": {
+    "jobId": "92c23359-3413-4d72-8c4c-f15938d18d79",
+    "failedAttempt": 4,
+    "succeededAttempt": 5,
+    "retainedPrefixBytes": 782896,
+    "restartAfterSettledNaturalNetworkFailure": true,
+    "explicitUiRetry": true,
+    "forceCrashPerformed": false,
+    "activeQaCrashAttemptGuardRefused": true,
+    "priorControlledCancelClearedPrefix": true,
+    "rawPublisherResponseHeadersCaptured": false,
+    "productionResumeGuard": "same strong ETag, exact 206 Content-Range, identity encoding and remaining length; source metadata and selected layer revalidated first"
+  },
+  "originalBytesTotal": 101498851,
+  "pickerArtifacts": [
+    {
+      "path": "prototype/qa/next2-public-channels-20261012/source-picker.ax.txt",
+      "sha256": "87990dc46643343b5b6e108785cce172e80a10483427f6b3e4444af7a6eb6f9b",
+      "bytes": 4302
+    },
+    {
+      "path": "prototype/qa/next2-public-channels-20261012/source-picker.jpg",
+      "sha256": "19576a05a249c9d9f47e3a3fae1410ff2628a48bc852804a17bad8d54b1f08aa",
+      "bytes": 84538
+    }
+  ],
+  "nativeReadOnlyAuditReceipt": {
+    "path": "docs/next2-public-channel-browser-native-audit-20261012.json",
+    "sha256": "311959b823a7fa357c2801c887c4ba21b388d1f27503daff581422bc845d1968"
+  }
+}

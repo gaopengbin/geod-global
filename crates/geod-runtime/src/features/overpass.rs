@@ -116,7 +116,7 @@ fn collections(url: &Url) -> Vec<Collection> {
     ["buildings", "roads", "water", "landuse", "pois"].into_iter().map(|id| Collection {
         id: id.into(), title: preset(id).unwrap().0.into(),
         description: "OSM bounding-box selection with complete geometry and recursive members; not an exact polygon clip.".into(),
-        items_url: url.to_string(), license_links: vec![LICENSE.into()], arcgis: None, wfs: None,
+        items_url: url.to_string(), license_links: vec![LICENSE.into()], arcgis: None, wfs: None, geoboundaries: None,
     }).collect()
 }
 fn identity(raw: &Value) -> Result<(String, f64, String, String)> {
@@ -343,6 +343,7 @@ pub(super) async fn discover(
         collections: collections(&url),
         connected_at: now(),
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
         overpass: Some(Service {
             generator,

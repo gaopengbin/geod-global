@@ -3,7 +3,7 @@ import { Download, Layers } from 'lucide-react';
 import { useI18n } from './i18n.jsx';
 import { projectSourceJobs } from './projects-client.js';
 import { VI_POLICIES, VI_SELECTION_KEYS, supportsViSelection } from './vegetation-quality.js';
-import { Button, Disclosure, Progress, Select, Surface } from './ui/index.jsx';
+import { InfoDetails, Button, Progress, Select, Surface } from './ui/index.jsx';
 
 export function VegetationQualityControls({ project, jobs, health, busy, onAction }) {
   const { t, number } = useI18n();
@@ -38,12 +38,12 @@ export function VegetationQualityControls({ project, jobs, health, busy, onActio
   </Surface>;
 }
 
-export function VegetationSelectionDetails({ job, metadata }) {
+export function VegetationSelectionDetails({ job, metadata, embedded = false }) {
   const { t, number, date } = useI18n();
   const result = metadata?.vegetation?.qualitySelection || job?.mosaicOutput?.viQuality;
   if (!result) return null;
   const spec = job?.mosaic?.viSelection;
-  return <Disclosure className="wm-legend vi-selection-details" summary={t('Vegetation quality selection')}>
+  return <InfoDetails embedded={embedded} closeLabel={t('Close')} contentClassName="wm-legend vi-selection-details" summary={t('Vegetation quality selection')}>
     <dl className="runtime-details">
       <dt>{t('Quality rule')}</dt><dd>{t(VI_POLICIES[result.policy])}</dd>
       <dt>{t('Complete index candidates')}</dt><dd>{number(result.inputCommonValidPixels)}</dd>
@@ -53,13 +53,13 @@ export function VegetationSelectionDetails({ job, metadata }) {
     </dl>
     <p>{t('Counts cover every output pixel. Missing pairs, outside-area pixels and quality failures are NoData.')}</p>
     <p>{t('Reject missing or undefined QA, low usefulness, high aerosol, adjacent or mixed clouds, snow/ice and shadow. These are GeoD screening choices.')}</p>
-    {spec && <Disclosure summary={t('Observation sources and contributions')}>
+    {spec && <section className="bui-info-section"><h4>{t('Observation sources and contributions')}</h4>
       <ul className="vi-source-list">{spec.scenes.map((s,i)=><li key={s.itemId}>
         <strong>{t('Composite start')} · {date(s.compositeStart)} · {number(result.sceneValidPixels[i])} {t('pixels')}</strong>
         <code className="runtime-wrap">{s.itemId}</code>
         <div>{s.sources.map((source,k)=><a key={source.jobId} href={source.href} target="_blank" rel="noreferrer" title={`SHA-256 ${source.sha256}`}>{['NDVI','EVI',t('Detailed VI quality'),t('Pixel reliability')][k]}</a>)}</div>
       </li>)}</ul>
-    </Disclosure>}
+    </section>}
     <a href="https://lpdaac.usgs.gov/documents/621/MOD13_User_Guide_V61.pdf" target="_blank" rel="noreferrer">{t('NASA MOD13 quality definitions')}</a>
-  </Disclosure>;
+  </InfoDetails>;
 }

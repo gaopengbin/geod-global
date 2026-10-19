@@ -85,7 +85,9 @@ test('image-only send uses owned localImage paths and persists references across
   let service=rig();await service.open();await service.configure(config,[{name:'geod_projects_list',inputSchema:{type:'object'}}]);
   await assert.rejects(service.send({text:'',images:['https://example.test/x.png']}));
   await service.send({text:'',images:[image.id]});await service.turnTask;
-  assert.deepEqual(calls.find(call=>call.method==='turn/start').params.input,[{type:'localImage',path:join(home,'images',`${image.id}.png`)}]);
+  const input=calls.find(call=>call.method==='turn/start').params.input;
+  assert(input[0].text.includes('Current application entry point'));
+  assert.deepEqual(input.filter(part=>part.type==='localImage'),[{type:'localImage',path:join(home,'images',`${image.id}.png`)}]);
   const id=service.selectedId;event({method:'turn/completed',params:{threadId,turn:{status:'completed'}}});await new Promise(r=>setImmediate(r));await service.close();
   const raw=await readFile(join(home,'sessions.json'),'utf8');assert(!raw.includes('data:image'));assert(!raw.includes(home));assert(!raw.includes(config.apiKey));
   const saved=JSON.parse(raw);saved.sessions[0].entries[0].images[0]=Object.fromEntries(Object.entries(image).sort(([a],[b])=>a.localeCompare(b)));

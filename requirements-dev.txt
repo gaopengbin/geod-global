@@ -1,3 +1,4 @@
 # Contract/schema checks and reproducible administrative boundary conversion; not app runtime dependencies.
 jsonschema==4.26.0
 pyshp==3.1.6
+-r services/official/requirements.txt

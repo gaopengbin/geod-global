@@ -1,0 +1,105 @@
+{
+  "schema": "geod-hilda-publisher-legend-review/v1",
+  "checkedAt": "2026-10-12T04:57:32.305132+00:00",
+  "exactOriginalHref": "https://s3.openlandmap.org/arco/land.use.land.cover_hilda.plus_c_1km_s_20190101_20191231_go_espg.4326_v1.0.tif",
+  "metadataReceipts": [
+    {
+      "url": "https://s3.eu-central-1.wasabisys.com/stac/openlandmap/land.use.land.cover_hilda.plus/collection.json",
+      "status": 200,
+      "sha256": "2199a588be430dd347f90476fc956481c7df622af412c6420cedb72073e192a3",
+      "bytes": 13901
+    },
+    {
+      "url": "https://s3.eu-central-1.wasabisys.com/stac/openlandmap/land.use.land.cover_hilda.plus/land.use.land.cover_hilda.plus_20190101_20191231/land.use.land.cover_hilda.plus_20190101_20191231.json",
+      "status": 200,
+      "sha256": "51916bffd873c89d51dafeb4d9afa96100aaa873b59cbaa286b61f8e5b3ddbad",
+      "bytes": 2989
+    },
+    {
+      "url": "https://s3.openlandmap.org/arco/land.use.land.cover_hilda.plus.sld",
+      "status": 200,
+      "sha256": "7e8942447fad65ab073a1afe27ed5ae61912144fe694436da064f1104f32e68c",
+      "bytes": 1576
+    },
+    {
+      "url": "https://s3.openlandmap.org/arco/land.use.land.cover_hilda.plus.qml",
+      "status": 200,
+      "sha256": "19eb7cc4c76e3c58bda02506a7cf416046173a75c427dfb18abad98c20bff6b8",
+      "bytes": 9481
+    }
+  ],
+  "sourceCollectionDescription": "HILDA+ (HIstoric Land Dynamics Assessment+) global dataset indicates annual land use/cover change between 1960-2019 at 1 km spatial resolution. It integrates multiple open data streams (from high-resolution remote sensing, long-term land use reconstructions and statistics). It covers six generic land use/cover categories: 1: Urban areas, 2: Cropland, 3: Pasture/rangeland, 4: Forest, 5: Unmanaged grass/shrubland, 6: Sparse/no vegetation.",
+  "sourceStyleEntries": [
+    {
+      "value": "0",
+      "label": "0"
+    },
+    {
+      "value": "11",
+      "label": "urban"
+    },
+    {
+      "value": "22",
+      "label": "cropland"
+    },
+    {
+      "value": "33",
+      "label": "pasture/rangeland"
+    },
+    {
+      "value": "44",
+      "label": "forset"
+    },
+    {
+      "value": "55",
+      "label": "unmanaged grass/shrubland"
+    },
+    {
+      "value": "77",
+      "label": "sparse/no vegatation"
+    }
+  ],
+  "sourceQgisStyleEntries": [
+    {
+      "value": "0",
+      "label": "0"
+    },
+    {
+      "value": "11",
+      "label": "urban"
+    },
+    {
+      "value": "22",
+      "label": "cropland"
+    },
+    {
+      "value": "33",
+      "label": "pasture/rangeland"
+    },
+    {
+      "value": "44",
+      "label": "forset"
+    },
+    {
+      "value": "55",
+      "label": "unmanaged grass/shrubland"
+    },
+    {
+      "value": "77",
+      "label": "sparse/no vegatation"
+    }
+  ],
+  "authorLegendUrl": "https://landchange.imk-ifu.kit.edu/hilda",
+  "authorDeclaredLegend": {
+    "0": "ocean",
+    "11": "urban",
+    "22": "cropland",
+    "33": "pasture/rangeland",
+    "44": "forest",
+    "55": "unmanaged grass/shrubland",
+    "66": "sparse/no vegetation",
+    "77": "water",
+    "99": "no data"
+  },
+  "interpretation": "The six abstract category ordinals are not raw TIFF codes. Exact 2019 styles label 77 as sparse/no vegetation and omit 66/99; author legend differs. Preserve raw codes and disclose conflict. No embedded TIFF NoData tag is invented."
+}

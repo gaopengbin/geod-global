@@ -1,0 +1,139 @@
+{
+  "profiles": [
+    {
+      "datasetId": "ghsl-built-surface",
+      "code": "GHS-BUILT-S",
+      "title": "GHSL · Built-up surface · 2020",
+      "layer": "built-surface",
+      "unit": "m² per cell",
+      "category": "thematic",
+      "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_buS2023.php",
+      "registryUrl": "https://registry.opendata.aws/ghs-built-s/",
+      "doi": "10.2905/9F06F36F-4B11-47EC-ABB0-4F8B7B1D72EA",
+      "citation": "Dataset : Pesaresi M., Politis P. (2023) : GHS-BUILT-S R2023A - GHS built-up surface grid, derived from Sentinel2 composite and Landsat, multitemporal (1975-2030) European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/9f06f36f-4b11-47ec-abb0-4f8b7b1d72ea , doi: 10.2905/9F06F36F-4B11-47EC-ABB0-4F8B7B1D72EA",
+      "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-built-s/r2023a/4326/30asec/2020/GHS_BUILT_S_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+      "bytes": 173085842,
+      "sha256": "c622f77878056a29f41496a0d8412bf381f4501c546ef07e7d5a76696cefbc5b",
+      "dataType": "UInt32",
+      "width": 43201,
+      "height": 21384,
+      "sourceBounds": [
+        -180.00124926466006,
+        -89.10041610517223,
+        180.00708264275895,
+        89.0995831776456
+      ],
+      "queryBounds": [
+        -180.0,
+        -89.10041610517223,
+        180.0,
+        89.0995831776456
+      ],
+      "transform": [
+        0.00833333330032682,
+        0.0,
+        -180.00124926466006,
+        0.0,
+        -0.008333333299795073,
+        89.0995831776456
+      ],
+      "nodata": null,
+      "publisherNoData": 4294967295,
+      "scale": 1.0,
+      "offset": 0.0,
+      "validZeroCount": 883683054,
+      "validMax": 848108.0,
+      "decodedPixels": 923810184
+    },
+    {
+      "datasetId": "ghsl-built-volume",
+      "code": "GHS-BUILT-V",
+      "title": "GHSL · Built-up volume · 2020",
+      "layer": "built-volume",
+      "unit": "m³ per cell",
+      "category": "thematic",
+      "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_buV2023.php",
+      "registryUrl": "https://registry.opendata.aws/ghs-built-v/",
+      "doi": "10.2905/AB2F107A-03CD-47A3-85E5-139D8EC63283",
+      "citation": "Dataset : Pesaresi M., Politis P. (2023) : GHS-BUILT-V R2023A - GHS built-up volume grids derived from joint assessment of Sentinel2, Landsat, and global DEM data, multitemporal (1975-2030). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/ab2f107a-03cd-47a3-85e5-139d8ec63283 , doi: 10.2905/AB2F107A-03CD-47A3-85E5-139D8EC63283",
+      "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-built-v/r2023a/4326/30asec/2020/GHS_BUILT_V_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+      "bytes": 187376914,
+      "sha256": "5f61071d872b5877cb506fcc3fac6793487568428ef8e00e0b54d6e392793b06",
+      "dataType": "UInt32",
+      "width": 43201,
+      "height": 21384,
+      "sourceBounds": [
+        -180.00124926466006,
+        -89.10041610513471,
+        180.00708264269574,
+        89.09958317764332
+      ],
+      "queryBounds": [
+        -180.0,
+        -89.10041610513471,
+        180.0,
+        89.09958317764332
+      ],
+      "transform": [
+        0.008333333300325358,
+        0.0,
+        -180.00124926466006,
+        0.0,
+        -0.008333333299793211,
+        89.09958317764332
+      ],
+      "nodata": null,
+      "publisherNoData": 4294967295,
+      "scale": 1.0,
+      "offset": 0.0,
+      "validZeroCount": 883683054,
+      "validMax": 16413999.0,
+      "decodedPixels": 923810184
+    },
+    {
+      "datasetId": "ghsl-population",
+      "code": "GHS-POP",
+      "title": "GHSL · Residential population · 2020",
+      "layer": "population-count",
+      "unit": "residents per cell",
+      "category": "population",
+      "documentationUrl": "https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php",
+      "registryUrl": "https://registry.opendata.aws/ghs-pop/",
+      "doi": "10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE",
+      "citation": "Dataset : Schiavina M., Freire S., Carioli A., MacManus K. (2023) : GHS-POP R2023A - GHS population grid multitemporal (1975-2030). European Commission, Joint Research Centre (JRC) PID: http://data.europa.eu/89h/2ff68a52-5b5b-4a22-8f40-c41da8332cfe , doi: 10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE",
+      "url": "https://jrc-ghsl.s3.eu-central-1.amazonaws.com/ghs-pop/r2023a/4326/30asec/2020/GHS_POP_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+      "bytes": 424616290,
+      "sha256": "b6eec24c613d0787c14166214865a3e0578b419ceebbaff00e46904e6a61e708",
+      "dataType": "Float64",
+      "width": 43202,
+      "height": 21384,
+      "sourceBounds": [
+        -180.00791593130032,
+        -89.10041610517223,
+        180.008749309419,
+        89.0995831776456
+      ],
+      "queryBounds": [
+        -180.0,
+        -89.10041610517223,
+        180.0,
+        89.0995831776456
+      ],
+      "transform": [
+        0.00833333330032682,
+        0.0,
+        -180.00791593130032,
+        0.0,
+        -0.008333333299795073,
+        89.0995831776456
+      ],
+      "nodata": null,
+      "publisherNoData": -200,
+      "scale": 1.0,
+      "offset": 0.0,
+      "validZeroCount": 881359774,
+      "validMax": 277608.74043127534,
+      "decodedPixels": 923831568
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "method": "direct native HTTP Range receipt; separate from browser screenshots",
+  "results": [
+    {
+      "snapshotId": "3b4a34fd67a51c53c4dbc3179d25010d7b5c36be7cfb1be872ba28bac45c82e2",
+      "status": 206,
+      "contentRange": "bytes 0-1023/108133854",
+      "contentLength": "1024",
+      "bytesRead": 1024,
+      "signature": "49492a00"
+    },
+    {
+      "snapshotId": "dad7d33a261f832c9699e0b85a297bdb5226e818353960b20336b80a1016b262",
+      "status": 206,
+      "contentRange": "bytes 0-1023/113664937",
+      "contentLength": "1024",
+      "bytesRead": 1024,
+      "signature": "49492a00"
+    }
+  ]
+}

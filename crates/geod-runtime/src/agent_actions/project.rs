@@ -535,6 +535,7 @@ impl JobManager {
         self.save_agent_plan(
             session,
             Action::Download {
+                originals_only: false,
                 acquisition: Some(footprint::Scope {
                     bounds: project.bounds,
                     geometry: project.geometry.clone(),

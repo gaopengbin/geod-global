@@ -5,12 +5,13 @@ import { useI18n } from './i18n.jsx';
 import { desktopAvailable } from './runtime-client.js';
 import { activateDesktopFrame, syncDesktopAppearance, showDesktopWindowMenu, handleDesktopTitlebarMouseDown } from './desktop-frame.js';
 import './app-header.css';
+import './brand.css';
 
 export function GeoDBrand({ compact = false }) {
   const { t } = useI18n();
   return <a className="geod-brand" href="#Home" aria-label={t('GeoD home')}>
     <img src="./brand/geod-symbol.png" width="32" height="32" alt="" draggable="false" />
-    {!compact && <span>GeoD <span className="geod-brand-edition">Global</span></span>}
+    {!compact && <span>GeoD <span className="geod-brand-edition geod-brand-gradient">Global</span></span>}
   </a>;
 }
 

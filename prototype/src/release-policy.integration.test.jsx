@@ -5,14 +5,14 @@ import { I18nProvider } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { DownloadAssetButton } from './runtime-ui.jsx';
 import { PROVIDERS } from './providers.js';
-import { PROTECTED_ORIGINAL_NOTICE } from './release-policy.js';
+import { PROTECTED_ORIGINAL_NOTICE,originalsReleased } from './release-policy.js';
 import { runtimeRequest } from './runtime-client.js';
 vi.mock('./runtime-client.js', async original => ({ ...await original(), runtimeRequest: vi.fn() }));
 beforeEach(() => {
   Object.defineProperty(window, 'localStorage', { configurable:true, value:{getItem:()=> 'en',setItem:vi.fn()} });
   runtimeRequest.mockClear();
 });
-it.each(PROVIDERS.filter(p=>p.account))('withholds $id downloads while retaining the correct authorization route', source => {
+it.each(PROVIDERS.filter(p=>p.account&&!originalsReleased(p)))('withholds $id downloads while retaining the correct authorization route', source => {
   render(<I18nProvider><RuntimeContext.Provider value={{health:{},jobs:[],refresh:vi.fn()}}>
     <DownloadAssetButton scene={{provider:source.id}}/>
   </RuntimeContext.Provider></I18nProvider>);

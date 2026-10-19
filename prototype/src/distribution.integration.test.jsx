@@ -24,7 +24,7 @@ const notice=(id='notice-1')=>({id,revision:1,title:{en:'Product news','zh-CN':'
 it('does not silently download or install; inspection, verified download and install confirmation are separate',async()=>{
   mount();await waitFor(()=>expect(screen.getByText('Installed version')).toBeTruthy());
   expect(invoke.mock.calls.every(([name])=>name==='distribution_snapshot')).toBe(true);
-  await userEvent.click(screen.getByRole('button',{name:'Check for updates'}));await screen.findByText('Signed release notes');
+  await userEvent.click(screen.getByRole('button',{name:'Check for updates'}));expect(screen.queryByText('Signed release notes')).toBeNull();await userEvent.click(await screen.findByRole('button',{name:'Release notes'}));await screen.findByText('Signed release notes');await userEvent.keyboard('{Escape}');
   expect(invoke).not.toHaveBeenCalledWith('update_download',expect.anything());
   await userEvent.click(screen.getByRole('button',{name:'Download update'}));await screen.findByText('Update verified and ready to install.');
   await userEvent.click(screen.getByRole('button',{name:'Install and restart'}));const dialog=await screen.findByRole('dialog');expect(invoke).not.toHaveBeenCalledWith('update_install',expect.anything());

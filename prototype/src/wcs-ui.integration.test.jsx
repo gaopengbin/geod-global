@@ -22,6 +22,7 @@ it('requires explicit coverage description and bounded plan, retaining declarati
   await choose(user); expect(wcsRequest.mock.calls.some(([op]) => op === 'describe')).toBe(false); expect(screen.getByRole('button', { name: 'Plan coverage subset' }).disabled).toBe(true);
   await user.click(screen.getByRole('button', { name: 'Read coverage description' })); await screen.findByText('100 × 100 · EPSG:4326 · 1 range fields');
   await user.click(screen.getByRole('button', { name: 'Declared range fields · 1' })); expect(screen.getByText('K')).toBeTruthy(); expect(screen.getByText('<img src=x onerror=alert(1)>')).toBeTruthy(); expect(document.querySelector('img')).toBeNull();
+  await user.keyboard('{Escape}');
   await user.click(screen.getByRole('button', { name: 'Plan coverage subset' })); await screen.findByText('20 × 10 · EPSG:4326');
   expect(wcsRequest.mock.calls.find(([op]) => op === 'plan')[1]).toEqual({ descriptionId: wcsDescription.id, bounds: wcsPlan.requestedBounds });
   await user.type(screen.getByRole('textbox', { name: 'Coverage project name' }), 'Temperature subset'); await user.click(screen.getByRole('button', { name: 'Save coverage plan' }));

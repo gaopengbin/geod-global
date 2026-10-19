@@ -34,7 +34,7 @@ it('blocks unconnected HLS original downloads and links to the matching authoriz
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   await screen.findByText('Connect NASA Earthdata before downloading protected files.');
   expect(screen.getByRole('link',{name:'Manage authorization'}).hash).toBe('#Settings?account=nasa-earthdata');
-  expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(true);
+  expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(true);
   expect(runtimeRequest.mock.calls.map(([operation])=>operation)).toEqual(['accounts']);
   expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('Int16');
   expect(screen.queryByText(/UInt16/)).toBeNull();
@@ -44,8 +44,8 @@ it('saved native authorization queues three calibrated originals into one projec
   account = state('saved');
   download();
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
-  await waitFor(()=>expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(false));
-  await userEvent.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(false));
+  await userEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.map(([operation])=>operation)).toEqual(['accounts','createProject','downloadProject','downloadProject','downloadProject']);
   const saved = runtimeRequest.mock.calls.find(([operation])=>operation==='createProject')[1];
@@ -59,7 +59,7 @@ it('a browser preview cannot queue protected downloads or request a credential',
   download();
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   expect(screen.getByText('Open the desktop app to authorize and download protected NASA files.')).toBeTruthy();
-  expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(true);
+  expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(true);
   expect(runtimeRequest).not.toHaveBeenCalled();
   expect(screen.queryByLabelText('Earthdata user token')).toBeNull();
 });
@@ -86,13 +86,13 @@ it('Copernicus resolves a complete original product before saving or queuing a d
   wrap(<DownloadAssetButton scene={cdse} scenes={[cdse]} areaBounds={cdse.bbox} areaName="SAFE"/>);
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   expect(screen.getByText('Resolving original products from the official catalogue…')).toBeTruthy();
-  expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(true);
+  expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(true);
   expect(screen.queryByText(/no common supported/)).toBeNull();
   resolve([product]);
-  await waitFor(()=>expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(false));
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(false));
   expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('SAFE product · ZIP');
   expect(screen.getByText(/1.1 GiB/)).toBeTruthy();
-  await userEvent.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await userEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   const saved = runtimeRequest.mock.calls.find(([operation])=>operation==='createProject')[1];
   expect(saved.scenes[0].assets).toEqual({product:{href:product.href,mediaType:'application/zip'}});
@@ -108,7 +108,7 @@ it('Copernicus lookup failure keeps the download disabled and does not save an e
   wrap(<DownloadAssetButton scene={cdse} scenes={[cdse]} areaBounds={cdse.bbox} areaName="SAFE"/>);
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   await screen.findByText('Original products could not be resolved. Close and retry this download.');
-  expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(true);
+  expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(true);
   expect(runtimeRequest.mock.calls.some(([operation])=>operation==='createProject')).toBe(false);
 });
 

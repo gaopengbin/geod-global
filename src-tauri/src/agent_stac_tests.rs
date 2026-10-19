@@ -3,6 +3,141 @@
 use super::tests::{assistant_text, completed};
 use super::*;
 
+#[tokio::test]
+#[ignore = "Explicit own desktop profile, real selected model and public WorldCover metadata; creates only an isolated project, never a download"]
+async fn live_worldcover_natural_request_reaches_download_review() {
+    use super::registry::{NativeVault, Vault};
+    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .canonicalize()
+        .unwrap();
+    let base =
+        PathBuf::from(std::env::var("GEOD_AGENT_WORLDCOVER_QA").expect("fresh isolated QA folder"));
+    assert!(
+        base.is_absolute()
+            && base
+                .parent()
+                .unwrap()
+                .canonicalize()
+                .unwrap()
+                .starts_with(root.join(".verification").canonicalize().unwrap())
+    );
+    assert!(!base.exists());
+    tokio::fs::create_dir_all(&base).await.unwrap();
+    let profile = PathBuf::from(
+        std::env::var("GEOD_AGENT_WORLDCOVER_PROFILE").expect("explicit own profile"),
+    );
+    let registry_bytes = tokio::fs::read(profile.join("agent/registry.json"))
+        .await
+        .unwrap();
+    let registry: Value = serde_json::from_slice(&registry_bytes).unwrap();
+    let selected = registry["connections"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|entry| entry["id"] == registry["selectedId"])
+        .unwrap();
+    let reference = selected["credentialRef"].as_str().unwrap();
+    assert!(reference.starts_with("connection-"));
+    let secret = NativeVault
+        .read(reference)
+        .unwrap()
+        .expect("saved model key");
+    let mut config = selected["settings"].clone();
+    let model = config["model"].clone();
+    config["apiKey"] = json!(secret.as_str());
+    let home = base.join("agent");
+    tokio::fs::create_dir_all(&home).await.unwrap();
+    let manager = JobManager::open(base.join("core")).await.unwrap();
+    if let Ok(proxy) = std::env::var("GEOD_AGENT_TEST_PROXY") {
+        manager
+            .save_proxy_settings(geod_runtime::ProxySettings {
+                mode: geod_runtime::proxy::ProxyMode::Custom,
+                url: Some(proxy),
+            })
+            .await
+            .unwrap();
+    }
+    let runtime = root.join(".agent-runtime/win32-x64");
+    verify_runtime(&runtime).await.unwrap();
+    let connection = Connection::spawn(&runtime, &home, manager.clone())
+        .await
+        .unwrap();
+    connection
+        .rpc(
+            "configure",
+            json!({"config":config,"definitions":definitions()}),
+        )
+        .await
+        .unwrap();
+    let agent = DesktopAgent::open(home.clone(), runtime, manager.clone())
+        .await
+        .unwrap();
+    agent.0.state.lock().await.connection = Some(connection.clone());
+    let context = json!({"page":"Explore","provider":"earth-search","bounds":[115.421823,39.440435,117.488571,41.047728],"start":"2021-01-01","end":"2021-12-31","cloudMax":100,"projectId":null});
+    let first = agent.operation("send", json!({"text":"找北京2021年的 ESA WorldCover 10米土地覆盖，先准备方案给我确认，不要下载。","context":context,"scene":{"kind":"workspace","page":"Explore"}})).await.unwrap();
+    let session = first["selected"]["id"].as_str().unwrap().to_owned();
+    let project_turn = finish(&connection, "WorldCover natural discovery").await;
+    tokio::fs::write(
+        base.join("project-turn.json"),
+        serde_json::to_vec_pretty(&project_turn).unwrap(),
+    )
+    .await
+    .unwrap();
+    let names = tool_names(&project_turn);
+    assert!(names.iter().any(|name| name == "geod_dataset_connect"));
+    assert!(!names.iter().any(|name| name == "geod_scene_search"));
+    let project_plan = pending(&agent.snapshot().await.unwrap(), "project");
+    assert!(manager.list_projects().await.is_empty() && manager.list().await.is_empty());
+    assert_eq!(project_plan["files"].as_array().unwrap().len(), 2);
+    let accepted = agent
+        .approve_plan(
+            &session,
+            project_plan["planId"].as_str().unwrap(),
+            project_plan["planHash"].as_str().unwrap(),
+        )
+        .await
+        .unwrap();
+    let submitted = accepted["plans"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|p| p["planId"] == project_plan["planId"])
+        .unwrap();
+    let project_id = submitted["project"]["id"].as_str().unwrap();
+    assert!(manager.list().await.is_empty());
+    agent.operation("send", json!({"sessionId":session,"text":format!("工程已确认，工程编号 {project_id}。继续准备原文件下载方案给我确认，先不要下载。"),"context":context,"scene":{"kind":"workspace","page":"Explore"}})).await.unwrap();
+    let download_turn = finish(&connection, "WorldCover original download review").await;
+    tokio::fs::write(
+        base.join("download-turn.json"),
+        serde_json::to_vec_pretty(&download_turn).unwrap(),
+    )
+    .await
+    .unwrap();
+    let download_plan = pending(&agent.snapshot().await.unwrap(), "download");
+    assert_eq!(download_plan["files"].as_array().unwrap().len(), 2);
+    assert!(download_plan["files"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(|file| file["assetKey"] == "stac_asset" && file["originalAssetKey"] == "raster"));
+    assert!(manager.list().await.is_empty());
+    assert_eq!(
+        tokio::fs::read(profile.join("agent/registry.json"))
+            .await
+            .unwrap(),
+        registry_bytes
+    );
+    let receipt = json!({"schema":"geod-worldcover-model-review-acceptance/v1","status":"passed","model":model,"naturalLanguageRequest":true,"projectPlan":project_plan,"downloadPlan":download_plan,"projectId":project_id,"originalFilesTransferred":0,"usedUserDesktop":false,"credentialVaultWritten":false,"userProfileUnchanged":true,"snapshot":download_turn});
+    tokio::fs::write(
+        base.join("receipt.json"),
+        serde_json::to_vec_pretty(&receipt).unwrap(),
+    )
+    .await
+    .unwrap();
+    connection.close().await;
+}
+
 fn tool_names(snapshot: &Value) -> Vec<String> {
     snapshot["selected"]["entries"]
         .as_array()

@@ -1,0 +1,325 @@
+{
+  "sourceId": "gscloud",
+  "status": "auth",
+  "retrievedAt": "2026-10-15T08:08:59.314557700+00:00",
+  "catalogProductCount": 124,
+  "catalogMetadataSha256": "f2abf7523d9c8708e5d8ca3f926af3a1d1612a16980003aeed7a93e2e374449e",
+  "liveMetadata": [
+    {
+      "request": {
+        "productId": "2c79f880a0304edebac6c48592d8e088",
+        "bounds": [
+          116.2,
+          39.8,
+          116.5,
+          40.1
+        ],
+        "start": "2025-09-01",
+        "end": "2025-10-15",
+        "cloudMax": null,
+        "presence": "all",
+        "page": 1,
+        "pageSize": 3
+      },
+      "total": 24,
+      "itemsInPage": 3,
+      "elapsedSeconds": 1.438,
+      "metadataSha256": "e6f398183af7121aeb19a8ab896748dfef938030bb14e2a0c9c5cae69a431b4b",
+      "detail": {
+        "downloadsStarted": false,
+        "item": {
+          "bbox": [
+            113.71543,
+            39.22345,
+            116.5456,
+            41.4174
+          ],
+          "bytes": 1052278272.0,
+          "cloudCover": 12.15,
+          "datetime": "2025-09-01T00:00:00Z",
+          "downloadStatus": "account-required",
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  113.71543,
+                  41.37145
+                ],
+                [
+                  116.53093,
+                  41.4174
+                ],
+                [
+                  116.5456,
+                  39.26605
+                ],
+                [
+                  113.81794,
+                  39.22345
+                ],
+                [
+                  113.71543,
+                  41.37145
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "LC09_L2SP_124032_20250901_20250902_02_T1",
+          "path": "124",
+          "presence": "available",
+          "productId": "2c79f880a0304edebac6c48592d8e088",
+          "row": "32"
+        },
+        "metadataSha256": "3532068442537cf261097086a17d54d8fbae960ef4845c523b21e14c09fcb051",
+        "retrievedAt": "2026-10-15T08:09:00.750127100+00:00"
+      },
+      "downloadsStarted": false
+    },
+    {
+      "request": {
+        "productId": "305",
+        "bounds": [
+          116.2,
+          39.8,
+          116.5,
+          40.1
+        ],
+        "start": "1980-01-01",
+        "end": "2026-10-15",
+        "cloudMax": null,
+        "presence": "all",
+        "page": 1,
+        "pageSize": 3
+      },
+      "total": 2,
+      "itemsInPage": 2,
+      "elapsedSeconds": 0.562,
+      "metadataSha256": "05449fd8478413f392c6fd234695fd075321d88fece7e73eb6b11e27ba292ee5",
+      "detail": {
+        "downloadsStarted": false,
+        "item": {
+          "bbox": [
+            115.0,
+            40.0,
+            120.0,
+            45.0
+          ],
+          "bytes": null,
+          "cloudCover": null,
+          "datetime": null,
+          "downloadStatus": "account-required",
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  115,
+                  45
+                ],
+                [
+                  120,
+                  45
+                ],
+                [
+                  120,
+                  40
+                ],
+                [
+                  115,
+                  40
+                ],
+                [
+                  115,
+                  45
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "srtm_60_04",
+          "path": "60",
+          "presence": "available",
+          "productId": "305",
+          "row": "4"
+        },
+        "metadataSha256": "17ac4a1cf70f9d71b9478fe1db2604f5c6df1163eb3b674aabac478e349ccb6c",
+        "retrievedAt": "2026-10-15T08:09:01.320663800+00:00"
+      },
+      "downloadsStarted": false
+    }
+  ],
+  "validation": {
+    "nativeTestsPassed": 10,
+    "uiTestsPassed": 104,
+    "latestGscloudUiTestsPassed": 11,
+    "agentTestsPassed": 155,
+    "desktopBuild": true,
+    "realAccountLogin": true,
+    "realAccountLoginEvidence": "User confirmed successful official-website sign-in and in-app session verification on 2026-10-15.",
+    "originalDownloadVerified": true,
+    "reservationImplemented": false,
+    "humanCaptchaSubmission": false,
+    "latestGscloudClientTestsPassed": 6,
+    "verifiedOriginalProducts": [
+      "305",
+      "307",
+      "308",
+      "310",
+      "421",
+      "aeab8000652a45b38afbb7ff023ddabb"
+    ],
+    "nativeImgPreviewAvailable": false
+  },
+  "previewExistingJobsAfterUpgrade": 61,
+  "publicMetadataInterface": "https://www.gscloud.cn/geoagent/api/gscloud",
+  "desktopBinarySha256": "b2edd3c8194dd150a2788411a87a192abbc001ce5106e3fb34143de96c2ba097",
+  "loginRevision": {
+    "method": "official-website-in-isolated-incognito-desktop-window",
+    "oldPasswordCaptchaRsaAdapterRemoved": true,
+    "frontendReceivesCredentials": false,
+    "remotePageHasDesktopCommandAcl": false,
+    "sessionVerifiedWithPublisherBeforeVaultSave": true,
+    "manualUserSignInVerification": "user-confirmed-success",
+    "nativeTests": {
+      "runtimePassed": 6,
+      "runtimeLiveMetadataIgnored": 1,
+      "desktopNavigationPassed": 1
+    },
+    "uiTestsPassed": 7,
+    "clientTestsPassed": 4,
+    "desktopCommandAclPassed": true,
+    "frontendBuildPassed": true,
+    "desktopBuildPassed": true,
+    "nativeLaunchVerified": true,
+    "nativeSourceEntryVerified": true,
+    "originalDownloadVerified": false,
+    "existingDesktopRecordsAfterRestart": {
+      "jobs": 104,
+      "succeeded": 84,
+      "failed": 14,
+      "interrupted": 6,
+      "agentSessions": 13
+    },
+    "executableBytes": 159213568
+  },
+  "originalRevision": {
+    "scope": "SRTMDEM90m product 305 original ZIP only; other products and reservations pending",
+    "retrievedAt": "2026-10-15T09:12:49.508091100+00:00",
+    "nativeJobId": "0d472af5-5f56-4704-8990-fc58069e10ca",
+    "publicStableHref": "https://bjdl.gscloud.cn/sources/download/305/srtm_60_04",
+    "privateDeliveryCredentialsPersisted": false,
+    "original": {
+      "productId": "305",
+      "itemId": "srtm_60_04",
+      "archiveBytes": 34890696,
+      "archiveSha256": "bc40bbf3beec41921e2aa58b2fb91f37a317a92d3b0b3d95b22734087b91095b",
+      "zipCrcVerified": true,
+      "members": [
+        {
+          "name": "srtm_60_04.img",
+          "bytes": 65652411,
+          "compressedBytes": 34890518,
+          "crc32": "30948220"
+        }
+      ],
+      "memberSha256": "d22e5790cf1dd8a75b2e32819bcaa5d92a149a81ba3125e41fbdb1cd81c441a6",
+      "raster": {
+        "width": 6000,
+        "height": 6000,
+        "bands": 1,
+        "dataTypes": [
+          "int16"
+        ],
+        "crs": "EPSG:4326",
+        "transform": [
+          0.0008333333333333334,
+          0.0,
+          115.0,
+          0.0,
+          -0.0008333333333333334,
+          45.0
+        ],
+        "bounds": [
+          115.0,
+          40.0,
+          120.0,
+          45.0
+        ],
+        "noData": -32768.0,
+        "blockShapes": [
+          [
+            64,
+            64
+          ]
+        ],
+        "tags": {
+          "AREA_OR_POINT": "Area"
+        },
+        "samples": [
+          {
+            "column": 0,
+            "row": 0,
+            "value": 1355
+          },
+          {
+            "column": 100,
+            "row": 100,
+            "value": 1256
+          },
+          {
+            "column": 3000,
+            "row": 3000,
+            "value": 1509
+          },
+          {
+            "column": 5999,
+            "row": 5999,
+            "value": -32768
+          },
+          {
+            "column": 3000,
+            "row": 1000,
+            "value": 1266
+          }
+        ]
+      },
+      "independentInspectionOnly": true,
+      "softwareNativeReaderAvailable": false
+    },
+    "nativeQueue": {
+      "completeFileShaMatchesIndependentDownload": true,
+      "liveJobReopenVerified": true,
+      "fixtureCancelRetryAndDuplicateSubmissionPassed": true,
+      "resumesPartialBytes": false,
+      "createsReservationOrApplication": false
+    },
+    "validation": {
+      "runtimeTestsPassed": 9,
+      "runtimeTestsIgnored": 3,
+      "uiTestsPassed": 10,
+      "clientTestsPassed": 5,
+      "genericDownloadRegressionPassed": 1,
+      "liveNativeDownloadAndReopenPassed": 1,
+      "desktopAclCommandCount": 165,
+      "desktopAclPassed": true,
+      "frontendBuildPassed": true,
+      "desktopBuildPassed": true,
+      "manualNativeDownloadWidgetVisualReview": "pending; native app was occluded by another application"
+    },
+    "existingDesktopRecordsAfterReopen": {
+      "jobs": 105,
+      "succeeded": 85,
+      "failed": 14,
+      "interrupted": 6,
+      "agentSessions": 13
+    },
+    "desktopExecutableBytes": 159300096
+  },
+  "publicOriginalRevision": {
+    "receipt": "gscloud-public-20261015.json",
+    "newProducts": 5,
+    "totalVerifiedProducts": 6,
+    "nativeArchiveRasterPreviewAvailable": false,
+    "nativeReopenVerified": true
+  }
+}

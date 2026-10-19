@@ -1,0 +1,125 @@
+{
+  "schema": "geod-ui-simplification-live/v1",
+  "date": "2026-10-15",
+  "project": {
+    "id": "e26eef9c-e996-4f7e-a896-5d1e1cd4320c",
+    "name": "界面流程验收 · 北京小范围（测试）",
+    "bounds": [
+      116.3,
+      39.9,
+      116.32,
+      39.92
+    ]
+  },
+  "browserFlow": {
+    "source": "earth-search",
+    "catalogResults": 10,
+    "selectedScenes": 2,
+    "realCogPixelsDisplayed": true,
+    "downloadedOriginals": 2,
+    "processedOutputs": 1,
+    "downloadReviewReusedExistingOriginals": true,
+    "resultMapOpened": true,
+    "centrePixel": {
+      "classCode": 5,
+      "column": 43,
+      "row": 56,
+      "coordinate": [
+        441030,
+        4417990
+      ]
+    }
+  },
+  "jobs": [
+    {
+      "id": "33ed6bfe-bcd0-452b-82e0-15c4d2afc670",
+      "kind": "download",
+      "itemId": "S2B_50TMK_20261010_0_L2A",
+      "assetKey": "scl",
+      "status": "succeeded",
+      "bytesDownloaded": 1854154,
+      "sha256": "427ba3993bae438f310d31924daad27c83628ca9579d92611f644a5349d41b21",
+      "mosaicOutput": null,
+      "localFileSha256Matched": true
+    },
+    {
+      "id": "df33a6c9-15db-452b-8e91-6ffba5eba114",
+      "kind": "download",
+      "itemId": "S2B_50TMK_20261013_1_L2A",
+      "assetKey": "scl",
+      "status": "succeeded",
+      "bytesDownloaded": 3917740,
+      "sha256": "72b57c0ae953d5de205dc11b97f257f0acdbf990232a1cdcc1803abb76519510",
+      "mosaicOutput": null,
+      "localFileSha256Matched": true
+    },
+    {
+      "id": "85fb4634-79fe-4423-9e9c-f016da8b9b2f",
+      "kind": "raster_mosaic",
+      "itemId": "project:e26eef9c-e996-4f7e-a896-5d1e1cd4320c",
+      "assetKey": "scl",
+      "status": "succeeded",
+      "bytesDownloaded": 1505,
+      "sha256": "76b09c1fc282072e973cafe733661d48df143fcf3d9b53a0e8fe858ab643b902",
+      "mosaicOutput": {
+        "width": 87,
+        "height": 113,
+        "bandCount": 1,
+        "crs": "EPSG:32650",
+        "bounds": [
+          440160.0,
+          4416860.0,
+          441900.0,
+          4419120.0
+        ],
+        "pixelSize": [
+          20.0,
+          20.0
+        ],
+        "sourceCount": 2,
+        "maskedPixels": 0,
+        "coveredPixels": 9831,
+        "overlapPolicy": "newest non-nodata scene wins; unfilled pixels retain product NoData"
+      },
+      "localFileSha256Matched": true
+    }
+  ],
+  "agentReadback": {
+    "originalRealModelReceipt": "gscloud-agent-original-live-20261015.json",
+    "newModelRequestsThisPolish": 0,
+    "actualSavedConnectionOpened": true,
+    "contextTokensShown": 300000,
+    "completedPlanInitiallyHidden": true,
+    "summaryAndVerifiedResultVisible": true,
+    "archiveManifestOpened": true,
+    "nativeBridgeShutdownPassed": true,
+    "nativeWindowVisualAutomation": false,
+    "harnessFrameControlsUnsupported": true
+  },
+  "uiRegression": {
+    "passed": 117,
+    "failed": 0,
+    "files": [
+      "agent-panel.integration.test.jsx",
+      "home.integration.test.jsx",
+      "explore-multiselect.integration.test.jsx",
+      "library-page.integration.test.jsx"
+    ]
+  },
+  "additionalChecks": {
+    "navigationAndMapAndConversationNodeTests": 33,
+    "protectedAndViirsAndReleaseUiTests": 20,
+    "responsiveViewport": [
+      900,
+      680
+    ],
+    "frontendBuild": "passed",
+    "desktopBuild": "passed"
+  },
+  "desktopSha256": "c62b00af02c41122e028801e029591df1631745f4d19246271852a13bd8526da",
+  "limits": [
+    "This is a UI and main-flow acceptance, not a fresh test of every connected provider.",
+    "The GSCloud Agent receipt was reopened without a new model call or download.",
+    "ZIP members remain a verified file manifest; in-archive raster pixels are not decoded."
+  ]
+}

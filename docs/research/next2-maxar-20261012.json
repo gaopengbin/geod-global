@@ -1,0 +1,6119 @@
+{
+  "schema": "geod-next-channel-research/maxar-vantor-v1",
+  "checkedAt": "2026-10-12T12:50:40.475983+00:00",
+  "status": "two legacy Maui analytic originals passed actual generic native flow; finite adapter authored, shared hooks and production acceptance owned by parent; new Vantor visuals planned",
+  "researchScope": "No credentials, imagery purchase, Earth Engine computation, public deployment or user-preview-store operation. Isolated native port 4673 stopped after verification.",
+  "sources": {
+    "publisherProgram": "https://vantor.com/company/open-data-program/",
+    "publisherAssetGuide": "https://xpress-docs.maxar.com/OpenData/OpenData_viewing.htm",
+    "legacyAwsRegistry": "https://registry.opendata.aws/maxar-open-data/",
+    "legacyCatalog": "https://maxar-opendata.s3.amazonaws.com/events/catalog.json",
+    "newVantorCatalog": "https://vantor-opendata.s3.amazonaws.com/events/catalog.json",
+    "newVantorBucketLicense": "https://vantor-opendata.s3.amazonaws.com/LICENSE.TXT",
+    "communityDiscoveryOnly": [
+      "https://www.reddit.com/r/remotesensing/comments/1stmw46/did_maxar_vantor_stop_publishing_open_data/",
+      "https://github.com/opengeos/maxar-open-data",
+      "https://github.com/opengeos/maplibre-gl-vantor"
+    ],
+    "communityRole": "Discovered migration and visualization alternatives; product claims, permissions and numerical acceptance use actual publisher JSON/files and direct tests. No community-generated geometry or mosaic replaces publisher metadata."
+  },
+  "catalogReceipts": [
+    {
+      "name": "legacy-catalog",
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/catalog.json",
+      "status": 200,
+      "finalUrl": "https://maxar-opendata.s3.amazonaws.com/events/catalog.json",
+      "bytes": 5780,
+      "sha256": "0e902e2b8ffeaec4e16a16caa3e07343969a724b69aec5a29cd4826ab602acb7",
+      "contentType": "binary/octet-stream",
+      "id": "maxar-opendata",
+      "links": [
+        {
+          "rel": "child",
+          "href": "./BayofBengal-Cyclone-Mocha-May-23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Belize-Wildfires-June24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Brazil-Flooding-May24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Cyclone-Chido-Dec15/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Cyclone-Ditwah-Sri-Lanka-Nov-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Cyclone-Senyar-Indonesia-Nov-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Cyclone-Senyar-Thailand-Nov-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Earthquake-Myanmar-March-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Emilia-Romagna-Italy-flooding-may23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Floods-Spain-Oct24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Gambia-flooding-8-11-2022/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Hurricane-Fiona-9-19-2022/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Hurricane-Ian-9-26-2022/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Hurricane-Idalia-Florida-Aug23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Hurricane-Maria-PuertoRico-Oct-2017/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Hurricane-Melissa-Oct-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./HurricaneHelene-Oct24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./HurricaneMilton-Oct24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Iceland-Volcano_Eruption-Dec-2023/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./India-Floods-Oct-2023/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Indonesia-Earthquake22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Japan-Earthquake-Jan-2024/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Kahramanmaras-turkey-earthquake-23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Kalehe-DRC-Flooding-5-8-23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Kenya-Flooding-May24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Libya-Floods-Sept-2023/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Marshall-Fire-21-Update/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Maui-Hawaii-fires-Aug-23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./McDougallCreekWildfire-BC-Canada-Aug-23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Morocco-Earthquake-Sept-2023/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Morocco-Flooding-Dec-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./NWT-Canada-Aug-23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Nepal-Earthquake-Apr-2015/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Nepal-Earthquake-Nov-2023/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Nepal-Floods-Sept-2024/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./New-Zealand-Flooding23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Nigeria-Flooding-May-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Nigeria-Floods-Sept-2024/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./PNG-Landslide-June24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./SmokeHouseCreek-Wildfires-Texas-Mar24/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Sudan-flooding-8-22-2022/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Texas-Flooding-July-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Typhoon-Kalmaegi-Nov-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./Vanuatu-Earthquake-Dec17/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./WildFires-LosAngeles-Jan-2025/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./afghanistan-earthquake22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./cyclone-emnati22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./ghana-explosion22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./kentucky-flooding-7-29-2022/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./pakistan-flooding22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./shovi-georgia-landslide-8Aug23/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./southafrica-flooding22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./tonga-volcano21/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./volcano-indonesia21/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./yellowstone-flooding22/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "root",
+          "href": "./catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "name": "vantor-root",
+      "url": "https://vantor-opendata.s3.amazonaws.com/?list-type=2&delimiter=/&max-keys=100",
+      "status": 200,
+      "finalUrl": "https://vantor-opendata.s3.amazonaws.com/?list-type=2&delimiter=/&max-keys=100",
+      "bytes": 916,
+      "sha256": "2eec439a1884b68d3f312f20982f73a30bbf0f6a1c0e841e9d2f6be3a680a6bf",
+      "contentType": "application/xml",
+      "prefixes": [
+        "events/"
+      ],
+      "keys": [
+        "LICENSE.TXT",
+        "index.html"
+      ],
+      "isTruncated": "false"
+    },
+    {
+      "name": "vantor-events-catalog",
+      "url": "https://vantor-opendata.s3.amazonaws.com/events/catalog.json",
+      "status": 200,
+      "finalUrl": "https://vantor-opendata.s3.amazonaws.com/events/catalog.json",
+      "bytes": 2285,
+      "sha256": "171253c73f14f4c82f08d3a92e0f2218f40354f2ccfb15126bb4f3cc9f4f0cc3",
+      "contentType": "application/json",
+      "id": "vantor-opendata",
+      "links": [
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Mexico-Hurricane-Simon-Oct-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Indonesia-Earthquakes-Aug-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Colombia-Earthquake-Aug-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Spokane-Washington-Wildfire-Aug-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Bordeaux-France-Wildfire-July-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Marianas-Typhoon-Bavi-Jul-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Venezuela-Earthquake-Jun-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Typhoon-Gezani-Feb-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Spain-Portugal-Flooding-Feb-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/DRC-Ebola-May-2026/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "root",
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/catalog.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ],
+  "newVantor": {
+    "catalogEventCount": 11,
+    "actualReviewedEventDocuments": [
+      {
+        "name": "Nepal-Flooding-Aug-2026",
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json",
+        "status": 200,
+        "bytes": 14607,
+        "sha256": "8b91d943a5e31a2fcdbb7bfb391b198782cab363c734b4c427076f7bc0a2d08a",
+        "id": "Nepal-Flooding-Aug-2026",
+        "license": "CC-BY-NC-4.0"
+      },
+      {
+        "name": "Spokane-Washington-Wildfire-Aug-2026",
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Spokane-Washington-Wildfire-Aug-2026/collection.json",
+        "status": 200,
+        "bytes": 5088,
+        "sha256": "548f0a5fd21c51bb423794f31bf7900f14a4fee8a7db0f02511d269d49dc8006",
+        "id": "Spokane-Washington-Wildfire-Aug-2026",
+        "license": "CC-BY-NC-4.0"
+      },
+      {
+        "name": "Bordeaux-France-Wildfire-July-2026",
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Bordeaux-France-Wildfire-July-2026/collection.json",
+        "status": 200,
+        "bytes": 4631,
+        "sha256": "8943b61f60696f98571f81f8bcb99464570e9e42db83804d9fe026191c7976ba",
+        "id": "Bordeaux-France-Wildfire-July-2026",
+        "license": "CC-BY-NC-4.0"
+      },
+      {
+        "name": "DRC-Ebola-May-2026",
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/DRC-Ebola-May-2026/collection.json",
+        "status": 200,
+        "bytes": 6983,
+        "sha256": "1a45af6dd16ed0d79d1da857dbff237e1786b415ececc6582dd3c9e90d86483e",
+        "id": "DRC-Ebola-May-2026",
+        "license": "CC-BY-NC-4.0"
+      },
+      {
+        "name": "vantor-license",
+        "url": "https://vantor-opendata.s3.amazonaws.com/LICENSE.TXT",
+        "status": 200,
+        "bytes": 19790,
+        "sha256": "eb76abcc9c94d7c8941aa8a5b0402cee455448aafb99732a339a681d30f397af",
+        "id": null,
+        "license": null
+      }
+    ],
+    "screening": {
+      "candidateHeadRequests": 69,
+      "within512MiB": 29,
+      "scope": "HEAD screening of same-basename candidates only. A filename candidate is not acceptance; actual item asset declaration must still match before any original download."
+    },
+    "oneCompleteOriginal": {
+      "itemId": "B120001101250A10",
+      "event": "Nepal-Flooding-Aug-2026",
+      "item": {
+        "id": "B120001101250A10",
+        "bbox": [
+          85.37344389401046,
+          28.14318026453769,
+          85.56232174064412,
+          28.332368860911252
+        ],
+        "type": "Feature",
+        "links": [
+          {
+            "rel": "collection",
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json"
+          },
+          {
+            "rel": "self",
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json"
+          },
+          {
+            "rel": "root",
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/catalog.json"
+          }
+        ],
+        "assets": {
+          "visual": {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "Visual COG",
+            "roles": [
+              "visual"
+            ]
+          },
+          "thumbnail": {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.jpg",
+            "type": "image/jpeg",
+            "title": "Thumbnail",
+            "roles": [
+              "thumbnail"
+            ]
+          }
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                85.55265030905096,
+                28.306142858634942
+              ],
+              [
+                85.55293265187686,
+                28.305374409715267
+              ],
+              [
+                85.5537705326943,
+                28.299189021332904
+              ],
+              [
+                85.55396480892105,
+                28.297228049387307
+              ],
+              [
+                85.55400339321096,
+                28.297033925817445
+              ],
+              [
+                85.55406621541634,
+                28.296210302932053
+              ],
+              [
+                85.55418034615448,
+                28.295615986690525
+              ],
+              [
+                85.55421064016342,
+                28.295234169640647
+              ],
+              [
+                85.55585185277556,
+                28.286769289911465
+              ],
+              [
+                85.55663516978083,
+                28.28260733654299
+              ],
+              [
+                85.5566548891027,
+                28.28257685415769
+              ],
+              [
+                85.55667206536037,
+                28.28248467309067
+              ],
+              [
+                85.55699195175696,
+                28.281995571265373
+              ],
+              [
+                85.55704418152612,
+                28.281732709295888
+              ],
+              [
+                85.55744705744695,
+                28.281225345042976
+              ],
+              [
+                85.55750234119698,
+                28.281064933434788
+              ],
+              [
+                85.55797074972341,
+                28.280487281806174
+              ],
+              [
+                85.55799723044285,
+                28.280432855036427
+              ],
+              [
+                85.55809243777723,
+                28.280312901767292
+              ],
+              [
+                85.55971556997818,
+                28.277830975606562
+              ],
+              [
+                85.56023845260196,
+                28.276708776044423
+              ],
+              [
+                85.56069961885964,
+                28.275439723659336
+              ],
+              [
+                85.56127523001328,
+                28.271292035364695
+              ],
+              [
+                85.5616629754479,
+                28.265519128503463
+              ],
+              [
+                85.56167108406368,
+                28.26548831206837
+              ],
+              [
+                85.56171395402997,
+                28.264451475852198
+              ],
+              [
+                85.56230990710957,
+                28.262603806896717
+              ],
+              [
+                85.55254176344665,
+                28.24837753896889
+              ],
+              [
+                85.55229612734918,
+                28.247184750571584
+              ],
+              [
+                85.55190242863932,
+                28.246626311443794
+              ],
+              [
+                85.55176948347713,
+                28.245411751139173
+              ],
+              [
+                85.55168063055183,
+                28.245287208800672
+              ],
+              [
+                85.55159970981569,
+                28.24396489041292
+              ],
+              [
+                85.55150861386983,
+                28.243838223115844
+              ],
+              [
+                85.55150422695316,
+                28.24333918444683
+              ],
+              [
+                85.5513425117172,
+                28.24255384453428
+              ],
+              [
+                85.55137121598749,
+                28.241773128258348
+              ],
+              [
+                85.55133294080983,
+                28.24142343097387
+              ],
+              [
+                85.55140630855018,
+                28.240804455491002
+              ],
+              [
+                85.55137835480171,
+                28.240347644301853
+              ],
+              [
+                85.55144641311232,
+                28.239727782011073
+              ],
+              [
+                85.55150718081588,
+                28.238074819006016
+              ],
+              [
+                85.55172100723125,
+                28.236582449057295
+              ],
+              [
+                85.55254256849074,
+                28.228242450246412
+              ],
+              [
+                85.55250694680963,
+                28.22555234108073
+              ],
+              [
+                85.55241699293202,
+                28.223169400629477
+              ],
+              [
+                85.55214747057715,
+                28.221835210302622
+              ],
+              [
+                85.55070770304273,
+                28.21773686806435
+              ],
+              [
+                85.54859804962675,
+                28.213085305760977
+              ],
+              [
+                85.54857392665781,
+                28.212960306259482
+              ],
+              [
+                85.548520531445,
+                28.212844234681548
+              ],
+              [
+                85.54849920206799,
+                28.21272413544671
+              ],
+              [
+                85.5476347783989,
+                28.211007056768466
+              ],
+              [
+                85.54762013993088,
+                28.209925287856283
+              ],
+              [
+                85.54757347824568,
+                28.20982279582496
+              ],
+              [
+                85.54761027926774,
+                28.209196603267642
+              ],
+              [
+                85.54760637093074,
+                28.208907786481603
+              ],
+              [
+                85.54751181850396,
+                28.208638585831114
+              ],
+              [
+                85.54756273702073,
+                28.208397102743145
+              ],
+              [
+                85.54759635881884,
+                28.208167920521888
+              ],
+              [
+                85.54759238063315,
+                28.207873946255813
+              ],
+              [
+                85.54748785960882,
+                28.207332294073858
+              ],
+              [
+                85.54752086488796,
+                28.207215160967372
+              ],
+              [
+                85.54751776385335,
+                28.207197698380604
+              ],
+              [
+                85.54758011790729,
+                28.206967780387977
+              ],
+              [
+                85.54757097025487,
+                28.20629181320851
+              ],
+              [
+                85.54789025174249,
+                28.20522755582826
+              ],
+              [
+                85.54910893809326,
+                28.20106359227826
+              ],
+              [
+                85.54925166555542,
+                28.20038658947774
+              ],
+              [
+                85.53129707193011,
+                28.19763555361226
+              ],
+              [
+                85.52486923307812,
+                28.195035157142524
+              ],
+              [
+                85.51985153485985,
+                28.193832202603446
+              ],
+              [
+                85.5113587625405,
+                28.192952543406193
+              ],
+              [
+                85.49410626715122,
+                28.187211052446656
+              ],
+              [
+                85.4842654096548,
+                28.185029705848034
+              ],
+              [
+                85.472456639779,
+                28.180935966973703
+              ],
+              [
+                85.4673428165031,
+                28.179666786456462
+              ],
+              [
+                85.46121297576634,
+                28.177410577090903
+              ],
+              [
+                85.45277877094271,
+                28.17291716341891
+              ],
+              [
+                85.44163961461473,
+                28.16580446200693
+              ],
+              [
+                85.42166044152758,
+                28.15757923117607
+              ],
+              [
+                85.41654008872187,
+                28.156339037019332
+              ],
+              [
+                85.40472049509664,
+                28.15234205852927
+              ],
+              [
+                85.37683378379913,
+                28.144814211184368
+              ],
+              [
+                85.3765002589541,
+                28.145197555933688
+              ],
+              [
+                85.37395521627718,
+                28.148989652835276
+              ],
+              [
+                85.37380147273203,
+                28.149338291982016
+              ],
+              [
+                85.37357465040085,
+                28.14993832591724
+              ],
+              [
+                85.37345714879103,
+                28.15047854199587
+              ],
+              [
+                85.37377545008005,
+                28.152058637197552
+              ],
+              [
+                85.37386477616938,
+                28.152334102761678
+              ],
+              [
+                85.37609131031914,
+                28.157177483210265
+              ],
+              [
+                85.37796805053425,
+                28.16046100361548
+              ],
+              [
+                85.37925609362789,
+                28.1626745926432
+              ],
+              [
+                85.37972020099909,
+                28.16366826556924
+              ],
+              [
+                85.37982250324714,
+                28.1638309125453
+              ],
+              [
+                85.38066647961352,
+                28.165153503822104
+              ],
+              [
+                85.38101773595056,
+                28.166032915471934
+              ],
+              [
+                85.38168626647077,
+                28.167089090343357
+              ],
+              [
+                85.38175162107545,
+                28.167269344491235
+              ],
+              [
+                85.38183070294656,
+                28.16739558414375
+              ],
+              [
+                85.38221660361948,
+                28.16844377859162
+              ],
+              [
+                85.3822183304781,
+                28.168446630397575
+              ],
+              [
+                85.38224800913814,
+                28.168529082276862
+              ],
+              [
+                85.38320563093541,
+                28.171130111265988
+              ],
+              [
+                85.38320576457764,
+                28.171130397355974
+              ],
+              [
+                85.38320589088002,
+                28.17113081729357
+              ],
+              [
+                85.38448757865768,
+                28.174611859441168
+              ],
+              [
+                85.38454696674223,
+                28.174915563991632
+              ],
+              [
+                85.38478454757819,
+                28.175575518913544
+              ],
+              [
+                85.38485396556409,
+                28.176087338809324
+              ],
+              [
+                85.38485477467468,
+                28.176089672906677
+              ],
+              [
+                85.38485670019153,
+                28.176107501178628
+              ],
+              [
+                85.38498310990121,
+                28.177039511414584
+              ],
+              [
+                85.38517898391146,
+                28.17769069313523
+              ],
+              [
+                85.38518137788277,
+                28.178053059253077
+              ],
+              [
+                85.38547456900105,
+                28.179100753899384
+              ],
+              [
+                85.38543746840988,
+                28.17941850694245
+              ],
+              [
+                85.38560958991644,
+                28.1801885768363
+              ],
+              [
+                85.38559267118927,
+                28.18026294026364
+              ],
+              [
+                85.38561135381276,
+                28.180358472556545
+              ],
+              [
+                85.38549998106463,
+                28.18085022991518
+              ],
+              [
+                85.38551269119581,
+                28.180943934682293
+              ],
+              [
+                85.38520846158251,
+                28.182153119543795
+              ],
+              [
+                85.3852100453812,
+                28.182392911372023
+              ],
+              [
+                85.3850344834661,
+                28.182905540939164
+              ],
+              [
+                85.38502586272274,
+                28.182943603245846
+              ],
+              [
+                85.38498371984915,
+                28.18330450939232
+              ],
+              [
+                85.38489739774084,
+                28.183510798173135
+              ],
+              [
+                85.3847412688133,
+                28.184200124904937
+              ],
+              [
+                85.38461845520301,
+                28.184498058351295
+              ],
+              [
+                85.38456479386436,
+                28.18471132576241
+              ],
+              [
+                85.37992417974965,
+                28.197157841004586
+              ],
+              [
+                85.37967900967624,
+                28.198045214644754
+              ],
+              [
+                85.37938358705833,
+                28.19926731507086
+              ],
+              [
+                85.37964218761043,
+                28.20122373769454
+              ],
+              [
+                85.38162704244029,
+                28.20683388434966
+              ],
+              [
+                85.38162953857078,
+                28.206876340943047
+              ],
+              [
+                85.38169763831507,
+                28.207065722813216
+              ],
+              [
+                85.38173794885674,
+                28.207988707341705
+              ],
+              [
+                85.38178374544275,
+                28.20810752325903
+              ],
+              [
+                85.38178180748011,
+                28.2081508962789
+              ],
+              [
+                85.38185729235677,
+                28.208343959530907
+              ],
+              [
+                85.38180957018153,
+                28.20905545050825
+              ],
+              [
+                85.38194712691701,
+                28.209387026500995
+              ],
+              [
+                85.38193921610942,
+                28.20943149224853
+              ],
+              [
+                85.38202034292982,
+                28.209624684350228
+              ],
+              [
+                85.38195582679754,
+                28.20993766449067
+              ],
+              [
+                85.38215210688969,
+                28.21042867655103
+              ],
+              [
+                85.38208910584146,
+                28.210590034677356
+              ],
+              [
+                85.38219317189913,
+                28.210913985957745
+              ],
+              [
+                85.38190539530476,
+                28.211568262198824
+              ],
+              [
+                85.3819176716695,
+                28.21177705994024
+              ],
+              [
+                85.38190478733158,
+                28.211808714931045
+              ],
+              [
+                85.38191029182298,
+                28.211934746326
+              ],
+              [
+                85.38052738903527,
+                28.215288016403658
+              ],
+              [
+                85.38037868332647,
+                28.215547619176522
+              ],
+              [
+                85.38016060719684,
+                28.216066212459793
+              ],
+              [
+                85.3798268117148,
+                28.2166063806809
+              ],
+              [
+                85.37974190306302,
+                28.216794601153644
+              ],
+              [
+                85.37953537104049,
+                28.217130186961445
+              ],
+              [
+                85.37949339007892,
+                28.217237693206435
+              ],
+              [
+                85.37804730341306,
+                28.219617426100648
+              ],
+              [
+                85.37616275436655,
+                28.222906946761466
+              ],
+              [
+                85.37583984362831,
+                28.223761863441094
+              ],
+              [
+                85.37559365606104,
+                28.224725148734972
+              ],
+              [
+                85.37533896019748,
+                28.226050380483457
+              ],
+              [
+                85.37570411388361,
+                28.228178444824433
+              ],
+              [
+                85.37650992851998,
+                28.230853212670304
+              ],
+              [
+                85.37775774156653,
+                28.23425367453518
+              ],
+              [
+                85.3778003273783,
+                28.234453178106317
+              ],
+              [
+                85.37797769722897,
+                28.23490766925053
+              ],
+              [
+                85.37800347057872,
+                28.23505841011673
+              ],
+              [
+                85.37897932850974,
+                28.237143162790208
+              ],
+              [
+                85.37895556648608,
+                28.23774220527573
+              ],
+              [
+                85.3791890815533,
+                28.238300015455838
+              ],
+              [
+                85.3791764941787,
+                28.238406925343625
+              ],
+              [
+                85.37920737740434,
+                28.238483714185193
+              ],
+              [
+                85.37905516415279,
+                28.239945840056247
+              ],
+              [
+                85.37901418078951,
+                28.241458141008714
+              ],
+              [
+                85.37901484548354,
+                28.241552156852595
+              ],
+              [
+                85.37925813891408,
+                28.246154572004155
+              ],
+              [
+                85.37932229085098,
+                28.246788786942542
+              ],
+              [
+                85.37907934723759,
+                28.247649802578565
+              ],
+              [
+                85.37908165995557,
+                28.24768608314607
+              ],
+              [
+                85.3770205933212,
+                28.255060944127017
+              ],
+              [
+                85.37676785447543,
+                28.25550432811337
+              ],
+              [
+                85.37666549552968,
+                28.255850191961695
+              ],
+              [
+                85.37639152840808,
+                28.256251270941657
+              ],
+              [
+                85.37638676838814,
+                28.25626547493557
+              ],
+              [
+                85.37606331536014,
+                28.25674028975353
+              ],
+              [
+                85.37454037608664,
+                28.259411841341933
+              ],
+              [
+                85.3737633400918,
+                28.262656139875155
+              ],
+              [
+                85.3737592152878,
+                28.263731007220354
+              ],
+              [
+                85.37878650906403,
+                28.265177489260328
+              ],
+              [
+                85.39131523852217,
+                28.27336343018981
+              ],
+              [
+                85.4021863024687,
+                28.276387943333003
+              ],
+              [
+                85.40652995131634,
+                28.27687226079418
+              ],
+              [
+                85.41266168889679,
+                28.27905039861238
+              ],
+              [
+                85.41923610925448,
+                28.28165282154503
+              ],
+              [
+                85.4296205915795,
+                28.287876260815867
+              ],
+              [
+                85.44042250559946,
+                28.290885499069965
+              ],
+              [
+                85.44925735780417,
+                28.292032244031688
+              ],
+              [
+                85.45462073658825,
+                28.29350992446751
+              ],
+              [
+                85.464980867137,
+                28.299764832734926
+              ],
+              [
+                85.47106382703569,
+                28.30194256391367
+              ],
+              [
+                85.47613208136794,
+                28.30315337059872
+              ],
+              [
+                85.48352980860261,
+                28.302953609339305
+              ],
+              [
+                85.48890825334946,
+                28.304466972717595
+              ],
+              [
+                85.49781927451218,
+                28.305725252181468
+              ],
+              [
+                85.50320994594524,
+                28.307258043192057
+              ],
+              [
+                85.51447373567707,
+                28.314464750174704
+              ],
+              [
+                85.53707310921553,
+                28.31799985350983
+              ],
+              [
+                85.54291473251685,
+                28.31999621401828
+              ],
+              [
+                85.55685529593978,
+                28.32933049345949
+              ],
+              [
+                85.55682975142938,
+                28.329234138918256
+              ],
+              [
+                85.55603751809001,
+                28.32723963958379
+              ],
+              [
+                85.55457874322782,
+                28.324340117248433
+              ],
+              [
+                85.54973679556159,
+                28.31623124558349
+              ],
+              [
+                85.54974840426426,
+                28.316092897878114
+              ],
+              [
+                85.54972962824745,
+                28.316061281488306
+              ],
+              [
+                85.54978535812191,
+                28.315552118757783
+              ],
+              [
+                85.5492898306876,
+                28.314678505410804
+              ],
+              [
+                85.54932957765358,
+                28.31458340724024
+              ],
+              [
+                85.54929524586461,
+                28.314522458061912
+              ],
+              [
+                85.54945296622105,
+                28.314150594975438
+              ],
+              [
+                85.54902791038354,
+                28.31330553557967
+              ],
+              [
+                85.54969658039656,
+                28.312366565692113
+              ],
+              [
+                85.55177344673677,
+                28.30845885485717
+              ],
+              [
+                85.55265030905096,
+                28.306142858634942
+              ]
+            ]
+          ]
+        },
+        "collection": "Nepal-Flooding-Aug-2026",
+        "properties": {
+          "title": "[POST] Vantor LG02 Image B120001101250A10",
+          "pan_gsd": 0.54,
+          "datetime": "2026-09-07T05:07:53.249593Z",
+          "eo:bands": [
+            {
+              "name": "b1",
+              "description": "Red",
+              "common_name": "red"
+            },
+            {
+              "name": "b2",
+              "description": "Green",
+              "common_name": "green"
+            },
+            {
+              "name": "b3",
+              "description": "Blue",
+              "common_name": "blue"
+            }
+          ],
+          "vehicle_name": "LG02",
+          "view:azimuth": 42.52,
+          "constellation": "maxar",
+          "eo:cloud_cover": 93,
+          "scan_direction": "Reverse",
+          "view:off_nadir": 39.36,
+          "view:sun_azimuth": 140.69,
+          "multispectral_gsd": 2.15,
+          "ingestion_datetime": "2026-09-07T06:12:41.054679922Z",
+          "view:sun_elevation": 62.54,
+          "phase": "post",
+          "published": "2026-09-07T07:06:29.855694"
+        },
+        "stac_version": "1.0.0",
+        "stac_extensions": [
+          "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+          "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+          "https://stac-extensions.github.io/timestamps/v1.1.0/schema.json"
+        ],
+        "license": "CC-BY-NC-4.0"
+      },
+      "itemReceipt": {
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+        "bytes": 29143,
+        "sha256": "e97d73e69372a546ee4d9bf1a348f5d9d944b06dfccb7c2a4724ff8bf5356291",
+        "status": 200,
+        "contentType": "application/json"
+      },
+      "collectionReceipt": {
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json",
+        "bytes": 14607,
+        "sha256": "8b91d943a5e31a2fcdbb7bfb391b198782cab363c734b4c427076f7bc0a2d08a",
+        "id": "Nepal-Flooding-Aug-2026",
+        "license": "CC-BY-NC-4.0"
+      },
+      "assetKey": "visual",
+      "transfer": {
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif",
+        "status": 200,
+        "bytes": 29534465,
+        "sha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+        "headers": {
+          "Content-Type": "image/tiff",
+          "Content-Length": "29534465",
+          "ETag": "\"ecb28ddb266dd6e82ae4857927b392f5-4\"",
+          "Last-Modified": "Mon, 07 Sep 2026 07:06:31 GMT",
+          "Accept-Ranges": "bytes"
+        },
+        "seconds": 256.937,
+        "mode": "fresh complete GET; no local cache or Range resume",
+        "path": "G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\B120001101250A10-complete-original.tif"
+      },
+      "independentRaster": {
+        "width": 36389,
+        "height": 41157,
+        "count": 3,
+        "crs": "EPSG:4326",
+        "bounds": [
+          85.37344389401046,
+          28.14318026453769,
+          85.56232174064412,
+          28.332368860911252
+        ],
+        "transform": [
+          5.190520394450596e-06,
+          0.0,
+          85.37344389401046,
+          0.0,
+          -4.5967538055144995e-06,
+          28.332368860911252
+        ],
+        "resolution": [
+          5.190520394450596e-06,
+          4.5967538055144995e-06
+        ],
+        "scales": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "units": [
+          null,
+          null,
+          null
+        ],
+        "tags": {
+          "ACQUISITION_TIME": "2026-09-07T05:07:53.249593Z",
+          "AREA_OR_POINT": "Area",
+          "COLLECT_IDENTIFIER": "B120001101250A10",
+          "TIFFTAG_COPYRIGHT": "Vantor Inc. 2026",
+          "TIFFTAG_SOFTWARE": "Transform-API",
+          "VEHICLE_NAME": "LG02"
+        },
+        "bands": [
+          {
+            "index": 1,
+            "dtype": "uint8",
+            "nodata": null,
+            "allPixelsDecoded": 1497662073,
+            "validPixels": 1497662073,
+            "validFraction": 1.0,
+            "minimum": 0,
+            "maximum": 255,
+            "valueCounts": {
+              "0": 574829073,
+              "1": 106223,
+              "2": 30641,
+              "3": 38905,
+              "4": 22901,
+              "5": 20050,
+              "6": 17931,
+              "7": 16892,
+              "8": 17459,
+              "9": 20203,
+              "10": 26651,
+              "11": 37511,
+              "12": 55651,
+              "13": 82205,
+              "14": 114433,
+              "15": 151939,
+              "16": 191660,
+              "17": 230694,
+              "18": 266015,
+              "19": 299591,
+              "20": 334815,
+              "21": 376407,
+              "22": 426803,
+              "23": 488993,
+              "24": 565098,
+              "25": 660739,
+              "26": 768492,
+              "27": 872498,
+              "32": 1147587,
+              "202": 6113081,
+              "206": 7320550,
+              "207": 7605258,
+              "208": 7720955,
+              "209": 6261381,
+              "210": 11283226,
+              "211": 15542698,
+              "212": 14801908,
+              "213": 7579027,
+              "214": 1567853,
+              "215": 5689332,
+              "216": 13384262,
+              "217": 19482363,
+              "218": 23510679,
+              "219": 23595026,
+              "220": 14635933,
+              "221": 9337900,
+              "222": 23728615,
+              "223": 37528110,
+              "224": 42457779,
+              "225": 30849045,
+              "226": 31436262,
+              "227": 35100612,
+              "228": 33439197,
+              "229": 25210644,
+              "230": 21401318,
+              "231": 23178402,
+              "232": 19457425,
+              "233": 16055068,
+              "234": 15042225,
+              "235": 19301031,
+              "236": 17860119,
+              "237": 391707,
+              "238": 101732,
+              "239": 38716,
+              "240": 15446,
+              "241": 7840,
+              "242": 4842,
+              "243": 3196,
+              "244": 2235,
+              "245": 1711,
+              "246": 1500,
+              "247": 1116,
+              "248": 921,
+              "249": 784,
+              "250": 619,
+              "251": 613,
+              "252": 436,
+              "253": 374,
+              "254": 318,
+              "255": 1175,
+              "28": 955145,
+              "29": 1020176,
+              "199": 4018560,
+              "203": 7150465,
+              "204": 8208966,
+              "33": 1187895,
+              "34": 1240588,
+              "39": 1353952,
+              "185": 3449130,
+              "189": 3926861,
+              "193": 5622401,
+              "198": 4704245,
+              "201": 5219681,
+              "205": 7846502,
+              "30": 1067276,
+              "200": 4157883,
+              "187": 3669955,
+              "31": 1103051,
+              "36": 1326584,
+              "38": 1352813,
+              "195": 6177653,
+              "197": 5576702,
+              "35": 1292627,
+              "40": 1340752,
+              "196": 5946882,
+              "186": 3445565,
+              "191": 4463522,
+              "192": 4950811,
+              "194": 6136717,
+              "41": 1327610,
+              "175": 2709117,
+              "181": 3193486,
+              "183": 3255475,
+              "188": 3846978,
+              "190": 4282059,
+              "156": 2083262,
+              "157": 2107933,
+              "160": 2117901,
+              "161": 2087808,
+              "162": 2103660,
+              "163": 2097017,
+              "164": 2102148,
+              "165": 2138482,
+              "166": 2182239,
+              "167": 2200595,
+              "168": 2256304,
+              "169": 2323948,
+              "170": 2364044,
+              "171": 2416829,
+              "172": 2493253,
+              "173": 2613417,
+              "174": 2627432,
+              "176": 2786944,
+              "177": 2792688,
+              "178": 2842034,
+              "179": 2908431,
+              "180": 3045657,
+              "182": 3173890,
+              "184": 3315570,
+              "121": 1213975,
+              "122": 1231850,
+              "134": 1517038,
+              "135": 1523064,
+              "136": 1537696,
+              "137": 1546473,
+              "138": 1568193,
+              "139": 1558478,
+              "140": 1568818,
+              "141": 1587391,
+              "142": 1596948,
+              "143": 1628616,
+              "144": 1652664,
+              "145": 1681979,
+              "146": 1722552,
+              "147": 1771660,
+              "148": 1813561,
+              "149": 1889773,
+              "150": 1915973,
+              "151": 1973702,
+              "152": 1973236,
+              "153": 1974426,
+              "154": 2025353,
+              "155": 2076917,
+              "158": 2148397,
+              "159": 2200335,
+              "43": 1297845,
+              "54": 1183010,
+              "55": 1166019,
+              "57": 1121611,
+              "58": 1099382,
+              "59": 1072156,
+              "60": 1039434,
+              "61": 1007584,
+              "62": 974516,
+              "65": 896050,
+              "66": 876481,
+              "67": 868638,
+              "68": 865923,
+              "69": 864161,
+              "70": 866067,
+              "71": 866758,
+              "72": 868117,
+              "73": 874496,
+              "74": 880971,
+              "75": 884013,
+              "76": 888339,
+              "77": 895334,
+              "78": 892287,
+              "79": 889654,
+              "80": 892771,
+              "81": 892108,
+              "82": 889541,
+              "83": 886317,
+              "84": 879883,
+              "85": 878203,
+              "86": 872679,
+              "87": 873853,
+              "88": 877850,
+              "89": 885630,
+              "90": 888704,
+              "91": 896235,
+              "92": 900130,
+              "93": 900828,
+              "94": 916566,
+              "95": 921525,
+              "96": 933425,
+              "97": 930266,
+              "98": 933551,
+              "99": 938839,
+              "100": 946549,
+              "101": 951606,
+              "102": 966781,
+              "103": 973102,
+              "104": 976369,
+              "105": 997377,
+              "106": 1005363,
+              "107": 1018425,
+              "108": 1039908,
+              "109": 1050488,
+              "110": 1058070,
+              "111": 1070656,
+              "112": 1082965,
+              "113": 1102600,
+              "114": 1108075,
+              "115": 1105409,
+              "116": 1113014,
+              "117": 1115856,
+              "118": 1146454,
+              "119": 1161068,
+              "120": 1181905,
+              "123": 1251878,
+              "124": 1280560,
+              "125": 1316570,
+              "126": 1340769,
+              "127": 1383764,
+              "128": 1403166,
+              "129": 1456851,
+              "130": 1499877,
+              "131": 1502725,
+              "132": 1504708,
+              "133": 1505942,
+              "45": 1266186,
+              "49": 1229007,
+              "51": 1220249,
+              "52": 1212825,
+              "56": 1146056,
+              "63": 946142,
+              "64": 920963,
+              "46": 1254376,
+              "53": 1200208,
+              "37": 1344594,
+              "50": 1226441,
+              "47": 1240079,
+              "48": 1234802,
+              "42": 1311280,
+              "44": 1283001
+            },
+            "firstUsableSample": {
+              "column": 0,
+              "row": 0,
+              "value": 0
+            }
+          },
+          {
+            "index": 2,
+            "dtype": "uint8",
+            "nodata": null,
+            "allPixelsDecoded": 1497662073,
+            "validPixels": 1497662073,
+            "validFraction": 1.0,
+            "minimum": 0,
+            "maximum": 255,
+            "valueCounts": {
+              "0": 574712919,
+              "1": 167437,
+              "2": 63761,
+              "3": 33868,
+              "4": 25541,
+              "5": 22039,
+              "6": 19245,
+              "7": 16504,
+              "8": 14861,
+              "9": 13368,
+              "10": 12135,
+              "11": 10555,
+              "12": 9592,
+              "13": 9860,
+              "14": 10848,
+              "15": 13680,
+              "16": 18891,
+              "17": 26361,
+              "18": 37418,
+              "19": 52599,
+              "20": 71935,
+              "21": 95785,
+              "22": 125749,
+              "23": 160618,
+              "24": 204691,
+              "25": 259007,
+              "26": 326199,
+              "27": 396631,
+              "32": 726817,
+              "202": 5224802,
+              "206": 7759723,
+              "207": 8143454,
+              "208": 8085248,
+              "209": 7835547,
+              "210": 8739284,
+              "211": 10648682,
+              "212": 10206658,
+              "213": 8310435,
+              "214": 9439759,
+              "215": 15245413,
+              "216": 17443013,
+              "217": 20385659,
+              "218": 20817618,
+              "219": 20326254,
+              "220": 25228010,
+              "221": 32111381,
+              "222": 36655537,
+              "223": 38297880,
+              "224": 42531161,
+              "225": 30882794,
+              "226": 31456664,
+              "227": 35114699,
+              "228": 33449359,
+              "229": 25218790,
+              "230": 21408258,
+              "231": 23184778,
+              "232": 19462538,
+              "233": 16059334,
+              "234": 15046312,
+              "235": 19304764,
+              "236": 17863431,
+              "237": 395350,
+              "238": 104793,
+              "239": 40040,
+              "240": 16818,
+              "241": 8910,
+              "242": 5509,
+              "243": 3727,
+              "244": 2630,
+              "245": 1985,
+              "246": 1676,
+              "247": 1237,
+              "248": 1003,
+              "249": 828,
+              "250": 660,
+              "251": 636,
+              "252": 456,
+              "253": 378,
+              "254": 320,
+              "255": 1188,
+              "28": 462797,
+              "29": 526002,
+              "199": 4053168,
+              "203": 6022114,
+              "204": 6905117,
+              "33": 789708,
+              "34": 855178,
+              "39": 1073395,
+              "185": 2761298,
+              "189": 3036121,
+              "193": 3387257,
+              "198": 3881461,
+              "201": 4647856,
+              "205": 7439935,
+              "30": 592100,
+              "200": 4423007,
+              "187": 2829691,
+              "31": 661254,
+              "36": 971301,
+              "38": 1043403,
+              "195": 3468891,
+              "197": 3719085,
+              "35": 917576,
+              "40": 1094513,
+              "196": 3486286,
+              "186": 2804973,
+              "191": 3311052,
+              "192": 3313469,
+              "194": 3386615,
+              "41": 1102928,
+              "180": 2317242,
+              "188": 2897277,
+              "190": 3122421,
+              "164": 1933437,
+              "166": 1929578,
+              "167": 1967615,
+              "168": 1988313,
+              "170": 2016181,
+              "172": 2112788,
+              "173": 2056686,
+              "174": 2048320,
+              "175": 2123602,
+              "176": 2168615,
+              "177": 2186634,
+              "178": 2212294,
+              "179": 2250931,
+              "181": 2366160,
+              "182": 2470830,
+              "183": 2582521,
+              "184": 2646761,
+              "124": 1089066,
+              "126": 1105333,
+              "139": 1444339,
+              "141": 1463881,
+              "145": 1480501,
+              "147": 1515824,
+              "148": 1497206,
+              "149": 1494840,
+              "150": 1483745,
+              "152": 1503210,
+              "153": 1541713,
+              "154": 1567372,
+              "155": 1610643,
+              "156": 1630415,
+              "157": 1660181,
+              "158": 1715519,
+              "159": 1792136,
+              "160": 1850544,
+              "161": 1842358,
+              "162": 1873994,
+              "163": 1904110,
+              "165": 1956605,
+              "169": 1999915,
+              "171": 2067018,
+              "37": 1012366,
+              "43": 1109816,
+              "54": 1258076,
+              "55": 1259085,
+              "57": 1265777,
+              "59": 1254374,
+              "60": 1247216,
+              "61": 1235786,
+              "65": 1133787,
+              "66": 1089606,
+              "67": 1049056,
+              "69": 979166,
+              "70": 955492,
+              "71": 933719,
+              "72": 923156,
+              "73": 913414,
+              "74": 906358,
+              "75": 901310,
+              "76": 896563,
+              "77": 892008,
+              "78": 893389,
+              "79": 896109,
+              "80": 893864,
+              "81": 894601,
+              "82": 896529,
+              "83": 899276,
+              "84": 898260,
+              "85": 901401,
+              "86": 902216,
+              "87": 907587,
+              "88": 908496,
+              "89": 911878,
+              "90": 914873,
+              "91": 911341,
+              "92": 914390,
+              "93": 906943,
+              "94": 911508,
+              "95": 919200,
+              "96": 919912,
+              "97": 929485,
+              "98": 925828,
+              "99": 926686,
+              "100": 937112,
+              "101": 937730,
+              "102": 946264,
+              "103": 949318,
+              "104": 949330,
+              "105": 953178,
+              "106": 954762,
+              "107": 958072,
+              "108": 960799,
+              "109": 961511,
+              "110": 966411,
+              "111": 969531,
+              "112": 979713,
+              "113": 981047,
+              "114": 996083,
+              "115": 1002259,
+              "116": 1016146,
+              "117": 1026580,
+              "118": 1032142,
+              "119": 1049787,
+              "120": 1047005,
+              "121": 1060749,
+              "122": 1081579,
+              "123": 1087720,
+              "125": 1099349,
+              "127": 1114803,
+              "128": 1150405,
+              "129": 1165070,
+              "130": 1204714,
+              "131": 1221931,
+              "132": 1239592,
+              "133": 1246800,
+              "134": 1274255,
+              "135": 1319930,
+              "136": 1359804,
+              "137": 1394518,
+              "138": 1410519,
+              "140": 1454623,
+              "142": 1479480,
+              "143": 1475745,
+              "144": 1462860,
+              "146": 1480940,
+              "151": 1515698,
+              "47": 1144253,
+              "51": 1221272,
+              "53": 1254114,
+              "56": 1264533,
+              "58": 1261269,
+              "62": 1217659,
+              "63": 1197669,
+              "64": 1166394,
+              "68": 1008102,
+              "42": 1102965,
+              "50": 1206179,
+              "46": 1130247,
+              "52": 1238998,
+              "49": 1185897,
+              "44": 1112850,
+              "45": 1117594,
+              "48": 1165789
+            },
+            "firstUsableSample": {
+              "column": 0,
+              "row": 0,
+              "value": 0
+            }
+          },
+          {
+            "index": 3,
+            "dtype": "uint8",
+            "nodata": null,
+            "allPixelsDecoded": 1497662073,
+            "validPixels": 1497662073,
+            "validFraction": 1.0,
+            "minimum": 0,
+            "maximum": 255,
+            "valueCounts": {
+              "0": 574855101,
+              "1": 33288,
+              "2": 77731,
+              "3": 26390,
+              "4": 31688,
+              "5": 20948,
+              "6": 17483,
+              "7": 15005,
+              "8": 13554,
+              "9": 12032,
+              "10": 10787,
+              "11": 9201,
+              "12": 7994,
+              "13": 7558,
+              "14": 7429,
+              "15": 7862,
+              "16": 9444,
+              "17": 13273,
+              "18": 19810,
+              "19": 31773,
+              "20": 51979,
+              "21": 84029,
+              "22": 127630,
+              "23": 180619,
+              "24": 234630,
+              "25": 294622,
+              "26": 360699,
+              "27": 435336,
+              "32": 875322,
+              "202": 6608698,
+              "206": 7627198,
+              "207": 7114158,
+              "208": 7906173,
+              "209": 11705950,
+              "210": 12636282,
+              "211": 5402269,
+              "212": 4915722,
+              "213": 11706473,
+              "214": 12386968,
+              "215": 13978291,
+              "216": 19391511,
+              "217": 23094307,
+              "218": 24718466,
+              "219": 20281868,
+              "220": 4240214,
+              "221": 2072724,
+              "222": 20970697,
+              "223": 37556492,
+              "224": 42433796,
+              "225": 30650826,
+              "226": 31440279,
+              "227": 35104182,
+              "228": 33441770,
+              "229": 25213021,
+              "230": 21403494,
+              "231": 23180088,
+              "232": 19459271,
+              "233": 16056450,
+              "234": 15043770,
+              "235": 19302225,
+              "236": 17861047,
+              "237": 393375,
+              "238": 103502,
+              "239": 38729,
+              "240": 14997,
+              "241": 7372,
+              "242": 4554,
+              "243": 3100,
+              "244": 2170,
+              "245": 1721,
+              "246": 1498,
+              "247": 1121,
+              "248": 907,
+              "249": 796,
+              "250": 617,
+              "251": 615,
+              "252": 436,
+              "253": 378,
+              "254": 318,
+              "255": 1172,
+              "28": 515691,
+              "29": 601333,
+              "199": 6096061,
+              "203": 6719416,
+              "204": 7580198,
+              "33": 957721,
+              "34": 1040569,
+              "39": 1292973,
+              "185": 3269515,
+              "189": 3670455,
+              "193": 4837294,
+              "198": 5969729,
+              "201": 6083577,
+              "205": 8034590,
+              "30": 694528,
+              "200": 5861197,
+              "187": 3356569,
+              "31": 792840,
+              "36": 1172561,
+              "38": 1270445,
+              "195": 6101329,
+              "197": 6111696,
+              "35": 1112909,
+              "40": 1309323,
+              "196": 6336486,
+              "186": 3359449,
+              "191": 4139476,
+              "192": 4235261,
+              "194": 5595520,
+              "41": 1315746,
+              "174": 2644553,
+              "182": 3291413,
+              "188": 3544178,
+              "190": 3821814,
+              "184": 3211517,
+              "156": 2006390,
+              "157": 2047949,
+              "160": 2115034,
+              "162": 2189515,
+              "164": 2305085,
+              "165": 2392591,
+              "167": 2348515,
+              "168": 2366916,
+              "169": 2359901,
+              "170": 2387029,
+              "171": 2431884,
+              "172": 2517881,
+              "173": 2610725,
+              "175": 2652035,
+              "176": 2751031,
+              "177": 2811110,
+              "178": 2790744,
+              "179": 2913054,
+              "180": 3044271,
+              "181": 3185947,
+              "183": 3177012,
+              "120": 1193721,
+              "123": 1259812,
+              "135": 1597106,
+              "137": 1581841,
+              "138": 1586623,
+              "140": 1605952,
+              "141": 1616456,
+              "142": 1623365,
+              "143": 1636873,
+              "144": 1647695,
+              "145": 1686350,
+              "146": 1692579,
+              "147": 1716261,
+              "148": 1757087,
+              "149": 1804305,
+              "150": 1850560,
+              "151": 1919059,
+              "152": 1941642,
+              "153": 1957922,
+              "154": 1964998,
+              "155": 2013154,
+              "158": 2077459,
+              "159": 2112013,
+              "161": 2149202,
+              "163": 2224803,
+              "166": 2353756,
+              "43": 1329830,
+              "54": 1399233,
+              "55": 1373271,
+              "56": 1351148,
+              "57": 1325744,
+              "58": 1299675,
+              "59": 1271974,
+              "60": 1241154,
+              "61": 1197403,
+              "64": 1050029,
+              "65": 1010829,
+              "66": 979269,
+              "67": 956733,
+              "68": 944486,
+              "69": 941315,
+              "70": 937860,
+              "71": 935799,
+              "72": 942497,
+              "73": 939883,
+              "74": 943500,
+              "75": 943414,
+              "76": 945673,
+              "77": 948219,
+              "78": 950600,
+              "79": 953300,
+              "80": 952852,
+              "81": 954987,
+              "82": 952597,
+              "83": 955338,
+              "84": 954184,
+              "85": 958676,
+              "86": 955695,
+              "87": 953249,
+              "88": 952316,
+              "89": 948285,
+              "90": 951330,
+              "91": 960550,
+              "92": 953254,
+              "93": 956678,
+              "94": 956714,
+              "95": 956186,
+              "96": 968619,
+              "97": 967189,
+              "98": 964696,
+              "99": 969290,
+              "100": 977280,
+              "101": 989814,
+              "102": 1001787,
+              "103": 1008114,
+              "104": 1011070,
+              "105": 1024254,
+              "106": 1037564,
+              "107": 1044354,
+              "108": 1057996,
+              "109": 1053742,
+              "110": 1066462,
+              "111": 1081302,
+              "112": 1097597,
+              "113": 1112282,
+              "114": 1129155,
+              "115": 1148231,
+              "116": 1151569,
+              "117": 1170096,
+              "118": 1179076,
+              "119": 1184488,
+              "121": 1209860,
+              "122": 1228725,
+              "124": 1285403,
+              "125": 1317284,
+              "126": 1352378,
+              "127": 1391004,
+              "128": 1429990,
+              "129": 1449980,
+              "130": 1490498,
+              "131": 1525878,
+              "132": 1547540,
+              "133": 1573138,
+              "134": 1611928,
+              "136": 1578475,
+              "139": 1603028,
+              "37": 1226755,
+              "46": 1392566,
+              "48": 1443529,
+              "52": 1442971,
+              "53": 1424923,
+              "62": 1153076,
+              "63": 1099403,
+              "49": 1459052,
+              "47": 1422364,
+              "50": 1459744,
+              "51": 1455644,
+              "45": 1364056,
+              "44": 1341017,
+              "42": 1321688
+            },
+            "firstUsableSample": {
+              "column": 0,
+              "row": 0,
+              "value": 0
+            }
+          }
+        ],
+        "seconds": 43.953,
+        "completeDecode": true,
+        "colorInterpretation": [
+          "red",
+          "green",
+          "blue"
+        ],
+        "maskFlags": [
+          [
+            "all_valid"
+          ],
+          [
+            "all_valid"
+          ],
+          [
+            "all_valid"
+          ]
+        ],
+        "imageStructure": {
+          "COMPRESSION": "YCbCr JPEG",
+          "INTERLEAVE": "PIXEL",
+          "JPEGTABLESMODE": "1",
+          "JPEG_QUALITY": "75",
+          "LAYOUT": "COG",
+          "SOURCE_COLOR_SPACE": "YCbCr"
+        },
+        "overviews": [
+          [
+            2,
+            4,
+            8,
+            16,
+            32,
+            64,
+            128
+          ],
+          [
+            2,
+            4,
+            8,
+            16,
+            32,
+            64,
+            128
+          ],
+          [
+            2,
+            4,
+            8,
+            16,
+            32,
+            64,
+            128
+          ]
+        ]
+      },
+      "rawSamples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "datasetMaskValid": [
+            true,
+            true,
+            true
+          ],
+          "scalarNoData": [
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "column": 18194,
+          "row": 20578,
+          "values": [
+            232,
+            232,
+            232
+          ],
+          "datasetMaskValid": [
+            true,
+            true,
+            true
+          ],
+          "scalarNoData": [
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "column": 36388,
+          "row": 41156,
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "datasetMaskValid": [
+            true,
+            true,
+            true
+          ],
+          "scalarNoData": [
+            false,
+            false,
+            false
+          ]
+        }
+      ],
+      "tiffStructure": {
+        "isBigTiff": true,
+        "ifds": [
+          {
+            "index": 0,
+            "offset": 200,
+            "shape": [
+              41157,
+              36389,
+              3
+            ],
+            "isMask": false,
+            "isReduced": false,
+            "isTiled": true,
+            "tags": {
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 1,
+            "offset": 1528,
+            "shape": [
+              20578,
+              18194,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 2,
+            "offset": 2054,
+            "shape": [
+              10289,
+              9097,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 3,
+            "offset": 2580,
+            "shape": [
+              5144,
+              4548,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 4,
+            "offset": 3106,
+            "shape": [
+              2572,
+              2274,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 5,
+            "offset": 3632,
+            "shape": [
+              1286,
+              1137,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 6,
+            "offset": 4158,
+            "shape": [
+              643,
+              568,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          },
+          {
+            "index": 7,
+            "offset": 4684,
+            "shape": [
+              321,
+              284,
+              3
+            ],
+            "isMask": false,
+            "isReduced": true,
+            "isTiled": true,
+            "tags": {
+              "NewSubfileType": 1,
+              "PhotometricInterpretation": 6,
+              "SamplesPerPixel": 3,
+              "BitsPerSample": [
+                8,
+                8,
+                8
+              ],
+              "SampleFormat": [
+                1,
+                1,
+                1
+              ],
+              "Compression": 7,
+              "TileWidth": 512,
+              "TileLength": 512
+            }
+          }
+        ]
+      },
+      "status": "full original independently decoded; native generic route not yet run in this research round"
+    },
+    "incompleteTransferNotAccepted": {
+      "itemId": "B130001101153A10",
+      "observedPartialBytes": 42991616,
+      "expectedFullBytes": 51775473,
+      "path": "G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\B130001101153A10-failed-partial.bin",
+      "error": "Python HTTPS read TimeoutError after 60 second read timeout",
+      "accepted": false,
+      "resumed": false
+    },
+    "actualGenericNativeResult": {
+      "scope": "One actual Vantor event item in unchanged generic STAC flow, fresh full original, current reader boundary and isolated restart; not a ready built-in product",
+      "binarySha256": "b63daf248f7c042d7109594d7df944b61fb6e576342da1f09b21026dc2c92580",
+      "port": 4673,
+      "store": "G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\generic-native-core",
+      "status": "planned: actual generic metadata and fresh original succeeded; native YCbCr inspection correctly rejected",
+      "credentialsRead": false,
+      "itemUrl": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+      "expectedOriginalSha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+      "settledOriginalReusedForFormatBoundaryRecheck": true,
+      "project": {
+        "id": "4e5dc121-693c-46b0-8403-a61cc2bffa5a",
+        "name": "Vantor new event visual boundary · actual native transfer",
+        "bounds": [
+          85.37344389401046,
+          28.14318026453769,
+          85.56232174064412,
+          28.332368860911252
+        ],
+        "scenes": [],
+        "stacItems": [
+          {
+            "snapshotId": "31a45abd8fd69a31518818806497401ec109e5b6d7d5a2b66744a2f9500e7de9",
+            "assetKey": "visual",
+            "title": "[POST] Vantor LG02 Image B120001101250A10 · Visual COG",
+            "itemId": "B120001101250A10",
+            "collectionId": "Nepal-Flooding-Aug-2026",
+            "serviceName": "Vantor finite event generic original research",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "datetime": "2026-09-07T05:07:53.249593Z",
+            "startDatetime": null,
+            "endDatetime": null,
+            "bbox": [
+              85.37344389401046,
+              28.14318026453769,
+              85.56232174064412,
+              28.332368860911252
+            ],
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif"
+          }
+        ],
+        "createdAt": "2026-10-12T12:26:45.807974400+00:00",
+        "updatedAt": "2026-10-12T12:26:45.807974400+00:00"
+      },
+      "job": {
+        "id": "b27c505f-1c81-42a7-ada5-7172c89b0bd0",
+        "kind": "download",
+        "parentId": null,
+        "recipe": null,
+        "crop": null,
+        "mosaic": null,
+        "mosaicOutput": null,
+        "manifestPath": null,
+        "safe": null,
+        "safeOutput": null,
+        "stacSource": {
+          "snapshotId": "31a45abd8fd69a31518818806497401ec109e5b6d7d5a2b66744a2f9500e7de9",
+          "assetKey": "visual"
+        },
+        "itemId": "B120001101250A10",
+        "assetKey": "stac_asset",
+        "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif",
+        "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "title": "[POST] Vantor LG02 Image B120001101250A10 · Visual COG",
+        "status": "succeeded",
+        "bytesDownloaded": 29534465,
+        "totalBytes": 29534465,
+        "sha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+        "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\generic-native-core\\assets\\b27c505f-1c81-42a7-ada5-7172c89b0bd0.tif",
+        "error": null,
+        "createdAt": "2026-10-12T12:26:45.845797600+00:00",
+        "updatedAt": "2026-10-12T12:28:06.659143+00:00",
+        "source": "Vantor finite event generic original research",
+        "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+        "attempts": 1,
+        "transfer": {
+          "mode": "fresh",
+          "resumedBytes": 0
+        },
+        "settled": true
+      },
+      "freshOriginalByteAndHashMatch": true,
+      "independentCompleteDecode": {
+        "receipt": "G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\original-report.json",
+        "sha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+        "allBaseSamplesDecoded": 4492986219,
+        "scope": "Independently decoded complete separately fresh-downloaded original has exactly the same complete-file SHA-256 as this fresh native transfer"
+      },
+      "nativeInspection": {
+        "jobId": "b27c505f-1c81-42a7-ada5-7172c89b0bd0",
+        "sha256": "54833b631a8e999ccb6b2aebd409648f79d2a4ece60041b94978aeec009c6f3a",
+        "width": 36389,
+        "height": 41157,
+        "storageLayout": "tile",
+        "bands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": null
+          },
+          {
+            "index": 2,
+            "dataType": "UInt8",
+            "nodata": null
+          },
+          {
+            "index": 3,
+            "dataType": "UInt8",
+            "nodata": null
+          }
+        ],
+        "crs": "EPSG:4326",
+        "horizontalCrs": "EPSG:4326",
+        "sourceModelPixelScale": [
+          5.190520394450596e-06,
+          4.5967538055144995e-06,
+          0.0
+        ],
+        "sourceModelTiepoint": [
+          0.0,
+          0.0,
+          0.0,
+          85.37344389401046,
+          28.332368860911252,
+          0.0
+        ],
+        "transform": [
+          5.190520394450596e-06,
+          0.0,
+          85.37344389401046,
+          0.0,
+          -4.5967538055144995e-06,
+          28.332368860911252
+        ],
+        "bounds": [
+          85.37344389401046,
+          28.14318026453769,
+          85.56232174064412,
+          28.332368860911252
+        ],
+        "pixelInterpretation": "area",
+        "previewWidth": null,
+        "previewHeight": null,
+        "displayBand": 1,
+        "displayRange": null,
+        "limitations": [
+          "Preview is a first-band grayscale stretch of raw samples; no sensor calibration or scientific units are inferred.",
+          "COG layout conformance has not been validated.",
+          "This photometric interpretation could transform raw samples and is not decoded."
+        ]
+      },
+      "nativePixelBoundary": {
+        "httpErrorStatus": 400,
+        "errorBody": "{\"error\":\"This TIFF sample layout cannot be decoded\"}"
+      },
+      "expectedColorEncodingRejectionVerified": true,
+      "isolatedRestartOriginalMetadataProjectJobAndRejectionPreserved": true,
+      "privateServiceStopped": true
+    },
+    "capability": "planned: matching licensed event collection and full fresh original transfer succeed, but current native raw decoder returns metadata-only with no preview and explicitly rejects YCbCr pixel interpretation",
+    "noDataCorrection": "A TIFF library convenience property defaulted to zero when no GDAL_NODATA tag exists. Actual full Rasterio and IFD tags confirm scalar NoData absent; no zero mask is fabricated. The reviewed Vantor original has only image/overview IFDs, no embedded dataset mask or alpha.",
+    "qualityBoundary": "Actual first item is a 2026-09-07 post-event observation despite the event's Aug label, with publisher scene cloud cover 93%; no cloud-free or damage-detection claim."
+  },
+  "legacyMaui": {
+    "datasetId": "maxar-open-legacy",
+    "reviewedItemCount": 1,
+    "layers": [
+      "ms_analytic",
+      "pan_analytic"
+    ],
+    "year": 2023,
+    "month": 8,
+    "instant": "2023-08-12 21:12:49Z",
+    "sourceItemId": "4/122000312222/10300100EB15FF00",
+    "sourceRegion": null,
+    "actualFootprintBbox": [
+      -156.68792052300424,
+      20.96287019085091,
+      -156.642091971835,
+      20.97020234128532
+    ],
+    "itemReceipt": {
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+      "bytes": 4043,
+      "sha256": "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca",
+      "status": 200
+    },
+    "acquisitionCollectionReceipt": {
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/acquisition_collections/10300100EB15FF00_collection.json",
+      "bytes": 3136,
+      "sha256": "ea7968af0aad150299a6244c9607f784390eba24dac5f4af602d64b231a05f40",
+      "status": 200
+    },
+    "eventReceipt": {
+      "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/collection.json",
+      "bytes": 1598,
+      "sha256": "69fa03e33734cc2b42932e24071dd6cd554e08077b3fd464a60ba9178207c1bb",
+      "status": 200
+    },
+    "licenses": {
+      "item": null,
+      "acquisitionCollection": "CC-BY-NC-4.0",
+      "eventCollection": "CC-BY-NC-4.0",
+      "conflictObservedForSelectedItem": false,
+      "otherLegacyAcquisitionsCanConflict": "Sri Lanka 2025 and Nepal 2023 reviewed acquisition collections declare proprietary; those declarations are preserved and those items are not substituted."
+    },
+    "genericNative": {
+      "status": "passed generic analytic candidates; visual expected unsupported; no built-in preset or browser UI yet",
+      "binarySha256": "b63daf248f7c042d7109594d7df944b61fb6e576342da1f09b21026dc2c92580",
+      "itemUrl": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+      "itemId": "4/122000312222/10300100EB15FF00",
+      "scope": "One actual finite Maui August 2023 item; three unchanged complete asset files through generic STAC. No built-in adapter or browser UI claimed.",
+      "credentialsRead": false,
+      "cases": [
+        {
+          "assetKey": "ms_analytic",
+          "status": "passed: complete fresh native original, full independent decode, raw values and scalar NoData match; file validity mask retained separately",
+          "job": {
+            "id": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+            "kind": "download",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": null,
+            "mosaicOutput": null,
+            "manifestPath": null,
+            "safe": null,
+            "safeOutput": null,
+            "stacSource": {
+              "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+              "assetKey": "ms_analytic"
+            },
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "assetKey": "stac_asset",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-ms.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "4/122000312222/10300100EB15FF00 · Multispectral Image",
+            "status": "succeeded",
+            "bytesDownloaded": 12977165,
+            "totalBytes": 12977165,
+            "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\maui-native-core\\assets\\38ec459b-560d-4d30-a0cc-5e9a030f72c8.tif",
+            "error": null,
+            "createdAt": "2026-10-12T12:37:05.331069600+00:00",
+            "updatedAt": "2026-10-12T12:37:19.681740+00:00",
+            "source": "Reviewed Maui actual original verification",
+            "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+            "attempts": 1,
+            "transfer": {
+              "mode": "fresh",
+              "resumedBytes": 0
+            },
+            "settled": true
+          },
+          "independentRaster": {
+            "width": 2583,
+            "height": 2583,
+            "count": 8,
+            "crs": "EPSG:32604",
+            "bounds": [
+              739843.75,
+              2319843.75,
+              745156.25,
+              2325156.25
+            ],
+            "transform": [
+              2.056716995741386,
+              0.0,
+              739843.75,
+              0.0,
+              -2.056716995741386,
+              2325156.25
+            ],
+            "resolution": [
+              2.056716995741386,
+              2.056716995741386
+            ],
+            "scales": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "offsets": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "tags": {
+              "AREA_OR_POINT": "Area"
+            },
+            "bands": [
+              {
+                "index": 1,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 5484,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 484
+                }
+              },
+              {
+                "index": 2,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 7239,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 800
+                }
+              },
+              {
+                "index": 3,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 7590,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 922
+                }
+              },
+              {
+                "index": 4,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 8502,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 448
+                }
+              },
+              {
+                "index": 5,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 8530,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 286
+                }
+              },
+              {
+                "index": 6,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 8578,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 163
+                }
+              },
+              {
+                "index": 7,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 8266,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 75
+                }
+              },
+              {
+                "index": 8,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 6671889,
+                "validPixels": 742179,
+                "validFraction": 0.1112397103728794,
+                "minimum": 1,
+                "maximum": 8668,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 507,
+                  "row": 2312,
+                  "value": 23
+                }
+              }
+            ],
+            "seconds": 0.36,
+            "completeDecode": true,
+            "maskFlags": [
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ]
+            ],
+            "colorInterpretation": [
+              "gray",
+              "undefined",
+              "undefined",
+              "undefined",
+              "undefined",
+              "undefined",
+              "undefined",
+              "undefined"
+            ],
+            "imageStructure": {
+              "COMPRESSION": "DEFLATE",
+              "INTERLEAVE": "PIXEL"
+            }
+          },
+          "ifds": [
+            {
+              "index": 0,
+              "offset": 8,
+              "shape": [
+                2583,
+                2583,
+                8
+              ],
+              "isMask": false,
+              "isReduced": false,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 1,
+              "offset": 730,
+              "shape": [
+                2583,
+                2583
+              ],
+              "isMask": true,
+              "isReduced": false,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 2,
+              "offset": 9714488,
+              "shape": [
+                1292,
+                1292,
+                8
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 3,
+              "offset": 9714792,
+              "shape": [
+                646,
+                646,
+                8
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 4,
+              "offset": 9715056,
+              "shape": [
+                323,
+                323,
+                8
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 5,
+              "offset": 9715288,
+              "shape": [
+                1292,
+                1292
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 6,
+              "offset": 9715534,
+              "shape": [
+                646,
+                646
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 7,
+              "offset": 9715740,
+              "shape": [
+                323,
+                323
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            }
+          ],
+          "nativeInspection": {
+            "jobId": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+            "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+            "width": 2583,
+            "height": 2583,
+            "storageLayout": "tile",
+            "bands": [
+              {
+                "index": 1,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 2,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 3,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 4,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 5,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 6,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 7,
+                "dataType": "UInt16",
+                "nodata": null
+              },
+              {
+                "index": 8,
+                "dataType": "UInt16",
+                "nodata": null
+              }
+            ],
+            "crs": "EPSG:32604",
+            "horizontalCrs": "EPSG:32604",
+            "sourceModelPixelScale": [
+              2.056716995741386,
+              2.056716995741386,
+              0.0
+            ],
+            "sourceModelTiepoint": [
+              0.0,
+              0.0,
+              0.0,
+              739843.75,
+              2325156.25,
+              0.0
+            ],
+            "transform": [
+              2.056716995741386,
+              0.0,
+              739843.75,
+              0.0,
+              -2.056716995741386,
+              2325156.25
+            ],
+            "bounds": [
+              739843.75,
+              2319843.75,
+              745156.25,
+              2325156.25
+            ],
+            "pixelInterpretation": "area",
+            "previewWidth": 768,
+            "previewHeight": 768,
+            "displayBand": 1,
+            "displayRange": [
+              0.0,
+              4837.0
+            ],
+            "limitations": [
+              "Preview is a first-band grayscale stretch of raw samples; no sensor calibration or scientific units are inferred.",
+              "COG layout conformance has not been validated.",
+              "Preview samples an embedded overview; raw pixel inspection always reads the original image."
+            ]
+          },
+          "previewSha256": "22a9c8c66a907590e75c5ec5173e449e3baba4c579e5517212b604287396b397",
+          "rawSamples": [
+            {
+              "jobId": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+              "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+              "column": 0,
+              "row": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "noData": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "datasetMaskValid": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "pixelCenterInPublishedFootprint": false
+            },
+            {
+              "jobId": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+              "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+              "column": 507,
+              "row": 2312,
+              "values": [
+                484,
+                800,
+                922,
+                448,
+                286,
+                163,
+                75,
+                23
+              ],
+              "noData": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "datasetMaskValid": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "pixelCenterInPublishedFootprint": false
+            },
+            {
+              "jobId": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+              "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+              "column": 1291,
+              "row": 1291,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "noData": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "datasetMaskValid": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "pixelCenterInPublishedFootprint": false
+            },
+            {
+              "jobId": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+              "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+              "column": 1449,
+              "row": 2452,
+              "values": [
+                95,
+                296,
+                469,
+                512,
+                524,
+                1158,
+                1741,
+                1925
+              ],
+              "noData": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "datasetMaskValid": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "pixelCenterInPublishedFootprint": true
+            },
+            {
+              "jobId": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+              "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+              "column": 2582,
+              "row": 2582,
+              "values": [
+                37,
+                224,
+                394,
+                346,
+                205,
+                1496,
+                2530,
+                2755
+              ],
+              "noData": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "datasetMaskValid": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "pixelCenterInPublishedFootprint": true
+            }
+          ],
+          "completeGridDecodeReusedForUnchangedFileSha256": true
+        },
+        {
+          "assetKey": "pan_analytic",
+          "status": "passed: complete fresh native original, full independent decode, raw values and scalar NoData match; file validity mask retained separately",
+          "job": {
+            "id": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+            "kind": "download",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": null,
+            "mosaicOutput": null,
+            "manifestPath": null,
+            "safe": null,
+            "safeOutput": null,
+            "stacSource": {
+              "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+              "assetKey": "pan_analytic"
+            },
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "assetKey": "stac_asset",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-pan.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "4/122000312222/10300100EB15FF00 · Panchromatic Image",
+            "status": "succeeded",
+            "bytesDownloaded": 23460106,
+            "totalBytes": 23460106,
+            "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\maui-native-core\\assets\\826e6ecd-5111-4414-93d4-1bb5656f3c27.tif",
+            "error": null,
+            "createdAt": "2026-10-12T12:37:05.332717600+00:00",
+            "updatedAt": "2026-10-12T12:37:18.279802300+00:00",
+            "source": "Reviewed Maui actual original verification",
+            "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+            "attempts": 1,
+            "transfer": {
+              "mode": "fresh",
+              "resumedBytes": 0
+            },
+            "settled": true
+          },
+          "independentRaster": {
+            "width": 10332,
+            "height": 10332,
+            "count": 1,
+            "crs": "EPSG:32604",
+            "bounds": [
+              739843.75,
+              2319843.75,
+              745156.25,
+              2325156.25
+            ],
+            "transform": [
+              0.5141792489353465,
+              0.0,
+              739843.75,
+              0.0,
+              -0.5141792489353465,
+              2325156.25
+            ],
+            "resolution": [
+              0.5141792489353465,
+              0.5141792489353465
+            ],
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "units": [
+              null
+            ],
+            "tags": {
+              "AREA_OR_POINT": "Area"
+            },
+            "bands": [
+              {
+                "index": 1,
+                "dtype": "uint16",
+                "nodata": null,
+                "allPixelsDecoded": 106750224,
+                "validPixels": 11858587,
+                "validFraction": 0.11108723294107561,
+                "minimum": 1,
+                "maximum": 10000,
+                "valueCounts": null,
+                "firstUsableSample": {
+                  "column": 3057,
+                  "row": 9189,
+                  "value": 1233
+                }
+              }
+            ],
+            "seconds": 0.594,
+            "completeDecode": true,
+            "maskFlags": [
+              [
+                "per_dataset"
+              ]
+            ],
+            "colorInterpretation": [
+              "gray"
+            ],
+            "imageStructure": {
+              "COMPRESSION": "DEFLATE",
+              "INTERLEAVE": "BAND"
+            }
+          },
+          "ifds": [
+            {
+              "index": 0,
+              "offset": 8,
+              "shape": [
+                10332,
+                10332
+              ],
+              "isMask": false,
+              "isReduced": false,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 1,
+              "offset": 3912,
+              "shape": [
+                10332,
+                10332
+              ],
+              "isMask": true,
+              "isReduced": false,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 2,
+              "offset": 17483400,
+              "shape": [
+                5166,
+                5166
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 3,
+              "offset": 17484542,
+              "shape": [
+                2583,
+                2583
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 4,
+              "offset": 17485004,
+              "shape": [
+                1292,
+                1292
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 5,
+              "offset": 17485250,
+              "shape": [
+                646,
+                646
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 6,
+              "offset": 17485456,
+              "shape": [
+                323,
+                323
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 1,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 7,
+              "offset": 17485630,
+              "shape": [
+                5166,
+                5166
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 8,
+              "offset": 17486772,
+              "shape": [
+                2583,
+                2583
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 9,
+              "offset": 17487234,
+              "shape": [
+                1292,
+                1292
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 10,
+              "offset": 17487480,
+              "shape": [
+                646,
+                646
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 11,
+              "offset": 17487686,
+              "shape": [
+                323,
+                323
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            }
+          ],
+          "nativeInspection": {
+            "jobId": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+            "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+            "width": 10332,
+            "height": 10332,
+            "storageLayout": "tile",
+            "bands": [
+              {
+                "index": 1,
+                "dataType": "UInt16",
+                "nodata": null
+              }
+            ],
+            "crs": "EPSG:32604",
+            "horizontalCrs": "EPSG:32604",
+            "sourceModelPixelScale": [
+              0.5141792489353465,
+              0.5141792489353465,
+              0.0
+            ],
+            "sourceModelTiepoint": [
+              0.0,
+              0.0,
+              0.0,
+              739843.75,
+              2325156.25,
+              0.0
+            ],
+            "transform": [
+              0.5141792489353465,
+              0.0,
+              739843.75,
+              0.0,
+              -0.5141792489353465,
+              2325156.25
+            ],
+            "bounds": [
+              739843.75,
+              2319843.75,
+              745156.25,
+              2325156.25
+            ],
+            "pixelInterpretation": "area",
+            "previewWidth": 768,
+            "previewHeight": 768,
+            "displayBand": 1,
+            "displayRange": [
+              0.0,
+              6182.0
+            ],
+            "limitations": [
+              "Preview is a first-band grayscale stretch of raw samples; no sensor calibration or scientific units are inferred.",
+              "COG layout conformance has not been validated.",
+              "Preview samples an embedded overview; raw pixel inspection always reads the original image."
+            ]
+          },
+          "previewSha256": "179f1ebb4aa862e9dbb3ba5e4beb182a8f774a321c20bbdef4948021e3f6507f",
+          "rawSamples": [
+            {
+              "jobId": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+              "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+              "column": 0,
+              "row": 0,
+              "values": [
+                0
+              ],
+              "noData": [
+                false
+              ],
+              "datasetMaskValid": [
+                false
+              ],
+              "pixelCenterInPublishedFootprint": false
+            },
+            {
+              "jobId": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+              "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+              "column": 3057,
+              "row": 9189,
+              "values": [
+                1233
+              ],
+              "noData": [
+                false
+              ],
+              "datasetMaskValid": [
+                true
+              ],
+              "pixelCenterInPublishedFootprint": false
+            },
+            {
+              "jobId": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+              "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+              "column": 5166,
+              "row": 5166,
+              "values": [
+                0
+              ],
+              "noData": [
+                false
+              ],
+              "datasetMaskValid": [
+                false
+              ],
+              "pixelCenterInPublishedFootprint": false
+            },
+            {
+              "jobId": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+              "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+              "column": 5799,
+              "row": 9809,
+              "values": [
+                470
+              ],
+              "noData": [
+                false
+              ],
+              "datasetMaskValid": [
+                true
+              ],
+              "pixelCenterInPublishedFootprint": true
+            },
+            {
+              "jobId": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+              "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+              "column": 10331,
+              "row": 10331,
+              "values": [
+                608
+              ],
+              "noData": [
+                false
+              ],
+              "datasetMaskValid": [
+                true
+              ],
+              "pixelCenterInPublishedFootprint": true
+            }
+          ],
+          "completeGridDecodeReusedForUnchangedFileSha256": true
+        },
+        {
+          "assetKey": "visual",
+          "status": "expected unsupported visual: complete fresh original independently decoded; native grid only, no preview or raw pixel interpretation",
+          "job": {
+            "id": "eef02db0-ad78-4d35-a8f9-72ce20d6085c",
+            "kind": "download",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": null,
+            "mosaicOutput": null,
+            "manifestPath": null,
+            "safe": null,
+            "safeOutput": null,
+            "stacSource": {
+              "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+              "assetKey": "visual"
+            },
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "assetKey": "stac_asset",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-visual.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "4/122000312222/10300100EB15FF00 · Visual Image",
+            "status": "succeeded",
+            "bytesDownloaded": 10420319,
+            "totalBytes": 10420319,
+            "sha256": "f716caa632b51459c283d98068d1ebda15160579d2d6b8f19d803b3779ca6f08",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\maui-native-core\\assets\\eef02db0-ad78-4d35-a8f9-72ce20d6085c.tif",
+            "error": null,
+            "createdAt": "2026-10-12T12:37:05.335091200+00:00",
+            "updatedAt": "2026-10-12T12:37:27.665601900+00:00",
+            "source": "Reviewed Maui actual original verification",
+            "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+            "attempts": 1,
+            "transfer": {
+              "mode": "fresh",
+              "resumedBytes": 0
+            },
+            "settled": true
+          },
+          "independentRaster": {
+            "width": 17408,
+            "height": 17408,
+            "count": 3,
+            "crs": "EPSG:32604",
+            "bounds": [
+              739843.75,
+              2319843.75,
+              745156.25,
+              2325156.25
+            ],
+            "transform": [
+              0.30517578125,
+              0.0,
+              739843.75,
+              0.0,
+              -0.30517578125,
+              2325156.25
+            ],
+            "resolution": [
+              0.30517578125,
+              0.30517578125
+            ],
+            "scales": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "offsets": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": [
+              null,
+              null,
+              null
+            ],
+            "tags": {
+              "AREA_OR_POINT": "Area"
+            },
+            "bands": [
+              {
+                "index": 1,
+                "dtype": "uint8",
+                "nodata": null,
+                "allPixelsDecoded": 303038464,
+                "validPixels": 33657451,
+                "validFraction": 0.11106659714325902,
+                "minimum": 0,
+                "maximum": 255,
+                "valueCounts": {
+                  "0": 138558,
+                  "1": 48892,
+                  "2": 55964,
+                  "3": 66851,
+                  "4": 76417,
+                  "5": 84911,
+                  "6": 93960,
+                  "7": 102571,
+                  "8": 109117,
+                  "9": 115939,
+                  "10": 122001,
+                  "11": 128440,
+                  "12": 132653,
+                  "13": 137043,
+                  "14": 142098,
+                  "15": 145866,
+                  "16": 149577,
+                  "17": 153912,
+                  "18": 157532,
+                  "19": 161941,
+                  "20": 165867,
+                  "21": 170175,
+                  "22": 174118,
+                  "23": 177246,
+                  "24": 181523,
+                  "25": 185547,
+                  "26": 189645,
+                  "27": 193206,
+                  "28": 197088,
+                  "29": 202071,
+                  "30": 205577,
+                  "31": 209774,
+                  "32": 213874,
+                  "33": 219441,
+                  "34": 223332,
+                  "35": 227169,
+                  "36": 233081,
+                  "37": 237762,
+                  "38": 242120,
+                  "39": 247096,
+                  "40": 252318,
+                  "41": 257041,
+                  "42": 262996,
+                  "43": 267608,
+                  "44": 273815,
+                  "46": 283560,
+                  "47": 287567,
+                  "50": 301538,
+                  "51": 303657,
+                  "52": 308886,
+                  "55": 313261,
+                  "56": 314261,
+                  "62": 304779,
+                  "45": 279322,
+                  "48": 293953,
+                  "49": 297791,
+                  "53": 310269,
+                  "54": 312061,
+                  "57": 313784,
+                  "58": 312709,
+                  "59": 311664,
+                  "60": 310450,
+                  "61": 307341,
+                  "63": 302348,
+                  "64": 300236,
+                  "65": 295538,
+                  "66": 292399,
+                  "67": 288865,
+                  "68": 285269,
+                  "69": 282140,
+                  "70": 276717,
+                  "71": 272991,
+                  "72": 269189,
+                  "73": 265015,
+                  "74": 260450,
+                  "75": 256920,
+                  "76": 253058,
+                  "77": 249401,
+                  "78": 246857,
+                  "79": 241463,
+                  "80": 238692,
+                  "81": 235424,
+                  "82": 233144,
+                  "83": 230652,
+                  "84": 227886,
+                  "85": 224897,
+                  "86": 223287,
+                  "87": 222267,
+                  "88": 220540,
+                  "89": 219597,
+                  "90": 219023,
+                  "91": 219132,
+                  "92": 219095,
+                  "93": 219937,
+                  "94": 221550,
+                  "95": 222866,
+                  "96": 226205,
+                  "97": 228169,
+                  "98": 231376,
+                  "99": 235101,
+                  "100": 239012,
+                  "101": 242730,
+                  "102": 247383,
+                  "103": 252202,
+                  "104": 257511,
+                  "105": 262058,
+                  "106": 267437,
+                  "107": 272377,
+                  "108": 276570,
+                  "109": 280639,
+                  "110": 285470,
+                  "111": 288449,
+                  "112": 290793,
+                  "113": 291325,
+                  "114": 292247,
+                  "115": 292373,
+                  "116": 290103,
+                  "117": 287753,
+                  "118": 284715,
+                  "119": 279212,
+                  "120": 273277,
+                  "121": 267908,
+                  "122": 260316,
+                  "123": 251112,
+                  "124": 243999,
+                  "125": 233805,
+                  "126": 224193,
+                  "127": 214831,
+                  "128": 205740,
+                  "129": 196910,
+                  "130": 186813,
+                  "131": 178454,
+                  "132": 170232,
+                  "133": 162138,
+                  "134": 153692,
+                  "135": 146537,
+                  "136": 139242,
+                  "137": 131913,
+                  "138": 126143,
+                  "139": 120156,
+                  "140": 113503,
+                  "141": 108351,
+                  "142": 102753,
+                  "143": 98365,
+                  "144": 93292,
+                  "145": 88762,
+                  "146": 83364,
+                  "147": 79889,
+                  "148": 75178,
+                  "149": 71104,
+                  "150": 67181,
+                  "151": 62280,
+                  "152": 58294,
+                  "153": 54164,
+                  "154": 50233,
+                  "155": 46222,
+                  "156": 42705,
+                  "157": 39663,
+                  "158": 36201,
+                  "159": 33274,
+                  "160": 30223,
+                  "161": 27456,
+                  "162": 25065,
+                  "163": 23261,
+                  "164": 21116,
+                  "165": 19410,
+                  "166": 17955,
+                  "167": 16469,
+                  "171": 12577,
+                  "172": 11602,
+                  "168": 15522,
+                  "169": 14282,
+                  "174": 10634,
+                  "181": 7179,
+                  "170": 13289,
+                  "173": 10947,
+                  "175": 9857,
+                  "176": 9344,
+                  "177": 8717,
+                  "178": 8597,
+                  "182": 6922,
+                  "179": 8010,
+                  "180": 7406,
+                  "183": 6674,
+                  "184": 6188,
+                  "185": 6114,
+                  "186": 5798,
+                  "187": 5486,
+                  "188": 5287,
+                  "189": 5114,
+                  "190": 4958,
+                  "191": 4795,
+                  "192": 4464,
+                  "193": 4350,
+                  "194": 4021,
+                  "195": 3928,
+                  "207": 2385,
+                  "196": 3698,
+                  "200": 3413,
+                  "197": 3590,
+                  "198": 3499,
+                  "199": 3271,
+                  "201": 3118,
+                  "202": 3091,
+                  "203": 2827,
+                  "204": 2743,
+                  "205": 2612,
+                  "206": 2435,
+                  "209": 1995,
+                  "211": 1844,
+                  "212": 1725,
+                  "215": 1538,
+                  "218": 1239,
+                  "219": 1229,
+                  "229": 1346,
+                  "237": 1554,
+                  "208": 2253,
+                  "210": 1905,
+                  "213": 1649,
+                  "214": 1586,
+                  "216": 1471,
+                  "217": 1366,
+                  "220": 1265,
+                  "221": 1109,
+                  "222": 1149,
+                  "223": 1131,
+                  "224": 1210,
+                  "225": 1165,
+                  "226": 1151,
+                  "227": 1199,
+                  "228": 1274,
+                  "230": 1409,
+                  "231": 1460,
+                  "232": 1501,
+                  "233": 1532,
+                  "234": 1691,
+                  "235": 1690,
+                  "236": 1626,
+                  "238": 1355,
+                  "239": 1135,
+                  "240": 1188,
+                  "241": 1108,
+                  "242": 1090,
+                  "243": 1077,
+                  "244": 1184,
+                  "245": 1265,
+                  "246": 1346,
+                  "247": 1337,
+                  "248": 1403,
+                  "249": 1430,
+                  "250": 1707,
+                  "251": 2013,
+                  "252": 2187,
+                  "253": 2887,
+                  "254": 3710,
+                  "255": 15238
+                },
+                "firstUsableSample": {
+                  "column": 15869,
+                  "row": 14836,
+                  "value": 0
+                }
+              },
+              {
+                "index": 2,
+                "dtype": "uint8",
+                "nodata": null,
+                "allPixelsDecoded": 303038464,
+                "validPixels": 33657451,
+                "validFraction": 0.11106659714325902,
+                "minimum": 0,
+                "maximum": 255,
+                "valueCounts": {
+                  "0": 34458,
+                  "1": 19365,
+                  "2": 21975,
+                  "3": 25066,
+                  "4": 28678,
+                  "5": 33449,
+                  "6": 38387,
+                  "7": 43985,
+                  "8": 49478,
+                  "9": 54713,
+                  "10": 60243,
+                  "11": 65531,
+                  "12": 70758,
+                  "13": 76013,
+                  "14": 80416,
+                  "15": 85219,
+                  "16": 88836,
+                  "17": 92469,
+                  "18": 97111,
+                  "19": 100740,
+                  "20": 105383,
+                  "21": 108643,
+                  "22": 113864,
+                  "23": 116897,
+                  "24": 121490,
+                  "25": 125101,
+                  "26": 130040,
+                  "27": 133456,
+                  "28": 137443,
+                  "29": 142193,
+                  "30": 146404,
+                  "31": 151113,
+                  "32": 155826,
+                  "33": 160314,
+                  "34": 165725,
+                  "35": 170400,
+                  "36": 175552,
+                  "37": 180065,
+                  "38": 184512,
+                  "39": 190212,
+                  "40": 195728,
+                  "41": 201436,
+                  "42": 208058,
+                  "43": 215274,
+                  "44": 220958,
+                  "45": 228531,
+                  "46": 236127,
+                  "47": 244151,
+                  "48": 250577,
+                  "49": 259397,
+                  "50": 267602,
+                  "51": 275177,
+                  "53": 290875,
+                  "54": 298636,
+                  "55": 307122,
+                  "56": 313838,
+                  "57": 320883,
+                  "58": 328036,
+                  "59": 334895,
+                  "60": 343837,
+                  "61": 351024,
+                  "62": 358203,
+                  "63": 364601,
+                  "64": 372879,
+                  "65": 381565,
+                  "67": 397035,
+                  "68": 402920,
+                  "52": 282892,
+                  "66": 388302,
+                  "69": 408867,
+                  "70": 415017,
+                  "71": 420965,
+                  "72": 424626,
+                  "73": 428131,
+                  "74": 430712,
+                  "75": 431525,
+                  "76": 432696,
+                  "77": 433062,
+                  "78": 432743,
+                  "79": 432388,
+                  "80": 432407,
+                  "81": 430787,
+                  "82": 431308,
+                  "83": 429348,
+                  "84": 429054,
+                  "85": 427506,
+                  "86": 429016,
+                  "87": 427451,
+                  "88": 428176,
+                  "89": 426531,
+                  "90": 427383,
+                  "91": 425945,
+                  "92": 424862,
+                  "93": 421843,
+                  "94": 420231,
+                  "95": 416564,
+                  "96": 413747,
+                  "97": 408413,
+                  "98": 403148,
+                  "99": 394805,
+                  "100": 387335,
+                  "101": 375928,
+                  "102": 364517,
+                  "103": 352642,
+                  "104": 340367,
+                  "105": 325568,
+                  "106": 311441,
+                  "107": 296028,
+                  "108": 282920,
+                  "111": 241224,
+                  "109": 267930,
+                  "110": 255432,
+                  "112": 228279,
+                  "113": 216070,
+                  "114": 203742,
+                  "115": 192779,
+                  "116": 182877,
+                  "117": 174454,
+                  "118": 164143,
+                  "119": 155507,
+                  "120": 147137,
+                  "121": 139485,
+                  "122": 132405,
+                  "123": 124309,
+                  "124": 118151,
+                  "125": 110659,
+                  "126": 104748,
+                  "127": 98537,
+                  "128": 92406,
+                  "129": 86076,
+                  "130": 80105,
+                  "131": 75774,
+                  "132": 70083,
+                  "133": 65419,
+                  "134": 60557,
+                  "135": 56345,
+                  "136": 51978,
+                  "137": 48095,
+                  "138": 44630,
+                  "139": 41275,
+                  "140": 38249,
+                  "141": 34990,
+                  "142": 32485,
+                  "143": 29985,
+                  "144": 27772,
+                  "145": 25939,
+                  "146": 24167,
+                  "147": 22389,
+                  "148": 21055,
+                  "149": 19852,
+                  "150": 18898,
+                  "151": 17974,
+                  "152": 17223,
+                  "153": 16332,
+                  "154": 15484,
+                  "155": 14774,
+                  "156": 14051,
+                  "157": 13166,
+                  "158": 12750,
+                  "159": 12454,
+                  "160": 11614,
+                  "161": 10953,
+                  "162": 10453,
+                  "163": 9970,
+                  "164": 9563,
+                  "165": 9097,
+                  "167": 8296,
+                  "168": 8080,
+                  "169": 7670,
+                  "174": 6076,
+                  "181": 4512,
+                  "166": 8873,
+                  "170": 7371,
+                  "171": 6945,
+                  "172": 6781,
+                  "173": 6510,
+                  "175": 5986,
+                  "176": 5694,
+                  "177": 5265,
+                  "178": 5073,
+                  "179": 5054,
+                  "180": 4699,
+                  "182": 4203,
+                  "183": 3930,
+                  "184": 3730,
+                  "185": 3670,
+                  "186": 3479,
+                  "187": 3498,
+                  "188": 3294,
+                  "189": 3151,
+                  "190": 3226,
+                  "191": 3093,
+                  "192": 3043,
+                  "193": 3032,
+                  "195": 2854,
+                  "196": 2648,
+                  "197": 2609,
+                  "198": 2459,
+                  "199": 2423,
+                  "200": 2447,
+                  "201": 2500,
+                  "202": 2349,
+                  "203": 2326,
+                  "204": 2276,
+                  "206": 2082,
+                  "207": 1752,
+                  "209": 1329,
+                  "214": 869,
+                  "194": 2749,
+                  "205": 2087,
+                  "208": 1457,
+                  "210": 1148,
+                  "211": 1081,
+                  "212": 1032,
+                  "213": 1010,
+                  "215": 967,
+                  "216": 943,
+                  "217": 1006,
+                  "218": 968,
+                  "219": 1015,
+                  "220": 1007,
+                  "221": 1103,
+                  "223": 990,
+                  "224": 967,
+                  "225": 914,
+                  "226": 867,
+                  "227": 894,
+                  "228": 816,
+                  "229": 805,
+                  "230": 799,
+                  "233": 834,
+                  "234": 797,
+                  "236": 716,
+                  "238": 780,
+                  "240": 829,
+                  "241": 855,
+                  "246": 1227,
+                  "248": 1437,
+                  "253": 3357,
+                  "222": 1055,
+                  "231": 812,
+                  "232": 720,
+                  "235": 794,
+                  "237": 737,
+                  "239": 792,
+                  "242": 856,
+                  "244": 1006,
+                  "245": 1119,
+                  "250": 1855,
+                  "243": 983,
+                  "247": 1435,
+                  "249": 1682,
+                  "251": 2127,
+                  "252": 2474,
+                  "254": 4521,
+                  "255": 3534
+                },
+                "firstUsableSample": {
+                  "column": 15869,
+                  "row": 14836,
+                  "value": 5
+                }
+              },
+              {
+                "index": 3,
+                "dtype": "uint8",
+                "nodata": null,
+                "allPixelsDecoded": 303038464,
+                "validPixels": 33657451,
+                "validFraction": 0.11106659714325902,
+                "minimum": 0,
+                "maximum": 255,
+                "valueCounts": {
+                  "0": 47051,
+                  "1": 14350,
+                  "2": 23456,
+                  "3": 23710,
+                  "4": 31474,
+                  "5": 36164,
+                  "6": 41084,
+                  "7": 48221,
+                  "8": 54985,
+                  "9": 63656,
+                  "10": 71527,
+                  "11": 79980,
+                  "12": 89225,
+                  "13": 97974,
+                  "14": 106577,
+                  "15": 116206,
+                  "16": 124140,
+                  "17": 132119,
+                  "18": 140598,
+                  "19": 147709,
+                  "20": 155575,
+                  "21": 162718,
+                  "22": 170386,
+                  "23": 178135,
+                  "24": 185014,
+                  "25": 192050,
+                  "26": 199456,
+                  "27": 206263,
+                  "28": 213799,
+                  "29": 221396,
+                  "30": 229901,
+                  "31": 238570,
+                  "32": 246692,
+                  "33": 257290,
+                  "34": 266591,
+                  "35": 277240,
+                  "36": 288953,
+                  "37": 299326,
+                  "38": 311689,
+                  "39": 326163,
+                  "40": 338683,
+                  "41": 352605,
+                  "42": 367345,
+                  "43": 381395,
+                  "44": 395348,
+                  "45": 408058,
+                  "46": 421602,
+                  "47": 433818,
+                  "48": 443614,
+                  "49": 454916,
+                  "50": 462585,
+                  "51": 469605,
+                  "52": 476163,
+                  "53": 479879,
+                  "54": 483208,
+                  "55": 485065,
+                  "57": 485696,
+                  "58": 483447,
+                  "59": 482123,
+                  "61": 473787,
+                  "62": 468705,
+                  "63": 464595,
+                  "56": 485766,
+                  "60": 478378,
+                  "64": 459066,
+                  "65": 452753,
+                  "66": 447355,
+                  "67": 442857,
+                  "68": 436359,
+                  "69": 433227,
+                  "70": 430255,
+                  "71": 426321,
+                  "72": 424886,
+                  "73": 423307,
+                  "74": 423532,
+                  "75": 423513,
+                  "76": 423910,
+                  "77": 425534,
+                  "78": 425271,
+                  "79": 426629,
+                  "80": 428683,
+                  "81": 428227,
+                  "82": 426440,
+                  "83": 424322,
+                  "84": 419783,
+                  "85": 415238,
+                  "86": 408979,
+                  "87": 398300,
+                  "88": 387662,
+                  "89": 374847,
+                  "90": 360105,
+                  "91": 343553,
+                  "92": 328344,
+                  "93": 309436,
+                  "94": 290553,
+                  "95": 272753,
+                  "96": 255489,
+                  "97": 237662,
+                  "98": 220331,
+                  "99": 204502,
+                  "100": 189050,
+                  "101": 173477,
+                  "104": 136583,
+                  "102": 160140,
+                  "103": 148643,
+                  "105": 126137,
+                  "106": 116460,
+                  "107": 107289,
+                  "108": 99505,
+                  "109": 91555,
+                  "110": 84951,
+                  "111": 79135,
+                  "112": 72848,
+                  "113": 68302,
+                  "114": 62919,
+                  "115": 58741,
+                  "116": 54597,
+                  "117": 50586,
+                  "118": 47507,
+                  "119": 44266,
+                  "120": 41283,
+                  "121": 38692,
+                  "122": 36443,
+                  "123": 34446,
+                  "124": 32649,
+                  "125": 30993,
+                  "126": 29904,
+                  "127": 28504,
+                  "128": 27289,
+                  "129": 26063,
+                  "130": 25261,
+                  "131": 24208,
+                  "132": 23356,
+                  "133": 22764,
+                  "134": 21472,
+                  "135": 21246,
+                  "136": 20320,
+                  "137": 19770,
+                  "138": 19379,
+                  "139": 18742,
+                  "140": 18127,
+                  "141": 17535,
+                  "142": 17034,
+                  "143": 16491,
+                  "144": 16070,
+                  "145": 15770,
+                  "146": 15110,
+                  "147": 14656,
+                  "148": 14310,
+                  "149": 13743,
+                  "150": 13109,
+                  "151": 12426,
+                  "152": 11890,
+                  "153": 11226,
+                  "154": 10948,
+                  "155": 10312,
+                  "156": 9859,
+                  "157": 9292,
+                  "158": 9050,
+                  "159": 8447,
+                  "160": 8108,
+                  "161": 7850,
+                  "164": 6867,
+                  "165": 6433,
+                  "163": 7159,
+                  "168": 5763,
+                  "169": 5908,
+                  "174": 4873,
+                  "181": 3479,
+                  "162": 7393,
+                  "166": 6239,
+                  "167": 6109,
+                  "170": 5507,
+                  "171": 5468,
+                  "172": 5382,
+                  "173": 5014,
+                  "175": 4815,
+                  "176": 4626,
+                  "177": 4409,
+                  "178": 4197,
+                  "179": 3856,
+                  "180": 3693,
+                  "182": 3348,
+                  "183": 3176,
+                  "184": 3064,
+                  "185": 2841,
+                  "186": 2864,
+                  "187": 2765,
+                  "188": 2637,
+                  "189": 2574,
+                  "190": 2325,
+                  "191": 2295,
+                  "192": 2132,
+                  "193": 1945,
+                  "194": 1882,
+                  "195": 1692,
+                  "196": 1601,
+                  "197": 1601,
+                  "198": 1525,
+                  "199": 1491,
+                  "200": 1462,
+                  "201": 1410,
+                  "202": 1281,
+                  "203": 1244,
+                  "204": 1153,
+                  "205": 1184,
+                  "206": 1054,
+                  "207": 1051,
+                  "209": 1115,
+                  "210": 1139,
+                  "212": 1056,
+                  "213": 954,
+                  "218": 812,
+                  "219": 788,
+                  "220": 868,
+                  "222": 850,
+                  "208": 1122,
+                  "211": 1035,
+                  "214": 943,
+                  "215": 903,
+                  "216": 845,
+                  "217": 838,
+                  "221": 835,
+                  "223": 872,
+                  "224": 865,
+                  "225": 919,
+                  "226": 874,
+                  "227": 878,
+                  "228": 807,
+                  "230": 835,
+                  "231": 797,
+                  "233": 798,
+                  "235": 820,
+                  "236": 783,
+                  "239": 882,
+                  "240": 938,
+                  "242": 974,
+                  "243": 1151,
+                  "244": 1240,
+                  "250": 1796,
+                  "252": 763,
+                  "229": 825,
+                  "234": 739,
+                  "237": 812,
+                  "241": 1019,
+                  "232": 754,
+                  "238": 868,
+                  "245": 1002,
+                  "246": 1514,
+                  "247": 1084,
+                  "248": 1619,
+                  "249": 988,
+                  "251": 1234,
+                  "253": 1176,
+                  "254": 1454,
+                  "255": 1860
+                },
+                "firstUsableSample": {
+                  "column": 15869,
+                  "row": 14836,
+                  "value": 1
+                }
+              }
+            ],
+            "seconds": 4.281,
+            "completeDecode": true,
+            "maskFlags": [
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ],
+              [
+                "per_dataset"
+              ]
+            ],
+            "colorInterpretation": [
+              "red",
+              "green",
+              "blue"
+            ],
+            "imageStructure": {
+              "COMPRESSION": "YCbCr JPEG",
+              "INTERLEAVE": "PIXEL",
+              "JPEGTABLESMODE": "1",
+              "JPEG_QUALITY": "75",
+              "SOURCE_COLOR_SPACE": "YCbCr"
+            }
+          },
+          "ifds": [
+            {
+              "index": 0,
+              "offset": 8,
+              "shape": [
+                17408,
+                17408,
+                3
+              ],
+              "isMask": false,
+              "isReduced": false,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 1,
+              "offset": 9858,
+              "shape": [
+                17408,
+                17408
+              ],
+              "isMask": true,
+              "isReduced": false,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 2,
+              "offset": 7171238,
+              "shape": [
+                8704,
+                8704,
+                3
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 3,
+              "offset": 7173950,
+              "shape": [
+                4352,
+                4352,
+                3
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 4,
+              "offset": 7174998,
+              "shape": [
+                2176,
+                2176,
+                3
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 5,
+              "offset": 7175598,
+              "shape": [
+                1088,
+                1088,
+                3
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 6,
+              "offset": 7176070,
+              "shape": [
+                544,
+                544,
+                3
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 7,
+              "offset": 7176502,
+              "shape": [
+                272,
+                272,
+                3
+              ],
+              "isMask": false,
+              "isReduced": true,
+              "photometric": 6,
+              "compression": 7,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 8,
+              "offset": 7176902,
+              "shape": [
+                8704,
+                8704
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 9,
+              "offset": 7179388,
+              "shape": [
+                4352,
+                4352
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 10,
+              "offset": 7180210,
+              "shape": [
+                2176,
+                2176
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 11,
+              "offset": 7180584,
+              "shape": [
+                1088,
+                1088
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 12,
+              "offset": 7180830,
+              "shape": [
+                544,
+                544
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            },
+            {
+              "index": 13,
+              "offset": 7181036,
+              "shape": [
+                272,
+                272
+              ],
+              "isMask": true,
+              "isReduced": true,
+              "photometric": 4,
+              "compression": 8,
+              "SubIFDs": null,
+              "ExtraSamples": null,
+              "scalarNoDataTagPresent": false
+            }
+          ],
+          "nativeInspection": {
+            "jobId": "eef02db0-ad78-4d35-a8f9-72ce20d6085c",
+            "sha256": "f716caa632b51459c283d98068d1ebda15160579d2d6b8f19d803b3779ca6f08",
+            "width": 17408,
+            "height": 17408,
+            "storageLayout": "tile",
+            "bands": [
+              {
+                "index": 1,
+                "dataType": "UInt8",
+                "nodata": null
+              },
+              {
+                "index": 2,
+                "dataType": "UInt8",
+                "nodata": null
+              },
+              {
+                "index": 3,
+                "dataType": "UInt8",
+                "nodata": null
+              }
+            ],
+            "crs": "EPSG:32604",
+            "horizontalCrs": "EPSG:32604",
+            "sourceModelPixelScale": [
+              0.30517578125,
+              0.30517578125,
+              0.0
+            ],
+            "sourceModelTiepoint": [
+              0.0,
+              0.0,
+              0.0,
+              739843.75,
+              2325156.25,
+              0.0
+            ],
+            "transform": [
+              0.30517578125,
+              0.0,
+              739843.75,
+              0.0,
+              -0.30517578125,
+              2325156.25
+            ],
+            "bounds": [
+              739843.75,
+              2319843.75,
+              745156.25,
+              2325156.25
+            ],
+            "pixelInterpretation": "area",
+            "previewWidth": null,
+            "previewHeight": null,
+            "displayBand": 1,
+            "displayRange": null,
+            "limitations": [
+              "Preview is a first-band grayscale stretch of raw samples; no sensor calibration or scientific units are inferred.",
+              "COG layout conformance has not been validated.",
+              "This photometric interpretation could transform raw samples and is not decoded."
+            ]
+          },
+          "completeGridDecodeReusedForUnchangedFileSha256": true,
+          "nativePixelExpectedRejection": "/stac/jobs/eef02db0-ad78-4d35-a8f9-72ce20d6085c/pixel?column=0&row=0: HTTP 400 {\"error\":\"This TIFF sample layout cannot be decoded\"}"
+        }
+      ],
+      "settledOriginalsReusedForReaderBoundaryAndReopenRecheck": true,
+      "connection": {
+        "id": "27cd8cf2-43c5-4836-a21e-46ec7b39f8b0",
+        "name": "Reviewed Maui actual original verification",
+        "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+        "kind": "item",
+        "connectedAt": "2026-10-12T12:37:03.283298900+00:00",
+        "collections": [
+          {
+            "id": "10300100EB15FF00",
+            "title": "10300100EB15FF00",
+            "description": "10300100EB15FF00 ARD Tiles",
+            "license": "CC-BY-NC-4.0"
+          }
+        ],
+        "capabilities": {
+          "searchGet": false,
+          "searchPost": false
+        },
+        "snapshotIds": [
+          "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4"
+        ],
+        "searchUrl": null,
+        "searchMethod": "GET",
+        "metadataSha256": [
+          "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca",
+          "ea7968af0aad150299a6244c9607f784390eba24dac5f4af602d64b231a05f40"
+        ],
+        "metadataDocuments": [
+          {
+            "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+            "sha256": "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca"
+          },
+          {
+            "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/acquisition_collections/10300100EB15FF00_collection.json",
+            "sha256": "ea7968af0aad150299a6244c9607f784390eba24dac5f4af602d64b231a05f40"
+          }
+        ]
+      },
+      "snapshot": {
+        "id": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+        "connectionId": "27cd8cf2-43c5-4836-a21e-46ec7b39f8b0",
+        "collectionId": "10300100EB15FF00",
+        "itemId": "4/122000312222/10300100EB15FF00",
+        "title": "4/122000312222/10300100EB15FF00",
+        "datetime": "2023-08-12 21:12:49Z",
+        "startDatetime": null,
+        "endDatetime": null,
+        "bbox": [
+          -156.68792052300424,
+          20.96287019085091,
+          -156.642091971835,
+          20.97020234128532
+        ],
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -156.64219508913249,
+                20.96287019085091
+              ],
+              [
+                -156.68792052300424,
+                20.963496032042123
+              ],
+              [
+                -156.685991,
+                20.968324
+              ],
+              [
+                -156.642091971835,
+                20.97020234128532
+              ],
+              [
+                -156.64219508913249,
+                20.96287019085091
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "properties": {
+          "ard_metadata_version": "0.0.1",
+          "catalog_id": "10300100EB15FF00",
+          "datetime": "2023-08-12 21:12:49Z",
+          "grid:code": "MXRA-Z4-122000312222",
+          "gsd": 0.53,
+          "platform": "WV02",
+          "proj:bbox": [
+            740398.903221335,
+            2319843.75,
+            745156.25,
+            2320656.618673428
+          ],
+          "proj:epsg": 32604,
+          "proj:geometry": {
+            "coordinates": [
+              [
+                [
+                  745156.25,
+                  2319843.75
+                ],
+                [
+                  740398.903221335,
+                  2319843.75
+                ],
+                [
+                  740591.9003037951,
+                  2320381.2200105297
+                ],
+                [
+                  745155.0108709247,
+                  2320656.618673428
+                ],
+                [
+                  745156.25,
+                  2319843.75
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "quadkey": "122000312222",
+          "tile:clouds_area": 0.0,
+          "tile:clouds_percent": 1,
+          "tile:data_area": 3.1,
+          "utm_zone": 4,
+          "view:azimuth": 202.8,
+          "view:incidence_angle": 65.4,
+          "view:off_nadir": 21.8,
+          "view:sun_azimuth": 104.3,
+          "view:sun_elevation": 70.3
+        },
+        "assets": [
+          {
+            "key": "data-mask",
+            "title": "Data Mask",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-data-mask.gpkg",
+            "mediaType": "application/geopackage+sqlite3",
+            "roles": [
+              "data-mask"
+            ],
+            "eligible": false,
+            "reason": "Original download and local inspection currently support GeoTIFF/COG assets only",
+            "metadata": {
+              "href": "./10300100EB15FF00-data-mask.gpkg",
+              "roles": [
+                "data-mask"
+              ],
+              "title": "Data Mask",
+              "type": "application/geopackage+sqlite3"
+            }
+          },
+          {
+            "key": "ms_analytic",
+            "title": "Multispectral Image",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-ms.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+              "data"
+            ],
+            "eligible": true,
+            "reason": null,
+            "metadata": {
+              "eo:bands": [
+                {
+                  "common_name": "coastal",
+                  "description": "Coastal Blue",
+                  "name": "BAND_C"
+                },
+                {
+                  "common_name": "blue",
+                  "description": "Blue",
+                  "name": "BAND_B"
+                },
+                {
+                  "common_name": "green",
+                  "description": "Green",
+                  "name": "BAND_G"
+                },
+                {
+                  "common_name": "yellow",
+                  "description": "Yellow",
+                  "name": "BAND_Y"
+                },
+                {
+                  "common_name": "red",
+                  "description": "Red",
+                  "name": "BAND_R"
+                },
+                {
+                  "common_name": "rededge",
+                  "description": "Red Edge 1",
+                  "name": "BAND_RE"
+                },
+                {
+                  "common_name": "nir08",
+                  "description": "Near Infrared 1",
+                  "name": "BAND_N"
+                },
+                {
+                  "common_name": "nir09",
+                  "description": "Near Infrared 2",
+                  "name": "BAND_N2"
+                }
+              ],
+              "href": "./10300100EB15FF00-ms.tif",
+              "proj:bbox": [
+                739843.75,
+                2319843.75,
+                745156.25,
+                2325156.25
+              ],
+              "proj:shape": [
+                2583,
+                2583
+              ],
+              "proj:transform": [
+                2.056716995741386,
+                0.0,
+                739843.75,
+                0.0,
+                -2.056716995741386,
+                2325156.25,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "roles": [
+                "data"
+              ],
+              "title": "Multispectral Image",
+              "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+            }
+          },
+          {
+            "key": "pan_analytic",
+            "title": "Panchromatic Image",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-pan.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+              "data"
+            ],
+            "eligible": true,
+            "reason": null,
+            "metadata": {
+              "eo:bands": [
+                {
+                  "description": "Pan",
+                  "name": "BAND_P"
+                }
+              ],
+              "href": "./10300100EB15FF00-pan.tif",
+              "proj:bbox": [
+                739843.75,
+                2319843.75,
+                745156.25,
+                2325156.25
+              ],
+              "proj:shape": [
+                10332,
+                10332
+              ],
+              "proj:transform": [
+                0.5141792489353465,
+                0.0,
+                739843.75,
+                0.0,
+                -0.5141792489353465,
+                2325156.25,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "roles": [
+                "data"
+              ],
+              "title": "Panchromatic Image",
+              "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+            }
+          },
+          {
+            "key": "visual",
+            "title": "Visual Image",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-visual.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+              "visual"
+            ],
+            "eligible": true,
+            "reason": null,
+            "metadata": {
+              "eo:bands": [
+                {
+                  "common_name": "red",
+                  "description": "Red",
+                  "name": "BAND_R"
+                },
+                {
+                  "common_name": "green",
+                  "description": "Green",
+                  "name": "BAND_G"
+                },
+                {
+                  "common_name": "blue",
+                  "description": "Blue",
+                  "name": "BAND_B"
+                }
+              ],
+              "href": "./10300100EB15FF00-visual.tif",
+              "proj:bbox": [
+                739843.75,
+                2319843.75,
+                745156.25,
+                2325156.25
+              ],
+              "proj:shape": [
+                17408,
+                17408
+              ],
+              "proj:transform": [
+                0.30517578125,
+                0.0,
+                739843.75,
+                0.0,
+                -0.30517578125,
+                2325156.25,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "roles": [
+                "visual"
+              ],
+              "title": "Visual Image",
+              "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+            }
+          }
+        ],
+        "retrievedAt": "2026-10-12T12:37:03.283298900+00:00",
+        "documentSha256": "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca",
+        "temporalStatus": "instant",
+        "warnings": [],
+        "provenance": {
+          "documentUrl": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+          "metadataDocuments": [
+            {
+              "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00.json",
+              "sha256": "ffa8053a6350823968a4cfff184aac173e71654318efd2ebb72282016e64f5ca"
+            },
+            {
+              "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/acquisition_collections/10300100EB15FF00_collection.json",
+              "sha256": "ea7968af0aad150299a6244c9607f784390eba24dac5f4af602d64b231a05f40"
+            }
+          ],
+          "search": null,
+          "collection": {
+            "description": "10300100EB15FF00 ARD Tiles",
+            "extent": {
+              "spatial": {
+                "bbox": [
+                  [
+                    -156.68792052300424,
+                    20.96287019085091,
+                    -156.642091971835,
+                    20.97020234128532
+                  ],
+                  [
+                    -156.6451986578294,
+                    20.962198475287465,
+                    -156.59398245903245,
+                    20.972260839796352
+                  ],
+                  [
+                    -156.5971424454439,
+                    20.962147945828608,
+                    -156.59059723091246,
+                    20.972368
+                  ],
+                  [
+                    -156.7013986187411,
+                    20.918386707246114,
+                    -156.69034664991608,
+                    20.957425483535353
+                  ],
+                  [
+                    -156.70182,
+                    20.87769407290389,
+                    -156.69090243501645,
+                    20.921346355649842
+                  ],
+                  [
+                    -156.69394845515106,
+                    20.91773006427497,
+                    -156.64215084021615,
+                    20.966302613098925
+                  ],
+                  [
+                    -156.64590474324967,
+                    20.91705992756025,
+                    -156.59409384672028,
+                    20.96573297933849
+                  ],
+                  [
+                    -156.69411715019626,
+                    20.872589676524857,
+                    -156.64285794168603,
+                    20.92124866755608
+                  ],
+                  [
+                    -156.64660895298505,
+                    20.87192111774518,
+                    -156.5948153265835,
+                    20.920592771475523
+                  ],
+                  [
+                    -156.59786290703173,
+                    20.916944127703637,
+                    -156.58670154455154,
+                    20.9650620104707
+                  ],
+                  [
+                    -156.59858145477497,
+                    20.87174026507505,
+                    -156.5828058543553,
+                    20.91992337952762
+                  ],
+                  [
+                    -156.6903559432298,
+                    20.832582,
+                    -156.64356316492663,
+                    20.876048861725508
+                  ],
+                  [
+                    -156.64722461646258,
+                    20.833065103782303,
+                    -156.595534890055,
+                    20.875452302464577
+                  ],
+                  [
+                    -156.5991659138191,
+                    20.835156872297322,
+                    -156.579726,
+                    20.87478448652387
+                  ]
+                ]
+              },
+              "temporal": {
+                "interval": [
+                  [
+                    "2023-08-12 21:12:48Z",
+                    "2023-08-12 21:12:49Z"
+                  ]
+                ]
+              }
+            },
+            "id": "10300100EB15FF00",
+            "license": "CC-BY-NC-4.0",
+            "links": [
+              {
+                "href": "../order_collections/6252266402030965071_root_collection.json",
+                "rel": "root",
+                "type": "application/json"
+              },
+              {
+                "href": "../order_collections/6252266402030965071_root_collection.json",
+                "rel": "parent",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000312222/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000312223/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000312232/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000321111/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000321113/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330000/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330001/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330002/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330003/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330010/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330012/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330020/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330021/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              },
+              {
+                "href": "../04/122000330030/2023-08-12/10300100EB15FF00.json",
+                "rel": "item",
+                "type": "application/json"
+              }
+            ],
+            "stac_version": "1.0.0",
+            "type": "Collection"
+          }
+        }
+      },
+      "project": {
+        "id": "831a29a4-547b-4c91-8070-55dcc1f81ae7",
+        "name": "Maui raw ARD originals · local generic acceptance",
+        "bounds": [
+          -156.68792052300424,
+          20.96287019085091,
+          -156.642091971835,
+          20.97020234128532
+        ],
+        "scenes": [],
+        "stacItems": [
+          {
+            "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+            "assetKey": "ms_analytic",
+            "title": "4/122000312222/10300100EB15FF00 · Multispectral Image",
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "collectionId": "10300100EB15FF00",
+            "serviceName": "Reviewed Maui actual original verification",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "datetime": "2023-08-12 21:12:49Z",
+            "startDatetime": null,
+            "endDatetime": null,
+            "bbox": [
+              -156.68792052300424,
+              20.96287019085091,
+              -156.642091971835,
+              20.97020234128532
+            ],
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-ms.tif"
+          },
+          {
+            "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+            "assetKey": "pan_analytic",
+            "title": "4/122000312222/10300100EB15FF00 · Panchromatic Image",
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "collectionId": "10300100EB15FF00",
+            "serviceName": "Reviewed Maui actual original verification",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "datetime": "2023-08-12 21:12:49Z",
+            "startDatetime": null,
+            "endDatetime": null,
+            "bbox": [
+              -156.68792052300424,
+              20.96287019085091,
+              -156.642091971835,
+              20.97020234128532
+            ],
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-pan.tif"
+          },
+          {
+            "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+            "assetKey": "visual",
+            "title": "4/122000312222/10300100EB15FF00 · Visual Image",
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "collectionId": "10300100EB15FF00",
+            "serviceName": "Reviewed Maui actual original verification",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "datetime": "2023-08-12 21:12:49Z",
+            "startDatetime": null,
+            "endDatetime": null,
+            "bbox": [
+              -156.68792052300424,
+              20.96287019085091,
+              -156.642091971835,
+              20.97020234128532
+            ],
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-visual.tif"
+          }
+        ],
+        "createdAt": "2026-10-12T12:37:05.281989900+00:00",
+        "updatedAt": "2026-10-12T12:37:05.281989900+00:00"
+      },
+      "queued": {
+        "jobs": [
+          {
+            "id": "38ec459b-560d-4d30-a0cc-5e9a030f72c8",
+            "kind": "download",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": null,
+            "mosaicOutput": null,
+            "manifestPath": null,
+            "safe": null,
+            "safeOutput": null,
+            "stacSource": {
+              "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+              "assetKey": "ms_analytic"
+            },
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "assetKey": "stac_asset",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-ms.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "4/122000312222/10300100EB15FF00 · Multispectral Image",
+            "status": "succeeded",
+            "bytesDownloaded": 12977165,
+            "totalBytes": 12977165,
+            "sha256": "0fb2472eab96eda7f298d97c6b8f44ad89c773f079576d7983759e546f2ad5b6",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\maui-native-core\\assets\\38ec459b-560d-4d30-a0cc-5e9a030f72c8.tif",
+            "error": null,
+            "createdAt": "2026-10-12T12:37:05.331069600+00:00",
+            "updatedAt": "2026-10-12T12:37:19.681740+00:00",
+            "source": "Reviewed Maui actual original verification",
+            "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+            "attempts": 1,
+            "transfer": {
+              "mode": "fresh",
+              "resumedBytes": 0
+            },
+            "settled": true
+          },
+          {
+            "id": "826e6ecd-5111-4414-93d4-1bb5656f3c27",
+            "kind": "download",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": null,
+            "mosaicOutput": null,
+            "manifestPath": null,
+            "safe": null,
+            "safeOutput": null,
+            "stacSource": {
+              "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+              "assetKey": "pan_analytic"
+            },
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "assetKey": "stac_asset",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-pan.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "4/122000312222/10300100EB15FF00 · Panchromatic Image",
+            "status": "succeeded",
+            "bytesDownloaded": 23460106,
+            "totalBytes": 23460106,
+            "sha256": "50fde40b1f0ac18b65cf5d3e8f204568d14bbfdd5c072cca74102b061424b141",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\maui-native-core\\assets\\826e6ecd-5111-4414-93d4-1bb5656f3c27.tif",
+            "error": null,
+            "createdAt": "2026-10-12T12:37:05.332717600+00:00",
+            "updatedAt": "2026-10-12T12:37:18.279802300+00:00",
+            "source": "Reviewed Maui actual original verification",
+            "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+            "attempts": 1,
+            "transfer": {
+              "mode": "fresh",
+              "resumedBytes": 0
+            },
+            "settled": true
+          },
+          {
+            "id": "eef02db0-ad78-4d35-a8f9-72ce20d6085c",
+            "kind": "download",
+            "parentId": null,
+            "recipe": null,
+            "crop": null,
+            "mosaic": null,
+            "mosaicOutput": null,
+            "manifestPath": null,
+            "safe": null,
+            "safeOutput": null,
+            "stacSource": {
+              "snapshotId": "e90719be822fd7483e8dfd470fe84de173095cd28b58982234d23a6017c246e4",
+              "assetKey": "visual"
+            },
+            "itemId": "4/122000312222/10300100EB15FF00",
+            "assetKey": "stac_asset",
+            "href": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/ard/04/122000312222/2023-08-12/10300100EB15FF00-visual.tif",
+            "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "4/122000312222/10300100EB15FF00 · Visual Image",
+            "status": "succeeded",
+            "bytesDownloaded": 10420319,
+            "totalBytes": 10420319,
+            "sha256": "f716caa632b51459c283d98068d1ebda15160579d2d6b8f19d803b3779ca6f08",
+            "outputPath": "\\\\?\\G:\\code\\geod-global\\.verification\\next2-maxar-20261012\\maui-native-core\\assets\\eef02db0-ad78-4d35-a8f9-72ce20d6085c.tif",
+            "error": null,
+            "createdAt": "2026-10-12T12:37:05.335091200+00:00",
+            "updatedAt": "2026-10-12T12:37:27.665601900+00:00",
+            "source": "Reviewed Maui actual original verification",
+            "validation": "Passed file signature, byte count and SHA-256 checks; no scientific raster validation",
+            "attempts": 1,
+            "transfer": {
+              "mode": "fresh",
+              "resumedBytes": 0
+            },
+            "settled": true
+          }
+        ]
+      },
+      "reopenedSourceProjectAllOriginalsPreviewAndRawSamplesVerified": true,
+      "totalFreshNativeOriginalBytes": 46857590,
+      "totalBaseSamplesIndependentlyDecoded": 1069240728,
+      "supportedAnalyticBytes": 36437271,
+      "supportedAnalyticBaseSamplesDecoded": 160125336,
+      "privateServiceStopped": true
+    },
+    "supportedAnalyticOriginalBytes": 36437271,
+    "supportedAnalyticBaseSamplesDecoded": 160125336,
+    "supportedNativeRawCoordinateCount": 10,
+    "physicalInterpretation": "Stored UInt16 bands are delivered unchanged. Actual item declares band names but no radiometric scale, offset or physical unit; no calibrated reflectance or automatic index is claimed. Sensor GSD, original output grid and visual output spacing are distinct.",
+    "maskBoundary": "Both analytic files have scalar NoData null and per_dataset masks in their separate second IFD plus reduced mask IFDs; no alpha channel or SubIFD. Current native raw preview and scalar noData do not apply these masks. Whole original masks stay intact; noData=false does not certify valid coverage.",
+    "runtimeLicenseBoundary": "Noncommercial-use and source-attribution restrictions remain. This open disaster archive does not grant commercial purchasing rights or become commercially reusable through a GeoD plan.",
+    "adapterFiles": [
+      "crates/geod-runtime/src/datasets/maxar.rs",
+      "crates/geod-runtime/src/datasets/maxar-reviewed-items.json",
+      "crates/geod-runtime/src/datasets/maxar-reviewed-collections.json",
+      "crates/geod-runtime/src/datasets/maxar-reviewed-events.json"
+    ],
+    "integrationNotClaimedByThisReport": "Final built-in preset / production binary / browser UI acceptance is pending; generic native candidates were actually tested, scoped adapter and shared archive hooks are implemented, persistence tests authored.",
+    "integrationCodeStatus": {
+      "adapter": "implemented and frozen",
+      "sharedHooks": "parent implemented scoped three original document receipts",
+      "persistenceTests": "four meaningful groups authored in stac/tests.rs; unified execution pending parent",
+      "nativeCases": "scripts/next2-maxar-cases-20261012.json",
+      "requestedAoi": [
+        -156.6647146,
+        20.9654519,
+        -156.6644146,
+        20.9657519
+      ],
+      "independentAoiSamples": {
+        "ms_analytic": {
+          "column": 1442,
+          "row": 2444,
+          "value": 21
+        },
+        "pan_analytic": {
+          "column": 5767,
+          "row": 9777,
+          "value": 370
+        }
+      },
+      "aoiSampleScope": "One unmasked sample within actual requested area per original; not valid-area coverage certification",
+      "finalBuiltInPresetAndBrowserUiAcceptance": "pending parent"
+    }
+  },
+  "evidenceReceipts": [
+    {
+      "path": ".verification/next2-maxar-20261012/native-maui-report.json",
+      "sha256": "68a12607f74846a21a5d51fefda838d47c67f661860e3047d8fe3cf8e51e6705"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/native-generic-report.json",
+      "sha256": "594e59a97cf4183a46fde32524a519175b63500a40de0f1eec070b8c9178f3a1"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/original-report.json",
+      "sha256": "da749c8f945eb39976b5f1effed154d4f4bae73ff7abdd3df5b484dca2a970be"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/legacy-original-report.json",
+      "sha256": "e538cd65fe9c30e1183605217667ee7a01897f19a7bf57a7494558731f00fa93"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/discovery.json",
+      "sha256": "6bdf158d49a68f57de448c8bfa047175966c5a191ff5b37589e430dc65f0d146"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/events-discovery.json",
+      "sha256": "f7fae0faac2b643c97a6c66972ae9c6490b6bd148e4bb28032abee5fff8658d1"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/legacy-screening.json",
+      "sha256": "95ad636cfd61929d92738b17dada5c4ec8b60227ed282be9db707c27d9e147a8"
+    },
+    {
+      "path": ".verification/next2-maxar-20261012/event-size-screening.json",
+      "sha256": "782eb115c04a0313b62c259a857ac76cfce10bf0d080767ff96c4a656706cc7c"
+    }
+  ]
+}

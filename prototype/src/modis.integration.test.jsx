@@ -27,7 +27,7 @@ it('MODIS download uses Int16 500m COGs without account or SAFE requirements',as
   wrap(<DownloadAssetButton scene={scene} areaBounds={project.bounds} areaName="MODIS"/>);
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('8-day · 500 m · Int16');
-  expect(screen.getByText(/not the original HDF product/)).toBeTruthy();
+  await userEvent.click(screen.getByRole('button',{name:'Download contents'}));expect(screen.getByText(/not the original HDF product/)).toBeTruthy();await userEvent.keyboard('{Escape}');
   expect(screen.queryByText('Manage authorization')).toBeNull();
 });
 it('MODIS restored project offers band processing while retaining sinusoidal and quality limits',async()=>{

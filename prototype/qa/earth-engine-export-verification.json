@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-11",
+  "scope": "GEE signed getPixels link download, bounded Landsat script generation, full GeoTIFF decoding, saved export library and local first-band preview; no automatic Google OAuth/catalog or hosted Pro service",
+  "realDownload": {
+    "provider": "Google Earth Engine",
+    "projectId": "geod-global-dev",
+    "bytes": 917329,
+    "downloadSeconds": 4.0787434,
+    "sha256": "2f92b4b5fdf23206f80d3bfaca9042c40fe01c3e08ae01f6e0671182e18ca63e",
+    "width": 719,
+    "height": 746,
+    "crs": "EPSG:32650",
+    "bands": 1,
+    "dataType": "UInt16",
+    "pixelSize": [30, 30],
+    "noData": 0,
+    "fullDecode": true,
+    "fileExportChecksumVerified": true,
+    "restartAndLocalReadVerified": true,
+    "signedLinkPersisted": false,
+    "eecuSeconds": null
+  },
+  "quotaEvidence": {
+    "source": "User-provided Cloud Console screenshot, 2026-10-11",
+    "scope": "project monthly aggregate, not per download",
+    "monthlyUsedEecuSeconds": 400,
+    "monthlyLimitEecuSeconds": 540000,
+    "perDownloadAttribution": "not established"
+  },
+  "checks": {
+    "frontendUnitTests": "351 passed",
+    "agentTests": "145 passed",
+    "uiTests": "399 passed initially; one source count assertion updated for new connector, all 19 tests in affected home file then passed",
+    "nativeGenericRasterTests": "8 passed including exact integer decimal NoData",
+    "runtimeBuild": "passed",
+    "desktopCheck": "passed",
+    "frontendBuild": "passed",
+    "repositoryIsolationContractsBoundaries": "passed",
+    "desktopReplacement": "compiled linked binary staged at target/debug/geod-global-desktop.exe; previous running binary renamed to a timestamped backup; no process termination",
+    "nativeVisualInspection": "not performed; browser control timed out",
+    "localRasterPreviewInspection": "actual generated grayscale preview inspected"
+  },
+  "commercialDecision": {
+    "bringYourOwnProject": "local connector, consumes user's selected project quota",
+    "officialHosted": "future Pro candidate; disabled pending commercial eligibility, server-side entitlements and authoritative usage metering",
+    "sharedDeveloperCredentialsInClient": false
+  }
+}

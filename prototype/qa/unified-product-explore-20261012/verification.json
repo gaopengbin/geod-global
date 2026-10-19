@@ -1,0 +1,18 @@
+{
+  "nativeJobsCount": 20,
+  "activeJobs": 0,
+  "jobsBefore": 20,
+  "newOriginalJobsThisTurn": 0,
+  "fullUiBeforeFinalEdgeFixes": {
+    "files": 52,
+    "testsPassed": 511
+  },
+  "finalRelatedUiAfterEdgeFixes": {
+    "files": 4,
+    "testsPassed": 79
+  },
+  "build": "passed",
+  "repositoryCheck": "passed",
+  "diffWhitespaceCheck": "passed",
+  "release": "local preview only; not committed, deployed or desktop packaged"
+}

@@ -338,10 +338,23 @@ fn attribute_text(group: &hdf5_reader::group::Group, name: &str) -> Result<Strin
 
 fn metadata(file: &Hdf5File, item: &str) -> Result<ScienceSummary> {
     let product = identity(item).ok_or("Invalid VIIRS v002 product")?;
-    // HDF-EOS metadata lives in FILE_ATTRIBUTES; require that exact group.
-    let attrs = file
-        .group("/HDFEOS/ADDITIONAL/FILE_ATTRIBUTES")
-        .map_err(io_error)?;
+    // Actual NASA v002 HDF-EOS5 originals store these attributes at root;
+    // earlier reviewed fixtures use FILE_ATTRIBUTES. Select one complete
+    // scope, never merge fields from both or override a conflicting identity.
+    let root = file.group("/").map_err(io_error)?;
+    let legacy = file.group("/HDFEOS/ADDITIONAL/FILE_ATTRIBUTES").ok();
+    let root_id = root.attribute("LocalGranuleID").is_ok();
+    let legacy_id = legacy
+        .as_ref()
+        .is_some_and(|g| g.attribute("LocalGranuleID").is_ok());
+    if root_id && legacy_id {
+        return Err("VIIRS has ambiguous root and FILE_ATTRIBUTES product identities".into());
+    }
+    let attrs = if root_id {
+        root
+    } else {
+        legacy.ok_or("VIIRS has no complete product metadata scope")?
+    };
     for (name, expected) in [
         ("LocalGranuleID", format!("{item}.h5")),
         ("ShortName", product.product.into()),

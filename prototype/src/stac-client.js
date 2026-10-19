@@ -1,5 +1,8 @@
 import { desktopAvailable } from './runtime-client.js';
 import { validQueryBounds } from './features-client.js';
+import { isNextPlanetaryProduct, validNextPlanetarySnapshot } from './next-public-products.js';
+import {reviewedLargeRasterInspection,reviewedClcdSelection} from './original-backlog-client.js';
+import {reviewedEnmapInspection,reviewedEnmapPixel} from './enmap-client.js';
 
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const hash = /^[a-f0-9]{64}$/;
@@ -43,6 +46,41 @@ export function validateStacConnection(value) {
   return value;
 }
 
+function validPublicAssetTransport(value, asset) {
+  const proof = value.provenance.reviewedDataset, dataset = proof?.dataset?.id, year = proof?.request?.year;
+  if (!text(asset.originalHref, 8192) || asset.metadata.href !== asset.originalHref || !validStacUrl(asset.href)) return false;
+  if (isNextPlanetaryProduct(dataset)) return validNextPlanetarySnapshot(value,asset);
+  const bucket = 's3://deafrica-input-datasets/', endpoint = 'https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/';
+  if (dataset === 'worldcereal') {
+    const prefix = `${bucket}esa_worldcereal/`;
+    return asset.originalHref.startsWith(prefix) && !/[?#\\]/.test(asset.originalHref)
+      && !asset.originalHref.slice(prefix.length).split('/').some(part => !part || part === '.' || part === '..' || /%2e|%2f|%5c/i.test(part))
+      && asset.transportAdapter === 'deafrica-worldcereal-public-s3'
+      && asset.href === `${endpoint}esa_worldcereal/${asset.originalHref.slice(prefix.length)}`;
+  }
+  if (dataset === 'cgls-landcover') {
+    const stem = `cgls_landcover_${year}`, key = 'permanentwater_cover_fraction';
+    return Number.isInteger(year) && year >= 2015 && year <= 2019 && proof.request.layer === 'permanentwater' && asset.key === key
+      && asset.transportAdapter === 'deafrica-cgls-reviewed-distribution-path'
+      && asset.originalHref === `${bucket}gls/${year}/${stem}_${key}.tif`
+      && asset.href === `${endpoint}cgls_landcover/${year}/${stem}_${key}.tif`
+      && value.provenance.documentUrl === `${endpoint}cgls_landcover/${year}/${stem}.stac-item.json`;
+  }
+  if (!['wsf-settlements', 'gmw-mangroves'].includes(dataset) || !asset.originalHref.startsWith(bucket)
+    || asset.transportAdapter !== 'deafrica-settlements-mangrove-public-s3') return false;
+  const path = asset.originalHref.slice(bucket.length);
+  if (dataset === 'wsf-settlements') {
+    const version = year === 2015 ? 'v2' : 'v1', match = path.match(/^wsf_(2015|2019)\/(-?\d+_-?\d+)\/WSF(2015|2019)_(v[12])_(-?\d+_-?\d+)\.tif$/);
+    if (!match || ![2015, 2019].includes(year) || proof.request.layer !== 'settlement' || asset.key !== `wsf${year}`
+      || Number(match[1]) !== year || Number(match[3]) !== year || match[2] !== match[5] || match[4] !== version) return false;
+  } else {
+    const match = path.match(/^gmw\/(201[789]|2020)\/([NS]\d{2}[EW]\d{3})\/GMW_([NS]\d{2}[EW]\d{3})_(201[789]|2020)_v3\.tif$/);
+    if (!match || ![2017, 2018, 2019, 2020].includes(year) || proof.request.layer !== 'mangrove' || asset.key !== 'mangrove'
+      || Number(match[1]) !== year || Number(match[4]) !== year || match[2] !== match[3]) return false;
+  }
+  return asset.href === `${endpoint}${path}` && value.provenance.documentUrl === `${endpoint}${path.slice(0, -4)}.stac-item.json`;
+}
+
 export function validateStacSnapshot(value) {
   if (!object(value) || !hash.test(value.id) || !uuid.test(value.connectionId) || !text(value.itemId, 1024) || !value.itemId
     || !text(value.title) || !(value.collectionId === null || text(value.collectionId, 512))
@@ -65,31 +103,83 @@ export function validateStacSnapshot(value) {
     || !Array.isArray(value.assets) || value.assets.length > 512 || value.assets.some(asset =>
       !object(asset) || !text(asset.key, 1024) || !asset.key || !text(asset.title) || !text(asset.href, 8192)
       || !(asset.mediaType === null || text(asset.mediaType, 512)) || !Array.isArray(asset.roles) || asset.roles.some(role => !text(role, 256))
-      || !object(asset.metadata) || typeof asset.eligible !== 'boolean' || !(asset.reason === null || text(asset.reason)) || asset.eligible && !validStacUrl(asset.href))
+      || !object(asset.metadata) || typeof asset.eligible !== 'boolean' || !(asset.reason === null || text(asset.reason)) || asset.eligible && (!validStacUrl(asset.href)
+        || ['file:size','bdc:size'].some(key=>asset.metadata[key]!=null && (!integer(asset.metadata[key],1) || asset.metadata[key]>512*1024*1024 && !reviewedClcdSelection(asset)))))
     || new Set(value.assets.map(asset => asset.key)).size !== value.assets.length) fail('The raster source returned invalid item metadata.');
   if (value.temporalStatus !== (value.datetime ? 'instant' : value.startDatetime && value.endDatetime ? 'interval' : 'missing')) fail('The raster source observation time is inconsistent.');
+  const transports = value.provenance.assetTransports || [];
+  const mapped = value.assets.filter(asset => asset.originalHref !== undefined || asset.transportAdapter !== undefined);
+  if (!Array.isArray(transports) || transports.length > value.assets.length || new Set(transports.map(receipt => receipt.assetKey)).size !== transports.length
+    || transports.length !== mapped.length || mapped.length && (!object(value.provenance.reviewedDataset) || value.provenance.reviewedDataset.schemaVersion !== 2
+      || !(['worldcereal', 'cgls-landcover', 'wsf-settlements', 'gmw-mangroves'].includes(value.provenance.reviewedDataset.dataset?.id) || isNextPlanetaryProduct(value.provenance.reviewedDataset.dataset?.id)) || value.provenance.reviewedDataset.dataset?.discovery !== 'stac-items'
+      || value.provenance.search !== null)
+    || transports.some(receipt => !object(receipt) || !mapped.some(asset => receipt.assetKey === asset.key && receipt.originalHref === asset.originalHref && receipt.href === asset.href && receipt.adapter === asset.transportAdapter))
+    || mapped.some(asset => !validPublicAssetTransport(value, asset))) fail('The public asset transport does not match its original publisher source.');
+  return value;
+}
+
+export function validateStacSearchPage(value, request, bindQuery = false) {
+  if (!object(value) || !Array.isArray(value.items) || value.items.length > 100 || !(value.nextCursor === null || text(value.nextCursor, 16384) && value.nextCursor.length)
+    || typeof value.complete !== 'boolean' || typeof value.limitReached !== 'boolean' || value.complete && (value.nextCursor !== null || value.limitReached)
+    || value.scannedItems !== undefined && (!integer(value.scannedItems) || value.scannedItems > 1000 || value.scannedItems < value.items.length)
+    || new Set(value.items.map(item => item.id)).size !== value.items.length) fail('Invalid raster search page.');
+  const period = request.datetime?.split('/');
+  const periodStart = period?.[0] === '..' ? -Infinity : Date.parse(period?.[0]);
+  const periodEnd = period?.at(-1) === '..' ? Infinity : Date.parse(period?.at(-1));
+  if (bindQuery && (!integer(request.limit, 1) || request.limit > 100 || value.items.length > request.limit || !validQueryBounds(request.bounds)
+    || request.datetime != null && (period.length > 2 || Number.isNaN(periodStart) || Number.isNaN(periodEnd) || periodStart > periodEnd))) fail('Invalid raster search page.');
+  value.items.forEach(item => {
+    validateStacSnapshot(item);
+    if (item.connectionId !== request.connectionId
+      || (item.provenance.searchMode === 'catalog' ? item.provenance.search.collectionId !== request.collectionId || value.scannedItems === undefined : item.collectionId !== request.collectionId)) fail('Raster search returned an item from a different source or collection.');
+    const query = item.provenance.search;
+    if (bindQuery && (!query || query.connectionId !== request.connectionId || query.collectionId !== request.collectionId
+      || query.bounds.some((coordinate, index) => coordinate !== request.bounds[index])
+      || query.datetime !== request.datetime || query.limit !== request.limit || query.cursor != null)) fail('Raster search returned an item from a different query.');
+    if (bindQuery) {
+      // Saved provenance retains the canonical query; the page cursor belongs to documentRequest.
+      const bounds = item.bbox;
+      const start = Date.parse(item.datetime ?? item.startDatetime), end = Date.parse(item.datetime ?? item.endDatetime);
+      if (!bounds || bounds[2] < request.bounds[0] || bounds[0] > request.bounds[2] || bounds[3] < request.bounds[1] || bounds[1] > request.bounds[3]
+        || request.datetime != null && (Number.isNaN(start) || Number.isNaN(end) || start > end || end < periodStart || start > periodEnd)) fail('Raster search returned an item outside the requested area or time.');
+    }
+  });
   return value;
 }
 
 export function validateStacInspection(value, id) {
+  const reviewedLarge=reviewedLargeRasterInspection(value);
+  const envi=reviewedEnmapInspection(value);
   if (!object(value) || value.jobId !== id || !hash.test(value.sha256) || !integer(value.width, 1) || !integer(value.height, 1)
-    || value.width > 65536 || value.height > 65536 || !Array.isArray(value.bands) || !value.bands.length || value.bands.length > 16
+    || !reviewedLarge && (value.width > 131072 || value.height > 131072 || value.width * value.height > 8000000000)
+    || value.storageLayout !== undefined && !['tile', 'strip'].includes(value.storageLayout) && !envi
+    || (value.width > 65536 || value.height > 65536) && value.storageLayout !== 'tile'
+    || !Array.isArray(value.bands) || !value.bands.length || value.bands.length > 16 && !envi
     || value.bands.some((band, index) => !object(band) || band.index !== index + 1 || !text(band.dataType, 80) || !band.dataType
       || !rawSample(band.nodata))
     || !(value.crs === null || text(value.crs)) || !(value.transform === null || finiteArray(value.transform, 6))
+    || ['horizontalCrs', 'verticalCrs'].some(key => value[key] !== undefined && value[key] !== null && !text(value[key], 2048))
+    || value.sourceModelPixelScale !== undefined && value.sourceModelPixelScale !== null && !finiteArray(value.sourceModelPixelScale, 3)
+    || value.sourceModelTiepoint !== undefined && value.sourceModelTiepoint !== null && !finiteArray(value.sourceModelTiepoint, 6)
     || !(value.bounds === null || finiteArray(value.bounds, 4)) || !(value.pixelInterpretation === null || text(value.pixelInterpretation, 80))
-    || !Array.isArray(value.limitations) || value.limitations.some(item => !text(item)) || value.displayBand !== 1
+    || !Array.isArray(value.limitations) || value.limitations.some(item => !text(item)) || value.displayBand !== 1 && !envi
     || !(value.displayRange === null || finiteArray(value.displayRange, 2) && value.displayRange[0] <= value.displayRange[1])) fail('The local raster inspection is incomplete or invalid.');
+  if(value.categoricalEncoding!=null && !reviewedLarge) fail('The categorical preview differs from its exact reviewed original.');
+  if(value.spectralEncoding!=null && !envi) fail('EnMAP original cube, header or source receipt changed.');
   if (value.previewDataUrl === null) {
     if (value.previewWidth !== null || value.previewHeight !== null) fail('The local raster preview is invalid.');
   } else if (!text(value.previewDataUrl, 4000000) || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(value.previewDataUrl)
     || !integer(value.previewWidth, 1) || !integer(value.previewHeight, 1) || value.previewWidth > 1024 || value.previewHeight > 1024) fail('The local raster preview is invalid.');
+  if(value.sampleEncoding!=null) {
+    const expected={kind:'jpeg-ycbcr-components',components:['Y','Cb','Cr'],codec:'JPEG',chromaSubsampling:[2,2],chromaUpsampling:'triangular fancy interpolation to the original pixel grid',previewComponent:'Y',scientificCalibration:false};
+    if(!sameJson(value.sampleEncoding,expected)||value.bands.length!==3||value.bands.some(b=>b.dataType!=='UInt8'))fail('The visual JPEG component encoding is invalid.');
+  }
   return value;
 }
 
 export function validateStacPixel(value, request) {
   if (!object(value) || value.jobId !== request.id || value.column !== request.column || value.row !== request.row || !hash.test(value.sha256)
-    || !Array.isArray(value.values) || !value.values.length || value.values.length > 16 || value.values.some(v => !rawSample(v))
+    || !Array.isArray(value.values) || !value.values.length || value.values.length > 16 && !reviewedEnmapPixel(value) || value.values.some(v => !rawSample(v))
     || !Array.isArray(value.noData) || value.noData.length !== value.values.length || value.noData.some(v => typeof v !== 'boolean')) fail('The raster pixel response does not match the requested file and position.');
   return value;
 }
@@ -149,6 +239,7 @@ export async function stacRequest(operation, payload = {}, signal) {
   if (operation === 'connect' && (!validStacUrl(payload.url) || !payload.name?.trim() || !['api', 'item', 'raster', 'catalog'].includes(payload.kind))) fail('Enter a source name and a public HTTPS URL.');
   if (operation === 'search' && (!uuid.test(payload.connectionId) || !text(payload.collectionId, 512) || !payload.collectionId || !validQueryBounds(payload.bounds))) fail('Choose a collection and a valid search region.');
   if (operation === 'pixel' && (!integer(payload.column) || !integer(payload.row))) fail('Enter a nonnegative pixel column and row.');
+  if (operation === 'inspect' && payload.displayBand!=null && (!integer(payload.displayBand,1)||payload.displayBand>224)) fail('Choose a spectral band from 1 to 224.');
   if (operation === 'project' && (!validQueryBounds(payload.bounds) || !Array.isArray(payload.selections) || !payload.selections.length || payload.selections.length > 32)) fail('Select 1 to 32 raster assets and a valid project region.');
   if (['project', 'downloads'].includes(operation) && payload.selections?.some(item => !hash.test(item.snapshotId) || !text(item.assetKey, 1024) || !item.assetKey)) fail('Invalid raster selection.');
   const check = () => { if (signal?.aborted) throw new DOMException('Raster request cancelled', 'AbortError'); }; check();
@@ -158,6 +249,7 @@ export async function stacRequest(operation, payload = {}, signal) {
     catch (error) { throw error instanceof Error ? error : new Error(String(error)); }
   } else {
     const paths = { list: '/stac/connections', connect: '/stac/connections', forget: `/stac/connections/${payload.id}/forget`, search: '/stac/search', snapshot: `/stac/snapshots/${payload.id}`, inspect: `/stac/jobs/${payload.id}/inspect`, pixel: `/stac/jobs/${payload.id}/pixel?${new URLSearchParams({ column: payload.column, row: payload.row })}`, project: '/stac/project', downloads: '/stac/downloads' };
+    if(operation==='inspect'&&payload.displayBand!=null) paths.inspect+=`?displayBand=${payload.displayBand}`;
     const mutation = ['connect', 'forget', 'search', 'project', 'downloads'].includes(operation);
     const response = await fetch('http://127.0.0.1:4318' + paths[operation], { method: mutation ? 'POST' : 'GET', signal,
       headers: mutation ? { 'Content-Type': 'application/json', 'X-GeoD-Client': 'geod-global' } : undefined, body: mutation ? JSON.stringify(payload) : undefined });
@@ -168,14 +260,9 @@ export async function stacRequest(operation, payload = {}, signal) {
   if (operation === 'list') { if (!Array.isArray(value) || value.length > 128) fail('Invalid saved raster sources.'); value.forEach(validateStacConnection); }
   if (operation === 'connect') validateStacConnection(value);
   if (operation === 'snapshot') { validateStacSnapshot(value); if (value.id !== payload.id) fail('The saved item does not match the requested snapshot.'); }
-  if (operation === 'search') {
-    if (!object(value) || !Array.isArray(value.items) || value.items.length > 100 || !(value.nextCursor === null || text(value.nextCursor, 16384) && value.nextCursor.length)
-      || typeof value.complete !== 'boolean' || typeof value.limitReached !== 'boolean' || value.complete && (value.nextCursor !== null || value.limitReached)
-      || value.scannedItems !== undefined && (!integer(value.scannedItems) || value.scannedItems > 1000 || value.scannedItems < value.items.length)) fail('Invalid raster search page.');
-    value.items.forEach(item => { validateStacSnapshot(item); if (item.connectionId !== payload.connectionId
-      || (item.provenance.searchMode === 'catalog' ? item.provenance.search.collectionId !== payload.collectionId || value.scannedItems === undefined : item.collectionId !== payload.collectionId)) fail('Raster search returned an item from a different source or collection.'); });
-  }
+  if (operation === 'search') validateStacSearchPage(value, payload);
   if (operation === 'inspect') validateStacInspection(value, payload.id);
+  if (operation === 'inspect' && payload.displayBand!=null && value.displayBand!==payload.displayBand) fail('The preview does not match the selected spectral band.');
   if (operation === 'pixel') validateStacPixel(value, payload);
   if (operation === 'project') value = await validateSavedProject(value, payload, signal);
   if (operation === 'downloads' && (!object(value) || value.projectId !== payload.projectId || value.assetKey !== 'stac_asset' || !Array.isArray(value.jobs)

@@ -47,6 +47,256 @@ pub(crate) struct Checkpoint {
     pub(crate) bytes: u64,
     pub(crate) total: u64,
     sha256: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    kind: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    expected_original_sha256: Option<String>,
+}
+
+/// A compiled whole-file identity is independent of HTTP representation tags.
+/// It never grants eligibility to a URL or client-provided checksum.
+#[derive(Clone, Debug)]
+pub(crate) enum Validator {
+    StrongEtag {
+        etag: String,
+        total: u64,
+    },
+    ReviewedOriginal {
+        expected_original_sha256: String,
+        total: u64,
+    },
+}
+
+impl Checkpoint {
+    pub(crate) fn validator(&self) -> Validator {
+        match self.expected_original_sha256.as_ref() {
+            Some(sha256) => Validator::ReviewedOriginal {
+                expected_original_sha256: sha256.clone(),
+                total: self.total,
+            },
+            None => Validator::StrongEtag {
+                etag: self.etag.clone(),
+                total: self.total,
+            },
+        }
+    }
+}
+
+const ORIGINAL_KIND: &str = "reviewed-original-sha256";
+
+pub(crate) mod finite_original;
+
+#[cfg(test)]
+mod clcd_range_policy_tests {
+    use super::*;
+
+    #[test]
+    fn large_clcd_ranges_require_the_complete_reviewed_identity() {
+        let total = crate::datasets::clcd::ORIGINAL_BYTES;
+        assert!(FiniteRange::new(0, total).is_err());
+        assert!(FiniteRange::new_clcd(0, total, &"a".repeat(64)).is_err());
+        if let Ok(sha) = crate::datasets::clcd::original_sha256() {
+            let range = FiniteRange::new_clcd(0, total, sha).unwrap();
+            assert_eq!(range.length(), 2 * 1024 * 1024);
+            let end = FiniteRange::new_clcd(total - 17, total, sha).unwrap();
+            assert_eq!(end.length(), 17);
+            assert_eq!(end.end, total - 1);
+            assert!(FiniteRange::new_clcd(0, total + 1, sha).is_err());
+            assert!(FiniteRange::new_clcd(total, total, sha).is_err());
+        }
+    }
+
+    fn response(media: &str) -> Response {
+        reqwest::Response::from(
+            axum::http::Response::builder()
+                .status(206)
+                .header("Content-Range", "bytes 16-20/21")
+                .header("Content-Length", "5")
+                .header("Content-Type", media)
+                .body(vec![0; 5])
+                .unwrap(),
+        )
+    }
+
+    #[test]
+    fn raw_tiff_headers_do_not_relax_the_zip_or_ambiguous_media_contract() {
+        let range = FiniteRange {
+            start: 16,
+            end: 20,
+            total: 21,
+        };
+        assert!(validate_finite_tiff_response(&response("image/tiff, image/tiff"), range).is_ok());
+        assert!(validate_finite_response(&response("image/tiff, image/tiff"), range).is_err());
+        assert!(validate_finite_tiff_response(
+            &response("image/tiff, application/octet-stream"),
+            range
+        )
+        .is_err());
+        assert!(validate_finite_tiff_response(&response("image/tiff, text/html"), range).is_err());
+        assert!(validate_finite_tiff_response(&response("application/zip"), range).is_err());
+        assert!(validate_finite_response(&response("application/zip"), range).is_ok());
+    }
+}
+
+/// Closed byte intervals used only by the explicitly reviewed original path.
+/// Legacy open-ended Range/If-Range behavior remains separate and unchanged.
+pub(crate) const CLCD_RANGE_BYTES: u64 = 2 * 1024 * 1024;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) struct FiniteRange {
+    pub(crate) start: u64,
+    pub(crate) end: u64,
+    pub(crate) total: u64,
+}
+
+impl FiniteRange {
+    pub(crate) fn new(start: u64, total: u64) -> Result<Self> {
+        if start >= total || total > crate::MAX_ASSET_BYTES {
+            return Err("Reviewed byte range lies outside its complete original".into());
+        }
+        Ok(Self {
+            start,
+            end: start.saturating_add(8 * 1024 * 1024 - 1).min(total - 1),
+            total,
+        })
+    }
+    pub(crate) fn new_clcd(start: u64, total: u64, sha256: &str) -> Result<Self> {
+        let expected = crate::datasets::clcd::original_sha256()?;
+        if sha256 != expected
+            || total != crate::datasets::clcd::ORIGINAL_BYTES
+            || total > crate::datasets::clcd::MAX_ORIGINAL_BYTES
+            || start >= total
+        {
+            return Err(
+                "CLCD byte range requires its exact independently reviewed complete original"
+                    .into(),
+            );
+        }
+        Ok(Self {
+            start,
+            // Measured slow CLCD intervals exceed an 8 MiB/300 s attempt.
+            // Smaller exact-source windows retain all time and SHA guards and
+            // reduce buffered payload; ordinary SinoLC remains at 8 MiB.
+            end: start.saturating_add(CLCD_RANGE_BYTES - 1).min(total - 1),
+            total,
+        })
+    }
+    pub(crate) fn length(self) -> usize {
+        (self.end - self.start + 1) as usize
+    }
+    pub(crate) fn header(self) -> String {
+        format!("bytes={}-{}", self.start, self.end)
+    }
+}
+
+pub(crate) fn validate_finite_response(response: &Response, requested: FiniteRange) -> Result<()> {
+    validate_finite_response_inner(response, requested, false)
+}
+
+pub(crate) fn validate_finite_tiff_response(
+    response: &Response,
+    requested: FiniteRange,
+) -> Result<()> {
+    validate_finite_response_inner(response, requested, true)
+}
+
+fn validate_finite_response_inner(
+    response: &Response,
+    requested: FiniteRange,
+    raw_tiff: bool,
+) -> Result<()> {
+    let h = response.headers();
+    if response.status() != StatusCode::PARTIAL_CONTENT {
+        return Err(format!(
+            "Reviewed original segment returned HTTP {} instead of 206",
+            response.status().as_u16()
+        ));
+    }
+    if h.get_all(header::CONTENT_RANGE).iter().count() != 1
+        || h.get(header::CONTENT_RANGE)
+            .and_then(|v| v.to_str().ok())
+            .and_then(range)
+            != Some((requested.start, requested.end, requested.total))
+    {
+        return Err(
+            "Reviewed original segment has a missing, ambiguous or changed Content-Range".into(),
+        );
+    }
+    if h.get_all(header::CONTENT_LENGTH).iter().count() != 1
+        || h.get(header::CONTENT_LENGTH)
+            .and_then(|v| v.to_str().ok())
+            .and_then(number)
+            != Some(requested.length() as u64)
+        || response.content_length() != Some(requested.length() as u64)
+    {
+        return Err(
+            "Reviewed original segment has a missing, ambiguous or changed Content-Length".into(),
+        );
+    }
+    if h.contains_key(header::TRANSFER_ENCODING)
+        || h.get_all(header::CONTENT_ENCODING).iter().count() > 1
+        || h.get(header::CONTENT_ENCODING)
+            .is_some_and(|v| v != "identity")
+    {
+        return Err(
+            "Reviewed original segment has an unsupported or ambiguous transfer/content encoding"
+                .into(),
+        );
+    }
+    let types = h.get_all(header::CONTENT_TYPE).iter().collect::<Vec<_>>();
+    if raw_tiff {
+        // The exact Zenodo TIFF repeats image/tiff, sometimes within a single
+        // comma-combined header. All repetitions must agree; mixed types,
+        // multipart, HTML and missing declarations remain rejected.
+        let mut media: Option<&str> = None;
+        for value in types {
+            let value = value
+                .to_str()
+                .map_err(|_| "CLCD segment Content-Type is invalid")?;
+            for part in value.split(',').map(str::trim) {
+                if !matches!(
+                    part,
+                    "image/tiff" | "image/geotiff" | "application/octet-stream"
+                ) || media.is_some_and(|previous| previous != part)
+                {
+                    return Err(
+                        "CLCD segment has a missing, conflicting or non-TIFF Content-Type".into(),
+                    );
+                }
+                media = Some(part);
+            }
+        }
+        if media.is_none() {
+            return Err("CLCD segment has no original TIFF Content-Type".into());
+        }
+        return Ok(());
+    }
+    // The native Zenodo response repeats application/octet-stream verbatim.
+    // Conflicting declarations, HTML, multipart and absent types remain invalid.
+    let media = types.first().and_then(|v| v.to_str().ok()).map(str::trim);
+    if !matches!(media, Some("application/zip" | "application/octet-stream"))
+        || types
+            .iter()
+            .any(|v| v.to_str().ok().map(str::trim) != media)
+    {
+        return Err(
+            "Reviewed original segment has a missing, conflicting or non-ZIP Content-Type".into(),
+        );
+    }
+    Ok(())
+}
+
+fn valid_sha256(value: &str) -> bool {
+    value.len() == 64
+        && value
+            .bytes()
+            .all(|v| v.is_ascii_digit() || (b'a'..=b'f').contains(&v))
+}
+
+fn original_binding(job: &Job, sha256: &str, total: u64) -> Result<String> {
+    let bytes =
+        serde_json::to_vec(&(ORIGINAL_KIND, binding(job)?, sha256, total)).map_err(io_error)?;
+    Ok(format!("{:x}", Sha256::digest(bytes)))
 }
 
 pub(crate) struct Prepared {
@@ -171,19 +421,32 @@ fn load(root: &Path, job: &Job, limit: u64) -> Result<Checkpoint> {
         .map_err(|_| "Invalid partial transfer receipt")?;
     storage::regular_file(&partial)?;
     let size = std::fs::metadata(&partial).map_err(io_error)?.len();
-    if receipt.schema != "geod-partial-transfer/v1"
-        || receipt.binding != binding(job)?
-        || !strong_etag(&receipt.etag)
+    let representation_matches = match (
+        receipt.schema.as_str(),
+        receipt.kind.as_deref(),
+        receipt.expected_original_sha256.as_deref(),
+    ) {
+        ("geod-partial-transfer/v1", None, None) => {
+            receipt.binding == binding(job)? && strong_etag(&receipt.etag)
+        }
+        ("geod-partial-transfer/v2", Some(ORIGINAL_KIND), Some(expected))
+            if receipt.etag.is_empty() && valid_sha256(expected) =>
+        {
+            let reviewed = crate::stac::reviewed_whole_original(root, job)?
+                .ok_or("A whole-original checkpoint requires a compiled reviewed source")?;
+            reviewed.bytes == receipt.total
+                && reviewed.sha256 == expected
+                && receipt.binding == original_binding(job, expected, receipt.total)?
+        }
+        _ => false,
+    };
+    if !representation_matches
         || receipt.bytes == 0
         || receipt.bytes >= receipt.total
         || receipt.total > limit
         || size < receipt.bytes
         || size > limit
-        || receipt.sha256.len() != 64
-        || !receipt
-            .sha256
-            .bytes()
-            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+        || !valid_sha256(&receipt.sha256)
     {
         return Err("Partial transfer no longer matches the source or byte limits".into());
     }
@@ -306,6 +569,9 @@ pub(crate) async fn prepare(
 pub(crate) fn request(builder: RequestBuilder, checkpoint: Option<&Checkpoint>) -> RequestBuilder {
     let builder = builder.header(header::ACCEPT_ENCODING, "identity");
     match checkpoint {
+        Some(pin) if pin.expected_original_sha256.is_some() => {
+            builder.header(header::RANGE, format!("bytes={}-", pin.bytes))
+        }
         Some(pin) => builder
             .header(header::RANGE, format!("bytes={}-", pin.bytes))
             .header(header::IF_RANGE, &pin.etag),
@@ -327,10 +593,23 @@ fn range(text: &str) -> Option<(u64, u64, u64)> {
 
 pub(crate) fn accepts(response: &Response, checkpoint: &Checkpoint) -> bool {
     let headers = response.headers();
+    let validator_matches = if checkpoint.expected_original_sha256.is_some() {
+        // SHA-bound recovery has no If-Range semantics. Length and range must
+        // be explicit; final whole-file validation decides source identity.
+        headers.get_all(header::CONTENT_LENGTH).iter().count() == 1
+            && headers
+                .get(header::CONTENT_LENGTH)
+                .and_then(|v| v.to_str().ok())
+                .and_then(number)
+                == Some(checkpoint.total - checkpoint.bytes)
+    } else {
+        headers.get_all(header::ETAG).iter().count() == 1
+            && headers.get(header::ETAG).and_then(|v| v.to_str().ok())
+                == Some(checkpoint.etag.as_str())
+    };
     response.status() == StatusCode::PARTIAL_CONTENT
-        && headers.get_all(header::ETAG).iter().count() == 1
+        && validator_matches
         && headers.get_all(header::CONTENT_RANGE).iter().count() == 1
-        && headers.get(header::ETAG).and_then(|v| v.to_str().ok()) == Some(checkpoint.etag.as_str())
         && headers
             .get(header::CONTENT_RANGE)
             .and_then(|v| v.to_str().ok())
@@ -347,46 +626,124 @@ pub(crate) fn accepts(response: &Response, checkpoint: &Checkpoint) -> bool {
             .is_none_or(|v| !v.as_bytes().starts_with(b"multipart/"))
 }
 
-pub(crate) fn validator(response: &Response, supported: bool) -> Option<(String, u64)> {
+pub(crate) fn validator(
+    response: &Response,
+    supported: bool,
+    root: &Path,
+    job: &Job,
+) -> Result<Option<Validator>> {
     if !supported
         || response
             .headers()
             .get(header::CONTENT_ENCODING)
             .is_some_and(|v| v != "identity")
     {
-        return None;
+        return Ok(None);
+    }
+    if let Some(reviewed) = crate::stac::reviewed_whole_original(root, job)? {
+        if !valid_sha256(&reviewed.sha256)
+            || reviewed.bytes == 0
+            || response.status() != StatusCode::OK
+            || response.headers().contains_key(header::CONTENT_RANGE)
+            || response
+                .headers()
+                .get_all(header::CONTENT_LENGTH)
+                .iter()
+                .count()
+                != 1
+            || response.content_length() != Some(reviewed.bytes)
+        {
+            return Err("Reviewed whole-original response differs from its compiled byte length or complete representation".into());
+        }
+        return Ok(Some(Validator::ReviewedOriginal {
+            expected_original_sha256: reviewed.sha256,
+            total: reviewed.bytes,
+        }));
     }
     if response.headers().get_all(header::ETAG).iter().count() != 1 {
-        return None;
+        return Ok(None);
     }
-    let etag = response.headers().get(header::ETAG)?.to_str().ok()?;
-    let total = response.content_length()?;
-    (strong_etag(etag) && total > 0).then(|| (etag.to_owned(), total))
+    let Some(etag) = response
+        .headers()
+        .get(header::ETAG)
+        .and_then(|v| v.to_str().ok())
+    else {
+        return Ok(None);
+    };
+    let Some(total) = response.content_length() else {
+        return Ok(None);
+    };
+    Ok(
+        (strong_etag(etag) && total > 0).then(|| Validator::StrongEtag {
+            etag: etag.to_owned(),
+            total,
+        }),
+    )
 }
 
 pub(crate) async fn checkpoint(
     root: &Path,
     job: &Job,
     file: &tokio::fs::File,
-    validator: Option<&(String, u64)>,
+    validator: Option<&Validator>,
     bytes: u64,
     hasher: &Sha256,
     header_bytes: &[u8],
 ) -> Result<()> {
-    let Some((etag, total)) = validator else {
+    let Some(validator) = validator else {
         return Ok(());
     };
-    if bytes == 0 || bytes >= *total || verify_signature(header_bytes, &job.media_type).is_err() {
+    let (schema, kind, expected_original_sha256, etag, total, source_binding) = match validator {
+        Validator::StrongEtag { etag, total } => {
+            if !strong_etag(etag) {
+                return Err("Invalid strong ETag checkpoint validator".into());
+            }
+            (
+                "geod-partial-transfer/v1",
+                None,
+                None,
+                etag.clone(),
+                *total,
+                binding(job)?,
+            )
+        }
+        Validator::ReviewedOriginal {
+            expected_original_sha256,
+            total,
+        } => {
+            let reviewed = crate::stac::reviewed_whole_original(root, job)?
+                .ok_or("A whole-original checkpoint requires a compiled reviewed source")?;
+            if reviewed.bytes != *total
+                || reviewed.sha256 != *expected_original_sha256
+                || !valid_sha256(expected_original_sha256)
+            {
+                return Err(
+                    "Whole-original checkpoint differs from its compiled native source".into(),
+                );
+            }
+            (
+                "geod-partial-transfer/v2",
+                Some(ORIGINAL_KIND.into()),
+                Some(expected_original_sha256.clone()),
+                String::new(),
+                *total,
+                original_binding(job, expected_original_sha256, *total)?,
+            )
+        }
+    };
+    if bytes == 0 || bytes >= total || verify_signature(header_bytes, &job.media_type).is_err() {
         return Ok(());
     }
     file.sync_all().await.map_err(io_error)?;
     let receipt = Checkpoint {
-        schema: "geod-partial-transfer/v1".into(),
-        binding: binding(job)?,
-        etag: etag.clone(),
+        schema: schema.into(),
+        binding: source_binding,
+        etag,
         bytes,
-        total: *total,
+        total,
         sha256: format!("{:x}", hasher.clone().finalize()),
+        kind,
+        expected_original_sha256,
     };
     let (_, destination) = paths(root, &job.id)?;
     let pending =

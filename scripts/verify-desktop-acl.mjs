@@ -35,7 +35,16 @@ export function verifyDesktopAclSources(main, build, capability, config) {
   return { desktopCommandAcl: 'passed', registeredCommands: registered.length, window: 'main', remoteOrigins: false };
 }
 
+export async function readDesktopAclSources(root) {
+  const files = await Promise.all([
+    'src-tauri/src/main.rs', 'src-tauri/build.rs', 'src-tauri/capabilities/main-window.json', 'src-tauri/tauri.conf.json',
+    'src-tauri/src/distribution.rs', 'src-tauri/src/identity.rs', 'src-tauri/src/earth_engine.rs',
+    'src-tauri/src/local_raster.rs', 'src-tauri/src/official_vectors.rs', 'src-tauri/src/gebco.rs', 'src-tauri/src/gscloud.rs',
+  ].map(file => readFile(path.join(root, file), 'utf8')));
+  return { main: files[0] + '\n' + files.slice(4).join('\n'), build: files[1], capability: JSON.parse(files[2]), config: JSON.parse(files[3]) };
+}
+
 export async function verifyDesktopAcl(root) {
-  const files = await Promise.all(['src-tauri/src/main.rs', 'src-tauri/build.rs', 'src-tauri/capabilities/main-window.json', 'src-tauri/tauri.conf.json','src-tauri/src/distribution.rs','src-tauri/src/identity.rs'].map(file => readFile(path.join(root, file), 'utf8')));
-  return verifyDesktopAclSources(files[0]+'\n'+files[4]+'\n'+files[5], files[1], JSON.parse(files[2]), JSON.parse(files[3]));
+  const { main, build, capability, config } = await readDesktopAclSources(root);
+  return verifyDesktopAclSources(main, build, capability, config);
 }

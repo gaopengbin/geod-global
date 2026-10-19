@@ -45,9 +45,45 @@ test('connection probe uses the actual adapter for text and one inert tool call,
   assert.equal(result.status,'passed');assert.equal(result.text,true);assert.equal(result.functionCalls,true);
   assert.equal(requests.length,2);assert(requests.every(request=>request.url==='/v1/chat/completions' && request.authorization==='Bearer '+config.apiKey));
   assert.equal(requests[0].body.tools,undefined);assert.equal(requests[1].body.tools.length,1);
-  assert.equal(requests[1].body.tool_choice.function.name,'geod_connection_probe');
+  assert.equal(requests[1].body.tool_choice,'auto');
   assert.deepEqual(Object.keys(result).sort(),['version','status','text','functionCalls','latencyMs','checkedAt'].sort());
   assert(!JSON.stringify(result).includes(config.apiKey));
+});
+
+test('DeepSeek thinking probe uses conversation output capacity and automatic tools instead of rejected forced choice',async t=>{
+  const {config,requests}=await endpoint(t,(_req,res,body,index)=>{
+    if(body.tool_choice && body.tool_choice!=='auto')return res.writeHead(400,{'content-type':'application/json'}).end(JSON.stringify({error:{message:'Forced tool choice is not supported in thinking mode.'}}));
+    if(body.max_tokens<4096)return completion(res,{role:'assistant',content:null,reasoning_content:'Thinking budget exhausted.'},'length');
+    if(index===1)return completion(res,{role:'assistant',content:'GeoD connection ready.',reasoning_content:'Diagnostic text ready.'});
+    const nonce=body.messages.at(-1).content.match(/nonce ([a-f0-9-]{36})/)[1];
+    completion(res,{role:'assistant',content:null,reasoning_content:'Call the inert probe.',tool_calls:[{id:'thinking-probe',type:'function',function:{name:'geod_connection_probe',arguments:JSON.stringify({nonce})}}]},'tool_calls');
+  });
+  const result=await testModelConnection({...config,model:'deepseek-flash',contextWindow:300000});
+  assert.equal(result.status,'passed');assert.equal(requests.length,2);
+  assert(requests.every(request=>request.body.max_tokens===16384 && request.body.reasoning_effort==='low'));
+  assert.equal(requests[1].body.tool_choice,'auto');
+});
+
+test('tool request rejection preserves text connectivity without exposing the upstream body',async t=>{
+  const {config,requests}=await endpoint(t,(_req,res,_body,index)=>index===1
+    ?completion(res,{role:'assistant',content:'GeoD connection ready.'})
+    :res.writeHead(400,{'content-type':'application/json'}).end(JSON.stringify({error:{message:'private endpoint detail synthetic-test-secret'}})));
+  const result=await testModelConnection(config);
+  assert.equal(result.status,'failed');assert.equal(result.text,true);assert.equal(result.functionCalls,false);
+  assert.equal(result.message,'Text response works, but the model rejected the tool-call test (HTTP 400).');
+  assert.equal(requests.length,2);assert(!JSON.stringify(result).includes('private endpoint detail'));
+  assert(!JSON.stringify(result).includes(config.apiKey));
+});
+
+test('truncated reasoning or text does not claim a completed diagnostic',async()=>{
+  for(const truncatedStep of [1,2]) {
+    let calls=0;
+    const result=await testModelConnection({label:'Budget test',protocol:'openai-compatible',baseUrl:'https://example.test/v1',model:'owned-model',apiKey:'synthetic'},
+      {generate:async()=>++calls===truncatedStep?{text:'Partial response',finishReason:'length'}:{text:'Ready',finishReason:'stop'}});
+    assert.equal(result.status,'failed');assert.equal(result.functionCalls,false);
+    assert.equal(result.text,truncatedStep===2);assert.equal(calls,truncatedStep);
+    assert.equal(result.message,'The model reached its output limit during the connection test.');
+  }
 });
 test('authorization failure is sanitized and does not retry or test tools',async t=>{
   const {config,requests}=await endpoint(t,(_req,res)=>res.writeHead(401,{'content-type':'application/json'}).end(JSON.stringify({error:{message:'invalid key synthetic-test-secret'}})));

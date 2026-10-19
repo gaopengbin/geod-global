@@ -1,0 +1,1278 @@
+{
+  "schemaVersion": "geod-source-release-scope/v1",
+  "version": "0.2.0-rc.5",
+  "directoryEntries": 133,
+  "pickerProducts": 132,
+  "groups": 17,
+  "statuses": {
+    "ready": 110,
+    "auth": 2,
+    "planned": 21
+  },
+  "statusMeaning": "Connector availability only. Provider accounts, product coverage, file limits and per-workflow acceptance remain separate. Planned families with a partial action are not complete.",
+  "entries": [
+    {
+      "id": "earth-engine-export",
+      "name": "Google Earth Engine exports",
+      "group": "catalogs",
+      "status": "ready",
+      "action": {
+        "kind": "earth-engine"
+      }
+    },
+    {
+      "id": "earth-search",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "earth-search"
+      }
+    },
+    {
+      "id": "planetary-landsat",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "planetary-landsat"
+      }
+    },
+    {
+      "id": "planetary-radar",
+      "group": "radar",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "planetary-radar"
+      }
+    },
+    {
+      "id": "planetary-vegetation",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "planetary-vegetation"
+      }
+    },
+    {
+      "id": "copernicus-dem",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "copernicus-dem"
+      }
+    },
+    {
+      "id": "planetary-naip",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "planetary-naip"
+      }
+    },
+    {
+      "id": "planetary-modis",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "planetary-modis"
+      }
+    },
+    {
+      "id": "planetary-computer",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "planetary-computer"
+      }
+    },
+    {
+      "id": "copernicus-dem-90",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "copernicus-dem-90"
+      }
+    },
+    {
+      "id": "nasa-viirs-noaa21",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "nasa-viirs-noaa21"
+      }
+    },
+    {
+      "id": "nasa-viirs-noaa20",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "nasa-viirs-noaa20"
+      }
+    },
+    {
+      "id": "nasa-viirs-npp",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "nasa-viirs-npp"
+      }
+    },
+    {
+      "id": "nasa-srtm",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "nasa-srtm"
+      }
+    },
+    {
+      "id": "srtm-num",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "srtm-num"
+      }
+    },
+    {
+      "id": "copernicus",
+      "group": "optical",
+      "status": "auth",
+      "action": {
+        "kind": "provider",
+        "providerId": "copernicus"
+      }
+    },
+    {
+      "id": "nasa-earthdata",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "provider",
+        "providerId": "nasa-earthdata"
+      }
+    },
+    {
+      "id": "usgs-landsat",
+      "name": "Landsat · USGS direct access",
+      "group": "optical",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "modis-more",
+      "name": "MODIS · Additional products",
+      "group": "optical",
+      "status": "planned",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "modis-more"
+      }
+    },
+    {
+      "id": "viirs-more",
+      "name": "VIIRS · Additional products",
+      "group": "optical",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "nasa-more",
+      "name": "NASA Earthdata · Additional products",
+      "group": "optical",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "srtm-gl3",
+      "name": "SRTM GL3 · 3 arc-second elevation",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "srtm-gl3"
+      }
+    },
+    {
+      "id": "nasadem",
+      "name": "NASADEM · Public COG archive",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "nasadem"
+      }
+    },
+    {
+      "id": "alos-aw3d30",
+      "name": "ALOS AW3D30 · Public COG archive",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "alos-aw3d30"
+      }
+    },
+    {
+      "id": "srtm-gl1",
+      "name": "SRTM_GL1 · Public COG archive",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "srtm-gl1"
+      }
+    },
+    {
+      "id": "custom-stac-api",
+      "name": "STAC API",
+      "group": "catalogs",
+      "status": "ready",
+      "action": {
+        "kind": "stac",
+        "sourceType": "api"
+      }
+    },
+    {
+      "id": "static-stac",
+      "name": "Static STAC catalog",
+      "group": "catalogs",
+      "status": "ready",
+      "action": {
+        "kind": "stac",
+        "sourceType": "catalog"
+      }
+    },
+    {
+      "id": "stac-item",
+      "name": "STAC item",
+      "group": "catalogs",
+      "status": "ready",
+      "action": {
+        "kind": "stac",
+        "sourceType": "item"
+      }
+    },
+    {
+      "id": "direct-cog",
+      "name": "COG / GeoTIFF URL",
+      "group": "catalogs",
+      "status": "ready",
+      "action": {
+        "kind": "stac",
+        "sourceType": "raster"
+      }
+    },
+    {
+      "id": "wcs-service",
+      "name": "WCS 2.0.1",
+      "group": "catalogs",
+      "status": "ready",
+      "action": {
+        "kind": "wcs"
+      }
+    },
+    {
+      "id": "earth-search-more",
+      "name": "Earth Search · Additional collections",
+      "group": "catalogs",
+      "status": "planned",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "earth-search-more"
+      }
+    },
+    {
+      "id": "planetary-more",
+      "name": "Planetary Computer · Additional collections",
+      "group": "catalogs",
+      "status": "planned",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "planetary-more"
+      }
+    },
+    {
+      "id": "copernicus-more",
+      "name": "Copernicus · Additional products",
+      "group": "catalogs",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "nasa-gibs",
+      "name": "NASA GIBS",
+      "group": "maps",
+      "status": "ready",
+      "action": {
+        "kind": "map",
+        "protocol": "WMS",
+        "preset": "gibs"
+      }
+    },
+    {
+      "id": "wms-service",
+      "name": "WMS",
+      "group": "maps",
+      "status": "ready",
+      "action": {
+        "kind": "map",
+        "protocol": "WMS"
+      }
+    },
+    {
+      "id": "wmts-service",
+      "name": "WMTS",
+      "group": "maps",
+      "status": "ready",
+      "action": {
+        "kind": "map",
+        "protocol": "WMTS"
+      }
+    },
+    {
+      "id": "xyz-service",
+      "name": "XYZ",
+      "group": "maps",
+      "status": "ready",
+      "action": {
+        "kind": "map",
+        "protocol": "XYZ"
+      }
+    },
+    {
+      "id": "tms-service",
+      "name": "TMS",
+      "group": "maps",
+      "status": "ready",
+      "action": {
+        "kind": "map",
+        "protocol": "TMS"
+      }
+    },
+    {
+      "id": "arcgis-map",
+      "name": "ArcGIS MapServer / ImageServer",
+      "group": "maps",
+      "status": "ready",
+      "action": {
+        "kind": "map",
+        "protocol": "ArcGIS"
+      }
+    },
+    {
+      "id": "wayback",
+      "name": "Wayback",
+      "group": "maps",
+      "status": "planned",
+      "action": {
+        "kind": "wayback"
+      }
+    },
+    {
+      "id": "commercial-imagery",
+      "name": "Jilin-1 / commercial imagery",
+      "group": "optical",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "osm-overpass",
+      "name": "OpenStreetMap / Overpass",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "vector",
+        "protocol": "Overpass"
+      }
+    },
+    {
+      "id": "ogc-features",
+      "name": "OGC API Features",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "vector",
+        "protocol": "OGC"
+      }
+    },
+    {
+      "id": "wfs-service",
+      "name": "WFS 2.0",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "vector",
+        "protocol": "WFS2"
+      }
+    },
+    {
+      "id": "arcgis-features",
+      "name": "ArcGIS Feature Service",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "vector",
+        "protocol": "ArcGIS"
+      }
+    },
+    {
+      "id": "protomaps",
+      "name": "Protomaps / PMTiles",
+      "group": "tiles",
+      "status": "ready",
+      "action": {
+        "kind": "tiles"
+      }
+    },
+    {
+      "id": "local-pmtiles",
+      "name": "Local PMTiles",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "library",
+        "view": "tiles"
+      }
+    },
+    {
+      "id": "local-mbtiles",
+      "name": "Local MBTiles",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "library",
+        "view": "tiles"
+      }
+    },
+    {
+      "id": "local-geojson",
+      "name": "GeoJSON / Overpass JSON",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "library",
+        "view": "vectors"
+      }
+    },
+    {
+      "id": "local-geopackage",
+      "name": "GeoPackage",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "library",
+        "view": "vectors"
+      }
+    },
+    {
+      "id": "local-shapefile",
+      "name": "Shapefile / ZIP",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "library",
+        "view": "vectors"
+      }
+    },
+    {
+      "id": "local-osm",
+      "name": "OSM XML / PBF",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "library",
+        "view": "vectors"
+      }
+    },
+    {
+      "id": "local-raster",
+      "name": "Local GeoTIFF / COG files",
+      "group": "local",
+      "status": "ready",
+      "action": {
+        "kind": "local-raster"
+      }
+    },
+    {
+      "id": "worldcover-composites",
+      "name": "ESA WorldCover · Annual composites",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "worldcover-composites"
+      }
+    },
+    {
+      "id": "etopo",
+      "name": "NOAA ETOPO 2022",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "etopo"
+      }
+    },
+    {
+      "id": "cbers-sr",
+      "name": "CBERS-4 / 4A · Surface reflectance",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "cbers-sr"
+      }
+    },
+    {
+      "id": "io-lulc",
+      "name": "Esri / Impact Observatory · Annual land cover",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "io-lulc"
+      }
+    },
+    {
+      "id": "hilda-land-use",
+      "name": "HILDA+ · Historical land use / cover",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "hilda-land-use"
+      }
+    },
+    {
+      "id": "worldcereal",
+      "name": "ESA WorldCereal · Mauritius / Réunion",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "worldcereal"
+      }
+    },
+    {
+      "id": "deafrica-fractional-cover",
+      "name": "DE Africa · Annual fractional cover",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "deafrica-fractional-cover"
+      }
+    },
+    {
+      "id": "deafrica-wofs-annual",
+      "name": "DE Africa · Annual water observations",
+      "group": "hydrology",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "deafrica-wofs-annual"
+      }
+    },
+    {
+      "id": "wsf-settlements",
+      "name": "World Settlement Footprint · DE Africa",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "wsf-settlements"
+      }
+    },
+    {
+      "id": "gmw-mangroves",
+      "name": "Global Mangrove Watch v3 · DE Africa",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "gmw-mangroves"
+      }
+    },
+    {
+      "id": "cgls-landcover",
+      "name": "Copernicus land cover · Permanent-water fraction",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "cgls-landcover"
+      }
+    },
+    {
+      "id": "usgs-3dep",
+      "name": "USGS 3DEP · Current 1 arc-second elevation",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "usgs-3dep"
+      }
+    },
+    {
+      "id": "chelsa-climate",
+      "name": "CHELSA · Mean climate moisture index",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "chelsa-climate"
+      }
+    },
+    {
+      "id": "jaxa-amsr2-soil-moisture",
+      "name": "JAXA AMSR2 · Monthly soil moisture",
+      "group": "soil",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-amsr2-soil-moisture"
+      }
+    },
+    {
+      "id": "jaxa-sgli-lst",
+      "name": "JAXA SGLI · Monthly land-surface temperature",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-sgli-lst"
+      }
+    },
+    {
+      "id": "jaxa-modis-ndvi",
+      "name": "JAXA MODIS · Monthly vegetation index",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-modis-ndvi"
+      }
+    },
+    {
+      "id": "jaxa-palsar-fnf",
+      "name": "JAXA PALSAR-2 · Forest / non-forest",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-palsar-fnf"
+      }
+    },
+    {
+      "id": "jaxa-sgli-chla",
+      "name": "JAXA SGLI · Monthly ocean chlorophyll",
+      "group": "ocean",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-sgli-chla"
+      }
+    },
+    {
+      "id": "jaxa-gsmap-rainfall",
+      "name": "JAXA GSMaP · Precipitation rate",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-gsmap-rainfall"
+      }
+    },
+    {
+      "id": "jaxa-hrlulc-japan",
+      "name": "JAXA HRLULC · Japan land cover overview",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-hrlulc-japan"
+      }
+    },
+    {
+      "id": "jaxa-modis-swr",
+      "name": "JAXA MODIS · Shortwave radiation",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-modis-swr"
+      }
+    },
+    {
+      "id": "jaxa-sgli-sst",
+      "name": "JAXA SGLI · Sea-surface temperature",
+      "group": "ocean",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-sgli-sst"
+      }
+    },
+    {
+      "id": "jaxa-sgli-et",
+      "name": "JAXA SGLI · Evapotranspiration",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-sgli-et"
+      }
+    },
+    {
+      "id": "jaxa-sgli-et-index",
+      "name": "JAXA SGLI · Evapotranspiration index",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-sgli-et-index"
+      }
+    },
+    {
+      "id": "jaxa-sgli-aerosol",
+      "name": "JAXA SGLI · Aerosol optical depth",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-sgli-aerosol"
+      }
+    },
+    {
+      "id": "jaxa-modis-aerosol",
+      "name": "JAXA MODIS · Aerosol optical depth",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-modis-aerosol"
+      }
+    },
+    {
+      "id": "jaxa-amsr2-wind",
+      "name": "JAXA AMSR2 · Sea-surface wind speed",
+      "group": "ocean",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-amsr2-wind"
+      }
+    },
+    {
+      "id": "jaxa-amsr2-sst",
+      "name": "JAXA AMSR2 · Microwave sea-surface temperature",
+      "group": "ocean",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-amsr2-sst"
+      }
+    },
+    {
+      "id": "jaxa-gsmap-spi",
+      "name": "JAXA GSMaP · Standardized precipitation index",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jaxa-gsmap-spi"
+      }
+    },
+    {
+      "id": "gedi-l3-canopy",
+      "name": "GEDI L3 · Mean canopy height",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "gedi-l3-canopy"
+      }
+    },
+    {
+      "id": "srtm15plus-bathymetry",
+      "name": "SRTM15+ · Land and ocean elevation",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "srtm15plus-bathymetry"
+      }
+    },
+    {
+      "id": "ghsl-built-surface",
+      "name": "GHSL · Built-up surface",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "ghsl-built-surface"
+      }
+    },
+    {
+      "id": "ghsl-built-volume",
+      "name": "GHSL · Built-up volume",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "ghsl-built-volume"
+      }
+    },
+    {
+      "id": "ghsl-population",
+      "name": "GHSL · Residential population",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "ghsl-population"
+      }
+    },
+    {
+      "id": "eth-canopy-height",
+      "name": "ETH · Canopy top height",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "eth-canopy-height"
+      }
+    },
+    {
+      "id": "hydrosheds-accumulation",
+      "name": "HydroSHEDS v2 · Upstream accumulation",
+      "group": "hydrology",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "hydrosheds-accumulation"
+      }
+    },
+    {
+      "id": "etopo-geoid",
+      "name": "NOAA ETOPO · Geoid separation",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "etopo-geoid"
+      }
+    },
+    {
+      "id": "pc-hrea",
+      "name": "HREA · Settlement electricity access",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "pc-hrea"
+      }
+    },
+    {
+      "id": "pc-biodiversity",
+      "name": "Impact Observatory · Biodiversity intactness",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "pc-biodiversity"
+      }
+    },
+    {
+      "id": "noaa-ohc",
+      "name": "NOAA · Ocean heat-content anomaly",
+      "group": "ocean",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "noaa-ohc"
+      }
+    },
+    {
+      "id": "noaa-nclimgrid",
+      "name": "NOAA NClimGrid · Monthly climate",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "noaa-nclimgrid"
+      }
+    },
+    {
+      "id": "amazonia-wfi-dn",
+      "name": "AMAZÔNIA-1 WFI · L4 multispectral DN",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "amazonia-wfi-dn"
+      }
+    },
+    {
+      "id": "glad-landcover-2020",
+      "name": "GLAD · Land cover and use 2020",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "glad-landcover-2020"
+      }
+    },
+    {
+      "id": "openlandmap-nightlights",
+      "name": "OpenLandMap · Annual nighttime-light DN",
+      "group": "nightlights",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "openlandmap-nightlights"
+      }
+    },
+    {
+      "id": "vantor-open",
+      "name": "Vantor · Nepal visual original",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "vantor-open"
+      }
+    },
+    {
+      "id": "cbers-4a",
+      "name": "CBERS-4A WPM · L4 multispectral DN",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "cbers-wpm"
+      }
+    },
+    {
+      "id": "maxar-open",
+      "name": "Maxar Open Data · Maui analytic imagery",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "maxar-open-legacy"
+      }
+    },
+    {
+      "id": "esa-tpm",
+      "name": "ESA · Third Party Missions",
+      "group": "portals",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "enmap",
+      "name": "EnMAP · Nevada L2A hyperspectral original",
+      "group": "optical",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "enmap"
+      }
+    },
+    {
+      "id": "piesat-open-samples",
+      "name": "PIESAT-1 · Free SAR samples",
+      "group": "radar",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "worldcover",
+      "name": "ESA WorldCover",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "worldcover"
+      }
+    },
+    {
+      "id": "dynamic-world",
+      "name": "Dynamic World",
+      "group": "land-cover",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "glc-fcs30d",
+      "name": "GLC_FCS30D · 1985 / 1990 / 1995",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "glc-fcs30d"
+      }
+    },
+    {
+      "id": "glc-fcs10",
+      "name": "GLC_FCS10",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "glc-fcs10"
+      }
+    },
+    {
+      "id": "clcd",
+      "name": "CLCD · national 2004 land-cover original",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "clcd"
+      }
+    },
+    {
+      "id": "sinolc-1",
+      "name": "SinoLC-1 · Shanghai classification original",
+      "group": "land-cover",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "sinolc-1"
+      }
+    },
+    {
+      "id": "irsamap",
+      "name": "IRSAMap · Labeled land-cover vectors",
+      "group": "vectors",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "jrc-water",
+      "name": "JRC Global Surface Water",
+      "group": "hydrology",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "jrc-water"
+      }
+    },
+    {
+      "id": "glad-forest",
+      "name": "Hansen Global Forest Change",
+      "group": "vegetation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "glad-forest"
+      }
+    },
+    {
+      "id": "worldpop",
+      "name": "WorldPop · Population grids",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "worldpop"
+      }
+    },
+    {
+      "id": "ghsl",
+      "name": "GHSL · Settlement classes 2020",
+      "group": "population",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "ghsl-smod"
+      }
+    },
+    {
+      "id": "soilgrids",
+      "name": "SoilGrids · corrected WRB 2017",
+      "group": "soil",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "soilgrids"
+      }
+    },
+    {
+      "id": "hydrosheds",
+      "name": "HydroSHEDS v2 · Flow direction",
+      "group": "hydrology",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "hydrosheds"
+      }
+    },
+    {
+      "id": "merit-hydro",
+      "name": "MERIT Hydro IHU · 5 arc-minute water networks",
+      "group": "hydrology",
+      "status": "planned",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "merit-hydro"
+      }
+    },
+    {
+      "id": "fabdem",
+      "name": "FABDEM V1-2 · N08E050 / N09E050",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "fabdem"
+      }
+    },
+    {
+      "id": "usgs-3dep-dem",
+      "name": "USGS 3DEP · NJ 1 m DEM",
+      "group": "elevation",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "usgs-3dep-1m"
+      }
+    },
+    {
+      "id": "gebco",
+      "name": "GEBCO · Regional terrain and global source types",
+      "group": "elevation",
+      "status": "planned",
+      "action": {
+        "kind": "gebco",
+        "datasetId": "gebco-tid"
+      }
+    },
+    {
+      "id": "era5-land",
+      "name": "ERA5-Land",
+      "group": "climate",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "chirps",
+      "name": "CHIRPS v3 · Monthly precipitation",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "chirps"
+      }
+    },
+    {
+      "id": "worldclim",
+      "name": "WorldClim 2.1 · Nepal climate normals",
+      "group": "climate",
+      "status": "ready",
+      "action": {
+        "kind": "dataset",
+        "datasetId": "worldclim"
+      }
+    },
+    {
+      "id": "eog-nightlights",
+      "name": "VIIRS · EOG Nighttime Lights",
+      "group": "nightlights",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "ms-buildings",
+      "name": "Microsoft · reviewed building partitions",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "official-vector",
+        "datasetId": "ms-buildings"
+      }
+    },
+    {
+      "id": "overture-maps",
+      "name": "Overture · original bathymetry part",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "overture"
+      }
+    },
+    {
+      "id": "geoboundaries",
+      "name": "geoBoundaries",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "vector",
+        "protocol": "geoBoundaries"
+      }
+    },
+    {
+      "id": "geofabrik",
+      "name": "Geofabrik · Monaco free GIS bundle",
+      "group": "vectors",
+      "status": "ready",
+      "action": {
+        "kind": "official-vector",
+        "datasetId": "geofabrik"
+      }
+    },
+    {
+      "id": "jaxa-earth",
+      "name": "JAXA Earth API",
+      "group": "portals",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "geodata-china",
+      "name": "National Earth System Science Data Center",
+      "group": "portals",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "tpdc",
+      "name": "National Tibetan Plateau Data Center",
+      "group": "portals",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "resdc-cnlucc",
+      "name": "RESDC · CNLUCC",
+      "group": "land-cover",
+      "status": "planned",
+      "action": null
+    },
+    {
+      "id": "gscloud",
+      "name": "Geospatial Data Cloud",
+      "group": "portals",
+      "status": "auth",
+      "action": {
+        "kind": "gscloud"
+      }
+    }
+  ]
+}

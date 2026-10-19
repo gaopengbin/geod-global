@@ -1,6 +1,6 @@
 {
   "name": "geod-global",
-  "version": "0.2.0-rc.4",
+  "version": "0.2.0-rc.5",
   "private": true,
   "type": "module",
   "license": "GPL-3.0-only",
@@ -31,13 +31,16 @@
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "1.14.0",
+    "motion": "12.43.0",
     "ol": "10.10.0",
     "pdfjs-dist": "6.4.299",
     "proj4": "2.22.0",
     "react": "19.2.5",
     "react-day-picker": "10.0.2",
     "react-dom": "19.2.5",
+    "react-markdown": "10.1.0",
     "react-resizable-panels": "4.14.1",
+    "remark-gfm": "4.0.1",
     "shadow-plugin": "2.1.1",
     "tailwind-merge": "3.7.0"
   },
@@ -57,6 +60,7 @@
   "scripts": {
     "agent:prepare": "node scripts/prepare-agent-runtime.mjs",
     "test:agent": "node --test agent/*.test.mjs scripts/prepare-agent-runtime.test.mjs",
+    "test:services": "python -X utf8 -m unittest services.official.test_service -v",
     "dev": "vite prototype --config prototype/vite.config.mjs",
     "build": "vite build prototype --config prototype/vite.config.mjs",
     "preview": "vite preview prototype --config prototype/vite.config.mjs",
@@ -71,7 +75,8 @@
     "check:contracts": "python GeoD-Global-Spec/contracts/verify_contracts.py",
     "check:recipes": "python scripts/check-recipe-schema.py",
     "check:boundaries": "python scripts/build-agent-boundary-bundle.test.py && python scripts/build-agent-boundary-bundle.py --check",
-    "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes && npm run check:boundaries",
+    "check:sources": "node scripts/source-release-inventory.mjs --check",
+    "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes && npm run check:boundaries && npm run check:sources",
     "verify": "npm run check && npm test && npm run test:agent && npm run test:ui && npm run build",
     "verify:all": "npm run verify && npm run test:runtime && npm run test:desktop",
     "test:ui": "vitest run"

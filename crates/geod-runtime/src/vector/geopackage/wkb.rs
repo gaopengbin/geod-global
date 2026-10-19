@@ -341,3 +341,35 @@ pub(super) fn decode(
     }
     Ok((g, has_m.then_some(m)))
 }
+
+/// Raw ISO WKB read used by explicit GeoParquet WGS84 metadata. No container
+/// header, layer inference, geometry repair or coordinate clipping is added.
+pub(crate) fn decode_wgs84(
+    raw: &[u8],
+    transform: &proj_core::Transform,
+    total: &mut usize,
+) -> Result<Value> {
+    if raw.len() < 5 || raw.len() > MAX_BYTES {
+        return Err("Raw WKB geometry exceeds the bounded vector read".into());
+    }
+    let mut reader = Reader {
+        bytes: raw,
+        offset: 0,
+        source_bounds: [None; 4],
+        coordinates: 0,
+        outside_operation_area: 0,
+        parts: 0,
+        transform,
+    };
+    let (geometry, _, _, _, measures) = reader.geometry(0, None)?;
+    if reader.offset != raw.len() || measures {
+        return Err("GeoParquet WKB has trailing content or unsupported measures".into());
+    }
+    *total = total
+        .checked_add(reader.coordinates)
+        .ok_or("WKB coordinate count overflow")?;
+    if *total > MAX_COORDINATES {
+        return Err("Selected GeoParquet preview exceeds 500,000 coordinates".into());
+    }
+    Ok(geometry)
+}

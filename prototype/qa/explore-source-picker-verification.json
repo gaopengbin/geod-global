@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-12",
+  "scope": "Unified Explore selector and inline public-product workflow; no new source or actual-model acceptance claim",
+  "selector": {"catalogProviders": 15, "publicProducts": 6, "total": 21, "usesAddMenu": false, "usesProductModal": false},
+  "automated": {
+    "targetedUi": {"passed": 36, "failed": 0},
+    "repositoryVerify": "passed",
+    "runtimeTests": {"passed": 637, "optInIgnored": 15},
+    "desktopTests": {"passed": 56, "optInIgnored": 27},
+    "workspaceClippy": "passed",
+    "formatting": "passed",
+    "productionFrontendBuild": "passed",
+    "regressions": ["Late old satellite page cannot replace a public product", "AOI change aborts old product file checks", "Explicit source choice invalidates a pending project restoration", "Selecting a scene does not stop subsequent catalog pages", "Agent receives the current product form without old imagery counts, acquisition dates or selection IDs"]
+  },
+  "realBrowser": {
+    "url": "http://127.0.0.1:4317/#Explore",
+    "nativeRuntimePort": 4318,
+    "status": "passed",
+    "narrowViewport": {"width": 768, "height": 800, "status": "passed", "viewportRestored": true},
+    "steps": ["Select WorldPop from the existing Data source dropdown", "Enter NIU and the public test-country bounds", "Resolve and check the actual published source", "Explicitly save to the owned test project", "Explicitly queue the complete original download", "Open the saved project and inspect its real grayscale preview and raw pixel", "Switch back to Earth Search with the same AOI", "Select JRC and verify the old imagery state is absent and the AOI is preserved"],
+    "projectId": "24e2d31c-e438-4f28-b128-ba4f1256c993",
+    "newDownloadJobId": "bcead080-3ddf-4a4f-aac2-24f0bc518fd2",
+    "downloadStatus": "succeeded",
+    "bytes": 156803,
+    "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+    "rawOriginalInspector": {"column": 107, "row": 122, "value": 0.02245340682566166},
+    "screenshots": "Viewed in the browser tool; no screenshot file was saved"
+  },
+  "limits": ["The browser adapter does not run the desktop Agent; the current product context was tested through the App composer and native context tool separately", "Existing full-file scientific acceptance remains documented in docs/public-dataset-integration-20261012.md"]
+}

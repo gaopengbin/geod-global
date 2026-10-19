@@ -14,6 +14,7 @@ use std::{
 use url::Url;
 use uuid::Uuid;
 pub mod arcgis;
+pub mod geoboundaries;
 pub mod overpass;
 #[cfg(test)]
 mod tests;
@@ -37,6 +38,8 @@ pub struct Collection {
     pub arcgis: Option<arcgis::Layer>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub wfs: Option<wfs::Layer>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geoboundaries: Option<geoboundaries::Layer>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -53,6 +56,8 @@ pub struct FeatureService {
     pub overpass: Option<overpass::Service>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub wfs: Option<wfs::Service>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geoboundaries: Option<geoboundaries::Service>,
 }
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -120,6 +125,8 @@ pub struct Provenance {
     pub arcgis: Option<arcgis::Snapshot>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub wfs: Option<wfs::Snapshot>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geoboundaries: Option<geoboundaries::Snapshot>,
 }
 fn hash(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
@@ -364,6 +371,7 @@ fn collection(root: &Url, v: &Value) -> Result<Option<Collection>> {
         items_url: metadata_url(root, &items)?.to_string(),
         license_links,
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
     }))
 }
@@ -438,6 +446,9 @@ async fn discover(
     request: ConnectRequest,
     settings: crate::ProxySettings,
 ) -> Result<FeatureService> {
+    if request.protocol == "geoBoundaries" {
+        return geoboundaries::discover(request, settings).await;
+    }
     if request.protocol == "WFS2" {
         return wfs::discover(request, settings).await;
     }
@@ -513,6 +524,7 @@ async fn discover(
         collections: collections.into_values().collect(),
         connected_at: now(),
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
         overpass: None,
     })
@@ -586,6 +598,21 @@ impl Assembly {
 }
 impl Provenance {
     pub(crate) fn validate(&self, count: usize) -> Result<()> {
+        if [
+            self.wfs.is_some(),
+            self.arcgis.is_some(),
+            self.geoboundaries.is_some(),
+        ]
+        .into_iter()
+        .filter(|present| *present)
+        .count()
+            > 1
+        {
+            return Err("Ambiguous feature query provenance".into());
+        }
+        if self.geoboundaries.is_some() {
+            return geoboundaries::validate_provenance(self, count);
+        }
         if self.wfs.is_some() {
             return wfs::validate_provenance(self, count);
         }
@@ -678,6 +705,29 @@ pub(crate) async fn load(root: &Path) -> Result<BTreeMap<String, FeatureService>
         {
             return Err("Invalid saved data service".into());
         }
+        if [
+            s.wfs.is_some(),
+            s.overpass.is_some(),
+            s.arcgis.is_some(),
+            s.geoboundaries.is_some(),
+        ]
+        .into_iter()
+        .filter(|present| *present)
+        .count()
+            > 1
+        {
+            return Err("Ambiguous data service protocol".into());
+        }
+        if s.collections
+            .iter()
+            .any(|collection| collection.geoboundaries.is_some() != s.geoboundaries.is_some())
+        {
+            return Err("geoBoundaries collection metadata differs from the saved protocol".into());
+        }
+        if s.geoboundaries.is_some() {
+            geoboundaries::validate_service(s)?;
+            continue;
+        }
         if s.wfs.is_some() {
             wfs::validate_service(s)?;
             continue;
@@ -698,6 +748,7 @@ pub(crate) async fn load(root: &Path) -> Result<BTreeMap<String, FeatureService>
                 || c.description.len() > 16_384
                 || c.arcgis.is_some()
                 || c.wfs.is_some()
+                || c.geoboundaries.is_some()
                 || metadata_url(&root, &c.items_url)?.as_str() != c.items_url
             {
                 return Err("Invalid saved feature collection".into());
@@ -817,6 +868,21 @@ impl JobManager {
         if request.response_format.is_some() {
             return Err("Response format selection requires a WFS connection".into());
         }
+        if service.geoboundaries.is_some() {
+            let (data, source, title) = tokio::time::timeout(
+                Duration::from_secs(180),
+                geoboundaries::query(service, collection, request, self.proxy_settings().await),
+            )
+            .await
+            .map_err(|_| "geoBoundaries download timed out; no file was registered")??;
+            return Ok(Snapshot::Features(
+                vector::ImportVectorRequest {
+                    name: format!("{} · gbOpen", title.chars().take(108).collect::<String>()),
+                    text: serde_json::to_string(&data).map_err(io_error)?,
+                },
+                source,
+            ));
+        }
         if service.overpass.is_some() {
             let (bytes, source) = tokio::time::timeout(
                 Duration::from_secs(45),
@@ -854,7 +920,7 @@ impl JobManager {
                 match assembled.append(page,receipt)? {Some(raw)=>url=next_url(&root,&url,&raw,Some(request.bounds))?,None=>break}
             }
             assembled.complete()?;
-            let source=Provenance{service_url:service.url,service_name:service.name,collection_id:collection.id,collection_title:collection.title.clone(),license_links:collection.license_links,requested_bounds:request.bounds,area_geometry:request.area_geometry,requested_at:at,pages:assembled.pages,number_matched:assembled.matched,feature_count:assembled.features.len(),selection:"bbox-full-features".into(),arcgis:None,wfs:None};
+            let source=Provenance{service_url:service.url,service_name:service.name,collection_id:collection.id,collection_title:collection.title.clone(),license_links:collection.license_links,requested_bounds:request.bounds,area_geometry:request.area_geometry,requested_at:at,pages:assembled.pages,number_matched:assembled.matched,feature_count:assembled.features.len(),selection:"bbox-full-features".into(),arcgis:None,wfs:None,geoboundaries:None};
             source.validate(assembled.features.len())?;
             let data=json!({"type":"FeatureCollection","features":assembled.features,"geodSource":source});
             Ok::<_,String>((data,source,collection.title))

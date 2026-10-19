@@ -1,0 +1,709 @@
+{
+  "schema": "geod-additional-pc-original-acceptance/v1",
+  "verifiedDate": "2026-10-15",
+  "acceptedFiniteActions": true,
+  "scope": "Only the reviewed 2020-09-01 OISST SST published COG and September 2020 h27v05 MCD64A1 Burn_Date/QA published COGs. This accepts two finite products and three complete files, without completing either original parent family or claiming NOAA NetCDF/NASA HDF originals.",
+  "progress": {
+    "originalPlannedClearedThisBatch": 0,
+    "extraDirectoryIdsAddedThisBatch": 0,
+    "finiteProductsAccepted": 2,
+    "completeOriginalsAccepted": 3,
+    "parentFamilies": [
+      {
+        "datasetId": "planetary-more",
+        "status": "planned",
+        "partialAction": true
+      },
+      {
+        "datasetId": "modis-more",
+        "status": "planned",
+        "partialAction": true
+      }
+    ]
+  },
+  "originals": [
+    {
+      "datasetId": "planetary-more",
+      "assetKey": "sst",
+      "publisherItemId": "oisst-avhrr-v02r01.20200901",
+      "canonicalUrl": "https://noaacdr.blob.core.windows.net/cogs/sea-surface-temperature-optimum-interpolation/202009/oisst-avhrr-v02r01.20200901-sst.tif",
+      "bytes": 1096226,
+      "sha256": "47b19bb75c95cdd302b1372a4d6a5a910c3e7213ccc013e6fee5f82f48646bfa",
+      "completeSoftwareDownload": true,
+      "matchesIndependentCompleteOriginal": true,
+      "observationInterval": {
+        "start": "2020-09-01T00:00:00Z",
+        "end": "2020-09-01T23:59:59Z"
+      },
+      "grid": {
+        "crs": "EPSG:4326",
+        "width": 1440,
+        "height": 720,
+        "transform": [
+          0.25,
+          0.0,
+          -180.0,
+          0.0,
+          -0.25,
+          90.0
+        ],
+        "pixelInterpretation": "area",
+        "storageLayout": "tile",
+        "bands": [
+          {
+            "index": 1,
+            "dataType": "Int16",
+            "nodata": -999
+          }
+        ]
+      },
+      "rawRepresentativePoints": [
+        {
+          "column": 565,
+          "row": 26,
+          "values": [
+            -999
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 1011,
+          "row": 31,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 5,
+          "row": 0,
+          "values": [
+            -180
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 932,
+          "row": 262,
+          "values": [
+            3405
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1215,
+          "row": 205,
+          "values": [
+            2416
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 720,
+          "row": 360,
+          "values": [
+            2538
+          ],
+          "noData": [
+            false
+          ]
+        }
+      ],
+      "preview": {
+        "pngSha256": "e98d2ff9f0e2e8d2002c39bbe80e7e62cfdaaa5b56bf3d9a0c5edf3727c4c8a8",
+        "width": 768,
+        "height": 384,
+        "publisherImageIndex": 0,
+        "fullRgbaMatchesIndependentSameFileDecode": true,
+        "scalarNoDataPreserved": true
+      }
+    },
+    {
+      "datasetId": "modis-more",
+      "assetKey": "Burn_Date",
+      "publisherItemId": "MCD64A1.A2020245.h27v05.061.2021309112113",
+      "canonicalUrl": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_Burn_Date.tif",
+      "bytes": 112419,
+      "sha256": "6537d61e333a8e7e478affd9de6fc7752a4ac60cbf513340cde33b043a04d073",
+      "completeSoftwareDownload": true,
+      "matchesIndependentCompleteOriginal": true,
+      "observationInterval": {
+        "start": "2020-09-01T00:00:00Z",
+        "end": "2020-09-30T23:59:59Z"
+      },
+      "grid": {
+        "crs": "MODIS:Sinusoidal",
+        "width": 2400,
+        "height": 2400,
+        "transform": [
+          463.3127165283333,
+          0.0,
+          10007554.677014,
+          0.0,
+          -463.3127165279167,
+          4447802.078664
+        ],
+        "pixelInterpretation": "area",
+        "storageLayout": "tile",
+        "bands": [
+          {
+            "index": 1,
+            "dataType": "Int16",
+            "nodata": -1
+          }
+        ],
+        "sphereRadiusMetres": 6371007.181
+      },
+      "rawRepresentativePoints": [
+        {
+          "column": 315,
+          "row": 0,
+          "values": [
+            -2
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 11,
+          "row": 108,
+          "values": [
+            -1
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 856,
+          "row": 1216,
+          "values": [
+            252
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 406,
+          "row": 756,
+          "values": [
+            274
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1144,
+          "row": 1541,
+          "values": [
+            271
+          ],
+          "noData": [
+            false
+          ]
+        }
+      ],
+      "preview": {
+        "pngSha256": "f8b5c21036cd46ae308586ee6576adb5677b77aae3186b166e2858ed3270d77d",
+        "width": 768,
+        "height": 768,
+        "publisherImageIndex": 1,
+        "fullRgbaMatchesIndependentSameFileDecode": true,
+        "scalarNoDataPreserved": true
+      }
+    },
+    {
+      "datasetId": "modis-more",
+      "assetKey": "QA",
+      "publisherItemId": "MCD64A1.A2020245.h27v05.061.2021309112113",
+      "canonicalUrl": "https://modiseuwest.blob.core.windows.net/modis-061-cogs/MCD64A1/27/05/2020245/MCD64A1.A2020245.h27v05.061.2021309112113_QA.tif",
+      "bytes": 811891,
+      "sha256": "5f2f9800fcfad9aabc6bbe5beade4ccd5922fd589868212adb012b2bbe6b1820",
+      "completeSoftwareDownload": true,
+      "matchesIndependentCompleteOriginal": true,
+      "observationInterval": {
+        "start": "2020-09-01T00:00:00Z",
+        "end": "2020-09-30T23:59:59Z"
+      },
+      "grid": {
+        "crs": "MODIS:Sinusoidal",
+        "width": 2400,
+        "height": 2400,
+        "transform": [
+          463.3127165283333,
+          0.0,
+          10007554.677014,
+          0.0,
+          -463.3127165279167,
+          4447802.078664
+        ],
+        "pixelInterpretation": "area",
+        "storageLayout": "tile",
+        "bands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": null
+          }
+        ],
+        "sphereRadiusMetres": 6371007.181
+      },
+      "rawRepresentativePoints": [
+        {
+          "column": 315,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 11,
+          "row": 108,
+          "values": [
+            1
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            3
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 856,
+          "row": 1216,
+          "values": [
+            3
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 406,
+          "row": 756,
+          "values": [
+            3
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1144,
+          "row": 1541,
+          "values": [
+            3
+          ],
+          "noData": [
+            false
+          ]
+        }
+      ],
+      "preview": {
+        "pngSha256": "a7795509064c524b7fd04ab812df1fdde45860f4962effea144098df51145d58",
+        "width": 768,
+        "height": 768,
+        "publisherImageIndex": 1,
+        "fullRgbaMatchesIndependentSameFileDecode": true,
+        "scalarNoDataPreserved": true
+      }
+    }
+  ],
+  "uiAcceptance": [
+    {
+      "datasetId": "planetary-more",
+      "assetKey": "sst",
+      "exploreSelectionAndOnlinePreview": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/oisst-explore.png",
+        "wholeFileVerified": false
+      },
+      "localOriginalMapAndRawRead": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/oisst-negative-original.png"
+      },
+      "normalRestartGuiReopen": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/oisst-negative-reopened.png",
+        "rawPoint": {
+          "column": 5,
+          "row": 0,
+          "values": [
+            -180
+          ],
+          "noData": [
+            false
+          ]
+        }
+      }
+    },
+    {
+      "datasetId": "modis-more",
+      "assetKey": "Burn_Date",
+      "exploreSelectionAndOnlinePreview": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/modis-burn-online-passed.png",
+        "wholeFileVerified": false
+      },
+      "localOriginalMapAndRawRead": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/modis-burn-original.png"
+      },
+      "normalRestartGuiReopen": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/modis-burn-reopened.png",
+        "rawPoint": {
+          "column": 856,
+          "row": 1216,
+          "values": [
+            252
+          ],
+          "noData": [
+            false
+          ]
+        }
+      }
+    },
+    {
+      "datasetId": "modis-more",
+      "assetKey": "QA",
+      "exploreSelectionAndOnlinePreview": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/modis-qa-online-passed.png",
+        "wholeFileVerified": false
+      },
+      "localOriginalMapAndRawRead": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/modis-qa-original.png"
+      },
+      "normalRestartGuiReopen": {
+        "passed": true,
+        "artifact": ".verification/clcd-oisst-modis-20261014/modis-qa-reopened.png",
+        "rawPoint": {
+          "column": 856,
+          "row": 1216,
+          "values": [
+            3
+          ],
+          "noData": [
+            false
+          ]
+        }
+      }
+    }
+  ],
+  "normalRestartAndPostFixReadback": {
+    "passed": true,
+    "rawRepresentativePointCount": 18,
+    "allOriginalsAndPngsIdentical": true,
+    "savedSourceGridProjectInspectionObjectsIdentical": true,
+    "globalJobListIdentical": true,
+    "unchangedJobCount": 31,
+    "unchangedProjectCount": 26,
+    "newTransfers": 0,
+    "researchOriginalsCopiedIntoSoftwareStore": false
+  },
+  "nonPersistingScopeQueries": {
+    "endpoint": "/datasets/resolve",
+    "method": "POST",
+    "passed": true,
+    "queryCount": 13,
+    "results": [
+      {
+        "name": "known-day252-Burn_Date",
+        "status": 200,
+        "accepted": true,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            114.12054327659972,
+            34.921249996837574,
+            114.14054327659973,
+            34.94124999683757
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "Burn_Date"
+        }
+      },
+      {
+        "name": "whole-tile-containing-Burn_Date",
+        "status": 200,
+        "accepted": true,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            -180,
+            -90,
+            180,
+            90
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "Burn_Date"
+        }
+      },
+      {
+        "name": "bbox-inside-grid-west-outside-Burn_Date",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            104,
+            39,
+            104.1,
+            39.1
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "Burn_Date"
+        }
+      },
+      {
+        "name": "bbox-inside-grid-east-outside-Burn_Date",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            130,
+            30,
+            130.1,
+            30.1
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "Burn_Date"
+        }
+      },
+      {
+        "name": "bbox-inside-grid-north-outside-Burn_Date",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            120,
+            40.02,
+            120.1,
+            40.04
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "Burn_Date"
+        }
+      },
+      {
+        "name": "known-day252-QA",
+        "status": 200,
+        "accepted": true,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            114.12054327659972,
+            34.921249996837574,
+            114.14054327659973,
+            34.94124999683757
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "QA"
+        }
+      },
+      {
+        "name": "whole-tile-containing-QA",
+        "status": 200,
+        "accepted": true,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            -180,
+            -90,
+            180,
+            90
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "QA"
+        }
+      },
+      {
+        "name": "bbox-inside-grid-west-outside-QA",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            104,
+            39,
+            104.1,
+            39.1
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "QA"
+        }
+      },
+      {
+        "name": "bbox-inside-grid-east-outside-QA",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            130,
+            30,
+            130.1,
+            30.1
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "QA"
+        }
+      },
+      {
+        "name": "bbox-inside-grid-north-outside-QA",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            120,
+            40.02,
+            120.1,
+            40.04
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "QA"
+        }
+      },
+      {
+        "name": "oisst-exact-day-source",
+        "status": 200,
+        "accepted": true,
+        "passed": true,
+        "request": {
+          "datasetId": "planetary-more",
+          "bounds": [
+            114.12054327659972,
+            34.921249996837574,
+            114.14054327659973,
+            34.94124999683757
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "sst"
+        }
+      },
+      {
+        "name": "oisst-wrong-month",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "planetary-more",
+          "bounds": [
+            114.12054327659972,
+            34.921249996837574,
+            114.14054327659973,
+            34.94124999683757
+          ],
+          "year": 2020,
+          "month": 8,
+          "layer": "sst"
+        }
+      },
+      {
+        "name": "modis-unselected-variable",
+        "status": 400,
+        "accepted": false,
+        "passed": true,
+        "request": {
+          "datasetId": "modis-more",
+          "bounds": [
+            114.12054327659972,
+            34.921249996837574,
+            114.14054327659973,
+            34.94124999683757
+          ],
+          "year": 2020,
+          "month": 9,
+          "layer": "Burn_Date_Uncertainty"
+        }
+      }
+    ],
+    "noNewJobs": true,
+    "noNewProjects": true,
+    "noNewConnections": true,
+    "sourceSnapshotsAndDocumentsUnchanged": true
+  },
+  "retainedBurnDateTransferHistory": {
+    "firstAttempt": {
+      "attempt": 1,
+      "status": "failed",
+      "bytesTransferred": 0,
+      "settled": true,
+      "error": "Planetary Computer access does not match the immutable reviewed original"
+    },
+    "retry": {
+      "attempt": 2,
+      "status": "succeeded",
+      "bytesTransferred": 112419,
+      "settled": true,
+      "sameTaskRetried": true
+    },
+    "fix": "Registered the missing independent transient access-cache state for the reviewed MODIS container; the initial failure remains retained."
+  },
+  "notValidated": {
+    "browserUiOriginalExport": "not_executed",
+    "installer": "not_tested",
+    "nativeDesktopWindowStartup": "not_tested",
+    "deployment": "not_performed"
+  }
+}

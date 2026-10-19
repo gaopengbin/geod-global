@@ -1,0 +1,277 @@
+{
+  "checkedAt": "2026-10-11T14:12:42.739789+00:00",
+  "scope": "Real bounded public source tests via current native runtime; not all scenes/bands, not desktop UI acceptance or full Beijing end-to-end acceptance",
+  "network": "Isolated runtime, system proxy mode; node country not independently verified",
+  "originalTimeoutSeconds": 240,
+  "results": [
+    {
+      "channel": "wms",
+      "status": "passed",
+      "seconds": 7.81,
+      "evidence": "G:\\code\\geod-global\\.verification\\channel-audit-20261011-215032"
+    },
+    {
+      "channel": "wmts",
+      "status": "passed",
+      "seconds": 135.86,
+      "evidence": "G:\\code\\geod-global\\.verification\\channel-audit-20261011-215032"
+    },
+    {
+      "channel": "wmts-rest",
+      "status": "passed",
+      "seconds": 76.3,
+      "evidence": "G:\\code\\geod-global\\.verification\\channel-audit-20261011-215032"
+    },
+    {
+      "channel": "arcgis",
+      "status": "passed",
+      "seconds": 12.17,
+      "evidence": "G:\\code\\geod-global\\.verification\\channel-audit-20261011-215032"
+    },
+    {
+      "channel": "xyz",
+      "status": "passed",
+      "seconds": 36.6,
+      "evidence": "G:\\code\\geod-global\\.verification\\extra-audit-20261011-215258"
+    },
+    {
+      "channel": "arcgis-map",
+      "status": "passed",
+      "seconds": 38.2,
+      "evidence": "G:\\code\\geod-global\\.verification\\extra-audit-20261011-215258"
+    },
+    {
+      "channel": "ogc-features",
+      "status": "passed",
+      "seconds": 26.9,
+      "evidence": "G:\\code\\geod-global\\.verification\\extra-audit-20261011-215258"
+    },
+    {
+      "channel": "wcs",
+      "status": "passed",
+      "seconds": 13.7,
+      "evidence": "G:\\code\\geod-global\\.verification\\extra-audit-20261011-215258"
+    },
+    {
+      "channel": "wfs",
+      "status": "passed",
+      "seconds": 5.9,
+      "evidence": "G:\\code\\geod-global\\.verification\\extra-audit-20261011-215258"
+    },
+    {
+      "channel": "overpass",
+      "status": "passed",
+      "seconds": 34.9,
+      "evidence": "G:\\code\\geod-global\\.verification\\extra-audit-20261011-215258"
+    },
+    {
+      "channel": "planetary-vegetation",
+      "provider": "planetary-vegetation",
+      "started": "2026-10-11T13:51:37.950Z",
+      "sceneCount": 1,
+      "item": "MOD13Q1.A2025177.h08v05.061.2025195142416",
+      "asset": "ndvi",
+      "status": "timeout_240s",
+      "bytes": 8863744,
+      "seconds": 241.062,
+      "error": null
+    },
+    {
+      "channel": "planetary-radar",
+      "provider": "planetary-radar",
+      "started": "2026-10-11T13:55:40.577Z",
+      "sceneCount": 1,
+      "item": "S1C_IW_GRDH_1SDV_20250630T140654_20250630T140719_003013_rtc",
+      "asset": "vv",
+      "status": "timeout_240s",
+      "bytes": 8192000,
+      "seconds": 240.919,
+      "error": null
+    },
+    {
+      "channel": "nasa-viirs-noaa21",
+      "provider": "nasa-viirs-noaa21",
+      "started": "2026-10-11T13:59:42.787Z",
+      "sceneCount": 1,
+      "item": "VJ209A1.A2025177.h08v05.002.2025333224010",
+      "status": "requires_account_in_isolated_test"
+    },
+    {
+      "channel": "nasa-viirs-noaa20",
+      "provider": "nasa-viirs-noaa20",
+      "started": "2026-10-11T13:59:43.927Z",
+      "sceneCount": 1,
+      "item": "VJ109A1.A2025177.h08v05.002.2025189193733",
+      "status": "requires_account_in_isolated_test"
+    },
+    {
+      "channel": "nasa-viirs-npp",
+      "provider": "nasa-viirs-npp",
+      "started": "2026-10-11T13:59:46.348Z",
+      "sceneCount": 1,
+      "item": "VNP09A1.A2025177.h08v05.002.2025202170202",
+      "status": "requires_account_in_isolated_test"
+    },
+    {
+      "channel": "planetary-modis",
+      "provider": "planetary-modis",
+      "started": "2026-10-11T13:59:47.823Z",
+      "sceneCount": 1,
+      "item": "MYD09A1.A2025177.h08v05.061.2025189031924",
+      "asset": "red",
+      "status": "timeout_240s",
+      "bytes": 6406144,
+      "seconds": 241.138,
+      "error": null
+    },
+    {
+      "channel": "nasa-srtm",
+      "provider": "nasa-srtm",
+      "started": "2026-10-11T14:03:50.565Z",
+      "sceneCount": 1,
+      "item": "N37W123.SRTMGL1.hgt",
+      "status": "requires_account_in_isolated_test"
+    },
+    {
+      "channel": "copernicus-dem",
+      "provider": "copernicus-dem",
+      "started": "2026-10-11T14:03:52.986Z",
+      "sceneCount": 1,
+      "item": "Copernicus_DSM_COG_10_N37_00_W123_00_DEM",
+      "asset": "elevation",
+      "status": "succeeded",
+      "bytes": 20060161,
+      "seconds": 6.029,
+      "error": null,
+      "raster": {
+        "width": 3600,
+        "height": 3600,
+        "crs": "EPSG:4326"
+      },
+      "sha256": "82343318fbf7265c32342d9cace0fda4eb48d4b567a1a3335cc37488d4a9a7d5"
+    },
+    {
+      "channel": "copernicus-dem-90",
+      "provider": "copernicus-dem-90",
+      "started": "2026-10-11T14:04:01.624Z",
+      "sceneCount": 1,
+      "item": "Copernicus_DSM_COG_30_N37_00_W123_00_DEM",
+      "asset": "elevation",
+      "status": "succeeded",
+      "bytes": 2432905,
+      "seconds": 4.017,
+      "error": null,
+      "raster": {
+        "width": 1200,
+        "height": 1200,
+        "crs": "EPSG:4326"
+      },
+      "sha256": "977e99bc16ecdc9d65e0d2bc0920ffe483f554ee4c8659d95b4189e377924787"
+    },
+    {
+      "channel": "planetary-computer",
+      "provider": "planetary-computer",
+      "started": "2026-10-11T14:04:07.623Z",
+      "sceneCount": 1,
+      "item": "S2C_MSIL2A_20250627T184941_R113_T10SEG_20250627T234511",
+      "asset": "visual",
+      "status": "timeout_240s",
+      "bytes": 8110080,
+      "seconds": 241.178,
+      "error": null
+    },
+    {
+      "channel": "copernicus",
+      "provider": "copernicus",
+      "started": "2026-10-11T14:08:10.594Z",
+      "sceneCount": 1,
+      "item": "S2C_MSIL2A_20250627T184941_N0511_R113_T10SEG_20250627T234511",
+      "status": "requires_account_in_isolated_test"
+    },
+    {
+      "channel": "planetary-landsat",
+      "provider": "planetary-landsat",
+      "started": "2026-10-11T14:08:14.882Z",
+      "sceneCount": 1,
+      "item": "LC09_L2SP_044034_20250628_02_T1",
+      "asset": "red",
+      "status": "timeout_240s",
+      "bytes": 2587705,
+      "seconds": 241.102,
+      "error": null
+    },
+    {
+      "channel": "nasa-earthdata",
+      "provider": "nasa-earthdata",
+      "started": "2026-10-11T14:12:17.991Z",
+      "sceneCount": 1,
+      "item": "HLS.L30.T10SEG.2025179T184546.v2.0",
+      "status": "requires_account_in_isolated_test"
+    },
+    {
+      "channel": "planetary-naip",
+      "provider": "planetary-naip",
+      "started": "2026-10-11T14:05:10.744Z",
+      "sceneCount": 1,
+      "item": "ca_m_3712220_ne_10_060_20220519",
+      "asset": "aerial",
+      "status": "timeout_240s",
+      "bytes": 9043968,
+      "seconds": 241.076,
+      "error": null
+    },
+    {
+      "channel": "earth-search",
+      "provider": "earth-search",
+      "started": "2026-10-11T14:09:13.141Z",
+      "sceneCount": 1,
+      "item": "S2C_10SEG_20250627_0_L2A",
+      "asset": "visual",
+      "status": "succeeded",
+      "bytes": 242742218,
+      "seconds": 18.059,
+      "error": null,
+      "raster": {
+        "width": 10980,
+        "height": 10980,
+        "crs": "EPSG:32610"
+      },
+      "sha256": "3491bcc41b21fb9cca934c1046a4462a5fbfd2621fcad5fe034acfcfc94b3f5a"
+    },
+    {
+      "channel": "api-sentinel-scl",
+      "case": "api-sentinel-scl",
+      "status": "passed"
+    },
+    {
+      "channel": "standalone-sentinel-item",
+      "case": "standalone-sentinel-item",
+      "status": "passed"
+    },
+    {
+      "channel": "direct-copernicus-dem",
+      "case": "direct-copernicus-dem",
+      "status": "passed"
+    },
+    {
+      "channel": "PMTiles",
+      "status": "passed",
+      "evidence": "G:\\code\\geod-global\\.verification\\pmtiles-audit-1791726945\\report.json"
+    },
+    {
+      "channel": "TMS",
+      "status": "passed",
+      "evidence": "G:\\code\\geod-global\\.verification\\tms-public-audit-wide-20261011"
+    },
+    {
+      "channel": "Static STAC",
+      "status": "metadata_passed_only",
+      "evidence": "G:\\code\\geod-global\\.verification\\static-audit-20261011\\acceptance.json"
+    },
+    {
+      "channel": "GEE export",
+      "status": "expired_link",
+      "evidence": "G:\\code\\geod-global\\.verification\\gee-runtime-20261011-215354\\verification.json"
+    }
+  ]
+}

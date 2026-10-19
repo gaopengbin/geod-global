@@ -35,7 +35,9 @@ test('document-only turns save references, resume the same thread, restore after
     await service.configure(config,definitions);return service;
   };
   let service=await rig();await service.send({text:'',documents:[document.id]});await service.turnTask;
-  assert.equal(calls.find(c=>c.method==='turn/start').params.input[0].text,documentInput({document,text}));
+  const input=calls.find(c=>c.method==='turn/start').params.input;
+  assert(input[0].text.includes('Current application entry point'));
+  assert.equal(input.find(part=>part.text?.startsWith('User-selected text document')).text,documentInput({document,text}));
   const sessionId=service.selectedId;
   service.event({method:'item/completed',params:{threadId,item:{type:'agentMessage',id:randomUUID(),text:'Controlled text result'}}});
   service.event({method:'turn/completed',params:{threadId,turn:{status:'completed'}}});await tick();await service.close();

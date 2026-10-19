@@ -1,0 +1,1074 @@
+[
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/E000.00-E090.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S90.00-N00.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0,
+              -90.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              90.0,
+              -90.0
+            ],
+            [
+              0.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in E000.00-E090.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./E000.00-S90.00-E090.00-N00.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        0.0,
+        -90.0,
+        90.0,
+        0.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/E000.00-E090.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "N00.00-N90.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              90.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in E000.00-E090.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./E000.00-N00.00-E090.00-N90.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        0.0,
+        0.0,
+        90.0,
+        90.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/E090.00-E180.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S90.00-N00.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              -90.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              180.0,
+              -90.0
+            ],
+            [
+              90.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in E090.00-E180.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./E090.00-S90.00-E180.00-N00.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        90.0,
+        -90.0,
+        180.0,
+        0.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/E090.00-E180.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "N00.00-N90.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              0.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              180.0,
+              90.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in E090.00-E180.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./E090.00-N00.00-E180.00-N90.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        90.0,
+        0.0,
+        180.0,
+        90.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/W090.00-E000.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S90.00-N00.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -90.0,
+              -90.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -90.0
+            ],
+            [
+              -90.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in W090.00-E000.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./W090.00-S90.00-E000.00-N00.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -90.0,
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/W090.00-E000.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "N00.00-N90.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -90.0,
+              90.0
+            ],
+            [
+              0.0,
+              90.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in W090.00-E000.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./W090.00-N00.00-E000.00-N90.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -90.0,
+        0.0,
+        0.0,
+        90.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/W180.00-W090.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S90.00-N00.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -180.0,
+              -90.0
+            ],
+            [
+              -180.0,
+              0.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -90.0,
+              -90.0
+            ],
+            [
+              -180.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in W180.00-W090.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./W180.00-S90.00-W090.00-N00.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -180.0,
+        -90.0,
+        -90.0,
+        0.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  },
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/2020/1/W180.00-W090.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "N00.00-N90.00",
+      "properties": {
+        "start_datetime": "2020-01-01T00:00:00Z",
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+        "license": "proprietary",
+        "je:cog_level": 1,
+        "je:stac_version": "v1.2",
+        "datetime": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -180.0,
+              0.0
+            ],
+            [
+              -180.0,
+              90.0
+            ],
+            [
+              -90.0,
+              90.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -180.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG in W180.00-W090.00 flies"
+        }
+      ],
+      "assets": {
+        "FNF": {
+          "href": "./W180.00-N00.00-W090.00-N90.00-FNF.tiff",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "je:rasters": {
+            "value": {
+              "def_interp": "nearest",
+              "unit": null
+            },
+            "dn2value": {
+              "slope": 1,
+              "offset": 0
+            },
+            "dn": {
+              "data_type": "uint8",
+              "min": 1,
+              "max": 4,
+              "nodata": 0
+            }
+          },
+          "classification:classes": [
+            {
+              "value": 0,
+              "color-hint": "#000000",
+              "description": "No Data"
+            },
+            {
+              "value": 1,
+              "color-hint": "#00B200",
+              "description": "Forest (x > 90%)"
+            },
+            {
+              "value": 2,
+              "color-hint": "#83EF62",
+              "description": "Forest (10% < x < 90%)"
+            },
+            {
+              "value": 3,
+              "color-hint": "#FFFF99",
+              "description": "Non forest"
+            },
+            {
+              "value": 4,
+              "color-hint": "#0000FF",
+              "description": "Water"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        -180.0,
+        0.0,
+        -90.0,
+        90.0
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+      ],
+      "collection": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly"
+    }
+  }
+]

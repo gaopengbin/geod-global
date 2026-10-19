@@ -4,6 +4,36 @@ use axum::{http::HeaderMap, routing::get, Json, Router};
 
 const ID: &str = "HLS.L30.T10SEG.2025179T184546.v2.0";
 
+#[test]
+fn current_s3_cdn_route_keeps_the_exact_original_and_existing_signature_boundary() {
+    let original = Url::parse(&format!(
+        "https://{HOST}/lp-prod-protected/HLSL30.020/{ID}/{ID}.B04.tif"
+    ))
+    .unwrap();
+    let suffix = original.path().strip_prefix("/lp-prod-protected/").unwrap();
+    let valid=format!("https://{CDN}/s3-2d2df3a34830d5223d1e9547cd713408/lp-prod-protected.s3.us-west-2.amazonaws.com/{suffix}?Expires=4600&Signature=reviewed-test&Key-Pair-Id=test&A-userid=not-a-real-user&backend_params=opaque-test");
+    assert!(cdn_target(&valid, &original, 1000).is_ok());
+    for bad in [
+        valid.replace(CDN, "untrusted.example"),
+        valid.replace(
+            "s3-2d2df3a34830d5223d1e9547cd713408",
+            "s3-not-a-fixed-hex-route",
+        ),
+        valid.replace(
+            "s3-2d2df3a34830d5223d1e9547cd713408",
+            "s3-2D2DF3A34830D5223D1E9547CD713408",
+        ),
+        valid.replace(".B04.tif", ".B03.tif"),
+        valid.replace("Expires=4600", "Expires=999"),
+        valid.replace("Expires=4600", "Expires=999999"),
+        format!("{valid}&Expires=4600"),
+        valid.replace("https://", "http://"),
+        format!("{valid}#fragment"),
+    ] {
+        assert!(cdn_target(&bad, &original, 1000).is_err());
+    }
+}
+
 #[tokio::test]
 async fn viirs_original_authorization_and_catalogue_period_are_not_bypassed() {
     let id = "VJ209A1.A2025177.h08v05.002.2025333224010";

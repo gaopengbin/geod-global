@@ -92,5 +92,6 @@ it('shows discovery exclusions only on demand while usable layers remain selecta
  mapRequest.mockImplementation(async op=>op==='services'?[wmtsService]:{id:'wmts-image'});const user=userEvent.setup();render(<MapServiceDialog areaBounds={[0,0,4,2]} onClose={()=>{}} onSaved={()=>{}}/>);
  const notes=await screen.findByRole('button',{name:'Service compatibility notes · 1'});expect(notes.getAttribute('aria-expanded')).toBe('false');expect(screen.queryByText('Bad Grid Layer')).toBeNull();
  await user.click(notes);expect(await screen.findByText('Bad Grid Layer')).toBeTruthy();expect(screen.getByText('Declared tile limits exceed every compatible matrix set')).toBeTruthy();
+ await user.keyboard('{Escape}');
  await user.click(screen.getByRole('combobox',{name:'Map layer'}));expect(screen.queryByRole('option',{name:'Bad Grid Layer'})).toBeNull();await user.click(await screen.findByRole('option',{name:'Land imagery'}));expect(screen.getByRole('button',{name:'Save map image'}).disabled).toBe(false);
 });

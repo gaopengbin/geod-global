@@ -52,6 +52,8 @@ pub struct ModelRequest {
     #[serde(default)]
     pub model: String,
     #[serde(default)]
+    pub context_window: Option<u32>,
+    #[serde(default)]
     pub api_key: Zeroizing<String>,
 }
 fn custom_provider() -> String {
@@ -64,6 +66,7 @@ impl ModelRequest {
             protocol: self.protocol.clone(),
             base_url: self.base_url.clone(),
             model: self.model.clone(),
+            context_window: self.context_window,
         }
     }
 }
@@ -449,6 +452,7 @@ pub async fn mutate(
             || !request.protocol.is_empty()
             || !request.base_url.is_empty()
             || !request.model.is_empty()
+            || request.context_window.is_some()
             || request.provider != "custom"
         {
             return Err("Connection selection and deletion accept only a connection ID.".into());
@@ -581,6 +585,103 @@ mod tests {
     }
     fn save(label: &str, key: &str) -> Value {
         json!({"action":"save","provider":"custom","label":label,"protocol":"openai-compatible","baseUrl":"https://example.test/v1","model":"test-model","apiKey":key})
+    }
+
+    #[tokio::test]
+    async fn context_capacity_persists_per_connection_without_changing_keys_or_model_identity() {
+        let directory = tempfile::tempdir().unwrap();
+        let vault = FakeVault::default();
+        let mut form = save("First", "synthetic-first");
+        form["contextWindow"] = json!(131_072);
+        let first = mutate(
+            directory.path(),
+            &vault,
+            &Registry::default(),
+            request(form.clone()),
+        )
+        .await
+        .unwrap();
+        let original = first.selected().unwrap().clone();
+        form["id"] = json!(original.id);
+        form["apiKey"] = json!("");
+        form["contextWindow"] = json!(2_097_152);
+        let updated = mutate(directory.path(), &vault, &first, request(form.clone()))
+            .await
+            .unwrap();
+        assert_eq!(
+            updated.selected().unwrap().credential_ref,
+            original.credential_ref
+        );
+        assert_eq!(
+            legacy_identity(&updated.selected().unwrap().settings),
+            legacy_identity(&original.settings)
+        );
+        assert_eq!(
+            updated.public()["connections"][0]["contextWindow"],
+            2_097_152
+        );
+        assert_eq!(
+            test_config(&vault, &updated, request(form.clone())).unwrap()["contextWindow"],
+            2_097_152
+        );
+        let reopened = load(directory.path(), &vault).await.unwrap();
+        assert_eq!(
+            reopened.selected().unwrap().settings.context_window,
+            Some(2_097_152)
+        );
+        let mut second = save("Second", "synthetic-second");
+        second["contextWindow"] = json!(65_536);
+        let two = mutate(directory.path(), &vault, &reopened, request(second))
+            .await
+            .unwrap();
+        assert_eq!(two.connections[0].settings.context_window, Some(2_097_152));
+        assert_eq!(two.connections[1].settings.context_window, Some(65_536));
+        let before = tokio::fs::read(directory.path().join("registry.json"))
+            .await
+            .unwrap();
+        for size in [0, 8_191, 4_194_305] {
+            form["contextWindow"] = json!(size);
+            assert!(
+                mutate(directory.path(), &vault, &two, request(form.clone()))
+                    .await
+                    .is_err()
+            );
+        }
+        assert!(mutate(
+            directory.path(),
+            &vault,
+            &two,
+            request(json!({"action":"select","id":original.id,"contextWindow":131_072}))
+        )
+        .await
+        .is_err());
+        assert_eq!(
+            before,
+            tokio::fs::read(directory.path().join("registry.json"))
+                .await
+                .unwrap()
+        );
+        assert_eq!(vault.secrets.lock().unwrap().len(), 2);
+        // Old v1 files without this optional field still load in automatic mode.
+        let mut old = serde_json::to_value(&two).unwrap();
+        for entry in old["connections"].as_array_mut().unwrap() {
+            entry["settings"]
+                .as_object_mut()
+                .unwrap()
+                .remove("contextWindow");
+        }
+        tokio::fs::write(
+            directory.path().join("registry.json"),
+            serde_json::to_vec(&old).unwrap(),
+        )
+        .await
+        .unwrap();
+        assert!(load(directory.path(), &vault)
+            .await
+            .unwrap()
+            .connections
+            .iter()
+            .all(|entry| entry.settings.context_window.is_none()));
     }
 
     #[tokio::test]
@@ -860,6 +961,7 @@ mod tests {
             protocol: "openai-compatible".into(),
             base_url: "https://api.deepseek.com".into(),
             model: "legacy-model".into(),
+            context_window: None,
         };
         tokio::fs::write(
             directory.path().join("model.json"),

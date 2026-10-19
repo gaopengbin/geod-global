@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-15",
+  "referenceRevision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf",
+  "realModel": "deepseek-flash",
+  "fixtureResponses": false,
+  "liveRequests": [
+    {
+      "request": "greeting",
+      "status": "completed",
+      "modelRequests": 1,
+      "nativeTools": [],
+      "inputTokens": 124,
+      "outputTokens": 74,
+      "cachedInputTokens": 0,
+      "reasoningOutputTokens": 49,
+      "elapsedSeconds": 2.03,
+      "toolCounts": [
+        0
+      ],
+      "registeredToolCount": 71,
+      "schemaCharacters": [
+        2
+      ],
+      "registeredSchemaCharacters": 59666
+    },
+    {
+      "request": "projects",
+      "status": "completed",
+      "modelRequests": 2,
+      "nativeTools": [
+        "geod_projects_list"
+      ],
+      "inputTokens": 19560,
+      "outputTokens": 159,
+      "cachedInputTokens": 11648,
+      "reasoningOutputTokens": 57,
+      "elapsedSeconds": 3.03,
+      "toolCounts": [
+        17,
+        17
+      ],
+      "registeredToolCount": 71,
+      "schemaCharacters": [
+        10772,
+        10772
+      ],
+      "registeredSchemaCharacters": 59666
+    },
+    {
+      "request": "greeting-after-tools",
+      "status": "completed",
+      "modelRequests": 1,
+      "nativeTools": [],
+      "inputTokens": 120,
+      "outputTokens": 77,
+      "cachedInputTokens": 0,
+      "reasoningOutputTokens": 55,
+      "elapsedSeconds": 2.03,
+      "toolCounts": [
+        0
+      ],
+      "registeredToolCount": 71,
+      "schemaCharacters": [
+        2
+      ],
+      "registeredSchemaCharacters": 59666
+    }
+  ],
+  "greetingBeforeInputTokens": 6561,
+  "tests": {
+    "agent": 153,
+    "agentUi": 88,
+    "relatedFrontend": 45,
+    "liveNativeHarness": 1
+  },
+  "browser": {
+    "surface": "actual AgentPanel replaying captured live receipts",
+    "home": "passed",
+    "sidebarWidth": 420,
+    "sidebar": "passed",
+    "keyboardDismiss": "passed",
+    "consoleErrors": 0
+  },
+  "desktopBuild": "passed",
+  "artifacts": [
+    {
+      "path": "target/debug/geod-global-desktop.exe",
+      "bytes": 158745088,
+      "sha256": "a9f4a5630b3533a6c5d2da6d51ecc063abf1471f26bd1ddf37cbdea411be1f42"
+    },
+    {
+      "path": ".agent-runtime/win32-x64/agent.mjs",
+      "bytes": 1501499,
+      "sha256": "52b8576f40dda73b276b82175534378d034d5893085709d8cf0b2e2c74c74e28"
+    }
+  ],
+  "limitations": [
+    "No fresh full satellite download or multi-source acquisition benchmark in this turn.",
+    "No claim of a proportional token reduction for all tasks or lower provider billing.",
+    "Full upstream history archive and parallel execution engine were not ported.",
+    "Old or truncated 128-record ledgers remain unavailable or partial; token subsets are not added twice.",
+    "Existing user preview was not reloaded and active desktop sessions were not restarted."
+  ]
+}

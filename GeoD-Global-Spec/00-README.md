@@ -20,6 +20,8 @@
 | [06-Decisions-Contracts-and-Release-Gates.md](06-Decisions-Contracts-and-Release-Gates.md) | 决策边界、机器契约草案、状态机、依赖修正及分开的发布门禁 | 评审方案、领取下一阶段开发任务 |
 | [07-Prototype-and-Validation.md](07-Prototype-and-Validation.md) | 交互原型范围、真实数据与模拟行为边界、检查记录 | 查看本轮可审阅成果及尚未实现能力 |
 | [08-Repository-Boundary.md](08-Repository-Boundary.md) | 独立仓库决定、依赖与发行隔离、共享库规则及下一步工程路径 | 建仓、维护与接入真实能力 |
+| [16-Free-Pro-and-Usage-Design.md](16-Free-Pro-and-Usage-Design.md) | Free / Pro 图源服务分档、注册登录、订阅 / 充值 / 消耗、任务费用确认、账本与异常恢复 | 会员与交易闭环设计；价格和可购买状态均为草案 |
+| [17-Agent-Entry-Points-and-Task-Continuity.md](17-Agent-Entry-Points-and-Task-Continuity.md) | 会话页与工作区助手的场景、选择、确认、后台接续及成果闭环 | Agent 入口语义与实际验证边界 |
 | [09-Live-Catalog-and-Downloads.md](09-Live-Catalog-and-Downloads.md) | 实时目录、Rust真实下载、桌面壳和文件验收记录 | 2026-09-22已实现链路及后续边界 |
 | [10-Languages-and-Raster-Inspection.md](10-Languages-and-Raster-Inspection.md) | 中英文界面、真实SCL像元预览、空间元数据与分类统计 | 多语言与下载成果读取验收 |
 | [11-Executable-Processing-and-Recipes.md](11-Executable-Processing-and-Recipes.md) | SCL矩形裁剪、来源清单、可执行配方、CLI及独立像元验收 | 当前真实工作流、全范围覆盖与后续边界 |
@@ -49,6 +51,8 @@
 英文模板含 `[占位符]`，发布前替换，并只使用对应版本真正支持的能力。文档中的价格、容量、预算和性能数字都不是已验证市场结果。
 
 ## 本次实际完成与未执行事项
+
+2026-10-09 商业设计补充：用户已确认基础图源免费、高级聚合与自动化 Pro；进一步明确当前只做平台聚合，暂不接商业影像采购，原“商业影像另购”建议已撤回。附件16细化我们自身服务的交易闭环，并映射当前 85 项目录；不改变现有来源可用性或本地许可证权利。价格、服务点数量、支付渠道、实际成本与许可准入仍需验证；未启用收费、创建支付订单或部署会员系统。
 
 **2026-09-30 当前产品质量结论：尚未达到最终交付发布标准。** 外观、完整操作流程、功能覆盖、性能及原生桌面验收仍需继续整改；本轮已落地的界面与 RGB 本地读取修复、实际检查证据和发布阻断项见[产品质量整改记录](../docs/releases/2026-09-30-product-quality-review.md)。打包成功不代表产品完成。
 

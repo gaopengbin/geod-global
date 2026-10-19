@@ -29,10 +29,10 @@ pub(crate) fn validate_job(job: &Job) -> Result<()> {
     let url = providers::asset_url(&job.href)?;
     if job.status != JobStatus::Succeeded
         || job.kind != "download"
-        || job.asset_key != "srtm"
+        || !matches!(job.asset_key.as_str(), "srtm" | "srtm_num")
         || extension(&job.media_type)? != "zip"
         || url.host_str() != Some(providers::nasa::HOST)
-        || !providers::matches_item(&url, &job.item_id, "srtm")
+        || !providers::matches_item(&url, &job.item_id, &job.asset_key)
     {
         return Err("SRTM inspection requires a completed NASA SRTMGL1 original HGT ZIP".into());
     }
@@ -90,12 +90,19 @@ pub(crate) fn open_original(
     {
         return Err("SHA-256 mismatch: SRTM ZIP no longer matches its completed download".into());
     }
-    let hgt = srtm::read_hgt_cancelled(Cursor::new(bytes), &job.item_id, deadline, cancel)?;
+    let hgt = if job.asset_key == "srtm_num" {
+        srtm::read_grid(Cursor::new(bytes), &job.item_id, true, deadline, cancel)?
+    } else {
+        srtm::read_hgt_cancelled(Cursor::new(bytes), &job.item_id, deadline, cancel)?
+    };
     Ok((file, hgt))
 }
 
 pub(crate) fn bounds(id: &str) -> Result<[f64; 4]> {
-    let [lon, lat] = srtm::cell(id).ok_or("Invalid SRTM tile")?.map(f64::from);
+    let [lon, lat] = srtm::cell(id)
+        .or_else(|| srtm::num_cell(id))
+        .ok_or("Invalid SRTM tile")?
+        .map(f64::from);
     // Both endpoints are posted samples. Neighbours share one row/column.
     Ok([
         lon - SPACING / 2.0,
@@ -111,6 +118,9 @@ fn value(bytes: &[u8], x: u32, y: u32) -> i16 {
 }
 
 pub(crate) fn inspect(root: &Path, job: &Job, edge: u32) -> Result<RasterInspection> {
+    if job.asset_key != "srtm" {
+        return Err("Height inspection cannot read NUM source codes".into());
+    }
     if job.kind == "raster_mosaic" {
         return elevation::inspect(root, job, edge);
     }
@@ -193,6 +203,9 @@ pub(crate) fn inspect(root: &Path, job: &Job, edge: u32) -> Result<RasterInspect
 }
 
 pub(crate) fn sample(root: &Path, job: &Job, x: f64, y: f64) -> Result<RasterPixel> {
+    if job.asset_key != "srtm" {
+        return Err("Height sampling cannot read NUM source codes".into());
+    }
     if job.kind == "raster_mosaic" {
         return elevation::sample(root, job, x, y);
     }

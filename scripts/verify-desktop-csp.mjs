@@ -11,7 +11,10 @@ export function verifyDesktopCspConfig(config) {
     const entries = config.app.security[name].split(';').map(value => value.trim().split(/\s+/)).filter(value => value[0]);
     assert.equal(new Set(entries.map(([key]) => key)).size, entries.length, 'Duplicate CSP directive');
     const directives = new Map(entries.map(([key, ...values]) => [key, values]));
-    const expected = ["'self'", 'blob:', 'ipc:', 'http://ipc.localhost', 'geod-elevation:', 'http://geod-elevation.localhost', catalog, imagery,
+    // The STAC reader is a product-owned custom protocol, with the exact
+    // localhost origin used by Windows convertFileSrc. It adds no remote host.
+    const expected = ["'self'", 'blob:', 'ipc:', 'http://ipc.localhost', 'geod-elevation:', 'http://geod-elevation.localhost',
+      'geod-stac-preview:', 'http://geod-stac-preview.localhost', catalog, imagery,
       'https://planetarycomputer.microsoft.com', 'https://stac.dataspace.copernicus.eu', 'https://sentinel2l2a01.blob.core.windows.net', 'https://landsateuwest.blob.core.windows.net', 'https://sentinel1euwestrtc.blob.core.windows.net', 'https://naipeuwest.blob.core.windows.net', 'https://cmr.earthdata.nasa.gov',
       'https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com', 'https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com',
       ...(development ? ['http://127.0.0.1:4317', 'ws://127.0.0.1:4317'] : [])];

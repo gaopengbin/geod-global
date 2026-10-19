@@ -2,6 +2,8 @@ use super::{api_error, ApiError, JobManager};
 use crate::{stac, stac_projects, Project, ProjectDownloads};
 use axum::{
     extract::{Path, Query, State},
+    http::{header, HeaderMap},
+    response::Response,
     routing::{get, post},
     Json, Router,
 };
@@ -50,6 +52,32 @@ async fn snapshot(
         .map(Json)
         .map_err(api_error)
 }
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct PreviewQuery {
+    asset_key: String,
+}
+async fn preview(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+    Query(query): Query<PreviewQuery>,
+    headers: HeaderMap,
+) -> Result<Response, ApiError> {
+    if headers.get_all(header::RANGE).iter().count() != 1 {
+        return Err(api_error(
+            "A single bounded Range header is required".into(),
+        ));
+    }
+    let range = headers
+        .get(header::RANGE)
+        .and_then(|value| value.to_str().ok())
+        .ok_or_else(|| api_error("A bounded Range header is required".into()))?;
+    manager
+        .read_stac_preview(&id, &query.asset_key, range)
+        .await
+        .map(|data| data.into_response().map(axum::body::Body::from))
+        .map_err(api_error)
+}
 async fn save_project(
     State(manager): State<JobManager>,
     Json(request): Json<stac_projects::SaveProjectRequest>,
@@ -73,12 +101,18 @@ async fn download(
 async fn inspect(
     State(manager): State<JobManager>,
     Path(id): Path<String>,
+    Query(query): Query<InspectionQuery>,
 ) -> Result<Json<stac::raster::GenericRasterInspection>, ApiError> {
     manager
-        .inspect_stac_asset(&id)
+        .inspect_stac_asset_band(&id, query.display_band)
         .await
         .map(Json)
         .map_err(api_error)
+}
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct InspectionQuery {
+    display_band: Option<u16>,
 }
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -103,6 +137,7 @@ pub(super) fn routes() -> Router<JobManager> {
         .route("/stac/connections/{id}/forget", post(forget))
         .route("/stac/search", post(search))
         .route("/stac/snapshots/{id}", get(snapshot))
+        .route("/stac/snapshots/{id}/preview", get(preview))
         .route("/stac/project", post(save_project))
         .route("/stac/downloads", post(download))
         .route("/stac/jobs/{id}/inspect", get(inspect))

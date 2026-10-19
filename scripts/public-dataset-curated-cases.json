@@ -1,0 +1,68 @@
+[
+  {
+    "datasetId": "cbers-sr",
+    "layer": "cbers4a-mux",
+    "bounds": [-44, -24, -43, -22],
+    "year": 2026,
+    "month": 9,
+    "itemContains": "CBERS_4A_MUX_20260928_199_140_L4",
+    "assetKey": "BAND5",
+    "expectedBytes": 32374526,
+    "requireDiscoveryComplete": true
+  },
+  {
+    "datasetId": "cbers-sr",
+    "layer": "cbers4-mux",
+    "bounds": [-44, -24, -43, -22],
+    "year": 2026,
+    "month": 9,
+    "itemContains": "CBERS_4_MUX_20260920_153_124_L4",
+    "assetKey": "BAND5",
+    "expectedBytes": 44837777,
+    "requireDiscoveryComplete": true
+  },
+  {
+    "datasetId": "cbers-sr",
+    "layer": "cbers4a-wfi",
+    "bounds": [-44, -24, -43, -22],
+    "year": 2026,
+    "month": 9,
+    "itemContains": "CBERS_4A_WFI_20260913_202_140_L4",
+    "assetKey": "BAND13",
+    "expectedBytes": 207441145,
+    "requireDiscoveryComplete": true
+  },
+  {
+    "datasetId": "cbers-sr",
+    "layer": "cbers4-wfi",
+    "bounds": [-44, -24, -43, -22],
+    "year": 2026,
+    "month": 9,
+    "itemContains": "CBERS_4_AWFI_20260929_150_129_L4",
+    "assetKey": "BAND13",
+    "expectedBytes": 224039192,
+    "requireDiscoveryComplete": true
+  },
+  {
+    "datasetId": "io-lulc",
+    "layer": "land-cover",
+    "bounds": [-8.75, 70.9, -8.65, 70.98],
+    "year": 2024,
+    "itemContains": "29W-2024",
+    "assetKey": "supercell",
+    "expectedCollectionLicense": "proprietary",
+    "expectedBytes": 12593521,
+    "expectedShape": [89448, 29338],
+    "requireDiscoveryComplete": true
+  },
+  {
+    "datasetId": "hilda-land-use",
+    "layer": "land-use",
+    "bounds": [6.65, 0.2, 6.7, 0.3],
+    "year": 2019,
+    "assetContains": "land.use.land.cover_hilda.plus_c_1km_s_20190101_20191231",
+    "expectedBytes": 40383673,
+    "expectedShape": [17923, 43200],
+    "sampleCoordinates": [[8941, 966], [22954, 901]]
+  }
+]

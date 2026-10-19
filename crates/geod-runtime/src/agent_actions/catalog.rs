@@ -19,6 +19,7 @@ pub(super) const IDS: &[&str] = &[
     "nasa-viirs-suomi",
     "nasa-viirs-noaa20",
     "nasa-viirs-noaa21",
+    "srtm-num",
 ];
 pub(super) struct Source {
     pub id: &'static str,
@@ -44,6 +45,7 @@ pub(super) fn source(id: &str) -> Result<Source> {
         "copernicus" => (IDS[9], "Copernicus Data Space · Sentinel-2 SAFE", "sentinel-2-l2a", p::copernicus::HOST, true, true, vec!["product"]),
         "nasa-earthdata" => (IDS[10], "NASA Earthdata · HLS L30", "HLSL30_2.0", p::nasa::HOST, true, true, vec!["red","green","blue"]),
         "nasa-srtm" => (IDS[11], "NASA Earthdata · SRTMGL1", p::srtm::COLLECTION, p::nasa::HOST, false, false, vec!["srtm"]),
+        "srtm-num" => (IDS[15], "NASA Earthdata · SRTM NUM source codes", p::srtm::NUM_COLLECTION, p::nasa::HOST, false, false, vec!["srtm_num"]),
         "nasa-viirs-suomi" => (IDS[12], "NASA VIIRS · Suomi-NPP", "VNP09A1_002", p::nasa::HOST, true, false, vec!["viirs"]),
         "nasa-viirs-noaa20" => (IDS[13], "NASA VIIRS · NOAA-20", "VJ109A1_002", p::nasa::HOST, true, false, vec!["viirs"]),
         "nasa-viirs-noaa21" => (IDS[14], "NASA VIIRS · NOAA-21", "VJ209A1_002", p::nasa::HOST, true, false, vec!["viirs"]),
@@ -59,7 +61,7 @@ pub(super) fn source(id: &str) -> Result<Source> {
         keys,
         endpoint: if id == "copernicus" {
             "https://stac.dataspace.copernicus.eu/v1/search"
-        } else if id.starts_with("nasa-") {
+        } else if id.starts_with("nasa-") || id == "srtm-num" {
             "https://cmr.earthdata.nasa.gov/stac/LPCLOUD/search"
         } else if id.starts_with("planetary-") {
             "https://planetarycomputer.microsoft.com/api/stac/v1/search"
@@ -126,6 +128,8 @@ pub(super) async fn sources_with_accounts(manager: &JobManager) -> Value {
             .unwrap_or_else(|| json!({"status":"unavailable","expiresAt":null,"verifiedAt":null}));
     }
     result["checkedAt"] = json!(now());
+    result["gscloud"] = json!({"id":"gscloud","name":"Geospatial Data Cloud / 地理空间数据云","agentSearch":true,"agentDownload":true,"desktopDownload":true,"desktopOriginalProductIds":crate::gscloud::original::desktop_product_ids(),"productsTool":"geod_gscloud_products","searchTool":"geod_gscloud_search","detailTool":"geod_gscloud_detail","setup":"GSCloud has its own tools, separate from geod_dataset_catalog and STAC. Six public terrain original ZIP adapters are verified in the desktop Explore > GSCloud download controls with the user's own official account. Agent supports geod_gscloud_download_plan, native confirmation, archive inspection and archive results for those six products. Other products remain metadata-only. No provider substitution, reservation, or credential collection."});
+    result["datasetSources"] = json!({"catalogTool":"geod_dataset_catalog","resolveTool":"geod_dataset_resolve","connectTool":"geod_dataset_connect","download":"Use existing native STAC/WCS review plans after metadata discovery. Whole published files; no automatic area crop.","ids":crate::datasets::list().iter().map(|dataset|serde_json::to_value(dataset).unwrap()["id"].clone()).collect::<Vec<_>>()});
     result["customSources"] = json!(manager.list_stac_connections().await.iter().map(|c|json!({
         "id":c.id,"name":c.name,"kind":c.kind,"agentRead":true,
         "agentSearch":matches!(c.kind.as_str(),"api"|"catalog"),"agentDownload":true,"approvalRequired":true,
@@ -408,7 +412,8 @@ pub(super) fn scene_temporal(scene: &crate::projects::ProjectScene) -> bool {
     !scene.assets.values().any(|a| {
         url::Url::parse(&a.href).is_ok_and(|u| {
             matches!(u.host_str(), Some(p::DEM_HOST | p::DEM90_HOST))
-                || u.host_str() == Some(p::nasa::HOST) && p::srtm::asset_path(u.path())
+                || u.host_str() == Some(p::nasa::HOST)
+                    && (p::srtm::asset_path(u.path()) || p::srtm::num_asset_path(u.path()))
         })
     })
 }
@@ -448,7 +453,7 @@ mod account_tests {
         )
         .await
         .unwrap();
-        assert_eq!(result["sources"].as_array().unwrap().len(), 15);
+        assert_eq!(result["sources"].as_array().unwrap().len(), IDS.len());
         assert!(DateTime::parse_from_rfc3339(result["checkedAt"].as_str().unwrap()).is_ok());
         for account in result["accountSources"].as_array().unwrap() {
             assert_eq!(account["authorization"]["status"], "not-connected");

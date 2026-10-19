@@ -37,7 +37,7 @@ it('SRTM browser download review clearly requires desktop authorization and pres
   await user.click(screen.getByRole('button',{name:'Create project and download'}));
   expect(screen.getByRole('textbox',{name:'Project name'}).value).toBe('SRTM · SRTMGL1 v003');
   const combo=screen.getByRole('combobox',{name:'Download content'});expect(combo.textContent).toContain('Int16 HGT ZIP');
-  expect(screen.getByRole('button',{name:'Create project and start download'}).disabled).toBe(true);
+  expect(screen.getByRole('button',{name:'Confirm and download'}).disabled).toBe(true);
   expect(screen.getByRole('link',{name:'Manage authorization'}).hash).toBe('#Settings?account=nasa-earthdata');
   expect(runtimeRequest).not.toHaveBeenCalled();
 });
@@ -47,7 +47,7 @@ it('SRTM native review uses the existing Earthdata account and queues the SRTM o
   const user=userEvent.setup();wrap(<DownloadAssetButton scene={scene} scenes={[scene]} areaBounds={project.bounds} areaName="SRTM"/>);
   await user.click(screen.getByRole('button',{name:'Create project and download'}));
   await screen.findByText('Earthdata authorization is available. File access will be checked when the task starts.');
-  await user.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await user.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.map(([op])=>op)).toEqual(['accounts','createProject','downloadProject']);
   expect(runtimeRequest.mock.calls[2][1].assetKey).toBe('srtm');
@@ -58,7 +58,7 @@ it('SRTM restored project reports EGM96 and requires every original before proce
   expect(screen.getByRole('button',{name:'Download elevation tiles'})).toBeTruthy();
   expect(screen.getByText('1 elevation tiles')).toBeTruthy();
   await userEvent.setup().click(screen.getByRole('button',{name:'Review selected scenes · 1'}));
-  expect(screen.getByText('SRTMGL1 v003 · Int16 · EGM96')).toBeTruthy();
+  expect(screen.getByText('SRTMGL1 v003 · Int16 · EGM96')).toBeTruthy();await userEvent.keyboard('{Escape}');
   expect(screen.getByRole('button',{name:'Clip elevation to project area'}).disabled).toBe(true);
   expect(screen.queryByRole('button',{name:/Download SCL|Download true-color/})).toBeNull();
   expect(screen.queryByText(/EGM2008/)).toBeNull();

@@ -1,0 +1,1735 @@
+{
+  "checkedAt": "2026-10-11",
+  "scope": "Product/channel research records, including refinements of previously collected channels. Not independent mirrors, newly implemented providers, or all anonymously downloadable products.",
+  "recordCount": 52,
+  "records": [
+    {
+      "recordId": "optical-radar:s2-gcs-safe",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s2-gcs-safe",
+        "name": "Google public Sentinel-2 SAFE mirror",
+        "products": "S2 L1C/L2A native JP2/SAFE bands",
+        "community": [
+          "https://github.com/alekfal/googlesat",
+          "https://allenai.github.io/rslearn/data_sources/gcp_public_data_Sentinel2/"
+        ],
+        "primary": [
+          "https://cloud.google.com/storage/docs/public-datasets/sentinel-2"
+        ],
+        "endpoint": "https://storage.googleapis.com/storage/v1/b/gcp-public-data-sentinel-2/o",
+        "access": "Anonymous Storage JSON/media API; no Google account or Earth Engine project required",
+        "tested": "full B01 JP2, MD5 verified, complete local decode passed",
+        "limitation": "Only this selected 2025-01-16 Beijing product checked. GCS and COG DN differ; preserve raw radiometry."
+      }
+    },
+    {
+      "recordId": "optical-radar:s2-earthsearch-cog",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s2-earthsearch-cog",
+        "name": "Earth Search / Sentinel COGs",
+        "products": "S2 L2A COG and SCL; current separate C1 collection",
+        "community": [
+          "https://github.com/DPIRD-DMA/S2Mosaic/blob/main/README.md",
+          "https://cogeotiff.github.io/rio-tiler-pds/usage/sentinel/"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/sentinel-2-l2a-cogs/",
+          "https://github.com/Element84/earth-search"
+        ],
+        "endpoint": "https://earth-search.aws.element84.com/v1",
+        "access": "Public STAC and unsigned public COG, no requester payer",
+        "tested": "Full B01 COG + SCL, complete local decode passed",
+        "limitation": "COG can apply BOA subtraction and low-value clamping; cannot be called byte-identical JP2 mirror."
+      }
+    },
+    {
+      "recordId": "optical-radar:s1-opera-public-sample",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s1-opera-public-sample",
+        "name": "OPERA public application/sample bucket",
+        "products": "Archived OPERA L2 RTC-S1 30m VV/VH burst COGs",
+        "community": [
+          "https://github.com/OPERA-Cal-Val/OPERA_Applications/blob/main/RTC/notebooks/RTC_landslide_example.ipynb"
+        ],
+        "primary": [
+          "https://www.earthdata.nasa.gov/data/catalog/asf-opera-l2-rtc-s1-v1-1",
+          "https://registry.opendata.aws/nasa-operal2rtc-s1v1/"
+        ],
+        "endpoint": "https://opera-pst-rs-pop1.s3.us-west-2.amazonaws.com/?list-type=2&prefix=products/RTC_S1/",
+        "access": "This sample bucket lists/reads anonymously; current official ASF production bucket is controlled access",
+        "tested": "Full VV+mask, provider MD5 verified, complete local decode passed",
+        "limitation": "Demonstrates archived example availability only; not global latest production mirror; RTC gamma0 is processed SLC, not original GRD."
+      }
+    },
+    {
+      "recordId": "optical-radar:s1-asf-production",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s1-asf-production",
+        "name": "ASF/OPERA formal production",
+        "products": "Sentinel-1 GRD/SLC; OPERA RTC/CSLC",
+        "community": [
+          "https://github.com/ASFOpenSARlab/NISAR-Early-Adopters-Workshop-Oct-2024/blob/main/S3_Direct_Access.ipynb",
+          "https://github.com/eceo-epfl/earth-extractor"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/nasa-operal2rtc-s1v1/",
+          "https://docs.asf.alaska.edu/asf_search/downloading/"
+        ],
+        "endpoint": "https://api.daac.asf.alaska.edu/services/search/param",
+        "access": "Public metadata search; production download/Earthdata S3 credentials required; controlled access not requester-pays",
+        "tested": "Metadata queried previously only, no authenticated pixel download",
+        "limitation": "No credential creation or authorization attempted."
+      }
+    },
+    {
+      "recordId": "optical-radar:s1-grd-public",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s1-grd-public",
+        "name": "Sentinel-1 GRD on AWS/Sentinel Hub",
+        "products": "Global Sentinel-1 GRD COG",
+        "community": [
+          "https://cogeotiff.github.io/rio-tiler-pds/usage/sentinel/"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/sentinel-1/",
+          "https://github.com/awslabs/open-data-registry/blob/main/datasets/sentinel-1.yaml"
+        ],
+        "endpoint": "https://sentinel-s1-l1c.s3.eu-central-1.amazonaws.com/",
+        "access": "Current AWS registry says unsigned public access; RequesterPays:false",
+        "tested": "Documentation/registry only in this run",
+        "limitation": "Old rio-tiler example has requester-payer setting; current registry differs. Need bounded real GRD scene download before production status."
+      }
+    },
+    {
+      "recordId": "optical-radar:s1-indigo-rtc",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s1-indigo-rtc",
+        "name": "Indigo Sentinel-1 analysis-ready RTC",
+        "products": "CONUS tiled RTC since 2017",
+        "community": [
+          "https://sentinel-s1-rtc-indigo-docs.s3-us-west-2.amazonaws.com/data_access.html"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/sentinel-1-rtc-indigo/"
+        ],
+        "endpoint": "https://sentinel-s1-rtc-indigo.s3.us-west-2.amazonaws.com/",
+        "access": "Registry unsigned public access, Indigo Atlas Sentinel license applies",
+        "tested": "Public S3 object listing only; sample Gamma0 files 43MB exceeded individual 30MiB budget, not downloaded",
+        "limitation": "Registry states updates paused while pipeline repaired; CONUS only, not a current global replacement."
+      }
+    },
+    {
+      "recordId": "optical-radar:s3-meeo",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s3-meeo",
+        "name": "MEEO Sentinel-3 on AWS",
+        "products": "S3 OLCI/SLSTR/SRAL NRT/NTC/STC, converted COG assets",
+        "community": [
+          "https://github.com/Sentinel-5P/data-on-s3/blob/master/DocsForAws/Sentinel3Description.md",
+          "https://github.com/opengeos/geospatial-data-catalogs/blob/master/aws_stac_catalogs.tsv"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/sentinel-3/"
+        ],
+        "endpoint": "https://meeo-s3-cog.s3.eu-central-1.amazonaws.com/",
+        "access": "Registry unsigned public access, Sentinel data legal notice",
+        "tested": "Documentation/registry only",
+        "limitation": "Need verify collection/version, current coverage and scientific radiance/geolocation/QA handling before integration; COG can be transformed."
+      }
+    },
+    {
+      "recordId": "optical-radar:s5p-meeo",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "s5p-meeo",
+        "name": "MEEO Sentinel-5P on AWS",
+        "products": "S5P L2 NRTI/OFFL/RPRO NetCDF and converted COGT atmospheric products",
+        "community": [
+          "https://github.com/Sentinel-5P/data-on-s3/blob/master/notebooks/Sentinel5P_Tutorial.ipynb"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/sentinel5p/",
+          "https://github.com/Sentinel-5P/data-on-s3"
+        ],
+        "endpoint": "https://meeo-s5p.s3.amazonaws.com/catalog.json",
+        "access": "Registry unsigned public access",
+        "tested": "Documentation/registry only",
+        "limitation": "OFFL-derived COGT is not original swath NetCDF; QA, units and processing version must remain explicit."
+      }
+    },
+    {
+      "recordId": "optical-radar:cbers-brazil-eosats",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "cbers-brazil-eosats",
+        "name": "CBERS on AWS current public bucket",
+        "products": "CBERS-4/4A MUX/WFI/AWFI/PAN/WPM COG, L4 where specified",
+        "community": [
+          "https://github.com/fredliporace/cbers-on-aws",
+          "https://github.com/fredliporace/cbers-2-stac"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/cbers/",
+          "https://github.com/awslabs/open-data-registry/blob/main/datasets/cbers.yaml"
+        ],
+        "endpoint": "https://stac.scitekno.com.br/v100",
+        "access": "Current brazil-eosats and br-eo-stac-1-0-0 registry entries are RequesterPays:false; CC-BY-SA-3.0",
+        "tested": "Documentation/registry only",
+        "limitation": "Old cbers-pds repository README discusses requester-pays: do not use old bucket. Global/current geographic availability still untested."
+      }
+    },
+    {
+      "recordId": "optical-radar:cdse-sentinel",
+      "workstream": "optical-radar",
+      "category": "光学/雷达/大气",
+      "detail": {
+        "id": "cdse-sentinel",
+        "name": "Copernicus Data Space original / processing routes",
+        "products": "Sentinel-1/2/3/5P originals or requested AOI Process/openEO results",
+        "community": [
+          "https://forum.dataspace.copernicus.eu/t/openeo-takes-much-more-time-than-sentinelhub/2975"
+        ],
+        "primary": [
+          "https://documentation.dataspace.copernicus.eu/Quotas.html",
+          "https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html"
+        ],
+        "endpoint": "https://catalogue.dataspace.copernicus.eu/odata/v1/",
+        "access": "Metadata public; authorized original/processing download with independent service quotas",
+        "tested": "Documentation only; no new authorization",
+        "limitation": "AOI processing output is a service subset with quota and scheduling; not an anonymous file mirror."
+      }
+    },
+    {
+      "recordId": "land-products:esa-worldcover",
+      "workstream": "land-products",
+      "category": "land cover",
+      "detail": {
+        "id": "esa-worldcover",
+        "category": "land cover",
+        "product": "2020 v100 / 2021 v200, 10m, 11-class annual map",
+        "distribution_channels": [
+          "anonymous AWS COG esa-worldcover",
+          "ESA download",
+          "Terrascope",
+          "Zenodo",
+          "GEE"
+        ],
+        "primary_source": "https://esa-worldcover.org/en/data-access",
+        "community_source": "https://github.com/ESA-WorldCover/esa-worldcover-datasets",
+        "community_experience": "Maintainer supplies country/bbox download script; direct COG avoids aggregate ZIP extraction.",
+        "license": "CC BY 4.0",
+        "authorization": "AWS complete file tested anonymously",
+        "limitations": [
+          "2020 and 2021 use different algorithms; apparent change is not necessarily real land-cover change",
+          "WMS/WMTS rendered RGB is explicitly unsuitable for numeric analysis"
+        ],
+        "tested": "complete 2021 v200 N78E015 numeric classification tile and full decode passed"
+      }
+    },
+    {
+      "recordId": "land-products:esri-impact-observatory-io10m",
+      "workstream": "land-products",
+      "category": "land cover",
+      "detail": {
+        "id": "esri-impact-observatory-io10m",
+        "category": "land cover",
+        "product": "Sentinel-2 annual 10m, 9-class map; Esri current page reports 2017-2025",
+        "distribution_channels": [
+          "Esri ImageServer",
+          "Planetary Computer archive",
+          "Sentinel Hub public collection, separate service terms"
+        ],
+        "numeric_endpoint": "https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer",
+        "primary_source": "https://livingatlas.arcgis.com/landcover/",
+        "community_source": "https://github.com/sentinel-hub/public-collections/blob/main/collections/impact-observatory-lulc-map.yaml",
+        "community_experience": "Collection maintainer documents discrete codes, one numeric band and separate BYOC delivery, rather than RGB screenshots.",
+        "license": "CC BY 4.0 data; Sentinel Hub service terms separate",
+        "authorization": "Metadata publicly available; actual anonymous numeric export not tested in this workstream",
+        "limitations": [
+          "Annual public dataset is different from paid custom IO Monitor products",
+          "Force None function and confirm Uint8 class codes before accepting TIFF"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:google-dynamic-world",
+      "workstream": "land-products",
+      "category": "land cover",
+      "detail": {
+        "id": "google-dynamic-world",
+        "category": "land cover",
+        "product": "10m per-scene nine probabilities and class label, 2015 onward",
+        "distribution_channels": [
+          "GEE GOOGLE/DYNAMICWORLD/V1"
+        ],
+        "primary_source": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1",
+        "community_source": "https://github.com/NINAnor/GlobalLULCcompare",
+        "community_experience": "Peer-reviewed comparison code compares WorldCover, Dynamic World and Esri; repository warns public demo GEE assets may disappear.",
+        "license": "CC BY 4.0; Google Earth Engine access and compute terms separate",
+        "authorization": "User Earth Engine project/authorization required for numeric export",
+        "limitations": [
+          "Cloud-masked scene classifications are not ready-made annual full coverage",
+          "Probability thresholds and compositing alter output",
+          "No independent anonymous full archive mirror verified"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:worldpop",
+      "workstream": "land-products",
+      "category": "population",
+      "detail": {
+        "id": "worldpop",
+        "category": "population",
+        "product": "Current Global2 R2025A v1, 2015-2030, country100m/1km and global1km; historical Global1 2000-2020",
+        "distribution_channels": [
+          "WorldPop direct GeoTIFF data.worldpop.org",
+          "Hub catalogue/API",
+          "FAO Global2 density Google Cloud mirror, not identical count product"
+        ],
+        "primary_source": "https://hub.worldpop.org/project/categories?id=3",
+        "release_source": "https://data.worldpop.org/repo/prj/Global_2015_2030/R2025A/doc/Global2_Release_Statement_R2025A_v1.pdf",
+        "community_source": "https://github.com/wpgp/wpgpdownloadpy",
+        "community_experience": "Maintainer's country/product downloader and QGIS plugin document complete TIFF delivery and metadata lookup.",
+        "license": "CC BY 4.0, confirmed for tested country archive via linked official license.txt",
+        "authorization": "Direct file and metadata API tested anonymously",
+        "limitations": [
+          "R2025A v1 is alpha and may change",
+          "Count per cell is different from people per square km",
+          "Future epochs are estimates, not observed counts",
+          "This trial verified Global1 2020, not Global2"
+        ],
+        "tested": "Niue Global1 2020 complete country numeric TIFF and full decode passed"
+      }
+    },
+    {
+      "recordId": "land-products:ghsl",
+      "workstream": "land-products",
+      "category": "urban / settlement / population",
+      "detail": {
+        "id": "ghsl",
+        "category": "urban / settlement / population",
+        "product": "GHS-BUILT-S, GHS-POP, GHS-SMOD R2023A with multiple epochs/resolutions",
+        "distribution_channels": [
+          "European Commission tiled ZIP/GeoTIFF",
+          "official global download"
+        ],
+        "primary_source": "https://human-settlement.emergency.copernicus.eu/datasets.php",
+        "download_source": "https://human-settlement.emergency.copernicus.eu/download.php",
+        "community_source": "https://data.europa.eu/data/datasets/9f06f36f-4b11-47ec-abb0-4f8b7b1d72ea?locale=en",
+        "community_experience": "Open-data catalog documents built-up surface quantity, imagery inputs and temporal interpolation; no speed anecdote relied upon.",
+        "license": "EU open reuse with acknowledgement, per product conditions",
+        "authorization": "Open download page, complete file not tested here",
+        "limitations": [
+          "Built-up area/fraction is not land-cover categorical label",
+          "Epochs through 2030 include interpolations/projections",
+          "Mollweide and WGS84 variants must not be mixed"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:isric-soilgrids",
+      "workstream": "land-products",
+      "category": "soil",
+      "detail": {
+        "id": "isric-soilgrids",
+        "category": "soil",
+        "product": "SoilGrids 2.0, 250m predicted soil properties, six depth intervals, quantiles and mean",
+        "distribution_channels": [
+          "ISRIC WCS numeric subset",
+          "ISRIC WebDAV VRT/OVR/GeoTIFF tiles",
+          "GEE community datasets"
+        ],
+        "primary_source": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_02.html",
+        "units_source": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html",
+        "community_source": "https://github.com/iliasmachairas/SoilGrids_Downloader/issues/2",
+        "community_date": "2025-03-03",
+        "community_experience": "Contributor/developer recommends WCS rather than REST for multiple queries; current official FAQ says REST temporarily paused.",
+        "license": "CC BY 4.0",
+        "authorization": "WCS capabilities and two complete numeric subsets tested anonymously",
+        "limitations": [
+          "REST endpoint paused; avoid production reliance",
+          "Urban masks cause large NoData fractions",
+          "Units use integer scaling, e.g. pH values divided by10",
+          "WCS sample output reprojected to EPSG4326, not native-grid raw file"
+        ],
+        "tested": "Beijing urban and northern rural soil pH 0-5cm mean numerical TIFFs fully decoded"
+      }
+    },
+    {
+      "recordId": "land-products:openlandmap",
+      "workstream": "land-products",
+      "category": "soil / vegetation / environmental",
+      "detail": {
+        "id": "openlandmap",
+        "category": "soil / vegetation / environmental",
+        "product": "Multiple versioned global soil/land/climate predictions at layer-specific resolutions",
+        "distribution_channels": [
+          "OpenGeoHub STAC/COG",
+          "OpenLandMap GeoServer",
+          "Zenodo versioned backup",
+          "GEE contributed layers"
+        ],
+        "primary_source": "https://docs.openlandmap.org/",
+        "community_source": "https://github.com/openlandmap/spatial-layers",
+        "community_experience": "Project publishes reproducible layer production and federated COG/STAC delivery; not one homogeneous map.",
+        "license": "Default CC BY-SA and/or ODbL, override possible per-layer",
+        "authorization": "Public catalogue documentation only; file not downloaded here",
+        "limitations": [
+          "Do not assume every layer uses same license or dates",
+          "Predicted soil values differ from measured observation",
+          "RGB visualization does not expose scientific units"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:gedtm30",
+      "workstream": "land-products",
+      "category": "terrain",
+      "detail": {
+        "id": "gedtm30",
+        "category": "terrain",
+        "product": "Global ensemble bare-earth DTM via data fusion, about30m",
+        "distribution_channels": [
+          "OpenGeoHub public COG",
+          "Zenodo DOI",
+          "OpenTopography mirror"
+        ],
+        "primary_source": "https://codeberg.org/openlandmap/GEDTM30",
+        "community_source": "https://github.com/openlandmap/GEDTM30/releases",
+        "community_experience": "Maintainer publishes COG URL tables; GitHub repository moved to Codeberg. Release notes recommend water masking and version-specific scale.",
+        "license": "Check chosen dataset release; repository license changed to MIT July2026, code license is not automatically data license",
+        "authorization": "Public COG links documented, complete sample not tested here",
+        "limitations": [
+          "DTM model is different from Copernicus DSM",
+          "Global TIFF enormous; choose numeric subset/tiles",
+          "Old Zenodo v0 and current v1.2 names/scales differ"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:fabdem",
+      "workstream": "land-products",
+      "category": "terrain",
+      "detail": {
+        "id": "fabdem",
+        "category": "terrain",
+        "product": "FABDEM v1.2, buildings/forests removed from Copernicus GLO30",
+        "distribution_channels": [
+          "University of Bristol 10-degree ZIP packages",
+          "community spatial download helpers"
+        ],
+        "primary_source": "https://data.bris.ac.uk/data/dataset/s5hqmjcdj8yo2ibzi9b4ew3sn",
+        "community_source": "https://github.com/jantomec/fabdem",
+        "community_experience": "Open-source helper downloads intersecting packages, merges tiles and caches previous downloads.",
+        "license": "CC BY-NC-SA 4.0; commercial queries to Fathom required",
+        "authorization": "Public file availability does not grant commercial platform rights",
+        "limitations": [
+          "Do not automatically include in commercial hosted Pro",
+          "Large ZIP packages; source small file cap not verified",
+          "Software GPL license does not change data noncommercial license"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:jrc-global-surface-water",
+      "workstream": "land-products",
+      "category": "water",
+      "detail": {
+        "id": "jrc-global-surface-water",
+        "category": "water",
+        "product": "GSW v1.5 through2024; occurrence/seasonality/recurrence/transitions and temporal history",
+        "distribution_channels": [
+          "EC/CloudFerro direct numeric TIFF",
+          "GEE assets",
+          "viewer/WMS visualization"
+        ],
+        "primary_source": "https://global-surface-water.appspot.com/download",
+        "download_source": "https://global-surface-water.appspot.com/gsw/Download_Instructions.html",
+        "community_source": "https://global-surface-water.appspot.com/download",
+        "community_experience": "Official download page links community Petr Tsymbarovich script for v1.4 and maintained Python3 script for v1.5.",
+        "license": "Copernicus open use with acknowledgement EC JRC/Google",
+        "authorization": "Direct delivery documented; new full file not tested here",
+        "limitations": [
+          "Updated2026-08-26, older download tutorials still targetv1.4",
+          "2022-2024 history must be joined with earlier history",
+          "Collection1-to2 geolocation mismatch and known recurrence issue explicitly documented",
+          "Viewer is visualization only"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:worldcover-annual-composites",
+      "workstream": "land-products",
+      "category": "vegetation / annual optical and SAR composites",
+      "detail": {
+        "id": "worldcover-annual-composites",
+        "category": "vegetation / annual optical and SAR composites",
+        "product": "2020/2021 annual RGBNIR median, SWIR median, NDVI percentiles and GAMMA0 median",
+        "distribution_channels": [
+          "anonymous AWS esa-worldcover-s1 and esa-worldcover-s2",
+          "Terrascope",
+          "FlatGeobuf tile index"
+        ],
+        "primary_source": "https://esa-worldcover.org/en/data-access",
+        "community_source": "https://registry.opendata.aws/esa-worldcover-vito-composites/",
+        "community_experience": "Registry links maintainer exploration notebooks and tile-index based data access.",
+        "license": "CC BY 4.0",
+        "authorization": "Public AWS buckets documented; no new sample downloaded here",
+        "limitations": [
+          "Annual composites are not specific-date imagery",
+          "10m/20m resolutions, different scale/offset/nodata per product",
+          "Median and percentiles alter temporal interpretation"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "land-products:copernicus-lc100",
+      "workstream": "land-products",
+      "category": "land cover / vegetation fractions",
+      "detail": {
+        "id": "copernicus-lc100",
+        "category": "land cover / vegetation fractions",
+        "product": "CGLS-LC100 Collection3 v3.0.1,2015-2019,100m discrete and fractional vegetation cover",
+        "distribution_channels": [
+          "Copernicus/VITO data access",
+          "GEE collection"
+        ],
+        "primary_source": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_Landcover_100m_Proba-V-C3_Global",
+        "community_source": "https://docs.openlandmap.org/",
+        "community_experience": "Long-term global land-data workflows use coarser consistent cover/fraction products; no speed claim or directly verified new mirror.",
+        "license": "Copernicus open data terms; attribution required",
+        "authorization": "GEE needs user project; direct file endpoint remains candidate to verify",
+        "limitations": [
+          "2015-2019 archive, not latest annual10m imagery",
+          "Fraction layers are scientific numeric values, not map colors",
+          "Do not count as independent mirror of WorldCover/Esri"
+        ],
+        "tested": false
+      }
+    },
+    {
+      "recordId": "weather-ocean:noaa-gfs",
+      "workstream": "weather-ocean",
+      "category": "气象数值预报",
+      "detail": {
+        "id": "noaa-gfs",
+        "name": "NOAA GFS 多云镜像",
+        "category": "气象数值预报",
+        "products": "GFS 0.25° 全球 GRIB2，温度/风/降水等",
+        "endpoints": [
+          "https://noaa-gfs-bdp-pds.s3.amazonaws.com/",
+          "https://storage.googleapis.com/global-forecast-system/",
+          "https://noaagfs.blob.core.windows.net/gfs/",
+          "https://nomads.ncep.noaa.gov/"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/noaa-gfs-bdp-pds/"
+        ],
+        "community": [
+          "https://github.com/blaylockbk/Herbie",
+          "https://github.com/mmomtchev/geosub",
+          "https://github.com/sharktopus-project/sharktopus"
+        ],
+        "experience": "利用 .idx 定位完整 GRIB 消息，按变量取数，保留源数据完整消息；社区工具已有多源回退设计。没有使用社区云端裁剪部署。",
+        "access": "三个镜像匿名取数；本次未调用云计算或 requester-pays",
+        "license": "NOAA NODD 数据公开可用，需标注且不得暗示 NOAA 背书",
+        "tested": "AWS/GCS/Azure同一2026-10-11 00Z f000二米温度消息完整解码；三份SHA相同",
+        "limitations": [
+          "不是遥感卫星原场景；不是整份493.5MB多变量文件",
+          "索引必须按镜像核验，不能盲用另一镜像字节偏移",
+          "单次速度不代表长期SLA"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:ecmwf-open-ifs",
+      "workstream": "weather-ocean",
+      "category": "气象数值预报",
+      "detail": {
+        "id": "ecmwf-open-ifs",
+        "name": "ECMWF IFS/AIFS Open Data",
+        "category": "气象数值预报",
+        "products": "公开IFS/AIFS预报子集，0.25° GRIB2",
+        "endpoints": [
+          "https://ecmwf-forecasts.s3.eu-central-1.amazonaws.com/",
+          "https://storage.googleapis.com/ecmwf-open-data/"
+        ],
+        "primary": [
+          "https://www.ecmwf.int/en/forecasts/datasets/open-data",
+          "https://github.com/ecmwf/ecmwf-opendata"
+        ],
+        "community": [
+          "https://github.com/blaylockbk/Herbie",
+          "https://github.com/oceanum/nwpio"
+        ],
+        "experience": "官方客户端可选择ECMWF/AWS/Google/Azure；多云镜像适合回退，按index取变量。",
+        "access": "AWS/GCS匿名读取；未调用Azure短期签名流程",
+        "license": "CC BY 4.0与ECMWF使用条款；更高分辨率/定制服务另论",
+        "tested": "AWS/GCS二米温度完整消息相同SHA；ecCodes全部1038240数值解码通过",
+        "limitations": [
+          "本机GDAL3.6.4无法解码CCSDS模板5.42；独立ecCodes2.49成功，不等于软件已兼容",
+          "公开产品只是完整目录子集，门户滚动12次运行约2–3天",
+          "模型数据非卫星原影像"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:noaa-goes",
+      "workstream": "weather-ocean",
+      "category": "静止气象卫星/热红外",
+      "detail": {
+        "id": "noaa-goes",
+        "name": "NOAA GOES 多云开放归档",
+        "category": "静止气象卫星/热红外",
+        "products": "GOES-18/19 ABI L1b/L2等，原生NetCDF",
+        "endpoints": [
+          "https://noaa-goes19.s3.amazonaws.com/"
+        ],
+        "primary": [
+          "https://registry.opendata.aws/noaa-goes/"
+        ],
+        "community": [
+          "https://github.com/blaylockbk/goes2go"
+        ],
+        "experience": "goes2go按ABI产品、时间/区域目录获取；需要处理卫星原生投影和辐射校准。",
+        "access": "AWS公开无签名；本次仅测试AWS",
+        "license": "NOAA NODD公开数据使用规则",
+        "tested": "GOES19 ABI L1b RadM1 C13 2026-10-11完整NetCDF、Rad/DQF全解码、发布者MD5相同",
+        "limitations": [
+          "是美洲固定卫星观测区域，不覆盖中国",
+          "热红外通道辐亮度不是直接地表温度/真彩色",
+          "GOES16已退出当前GOES-East，旧教程的最新数据桶不能照搬"
+        ],
+        "metadataConflict": {
+          "conflict": "Embedded GOES metadata says approved users only, while current NOAA-managed NODD registry explicitly permits public use. Anonymous full-file access passed. Preserve both statements; do not classify the public route as authentication failure.",
+          "embeddedField": "NC_GLOBAL#license",
+          "releasePolicy": "https://registry.opendata.aws/noaa-goes/"
+        }
+      }
+    },
+    {
+      "recordId": "weather-ocean:noaa-oisst-ncei",
+      "workstream": "weather-ocean",
+      "category": "海洋/海温",
+      "detail": {
+        "id": "noaa-oisst-ncei",
+        "name": "NOAA NCEI OISST 直链",
+        "category": "海洋/海温",
+        "products": "OISST v2.1 0.25°逐日全球海表温度、异常、误差、海冰",
+        "endpoints": [
+          "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/"
+        ],
+        "primary": [
+          "https://www.ncei.noaa.gov/products/optimum-interpolation-sst"
+        ],
+        "community": [
+          "https://discourse.pangeo.io/t/need-help-downloading-oisst-data/3434",
+          "https://robwschlegel.github.io/heatwaveR/articles/OISST_preparation.html"
+        ],
+        "experience": "社区提到NCEI/PC COG/NCAR等替代；各自版本与时间覆盖需核验，旧FTP地址不能当当前入口。",
+        "access": "匿名HTTPS完整NetCDF",
+        "license": "使用文件中的NOAA公开使用/署名说明",
+        "tested": "两个历史日期完整日文件各四科学变量全量读取",
+        "limitations": [
+          "L4卫星+船舶/浮标融合插值，非AVHRR原场景",
+          "本轮未验最新版近实时延迟"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:noaa-erddap",
+      "workstream": "weather-ocean",
+      "category": "降水/海洋多产品",
+      "detail": {
+        "id": "noaa-erddap",
+        "name": "NOAA ERDDAP 数值子集服务",
+        "category": "降水/海洋多产品",
+        "products": "按具体节点和集合提供NetCDF/CSV数值子集",
+        "endpoints": [
+          "https://coastwatch.pfeg.noaa.gov/erddap/"
+        ],
+        "primary": [
+          "https://coastwatch.pfeg.noaa.gov/erddap/",
+          "https://www.ncei.noaa.gov/products/optimum-interpolation-sst"
+        ],
+        "community": [
+          "https://github.com/ioos/erddapy",
+          "https://discourse.pangeo.io/t/need-help-downloading-oisst-data/3434"
+        ],
+        "experience": "按变量、时间、经纬度约束取数；平台/节点可用不代表每个集合可用。",
+        "access": "所测集合匿名；适度请求",
+        "license": "许可证逐集合继承，ERDDAP不是统一数据授权",
+        "tested": "CHIRPS月降水北京数值NetCDF成功；同节点OISST数值请求503，dds元数据成功",
+        "limitations": [
+          "不能把目录/元数据成功标为像元成功",
+          "返回文字错误即使保存为.nc也不是成功数据文件",
+          "服务子集不是原件镜像"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:nasa-power",
+      "workstream": "weather-ocean",
+      "category": "太阳辐射/气象时间序列",
+      "detail": {
+        "id": "nasa-power",
+        "name": "NASA POWER",
+        "category": "太阳辐射/气象时间序列",
+        "products": "CERES/再分析派生日均太阳能与气象变量",
+        "endpoints": [
+          "https://power.larc.nasa.gov/api/temporal/daily/point"
+        ],
+        "primary": [
+          "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+          "https://power.larc.nasa.gov/docs/tutorials/service-data-request/api/",
+          "https://power.larc.nasa.gov/docs/methodology/"
+        ],
+        "community": [],
+        "experience": "官方多点示例限制并发，重复请求同一分辨率单元可能封禁；按网格缓存和合并日期。",
+        "access": "匿名API；不要超当前分辨率重复查询；官方示例不超过5并发",
+        "license": "沿用NASA数据使用与来源说明；本轮未做托管服务授权审查",
+        "tested": "北京2025-09-01至07两个变量共14记录完整JSON/单位/非缺测通过",
+        "limitations": [
+          "不是10m卫星图像；JSON时间序列数据不同于栅格下载",
+          "点最多20变量，区域每次1变量",
+          "本轮是历史时间段，非实时更新承诺"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:copernicus-marine",
+      "workstream": "weather-ocean",
+      "category": "海洋/海色/海流/海温",
+      "detail": {
+        "id": "copernicus-marine",
+        "name": "Copernicus Marine Data Store",
+        "category": "海洋/海色/海流/海温",
+        "products": "卫星、原位观测与海洋模型，原NetCDF与ARCO Zarr",
+        "endpoints": [
+          "https://data.marine.copernicus.eu/"
+        ],
+        "primary": [
+          "https://help.marine.copernicus.eu/en/articles/7949409-copernicus-marine-data-access-options"
+        ],
+        "community": [
+          "https://github.com/mercator-ocean/copernicus-marine-toolbox/issues/267",
+          "https://github.com/copernicusmarine/copernicus-jupyter-notebook-gallery"
+        ],
+        "experience": "维护者解释geo-series与time-series分块适用范围不同；先限定最终时间/空间/变量再读取，避免隐式过量拉取。",
+        "access": "官方目前需免费个人账号，说明无下载量/带宽配额；本轮未登录或下载",
+        "license": "逐产品核对Marine使用条款；不等于服务可无限高并发",
+        "tested": false,
+        "limitations": [
+          "用户报告耗时不等于本机实测",
+          "服务量/分块/版本影响速度，不能只换代理节点",
+          "不能拿现有CDSE/国内账号等同已获Marine授权"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:google-arco-era5",
+      "workstream": "weather-ocean",
+      "category": "气象再分析",
+      "detail": {
+        "id": "google-arco-era5",
+        "name": "Google ARCO ERA5",
+        "category": "气象再分析",
+        "products": "ERA5 raw/co/ar三类，Gaussian原网格与规则网格Zarr",
+        "endpoints": [
+          "https://storage.googleapis.com/gcp-public-data-arco-era5/"
+        ],
+        "primary": [
+          "https://github.com/google-research/arco-era5",
+          "https://cloud.google.com/storage/docs/public-datasets/era5"
+        ],
+        "community": [
+          "https://github.com/PyPSA/atlite/issues/495"
+        ],
+        "experience": "逐小时全球块对小区域全年时间序列可能多下载；应检查chunks与valid_time_stop而非仅看可访问。",
+        "access": "公共数据路线候选，本轮仅资料核验未下载Zarr块",
+        "license": "数据许可不同于代码Apache2；正式接入需读取对应ECMWF数据许可",
+        "tested": false,
+        "limitations": [
+          "AR规则网格有插值，CO保持Gaussian布局，不能冒充相同原像元",
+          "稳定ERA5月更新且有延迟，ERA5T初步版本不同",
+          "不是GEE导出，不因此使用GEE计算配额"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:ncar-era5-earthdatahub",
+      "workstream": "weather-ocean",
+      "category": "气象再分析",
+      "detail": {
+        "id": "ncar-era5-earthdatahub",
+        "name": "NCAR / EarthDataHub ERA5 替代路线",
+        "category": "气象再分析",
+        "products": "ERA5时空子集与ARCO格式",
+        "endpoints": [
+          "https://gdex.ucar.edu/",
+          "https://earthdatahub.destine.eu/"
+        ],
+        "primary": [],
+        "community": [
+          "https://github.com/PyPSA/atlite/issues/495",
+          "https://github.com/PyPSA/atlite/pull/507"
+        ],
+        "experience": "社区2026讨论CDS长队列，试验NCAR与EDH；维护者实现状态/参数仍需逐版本核实。",
+        "access": "只有社区发现，当前认证/数据集/API稳定性未实测",
+        "license": "未完成逐集合商业使用核验",
+        "tested": false,
+        "limitations": [
+          "社区7MB/s/数小时等为他人报告，不能当本机结论",
+          "保留为次级候选，不能宣称匿名API已上线可用"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:nasa-obdaac",
+      "workstream": "weather-ocean",
+      "category": "海色/叶绿素/水色反射率",
+      "detail": {
+        "id": "nasa-obdaac",
+        "name": "NASA OB.DAAC Ocean Color",
+        "category": "海色/叶绿素/水色反射率",
+        "products": "MODIS/VIIRS/PACE等按目录所列L2/L3产品",
+        "endpoints": [
+          "https://oceancolor.gsfc.nasa.gov/",
+          "https://cmr.earthdata.nasa.gov/search/"
+        ],
+        "primary": [
+          "https://nasa.github.io/oceandata-notebooks/notebooks/modis/modis_explore_l3.html"
+        ],
+        "community": [
+          "https://ecop-africa.github.io/ocean-color-handbook/_sources/chapter3/dataretrieval.md"
+        ],
+        "experience": "官方与社区建议按CMR短名+granule通配筛选分辨率/时间聚合；同短名有多个变体。",
+        "access": "官方教程要求Earthdata Login；本轮未申请/读取用户授权",
+        "license": "按具体集合NASA说明；无新付费",
+        "tested": false,
+        "limitations": [
+          "L3聚合与L2轨道条带不同，数据分辨率和质量标志不能省略",
+          "当前PO.DAAC旧站提示迁移，接入应维护新入口",
+          "CMR搜索成功不等于下载成功"
+        ]
+      }
+    },
+    {
+      "recordId": "weather-ocean:nasa-podaac-nsidc",
+      "workstream": "weather-ocean",
+      "category": "海洋/冰雪/卫星测高",
+      "detail": {
+        "id": "nasa-podaac-nsidc",
+        "name": "NASA PO.DAAC / NSIDC 冰雪海洋轨道数据",
+        "category": "海洋/冰雪/卫星测高",
+        "products": "GHRSST、ICESat-2 ATL07、海洋测高等目录所列集合",
+        "endpoints": [
+          "https://www.earthdata.nasa.gov/data/centers/podaac-daac",
+          "https://www.earthdata.nasa.gov/data/centers/nsidc-daac"
+        ],
+        "primary": [
+          "https://nasa-openscapes.github.io/earthdata-cloud-cookbook/external/on-prem_cloud.html"
+        ],
+        "community": [
+          "https://github.com/NASA-Openscapes/earthdata-cloud-cookbook/blob/main/examples/NSIDC/ICESat2-CMR-OnPrem-vs-Cloud.ipynb"
+        ],
+        "experience": "云与非云双路线；同区域轨道匹配后读取HDF5组和质量信息。原生云S3要求短期凭据和区域限制。",
+        "access": "账号/短期S3授权按集合；本轮未下载",
+        "license": "逐集合NASA数据使用说明",
+        "tested": false,
+        "limitations": [
+          "2021教程路径为历史示例，应按最新CMR链接执行",
+          "测高沿轨数据不是可直接当地图底图的完整栅格"
+        ]
+      }
+    },
+    {
+      "recordId": "chinese-research:cresda-gf-wfv-cbers",
+      "workstream": "chinese-research",
+      "category": "国产光学影像",
+      "detail": {
+        "id": "cresda-gf-wfv-cbers",
+        "category": "国产光学影像",
+        "name": "CRESDA 的 GF-1 WFV / GF-6 WFV / GF-4 / CBERS-04",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/qq_46071146/article/details/107635469",
+            "date": "2023-05-24",
+            "date_kind": "latest_recommended_not_original",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://blog.csdn.net/m0_56808314/article/details/134957523",
+            "date": "2023-12-12",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://data.cresda.cn/#/home",
+            "date": null,
+            "date_kind": "current_portal",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.cresda.cn/",
+            "date": null,
+            "date_kind": "current_institution",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "科学影像标准产品；不同传感器和产品级别分别核实，不能统称高分全部免费。WFV 社区实例为 16m，PMS/资源三号不等价。",
+        "access": "需注册审核、提交订单、等待生产后取得下载地址；未使用账号。",
+        "free_status": "社区有免费 WFV/CBERS 经历，当前全部产品及商业/境外分发权限未核实",
+        "commercial": "unknown_requires_product_agreement",
+        "quota": "unknown",
+        "status": "candidate_primary_portal_blocked",
+        "evidence": "web 读取 data.cresda.cn 返回 403；未进行绕过。旧 36.112.*:7777 / Flash 教程不宜直接接入。",
+        "next": "按传感器建立目录；优先用户授权下载链接导入，取得现行协议及公开 API 后再开发连接器。"
+      }
+    },
+    {
+      "recordId": "chinese-research:inpe-cbers-aws",
+      "workstream": "chinese-research",
+      "category": "国产/中巴光学影像",
+      "detail": {
+        "id": "inpe-cbers-aws",
+        "category": "国产/中巴光学影像",
+        "name": "CBERS-4/4A 的 INPE / AWS 开放 COG",
+        "community": [
+          {
+            "url": "https://github.com/fredliporace/cbers-on-aws",
+            "date": null,
+            "date_kind": "repository_current",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://registry.opendata.aws/cbers/",
+            "date": null,
+            "date_kind": "current_registry",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://data.inpe.br/stac/browser/",
+            "date": null,
+            "date_kind": "current_catalog",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "CBERS-4 MUX/AWFI/PAN5M/PAN10M，CBERS-4A MUX/WFI/WPM L4 正射 COG；INPE 接收存档，覆盖不是全球所有中国国内场景。",
+        "access": "注册表明确无需 AWS 账号、可匿名 S3；当前 bucket brazil-eosats，us-west-2。",
+        "free_status": "公开科学栅格文件，下载未实测",
+        "commercial": "CC BY-SA 3.0，保留署名及相同方式共享；商用具体分发方式应按许可证",
+        "quota": "未见用户收费额度；请求量、限流与覆盖另验",
+        "status": "metadata_verified_no_raster_download",
+        "evidence": "注册表匿名读取 HTTP 200；旧 cbers-pds 及 us-east-1 教程需要迁移校准。Brazil Data Cube 另一个 AWS 条目已标废弃，不能混为该 CBERS 库。",
+        "next": "查询当前 STAC 检查实际可用资产、波段和等级，再限定小景真实下载。"
+      }
+    },
+    {
+      "recordId": "chinese-research:ncdc-gf1-archive",
+      "workstream": "chinese-research",
+      "category": "国产光学影像",
+      "detail": {
+        "id": "ncdc-gf1-archive",
+        "category": "国产光学影像",
+        "name": "国家冰川冻土沙漠中心的区域 GF-1 WFV 存档",
+        "community": [
+          {
+            "url": "https://www.cnblogs.com/Micang/p/7864799.html",
+            "date": "2017-11",
+            "date_kind": "month_in_article_search",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://www.ncdc.ac.cn/portal/metadata?af=WFV%E5%AE%BD%E5%B9%85%E7%9B%B8%E6%9C%BA&cn=%E5%BC%A0%E8%80%80%E5%8D%97&current_page=1&title_cn_like=%E5%9C%9F%E5%9C%B0%E8%A6%86%E7%9B%96",
+            "date": "2026-09-22",
+            "date_kind": "dataset_update",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "区域科学资料库：渭河流域 GF-1 WFV 数据集介绍为原始 L1、未校正；甘肃 2018 存档也在目录。不是连续全球检索镜像。",
+        "access": "元数据公开，标为登录获取；需账号和数据集的共享规定。",
+        "free_status": "科研目录线索；实际领取和当前许可未验证",
+        "commercial": "unknown_dataset_specific",
+        "quota": "unknown；渭河目录列 38.8GiB，甘肃 1TiB，未触发下载",
+        "status": "catalog_verified_login_required",
+        "evidence": "公开目录确实显示产品等级和登录获取；不把页上可预览当原件已下载。",
+        "next": "适合做区域数据集入口与用户授权导入；不宣称能实时检索全国 GF-1。"
+      }
+    },
+    {
+      "recordId": "chinese-research:sdgsat1-open-science",
+      "workstream": "chinese-research",
+      "category": "国产夜光/热红外/多光谱",
+      "detail": {
+        "id": "sdgsat1-open-science",
+        "category": "国产夜光/热红外/多光谱",
+        "name": "SDGSAT-1 开放科学计划",
+        "community": [
+          {
+            "url": "https://cloud.tencent.com/developer/news/1180246",
+            "date": "2023-09-06",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://cloud.tencent.com/developer/news/1728921",
+            "date": "2024-09-07",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://www.sdgsat.ac.cn/satellite/data",
+            "date": null,
+            "date_kind": "product_document",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.sdgsat.ac.cn/sciencePlan/howApply",
+            "date": null,
+            "date_kind": "application_entry",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.sdgsat.ac.cn/dataQuery",
+            "date": null,
+            "date_kind": "login_entry",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.sdgsat.ac.cn/dynamic/detail?id=9c971a90-5523-4d4e-97a1-e4673c2e30db",
+            "date": "2022",
+            "date_kind": "announcement_year",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "官方目前仅向用户提供 L4 标准影像包，含影像/元数据/浏览图/缩略图；夜光、热红外、多光谱产品独立。",
+        "access": "注册及研究计划申请、审核授权；当前 Data Access 显示登录。",
+        "free_status": "获批开放科学申请可免费；不是匿名公共下载",
+        "commercial": "未确认收费产品可用；研究授权不能自动等同商业再分发",
+        "quota": "未核实",
+        "status": "product_and_authorization_documented_no_download",
+        "evidence": "公众号/新闻转载带来线索，一手产品页区分原件与图集图片。",
+        "next": "提供授权说明和外部申请入口；先支持用户已有授权文件导入。"
+      }
+    },
+    {
+      "recordId": "chinese-research:asf-s1-sarviews",
+      "workstream": "chinese-research",
+      "category": "Sentinel-1 雷达",
+      "detail": {
+        "id": "asf-s1-sarviews",
+        "category": "Sentinel-1 雷达",
+        "name": "ASF / SARVIEWS 灾害区域现成 SAR 产品",
+        "community": [
+          {
+            "url": "https://www.cnblogs.com/Vicrooor/p/17396546.html",
+            "date": "2023-05-25",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://ask.csdn.net/questions/9177526",
+            "date": "2026-01-11",
+            "date_kind": "answer_date",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://docs.asf.alaska.edu/datasets/events_about/",
+            "date": null,
+            "date_kind": "current_manual",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://docs.asf.alaska.edu/asf_search/BestPractices/",
+            "date": null,
+            "date_kind": "current_manual",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "SARVIEWS 为 Sentinel-1 派生的地理编码、地形校正时序/InSAR 灾害产品；不是任意 AOI 的 SLC/GRD 原包镜像。",
+        "access": "SARVIEWS 现成产品无登录；ASF 原始 SLC/GRD 下载需 Earthdata 认证。",
+        "free_status": "官方明确 SARVIEWS 免费且不限用途，署名 ESA + SARVIEWS",
+        "commercial": "官方说无用途限制，需署名；原始产品遵照其许可",
+        "quota": "现成公共下载未列个人额度；HyP3 按需计算另有配额",
+        "status": "authorization_documented_no_download",
+        "evidence": "中文作者有下载失败/认证失败经历；CSDN 问答答案声明 AI 辅助，其示例和旧 SciHub 建议不作为可靠实现代码。",
+        "next": "把现成灾害成果列为独立产品，保留原始 SAR 认证渠道；不可用 SARVIEWS 冒充全区域 SLC。"
+      }
+    },
+    {
+      "recordId": "chinese-research:worldcover-composites",
+      "workstream": "chinese-research",
+      "category": "Sentinel 雷达/光学与土地覆盖",
+      "detail": {
+        "id": "worldcover-composites",
+        "category": "Sentinel 雷达/光学与土地覆盖",
+        "name": "ESA WorldCover / Terrascope / AWS 公共 COG",
+        "community": [
+          {
+            "url": "https://damodev.csdn.net/6880b68dbb9d8e0ecec2c3c4.html",
+            "date": "2023-12-15",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://blog.csdn.net/Promising_GEO/article/details/144232591",
+            "date": "2025-08-07",
+            "date_kind": "latest_recommended_not_original",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://esa-worldcover.org/en/data-access",
+            "date": null,
+            "date_kind": "current_document",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://github.com/ESA-WorldCover/esa-worldcover-datasets/blob/main/README.md",
+            "date": null,
+            "date_kind": "maintainer_repository",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "2020/2021 年 10m 分类图，另有 Sentinel-1 Gamma0、Sentinel-2 RGB/NIR/NDVI 年度合成 COG（SWIR 20m）。分类/年度合成与单日期原始场景区别明显。",
+        "access": "AWS COG 可匿名；Terrascope 网页下载要求登录。",
+        "free_status": "免费科学栅格；无需把显示 WMS/WMTS 瓦片当数据",
+        "commercial": "CC BY 4.0，保留 ESA/Copernicus 署名",
+        "quota": "公共对象未列个人额度；网页/云计算限制另查",
+        "status": "maintainer_api_documented_no_download",
+        "evidence": "社区教程注册步骤只适用于 viewer；官方维护者给无签名 S3 和 bbox 下载脚本。",
+        "next": "优先增添分类及年度合成数据连接器；选小瓦片实测 COG 完整解码。"
+      }
+    },
+    {
+      "recordId": "chinese-research:aw3d30-jaxa",
+      "workstream": "chinese-research",
+      "category": "高程 DSM",
+      "detail": {
+        "id": "aw3d30-jaxa",
+        "category": "高程 DSM",
+        "name": "JAXA AW3D30 的原始 DSM 瓦片",
+        "community": [
+          {
+            "url": "https://www.xingeo.com/articles/%E5%9C%B0%E5%BD%A2%E6%95%B0%E6%8D%AE%E4%BD%BF%E7%94%A8/",
+            "date": null,
+            "date_kind": "article_date_not_exposed",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e",
+            "date": null,
+            "date_kind": "current_product_document",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "约 30m DSM，GeoTIFF+掩膜+质量资料，全球最新版本区域分为 4.1/4.0/3.1；包含建筑/植被表面高度。",
+        "access": "JAXA 邮箱注册激活后取得下载登录账号；替代 OpenTopography 需个人 Key。",
+        "free_status": "一手页面明确商业及非商业可免费按其条款使用",
+        "commercial": "允许但需遵照 JAXA Terms of Use；不能拿第三方缓存授权替代原始条款",
+        "quota": "原站未核到量限；错误登录可能锁定20分钟",
+        "status": "current_document_verified_no_download",
+        "evidence": "国内工具作者自述缓存官方 AW3D30 并按 AOI 合并裁剪；只能视作第三方路线线索，实际服务和许可需另验。",
+        "next": "支持用户 JAXA 下载文件导入，或选择已有商用授权的高程服务；明确 DSM 与裸地 DTM。"
+      }
+    },
+    {
+      "recordId": "chinese-research:opentopography-globaldem",
+      "workstream": "chinese-research",
+      "category": "高程 API 聚合",
+      "detail": {
+        "id": "opentopography-globaldem",
+        "category": "高程 API 聚合",
+        "name": "OpenTopography Global Datasets API",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/weixin_43416590/article/details/151763843",
+            "date": "2025-09-16",
+            "date_kind": "original_profile_date",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://blog.csdn.net/weixin_43416590/article/details/151763843",
+            "date": "2026-07-30",
+            "date_kind": "latest_recommended_not_original",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://opentopography.org/developers",
+            "date": null,
+            "date_kind": "current_policy",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://portal.opentopography.org/apidocs/",
+            "date": null,
+            "date_kind": "current_api",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "按 AOI 获取 SRTM/AW3D30/NASADEM/Copernicus/GEBCO 等数值高程，不是图像瓦片。",
+        "access": "必须 Key。学术免费200次/24h，非学术50次/24h；商业软件集成要求 Enterprise Key。",
+        "free_status": "个人有免费额度；不能用一个公共 Key 给全部用户",
+        "commercial": "商业软件集成需 Enterprise Key。禁止共享 Key 或嵌入第三方绕过一人一 Key 的应用；应先获得适用授权",
+        "quota": "50/200次每天，Plus/Enterprise另行；30m单请求区域上限450000km²",
+        "status": "current_api_policy_verified_not_called",
+        "evidence": "社区用户报告插件快、也会失败；不能从插件可用推断我们可以免费共享其调用权益。",
+        "next": "放入用户自带授权/商用服务评估；取得服务授权前不做官方共享 Key 后端。"
+      }
+    },
+    {
+      "recordId": "chinese-research:fabdem-noncommercial",
+      "workstream": "chinese-research",
+      "category": "高程裸地 DEM",
+      "detail": {
+        "id": "fabdem-noncommercial",
+        "category": "高程裸地 DEM",
+        "name": "FABDEM 作者数据仓库 / 第三方 HF STAC 镜像",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/weixin_43416590/article/details/151854300",
+            "date": "2025-09-19",
+            "date_kind": "original_profile_date",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://huggingface.co/datasets/links-ads/fabdem-v12/blob/main/README.md",
+            "date": null,
+            "date_kind": "mirror_repository",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://www.fathom.global/insight/fabdem-download/",
+            "date": null,
+            "date_kind": "producer_license_statement",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://data.bris.ac.uk/data/dataset/s5hqmjcdj8yo2ibzi9b4ew3sn",
+            "date": null,
+            "date_kind": "original_repository",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "30m 去除森林/建筑高度的 Copernicus 派生 DEM；社区对比显示地区差异，不能默认总比 Copernicus 好。",
+        "access": "学术原始仓库公开；HF 镜像提供匿名 COG/STAC，但许可标识存在与作者说明差异。",
+        "free_status": "作者确认非商业免费，商业许可收费；不能当商用免费基础源",
+        "commercial": "commercial_license_required",
+        "quota": "未核；原仓库本机元数据请求12秒超时",
+        "status": "producer_noncommercial_boundary_verified_no_download",
+        "evidence": "镜像宣称 Non-Commercial Government Licence，作者原 readme 曾为 CC BY-NC-SA；不以镜像自行改标许可为商用依据。",
+        "next": "科研用户外部入口；Pro 服务不能靠付费会员身份自动获得 FABDEM 商用授权。"
+      }
+    },
+    {
+      "recordId": "chinese-research:chirps-direct-and-noaa",
+      "workstream": "chinese-research",
+      "category": "降水",
+      "detail": {
+        "id": "chirps-direct-and-noaa",
+        "category": "降水",
+        "name": "CHIRPS UCSB / NOAA ERDDAP / ClimateSERV",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/qq_31988139/article/details/136309731",
+            "date": "2025-01-08",
+            "date_kind": "latest_recommended_not_original",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://github.com/zhou100/chirps_rainfall",
+            "date": "2018-11-26",
+            "date_kind": "readme_date",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://chc.ucsb.edu/data/chirps",
+            "date": null,
+            "date_kind": "current_product_document",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.chc.ucsb.edu/data/chirps3",
+            "date": null,
+            "date_kind": "current_v3_document",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://coastwatch.pfeg.noaa.gov/erddap/info/chirps20GlobalMonthlyP05/index.html",
+            "date": null,
+            "date_kind": "mirror_metadata",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "卫星与站点融合降水科学格网，v2为0.05°、50S–50N；v3范围60S–60N。不是光学影像。",
+        "access": "UCSB HTTPS 匿名；NOAA ERDDAP 支持按变量/时间/AOI 的 NetCDF 子集；ClimateSERV 可另验。",
+        "free_status": "public_domain；匿名小 AOI 已真实下载全解码",
+        "commercial": "官方标 public domain / copyright waiver",
+        "quota": "未见个人 Key 或收费额度；ERDDAP 当前集合覆盖截止2025-02，不能宣称同步最新",
+        "status": "complete_download_and_full_decode",
+        "evidence": "北京2024-01降水 NetCDF，8076字节，1.938秒，21×21，441有效值，2.156–6.622mm/月。同为ERDDAP，不同部署/集合的可用性不能合并判断。",
+        "next": "优先接入匿名AOI降水；采用版本和更新时间标记，v2生产2026年12月后停止，新增v3路线。"
+      }
+    },
+    {
+      "recordId": "chinese-research:gsmap-jaxa-mosdac",
+      "workstream": "chinese-research",
+      "category": "降水",
+      "detail": {
+        "id": "gsmap-jaxa-mosdac",
+        "category": "降水",
+        "name": "JAXA GSMaP / MOSDAC 备选发布",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/weixin_43416590/article/details/153646960",
+            "date": "2025-10-20",
+            "date_kind": "original_profile_date",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://github.com/der-knight/gsmap",
+            "date": null,
+            "date_kind": "community_downloader_repository",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://sharaku.eorc.jaxa.jp/GSMaP/registration.html",
+            "date": null,
+            "date_kind": "current_access_and_terms",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://sharaku.eorc.jaxa.jp/GSMaP/guide.html",
+            "date": "2025-06-17",
+            "date_kind": "guide_update",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://gportal.jaxa.jp/",
+            "date": "2026-10-09",
+            "date_kind": "GSMaP_version_notice",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "0.1°逐小时降水科学产品，NRT/NOW/STD/Gauge等级和延迟不同；二进制 .dat 解码需官方网格/字节顺序。",
+        "access": "JAXA 注册激活邮件后FTP/下载登录；G-Portal 搜索匿名、下载要账号。社区 MOSDAC 下发 HDF5 路线需自有账号，未独立验证。",
+        "free_status": "JAXA 条款明确研究/商业均可免费，必须署名",
+        "commercial": "JAXA Terms of Use of Research Data及署名；MOSDAC镜像授权/质量需另核",
+        "quota": "未核到用户量限；2026-10-19计划升级V06，尚未发生",
+        "status": "current_primary_access_verified_no_download",
+        "evidence": "真实中文用户记载连接失败/慢、.dat在ENVI/ArcGIS打不开；不要仅下载字节便称可用。",
+        "next": "优先注册用户自带授权导入与可靠二进制解码；HTTP区域CSV和MOSDAC镜像另做真正下载测试。"
+      }
+    },
+    {
+      "recordId": "chinese-research:fengyun-nsmc-cma",
+      "workstream": "chinese-research",
+      "category": "气象卫星",
+      "detail": {
+        "id": "fengyun-nsmc-cma",
+        "category": "气象卫星",
+        "name": "风云 FY-2/3/4：NSMC / 中国气象数据网",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/Mae_Liu/article/details/113728819",
+            "date": "2021-02-06",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://blog.csdn.net/weixin_44812779/article/details/92838679",
+            "date": "2024-12-17",
+            "date_kind": "latest_recommended_not_original",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://data.nsmc.org.cn/DataPortal/cn/support/faq.html",
+            "date": null,
+            "date_kind": "current_faq",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "完整L1观测及L2专题产品（按卫星/仪器单独确定），HDF及定位/定标配套文件；非可见光普通底图。",
+        "access": "实名认证审核，创建订单后下载链接；在线/近线/离线准备时间差异明显。",
+        "free_status": "官方说全部卫星数据免费，注册审核不可省略",
+        "commercial": "FAQ未明确覆盖全部商业再分发，产品使用条款另核",
+        "quota": "普通30GB/日，问卷升级100GB/日；离线准备通常2工作日",
+        "status": "quota_and_access_verified_no_download",
+        "evidence": "中文用户用订单文件列表批量下载；L1数据能下载不代表已做定位校正，辅助文件也是验收项。",
+        "next": "用户授权的订单列表导入和文件完整性验证；遥感格网定位/定标单独实现。"
+      }
+    },
+    {
+      "recordId": "chinese-research:oisst-multiendpoint",
+      "workstream": "chinese-research",
+      "category": "海洋海温",
+      "detail": {
+        "id": "oisst-multiendpoint",
+        "category": "海洋海温",
+        "name": "NOAA OISST：NCEI / PSL / ERDDAP",
+        "community": [
+          {
+            "url": "https://www.cnblogs.com/violet172317/p/19713947",
+            "date": "2026-03",
+            "date_kind": "article_context_month",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.reddit.com/r/NOAA/comments/nxb22z",
+            "date": "2021-06",
+            "date_kind": "post_month",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
+            "date": null,
+            "date_kind": "current_product_document",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01606",
+            "date": "2020",
+            "date_kind": "dataset_release",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "0.25°日海温分析科学NetCDF，融合卫星/浮标/船舶/Argo，不是光学卫星原景；SST/anomaly/error/ice。",
+        "access": "NCEI HTTPS匿名全文件；PSL年度或区域入口另验；ERDDAP不同部署和集合可用性不同。",
+        "free_status": "匿名日文件已完整下载并四变量解码；非收费账户服务",
+        "commercial": "NOAA开放数据；再分发须保留产品引用及来源，原始产品条款为准",
+        "quota": "无Key；文件体积小，NCEI当前官方提示迁云可能临时影响服务",
+        "status": "complete_download_and_full_decode",
+        "evidence": "2025-01-01全日文件1553086字节/2.933秒，720×1440×4变量。SST packed int16需要0.01缩放，实际-1.8–32.72℃。父任务另一日复测不是额外产品。",
+        "next": "先接入NCEI直接下载，用实际变量/尺度因子/经度0–360处理；备用endpoint逐集合测试。"
+      }
+    },
+    {
+      "recordId": "chinese-research:chm-pre-zenodo",
+      "workstream": "chinese-research",
+      "category": "气象降水",
+      "detail": {
+        "id": "chm-pre-zenodo",
+        "category": "气象降水",
+        "name": "CHM_PRE V2：青藏高原中心 / 作者 Zenodo",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/weixin_43416590/article/details/152322239",
+            "date": "2025-09-30",
+            "date_kind": "original_profile_date",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://data.tpdc.ac.cn/zh-hans/data/e5c335d9-cbb9-48a6-ba35-d67dd614bb8c",
+            "date": null,
+            "date_kind": "institution_repository",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://zenodo.org/records/20378336",
+            "date": "2026-05-25",
+            "date_kind": "current_v2.1.1_record",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "中国大陆0.1°站点插值与协变量科学降水，1960–2025；日/月/年NetCDF/GeoTIFF。与卫星原件不同。",
+        "access": "Zenodo作者库公开无Key；TPDC网页JS登录/数据条款另核。",
+        "free_status": "作者库API实际200，open access；没有下载大文件",
+        "commercial": "作者记录 CC BY 4.0，保留署名",
+        "quota": "未见量限；年累计TIFF63.7MB超本次单文件上限，未下载",
+        "status": "author_repository_metadata_verified_no_raster_download",
+        "evidence": "匿名API核到V2.1.1，70文件，总46.8GB；避免社区旧1960–2024标题误认为最新时段。",
+        "next": "给出直接Zenodo来源及hash，按年/月份和地区取数策略需要另外实测。"
+      }
+    },
+    {
+      "recordId": "chinese-research:clcd-zenodo",
+      "workstream": "chinese-research",
+      "category": "土地覆盖",
+      "detail": {
+        "id": "clcd-zenodo",
+        "category": "土地覆盖",
+        "name": "CLCD：作者 Zenodo / GEE 社区目录",
+        "community": [
+          {
+            "url": "https://cloud.tencent.com/developer/article/2437710",
+            "date": "2024-07-18",
+            "date_kind": "original_publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://cloud.tencent.com/developer/article/2444269",
+            "date": "2024",
+            "date_kind": "year_only",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://zenodo.org/doi/10.5281/zenodo.4417809",
+            "date": null,
+            "date_kind": "concept_doi",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://zenodo.org/records/12779975",
+            "date": "2024-08-01",
+            "date_kind": "record_v1.0.3",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "中国30m年度分类GeoTIFF，核到作者库版本覆盖1985–2023；不是卫星原始波段。",
+        "access": "作者库匿名HTTPS，GEE社区资产需个人项目权限/云额度并核对映射及版本。",
+        "free_status": "作者记录公开、CC BY 4.0",
+        "commercial": "CC BY 4.0署名；第三方GEE资产自身稳定性和再发布权限需要核",
+        "quota": "无Key；72个文件合计57.2GB，单年全国数百MB，未下载",
+        "status": "author_repository_metadata_verified_no_raster_download",
+        "evidence": "作者API实际200，有md5可验证；通过概念DOI追最新版本，不从社区资产名称推断时段完整。",
+        "next": "直接作者分省包可做空间目录；确认可范围读取格式，避免每次下载全国全年。"
+      }
+    },
+    {
+      "recordId": "chinese-research:glc-fcs30d-zenodo",
+      "workstream": "chinese-research",
+      "category": "土地覆盖变化",
+      "detail": {
+        "id": "glc-fcs30d-zenodo",
+        "category": "土地覆盖变化",
+        "name": "GLC_FCS30D：中科院作者 Zenodo / GEE 社区",
+        "community": [
+          {
+            "url": "https://cloud.tencent.com/developer/article/2420006",
+            "date": "2024-05-24",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://zenodo.org/records/8239305",
+            "date": "2023-08-11",
+            "date_kind": "record_publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://zenodo.org/records/8239305/files/GLC_FCS30D%20UserGuides.pdf?download=1",
+            "date": "2023",
+            "date_kind": "author_guide",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "全球30m、35分类，1985–2022，2000前5年、2000后年度；Landsat派生分类变化产品。",
+        "access": "作者库匿名HTTPS；社区GEE映射是另外发布的可计算资产，需个人权限。",
+        "free_status": "原作者API确认open access / CC BY4.0",
+        "commercial": "CC BY4.0署名；保留版次与作者来源",
+        "quota": "38文件194.4GB，包数GB，未触发大下载",
+        "status": "author_repository_metadata_verified_no_raster_download",
+        "evidence": "科学原始数据集有hash；网页成功不代表GB压缩包能下载完整，需选资产/分块另测。",
+        "next": "建立离线包/用户导入支持或获授权COG重发布；不伪装成任意实时影像检索。"
+      }
+    },
+    {
+      "recordId": "chinese-research:persiann-chrs-noaa",
+      "workstream": "chinese-research",
+      "category": "降水",
+      "detail": {
+        "id": "persiann-chrs-noaa",
+        "category": "降水",
+        "name": "PERSIANN / PERSIANN-CDR：UCI CHRS / NCEI",
+        "community": [
+          {
+            "url": "https://blog.csdn.net/weixin_43416590/article/details/153646960",
+            "date": "2025-10-20",
+            "date_kind": "referral_article",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://github.com/ropensci/chirps/blob/master/README.md",
+            "date": null,
+            "date_kind": "community_tool_alternate_servir_route",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://persiann.eng.uci.edu/CHRSdata/",
+            "date": null,
+            "date_kind": "live_http_directory",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://chrsdata.eng.uci.edu/dev/",
+            "date": null,
+            "date_kind": "publisher_download_document",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.ncei.noaa.gov/products/climate-data-records/precipitation-persiann",
+            "date": null,
+            "date_kind": "NOAA_CDR_product",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "PERSIANN/CCS/CDR/PDIR产品按0.25°或0.04°和小时/日分别区分；神经网络遥感降水产品。",
+        "access": "UCI全局HTTP目录公开，子集Portal可按AOI取数；CDR的NCEI通道独立。",
+        "free_status": "可读官方公开下载目录；当前未做真实二进制下载",
+        "commercial": "未完成UCI原产品商业条款核实；NCEI产品有单独引用与条款",
+        "quota": "未核；daily_netcdf目录本次显示空，不能据教程编造可用文件",
+        "status": "public_directory_verified_no_download",
+        "evidence": "主CHRSdata和CCS年度目录显示到2026；时间/产品不能混用，空目录也记录为限制。",
+        "next": "核对官方readme字节顺序和网格，选小文件下载解码；ClimateSERV/NCEI替代逐个验证。"
+      }
+    },
+    {
+      "recordId": "chinese-research:copernicus-marine-toolbox",
+      "workstream": "chinese-research",
+      "category": "海洋/再分析",
+      "detail": {
+        "id": "copernicus-marine-toolbox",
+        "category": "海洋/再分析",
+        "name": "Copernicus Marine Toolbox / MyOcean / 文件服务",
+        "community": [
+          {
+            "url": "https://bchobby.github.io/posts/7301226efbf5b7d70614f90c958847a3/",
+            "date": null,
+            "date_kind": "publication_date_not_exposed_copyright2024",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://github.com/olivierpascalhenry/CMEMS-Data-Downloader",
+            "date": "2018-08-28",
+            "date_kind": "legacy_release",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://help.marine.copernicus.eu/en/articles/4220332-how-to-register-for-copernicus-marine-service",
+            "date": null,
+            "date_kind": "current_registration",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://help.marine.copernicus.eu/en/articles/16733110-how-to-access-and-download-copernicus-marine-data",
+            "date": null,
+            "date_kind": "current_access_guide",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://help.marine.copernicus.eu/en/articles/8286883-copernicus-marine-toolbox-api-get-original-files",
+            "date": null,
+            "date_kind": "current_API_guide",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "海温/盐度/流速/海平面/海冰等NetCDF/Zarr科学产品；subset按AOI取数、get保留原文件、WMTS只是图。",
+        "access": "下载必须登录；现可用CDSE联合登录或独立Marine免费账号；旧MotuClient教程需迁移当前Toolbox。",
+        "free_status": "官方注册说明教育/商业用途免费；本次未授权账号下载",
+        "commercial": "官方支持商业免费注册；完整产品再分发条款另核",
+        "quota": "GUI子集请求800MB；程序化服务未列该尺寸限制，限流/认证不是免费无限承诺",
+        "status": "current_access_documented_no_download",
+        "evidence": "真实中文博客因网页库迁移改用Toolbox；官方2026认证和旧2018MotuGUI不可混同。",
+        "next": "复用用户CDSE授权的可行性独立验证；SDK子集样例准备后须真实下载、变量解码验收。"
+      }
+    },
+    {
+      "recordId": "chinese-research:gebco-bathymetry",
+      "workstream": "chinese-research",
+      "category": "海洋地形/高程",
+      "detail": {
+        "id": "gebco-bathymetry",
+        "category": "海洋地形/高程",
+        "name": "GEBCO 下载应用 / OPeNDAP / 日本 NIED 历史镜像",
+        "community": [
+          {
+            "url": "https://learn.arcgis.com/zh-cn/projects/find-ocean-bathymetry-data/",
+            "date": null,
+            "date_kind": "Chinese_tutorial_not_user_anecdote",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "primary": [
+          {
+            "url": "https://www.gebco.net/data-products/gridded-bathymetry-data",
+            "date": null,
+            "date_kind": "current_grid",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://www.gebco.net/news/update-gebco-grid-download-app",
+            "date": "2026-01-12",
+            "date_kind": "publication",
+            "checked_on": "2026-10-11"
+          },
+          {
+            "url": "https://kiyuu.bosai.go.jp/ExData/GEBCO/",
+            "date": "2019-03-27",
+            "date_kind": "historical_mirror_file_date",
+            "checked_on": "2026-10-11"
+          }
+        ],
+        "product": "当前GEBCO2026为15角秒海陆地形，含来源类型TID；NIED镜像列2019历史NetCDF约11GB，不是最新版。",
+        "access": "公开官方下载应用支持用户区域、全球文件/OPeNDAP；WMS不能当数值数据。",
+        "free_status": "公开科学下载入口，真实子集待测",
+        "commercial": "完整当前Terms of Use未在本次读全，不能仅凭公开页面承诺商业再分发",
+        "quota": "全图巨大，未下载；无已知Key，公共服务限流待测",
+        "status": "current_and_historical_catalog_verified_no_download",
+        "evidence": "官方2026发布信息校准旧社区2019/2025链接；中国语教程只是WMS显示流程。",
+        "next": "优先AOI子集，不下载11GB旧镜像；删除未核实文章线索后保留可读来源。"
+      }
+    }
+  ],
+  "liveTestReport": "multisource-live-tests-20261011.md"
+}

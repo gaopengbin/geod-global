@@ -1,3 +1,4 @@
+import { NUM_NOTICE } from './srtm-num.js';
 import { VEGETATION_KEYS, vegetationMatchesJob } from './vegetation.js';
 import { MODIS_SCIENCE_KEYS } from './modis-science-layers.js';
 import { ModisScienceControls } from './modis-science-ui.jsx';
@@ -8,9 +9,9 @@ import { ArrowLeft, Check, Compass, Download, FolderOpen, Layers, Pencil, Refres
 import { RuntimeContext } from './runtime-context.js';
 import { runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
-import { Badge, Button, Disclosure, Input, Modal, Progress, SegmentedControl, Spinner, Surface } from './ui/index.jsx';
+import { InfoDetails, Badge, Button, Disclosure, Input, Modal, Progress, SegmentedControl, Spinner, Surface } from './ui/index.jsx';
 import { createProject, jobsForProject, pendingProjectJobs, projectSourceJobs, MAX_PROJECT_SCENES, projectRequest } from './projects-client.js';
-import { RuntimeJobRows } from './runtime-ui.jsx';
+import { RuntimeError, RuntimeJobRows } from './runtime-ui.jsx';
 import { FileThumbnail } from './file-thumbnail.jsx';
 import { SOURCE_ASSET_KEYS, LANDSAT_BANDS, assetLabel, demTileLabel, copDemLabel } from './providers.js';
 import { modisIdentity, MODIS_QUALITY_KEYS } from './modis.js';
@@ -47,7 +48,7 @@ export function SaveProjectButton({ scenes, bounds, geometry, areaName, onSaved 
   };
   return <>
     <Button size="sm" disabled={!scenes.length} onClick={() => { setName(`${t(areaName)} · ${scenes.length} ${t('scenes')}`); setError(''); setOpen(true); }}>{t('Save selected as project')}</Button>
-    {open && <Modal title={t('Save scene project')} onClose={() => !busy && setOpen(false)} closeDisabled={busy}>
+    {open && <Modal title={t('Save scene project')} closeLabel={t('Close')} onClose={() => !busy && setOpen(false)} closeDisabled={busy}>
       <form className="project-save-form" onSubmit={save}>
         <p>{t('This project keeps the selected scene IDs, source links and area together for later downloads and processing.')}</p>
         <label>{t('Project name')}<Input value={name} maxLength={120} onChange={event => setName(event.target.value)} required/></label>
@@ -55,7 +56,7 @@ export function SaveProjectButton({ scenes, bounds, geometry, areaName, onSaved 
         {scenes.length > MAX_PROJECT_SCENES && <p className="projects-error">{t('Narrow the selection to {max} scenes to save one project.', { max: MAX_PROJECT_SCENES })}</p>}
         {mixedCrs && <p className="projects-error">{t('This project crosses UTM zones. Create one project per CRS to mosaic without reprojection.')}</p>}
         {!health && <p className="projects-error">{t('The local task service is offline.')}</p>}
-        {error && <p className="projects-error" role="alert">{error}</p>}
+        {error && <RuntimeError message={error} summary="This operation could not finish. Check the local service and source file, then retry."/>}
         <footer><Button type="button" onClick={() => setOpen(false)} disabled={busy}>{t('Cancel')}</Button><Button primary type="submit" disabled={busy || !health || scenes.length > MAX_PROJECT_SCENES || !name.trim()}>{busy ? t('Saving…') : t('Save project')}</Button></footer>
       </form>
     </Modal>}
@@ -115,7 +116,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
       </div>
     </div>
     {loading && <p role="status"><Spinner size={16}/>{t('Loading projects…')}</p>}
-    {error && <p className="projects-error" role="alert">{error}</p>}
+    {error && <RuntimeError message={error} summary={error === t(PROTECTED_ORIGINAL_NOTICE) ? error : health ? 'This operation could not finish. Check the local service and source file, then retry.' : 'The local task service is offline.'}/>}
     {!loading && !projects.length && !error && <Surface className="projects-empty"><Layers size={19}/><span>{t('Choose scenes in Explore, then save them as a project.')}</span></Surface>}
     {!loading && !focusedProjectId && projects.length > 0 && !shown.length && <Surface className="projects-empty"><Search size={19}/><span>{t('No projects match this search.')}</span></Surface>}
     {!loading && focusedProjectId && projects.length > 0 && !shown.length && <p role="alert">{t('This project could not be found. Return to all projects or refresh the list.')}</p>}
@@ -131,6 +132,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
       const viirsReady = projectSourceJobs(project, jobs, 'viirs').filter(job => verifiedViirsScience(job)).length === project.scenes.length;
       const assetKeys = safeProject ? ['product', 'visual', 'scl'] : viirsProject ? ['viirs', ...LANDSAT_BANDS] : SOURCE_ASSET_KEYS.filter(key => project.scenes.some(scene => scene.assets?.[key]));
       const srtm = assetKeys.includes('srtm');
+      const num=assetKeys.includes('srtm_num');
       const elevation = assetKeys.includes('elevation') || srtm;
       const radar = assetKeys.some(key => ['vv','vh','hh','hv'].includes(key));
       const aerial = assetKeys.includes('aerial');
@@ -142,7 +144,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
       const orderedDates = project.scenes.map(scene => scene.date).sort();
       const lastObservationDate = project.scenes.map(scene => compositeIdentity(scene.itemId)?.endDate || scene.date).sort().at(-1);
       const activeCount = related.filter(job => ['queued', 'running'].includes(job.status)).length;
-      const preview = files.find(job => job.assetKey === 'aerial') || files.find(job => job.assetKey === 'visual') || files.find(job => job.assetKey === 'scl') || files.find(job => LANDSAT_BANDS.includes(job.assetKey)) || files.find(job => VEGETATION_KEYS.includes(job.assetKey)) || files.find(job => MODIS_SCIENCE_KEYS.includes(job.assetKey)) || files.find(job => ['elevation','srtm'].includes(job.assetKey)) || files.find(job => RADAR_KEYS.includes(job.assetKey)) || files.find(job => job.assetKey === 'stac_asset' || job.assetKey === 'wcs_coverage');
+      const preview = files.find(job => job.assetKey === 'aerial') || files.find(job => job.assetKey === 'visual') || files.find(job => job.assetKey === 'scl') || files.find(job => LANDSAT_BANDS.includes(job.assetKey)) || files.find(job => VEGETATION_KEYS.includes(job.assetKey)) || files.find(job => MODIS_SCIENCE_KEYS.includes(job.assetKey)) || files.find(job => ['elevation','srtm','srtm_num'].includes(job.assetKey)) || files.find(job => RADAR_KEYS.includes(job.assetKey)) || files.find(job => job.assetKey === 'stac_asset' || job.assetKey === 'wcs_coverage');
       const sourceFiles = files.filter(job => ['download', 'raster_prepare'].includes(job.kind));
       const outputs = files.filter(job => !['download', 'raster_prepare'].includes(job.kind));
       const visibleFiles = fileView === 'sources' ? sourceFiles : fileView === 'outputs' ? outputs : files;
@@ -151,16 +153,16 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
           {!focused && preview ? <FileThumbnail job={preview}/> : <span className="project-icon" aria-hidden="true"><FolderOpen size={16}/></span>}
           <div className="project-title-block">
             {editingId === project.id ? <form className="project-rename" onSubmit={event => rename(event, project)}><label>{t('Project name')}<Input autoFocus value={draftName} maxLength={120} required onChange={event => setDraftName(event.target.value)}/></label><Button type="submit" size="icon" variant="primary" disabled={!draftName.trim() || Boolean(busy)} aria-label={t('Save project name')}><Check size={16}/></Button><Button type="button" size="icon" disabled={Boolean(busy)} aria-label={t('Cancel renaming')} onClick={() => { setEditingId(''); setRenameError(''); }}><X size={16}/></Button></form> : <div className="project-name"><h3>{focused ? project.name : <Button variant="link" className="project-open-title" aria-label={`${t('Open project')} · ${project.name}`} onClick={() => onOpenProject?.(project.id)}>{project.name}</Button>}</h3><Button size="icon" variant="quiet" aria-label={t('Rename project {name}', { name: project.name })} onClick={() => { setEditingId(project.id); setDraftName(project.name); setRenameError(''); }}><Pencil size={16}/></Button></div>}
-            <p className="project-metadata">{focused && <Badge>{t('Current project')}</Badge>}{project.scenes.length > 0 && <span>{number(project.scenes.length)} {t(elevation ? 'elevation tiles' : 'scenes')}</span>}{project.stacItems?.length > 0 && <span>{t('{count} raster assets', { count: number(project.stacItems.length) })}</span>}{project.wcsItems?.length > 0 && <span>{t('{count} coverage subsets', { count: number(project.wcsItems.length) })}</span>}{!focused && <span>{t('{count} files', { count: number(files.length) })}</span>}{project.scenes.length > 0 && <span className="project-date-range">{srtm ? 'SRTMGL1 v003' : elevation ? copDemLabel(project.scenes) : date(orderedDates[0])}{!elevation && orderedDates[0] !== lastObservationDate && <> – {date(lastObservationDate)}</>}</span>}</p>
+            <p className="project-metadata">{project.scenes.length > 0 && <InfoDetails closeLabel={t('Close')} contentClassName="project-scenes" summary={t('Review selected scenes · {count}', { count: project.scenes.length })}>
+          <ul>{project.scenes.map(scene => <li key={scene.itemId}><code>{elevation ? demTileLabel(scene.itemId) : scene.itemId}</code><div className="project-scene-metadata">{elevation ? <span>{srtm ? 'SRTMGL1 v003 · Int16 · EGM96' : `${copDemLabel([scene])} · Float32 · EGM2008`}</span> : <><span>{compositePeriodLabel(scene, date)}</span>{!aerial && !radar && !compositeIdentity(scene.itemId) && <span>{t('Cloud cover')} · {scene.cloud == null ? t('Unknown') : number(scene.cloud / 100, { style: 'percent', maximumFractionDigits: 1 })}</span>}</>}</div></li>)}</ul>
+        </InfoDetails>}{focused && <Badge>{t('Current project')}</Badge>}{project.scenes.length > 0 && <span>{number(project.scenes.length)} {t(elevation ? 'elevation tiles' : 'scenes')}</span>}{project.stacItems?.length > 0 && <span>{t('{count} raster assets', { count: number(project.stacItems.length) })}</span>}{project.wcsItems?.length > 0 && <span>{t('{count} coverage subsets', { count: number(project.wcsItems.length) })}</span>}{!focused && <span>{t('{count} files', { count: number(files.length) })}</span>}{project.scenes.length > 0 && <span className="project-date-range">{num ? compositePeriodLabel(project.scenes[0],date) : srtm ? 'SRTMGL1 v003' : elevation ? copDemLabel(project.scenes) : date(orderedDates[0])}{!elevation && orderedDates[0] !== lastObservationDate && <> – {date(lastObservationDate)}</>}</span>}</p>
             {!focused && Boolean(activeCount || outputs.length) && <p className="project-card-state"><Badge tone={activeCount ? 'blue' : 'neutral'}>{t(activeCount ? '{count} active tasks' : '{count} processing results', { count: number(activeCount || outputs.length) })}</Badge></p>}
             {editingId === project.id && renameError && <p className="projects-error" role="alert">{renameError}</p>}
           </div>
         </div>
         {focused && <>
         {originalsDeferred && <p className="project-asset-help">{t(PROTECTED_ORIGINAL_NOTICE)}</p>}
-        {project.scenes.length > 0 && <Disclosure className="project-scenes" summary={t('Review selected scenes · {count}', { count: project.scenes.length })}>
-          <ul>{project.scenes.map(scene => <li key={scene.itemId}><code>{elevation ? demTileLabel(scene.itemId) : scene.itemId}</code><div className="project-scene-metadata">{elevation ? <span>{srtm ? 'SRTMGL1 v003 · Int16 · EGM96' : `${copDemLabel([scene])} · Float32 · EGM2008`}</span> : <><span>{compositePeriodLabel(scene, date)}</span>{!aerial && !radar && !compositeIdentity(scene.itemId) && <span>{t('Cloud cover')} · {scene.cloud == null ? t('Unknown') : number(scene.cloud / 100, { style: 'percent', maximumFractionDigits: 1 })}</span>}</>}</div></li>)}</ul>
-        </Disclosure>}
+
         {(project.stacItems?.length > 0 || project.wcsItems?.length > 0) && <div className="project-source-tools">
           {project.stacItems?.length > 0 && <StacProjectAssets project={project} jobs={related} onChanged={refresh}/>}
           {project.wcsItems?.length > 0 && <WcsProjectAssets project={project} jobs={related} onChanged={refresh}/>}
@@ -199,6 +201,7 @@ export function ProjectsLibrary({ focusedProjectId, onOpenProject, onCloseProjec
         {assetKeys.some(key => MODIS_QUALITY_KEYS.includes(key)) && <p className="project-asset-help">{t('Quality processing retains whole unsigned bit fields on the original grid. Newer valid composites win overlaps; gaps and polygon masks use product fill. This does not select clearer observations or apply a mask to reflectance.')}</p>}
         {radar && <p className="project-asset-help">{t('RTC processing preserves Float32 linear gamma0, polarization and the aligned file grid. Newer valid scenes win overlaps; gaps and polygon masks are -32768 NoData. No averaging, calibration or speckle filtering is applied.')}</p>}
         {aerial && <p className="project-asset-help">{t('NAIP processing keeps RGB, NIR and the aligned NAD83 grid. Uncovered areas use an independent coverage mask; zero channel values remain valid.')}</p>}
+        {assetKeys.includes('srtm_num') && <p className="project-asset-help">{t(NUM_NOTICE)}</p>}
         {srtm && <p className="project-asset-help">{t('SRTM processing preserves Int16 heights, EGM96 and the Point grid. Shared edges occupy one row or column; gaps and masks are -32768 NoData.')}</p>}
         {elevation && !srtm && <p className="project-asset-help">{t('Elevation processing preserves original Float32 heights and the Point grid. Tiles with different pixel spacing must be processed separately; gaps and polygon masks become NaN NoData.')}</p>}
         {assetKeys.some(key => VEGETATION_KEYS.includes(key)) && !supportsViSelection(project) && <p className="project-asset-help">{t('Processing keeps original index values and the grid. The newest valid composite fills overlaps; no quality mask is applied.')}</p>}

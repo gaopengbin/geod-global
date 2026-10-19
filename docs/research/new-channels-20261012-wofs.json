@@ -1,0 +1,825 @@
+{
+  "observedAt": "2026-10-12T08:25:41Z",
+  "scope": "independent complete originals only; no native integration or UI acceptance",
+  "item": {
+    "id": "ba1e962e-8f82-55ec-89a3-ed0b2a517cee",
+    "url": "https://deafrica-services.s3.af-south-1.amazonaws.com/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y.stac-item.json",
+    "sha256": "4d2321ca153a8316280c7d4f6b2eaa5c3d97251071319c52ee040d6e3bf9bf60",
+    "sha1PublisherMatched": true,
+    "properties": {
+      "odc:file_format": "GeoTIFF",
+      "odc:product_family": "wo_summary",
+      "odc:producer": "ga.gov.au",
+      "dtr:start_datetime": "2025-01-01T00:00:00.000000Z",
+      "dtr:end_datetime": "2025-12-31T23:59:59.999999Z",
+      "odc:processing_datetime": "2026-02-03T14:11:08Z",
+      "odc:region_code": "x218y075",
+      "odc:product": "wofs_ls_summary_annual",
+      "odc:dataset_version": "1.0.0",
+      "proj:epsg": 6933,
+      "proj:shape": [
+        3200,
+        3200
+      ],
+      "proj:transform": [
+        30.0,
+        0.0,
+        3552000.0,
+        0.0,
+        -30.0,
+        -96000.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "odc:lineage": {
+        "inputs": [
+          "205236ed-b607-5d20-9cea-6f47ec473e64",
+          "3253cf85-978b-5cdd-8131-9686b0d11521",
+          "5a655071-3b7b-525c-9052-ce1b5d387661",
+          "f6681a02-7e5f-5ee4-a5c8-c353fa2f1901",
+          "c5d0b644-506d-5f8d-ad8d-493cc4a8733e",
+          "e8cacea7-1988-5268-9b3a-aa8109ae25ce",
+          "f2e0ee73-7c9a-56c0-a641-e0160bc896b9",
+          "f0070afa-c219-51ba-933a-3776d6cc3361",
+          "93bae569-fdbb-5d43-a549-19ce3ac74359",
+          "1ac914e9-4c5b-577c-9ae0-ce5cd2611f34",
+          "3191ba7e-a323-5df2-b2b4-1398b4829e2b",
+          "2003d4d5-2fb1-5c2b-832a-9b0249bae99a",
+          "6ad1a7cd-ee00-5e54-a21f-23d38cb8505a",
+          "2439c0de-b403-545f-aa35-78e329fa7a79",
+          "a8dc609a-924d-5499-9d77-f9aa15326c01",
+          "9d2f1f43-595c-53b0-8af9-b8a72368aad6",
+          "c53ef5f3-2f7b-5a47-a462-147e604db7a3",
+          "af17844e-d12d-5ea8-a27e-53dad5c89f08",
+          "8c4ecb4c-7483-5442-862a-3bc851791dde",
+          "bb17efe5-65ef-5185-af14-3a4234061a19",
+          "9a6cbbee-2622-540a-9e90-6e2bc3c26b8a",
+          "fbb066b1-8907-55e0-87f8-32fd19849ab6",
+          "8a42204e-ee06-5447-b17f-251879fdb4ed",
+          "c0bf78c4-efc9-51df-aa36-230d7f4374d1",
+          "d1b4c220-71eb-54ba-aaac-5be82da7eb5e",
+          "a9a5fd48-d566-59bf-81ac-1cd45d6ffaab",
+          "4dbaa0db-5e1c-5c5f-a9a7-c0b6bc1f65f1",
+          "1a65b629-57f4-5e94-9a54-4e4bfacc949e",
+          "a8425446-0af0-52fa-ac36-b03b6a746016",
+          "50a5db95-78d4-5cd7-bdcc-928406b28028",
+          "0d96eca1-e02e-52ac-a42f-ba06c722c451",
+          "dedc3cbb-14c1-502f-958d-148481db0bf1",
+          "8009e358-c70d-5396-8b50-d9f90a82b2bf",
+          "de288218-bc1b-52f8-b8f3-70bd6d724762",
+          "e0ac800c-7d9e-54ee-a472-5177f4cc849a",
+          "e1f00bdf-eb6c-5cb4-9925-2f0f4add3b9d",
+          "71165f9b-2e18-5be1-8aa3-46706609a6d5",
+          "5143565e-7e63-5169-af22-6c8b228dba6c",
+          "8159a078-5374-5553-a94b-2302ae8799b8",
+          "776bc2e9-250f-5640-ae5e-c15397cf7ca9",
+          "cf8fc875-f853-51e5-b77c-ed99c533b35a",
+          "09326a05-b8fd-5f2a-94a1-d9ae7b477c2a",
+          "5bdf8efe-12c4-52ca-ad8f-8148f2fbe367",
+          "bcd6a3f1-5724-5aa6-bbfb-e31c2d0e97ff",
+          "ae08c019-1f73-5836-93c6-436f74e4736f",
+          "1d779745-c5f9-55f9-b1b8-03c41af36ee3",
+          "e4daff13-1429-59ce-ab60-36476d61f64a",
+          "012128f8-e4e7-591f-9139-b3054718c05a",
+          "eb20e1ef-8f54-5548-ad6b-2798d12b3010",
+          "f375abe0-f981-5b52-9b06-e2c2d880965d",
+          "2c914c47-1e22-53e5-be80-a5cddffcc4be",
+          "a491d8eb-fb02-50e8-a00e-0e52f43b1ec5",
+          "4e0bfd02-db6f-5eff-ab0b-95feacef6593",
+          "6c03b9ae-9061-5a56-870c-af8b2781d459",
+          "7fdba32a-e40c-54e5-98f4-78f519680b66",
+          "62feef7a-4b20-537e-98e9-448c6fcf0f25",
+          "a17a1169-d5d7-5a15-ad86-b670bf2deebf",
+          "ccb7d4ba-6948-566c-8ab1-71e1b5f3a84a",
+          "3a2a078d-7cbd-59cd-b35f-9ef5a20a9698",
+          "4b2a7cb8-43b4-5de5-9f88-4356ce0bbdab",
+          "bc346727-e157-5fb2-9e11-3c261e5f34b0",
+          "51bdbef5-0744-5f0e-bee9-7223b7351a20",
+          "2ac515e5-f5d2-57fc-a11b-838133383da7",
+          "4a1f5111-bcb7-5284-a4d9-ebc73c43f494",
+          "d7b61aec-5120-5be1-a1aa-9e90f56b9df5",
+          "9d29712c-5559-5c4a-b319-8a24ab1a1869",
+          "2ab9dbb1-0563-5e22-9581-14db9d5933be",
+          "252daab6-d48b-5148-8e7e-79a7e19fa830",
+          "154247c0-e262-54a6-b2ea-e81c1f57e120",
+          "0c05891a-2933-5691-aa52-9234710ffb2d",
+          "03750655-8804-569b-ab77-3c78894d1cb0",
+          "8104641b-42dc-5fd1-b027-2b239201f16c",
+          "6155ae89-3888-56e8-92d6-7af1dc5e6530",
+          "154004be-6520-5b42-bb4a-4209b2936dea",
+          "9a6dc343-9fe6-519f-bd93-04af99e6e986",
+          "ba758007-d25c-5940-be4f-53a0360f3d91",
+          "f62e6caf-352f-5715-9c18-6bc8c2fe8623",
+          "f905af9e-3cde-5221-a439-87553d36237a",
+          "76b3acf2-fa46-5293-aa7d-fbc085fbf0ac",
+          "254d7b4d-13c1-5a77-be6d-c7d141d80ef6",
+          "5de6dd59-4407-5c6d-bc9a-db056de5597d",
+          "3616496c-e80b-5234-93e7-bcd2ed8d1889",
+          "a801e56e-a07a-5b85-83fe-b5f4cca55cda",
+          "d2a0fb03-4f73-5e11-86e2-128c3522ae6b",
+          "687a64d2-80ac-5f8c-979c-a32b5db36505",
+          "82ffa167-ed71-5c7f-8743-84a53be50521",
+          "c83b5db8-4583-5b96-a931-a71979b97b4f",
+          "22a46161-116f-5884-bb45-da4c76f75f22",
+          "73929d05-6bca-5103-9d79-f87c5f37e23f",
+          "6a349bb5-6440-5ab3-a897-299faa8f5501",
+          "e85368d4-caf6-5b96-8b50-0548e3bceffc",
+          "2b34b842-77b6-5149-970e-aef2b4a9d790",
+          "7e262d89-11c3-597e-bd0e-6f6818cd33df",
+          "4f759efb-eda3-5afc-82c6-8c8d7564da05",
+          "a9574e79-a540-53ac-9667-1249605034d1",
+          "72353cb5-a209-566f-a6ce-4e878a0b33cf",
+          "18a39c94-ad0b-5726-99dd-09c42e0e79d3",
+          "c94bddac-72f3-5401-9cd2-ea1185bffaba",
+          "df40dd88-e07d-5363-9f5a-4ec1f4955ac7",
+          "72595c6a-28a8-5b63-a63d-2fb5260ae2b0",
+          "e77e7f44-9913-5504-8cb1-9dcfc4a9ae89",
+          "2858b094-09b0-5ba7-b21b-e7ae21c74185",
+          "ee95c96e-cc6e-5f6d-97dd-d62ba6841f37",
+          "c93648af-af59-5f92-a410-e1a98e91e899",
+          "1fe5e463-a066-55bf-a0ca-c375d79e7ea8",
+          "a0e15bfe-e5cc-501d-b6e2-94f1672296a1",
+          "6a0466e3-ed90-5b07-9ce9-45fd13a28c2b",
+          "3ab3c6dc-6876-509a-8115-370083bee6e9",
+          "57db33f7-f5f2-5c95-9592-d6b4085f09f6",
+          "76336320-d6dc-5eb8-a0e4-fed656360aea",
+          "faa6550d-a74a-5044-96dd-d6b2d00f1bd9",
+          "dd73fd28-160b-5d49-a3b6-275662d805d2",
+          "f1944344-828a-5ea0-919b-10ee62ce14cd",
+          "202c6347-9d26-5654-8e2e-b4298eba35ef",
+          "04002b42-7c6d-58fd-85aa-8fcca215a01b",
+          "0bd53896-0bf1-5e50-a93e-cfe10dec165c",
+          "6035fc65-a083-5234-a4bf-5e5626acab71",
+          "ccbe60d7-10fb-5556-9d2c-7adfb37936ef",
+          "fa7b40dc-eb24-5817-979d-6022280bbb53",
+          "e63090aa-f3ad-5ee2-8dc9-b47af09ff7cf",
+          "3ae32183-7427-55d6-8e5b-2fcb3198d82c",
+          "5165a50d-1a35-58d3-9448-030f5e704592",
+          "22715d44-6824-52d0-b8e0-46f08be854a5",
+          "79af80ed-bb92-5251-a124-146f7bb9b51a",
+          "b4c480c9-fa9d-58a4-884f-a3e27e525d7b",
+          "df2ab7e3-0b89-501b-8768-23856475a6e3"
+        ]
+      },
+      "datetime": "2025-01-01T00:00:00Z"
+    },
+    "bbox": [
+      36.8135240654279,
+      -1.5051857382785072,
+      37.808484175304336,
+      -0.7525296804300243
+    ],
+    "originalDocument": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "ba1e962e-8f82-55ec-89a3-ed0b2a517cee",
+      "properties": {
+        "odc:file_format": "GeoTIFF",
+        "odc:product_family": "wo_summary",
+        "odc:producer": "ga.gov.au",
+        "dtr:start_datetime": "2025-01-01T00:00:00.000000Z",
+        "dtr:end_datetime": "2025-12-31T23:59:59.999999Z",
+        "odc:processing_datetime": "2026-02-03T14:11:08Z",
+        "odc:region_code": "x218y075",
+        "odc:product": "wofs_ls_summary_annual",
+        "odc:dataset_version": "1.0.0",
+        "proj:epsg": 6933,
+        "proj:shape": [
+          3200,
+          3200
+        ],
+        "proj:transform": [
+          30.0,
+          0.0,
+          3552000.0,
+          0.0,
+          -30.0,
+          -96000.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "odc:lineage": {
+          "inputs": [
+            "205236ed-b607-5d20-9cea-6f47ec473e64",
+            "3253cf85-978b-5cdd-8131-9686b0d11521",
+            "5a655071-3b7b-525c-9052-ce1b5d387661",
+            "f6681a02-7e5f-5ee4-a5c8-c353fa2f1901",
+            "c5d0b644-506d-5f8d-ad8d-493cc4a8733e",
+            "e8cacea7-1988-5268-9b3a-aa8109ae25ce",
+            "f2e0ee73-7c9a-56c0-a641-e0160bc896b9",
+            "f0070afa-c219-51ba-933a-3776d6cc3361",
+            "93bae569-fdbb-5d43-a549-19ce3ac74359",
+            "1ac914e9-4c5b-577c-9ae0-ce5cd2611f34",
+            "3191ba7e-a323-5df2-b2b4-1398b4829e2b",
+            "2003d4d5-2fb1-5c2b-832a-9b0249bae99a",
+            "6ad1a7cd-ee00-5e54-a21f-23d38cb8505a",
+            "2439c0de-b403-545f-aa35-78e329fa7a79",
+            "a8dc609a-924d-5499-9d77-f9aa15326c01",
+            "9d2f1f43-595c-53b0-8af9-b8a72368aad6",
+            "c53ef5f3-2f7b-5a47-a462-147e604db7a3",
+            "af17844e-d12d-5ea8-a27e-53dad5c89f08",
+            "8c4ecb4c-7483-5442-862a-3bc851791dde",
+            "bb17efe5-65ef-5185-af14-3a4234061a19",
+            "9a6cbbee-2622-540a-9e90-6e2bc3c26b8a",
+            "fbb066b1-8907-55e0-87f8-32fd19849ab6",
+            "8a42204e-ee06-5447-b17f-251879fdb4ed",
+            "c0bf78c4-efc9-51df-aa36-230d7f4374d1",
+            "d1b4c220-71eb-54ba-aaac-5be82da7eb5e",
+            "a9a5fd48-d566-59bf-81ac-1cd45d6ffaab",
+            "4dbaa0db-5e1c-5c5f-a9a7-c0b6bc1f65f1",
+            "1a65b629-57f4-5e94-9a54-4e4bfacc949e",
+            "a8425446-0af0-52fa-ac36-b03b6a746016",
+            "50a5db95-78d4-5cd7-bdcc-928406b28028",
+            "0d96eca1-e02e-52ac-a42f-ba06c722c451",
+            "dedc3cbb-14c1-502f-958d-148481db0bf1",
+            "8009e358-c70d-5396-8b50-d9f90a82b2bf",
+            "de288218-bc1b-52f8-b8f3-70bd6d724762",
+            "e0ac800c-7d9e-54ee-a472-5177f4cc849a",
+            "e1f00bdf-eb6c-5cb4-9925-2f0f4add3b9d",
+            "71165f9b-2e18-5be1-8aa3-46706609a6d5",
+            "5143565e-7e63-5169-af22-6c8b228dba6c",
+            "8159a078-5374-5553-a94b-2302ae8799b8",
+            "776bc2e9-250f-5640-ae5e-c15397cf7ca9",
+            "cf8fc875-f853-51e5-b77c-ed99c533b35a",
+            "09326a05-b8fd-5f2a-94a1-d9ae7b477c2a",
+            "5bdf8efe-12c4-52ca-ad8f-8148f2fbe367",
+            "bcd6a3f1-5724-5aa6-bbfb-e31c2d0e97ff",
+            "ae08c019-1f73-5836-93c6-436f74e4736f",
+            "1d779745-c5f9-55f9-b1b8-03c41af36ee3",
+            "e4daff13-1429-59ce-ab60-36476d61f64a",
+            "012128f8-e4e7-591f-9139-b3054718c05a",
+            "eb20e1ef-8f54-5548-ad6b-2798d12b3010",
+            "f375abe0-f981-5b52-9b06-e2c2d880965d",
+            "2c914c47-1e22-53e5-be80-a5cddffcc4be",
+            "a491d8eb-fb02-50e8-a00e-0e52f43b1ec5",
+            "4e0bfd02-db6f-5eff-ab0b-95feacef6593",
+            "6c03b9ae-9061-5a56-870c-af8b2781d459",
+            "7fdba32a-e40c-54e5-98f4-78f519680b66",
+            "62feef7a-4b20-537e-98e9-448c6fcf0f25",
+            "a17a1169-d5d7-5a15-ad86-b670bf2deebf",
+            "ccb7d4ba-6948-566c-8ab1-71e1b5f3a84a",
+            "3a2a078d-7cbd-59cd-b35f-9ef5a20a9698",
+            "4b2a7cb8-43b4-5de5-9f88-4356ce0bbdab",
+            "bc346727-e157-5fb2-9e11-3c261e5f34b0",
+            "51bdbef5-0744-5f0e-bee9-7223b7351a20",
+            "2ac515e5-f5d2-57fc-a11b-838133383da7",
+            "4a1f5111-bcb7-5284-a4d9-ebc73c43f494",
+            "d7b61aec-5120-5be1-a1aa-9e90f56b9df5",
+            "9d29712c-5559-5c4a-b319-8a24ab1a1869",
+            "2ab9dbb1-0563-5e22-9581-14db9d5933be",
+            "252daab6-d48b-5148-8e7e-79a7e19fa830",
+            "154247c0-e262-54a6-b2ea-e81c1f57e120",
+            "0c05891a-2933-5691-aa52-9234710ffb2d",
+            "03750655-8804-569b-ab77-3c78894d1cb0",
+            "8104641b-42dc-5fd1-b027-2b239201f16c",
+            "6155ae89-3888-56e8-92d6-7af1dc5e6530",
+            "154004be-6520-5b42-bb4a-4209b2936dea",
+            "9a6dc343-9fe6-519f-bd93-04af99e6e986",
+            "ba758007-d25c-5940-be4f-53a0360f3d91",
+            "f62e6caf-352f-5715-9c18-6bc8c2fe8623",
+            "f905af9e-3cde-5221-a439-87553d36237a",
+            "76b3acf2-fa46-5293-aa7d-fbc085fbf0ac",
+            "254d7b4d-13c1-5a77-be6d-c7d141d80ef6",
+            "5de6dd59-4407-5c6d-bc9a-db056de5597d",
+            "3616496c-e80b-5234-93e7-bcd2ed8d1889",
+            "a801e56e-a07a-5b85-83fe-b5f4cca55cda",
+            "d2a0fb03-4f73-5e11-86e2-128c3522ae6b",
+            "687a64d2-80ac-5f8c-979c-a32b5db36505",
+            "82ffa167-ed71-5c7f-8743-84a53be50521",
+            "c83b5db8-4583-5b96-a931-a71979b97b4f",
+            "22a46161-116f-5884-bb45-da4c76f75f22",
+            "73929d05-6bca-5103-9d79-f87c5f37e23f",
+            "6a349bb5-6440-5ab3-a897-299faa8f5501",
+            "e85368d4-caf6-5b96-8b50-0548e3bceffc",
+            "2b34b842-77b6-5149-970e-aef2b4a9d790",
+            "7e262d89-11c3-597e-bd0e-6f6818cd33df",
+            "4f759efb-eda3-5afc-82c6-8c8d7564da05",
+            "a9574e79-a540-53ac-9667-1249605034d1",
+            "72353cb5-a209-566f-a6ce-4e878a0b33cf",
+            "18a39c94-ad0b-5726-99dd-09c42e0e79d3",
+            "c94bddac-72f3-5401-9cd2-ea1185bffaba",
+            "df40dd88-e07d-5363-9f5a-4ec1f4955ac7",
+            "72595c6a-28a8-5b63-a63d-2fb5260ae2b0",
+            "e77e7f44-9913-5504-8cb1-9dcfc4a9ae89",
+            "2858b094-09b0-5ba7-b21b-e7ae21c74185",
+            "ee95c96e-cc6e-5f6d-97dd-d62ba6841f37",
+            "c93648af-af59-5f92-a410-e1a98e91e899",
+            "1fe5e463-a066-55bf-a0ca-c375d79e7ea8",
+            "a0e15bfe-e5cc-501d-b6e2-94f1672296a1",
+            "6a0466e3-ed90-5b07-9ce9-45fd13a28c2b",
+            "3ab3c6dc-6876-509a-8115-370083bee6e9",
+            "57db33f7-f5f2-5c95-9592-d6b4085f09f6",
+            "76336320-d6dc-5eb8-a0e4-fed656360aea",
+            "faa6550d-a74a-5044-96dd-d6b2d00f1bd9",
+            "dd73fd28-160b-5d49-a3b6-275662d805d2",
+            "f1944344-828a-5ea0-919b-10ee62ce14cd",
+            "202c6347-9d26-5654-8e2e-b4298eba35ef",
+            "04002b42-7c6d-58fd-85aa-8fcca215a01b",
+            "0bd53896-0bf1-5e50-a93e-cfe10dec165c",
+            "6035fc65-a083-5234-a4bf-5e5626acab71",
+            "ccbe60d7-10fb-5556-9d2c-7adfb37936ef",
+            "fa7b40dc-eb24-5817-979d-6022280bbb53",
+            "e63090aa-f3ad-5ee2-8dc9-b47af09ff7cf",
+            "3ae32183-7427-55d6-8e5b-2fcb3198d82c",
+            "5165a50d-1a35-58d3-9448-030f5e704592",
+            "22715d44-6824-52d0-b8e0-46f08be854a5",
+            "79af80ed-bb92-5251-a124-146f7bb9b51a",
+            "b4c480c9-fa9d-58a4-884f-a3e27e525d7b",
+            "df2ab7e3-0b89-501b-8768-23856475a6e3"
+          ]
+        },
+        "datetime": "2025-01-01T00:00:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              36.8135240654279,
+              -0.7525296804300243
+            ],
+            [
+              36.8135240654279,
+              -1.5051857382785072
+            ],
+            [
+              37.808484175304336,
+              -1.5051857382785072
+            ],
+            [
+              37.808484175304336,
+              -0.7525296804300243
+            ],
+            [
+              36.8135240654279,
+              -0.7525296804300243
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.digitalearth.africa/product/wofs_ls_summary_annual",
+          "type": "application/json"
+        },
+        {
+          "rel": "self",
+          "href": "s3://deafrica-services/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y.json",
+          "type": "application/json"
+        }
+      ],
+      "assets": {
+        "count_wet": {
+          "href": "wofs_ls_summary_annual_x218y075_2025--P1Y_count_wet.tif",
+          "type": "image/tiff; application=geotiff",
+          "title": "count_wet",
+          "roles": [
+            "data"
+          ]
+        },
+        "count_clear": {
+          "href": "wofs_ls_summary_annual_x218y075_2025--P1Y_count_clear.tif",
+          "type": "image/tiff; application=geotiff",
+          "title": "count_clear",
+          "roles": [
+            "data"
+          ]
+        },
+        "frequency": {
+          "href": "wofs_ls_summary_annual_x218y075_2025--P1Y_frequency.tif",
+          "type": "image/tiff; application=geotiff",
+          "title": "frequency",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        36.8135240654279,
+        -1.5051857382785072,
+        37.808484175304336,
+        -0.7525296804300243
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ]
+    }
+  },
+  "originals": [
+    {
+      "assetKey": "count_wet",
+      "downloadUrl": "https://deafrica-services.s3.af-south-1.amazonaws.com/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y_count_wet.tif",
+      "bytes": 355667,
+      "freshDownloadSeconds": 2.9434219000395387,
+      "sha256": "8413faccf023730402caf9690eb93dfc80e9df24e266d4b8001c6e35716f2187",
+      "sha1": "f9ae7a6325fc836f1f06017ce95c563afbb4eaac",
+      "sha1PublisherMatched": true,
+      "file": "G:\\code\\geod-global\\.verification\\new-channels-wofs-20261012\\wofs_ls_summary_annual_x218y075_2025--P1Y_count_wet.tif",
+      "grid": {
+        "width": 3200,
+        "height": 3200,
+        "decodedPixels": 10240000,
+        "bandCount": 1,
+        "dtypes": [
+          "int16"
+        ],
+        "epsg": 6933,
+        "transform": [
+          30.0,
+          0.0,
+          3552000.0,
+          0.0,
+          -30.0,
+          -96000.0
+        ],
+        "bounds": [
+          3552000.0,
+          -192000.0,
+          3648000.0,
+          -96000.0
+        ],
+        "nodata": -999.0,
+        "blockShapes": [
+          [
+            800,
+            800
+          ]
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "validPixels": 10240000,
+        "noDataPixels": 0,
+        "minimumValid": 0.0,
+        "maximumValid": 27.0,
+        "positive": {
+          "column": 2021,
+          "row": 617,
+          "value": 18.0,
+          "noData": false,
+          "longitude": 37.4420590223389,
+          "latitude": -0.8977550233457116
+        },
+        "noDataProbe": null,
+        "tiffTags": {
+          "AREA_OR_POINT": "Area"
+        }
+      }
+    },
+    {
+      "assetKey": "count_clear",
+      "downloadUrl": "https://deafrica-services.s3.af-south-1.amazonaws.com/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y_count_clear.tif",
+      "bytes": 4225860,
+      "freshDownloadSeconds": 7.5691051001194865,
+      "sha256": "422de1a7829ff1d1af3aba3d964f8263dee7e890e129535e6765a9312747981d",
+      "sha1": "0c7f0d658f14c314a09c6cbe4f42f046163dc89f",
+      "sha1PublisherMatched": true,
+      "file": "G:\\code\\geod-global\\.verification\\new-channels-wofs-20261012\\wofs_ls_summary_annual_x218y075_2025--P1Y_count_clear.tif",
+      "grid": {
+        "width": 3200,
+        "height": 3200,
+        "decodedPixels": 10240000,
+        "bandCount": 1,
+        "dtypes": [
+          "int16"
+        ],
+        "epsg": 6933,
+        "transform": [
+          30.0,
+          0.0,
+          3552000.0,
+          0.0,
+          -30.0,
+          -96000.0
+        ],
+        "bounds": [
+          3552000.0,
+          -192000.0,
+          3648000.0,
+          -96000.0
+        ],
+        "nodata": -999.0,
+        "blockShapes": [
+          [
+            800,
+            800
+          ]
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "validPixels": 10240000,
+        "noDataPixels": 0,
+        "minimumValid": 0.0,
+        "maximumValid": 41.0,
+        "positive": {
+          "column": 1070,
+          "row": 1648,
+          "value": 17.0,
+          "noData": false,
+          "longitude": 37.146369314685,
+          "latitude": -1.1402413935444986
+        },
+        "noDataProbe": null,
+        "tiffTags": {
+          "AREA_OR_POINT": "Area"
+        }
+      }
+    },
+    {
+      "assetKey": "frequency",
+      "downloadUrl": "https://deafrica-services.s3.af-south-1.amazonaws.com/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y_frequency.tif",
+      "bytes": 2152684,
+      "freshDownloadSeconds": 5.1026926001068205,
+      "sha256": "7fe06cf06a4835c55fc83ed276f74137d7113dd625e77004f3b1ea809998ab72",
+      "sha1": "74a32a8a5d1b80c97fb6735a3112cd33291cd9ed",
+      "sha1PublisherMatched": true,
+      "file": "G:\\code\\geod-global\\.verification\\new-channels-wofs-20261012\\wofs_ls_summary_annual_x218y075_2025--P1Y_frequency.tif",
+      "grid": {
+        "width": 3200,
+        "height": 3200,
+        "decodedPixels": 10240000,
+        "bandCount": 1,
+        "dtypes": [
+          "float32"
+        ],
+        "epsg": 6933,
+        "transform": [
+          30.0,
+          0.0,
+          3552000.0,
+          0.0,
+          -30.0,
+          -96000.0
+        ],
+        "bounds": [
+          3552000.0,
+          -192000.0,
+          3648000.0,
+          -96000.0
+        ],
+        "nodata": "NaN",
+        "blockShapes": [
+          [
+            800,
+            800
+          ]
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
+        "validPixels": 9384383,
+        "noDataPixels": 855617,
+        "minimumValid": 0.0,
+        "maximumValid": 1.0,
+        "positive": {
+          "column": 2021,
+          "row": 617,
+          "value": 1.0,
+          "noData": false,
+          "longitude": 37.4420590223389,
+          "latitude": -0.8977550233457116
+        },
+        "noDataProbe": {
+          "column": 710,
+          "row": 897,
+          "rawValue": null,
+          "rawValueType": "NaN",
+          "noData": true
+        },
+        "tiffTags": {
+          "AREA_OR_POINT": "Area"
+        }
+      }
+    }
+  ],
+  "recipe": {
+    "version": "1-0-0",
+    "tile": "x218y075",
+    "referenceYear": 2025,
+    "period": [
+      "2025-01-01T00:00:00.000000Z",
+      "2025-12-31T23:59:59.999999Z"
+    ],
+    "assetResolution": "unchanged relative asset resolved from fetched .stac-item.json HTTPS directory",
+    "selfLinkIssue": "publisher self uses s3 *.json; actual published metadata fetched is HTTPS *.stac-item.json"
+  },
+  "ratioVerification": {
+    "comparedPixels": 9384383,
+    "countWetGreaterThanCountClear": 0,
+    "maximumAbsoluteDifference": 2.8610229518832853e-08,
+    "withinFloat32Precision": true,
+    "clearZeroPixels": 855617,
+    "finiteFrequencyOnClearZero": 0
+  },
+  "status": "three complete originals independently decoded with raw grid/values/nodata and publisher sha1 verified; native/UI not tested",
+  "alignedRawSamples": [
+    {
+      "column": 2021,
+      "row": 617,
+      "values": {
+        "count_wet": {
+          "value": 18.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "count_clear": {
+          "value": 18.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "frequency": {
+          "value": 1.0,
+          "valueType": "number",
+          "noData": false
+        }
+      }
+    },
+    {
+      "column": 710,
+      "row": 897,
+      "values": {
+        "count_wet": {
+          "value": 0.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "count_clear": {
+          "value": 0.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "frequency": {
+          "value": null,
+          "valueType": "NaN",
+          "noData": true
+        }
+      }
+    },
+    {
+      "column": 0,
+      "row": 0,
+      "values": {
+        "count_wet": {
+          "value": 0.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "count_clear": {
+          "value": 16.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "frequency": {
+          "value": 0.0,
+          "valueType": "number",
+          "noData": false
+        }
+      }
+    },
+    {
+      "column": 3199,
+      "row": 3199,
+      "values": {
+        "count_wet": {
+          "value": 0.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "count_clear": {
+          "value": 0.0,
+          "valueType": "number",
+          "noData": false
+        },
+        "frequency": {
+          "value": null,
+          "valueType": "NaN",
+          "noData": true
+        }
+      }
+    }
+  ],
+  "transportProbes": [
+    {
+      "name": "publisher-self-json",
+      "url": "https://deafrica-services.s3.af-south-1.amazonaws.com/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y.json",
+      "method": "HEAD",
+      "status": 404
+    },
+    {
+      "name": "original-item-https",
+      "url": "https://deafrica-services.s3.af-south-1.amazonaws.com/wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/wofs_ls_summary_annual_x218y075_2025--P1Y.stac-item.json",
+      "method": "HEAD",
+      "status": 200,
+      "contentType": "application/json",
+      "contentLength": "6737"
+    }
+  ],
+  "primarySources": [
+    {
+      "url": "https://docs.digitalearthafrica.org/en/latest/data_specs/Landsat_WOfS_specs.html",
+      "role": "Product meaning, original layer dtypes/units/NoData, 30m EPSG6933, CC BY 4.0, scientific limitations; page modified2024 and latest year/date path are stale compared with real 2025 listing."
+    },
+    {
+      "url": "https://registry.opendata.aws/deafrica-wofs/",
+      "role": "Public S3 product distribution."
+    }
+  ],
+  "accessRecipe": {
+    "region": "af-south-1",
+    "bucket": "deafrica-services",
+    "dataset": "wofs_ls_summary_annual",
+    "prefix": "wofs_ls_summary_annual/1-0-0/x218/y075/2025--P1Y/",
+    "itemFile": "wofs_ls_summary_annual_x218y075_2025--P1Y.stac-item.json",
+    "assetFiles": [
+      "wofs_ls_summary_annual_x218y075_2025--P1Y_count_wet.tif",
+      "wofs_ls_summary_annual_x218y075_2025--P1Y_count_clear.tif",
+      "wofs_ls_summary_annual_x218y075_2025--P1Y_frequency.tif"
+    ],
+    "version": "1.0.0",
+    "referenceYear": 2025,
+    "availableSampleTileYears": [
+      1984,
+      1985,
+      1986,
+      1987,
+      1994,
+      1995,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "geographicScope": "published Africa product; complete-original validation only for tile x218y075 northeast of Nairobi",
+    "fixedGridBoundsEPSG6933": [
+      3552000,
+      -192000,
+      3648000,
+      -96000
+    ],
+    "wgs84ItemBounds": [
+      36.8135240654279,
+      -1.5051857382785072,
+      37.808484175304336,
+      -0.7525296804300243
+    ],
+    "meaning": "annual proportion of clear Landsat observations classified wet; not physical fraction of time under water, water depth, instantaneous extent, or source reflectance imagery",
+    "units": {
+      "frequency": "ratio 0–1",
+      "count_wet": "number of clear wet observations",
+      "count_clear": "number of clear observations"
+    },
+    "license": {
+      "id": "CC-BY-4.0",
+      "source": "https://docs.digitalearthafrica.org/en/latest/data_specs/Landsat_WOfS_specs.html#license",
+      "publisherStacLicenseField": null
+    },
+    "warnings": [
+      "Keep dtr:start_datetime/dtr:end_datetime annual period distinct from publisher datetime2025-01-01.",
+      "Do not turn valid zero-frequency into NoData.",
+      "No clear observation => frequency NaN; do not report this as dry/non-water.",
+      "No global or whole-Africa all-year download acceptance is implied by one tested tile.",
+      "Do not claim native/UI integration from independent Rasterio decode."
+    ]
+  },
+  "totalBytes": 6734211,
+  "totalIndependentlyDecodedPixels": 30720000
+}

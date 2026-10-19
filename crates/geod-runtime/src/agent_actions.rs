@@ -28,7 +28,9 @@ mod boundary;
 mod catalog;
 mod coverage;
 mod custom;
+mod datasets;
 mod footprint;
+mod gscloud;
 mod places;
 mod preview;
 mod project;
@@ -37,6 +39,7 @@ mod regions;
 mod revision;
 mod science;
 mod search_more;
+mod selection;
 mod vector;
 use project::ProjectPin;
 pub use project::ProjectScope;
@@ -52,10 +55,107 @@ pub struct MapContext {
     pub start: String,
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub end: String,
+    #[serde(default)]
+    pub cloud_min: f64,
     pub cloud_max: f64,
     pub project_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub geometry: Option<crate::crop::PolygonGeometry>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub catalog: Option<CatalogContext>,
+    /// Optional complete public-product form. Absence is an observation of an
+    /// incomplete form, not permission to reuse a previous imagery selection.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub dataset: Option<crate::datasets::ResolveRequest>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub gscloud: Option<crate::gscloud::SearchRequest>,
+}
+
+/// Bounded UI observation attached to a human request, not a native search
+/// receipt, download authorization, or proof of pixel/footprint coverage.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct CatalogContext {
+    pub state: String,
+    pub total_count: u32,
+    pub filtered_count: u32,
+    pub selected_count: u32,
+    pub loaded_count: u32,
+    pub visible_loaded_count: u32,
+    pub complete: bool,
+    pub pages: u32,
+    pub retrieved_at: Option<String>,
+    pub includes_saved_project_scenes: bool,
+    pub active_date: Option<String>,
+    pub text_filter: String,
+    pub sort: String,
+    pub date_counts: Vec<CatalogDateCount>,
+    pub date_counts_truncated: bool,
+    #[serde(default)]
+    pub selected_item_ids: Vec<String>,
+    #[serde(default)]
+    pub selection_truncated: bool,
+    #[serde(default)]
+    pub visible_item_ids: Vec<String>,
+    #[serde(default)]
+    pub focused_item_id: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct CatalogDateCount {
+    pub date: String,
+    pub count: u32,
+}
+
+impl CatalogContext {
+    fn validate(&self) -> Result<()> {
+        let valid_date =
+            |date: &str| date.len() == 10 && NaiveDate::parse_from_str(date, "%Y-%m-%d").is_ok();
+        let mut dates = BTreeSet::new();
+        if !["idle", "loading", "ready", "error"].contains(&self.state.as_str())
+            || self.filtered_count > self.total_count
+            || self.selected_count > self.total_count
+            || self.loaded_count > self.total_count
+            || self.visible_loaded_count > self.loaded_count
+            || self.text_filter.chars().count() > 200
+            || !["date", "cloud"].contains(&self.sort.as_str())
+            || self.date_counts.len() > 31
+            || self.selected_item_ids.len() > 32
+            || self.visible_item_ids.len() > 16
+            || self.selected_item_ids.len() > self.selected_count as usize
+            || self.visible_item_ids.len() > self.visible_loaded_count as usize
+            || self
+                .selected_item_ids
+                .iter()
+                .chain(&self.visible_item_ids)
+                .any(|id| !selection::valid_item_id(id))
+            || self
+                .focused_item_id
+                .as_ref()
+                .is_some_and(|id| !selection::valid_item_id(id))
+            || self
+                .active_date
+                .as_ref()
+                .is_some_and(|date| !valid_date(date))
+            || self
+                .retrieved_at
+                .as_ref()
+                .is_some_and(|time| time.len() > 64 || DateTime::parse_from_rfc3339(time).is_err())
+            || self.date_counts.iter().any(|entry| {
+                !valid_date(&entry.date) || entry.count == 0 || !dates.insert(&entry.date)
+            })
+            || self
+                .date_counts
+                .iter()
+                .map(|entry| u64::from(entry.count))
+                .sum::<u64>()
+                > u64::from(self.total_count)
+        {
+            return Err("Invalid attached catalog summary.".into());
+        }
+        Ok(())
+    }
 }
 impl MapContext {
     pub fn validate(&self) -> Result<()> {
@@ -74,15 +174,56 @@ impl MapContext {
                 .bytes()
                 .all(|v| v.is_ascii_alphanumeric() || v == b'-')
             || self.project_id.as_ref().is_some_and(|id| !uuid(id))
+            || !self.cloud_min.is_finite()
+            || !(0.0..=self.cloud_max).contains(&self.cloud_min)
         {
             return Err("Invalid Agent map context.".into());
         }
+        let dataset_id = self.provider.strip_prefix("dataset-");
+        if let Some(request) = &self.gscloud {
+            request.validate()?;
+            if self.provider != "gscloud"
+                || request.bounds != self.bounds
+                || request.start != self.start
+                || request.end != self.end
+                || self.dataset.is_some()
+            {
+                return Err(
+                    "Attached GSCloud query differs from the current source or area.".into(),
+                );
+            }
+        } else if self.provider == "gscloud" {
+            return Err("GSCloud context requires its current product query.".into());
+        }
+        if let Some(id) = dataset_id {
+            if !crate::datasets::list().iter().any(|source| source.id == id) {
+                return Err("Unknown public dataset in Agent map context.".into());
+            }
+            if self.catalog.is_some() {
+                return Err("Public dataset context cannot contain an imagery catalog.".into());
+            }
+            if let Some(request) = &self.dataset {
+                if request.dataset_id != id || request.bounds != self.bounds {
+                    return Err(
+                        "Attached public dataset selection differs from the map source or area."
+                            .into(),
+                    );
+                }
+                crate::datasets::resolve(request.clone())?;
+            }
+        } else if self.dataset.is_some() {
+            return Err(
+                "A public dataset selection requires its matching dataset map source.".into(),
+            );
+        }
         // Reference elevation products do not have an acquisition date filter.
-        // Keep their actual area/project context without inventing dates. All
-        // temporal sources (and partial date pairs) retain strict validation.
+        // Public dataset reference periods likewise do not require acquisition
+        // dates. Keep their area/form without inventing dates. Temporal sources
+        // and any supplied partial date pair retain the strict validation.
         if self.start.is_empty()
             && self.end.is_empty()
-            && catalog::source(&self.provider).is_ok_and(|source| !source.temporal)
+            && (dataset_id.is_some()
+                || catalog::source(&self.provider).is_ok_and(|source| !source.temporal))
         {
             if !valid_bounds(self.bounds)
                 || !self.cloud_max.is_finite()
@@ -102,6 +243,12 @@ impl MapContext {
             {
                 return Err("Attached polygon does not overlap the map area.".into());
             }
+        }
+        if let Some(catalog) = &self.catalog {
+            if self.page != "Explore" {
+                return Err("A catalog summary requires the Explore page.".into());
+            }
+            catalog.validate()?;
         }
         Ok(())
     }
@@ -199,6 +346,8 @@ struct SearchReceipt {
     more_available: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     next: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    selection_scope: Option<selection::SelectionScope>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -217,6 +366,9 @@ struct DownloadFile {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "kebab-case", deny_unknown_fields)]
 enum Action {
+    GscloudDownload {
+        scope: gscloud::Scope,
+    },
     WcsProject {
         request: crate::wcs_projects::SaveProjectRequest,
         target: Option<ProjectPin>,
@@ -246,6 +398,8 @@ enum Action {
         project: Option<ProjectPin>,
         #[serde(default, skip_serializing_if = "Option::is_none")]
         acquisition: Option<footprint::Scope>,
+        #[serde(default, skip_serializing_if = "is_false")]
+        originals_only: bool,
     },
     Clip {
         recipe: crate::RasterRecipe,
@@ -280,6 +434,9 @@ struct Plan {
     expires_at: String,
     action: Action,
 }
+fn is_false(value: &bool) -> bool {
+    !value
+}
 impl Plan {
     fn validate_reference(&self, session: &str, id: &str) -> Result<()> {
         self.validate(session)?;
@@ -307,6 +464,12 @@ impl Plan {
             );
         }
         match &self.action {
+            Action::GscloudDownload { scope } => {
+                if self.policy != POLICY {
+                    return Err("GSCloud needs a current review policy.".into());
+                }
+                gscloud::validate(scope)?;
+            }
             Action::WcsProject { .. } | Action::WcsDownload { .. } => {
                 if self.policy != POLICY {
                     return Err("Coverage requests need a current review policy.".into());
@@ -329,9 +492,16 @@ impl Plan {
                 query,
                 files,
                 project,
+                acquisition,
+                originals_only,
                 ..
             } => {
                 query.validate()?;
+                if *originals_only && (project.is_some() || acquisition.is_some()) {
+                    return Err(
+                        "Originals-only selections cannot claim a project area or coverage.".into(),
+                    );
+                }
                 if let Some(pin) = project {
                     if self.policy != POLICY {
                         return Err("This project download plan uses an older policy.".into());
@@ -395,6 +565,7 @@ impl Plan {
     }
     fn job_ids(&self) -> Vec<String> {
         let count = match &self.action {
+            Action::GscloudDownload { scope } => scope.item_ids.len(),
             Action::Download { files, .. } => files.len(),
             Action::StacDownload { files, .. } => files.len(),
             Action::WcsDownload { selections, .. } => selections.len(),
@@ -607,6 +778,7 @@ impl JobManager {
             document_sha256: digest(&bytes),
             candidates,
             next,
+            selection_scope: None,
             more_available: value["links"]
                 .as_array()
                 .is_some_and(|links| links.iter().any(|link| link["rel"] == "next")),
@@ -622,8 +794,52 @@ impl JobManager {
         &self,
         session: &str,
         search_id: &str,
+        item_ids: Vec<String>,
+        asset_key: &str,
+    ) -> Result<Value> {
+        self.agent_download_plan_with_scope(session, search_id, item_ids, asset_key, false)
+            .await
+    }
+    async fn agent_download_plan_with_scope(
+        &self,
+        session: &str,
+        search_id: &str,
+        item_ids: Vec<String>,
+        asset_key: &str,
+        originals_only: bool,
+    ) -> Result<Value> {
+        self.agent_download_review_inner(
+            session,
+            search_id,
+            item_ids,
+            asset_key,
+            originals_only,
+            false,
+        )
+        .await
+    }
+    /// Private desktop controller path after it verifies an explicit human
+    /// originals-only request. Not exposed as a model or HTTP tool. This creates
+    /// only a pending review; execution still requires the native plan hash and
+    /// confirmation policy. Exact Explore selections retain their own proof.
+    pub async fn agent_explicit_originals_review(
+        &self,
+        session: &str,
+        search_id: &str,
+        item_ids: Vec<String>,
+        asset_key: &str,
+    ) -> Result<Value> {
+        self.agent_download_review_inner(session, search_id, item_ids, asset_key, true, true)
+            .await
+    }
+    async fn agent_download_review_inner(
+        &self,
+        session: &str,
+        search_id: &str,
         mut item_ids: Vec<String>,
         asset_key: &str,
+        originals_only: bool,
+        human_originals: bool,
     ) -> Result<Value> {
         if !crate::providers::SOURCE_ASSET_KEYS.contains(&asset_key)
             || item_ids.is_empty()
@@ -645,7 +861,11 @@ impl JobManager {
             );
         }
         receipt.query.validate()?;
-        footprint::selection(self, session, search_id, &item_ids, None).await?;
+        if originals_only && !human_originals {
+            selection::originals_selection(&receipt, &item_ids)?;
+        } else if !originals_only {
+            footprint::selection(self, session, search_id, &item_ids, None).await?;
+        }
         let mut requests = Vec::new();
         for id in item_ids {
             let candidate = receipt
@@ -674,7 +894,8 @@ impl JobManager {
         self.save_agent_plan(
             session,
             Action::Download {
-                acquisition: Some(footprint::Scope {
+                originals_only,
+                acquisition: (!originals_only).then(|| footprint::Scope {
                     bounds: receipt.query.bounds,
                     geometry: None,
                     scenes: receipt
@@ -786,6 +1007,9 @@ impl JobManager {
     pub async fn agent_plan_status(&self, session: &str, id: &str) -> Result<Value> {
         let plan: Plan = read_record(&self.inner.root, "plans", id).await?;
         plan.validate_reference(session, id)?;
+        if matches!(plan.action, Action::GscloudDownload { .. }) {
+            return gscloud::status(self, &plan).await;
+        }
         if matches!(plan.action, Action::Vector { .. }) {
             return vector::status(self, &plan).await;
         }
@@ -826,7 +1050,7 @@ impl JobManager {
             Action::Project {request,..} => request.scenes.iter().map(|s|json!({"itemId":s.item_id,"assetKey":"scene","date":s.date,"bytes":null})).collect(),
             Action::Mosaic {spec,output,..} => spec.sources.iter().map(|s|json!({"itemId":store.jobs.get(&s.job_id).map(|j|j.item_id.as_str()).unwrap_or(&s.job_id),"assetKey":spec.asset_key,"bytes":null,"width":output.width,"height":output.height})).collect(),
             Action::Rgb {spec,..} => spec.sources.iter().map(|s|json!({"itemId":s.item_id,"assetKey":s.pin.band,"bytes":s.bytes,"width":spec.grid.width,"height":spec.grid.height})).collect(),
-            Action::WcsProject { .. } | Action::WcsDownload { .. } | Action::StacProject { .. } | Action::StacDownload { .. } | Action::Vector { .. } => unreachable!(),
+            Action::WcsProject { .. } | Action::WcsDownload { .. } | Action::StacProject { .. } | Action::StacDownload { .. } | Action::Vector { .. } | Action::GscloudDownload {..} => unreachable!(),
         };
         let (kind, source, bounds, start, end) = match &plan.action {
             Action::Download { query, .. } => (
@@ -882,7 +1106,8 @@ impl JobManager {
             | Action::WcsDownload { .. }
             | Action::StacProject { .. }
             | Action::StacDownload { .. }
-            | Action::Vector { .. } => {
+            | Action::Vector { .. }
+            | Action::GscloudDownload { .. } => {
                 unreachable!()
             }
         };
@@ -920,7 +1145,7 @@ impl JobManager {
             "replacedBy":replacement.map(|r|r.plan_id),
             "expectedBytes":match &plan.action { Action::Download{files,..}=>files.iter().map(|f|f.pin.as_ref().map(|p|p.bytes)).sum::<Option<u64>>(),_=>None },
             "format":format,"authorization":authorization,"output":"Managed workspace files","expiresAt":plan.expires_at,"approvalRequired":true,"project":project,"processing":science::summary(&plan.action)?,
-            "notes":match &plan.action { Action::Download{query,..}=>protected::download_notes(&query.provider),Action::Clip{..}=>vec!["Exact local SCL pixel window; no reprojection or resampling."],Action::Project{target,..}=>vec![if target.is_some(){"Append the listed scenes to the existing project; preserve its saved area and source assets. No file transfer."}else{"Save the listed catalog scenes and search area as a project. No file transfer."}],Action::Mosaic{..}=>vec!["Verified local sources, aligned original pixel grid and saved project area. No reprojection or resampling."],Action::Rgb{spec,..}=>vec![if spec.quality_mask.is_some(){"Accepted original RGB samples and calibration are retained. Screening replaces rejected pixels with NoData; no reprojection or resampling."}else{"Original RGB values and calibration are retained; no quality screening or resampling."}],Action::WcsProject{..}|Action::WcsDownload{..}|Action::StacProject{..}|Action::StacDownload{..}|Action::Vector{..}=>unreachable!() },
+            "notes":match &plan.action { Action::Download{query,originals_only,..}=>{let mut notes=protected::download_notes(&query.provider);if *originals_only {notes.insert(0,"Only the exact selected original files will be downloaded. Full search-area coverage is not requested or verified.");}notes},Action::Clip{..}=>vec!["Exact local SCL pixel window; no reprojection or resampling."],Action::Project{target,..}=>vec![if target.is_some(){"Append the listed scenes to the existing project; preserve its saved area and source assets. No file transfer."}else{"Save the listed catalog scenes and search area as a project. No file transfer."}],Action::Mosaic{..}=>vec!["Verified local sources, aligned original pixel grid and saved project area. No reprojection or resampling."],Action::Rgb{spec,..}=>vec![if spec.quality_mask.is_some(){"Accepted original RGB samples and calibration are retained. Screening replaces rejected pixels with NoData; no reprojection or resampling."}else{"Original RGB values and calibration are retained; no quality screening or resampling."}],Action::WcsProject{..}|Action::WcsDownload{..}|Action::StacProject{..}|Action::StacDownload{..}|Action::Vector{..}|Action::GscloudDownload{..}=>unreachable!() },
             "jobs":jobs.unwrap_or_default().iter().map(|job|job_view(job,!crate::active(&job.status)&&!store.active.contains_key(&job.id))).collect::<Vec<_>>() }),
         )
     }
@@ -943,11 +1168,14 @@ impl JobManager {
         {
             return Err("This review was corrected. Confirm its replacement instead.".into());
         }
+        if matches!(plan.action, Action::GscloudDownload { .. }) {
+            return gscloud::commit(self, &plan).await;
+        }
         if matches!(plan.action, Action::Project { .. }) {
             return self.commit_project_plan(&plan).await;
         }
         if matches!(plan.action, Action::Vector { .. }) {
-            return vector::commit(self, &plan).await;
+            return Box::pin(vector::commit(self, &plan)).await;
         }
         if matches!(
             plan.action,
@@ -1040,7 +1268,8 @@ impl JobManager {
             | Action::StacDownload { .. }
             | Action::WcsProject { .. }
             | Action::WcsDownload { .. }
-            | Action::Vector { .. } => {
+            | Action::Vector { .. }
+            | Action::GscloudDownload { .. } => {
                 unreachable!()
             }
         }
@@ -1190,7 +1419,8 @@ impl JobManager {
             | Action::StacDownload { .. }
             | Action::WcsProject { .. }
             | Action::WcsDownload { .. }
-            | Action::Vector { .. } => {
+            | Action::Vector { .. }
+            | Action::GscloudDownload { .. } => {
                 unreachable!()
             }
         }
@@ -1295,14 +1525,15 @@ pub fn definitions() -> Vec<Value> {
         .collect::<Vec<_>>();
     let mut definitions = vec![
         json!({"name":"geod_sources_list","description":"Read reviewed public adapters, product/date semantics, current native NASA/Copernicus authorization status and app account setup entry points. Read-only: no login, refresh or account verification. Saved/connected authorization is not original-product entitlement. Protected search and reviews are available; native confirmation requires saved authorization, and file access is unverified until the native task succeeds.","inputSchema":schema(json!({}),json!([]))}),
-        json!({"name":"geod_workspace_context","description":"Read the attached desktop area/dates/source (may be null) and native current UTC date plus latest-imagery search defaults. An explicit named place overrides an unrelated current map area: use geod_region_search for administrative names or geod_place_search for a city gazetteer. Never guess coordinates.","inputSchema":schema(json!({}),json!([]))}),
+        json!({"name":"geod_workspace_context","description":"Read the desktop snapshot attached to this request: area, dates, source, cloud range, project, and context.catalog when the Explore list has results. Catalog includes totalCount, filteredCount, dateCounts, selected/loaded counts, complete/state and retrievedAt. Use it to answer current-list counts without searching again or counting historical jobs/projects; incomplete results are partial, a missing catalog is unknown, not zero. This UI observation is not a native searchId, downloaded files or coverage proof. Also returns native UTC/latest-imagery defaults. A named place overrides an unrelated map area. Never guess coordinates or counts.","inputSchema":schema(json!({}),json!([]))}),
         json!({"name":"geod_region_search","description":"Resolve global administrative names using actual source boundaries. Read-only. Bundled multilingual ADM0 country/region groupings and ADM1 provinces/states work offline. Detailed ADM2 through ADM5 use country-specific geoBoundaries gbOpen data with seven-day persistent cache, original license and geometry checksum. For detailed levels supply countryCode and adminLevel from geod_region_levels. Omitted level searches bundled ADM0/1 only. Match exact English, Chinese or local aliases where supplied; remote levels may require the established local or English name. ISO2 or ISO3 country filters; no guessed coordinates or universal city/county numbering. Returns real WGS84 envelopes and ambiguity, not a polygon, current legal status or complete imagery coverage.","inputSchema":schema(json!({"query":{"type":"string","minLength":1,"maxLength":120},"countryCode":{"type":"string","pattern":"^[A-Z]{2,3}$"},"adminLevel":{"type":"integer","minimum":0,"maximum":5},"limit":{"type":"integer","minimum":1,"maximum":10,"default":5}}),json!(["query"]))}),
         json!({"name":"geod_region_levels","description":"Read actual available geoBoundaries gbOpen administrative levels for an ISO2/ISO3 country, including each level's native name, unit count and source year. Read-only, cached. Use this before detailed city/county/district search when the country's numbering is uncertain. Missing levels are unavailable data, not permission errors. Do not ask the human to know administrative level numbers.","inputSchema":schema(json!({"countryCode":{"type":"string","pattern":"^[A-Z]{2,3}$"}}),json!(["countryCode"]))}),
         json!({"name":"geod_place_search","description":"Resolve a place explicitly named by the human using an actual bounded Photon/OpenStreetMap lookup, with a seven-day persistent cache and attribution. Read-only; no project, download or map mutation. kind=city excludes buildings/POIs (use for New York city); region selects county/state/country. Returns actual WGS84 extents; null bounds must not be invented. Prefer an exact relevant name over partial matches; ask only when plausible matches remain ambiguous. If a translated place has no match, retry its established English/local spelling. No arbitrary URLs or bulk lookup.","inputSchema":schema(json!({"query":{"type":"string","minLength":1,"maxLength":120},"kind":{"type":"string","enum":["city","region","place"],"default":"place"},"countryCode":{"type":"string","pattern":"^[A-Z]{2}$"}}),json!(["query"]))}),
         json!({"name":"geod_scene_search","description":"Search a bounded actual public catalog page from a reviewed provider. Read geod_sources_list first; DEM ignores dates/clouds, MODIS uses composite periods, radar has polarization-specific assets. Returns native searchId and validated scene IDs/assets; no source URLs. Not full coverage or download proof. Use context or user-specified WGS84 bounds, valid dates and cloud max.","inputSchema":schema(json!({"provider":{"type":"string","enum":catalog::IDS},"bounds":bounds,"start":{"type":"string"},"end":{"type":"string"},"cloudMax":{"type":"number","minimum":0,"maximum":100,"default":60},"limit":{"type":"integer","minimum":1,"maximum":20,"default":5}}),json!(["provider","bounds"]))}),
+        json!({"name":"geod_catalog_selection","description":"Re-read the actual selected, visible or focused Explore scene IDs from the reviewed provider's catalog. scope=selected uses the checked list; visible uses loaded visible layers; focused uses the opened scene. Uses attached UI references, never arbitrary model IDs or URLs. Returns a native searchId for project/download review with exact scene IDs and verified metadata. No selection or an oversized selection must be corrected, never silently replaced by other imagery. This read creates no project/download and is not full AOI coverage proof. Original file entitlement and confirmation remain separate.","inputSchema":schema(json!({"scope":{"type":"string","enum":["selected","visible","focused"]}}),json!(["scope"]))}),
         json!({"name":"geod_scene_search_more","description":"Continue this session's native fixed-provider search using its pinned next page. Retains validated footprints across pages (up to 200 scenes). Pass only the latest returned searchId; no URL or changed filters. Then call geod_scene_coverage again. A missing GET continuation requires another date interval within the user's constraints, not silent cloud/date relaxation.","inputSchema":schema(json!({"searchId":uuid}),json!(["searchId"]))}),
         json!({"name":"geod_scene_coverage","description":"Read-only native union coverage of actual STAC scene footprints against the requested polygon or rectangle. Pass the source administrative boundary or useAttachedPolygon=true by default for polygon areas. Omit itemIds to obtain a newest-first covering selection up to 32 scenes; supply IDs to check that exact selection. Returns complete/partial/unknown and gap envelopes, never bbox-based proof, files or approval. Partial/unknown cannot become downloads. Continue native pages/dates within the human's constraints; ask a decision card before relaxing them. Catalog coverage is separate from valid pixels and local cloud conditions.","inputSchema":schema(json!({"searchId":uuid,"itemIds":item_ids,"boundary":boundary_reference,"useAttachedPolygon":{"type":"boolean","default":false}}),json!(["searchId"]))}),
-        json!({"name":"geod_download_plan","description":"Create an immutable reviewable download plan for scene IDs from this conversation's native search. Public originals preflight sizes and ETags; protected originals use native authorization and transfer validation with encoded size unknown. Creates no download and no project; prefer project_plan then project_download_plan when the user wants project ownership. Text approval is insufficient.","inputSchema":schema(json!({"searchId":uuid,"itemIds":item_ids,"assetKey":{"type":"string","enum":download_keys}}),json!(["searchId","itemIds","assetKey"]))}),
+        json!({"name":"geod_download_plan","description":"Create an immutable reviewable download plan for scene IDs from this conversation's native search. Public originals preflight sizes and ETags; protected originals use native authorization and transfer validation with encoded size unknown. Creates no download and no project; prefer project_plan then project_download_plan when the user wants project ownership. Text approval is insufficient. Explore selected/visible/focused originals require geod_catalog_selection and its exact itemIds. In Home, an explicit human originals-only request can use IDs from a fresh native search; the desktop controller verifies that human request. Set originalsOnly=true only for these original-file requests, never as proof of full area coverage. Area deliveries keep originalsOnly=false and require coverage.","inputSchema":schema(json!({"searchId":uuid,"itemIds":item_ids,"assetKey":{"type":"string","enum":download_keys},"originalsOnly":{"type":"boolean","default":false}}),json!(["searchId","itemIds","assetKey"]))}),
         json!({"name":"geod_boundary_read","description":"Read the actual source polygon for a boundarySource returned by geod_place_search or geod_region_search. Census cities retain original TIGERweb rings including water areas; Natural Earth ADM0/ADM1 are offline reference boundaries; geoBoundaries detailed levels retain the source-provided simplified geometry and license. Return a session-scoped hash reference and provenance, never raw coordinates to the model. A failed request does not mean no boundary exists. Read-only: no project, image download or crop. Pass the exact returned boundary to project_plan/clip_plan for masking, preserving source precision and year.","inputSchema":schema(json!({"provider":{"type":"string","enum":["census","natural-earth","geoboundaries"]},"candidateId":{"type":"string","minLength":1,"maxLength":120},"lookupId":uuid,"countryCode":{"type":"string","pattern":"^[A-Z]{2,3}$"},"adminLevel":{"type":"integer","minimum":0,"maximum":5}}),json!(["provider","candidateId"]))}),
         json!({"name":"geod_project_plan","description":"Prepare a project review card from native search IDs. Supply name to create a project, OR projectId to append scenes. For a source administrative polygon, pass boundary exactly as returned by geod_boundary_read. Alternatively useAttachedPolygon=true preserves an attached native polygon. Choose one geometry source; do not invent vertices. Appending preserves the existing project's area and assets. No project or download is created until the user confirms the card.","inputSchema":schema(json!({"searchId":uuid,"itemIds":item_ids,"name":{"type":"string","maxLength":120},"projectId":uuid,"useAttachedPolygon":{"type":"boolean","default":false},"boundary":boundary_reference}),json!(["searchId","itemIds"]))}),
         json!({"name":"geod_project_download_plan","description":"Prepare downloads of a reviewed source asset for selected scenes in a confirmed saved project. Each plan uses one provider; select itemIds explicitly for a mixed project. Native active/completed matching tasks are reused; plan includes only missing files. Returns existing tasks if no files are missing. Requires a new card confirmation; does not execute.","inputSchema":schema(json!({"projectId":uuid,"assetKey":{"type":"string","enum":download_keys},"itemIds":item_ids}),json!(["projectId","assetKey"]))}),
@@ -1312,6 +1543,9 @@ pub fn definitions() -> Vec<Value> {
         json!({"name":"geod_recipe_review_plan","description":"Prepare a native review card for a versioned SHA-256-pinned local SCL crop recipe. Supports source/WGS84 rectangular windows (v1) and explicit WGS84 polygon masks (v2). Never invent a polygon; use the attached/user-specified geometry. Reuses native checksum, grid and mask preflight; writes no output until card confirmation.","inputSchema":schema(json!({"recipe":{"oneOf":[recipe_v1,recipe_v2]}}),json!(["recipe"]))}),
         json!({"name":"geod_plan_status","description":"Read this conversation's persisted plan and real results. Raster jobs complete only with succeeded AND settled=true. A submitted vector plan with vector.verified=true is a saved extraction result, with no raster jobs; verify that file through geod_vector_inspect. Never executes, retries or approves anything.","inputSchema":schema(json!({"planId":uuid}),json!(["planId"]))}),
     ];
+    definitions.extend(datasets::definitions());
+    definitions.extend(crate::gscloud::agent_definitions());
+    definitions.extend(gscloud::definitions());
     definitions.push(crate::mcp::agent_stac_search_definition());
     definitions.extend(custom::definitions());
     definitions.extend(coverage::definitions());
@@ -1347,6 +1581,8 @@ async fn call_inner(
         search_id: String,
         item_ids: Vec<String>,
         asset_key: String,
+        #[serde(default)]
+        originals_only: bool,
     }
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -1407,6 +1643,15 @@ async fn call_inner(
             }
             catalog::sources_with_accounts(&manager).await
         }
+        "geod_dataset_catalog" | "geod_dataset_resolve" | "geod_dataset_connect" => {
+            datasets::call(&manager, name, args).await?
+        }
+        "geod_gscloud_search" => gscloud::search(&manager, session, args).await?,
+        "geod_gscloud_download_plan" => gscloud::prepare(&manager, session, args).await?,
+        "geod_gscloud_archive_inspect" => gscloud::inspect(&manager, session, args).await?,
+        "geod_gscloud_products" | "geod_gscloud_detail" => {
+            crate::gscloud::agent_call(&manager, name, args).await?
+        }
         "geod_workspace_context" => {
             if args != json!({}) {
                 return Err("Context tool takes no arguments.".into());
@@ -1445,6 +1690,7 @@ async fn call_inner(
                 .agent_search(session, serde_json::from_value(args).map_err(invalid)?)
                 .await?
         }
+        "geod_catalog_selection" => selection::read(&manager, session, args, context).await?,
         "geod_scene_search_more" => search_more::more(&manager, session, args).await?,
         "geod_scene_coverage" => footprint::check(&manager, session, args, context).await?,
         "geod_wcs_describe" | "geod_wcs_prepare" => {
@@ -1483,7 +1729,13 @@ async fn call_inner(
         "geod_download_plan" => {
             let a: DownloadArgs = serde_json::from_value(args).map_err(invalid)?;
             manager
-                .agent_download_plan(session, &a.search_id, a.item_ids, &a.asset_key)
+                .agent_download_plan_with_scope(
+                    session,
+                    &a.search_id,
+                    a.item_ids,
+                    &a.asset_key,
+                    a.originals_only,
+                )
                 .await?
         }
         "geod_clip_plan" => {
@@ -1587,6 +1839,27 @@ async fn source_geometry(
             .map(Some);
     }
     attached_geometry(context, attached)
+}
+
+/// Resolve only native, session-bound geometry for an official monitoring draft.
+/// The model cannot supply replacement vertices or use another session's reference.
+pub async fn official_monitor_geometry(
+    manager: &JobManager,
+    session: &str,
+    context: Option<MapContext>,
+    attached: bool,
+    boundary_reference: Option<Value>,
+) -> Result<Value> {
+    let reference = boundary_reference
+        .map(|value| {
+            serde_json::from_value::<boundary::Reference>(value)
+                .map_err(|_| "Invalid monitoring boundary reference.".to_owned())
+        })
+        .transpose()?;
+    let geometry = source_geometry(manager, session, context, attached, reference)
+        .await?
+        .ok_or("Select a polygon or resolve an actual administrative boundary first.")?;
+    serde_json::to_value(geometry).map_err(io_error)
 }
 fn attached_geometry(
     context: Option<MapContext>,

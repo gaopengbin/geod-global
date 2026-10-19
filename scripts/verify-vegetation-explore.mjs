@@ -63,8 +63,8 @@ try{
   await page.waitForFunction(()=>document.querySelector('.catalog-fetch-status')?.textContent.includes('Catalog complete'),null,{timeout:90000});
   assert.equal(report.liveCatalogRequests.length,1);const query=new URL(report.liveCatalogRequests[0].url);
   assert.equal(query.searchParams.get('bbox'),project.bounds.join(','));assert.equal(query.searchParams.get('datetime'),'2025-06-01T00:00:00Z/2025-06-30T23:59:59.999Z');assert.equal(query.searchParams.has('query'),false);
-  const picker=page.getByRole('combobox',{name:'Data source',exact:true});assert((await picker.innerText()).includes('MODIS NDVI / EVI'));
-  await picker.click();assert.equal(await page.getByRole('option').count(),15);await page.keyboard.press('Escape');
+  const picker=page.getByRole('button',{name:'Choose a data source',exact:true});assert((await picker.innerText()).includes('MODIS NDVI / EVI'));
+  await picker.click();assert.equal(await page.locator('.source-picker [data-source-id]').count(),58);await page.keyboard.press('Escape');
   await page.getByRole('button',{name:'Filters',exact:true}).click();const filter=page.getByRole('dialog');assert.equal(await filter.getByRole('slider').count(),0);assert.equal(await filter.locator('input[type=date]').count(),0);
   await filter.getByRole('button',{name:'Close dialog',exact:true}).click();
   await page.waitForFunction(()=>{const images=[...document.querySelectorAll('.scene-list .catalog-thumbnail img')];return images.length>0&&images.every(img=>img.complete&&img.naturalWidth>0);},null,{timeout:90000});

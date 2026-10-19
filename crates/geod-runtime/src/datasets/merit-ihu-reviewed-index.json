@@ -1,0 +1,439 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "merit-hydro",
+  "release": "MERIT Hydro IHU v1.0; fixed record 7936280",
+  "documentation": "https://zenodo.org/records/7936280",
+  "originals": [
+    {
+      "id": "05min_flwdir",
+      "layer": "flwdir",
+      "url": "https://zenodo.org/records/7936280/files/05min_flwdir.tif",
+      "bytes": 1236970,
+      "publisherMd5": "3f5f40f1ec95883d4b5e7e087e6f3672",
+      "sha256": "97a22dba9b03887bb500b033c6390da47b2b5932f4ce6990741e567dd82275af",
+      "bounds": [
+        -180.0,
+        -59.999999999991786,
+        180.00000000004087,
+        85.0
+      ],
+      "width": 4320,
+      "height": 1740,
+      "dataType": "uint8",
+      "nodata": 247.0,
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0833333333333428,
+        0.0,
+        -180.0,
+        0.0,
+        -0.08333333333332861,
+        85.0
+      ],
+      "blockShapes": [
+        [
+          1,
+          4320
+        ]
+      ],
+      "overviews": [],
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            247
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 3556,
+          "row": 601,
+          "values": [
+            1
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2600,
+          "row": 1000,
+          "values": [
+            32
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1000,
+          "row": 1600,
+          "values": [
+            247
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 2100,
+          "row": 1200,
+          "values": [
+            247
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 2602,
+          "row": 459,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 3045,
+          "row": 455,
+          "values": [
+            1
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 3291,
+          "row": 598,
+          "values": [
+            2
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2484,
+          "row": 660,
+          "values": [
+            4
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1096,
+          "row": 573,
+          "values": [
+            8
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 3416,
+          "row": 436,
+          "values": [
+            16
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 804,
+          "row": 540,
+          "values": [
+            32
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 837,
+          "row": 645,
+          "values": [
+            64
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 815,
+          "row": 581,
+          "values": [
+            128
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 3356,
+          "row": 1035,
+          "values": [
+            247
+          ],
+          "noData": [
+            true
+          ]
+        }
+      ],
+      "validMin": 0.0,
+      "validMax": 128.0,
+      "noDataCount": 5214469,
+      "fullDecodedPixels": 7516800,
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "imageStructure": {
+        "COMPRESSION": "LZW",
+        "INTERLEAVE": "BAND"
+      }
+    },
+    {
+      "id": "05min_uparea",
+      "layer": "uparea",
+      "url": "https://zenodo.org/records/7936280/files/05min_uparea.tif",
+      "bytes": 25227549,
+      "publisherMd5": "e48de73786d2be7bf5debe80c4b5adf8",
+      "sha256": "e26442bcf936cddbc6e0a612dba787ddcf51e7bfc62d362591eac5b4bbe6b783",
+      "bounds": [
+        -180.0,
+        -59.999999999991786,
+        180.00000000004087,
+        85.0
+      ],
+      "width": 4320,
+      "height": 1740,
+      "dataType": "float64",
+      "nodata": -9999.0,
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0833333333333428,
+        0.0,
+        -180.0,
+        0.0,
+        -0.08333333333332861,
+        85.0
+      ],
+      "blockShapes": [
+        [
+          1,
+          4320
+        ]
+      ],
+      "overviews": [],
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            -9999.0
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 3556,
+          "row": 601,
+          "values": [
+            5151.064277920428
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2600,
+          "row": 1000,
+          "values": [
+            91.99440991900347
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1000,
+          "row": 1600,
+          "values": [
+            -9999.0
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 2100,
+          "row": 1200,
+          "values": [
+            -9999.0
+          ],
+          "noData": [
+            true
+          ]
+        }
+      ],
+      "validMin": 0.0009457523340473414,
+      "validMax": 5929680.981104226,
+      "noDataCount": 5214478,
+      "fullDecodedPixels": 7516800,
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "imageStructure": {
+        "COMPRESSION": "LZW",
+        "INTERLEAVE": "BAND"
+      }
+    },
+    {
+      "id": "05min_strord",
+      "layer": "strord",
+      "url": "https://zenodo.org/records/7936280/files/05min_strord.tif",
+      "bytes": 1016500,
+      "publisherMd5": "897bcd18224ce88dd12f947094f3ef86",
+      "sha256": "21edbd2e4c5f1f2baee1a39d4a709c4db612fd8fd278cc7cb90008e94ed4a86b",
+      "bounds": [
+        -180.0,
+        -59.999999999991786,
+        180.00000000004087,
+        85.0
+      ],
+      "width": 4320,
+      "height": 1740,
+      "dataType": "uint8",
+      "nodata": 255.0,
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0833333333333428,
+        0.0,
+        -180.0,
+        0.0,
+        -0.08333333333332861,
+        85.0
+      ],
+      "blockShapes": [
+        [
+          1,
+          4320
+        ]
+      ],
+      "overviews": [],
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 3556,
+          "row": 601,
+          "values": [
+            4
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2600,
+          "row": 1000,
+          "values": [
+            2
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1000,
+          "row": 1600,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 2100,
+          "row": 1200,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        },
+        {
+          "column": 3066,
+          "row": 555,
+          "values": [
+            1
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2558,
+          "row": 519,
+          "values": [
+            2
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2648,
+          "row": 540,
+          "values": [
+            4
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 956,
+          "row": 476,
+          "values": [
+            8
+          ],
+          "noData": [
+            false
+          ]
+        }
+      ],
+      "validMin": 1.0,
+      "validMax": 9.0,
+      "noDataCount": 5214478,
+      "fullDecodedPixels": 7516800,
+      "tags": {
+        "AREA_OR_POINT": "Area"
+      },
+      "imageStructure": {
+        "COMPRESSION": "LZW",
+        "INTERLEAVE": "BAND"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { providerById, providerForSearch, demProduct, srtmCell, srtmHref, isSupportedAsset, naipMatchesItem } from './providers.js';
+import { providerById, providerForSearch, demProduct, srtmCell, srtmHref, numCell, numHref, isSupportedAsset, naipMatchesItem } from './providers.js';
 import { MODIS_CRS, modisIdentity, modisAssetIdentity } from './modis.js';
 import { vegetationIdentity, vegetationAssetIdentity, VEGETATION_KEYS } from './vegetation.js';
 import { MODIS_SCIENCE } from './modis-science-layers.js';
@@ -171,6 +171,11 @@ export function normalizeScene(item, providerId = 'earth-search') {
     assets.srtm = { ...assets.hgt, type: 'application/zip' };
     if (assets.browse) assets.thumbnail = assets.browse;
   }
+  if (providerId === 'srtm-num') {
+    if (!numCell(item.id) || item.collection !== provider.collection || assets.num?.href !== numHref(item.id)
+      || !isSupportedAsset(assets.num?.href,'srtm_num')) throw new Error('The catalog returned an unsupported SRTM NUM tile.');
+    assets.srtm_num = {...assets.num,type:'application/zip'};
+  }
   if (providerId === 'planetary-computer' && assets.SCL) assets.scl = assets.SCL;
   if (providerId === 'planetary-computer' && assets.rendered_preview) assets.thumbnail = assets.rendered_preview;
   if (providerId === 'planetary-landsat') {
@@ -212,7 +217,7 @@ export function normalizeScene(item, providerId = 'earth-search') {
   const cloud = typeof properties["eo:cloud_cover"] === "number" && Number.isFinite(properties["eo:cloud_cover"]) ? properties["eo:cloud_cover"] : null;
   let transform = visual['proj:transform'] ?? properties['proj:transform'];
   if (providerId === 'planetary-naip' && transform?.length === 9 && transform.slice(6).join(',') === '0,0,1') transform = transform.slice(0,6);
-  return { id: item.id, provider: providerId, dataset: provider.dataset || 'Sentinel-2 L2A', collection: item.collection || provider.collection || "sentinel-2-l2a", date: acquisition, ...(period ? { endDate: period.endDate } : {}), cloud: ['aerial','elevation','composite','radar'].includes(provider.domain) ? null : cloud, thumbnail, source: thumbnail, bbox: item.bbox, geometry: item.geometry, assets, properties, crs: viirs ? null : period ? MODIS_CRS : providerId === 'nasa-srtm' ? 'EPSG:4326' : visual["proj:code"] ?? properties["proj:code"] ?? (Number.isInteger(epsg) ? `EPSG:${epsg}` : null), grid: { shape: visual["proj:shape"] ?? properties["proj:shape"], transform }, gsd: elevationProduct ? elevationProduct.resolution : provider.domain === 'radar' ? 10 : viirs ? 1000 : vegetation ? 250 : period ? 500 : visual.gsd ?? properties.gsd ?? (providerId === 'nasa-earthdata' ? 30 : null), itemURL: `${provider.catalog}collections/${encodeURIComponent(item.collection || provider.collection || "sentinel-2-l2a")}/items/${encodeURIComponent(item.id)}` };
+  return { id: item.id, provider: providerId, dataset: provider.dataset || 'Sentinel-2 L2A', collection: item.collection || provider.collection || "sentinel-2-l2a", date: acquisition, ...(period ? { endDate: period.endDate } : providerId==='srtm-num' ? {endDate:properties.end_datetime} : {}), cloud: ['aerial','elevation','composite','radar'].includes(provider.domain) ? null : cloud, thumbnail, source: thumbnail, bbox: item.bbox, geometry: item.geometry, assets, properties, crs: viirs ? null : period ? MODIS_CRS : ['nasa-srtm','srtm-num'].includes(providerId) ? 'EPSG:4326' : visual["proj:code"] ?? properties["proj:code"] ?? (Number.isInteger(epsg) ? `EPSG:${epsg}` : null), grid: { shape: visual["proj:shape"] ?? properties["proj:shape"], transform }, gsd: elevationProduct ? elevationProduct.resolution : provider.domain === 'radar' ? 10 : viirs ? 1000 : vegetation ? 250 : period ? 500 : visual.gsd ?? properties.gsd ?? (providerId === 'nasa-earthdata' ? 30 : null), itemURL: `${provider.catalog}collections/${encodeURIComponent(item.collection || provider.collection || "sentinel-2-l2a")}/items/${encodeURIComponent(item.id)}` };
 }
 
 export function normalizeSample(catalog) {

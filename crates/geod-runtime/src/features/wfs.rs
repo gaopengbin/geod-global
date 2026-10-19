@@ -462,6 +462,7 @@ fn parse_capabilities(raw: &str, root: &Url, name: &str) -> Result<FeatureServic
                 items_url: root.to_string(),
                 license_links: vec![],
                 arcgis: None,
+                geoboundaries: None,
                 wfs: Some(layer),
             }),
             Err(reason) => excluded.push(ExcludedLayer { id, title, reason }),
@@ -480,6 +481,7 @@ fn parse_capabilities(raw: &str, root: &Url, name: &str) -> Result<FeatureServic
         collections,
         arcgis: None,
         overpass: None,
+        geoboundaries: None,
         wfs: Some(Service {
             version: "2.0.0".into(),
             capabilities_sha256: hash(raw.as_bytes()),
@@ -1159,6 +1161,7 @@ pub(super) async fn query(
         feature_count: matched,
         selection: "wfs-bbox-full-features".into(),
         arcgis: None,
+        geoboundaries: None,
         wfs: Some(snapshot),
     };
     source.validate(matched)?;

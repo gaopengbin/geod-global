@@ -1,0 +1,472 @@
+{
+  "checkedAt": "2026-10-11T14:27:26.627249+00:00",
+  "credentialsUsed": false,
+  "scope": "Limited live anonymous API probes, no throughput comparison or product integration acceptance",
+  "results": [
+    {
+      "name": "geodes-stac",
+      "url": "https://geodes-portal.cnes.fr/api/stac/collections",
+      "verificationScope": "anonymous JSON API access; not complete imagery download",
+      "status": 200,
+      "seconds": 2.797,
+      "bytes": 29413,
+      "contentType": "application/json",
+      "sha256": "173b1bd5139c2796a1954d331889b3f181adc300c2f8f36add2a3708004f3f40",
+      "jsonKeys": [
+        "stac_version",
+        "stac_extensions",
+        "collections",
+        "links",
+        "context"
+      ],
+      "stac_version": "1.0.0-beta.1.extended",
+      "collectionsCount": 10,
+      "collectionsSample": [
+        {
+          "id": "THEIA_VENUS_VM1_L1C",
+          "title": "THEIA VENUS VM1 L1C",
+          "licenseFromMetadata": "Apache-2.0"
+        },
+        {
+          "id": "THEIA_REFLECTANCE_SPOT4_TAKE5_L2A",
+          "title": "TAKE5 SPOT4 LEVEL2A",
+          "licenseFromMetadata": "Apache-2.0"
+        },
+        {
+          "id": "THEIA_SWH-PHASE1_SPOT3_L1C",
+          "title": "THEIA SPOTWORLDHERITAGE SPOT3 L1C",
+          "licenseFromMetadata": "Apache-2.0"
+        }
+      ],
+      "linksCount": 2,
+      "linksSample": [
+        {
+          "href": "https://geodes-portal.cnes.fr/api/stac/collections/paginate?page=1",
+          "rel": "self",
+          "type": "application/json",
+          "title": "this search page"
+        },
+        {
+          "href": "https://geodes-portal.cnes.fr/api/stac/collections/paginate?page=2",
+          "rel": "next",
+          "type": "application/json",
+          "title": "next search page"
+        }
+      ]
+    },
+    {
+      "name": "opentopography-raster-stac",
+      "url": "https://portal.opentopography.org/stac/raster_catalog.json",
+      "verificationScope": "anonymous JSON API access; not complete imagery download",
+      "status": 200,
+      "seconds": 1.255,
+      "bytes": 43555,
+      "contentType": "application/json",
+      "sha256": "19e290741b375cbc938bc2654f94c8dad09a5544a860e309e788f63774c04644",
+      "jsonKeys": [
+        "type",
+        "id",
+        "stac_version",
+        "description",
+        "links"
+      ],
+      "id": "OpenTopography Raster DEM Data Catalog",
+      "stac_version": "1.1.0",
+      "linksCount": 285,
+      "linksSample": [
+        {
+          "rel": "root",
+          "href": "https://portal.opentopography.org/stac/raster_catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://portal.opentopography.org/stac/AK05_Pavlis_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://portal.opentopography.org/stac/AK22_Lamb_collection.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "name": "ornl-products",
+      "url": "https://modis.ornl.gov/rst/api/v1/products",
+      "verificationScope": "anonymous JSON API access; not complete imagery download",
+      "status": 200,
+      "seconds": 3.181,
+      "bytes": 9487,
+      "contentType": "application/json",
+      "sha256": "ebff4761cdffe952c6d74bbd56c759c5afa0d0576cf66235bc86fae2fc7c65bc",
+      "jsonKeys": [
+        "products"
+      ],
+      "productsCount": 46,
+      "productsSample": [
+        {
+          "product": "Daymet",
+          "description": "Daily Surface Weather Data (Daymet) on a 1-km Grid for North America, Version 4 R1",
+          "frequency": "Daily",
+          "resolution_meters": 1000
+        },
+        {
+          "product": "ECO4ESIPTJPL",
+          "description": "ECOSTRESS Evaporative Stress Index PT-JPL (ESI) Daily L4 Global 70 m",
+          "frequency": "Varies",
+          "resolution_meters": 70
+        },
+        {
+          "product": "ECO4WUE",
+          "description": "ECOSTRESS Water Use Efficiency (WUE) Daily L4 Global 70 m",
+          "frequency": "Varies",
+          "resolution_meters": 70
+        }
+      ]
+    },
+    {
+      "name": "ornl-beijing-dates",
+      "url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/dates?latitude=40&longitude=116.3",
+      "verificationScope": "anonymous JSON API access; not complete imagery download",
+      "status": 200,
+      "seconds": 4.333,
+      "bytes": 50815,
+      "contentType": "application/json",
+      "sha256": "2436decc1a5bb5718b89051993a1cac86ab08b79263f8beb7a5bbaa096906d2c",
+      "jsonKeys": [
+        "dates"
+      ],
+      "datesCount": 612,
+      "datesSample": [
+        {
+          "modis_date": "A2000049",
+          "calendar_date": "2000-02-18"
+        },
+        {
+          "modis_date": "A2000065",
+          "calendar_date": "2000-03-05"
+        },
+        {
+          "modis_date": "A2000081",
+          "calendar_date": "2000-03-21"
+        }
+      ],
+      "latestDate": {
+        "modis_date": "A2026257",
+        "calendar_date": "2026-09-14"
+      }
+    },
+    {
+      "name": "ornl-beijing-small-numeric-subset",
+      "url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset?latitude=40&longitude=116.3&startDate=A2026257&endDate=A2026257&kmAboveBelow=1&kmLeftRight=1",
+      "verificationScope": "subset request returned JSON but no pixel records; not a passed data download",
+      "status": 200,
+      "seconds": 4.231,
+      "bytes": 363,
+      "contentType": "application/json",
+      "sha256": "da9b098d2ae47f714a3ab779687c079b1f31118c162d1497557a998dbcf08d2c",
+      "jsonKeys": [
+        "xllcorner",
+        "yllcorner",
+        "cellsize",
+        "nrows",
+        "ncols",
+        "band",
+        "latitude",
+        "longitude",
+        "header",
+        "subset"
+      ],
+      "nrows": 9,
+      "ncols": 9,
+      "cellsize": 231.656358264,
+      "subsetRecords": 0,
+      "pixelValues": 0,
+      "contentValidation": "empty-subset-not-passed"
+    },
+    {
+      "name": "ornl-beijing-ndvi-latest",
+      "url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset?latitude=40&longitude=116.3&startDate=A2026257&endDate=A2026257&kmAboveBelow=1&kmLeftRight=1&band=250m_16_days_NDVI",
+      "verificationScope": "anonymous JSON API access",
+      "status": 200,
+      "seconds": 5.458,
+      "bytes": 459,
+      "contentType": "application/json",
+      "sha256": "19cd649a2dc75b5df47ceb9c8a9022e5cff9145f7b9ecde4f116e18008d617a6",
+      "jsonKeys": [
+        "xllcorner",
+        "yllcorner",
+        "cellsize",
+        "nrows",
+        "ncols",
+        "band",
+        "units",
+        "scale",
+        "latitude",
+        "longitude",
+        "header",
+        "subset"
+      ],
+      "nrows": 9,
+      "ncols": 9,
+      "band": "250m_16_days_NDVI",
+      "cellsize": 231.656358264,
+      "subsetRecords": 0,
+      "pixelValues": 0,
+      "contentValidation": "empty-subset-not-passed"
+    },
+    {
+      "name": "ornl-beijing-ndvi-2018",
+      "url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset?latitude=40&longitude=116.3&startDate=A2018049&endDate=A2018049&kmAboveBelow=1&kmLeftRight=1&band=250m_16_days_NDVI",
+      "verificationScope": "complete small numeric subset JSON; not whole granule HDF/GeoTIFF",
+      "status": 200,
+      "seconds": 15.211,
+      "bytes": 1142,
+      "contentType": "application/json",
+      "sha256": "aeb0b008cdf94bfd39601167488effcce9672907fadbd28334725ec8cbb34097",
+      "jsonKeys": [
+        "xllcorner",
+        "yllcorner",
+        "cellsize",
+        "nrows",
+        "ncols",
+        "band",
+        "units",
+        "scale",
+        "latitude",
+        "longitude",
+        "header",
+        "subset"
+      ],
+      "nrows": 9,
+      "ncols": 9,
+      "band": "250m_16_days_NDVI",
+      "cellsize": 231.656358264,
+      "subsetRecords": 1,
+      "pixelValues": 81,
+      "contentValidation": "numeric-subset-nonempty",
+      "responseFile": "ornl-beijing-ndvi-2018-20261011.json",
+      "numericSampleValidation": {
+        "count": 81,
+        "minimum": 709,
+        "maximum": 2444,
+        "distinctValues": 59,
+        "scale": "0.0001",
+        "calendarDate": "2018-02-18"
+      }
+    },
+    {
+      "name": "ornl-doc-example-ndvi",
+      "url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset?latitude=35.958767&longitude=-84.287433&startDate=A2018049&endDate=A2018049&kmAboveBelow=1&kmLeftRight=1&band=250m_16_days_NDVI",
+      "verificationScope": "complete small numeric subset JSON; not whole granule HDF/GeoTIFF",
+      "status": 200,
+      "seconds": 8.595,
+      "bytes": 1167,
+      "contentType": "application/json",
+      "sha256": "60affd1bb02407ed04bcce1e64b8220308031cee351ab28b8ff5599cd04d62d4",
+      "jsonKeys": [
+        "xllcorner",
+        "yllcorner",
+        "cellsize",
+        "nrows",
+        "ncols",
+        "band",
+        "units",
+        "scale",
+        "latitude",
+        "longitude",
+        "header",
+        "subset"
+      ],
+      "nrows": 9,
+      "ncols": 9,
+      "band": "250m_16_days_NDVI",
+      "cellsize": 231.656358264,
+      "subsetRecords": 1,
+      "pixelValues": 81,
+      "contentValidation": "numeric-subset-nonempty",
+      "responseFile": "ornl-doc-example-ndvi-20261011.json",
+      "numericSampleValidation": {
+        "count": 81,
+        "minimum": 3949,
+        "maximum": 5800,
+        "distinctValues": 68,
+        "scale": "0.0001",
+        "calendarDate": "2018-02-18"
+      }
+    },
+    {
+      "name": "jaxa-earth-stac",
+      "url": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
+      "verificationScope": "anonymous JSON API access",
+      "status": 200,
+      "seconds": 0.824,
+      "bytes": 24479,
+      "contentType": "application/json",
+      "sha256": "8cd75c8615a0bfccd3f7ff0842cacb64af060caada0e38be9d96d64cee6869a2",
+      "jsonKeys": [
+        "id",
+        "type",
+        "stac_version",
+        "title",
+        "description",
+        "links"
+      ],
+      "id": "cog",
+      "stac_version": "1.0.0",
+      "childCount": 112,
+      "candidateLinks": [
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS.PRISM_AW3D30.v3.2_global/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.nighttime.v3_global_half-monthly-normal/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.nighttime.v3_global_monthly-normal/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS-Aqua.MODIS_ndvi.v811_global_half-monthly-normal/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.JASMES_Terra.MODIS-Aqua.MODIS_ndvi.v811_global_monthly-normal/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/NASA.EOSDIS_Aqua.MODIS_MYD11C1-LST.nighttime.v061_global_half-monthly-normal/collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/NASA.EOSDIS_Aqua.MODIS_MYD11C1-LST.nighttime.v061_global_monthly-normal/collection.json",
+          "type": "application/json"
+        }
+      ],
+      "sampleLinks": [
+        {
+          "rel": "self",
+          "href": "https://data.earth.jaxa.jp/stac/cog/v1/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "root",
+          "href": "https://data.earth.jaxa.jp/stac/cog/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "parent",
+          "href": "https://data.earth.jaxa.jp/stac/cog/catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "name": "openlandmap-stac",
+      "url": "https://s3.eu-central-1.wasabisys.com/stac/openlandmap/catalog.json",
+      "verificationScope": "anonymous JSON API access",
+      "status": 200,
+      "seconds": 1.871,
+      "bytes": 20915,
+      "contentType": "application/json",
+      "sha256": "c6af5637a97f95943c137a51bc865f6b5b18442de4de676d2a5ed4bc0c812101",
+      "jsonKeys": [
+        "type",
+        "id",
+        "stac_version",
+        "description",
+        "links",
+        "title"
+      ],
+      "id": "openlandmap",
+      "stac_version": "1.0.0",
+      "childCount": 104,
+      "candidateLinks": [
+        {
+          "rel": "child",
+          "href": "./log.oc_iso.10694/collection.json",
+          "type": "application/json",
+          "title": "OpenLandMap annual soil organic carbon"
+        },
+        {
+          "rel": "child",
+          "href": "./bulkdens.fineearth_usda.4a1h/collection.json",
+          "type": "application/json",
+          "title": "Long-term soil bulk density for fine earth"
+        },
+        {
+          "rel": "child",
+          "href": "./geom_merit.dem/collection.json",
+          "type": "application/json",
+          "title": "MERIT geomorphometry"
+        },
+        {
+          "rel": "child",
+          "href": "./grtgroup_usda.soiltax/collection.json",
+          "type": "application/json",
+          "title": "USDA long-term soil great groups"
+        },
+        {
+          "rel": "child",
+          "href": "./organic.carbon.stock_msa.kgm2/collection.json",
+          "type": "application/json",
+          "title": "OpenLandMap long-term soil organic carbon stock"
+        },
+        {
+          "rel": "child",
+          "href": "./organic.carbon_usda.6a1c/collection.json",
+          "type": "application/json",
+          "title": "OpenLandMap long-term soil organic carbon content"
+        },
+        {
+          "rel": "child",
+          "href": "./ph.h2o_usda.4c1a2a/collection.json",
+          "type": "application/json",
+          "title": "OpenLandMap long-term soil pH"
+        },
+        {
+          "rel": "child",
+          "href": "./texture.class_usda.tt/collection.json",
+          "type": "application/json",
+          "title": "OpenLandMap long-term soil texture classes (USDA system)"
+        }
+      ],
+      "sampleLinks": [
+        {
+          "rel": "child",
+          "href": "./no2_s5p.l3.trop.tmwm/collection.json",
+          "type": "application/json",
+          "title": "Sentinel-5P monthly tropospheric nitrogen dioxide density"
+        },
+        {
+          "rel": "child",
+          "href": "./no2_s5p.l3.trop.tmwm.ltm/collection.json",
+          "type": "application/json",
+          "title": "Sentinel-5P long-term tropospheric nitrogen dioxide density"
+        },
+        {
+          "rel": "child",
+          "href": "./log.oc_iso.10694/collection.json",
+          "type": "application/json",
+          "title": "OpenLandMap annual soil organic carbon"
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-10-11T14:28:57.583553+00:00"
+}

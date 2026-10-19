@@ -79,8 +79,8 @@ async function visibleMap(imageTiles){
   return {...pixels,item:await page.locator('.explore-map-root').getAttribute('data-preview-item'),channel:await page.locator('.explore-map-root').getAttribute('data-preview-channel')};
 }
 async function choose(source){
-  await page.locator('.catalog-source-panel').getByRole('combobox').click();
-  await page.getByRole('option',{name:source.name,exact:true}).click();
+  await page.getByRole('button',{name:'选择数据源',exact:true}).click();
+  await page.locator(`.source-picker [data-source-id="${source.id}"] button`).click();
   await page.waitForFunction(()=>document.querySelector('.catalog-fetch-status')?.textContent.includes('目录已取完')||document.querySelector('.catalog-error'),null,{timeout:60000});
   assert.equal(await page.locator('.catalog-error').count(),0,await page.locator('.catalog-error').allTextContents());
   assert(await page.locator('.scene-list .scene').count()>0,source.id+' returned no scenes for this known covered area');
@@ -188,11 +188,11 @@ try {
       await capture('naip-legacy-2016-1440');report.cases.push({name:'naip-legacy-h-cog',item:id,map:legacy,passed:true});
     }
   }
-  await page.locator('.catalog-source-panel').getByRole('combobox').click();
-  assert.equal(await page.getByRole('group',{name:'可下载 · 无需账号 · 9 个数据源'}).getByRole('option').count(),9);await capture('source-capabilities-1440');await page.keyboard.press('Escape');
+  await page.getByRole('button',{name:'选择数据源',exact:true}).click();
+  assert.equal(await page.locator('.source-picker .source-picker-card [aria-label^="选择 "]').count(),58);await capture('source-capabilities-1440');await page.keyboard.press('Escape');
   await page.setViewportSize({width:900,height:680});await page.getByRole('button',{name:'切换明暗主题',exact:true}).click();
   await choose(PROVIDERS.find(source=>source.id==='planetary-modis'));await visibleMap(true);await capture('modis-900-zh-dark');
-  await page.locator('.catalog-source-panel').getByRole('combobox').click();await capture('source-capabilities-900');await page.keyboard.press('Escape');
+  await page.getByRole('button',{name:'选择数据源',exact:true}).click();await capture('source-capabilities-900');await page.keyboard.press('Escape');
   report.cspErrors.push(...await page.evaluate(()=>window.__CSP_ERRORS));await Promise.allSettled(receipts);await page.evaluate(()=>Promise.all(window.__PREVIEW_RECEIPTS));
   assert.equal(report.errors.length,0,JSON.stringify(report.errors));assert.equal(report.cspErrors.length,0,JSON.stringify(report.cspErrors));assert.deepEqual(await api('/jobs'),[]);
   report.rendererFiles=[...new Set(report.rendererFiles)];report.status='passed';console.log(JSON.stringify({status:report.status,cases:report.cases.length,root}));

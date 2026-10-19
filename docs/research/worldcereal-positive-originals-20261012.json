@@ -1,0 +1,993 @@
+{
+  "schema": "geod-worldcereal-positive-independent-research/v1",
+  "checkedAt": "2026-10-12T06:20:03.818385+00:00",
+  "status": "research-complete-native-acceptance-pending",
+  "credentialsRead": false,
+  "earthEngineComputeRequests": 0,
+  "reviewedIndex": {
+    "path": "worldcereal-deafrica-9026-index-20261012.json",
+    "sha256": "e9ca8ef16918b72c30cdfa41fe48f27c9aac22bc7b57303665ec77d7947435b6"
+  },
+  "scope": "Fresh independent complete original samples, no native product-readiness or exhaustive global coverage claim",
+  "independentOriginals": [
+    {
+      "checkedAt": "2026-10-12T06:02:09.513016+00:00",
+      "status": "complete-independent-original-decode",
+      "researchOnly": true,
+      "metadata": {
+        "key": "esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+        "bytes": 6310865,
+        "lastModified": "2025-05-09T08:08:49.000Z",
+        "itemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+        "itemId": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+        "collection": "esa_worldcereal_temporarycrops",
+        "bbox": [
+          53.864516174824,
+          -22.69539316166828,
+          59.99509950815733,
+          -18.981793161668282
+        ],
+        "shape": [
+          44563,
+          73567
+        ],
+        "nativeGridCandidate": true,
+        "properties": {
+          "odc:dataset_version": "v1.0.0",
+          "platform": "esa worldcereal project",
+          "odc:producer": "https://vito.be/",
+          "odc:product_family": "esa_worldcereal",
+          "start_datetime": "2020-11-09T00:00:00Z",
+          "end_datetime": "2021-11-09T23:59:59Z",
+          "created": "2023-04-12T10:17:08Z",
+          "odc:file_format": "GeoTIFF",
+          "odc:product": "esa_worldcereal_temporarycrops",
+          "odc:region_code": "9026",
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73567
+          ],
+          "proj:transform": [
+            8.333333333333334e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333333333333332e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": "2020-11-09T00:00:00Z"
+        },
+        "itemSha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d",
+        "stored": "f0171537-29fa-5b1e-8adb-0706d129fbbb.json",
+        "asset": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73567
+          ],
+          "proj:transform": [
+            8.333333333333334e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333333333333332e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "fullDownload": {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+        "status": 200,
+        "bytes": 6310865,
+        "sha256": "a4c3735e77d6784e1f85312a8b3e7ccdf9f650fd1ee541708ca9266969ca65dd",
+        "seconds": null,
+        "headers": {
+          "x-amz-id-2": "hQQJp9MNCGzhoxRPj2Q8oiZTdEmim5VslwWZzKWOA6ov7/CEx+qj77bi8u3AaDeZIcFxAGAz1aL+z6OF4PkqUCLo7B50nxbY",
+          "x-amz-request-id": "689VE0TNMRTCXBVW",
+          "Date": "Mon, 12 Oct 2026 06:01:44 GMT",
+          "Last-Modified": "Fri, 09 May 2025 08:08:49 GMT",
+          "ETag": "\"35371cf88aa53835bbda6b859c0da801\"",
+          "x-amz-server-side-encryption": "AES256",
+          "x-amz-version-id": "vSB9JiSTbsQD8XvGFSr.E86nfRxzG1wN",
+          "Accept-Ranges": "bytes",
+          "Content-Type": "image/tiff",
+          "Content-Length": "6310865",
+          "Server": "AmazonS3",
+          "Connection": "close"
+        },
+        "readerRepairRecovery": "Original full transfer completed in this batch before the independent reader invocation failed; local bytes reused, initial download timing unavailable. HEAD receipt is metadata-only."
+      },
+      "independentRaster": {
+        "width": 73567,
+        "height": 44563,
+        "count": 1,
+        "crs": "EPSG:4326",
+        "bounds": [
+          53.864516174824,
+          -22.695376495001614,
+          59.99509950815733,
+          -18.981793161668282
+        ],
+        "transform": [
+          8.333333333333334e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333333333333332e-05,
+          -18.981793161668282
+        ],
+        "resolution": [
+          8.333333333333334e-05,
+          8.333333333333332e-05
+        ],
+        "scales": [
+          1.0
+        ],
+        "offsets": [
+          0.0
+        ],
+        "units": [
+          null
+        ],
+        "tags": {
+          "AEZ_ID": "9026",
+          "AREA_OR_POINT": "Area",
+          "copyright": "ESA WorldCereal project",
+          "creation_time": "2023-04-12 10:17:08",
+          "end_date": "2021-11-09",
+          "legend": "0  other land cover/use\n100  temporary crops",
+          "license": "CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/",
+          "OVR_RESAMPLING_ALG": "NEAREST",
+          "product_version": "V1.0.0",
+          "provider": "VITO",
+          "reference": "https://esa-worldcereal.org/",
+          "start_date": "2020-11-09",
+          "title": "ESA-WorldCereal temporary crops map for the 2021 tc-annual season."
+        },
+        "bands": [
+          {
+            "index": 1,
+            "dtype": "uint8",
+            "nodata": 255.0,
+            "allPixelsDecoded": 3278366221,
+            "validPixels": 2313826316,
+            "validFraction": 0.7057864070153254,
+            "minimum": 0,
+            "maximum": 100,
+            "valueCounts": {
+              "0": 2311561545,
+              "100": 2264771
+            },
+            "firstUsableSample": {
+              "column": 26220,
+              "row": 99,
+              "value": 0
+            }
+          }
+        ],
+        "seconds": 22.11,
+        "completeDecode": true,
+        "storageLayout": "tile",
+        "compression": "deflate"
+      },
+      "publisherBboxMinusFileBoundsConflict": {
+        "fileMinusPublisherDeltas": [
+          0.0,
+          1.6666666667219943e-05,
+          0.0,
+          0.0
+        ],
+        "identicalWithin1e6Degrees": false,
+        "withinOneGridCell": true,
+        "sourceMetadataUnchanged": true
+      },
+      "representativeRawPixels": {
+        "255": {
+          "column": 0,
+          "row": 0,
+          "longitude": 53.864557841490665,
+          "latitude": -18.98183482833495,
+          "raw": 255,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": false
+        },
+        "0": {
+          "column": 26220,
+          "row": 99,
+          "longitude": 56.04955784149067,
+          "latitude": -18.99008482833495,
+          "raw": 0,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": true
+        },
+        "100": {
+          "column": 44343,
+          "row": 12268,
+          "longitude": 57.55980784149067,
+          "latitude": -20.004168161668282,
+          "raw": 100,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": true
+        }
+      },
+      "hasRaw100CropCategory": true,
+      "hasRaw0NonCropCategory": true,
+      "scope": "One complete regional original; positive raw category does not verify scientific classification accuracy or other zones/seasons",
+      "nativePresetAccepted": false
+    },
+    {
+      "checkedAt": "2026-10-12T06:02:40.560092+00:00",
+      "status": "complete-independent-original-decode",
+      "researchOnly": true,
+      "metadata": {
+        "key": "esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08_classification.tif",
+        "bytes": 6424508,
+        "lastModified": "2025-05-16T23:39:43.000Z",
+        "itemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08.stac-item.json",
+        "itemId": "bf4db2c1-e328-5a33-be67-52343b3f63b7",
+        "collection": "esa_worldcereal_maize_active",
+        "bbox": [
+          53.864516174824,
+          -22.695360250867942,
+          59.99502963949716,
+          -18.981793161668282
+        ],
+        "shape": [
+          44563,
+          73566
+        ],
+        "nativeGridCandidate": true,
+        "properties": {
+          "odc:dataset_version": "v1.0.0",
+          "platform": "esa worldcereal project",
+          "odc:producer": "https://vito.be/",
+          "odc:product_family": "esa_worldcereal",
+          "start_datetime": "2020-11-11T00:00:00Z",
+          "end_datetime": "2021-05-08T23:59:59Z",
+          "created": "2023-04-24T19:17:32Z",
+          "odc:file_format": "GeoTIFF",
+          "odc:product": "esa_worldcereal_maize_active",
+          "odc:region_code": "9026",
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "datetime": "2020-11-11T00:00:00Z"
+        },
+        "itemSha256": "b233eccc09e5af6011d15e000a0f22ec92499b45ee60d285e6bd3d5ab2d53659",
+        "stored": "bf4db2c1-e328-5a33-be67-52343b3f63b7.json",
+        "asset": {
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08_classification.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "classification",
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            8.33335163618134e-05,
+            0.0,
+            53.864516174824,
+            0.0,
+            -8.333296881268452e-05,
+            -18.981793161668282,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "fullDownload": {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-maize-main/9026/2021/9026_tc-maize-main_activecropland_2020-11-11_2021-05-08_classification.tif",
+        "status": 200,
+        "bytes": 6424508,
+        "sha256": "a91e50019c1f6db0fdfe3d038fd6c5270314a953df811707704a1128f6cf136e",
+        "seconds": 4.313,
+        "headers": {
+          "x-amz-id-2": "Ek8tqCnuKoqqx44kwq3czY3fptcrZbQFXlA1FGhlo7d9LU5hbIwXUS0kK0m/izJCdU3hce1gWYCSlc0oJnMbA1yW+TKuG8ci",
+          "x-amz-request-id": "68K1BF86304PYCKE",
+          "Date": "Mon, 12 Oct 2026 06:02:12 GMT",
+          "Last-Modified": "Fri, 16 May 2025 23:39:43 GMT",
+          "ETag": "\"fe37fb9ee6eaf3ba524b2352efece057\"",
+          "x-amz-server-side-encryption": "AES256",
+          "x-amz-version-id": "AtHyb08nmszif3noWyAJWAIT88P76hbv",
+          "Accept-Ranges": "bytes",
+          "Content-Type": "image/tiff",
+          "Content-Length": "6424508",
+          "Server": "AmazonS3",
+          "Connection": "close"
+        },
+        "readerRepairRecovery": null
+      },
+      "independentRaster": {
+        "width": 73566,
+        "height": 44563,
+        "count": 1,
+        "crs": "EPSG:4326",
+        "bounds": [
+          53.864516174824,
+          -22.695360250867942,
+          59.99502963949716,
+          -18.981793161668282
+        ],
+        "transform": [
+          8.33335163618134e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333296881268452e-05,
+          -18.981793161668282
+        ],
+        "resolution": [
+          8.33335163618134e-05,
+          8.333296881268452e-05
+        ],
+        "scales": [
+          1.0
+        ],
+        "offsets": [
+          0.0
+        ],
+        "units": [
+          null
+        ],
+        "tags": {
+          "AEZ_ID": "9026",
+          "AREA_OR_POINT": "Area",
+          "copyright": "ESA WorldCereal project",
+          "creation_time": "2023-04-24 19:17:32",
+          "end_date": "2021-05-08",
+          "legend": "0  not active\n100  active\n254  No crop",
+          "license": "CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/",
+          "OVR_RESAMPLING_ALG": "NEAREST",
+          "product_version": "V1.0.0",
+          "provider": "VITO",
+          "reference": "https://esa-worldcereal.org/",
+          "start_date": "2020-11-11",
+          "title": "ESA-WorldCereal active cropland map for the 2021 tc-maize-main season."
+        },
+        "bands": [
+          {
+            "index": 1,
+            "dtype": "uint8",
+            "nodata": 255.0,
+            "allPixelsDecoded": 3278321658,
+            "validPixels": 2313826316,
+            "validFraction": 0.7057960009365255,
+            "minimum": 0,
+            "maximum": 254,
+            "valueCounts": {
+              "254": 2311717060,
+              "0": 750743,
+              "100": 1358513
+            },
+            "firstUsableSample": {
+              "column": 26220,
+              "row": 99,
+              "value": 254
+            }
+          }
+        ],
+        "seconds": 22.64,
+        "completeDecode": true,
+        "storageLayout": "tile",
+        "compression": "deflate"
+      },
+      "publisherBboxMinusFileBoundsConflict": {
+        "fileMinusPublisherDeltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "identicalWithin1e6Degrees": true,
+        "withinOneGridCell": true,
+        "sourceMetadataUnchanged": true
+      },
+      "representativeRawPixels": {
+        "255": {
+          "column": 0,
+          "row": 0,
+          "longitude": 53.864557841582176,
+          "latitude": -18.98183482815269,
+          "raw": 255,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": false
+        },
+        "254": {
+          "column": 26220,
+          "row": 99,
+          "longitude": 56.049562640588924,
+          "latitude": -18.990084792065144,
+          "raw": 254,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": true
+        },
+        "0": {
+          "column": 44678,
+          "row": 12210,
+          "longitude": 57.58773268559528,
+          "latitude": -19.999330377355566,
+          "raw": 0,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": true
+        },
+        "100": {
+          "column": 44853,
+          "row": 12094,
+          "longitude": 57.60231605095859,
+          "latitude": -19.989663752973296,
+          "raw": 100,
+          "embeddedNoData": 255.0,
+          "rawFileMaskValid": true
+        }
+      },
+      "hasRaw100CropCategory": true,
+      "hasRaw0NonCropCategory": true,
+      "scope": "One complete regional original; positive raw category does not verify scientific classification accuracy or other zones/seasons",
+      "nativePresetAccepted": false
+    },
+    {
+      "checkedAt": "2026-10-12T06:17:50.742832+00:00",
+      "status": "complete-independent-original-decode",
+      "researchOnly": true,
+      "publisherItem": {
+        "collectionId": "esa_worldcereal_temporarycrops",
+        "publisherItemId": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+        "publisherItemUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+        "publisherItemSha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d",
+        "aez": "9026",
+        "referenceYear": 2021,
+        "season": "tc-annual",
+        "productFolder": "temporarycrops",
+        "startDatetime": "2020-11-09T00:00:00Z",
+        "endDatetime": "2021-11-09T23:59:59Z",
+        "publisherBbox": [
+          53.864516174824,
+          -22.69539316166828,
+          59.99509950815733,
+          -18.981793161668282
+        ],
+        "assets": [
+          {
+            "key": "classification",
+            "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+            "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+            "bytes": 6310865,
+            "shape": [
+              44563,
+              73567
+            ],
+            "transform": [
+              8.333333333333334e-05,
+              0.0,
+              53.864516174824,
+              0.0,
+              -8.333333333333332e-05,
+              -18.981793161668282,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "crs": "EPSG:4326"
+          },
+          {
+            "key": "confidence",
+            "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+            "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+            "bytes": 2038416,
+            "shape": [
+              9284,
+              15326
+            ],
+            "transform": [
+              0.0004,
+              0.0,
+              53.864516174824,
+              0.0,
+              -0.0004,
+              -18.981793161668282,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "crs": "EPSG:4326"
+          }
+        ]
+      },
+      "selectedAsset": {
+        "key": "confidence",
+        "publisherHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+        "publicTransportUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+        "bytes": 2038416,
+        "shape": [
+          9284,
+          15326
+        ],
+        "transform": [
+          0.0004,
+          0.0,
+          53.864516174824,
+          0.0,
+          -0.0004,
+          -18.981793161668282,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "crs": "EPSG:4326"
+      },
+      "fullDownload": {
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+        "status": 200,
+        "bytes": 2038416,
+        "sha256": "418ac67a78a94c33824519b2cb9c55976b8bb62f6f47f5eb69309cfea9d162df",
+        "seconds": 5.281,
+        "headers": {
+          "x-amz-id-2": "Kl3ODavbEK9BVXRl2Y22Awe9ofrgoey3edOimCrLH8Yu8QoYks+jhTsAj8g5+HqSBFtS17C5XvNJxlab9+7ScN/tsVqVi0n1",
+          "x-amz-request-id": "XGB9E7RG6GE6XKJ7",
+          "Date": "Mon, 12 Oct 2026 06:17:46 GMT",
+          "Last-Modified": "Fri, 09 May 2025 08:08:49 GMT",
+          "ETag": "\"22c3a1e2de50cd08552c1db51d8a55c2\"",
+          "x-amz-server-side-encryption": "AES256",
+          "x-amz-version-id": "rlqSEHhyjjjiB.wmz34kUz8NAA3Mg48B",
+          "Accept-Ranges": "bytes",
+          "Content-Type": "image/tiff",
+          "Content-Length": "2038416",
+          "Server": "AmazonS3",
+          "Connection": "close"
+        }
+      },
+      "independentRaster": {
+        "width": 15326,
+        "height": 9284,
+        "count": 1,
+        "crs": "EPSG:4326",
+        "bounds": [
+          53.864516174824,
+          -22.69539316166828,
+          59.994916174824,
+          -18.981793161668282
+        ],
+        "transform": [
+          0.0004,
+          0.0,
+          53.864516174824,
+          0.0,
+          -0.0004,
+          -18.981793161668282
+        ],
+        "resolution": [
+          0.0004,
+          0.0004
+        ],
+        "scales": [
+          1.0
+        ],
+        "offsets": [
+          0.0
+        ],
+        "units": [
+          null
+        ],
+        "tags": {
+          "AEZ_ID": "9026",
+          "AREA_OR_POINT": "Area",
+          "copyright": "ESA WorldCereal project",
+          "creation_time": "2023-04-27 10:00:25",
+          "end_date": "2021-11-09",
+          "legend": "From low (0) to high (100) confidence [254 = no crop]",
+          "license": "CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/",
+          "OVR_RESAMPLING_ALG": "NEAREST",
+          "product_version": "V1.0.0",
+          "provider": "VITO",
+          "reference": "https://esa-worldcereal.org/",
+          "start_date": "2020-11-09",
+          "title": "ESA-WorldCereal downsampled temporary crops confidence map for the 2021 tc-annual season."
+        },
+        "bands": [
+          {
+            "index": 1,
+            "dtype": "uint8",
+            "nodata": 255.0,
+            "allPixelsDecoded": 142286584,
+            "validPixels": 100450817,
+            "validFraction": 0.7059753223114837,
+            "minimum": 2,
+            "maximum": 254,
+            "valueCounts": {
+              "99": 98790185,
+              "100": 319,
+              "101": 226,
+              "104": 718,
+              "105": 647,
+              "106": 211,
+              "107": 394,
+              "110": 725,
+              "114": 216,
+              "115": 22,
+              "118": 544,
+              "133": 391,
+              "140": 217,
+              "146": 385,
+              "151": 723,
+              "160": 97,
+              "166": 212,
+              "169": 699,
+              "172": 383,
+              "179": 211,
+              "196": 600,
+              "198": 377,
+              "205": 213,
+              "208": 736,
+              "214": 694,
+              "217": 289,
+              "224": 389,
+              "226": 24,
+              "229": 800,
+              "231": 216,
+              "237": 390,
+              "248": 488,
+              "249": 213,
+              "251": 121,
+              "252": 353,
+              "112": 634,
+              "117": 765,
+              "129": 67,
+              "138": 810,
+              "144": 529,
+              "170": 504,
+              "201": 669,
+              "203": 631,
+              "235": 451,
+              "238": 113,
+              "137": 59,
+              "156": 762,
+              "177": 696,
+              "189": 60,
+              "209": 522,
+              "228": 66,
+              "242": 709,
+              "125": 698,
+              "131": 535,
+              "157": 472,
+              "164": 717,
+              "176": 67,
+              "183": 541,
+              "190": 631,
+              "216": 673,
+              "184": 197,
+              "222": 493,
+              "223": 191,
+              "236": 210,
+              "132": 198,
+              "139": 282,
+              "141": 13,
+              "250": 370,
+              "127": 164,
+              "161": 22,
+              "181": 46,
+              "194": 21,
+              "215": 58,
+              "103": 39,
+              "116": 18,
+              "147": 115,
+              "202": 67,
+              "245": 29,
+              "253": 657,
+              "148": 15,
+              "182": 765,
+              "120": 358,
+              "154": 25,
+              "167": 20,
+              "188": 653,
+              "111": 65,
+              "143": 741,
+              "152": 280,
+              "163": 62,
+              "168": 17,
+              "187": 326,
+              "199": 114,
+              "213": 326,
+              "218": 166,
+              "254": 104,
+              "119": 188,
+              "123": 690,
+              "128": 17,
+              "142": 15,
+              "186": 96,
+              "191": 278,
+              "121": 104,
+              "136": 670,
+              "165": 278,
+              "175": 696,
+              "227": 669,
+              "232": 19,
+              "241": 68,
+              "246": 333,
+              "113": 299,
+              "130": 690,
+              "145": 190,
+              "150": 56,
+              "155": 324,
+              "174": 12,
+              "221": 682,
+              "247": 715,
+              "109": 27,
+              "122": 325,
+              "134": 100,
+              "159": 360,
+              "173": 111,
+              "178": 289,
+              "230": 275,
+              "240": 709,
+              "108": 123,
+              "124": 54,
+              "153": 165,
+              "192": 192,
+              "193": 15,
+              "206": 16,
+              "210": 193,
+              "212": 108,
+              "220": 323,
+              "225": 96,
+              "233": 18,
+              "239": 17,
+              "244": 187,
+              "185": 353,
+              "211": 348,
+              "126": 285,
+              "200": 10,
+              "219": 13,
+              "102": 41,
+              "135": 19,
+              "234": 757,
+              "149": 727,
+              "158": 198,
+              "162": 653,
+              "171": 194,
+              "180": 16,
+              "195": 706,
+              "197": 192,
+              "207": 10,
+              "204": 286,
+              "243": 272,
+              "98": 251862,
+              "5": 363,
+              "6": 752,
+              "7": 1105,
+              "8": 1537,
+              "10": 2420,
+              "11": 2748,
+              "12": 3099,
+              "13": 3384,
+              "14": 3655,
+              "15": 3855,
+              "16": 4162,
+              "17": 4396,
+              "18": 4516,
+              "19": 4496,
+              "20": 4672,
+              "21": 4644,
+              "22": 4749,
+              "23": 4904,
+              "24": 4837,
+              "25": 4860,
+              "26": 5034,
+              "27": 5088,
+              "28": 5069,
+              "29": 5012,
+              "30": 5080,
+              "31": 5160,
+              "32": 5269,
+              "33": 5210,
+              "34": 5184,
+              "35": 5236,
+              "36": 5363,
+              "37": 5378,
+              "38": 5367,
+              "39": 5314,
+              "40": 5381,
+              "41": 5430,
+              "42": 5539,
+              "43": 5609,
+              "44": 5593,
+              "45": 5569,
+              "46": 5755,
+              "47": 5776,
+              "48": 5789,
+              "49": 5790,
+              "50": 5876,
+              "51": 5993,
+              "52": 6246,
+              "53": 6239,
+              "54": 6391,
+              "55": 6364,
+              "56": 6417,
+              "57": 6590,
+              "58": 6804,
+              "59": 6878,
+              "60": 6980,
+              "61": 7080,
+              "62": 7388,
+              "63": 7621,
+              "64": 7780,
+              "65": 7995,
+              "66": 8251,
+              "67": 8403,
+              "68": 8717,
+              "69": 8994,
+              "70": 9550,
+              "71": 10011,
+              "72": 10247,
+              "73": 10841,
+              "74": 11279,
+              "75": 12099,
+              "76": 12715,
+              "77": 13533,
+              "78": 14386,
+              "79": 15592,
+              "80": 16509,
+              "81": 18017,
+              "82": 19453,
+              "83": 20977,
+              "84": 22773,
+              "85": 24707,
+              "86": 26978,
+              "87": 30041,
+              "88": 33781,
+              "89": 37444,
+              "90": 41741,
+              "91": 47249,
+              "92": 54759,
+              "93": 63728,
+              "94": 75187,
+              "95": 91295,
+              "96": 115583,
+              "97": 156234,
+              "3": 50,
+              "4": 169,
+              "9": 1958,
+              "2": 5
+            },
+            "firstUsableSample": {
+              "column": 5462,
+              "row": 20,
+              "value": 226
+            }
+          }
+        ],
+        "seconds": 1.14,
+        "completeDecode": true
+      },
+      "representativeRawPixels": {
+        "255": {
+          "column": 0,
+          "row": 0,
+          "longitude": 53.864716174824,
+          "latitude": -18.98199316166828,
+          "raw": 255,
+          "noData": true
+        },
+        "100": {
+          "column": 5460,
+          "row": 479,
+          "longitude": 56.048716174823994,
+          "latitude": -19.173593161668283,
+          "raw": 100,
+          "noData": false
+        },
+        "254": {
+          "column": 10409,
+          "row": 18,
+          "longitude": 58.028316174824,
+          "latitude": -18.989193161668283,
+          "raw": 254,
+          "noData": false
+        },
+        "50": {
+          "column": 9337,
+          "row": 2519,
+          "longitude": 57.599516174824,
+          "latitude": -19.98959316166828,
+          "raw": 50,
+          "noData": false
+        }
+      },
+      "nativeAccepted": false,
+      "scope": "One separate confidence original; no scientific probability calibration/accuracy or other confidence originals claimed"
+    }
+  ],
+  "positiveUIProbe": {
+    "datasetId": "worldcereal",
+    "referenceYear": 2021,
+    "aez": "9026",
+    "product": "temporarycrops",
+    "season": "tc-annual",
+    "recommendedAOI": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "positivePixel": {
+      "column": 45065,
+      "row": 12882,
+      "longitude": 57.619974508157334,
+      "latitude": -20.05533482833495,
+      "expectedRawValue": 100,
+      "expectedNativeNoData": false
+    },
+    "nearby32x32Block": {
+      "positive100Count": 1024,
+      "originalPixelCount": 1024
+    },
+    "fileActualBounds": [
+      53.864516174824,
+      -22.695376495001614,
+      59.99509950815733,
+      -18.981793161668282
+    ],
+    "publisherBbox": [
+      53.864516174824,
+      -22.69539316166828,
+      59.99509950815733,
+      -18.981793161668282
+    ],
+    "bboxDifferenceDegrees": {
+      "southPublisherMinusActual": -1.6666666667219943e-05
+    },
+    "scope": "A representative original crop-coded pixel and small neighborhood; not scientific map accuracy or AOI-wide valid coverage verification"
+  },
+  "confidenceLegendConflict": {
+    "publisherLegend": "From low (0) to high (100) confidence [254 = no crop]",
+    "actualRawValues101Through253Count": 48300,
+    "rawUnmodified": true,
+    "interpretation": "Actual raw values exceed the TIFF stated confidence range in a small number of pixels; no clipping, probability calibration or automatic masking is claimed"
+  },
+  "totalIndependentBytes": 14773789,
+  "nativeAcceptanceFixture": "../scripts/public-dataset-worldcereal-cases.json",
+  "primaryDocumentation": [
+    "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+    "https://esa-worldcereal.org/en/products/global-maps"
+  ]
+}

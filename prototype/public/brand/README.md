@@ -1,24 +1,30 @@
-# GeoD brand assets
+# GeoD Global brand assets
 
-The blue/cyan **G** is the existing GeoD A1 symbol, copied without alteration
-from `GeoD-logo/03-geod-a1-symbol.png` in `gaopengbin/tif-downloader` at source
-commit `0938626b16aa2662df6058b2a7bd7733c72a3f14`.
+The simplified **Global v6** symbol uses the blue → cyan → green gradient from
+the GeoD Global 1.1 brand kit. Its revised transparent PNG SHA-256 is
+`01d4f478243768226237aedac44290665b48be3920e5b9117df17d7de0a3c7fe`.
+The existing GeoD MIT notice remains in `LICENSE`.
 
-`geod-symbol.png` is a 1254 × 1254 transparent PNG. Its SHA-256 is
-`ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000`.
-The original repository's MIT notice is included in `LICENSE`.
+Only selected production exports are included here, not the full design kit:
 
-The Tauri 2.11.5 CLI resampled this image to generate the desktop/tray PNG and
-multi-size Windows ICO in `src-tauri/icons`. It did not redraw or recolor the
-mark. The header, favicon and About view use this same source; the executable,
-tray and installer use the generated application icons.
+- `geod-symbol.png`: 256 × 256 transparent mark, used in the application header,
+  Agent welcome view, sign-in and favicon.
+- `global-space-v1.webp`: clean half-Earth space background from the same kit,
+  used by the sign-in page without an embedded wordmark.
+- `PROVENANCE.json`: selected kit exports and their SHA-256 hashes.
 
-Reproduce from this repository root:
+`src-tauri/icons/icon.png` is the same approved 256 px mark. `icon.ico` uses
+the kit's transparent Windows export with 16/24/32/48/64/128/256 px resources
+for the executable, window and tray. The CSS wordmark uses the kit's
+`#087BEA → #00BBDF → #21C885` gradient while keeping the existing interface
+control colors.
 
-```sh
-npx tauri icon prototype/public/brand/geod-symbol.png --output .verification/brand-icons
-```
+To reproduce, copy `icons/png/symbol-256.png`,
+`icons/windows/geod-global-symbol.ico` and
+`backgrounds/clean-space-original.webp` from
+`design/brand/geod-global-brand-kit-1.1` to their corresponding paths above.
+`scripts/verify-brand.mjs` pins the selected assets and verifies PNG
+transparency and Windows icon sizes before packaging. There is no runtime
+dependency on the design directory or the domestic product.
 
-This is a checked-in brand resource, not a build or runtime dependency on the
-domestic product. `scripts/verify-brand.mjs` checks the source and generated
-icon hashes, PNG headers and Windows icon sizes before packaging.
+The 1.1 symbol retains the clean G without the globe or satellite orbit. Earlier kits are retained for comparison.

@@ -150,6 +150,12 @@ impl JobManager {
         hash: &str,
     ) -> Result<Value> {
         let plan = self.editable_plan(session, id, hash).await?;
+        if matches!(plan.action, Action::GscloudDownload { .. }) {
+            return Err(
+                "Search GSCloud again and create a new review to change the selected originals."
+                    .into(),
+            );
+        }
         if matches!(plan.action, Action::Vector { .. }) {
             return vector::draft(&plan);
         }
@@ -238,7 +244,8 @@ impl JobManager {
             | Action::WcsDownload { .. }
             | Action::StacProject { .. }
             | Action::StacDownload { .. }
-            | Action::Vector { .. } => {
+            | Action::Vector { .. }
+            | Action::GscloudDownload { .. } => {
                 unreachable!()
             }
         }
@@ -310,6 +317,7 @@ impl JobManager {
                     files,
                     project,
                     mut acquisition,
+                    originals_only,
                 },
                 PlanRevision::Download { item_ids },
             ) => {
@@ -332,6 +340,7 @@ impl JobManager {
                     session,
                     Action::Download {
                         acquisition,
+                        originals_only,
                         query,
                         metadata_sha256,
                         files,

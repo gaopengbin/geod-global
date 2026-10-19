@@ -1,0 +1,3834 @@
+{
+  "date": "2026-10-15",
+  "schema": "geod-global-dialogue-channel-acceptance/v1",
+  "model": "deepseek-flash",
+  "realModelReplies": true,
+  "nativeDispatcher": true,
+  "reviewConfirmation": "Test driver confirmed only recorded small-file native plans using their actual planId and planHash. No arbitrary tools or credentials were supplied to the model.",
+  "coverage": "Eight representative channel routes, not every dataset, band, country, year or provider.",
+  "cases": [
+    {
+      "case": "earth-search",
+      "run": "dialogue-channels-20261015",
+      "seconds": 57.17,
+      "modelTurnStatus": "completed",
+      "goalStatus": "complete",
+      "modelRequests": 11,
+      "usage": {
+        "cachedInput": 189952,
+        "input": 223766,
+        "output": 5840,
+        "reasoningOutput": 3550,
+        "total": 229606
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "7efbae07-af28-41f7-848e-3281e3bf4150",
+          "bytes": 2633064,
+          "sha256": "1fc6f032960bc6c8608b8dcfbc3259d9e476e18a341cc1205159bf50c98a5ada",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:45:56.738Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 7,
+            "kind": "search",
+            "moreAvailable": true
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_project_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "1fc6f032960bc6c8608b8dcfbc3259d9e476e18a341cc1205159bf50c98a5ada"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": true,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/earth-search/report.json"
+    },
+    {
+      "case": "dem90",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 43.0,
+      "modelTurnStatus": "completed",
+      "goalStatus": "complete",
+      "modelRequests": 10,
+      "usage": {
+        "cachedInput": 159104,
+        "input": 180433,
+        "output": 3644,
+        "reasoningOutput": 1795,
+        "total": 184077
+      },
+      "confirmedReviews": 1,
+      "files": [
+        {
+          "id": "59aec314-7f10-43ea-aa30-6bd283af9d97",
+          "bytes": 5315373,
+          "sha256": "6c5a5815874946143f5bf84a20d6c3a15535436e5d870ab8264d6dfc06d79a65",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T07:01:41.049Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "search",
+            "moreAvailable": true
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_scene_coverage",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "6c5a5815874946143f5bf84a20d6c3a15535436e5d870ab8264d6dfc06d79a65"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": true,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/dem90/report.json"
+    },
+    {
+      "case": "worldpop",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 51.81,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 16,
+      "usage": {
+        "cachedInput": 249600,
+        "input": 296628,
+        "output": 5128,
+        "reasoningOutput": 2436,
+        "total": 301756
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "9bef8fe5-bac2-436e-b5e1-40b95a4310d8",
+          "bytes": 156803,
+          "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_dataset_catalog",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/worldpop/report.json"
+    },
+    {
+      "case": "chirps",
+      "run": "dialogue-channels-20261015",
+      "seconds": 83.19,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 17,
+      "usage": {
+        "cachedInput": 345728,
+        "input": 402781,
+        "output": 9619,
+        "reasoningOutput": 6326,
+        "total": 412400
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "382e1721-e800-40d9-8335-a745766a34a4",
+          "bytes": 21628766,
+          "sha256": "499e780f65a88e91e6fc8b337e165b249396a98b2ea4d51ae0cde946ef5d0ec6",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:48:32.019Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_stac_connections",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/chirps/report.json"
+    },
+    {
+      "case": "jaxa",
+      "run": "dialogue-channels-20261015",
+      "seconds": 94.92,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 19,
+      "usage": {
+        "cachedInput": 401152,
+        "input": 481789,
+        "output": 12149,
+        "reasoningOutput": 8552,
+        "total": 493938
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "8cd2bf64-82f5-403d-aeee-e6bbc175f442",
+          "bytes": 140042,
+          "sha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:49:50.305Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/jaxa/report.json"
+    },
+    {
+      "case": "vector",
+      "run": "dialogue-channels-20261015",
+      "seconds": 42.09,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 7,
+      "usage": {
+        "cachedInput": 103424,
+        "input": 115462,
+        "output": 5454,
+        "reasoningOutput": 3599,
+        "total": 120916
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_feature_services",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_region_levels",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 2,
+            "kind": "levels"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_region_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "places",
+            "total": 1
+          }
+        },
+        {
+          "name": "geod_boundary_read",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:51:39.564Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_region_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "places",
+            "total": 1
+          }
+        },
+        {
+          "name": "geod_boundary_read",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_region_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "places",
+            "total": 1
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/vector/report.json"
+    },
+    {
+      "case": "wcs",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 16.31,
+      "modelTurnStatus": "completed",
+      "goalStatus": null,
+      "modelRequests": 3,
+      "usage": {
+        "cachedInput": 28544,
+        "input": 36046,
+        "output": 1607,
+        "reasoningOutput": 1017,
+        "total": 37653
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_wcs_connections",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T07:02:24.954Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/wcs/report.json"
+    },
+    {
+      "case": "protected",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 23.56,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 4,
+      "usage": {
+        "cachedInput": 58624,
+        "input": 62958,
+        "output": 2640,
+        "reasoningOutput": 1285,
+        "total": 65598
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T07:02:40.299Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/protected/report.json"
+    }
+  ],
+  "attempts": [
+    {
+      "case": "earth-search",
+      "run": "dialogue-channels-20261015",
+      "seconds": 57.17,
+      "modelTurnStatus": "completed",
+      "goalStatus": "complete",
+      "modelRequests": 11,
+      "usage": {
+        "cachedInput": 189952,
+        "input": 223766,
+        "output": 5840,
+        "reasoningOutput": 3550,
+        "total": 229606
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "7efbae07-af28-41f7-848e-3281e3bf4150",
+          "bytes": 2633064,
+          "sha256": "1fc6f032960bc6c8608b8dcfbc3259d9e476e18a341cc1205159bf50c98a5ada",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:45:56.738Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 7,
+            "kind": "search",
+            "moreAvailable": true
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_project_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "1fc6f032960bc6c8608b8dcfbc3259d9e476e18a341cc1205159bf50c98a5ada"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": true,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/earth-search/report.json"
+    },
+    {
+      "case": "dem90",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 43.0,
+      "modelTurnStatus": "completed",
+      "goalStatus": "complete",
+      "modelRequests": 10,
+      "usage": {
+        "cachedInput": 159104,
+        "input": 180433,
+        "output": 3644,
+        "reasoningOutput": 1795,
+        "total": 184077
+      },
+      "confirmedReviews": 1,
+      "files": [
+        {
+          "id": "59aec314-7f10-43ea-aa30-6bd283af9d97",
+          "bytes": 5315373,
+          "sha256": "6c5a5815874946143f5bf84a20d6c3a15535436e5d870ab8264d6dfc06d79a65",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T07:01:41.049Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "search",
+            "moreAvailable": true
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_scene_coverage",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "6c5a5815874946143f5bf84a20d6c3a15535436e5d870ab8264d6dfc06d79a65"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": true,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/dem90/report.json"
+    },
+    {
+      "case": "dem90",
+      "run": "dialogue-channels-20261015",
+      "seconds": 44.94,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 9,
+      "usage": {
+        "cachedInput": 122112,
+        "input": 167813,
+        "output": 5957,
+        "reasoningOutput": 3356,
+        "total": 173770
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:47:19.505Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "search",
+            "moreAvailable": true
+          }
+        },
+        {
+          "name": "geod_scene_coverage",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_scene_coverage",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_scene_coverage",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/dem90/report.json"
+    },
+    {
+      "case": "worldpop",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 51.81,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 16,
+      "usage": {
+        "cachedInput": 249600,
+        "input": 296628,
+        "output": 5128,
+        "reasoningOutput": 2436,
+        "total": 301756
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "9bef8fe5-bac2-436e-b5e1-40b95a4310d8",
+          "bytes": 156803,
+          "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_dataset_catalog",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/worldpop/report.json"
+    },
+    {
+      "case": "worldpop",
+      "run": "dialogue-channels-v2-20261015",
+      "seconds": 59.55,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 16,
+      "usage": {
+        "cachedInput": 266880,
+        "input": 342614,
+        "output": 6660,
+        "reasoningOutput": 3631,
+        "total": 349274
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "d70f9bd8-2ebb-4c32-a576-68fde2e4ec6b",
+          "bytes": 156803,
+          "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:55:18.462Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_project_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v2-20261015/worldpop/report.json"
+    },
+    {
+      "case": "worldpop",
+      "run": "dialogue-channels-20261015",
+      "seconds": 24.62,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 8,
+      "usage": {
+        "cachedInput": 87168,
+        "input": 126208,
+        "output": 2721,
+        "reasoningOutput": 1301,
+        "total": 128929
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:48:02.097Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_connections",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/worldpop/report.json"
+    },
+    {
+      "case": "chirps",
+      "run": "dialogue-channels-20261015",
+      "seconds": 83.19,
+      "modelTurnStatus": "completed",
+      "goalStatus": "needs_attention",
+      "modelRequests": 17,
+      "usage": {
+        "cachedInput": 345728,
+        "input": 402781,
+        "output": 9619,
+        "reasoningOutput": 6326,
+        "total": 412400
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "382e1721-e800-40d9-8335-a745766a34a4",
+          "bytes": 21628766,
+          "sha256": "499e780f65a88e91e6fc8b337e165b249396a98b2ea4d51ae0cde946ef5d0ec6",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:48:32.019Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_stac_connections",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/chirps/report.json"
+    },
+    {
+      "case": "jaxa",
+      "run": "dialogue-channels-20261015",
+      "seconds": 94.92,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 19,
+      "usage": {
+        "cachedInput": 401152,
+        "input": 481789,
+        "output": 12149,
+        "reasoningOutput": 8552,
+        "total": 493938
+      },
+      "confirmedReviews": 2,
+      "files": [
+        {
+          "id": "8cd2bf64-82f5-403d-aeee-e6bbc175f442",
+          "bytes": 140042,
+          "sha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1",
+          "status": "succeeded",
+          "transfer": {
+            "mode": "fresh",
+            "resumedBytes": 0
+          }
+        }
+      ],
+      "nativeTools": [
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:49:50.305Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_dataset_resolve",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_connect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_snapshot",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_assets",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_stac_project_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_get",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_project_download_plan",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_download_plan",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "pending"
+          }
+        },
+        {
+          "name": "geod_plan_execute",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_job_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "job",
+            "settled": true,
+            "status": "succeeded"
+          }
+        },
+        {
+          "name": "geod_raster_inspect",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_stac_inspect",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "file",
+            "sha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1"
+          }
+        },
+        {
+          "name": "geod_goal_bind",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_open",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_plan_status",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "plan",
+            "status": "submitted"
+          }
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/jaxa/report.json"
+    },
+    {
+      "case": "vector",
+      "run": "dialogue-channels-20261015",
+      "seconds": 42.09,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 7,
+      "usage": {
+        "cachedInput": 103424,
+        "input": 115462,
+        "output": 5454,
+        "reasoningOutput": 3599,
+        "total": 120916
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_feature_services",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_region_levels",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 2,
+            "kind": "levels"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_region_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "places",
+            "total": 1
+          }
+        },
+        {
+          "name": "geod_boundary_read",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:51:39.564Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_region_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "places",
+            "total": 1
+          }
+        },
+        {
+          "name": "geod_boundary_read",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_region_search",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "count": 1,
+            "kind": "places",
+            "total": 1
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/vector/report.json"
+    },
+    {
+      "case": "wcs",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 16.31,
+      "modelTurnStatus": "completed",
+      "goalStatus": null,
+      "modelRequests": 3,
+      "usage": {
+        "cachedInput": 28544,
+        "input": 36046,
+        "output": 1607,
+        "reasoningOutput": 1017,
+        "total": 37653
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_wcs_connections",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T07:02:24.954Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/wcs/report.json"
+    },
+    {
+      "case": "wcs",
+      "run": "dialogue-channels-20261015",
+      "seconds": 54.2,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 13,
+      "usage": {
+        "cachedInput": 189568,
+        "input": 252344,
+        "output": 6348,
+        "reasoningOutput": 4153,
+        "total": 258692
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_wcs_connections",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:52:12.983Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_wcs_connections",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_wcs_connections",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:52:50.449Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/wcs/report.json"
+    },
+    {
+      "case": "protected",
+      "run": "dialogue-channels-v3-20261015",
+      "seconds": 23.56,
+      "modelTurnStatus": "completed",
+      "goalStatus": "waiting_input",
+      "modelRequests": 4,
+      "usage": {
+        "cachedInput": 58624,
+        "input": 62958,
+        "output": 2640,
+        "reasoningOutput": 1285,
+        "total": 65598
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T07:02:40.299Z",
+            "count": 16,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_execution_policy",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_request_decision",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-v3-20261015/protected/report.json"
+    },
+    {
+      "case": "protected",
+      "run": "dialogue-channels-20261015",
+      "seconds": 65.44,
+      "modelTurnStatus": "completed",
+      "goalStatus": "paused",
+      "modelRequests": 14,
+      "usage": {
+        "cachedInput": 297472,
+        "input": 355237,
+        "output": 6868,
+        "reasoningOutput": 3654,
+        "total": 362105
+      },
+      "confirmedReviews": 0,
+      "files": [],
+      "nativeTools": [
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:53:06.244Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_workspace_context",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_define",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:53:25.976Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_goal_check",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "kind": "read"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:53:46.585Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:53:56.513Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_sources_list",
+          "status": "completed",
+          "failureCode": null,
+          "error": null,
+          "summary": {
+            "accounts": [
+              {
+                "expiresAt": null,
+                "provider": "copernicus",
+                "status": "not-connected",
+                "verifiedAt": null
+              },
+              {
+                "expiresAt": null,
+                "provider": "nasa-earthdata",
+                "status": "not-connected",
+                "verifiedAt": null
+              }
+            ],
+            "checkedAt": "2026-10-15T06:54:03.288Z",
+            "count": 15,
+            "kind": "sources"
+          }
+        },
+        {
+          "name": "geod_scene_search",
+          "status": "failed",
+          "failureCode": "tool-failed",
+          "error": null,
+          "summary": null
+        }
+      ],
+      "openRequestVerified": false,
+      "rendererVerified": false,
+      "evidence": ".verification/dialogue-channels-20261015/protected/report.json"
+    }
+  ],
+  "independentFileChecks": [
+    {
+      "run": "dialogue-channels-20261015",
+      "case": "chirps",
+      "id": "382e1721-e800-40d9-8335-a745766a34a4",
+      "bytes": 21628766,
+      "sha256": "499e780f65a88e91e6fc8b337e165b249396a98b2ea4d51ae0cde946ef5d0ec6",
+      "width": 7200,
+      "height": 2400,
+      "bands": 1,
+      "dtypes": [
+        "float32"
+      ],
+      "crs": "EPSG:4326",
+      "nodata": null,
+      "decodedSamples": 17280000,
+      "unmaskedSamples": 17280000,
+      "freshTransfer": "fresh"
+    },
+    {
+      "run": "dialogue-channels-20261015",
+      "case": "earth-search",
+      "id": "7efbae07-af28-41f7-848e-3281e3bf4150",
+      "bytes": 2633064,
+      "sha256": "1fc6f032960bc6c8608b8dcfbc3259d9e476e18a341cc1205159bf50c98a5ada",
+      "width": 5490,
+      "height": 5490,
+      "bands": 1,
+      "dtypes": [
+        "uint8"
+      ],
+      "crs": "EPSG:32610",
+      "nodata": 0.0,
+      "decodedSamples": 30140100,
+      "unmaskedSamples": 30140100,
+      "freshTransfer": "fresh"
+    },
+    {
+      "run": "dialogue-channels-20261015",
+      "case": "jaxa",
+      "id": "8cd2bf64-82f5-403d-aeee-e6bbc175f442",
+      "bytes": 140042,
+      "sha256": "fff9b57eafe2f0d312226bcab9c71c1e435fa8fc732b8f1dabb413f7cb0be3f1",
+      "width": 900,
+      "height": 900,
+      "bands": 1,
+      "dtypes": [
+        "int16"
+      ],
+      "crs": "EPSG:4326",
+      "nodata": -32768.0,
+      "decodedSamples": 810000,
+      "unmaskedSamples": 228330,
+      "freshTransfer": "fresh"
+    },
+    {
+      "run": "dialogue-channels-v2-20261015",
+      "case": "worldpop",
+      "id": "d70f9bd8-2ebb-4c32-a576-68fde2e4ec6b",
+      "bytes": 156803,
+      "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+      "width": 214,
+      "height": 245,
+      "bands": 1,
+      "dtypes": [
+        "float32"
+      ],
+      "crs": "EPSG:4326",
+      "nodata": -99999.0,
+      "decodedSamples": 52430,
+      "unmaskedSamples": 33446,
+      "freshTransfer": "fresh"
+    },
+    {
+      "run": "dialogue-channels-v3-20261015",
+      "case": "dem90",
+      "id": "59aec314-7f10-43ea-aa30-6bd283af9d97",
+      "bytes": 5315373,
+      "sha256": "6c5a5815874946143f5bf84a20d6c3a15535436e5d870ab8264d6dfc06d79a65",
+      "width": 1200,
+      "height": 1200,
+      "bands": 1,
+      "dtypes": [
+        "float32"
+      ],
+      "crs": "EPSG:4326",
+      "nodata": null,
+      "decodedSamples": 1440000,
+      "unmaskedSamples": 1440000,
+      "freshTransfer": "fresh"
+    },
+    {
+      "run": "dialogue-channels-v3-20261015",
+      "case": "worldpop",
+      "id": "9bef8fe5-bac2-436e-b5e1-40b95a4310d8",
+      "bytes": 156803,
+      "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+      "width": 214,
+      "height": 245,
+      "bands": 1,
+      "dtypes": [
+        "float32"
+      ],
+      "crs": "EPSG:4326",
+      "nodata": -99999.0,
+      "decodedSamples": 52430,
+      "unmaskedSamples": 33446,
+      "freshTransfer": "fresh"
+    }
+  ],
+  "uniqueOriginals": 5,
+  "checks": {
+    "agentTests": 155,
+    "nativeDatasetTests": 6,
+    "desktopBuild": "passed"
+  },
+  "artifacts": [
+    {
+      "file": "target/debug/geod-global-desktop.exe",
+      "bytes": 199411200,
+      "sha256": "ab1b0fd4cc8047cc26bb3b49d01a6f20f5003404e0e29acad60c825d5c13d316"
+    },
+    {
+      "file": ".agent-runtime/win32-x64/agent.mjs",
+      "bytes": 1502729,
+      "sha256": "22c8b6df50bb7216f555095aff922715f1fdab8818f91c89b190e1891d342fa6"
+    }
+  ],
+  "limitations": [
+    "Native model test host and original user workspace remain separate. Only the saved model connection was reused; source accounts and user-created service connections were not copied.",
+    "No renderer or native desktop window acceptance in this test. Verified workspace-open requests alone are not rendered-pixel evidence.",
+    "Generic STAC products downloaded and inspected correctly but cannot currently be opened through geod_workspace_open as raster jobs.",
+    "geoBoundaries and WCS require saved connections; the Agent does not yet create these connections.",
+    "Copernicus SAFE original download was not tested with an authorized source account; its catalog response was invalid JSON on this route.",
+    "Initial results precede the bounded catalog and no-progress fixes. Retest runs are listed separately, with no extrapolated token saving."
+  ]
+}

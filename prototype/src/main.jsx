@@ -1,3 +1,4 @@
+import {NUM_NOTICE} from './srtm-num.js';
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -18,6 +19,7 @@ import {
   SquareDashed,
   SlidersHorizontal,
   Download,
+  Trash2,
   ExternalLink,
   ArrowUpRight,
   Sun,
@@ -35,6 +37,7 @@ import {
   MousePointer2,
   Mountain,
   MessageSquare,
+  Eye,
 } from "lucide-react";
 import "./ui/foundation.css";
 import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
@@ -52,25 +55,40 @@ import { desktopAvailable, runtimeRequest } from "./runtime-client.js";
 import { mergeProjectCatalog, projectCatalogScenes, projectExploreSearch } from "./project-explore.js";
 import { SettingsPage } from './settings-page.jsx';
 import { DistributionProvider, NotificationCenter } from './distribution-ui.jsx';
-import { StacSourceDialog } from './stac-ui.jsx';
-import { WcsSourceDialog } from './wcs-ui.jsx';
-import { MapServiceDialog } from './wms-ui.jsx';
-import { FeatureServiceDialog } from './features-ui.jsx';
-import { TileSourceDialog } from './tiles-ui.jsx';
+import { StacSourceDialog, StacSourceExplorer } from './stac-ui.jsx';
+import { WcsSourceDialog, WcsSourceExplorer } from './wcs-ui.jsx';
+import { PublicDatasetDialog, PublicDatasetExplorer } from './public-dataset-ui.jsx';
+import { MapServiceExplorer } from './wms-ui.jsx';
+import { FeatureServiceExplorer } from './features-ui.jsx';
+import {OfficialVectorExplorer} from './official-vector-explore.jsx';
+import {LocalRasterExplorer} from './local-raster-ui.jsx';
+import {WaybackExplorer} from './wayback-explore-ui.jsx';
+import {GSCloudExplorer} from './gscloud-ui.jsx';
+import {OvertureExplorer} from './overture-explore-ui.jsx';
+import { TileSourceExplorer } from './tiles-ui.jsx';
 import { SOURCE_DIRECTORY } from './source-directory.js';
 import { normalizeNavigationHash } from './navigation.js';
 import { I18nProvider, useI18n } from "./i18n.jsx";
 import { AppHeader, GeoDBrand } from './app-header.jsx';
 import { CatalogFilters } from './catalog-filters.jsx';
 import { CatalogSourcePanel } from './catalog-source-panel.jsx';
+import { SourcePickerDialog } from './source-picker.jsx';
+import { BackgroundWorkLink, ExploreResultRow, SelectionActions } from './acquisition-ui.jsx';
+import { productForSource,readProductPreferences,writeProductPreferences } from './product-catalog.js';
+import { EarthEngineDialog, EarthEngineExplorer } from './earth-engine-ui.jsx';
+import { GebcoExplorer } from './gebco-ui.jsx';
 import { CatalogPreviewControls } from './catalog-preview-ui.jsx';
-import { catalogPreviewKind, catalogPreviewChannel, catalogBrowsePreview } from './catalog-preview.js';
+import { catalogPreviewKind, catalogPreviewChannel, catalogBrowsePreview, catalogItemPreview } from './catalog-preview.js';
+import { elevationPreview } from './elevation-preview.js';
 import { providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel, demTileLabel, copDemLabel } from './providers.js';
 import { imageryHrefs } from './explore-imagery.js';
-import { RELEASE_VERSION } from './release-policy.js';
+import { RELEASE_VERSION, originalsReleased } from './release-policy.js';
 import { AgentPanel } from './agent-panel.jsx';
+const AgentArchiveResult=React.lazy(()=>import('./agent-archive-result.jsx'));
 import {IdentityProvider, IdentityEntry, SignInPage} from './identity-ui.jsx';
-import { agentMapContext, selectedSearchBounds } from './startup.js';
+import {OfficialServicesProvider, ImageryMonitoringPage} from './official-ui.jsx';
+import {AccountPage} from './account-ui.jsx';
+import { agentMapContext, gscloudMapContext, agentScene, selectedSearchBounds } from './startup.js';
 
 const WorkspaceMap = React.lazy(() => import("./workspace-map.jsx").then(module => ({ default: module.WorkspaceMap })));
 const VectorWorkspace = React.lazy(() => import("./vector-map.jsx").then(module => ({ default: module.VectorWorkspace })));
@@ -92,7 +110,8 @@ const pageFromHash = () => {
   try { requested = decodeURIComponent(location.hash.slice(1).split('?')[0]); }
   catch { return "Home"; }
   if (requested === "Recipes") return "My Data";
-  return [...nav.map(([name]) => name), "Settings", "SignIn"].includes(requested) ? requested : "Home";
+  if (requested === "Official services") return "Imagery monitoring";
+  return [...nav.map(([name]) => name), "Settings", "SignIn", "Account", "Imagery monitoring"].includes(requested) ? requested : "Home";
 };
 const projectFromHash = () => {
   if (!['My Data', 'Explore'].includes(pageFromHash())) return null;
@@ -127,23 +146,52 @@ function SceneThumbnail({ src, alt }) {
   </span> : <span className="catalog-thumbnail-missing" role="img" aria-label={t("Preview unavailable: {description}", { description: alt })}>{t("Preview unavailable")}</span>;
 }
 
+function ConnectedSourceExplorer({ entry, ...props }) {
+  if (entry.kind === 'gscloud') return <GSCloudExplorer {...props}/>;
+  if (entry.kind === 'gebco') return <GebcoExplorer {...props}/>;
+  if (entry.kind === 'overture') return <OvertureExplorer {...props}/>;
+  if (entry.kind === 'official-vector') return <OfficialVectorExplorer {...props} datasetId={entry.datasetId}/>;
+  if (entry.kind === 'local-raster') return <LocalRasterExplorer {...props}/>;
+  if (entry.kind === 'wayback') return <WaybackExplorer {...props}/>;
+  if (entry.kind === 'stac') return <StacSourceExplorer {...props} initialKind={entry.sourceType}/>;
+  if (entry.kind === 'wcs') return <WcsSourceExplorer {...props}/>;
+  if (entry.kind === 'map') return <MapServiceExplorer {...props} initialProtocol={entry.protocol} initialPreset={entry.preset}/>;
+  if (entry.kind === 'vector') return <FeatureServiceExplorer {...props} initialProtocol={entry.protocol}/>;
+  if (entry.kind === 'tiles') return <TileSourceExplorer {...props}/>;
+  if (entry.kind === 'earth-engine') return <EarthEngineExplorer {...props}/>;
+  return null;
+}
+
 export function App() {
-  return <IdentityProvider><DistributionProvider><AppContent/></DistributionProvider></IdentityProvider>;
+  return <IdentityProvider><OfficialServicesProvider><DistributionProvider><AppContent/></DistributionProvider></OfficialServicesProvider></IdentityProvider>;
 }
 function AppContent() {
   const { t, date, number, locale } = useI18n();
   const [liveCatalog, setLiveCatalog] = useState(null);
   const [searchInput, setSearchInput] = useState(defaultLiveSearch);
+  const [exploreDatasetId, setExploreDatasetId] = useState(null);
+  const [exploreEntry, setExploreEntry] = useState(null);
+  const [gscloudContext,setGSCloudContext]=useState(null);
+  const [publicDatasets, setPublicDatasets] = useState([]);
+  const [datasetRequest, setDatasetRequest] = useState(null);
+  const [datasetSearchRevision, setDatasetSearchRevision] = useState(0);
+  const [datasetSidebar, setDatasetSidebar] = useState(null);
+  const [datasetMutation, setDatasetMutation] = useState(false);
+  const [sourcePickerOpen, setSourcePickerOpen] = useState(false);
+  const sourcePickerTrigger = useRef(null);
+  const activeDataset = publicDatasets.find(dataset => dataset.id === exploreDatasetId);
   const sourceProvider = providerById(searchInput.provider);
   const canLoadMap = canDisplayImagery(sourceProvider);
   const isElevation = sourceProvider.domain === 'elevation';
   const isSrtm = sourceProvider.id === 'nasa-srtm';
+  const isNum=sourceProvider.id==='srtm-num';
   const isRadar = sourceProvider.domain === 'radar';
   const isComposite = sourceProvider.domain === 'composite';
   const isVegetation = sourceProvider.id === 'planetary-vegetation';
   const isViirs = sourceProvider.id.startsWith('nasa-viirs-');
   const isAerial = sourceProvider.domain === 'aerial';
   const previewKind = catalogPreviewKind(sourceProvider);
+  const canLoadSelectedMap = canLoadMap || Boolean(previewKind);
   const beforeAerialDates = useRef(null);
   const [preparingImagery, setPreparingImagery] = useState(false);
   const imagerySequence = useRef(0);
@@ -152,12 +200,17 @@ function AppContent() {
   const [appliedSearch, setAppliedSearch] = useState(null);
   const [areaPolygon, setAreaPolygon] = useState(null);
   const searchRunner = useRef(null);
+  const searchSequence = useRef(0);
   if (!searchRunner.current) searchRunner.current = createSearchRunner();
   const catalog = liveCatalog;
   const pendingBounds = selectedSearchBounds(searchInput);
-  const bbox = selectedSearchBounds(searchInput, appliedSearch);
+  const bbox = selectedSearchBounds(searchInput, exploreDatasetId || exploreEntry ? null : appliedSearch);
   const areaName = areaPolygon?.place?.name || "Custom search area";
   const [page, setPage] = useState(pageFromHash);
+  const [agentSessions,setAgentSessions]=useState({});
+  const agentDrafts=useRef(new Map());
+  const agentSessionViews=useRef(new Map());
+  const rememberAgentSession=(kind,id)=>setAgentSessions(current=>({...current,[kind]:id}));
   const [vectorId,setVectorId]=useState(()=>new URLSearchParams(location.hash.split('?')[1]||'').get('vector'));
   const [mapImageId,setMapImageId]=useState(()=>new URLSearchParams(location.hash.split('?')[1]||'').get('map'));
   const [tilePackageId,setTilePackageId]=useState(()=>new URLSearchParams(location.hash.split('?')[1]||'').get('tiles'));
@@ -166,12 +219,14 @@ function AppContent() {
   const [activeProject, setActiveProject] = useState(null);
   const [projectError, setProjectError] = useState('');
   const restoredProjectId = useRef(null);
+  const projectRestoreSequence = useRef(0);
   const [selected, setSelected] = useState(null),
     [query, setQuery] = useState(""),
     [sort, setSort] = useState("date");
   const [selectedIds, setSelectedIds] = useState([]);
   const [loadedIds, setLoadedIds] = useState([]);
   const [visibleLoadedIds, setVisibleLoadedIds] = useState([]);
+  const [batchPreview, setBatchPreview] = useState(false);
   const [activeDay, setActiveDay] = useState(null);
   const [vegetationIndex, setVegetationIndex] = useState('ndvi');
   const [radarPolarization, setRadarPolarization] = useState('vv');
@@ -187,7 +242,7 @@ function AppContent() {
   const [footprintCount, setFootprintCount] = useState(0);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [discoveryCollapsed, setDiscoveryCollapsed] = useState(false);
-  const [navCollapsed, setNavCollapsed] = useState(stored("nav-collapsed", false));
+  const [navCollapsed, setNavCollapsed] = useState(stored("nav-collapsed", true));
   const navigationPanel = useRef(null);
   const expandedNavigationSize = useRef(Math.max(180, Math.min(280, Number(stored('nav-width', 216)) || 216)));
   const initialNavigationSize = useRef(navCollapsed ? 72 : expandedNavigationSize.current);
@@ -195,9 +250,9 @@ function AppContent() {
     [compareId, setCompareId] = useState(""),
     [split, setSplit] = useState(50),
     [showArea, setShowArea] = useState(true),
-    [inspector, setInspector] = useState(window.innerWidth >= 1280);
+    [inspector, setInspector] = useState(false);
   const [stacOpen, setStacOpen] = useState(false);
-  const [sourceEntry, setSourceEntry] = useState(null);
+  const [earthEngineOpen, setEarthEngineOpen] = useState(false);
   const [agentOpen, setAgentOpen] = useState(() => pageFromHash() === 'Home');
   const [mapPreview,setMapPreview]=useState(null);
   useEffect(()=>setMapPreview(null),[page]);
@@ -214,14 +269,18 @@ function AppContent() {
     setLiveError("");
     imagerySequence.current += 1;
     const mapSequence = imagerySequence.current;
+    const searchGeneration = ++searchSequence.current;
     setPreparingImagery(false);
     setFiltersOpen(false);
+    let savedScenes;
+    try { savedScenes = restoredProject ? projectCatalogScenes(restoredProject) : []; }
+    catch(error) { setLiveError(error.message);setLiveState('error');return; }
     setLiveState("loading");
-    const savedScenes = restoredProject ? projectCatalogScenes(restoredProject) : [];
     setLiveCatalog(savedScenes.length ? mergeProjectCatalog({ complete: false, pages: 0 }, savedScenes) : null);
     setSelected(savedScenes[0] || null);
     setSelectedIds(savedScenes.map(scene => scene.id));
     setLoadedIds([]);
+    setBatchPreview(false);
     setVisibleLoadedIds([]);
     setActiveDay(null);
     setMapMatches([]);
@@ -231,6 +290,7 @@ function AppContent() {
     let previewRestored = false;
     try {
       const result = await searchRunner.current.runAll(url, { onPage: page => {
+        if (searchGeneration !== searchSequence.current) return;
         const merged = savedScenes.length ? mergeProjectCatalog(page, savedScenes) : page;
         setLiveCatalog(merged);
         if (!savedScenes.length && catalogPreviewKind(submitted.provider)) {
@@ -253,9 +313,10 @@ function AppContent() {
           }
         }
       } });
-      if (!result) return;
+      if (!result || searchGeneration !== searchSequence.current) return;
       setLiveState("ready");
     } catch (error) {
+      if (searchGeneration !== searchSequence.current) return;
       setLiveError(error.name === "AbortError" ? "Search cancelled." : error.name === "TimeoutError" ? "The data source did not respond within 30 seconds. Try again." : error.message);
       setLiveState("error");
     }
@@ -263,7 +324,7 @@ function AppContent() {
   // Catalog searches begin only after an explicit area/filter/source action,
   // or when restoring the actual area of a saved project.
   useEffect(() => () => searchRunner.current.cancel(), []);
-  const cancelSearch = () => { searchRunner.current.cancel(); setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
+  const cancelSearch = () => { searchRunner.current.cancel(); searchSequence.current += 1; setLiveState("idle"); setLiveError("Search cancelled. Run a search to retrieve scenes."); };
   const catalogError = (message) => {
     const httpError = /^(.*?) returned HTTP (\d+)\. Try again later\.$/.exec(message);
     return httpError ? t("{source} returned HTTP {status}. Try again later.", { source: httpError[1], status: httpError[2] }) : t(message);
@@ -271,14 +332,14 @@ function AppContent() {
   const applyFilters = values => {
     if (values.bbox !== searchInput.bbox) setAreaPolygon(null);
     setSearchInput(values);
-    runSearch(values);
+    if (!exploreDatasetId && !exploreEntry) runSearch(values);
   };
   const applyMapArea = ({ bounds, geometry, place }) => {
     const next = { ...searchInput, bbox: bounds.join(", ") };
     setSearchInput(next);
     setModal(null);
     setAreaPolygon(geometry ? { geometry, place, bounds } : null);
-    runSearch(next);
+    if (!exploreDatasetId && !exploreEntry) runSearch(next);
   };
   const exportMapArea = ({ bounds, geometry, place }) => showJSON("geod-search-area.geojson", {
     type: "Feature",
@@ -289,13 +350,16 @@ function AppContent() {
     ]] },
   });
   useEffect(() => {
+    let previousPage;
     const change = () => {
       const next = pageFromHash();
       const project = projectFromHash();
       const hash = normalizeNavigationHash(location.hash);
       if (location.hash !== hash) history.replaceState(null, "", hash);
       setPage(next);
-      if (next === 'Home') setAgentOpen(true);
+      if (next !== 'Explore') setSourcePickerOpen(false);
+      if (next !== previousPage) setAgentOpen(next === 'Home');
+      previousPage = next;
       setVectorId(new URLSearchParams(hash.split('?')[1]||'').get('vector'));
       setMapImageId(new URLSearchParams(hash.split('?')[1]||'').get('map'));
       setTilePackageId(new URLSearchParams(hash.split('?')[1]||'').get('tiles'));
@@ -325,21 +389,23 @@ function AppContent() {
   useEffect(() => {
     if (!exploringProjectId) return;
     let current = true;
+    const generation = ++projectRestoreSequence.current;
     const controller = new AbortController();
     setProjectError('');
     runtimeRequest('projects', undefined, controller.signal).then(projects => {
-      if (!current) return;
+      if (!current || generation !== projectRestoreSequence.current) return;
       const project = projects.find(item => item.id === exploringProjectId);
       if (!project) throw new Error('This project could not be found. Return to all projects or refresh the list.');
       setActiveProject(project);
       if (restoredProjectId.current !== project.id) {
         restoredProjectId.current = project.id;
         const next = projectExploreSearch(project, searchInput);
+        setExploreEntry(null); setExploreDatasetId(null); setDatasetRequest(null);
         setSearchInput(next);
         setAreaPolygon({ geometry: project.geometry || null, bounds: project.bounds, place: { name: project.name } });
         runSearch(next, project);
       }
-    }).catch(error => { if (current) setProjectError(error.message); });
+    }).catch(error => { if (current && generation === projectRestoreSequence.current) setProjectError(error.message); });
     return () => { current = false; controller.abort(); };
   }, [exploringProjectId]);
   const showJSON = (filename, value) =>
@@ -351,6 +417,28 @@ function AppContent() {
     setExploringProjectId(p === 'Explore' ? projectId : null);
   };
   const chooseSource = provider => {
+    if (datasetMutation) return;
+    const datasetId = provider.startsWith('dataset-') ? provider.slice('dataset-'.length) : null;
+    if (datasetId && !SOURCE_DIRECTORY.some(source => ['dataset','gebco'].includes(source.action?.kind) && source.action.datasetId === datasetId)) return;
+    if (!datasetId) providerById(provider);
+    const product=productForSource(provider);
+    if(product?.channels.length>1){const preferences=readProductPreferences();writeProductPreferences({...preferences,preferred:{...preferences.preferred,[product.id]:provider}});}
+    setExploreEntry(null);
+    projectRestoreSequence.current += 1;
+    if (exploringProjectId && activeProject?.id !== exploringProjectId) go('Explore');
+    searchRunner.current.cancel(); searchSequence.current += 1; imagerySequence.current += 1;
+    setLiveCatalog(null); setLiveState('idle'); setLiveError(''); setAppliedSearch(null);
+    setSelected(null); setSelectedIds([]); setLoadedIds([]); setVisibleLoadedIds([]);
+    setBatchPreview(false);
+    setActiveDay(null); setMapMatches([]); setCompare(false); setFootprintCount(0);
+    setFiltersOpen(false); setPreparingImagery(false); setQuery(''); setDatasetRequest(null);
+    if (provider.startsWith('dataset-')) {
+      if (bbox) setSearchInput(current => ({...current, bbox: bbox.join(', ')}));
+      setExploreDatasetId(datasetId); setDiscoveryCollapsed(false); setInspector(false);
+      setDatasetSearchRevision(current => current + 1);
+      return;
+    }
+    setExploreDatasetId(null);
     const next = { ...searchInput, provider };
     if (next.provider === 'planetary-naip' && sourceProvider.id !== next.provider) {
       beforeAerialDates.current = {start:searchInput.start,end:searchInput.end};
@@ -367,17 +455,28 @@ function AppContent() {
     go('Explore');
   };
   const openSourceEntry = id => {
-    const action = SOURCE_DIRECTORY.find(source => source.id === id)?.action;
+    if (datasetMutation) return;
+    const source = SOURCE_DIRECTORY.find(source => source.id === id);
+    const action = source?.action;
     if (!action) return;
     if (action.kind === 'provider') return exploreSource(action.providerId);
+    if (action.kind === 'dataset') return exploreSource(`dataset-${action.datasetId}`);
     if (action.kind === 'library') {
       location.hash = `My%20Data?view=${action.view}`;
       return;
     }
-    // A close animation may still be mounted when another card is selected.
-    setSourceEntry(previous=>({...action,id,generation:(previous?.generation || 0)+1}));
+    searchRunner.current.cancel(); searchSequence.current += 1; imagerySequence.current += 1;
+    projectRestoreSequence.current += 1;
+    setLiveCatalog(null); setLiveState('idle'); setLiveError(''); setAppliedSearch(null);
+    setSelected(null); setSelectedIds([]); setLoadedIds([]); setVisibleLoadedIds([]);
+    setBatchPreview(false); setActiveDay(null); setMapMatches([]); setCompare(false);
+    setFiltersOpen(false); setPreparingImagery(false); setQuery(''); setDatasetRequest(null);
+    setExploreDatasetId(null); setDiscoveryCollapsed(false); setInspector(false);
+    if (bbox) setSearchInput(current=>({...current,bbox:bbox.join(', ')}));
+    setExploreEntry({...action,id,name:source.name,detail:source.detail});
+    go('Explore');
   };
-  const openProject = (id) => go('My Data', id);
+  const openProject = (id,sessionId) => {if(sessionId)rememberAgentSession('workspace',sessionId);go('My Data', id);};
   const continueInProject = project => go('Explore', project?.id || activeProject?.id || null);
   const currentProject = activeProject?.id === exploringProjectId ? activeProject : null;
   const scenes = useMemo(() => catalog?.scenes || [], [catalog]);
@@ -409,11 +508,12 @@ function AppContent() {
     return () => observer.disconnect();
   }, [filtered.length, visibleListCount]);
   const sceneById = useMemo(() => new Map(scenes.map(scene => [scene.id, scene])), [scenes]);
-  const awaitingSelectedGrid = liveState === 'loading' && selectedIds.some(id => !imageryHrefs(sceneById.get(id)).length);
+  const awaitingSelectedGrid = liveState === 'loading' && selectedIds.some(id => !sceneById.has(id) || canLoadMap && !imageryHrefs(sceneById.get(id)).length || previewKind === 'elevation' && !sceneById.get(id)?.grid?.shape);
   const loadedScenes = useMemo(() => loadedIds.map(id => sceneById.get(id)).filter(Boolean), [loadedIds, sceneById]);
   const downloadScenes = useMemo(() => scenesForDownload({ scenes, selectedIds, loadedIds, currentScene: selected }), [scenes, selectedIds, loadedIds, selected]);
   const visibleLoadedScenes = useMemo(() => loadedScenes.filter(scene => visibleLoadedIds.includes(scene.id)), [loadedScenes, visibleLoadedIds]);
-  const mapScene = previewKind ? filtered.find(scene => scene.id === selected?.id) || filtered[0] : selected || filtered[0] || scenes[0];
+  const mapScene = previewKind && batchPreview ? visibleLoadedScenes.find(scene=>scene.id===selected?.id) || visibleLoadedScenes.find(scene=>!activeDay || scene.date.slice(0,10)===activeDay) || null
+    : previewKind ? filtered.find(scene => scene.id === selected?.id) || filtered[0] : selected || filtered[0] || scenes[0];
   const previewChannel = mapScene && previewKind && (previewKind !== 'elevation' || mapScene.grid?.shape) ? catalogPreviewChannel(mapScene,isVegetation ? vegetationIndex : radarPolarization) : undefined;
   useEffect(() => {
     const attribution = attributionRef.current;
@@ -439,39 +539,46 @@ function AppContent() {
     updateSelection(current => current.includes(id) ? current.filter(value => value !== id) : [...current, id]);
     if (!canLoadMap) setSelected(sceneById.get(id) || null);
   };
-  const loadSelected = async () => {
+  const loadSelected = async requested => {
     if (awaitingSelectedGrid) return;
-    const chosen = selectedIds.map(id => sceneById.get(id)).filter(scene => imageryHrefs(scene).length);
-    if (chosen.length !== selectedIds.length) { setLiveError('The selected scene has no supported georeferenced true-color grid.'); return; }
+    const ids=Array.isArray(requested)?requested:selectedIds;
+    const chosen = ids.map(id => sceneById.get(id)).filter(Boolean);
+    if (chosen.length !== ids.length) return;
     if (!chosen.length || chosen.length > 16) return;
+    try {
+      if (previewKind) chosen.forEach(scene=>previewKind==='elevation' ? elevationPreview(scene) : catalogItemPreview(scene,catalogPreviewChannel(scene,isVegetation ? vegetationIndex : radarPolarization)));
+      else if (chosen.some(scene=>!imageryHrefs(scene).length)) throw new Error('The selected scene has no supported georeferenced true-color grid.');
+    } catch (error) { setLiveError(error.message); return; }
     const sequence = ++imagerySequence.current;
     setLiveError('');
     setPreparingImagery(true);
-    try { await prepareAssetAccess(chosen.flatMap(imageryHrefs)); }
+    try { if (!previewKind) await prepareAssetAccess(chosen.flatMap(imageryHrefs)); }
     catch (error) { if (sequence === imagerySequence.current) { setLiveError(error.message); setPreparingImagery(false); } return; }
     if (sequence !== imagerySequence.current) return;
     setPreparingImagery(false);
+    setBatchPreview(Boolean(previewKind));
     setLoadedIds(chosen.sort((a, b) => a.date.localeCompare(b.date)).map(scene => scene.id));
     setVisibleLoadedIds(chosen.map(scene => scene.id));
     setSelected(chosen.filter(scene => !activeDay || scene.date.slice(0, 10) === activeDay).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
     setMapMatches([]);
   };
+  const clearMapPreviews = () => { imagerySequence.current+=1;setPreparingImagery(false);setLoadedIds([]);setVisibleLoadedIds([]);setBatchPreview(true);setCompare(false); };
   const showDay = day => {
     setActiveDay(day);
     setMapMatches([]);
-    setSelected((previewKind || !canLoadMap ? scenes : visibleLoadedScenes).filter(scene => !day || scene.date.slice(0, 10) === day).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
+    setSelected((previewKind && !batchPreview || !canLoadSelectedMap ? scenes : visibleLoadedScenes).filter(scene => !day || scene.date.slice(0, 10) === day).sort((a, b) => b.date.localeCompare(a.date))[0] || null);
   };
   const comparisons = scenes.filter((s) => compatibleScenes(selected, s));
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
   const home = page === "Home";
-  const agentVisible = page !== 'SignIn' && (home || agentOpen);
+  const agentVisible = !['SignIn','Account'].includes(page) && (home || agentOpen);
   const previewing=Boolean(mapPreview&&agentVisible);
   const workAreaVisible=!home&&!previewing;
   const workspace = page === "Explore" || page === "Workspace";
-  const hasInspector = inspector && Boolean(selected || mapMatches.length);
+  const hasInspector = !exploreDatasetId && !exploreEntry && inspector && Boolean(selected || mapMatches.length);
   const workspaceMinWidth = page === 'Explore'
-    ? 240 + (discoveryCollapsed ? 0 : 246) + (hasInspector ? 226 : 0)
+    ? 240 + (discoveryCollapsed ? 0 : 346) + (hasInspector ? 226 : 0)
     : 360;
   const resizeHint = t('Drag to resize · Double-click to reset · Arrow keys to adjust');
   if (page === 'SignIn') return <div className="app app-sign-in">
@@ -491,10 +598,11 @@ function AppContent() {
       }}
         leading={page === "Explore" && discoveryCollapsed && <Button variant="secondary" size="sm" icon={PanelLeftOpen} className="discovery-toggle" aria-label={t("Show scene list")} aria-controls="explore-discovery" aria-expanded={false} onClick={() => setDiscoveryCollapsed(false)}>{t("Imagery scenes")}</Button>}
         context={<div className="breadcrumb">
-          <strong>{home ? t('AI workspace') : currentProject?.name || t("{source} workspace", { source: page === 'Explore' ? sourceProvider.name : 'GeoD Global' })}</strong>
+          <strong>{home ? t('AI workspace') : currentProject?.name || t("{source} workspace", { source: page === 'Explore' ? t(exploreEntry?.name || activeDataset?.title || (exploreDatasetId ? SOURCE_DIRECTORY.find(source => source.action?.datasetId === exploreDatasetId)?.name || 'Data product' : sourceProvider.name)) : 'GeoD Global' })}</strong>
           <ChevronRight size={14} aria-hidden="true" /><span>{t(page==='SignIn'?'Sign in':page)}</span>
         </div>}
         actions={<>
+          <BackgroundWorkLink/>
           <NotificationCenter/>
           {!home && page !=='SignIn' && <Button size="icon" variant="quiet" icon={MessageSquare} aria-label={t(agentOpen ? 'Close Agent' : 'Open Agent')} tooltip={t(agentOpen ? 'Close Agent' : 'Open Agent')}
             aria-controls="geod-agent-panel" aria-expanded={agentOpen} onClick={() => {
@@ -533,7 +641,7 @@ function AppContent() {
           { id: "Settings", label: t("Settings"), icon: Settings, href: "#Settings", active: page === "Settings" },
           { id: "Help", label: t("Help"), icon: HelpCircle, onClick: () => setModal("about") },
         ]}
-        footer={<IdentityEntry onOpen={()=>go('SignIn')}/>}
+        footer={<IdentityEntry onOpen={go}/>}
       />
       </ResizablePanel>
       <ResizeHandle key="navigation-divider" label={t('Resize navigation panel')} hint={resizeHint} disabled={navCollapsed}/>
@@ -543,20 +651,20 @@ function AppContent() {
         {page === 'Explore' && exploringProjectId && projectError && <p className="project-context-status projects-error" role="alert">{t(projectError)}</p>}
         {page === "Workspace" ? <React.Suspense fallback={<main className="wm-map-loading" role="status">{t("Loading local map…")}</main>}>{tilePackageId?<TileWorkspace id={tilePackageId}/>:mapImageId?<MapImageWorkspace id={mapImageId}/>:vectorId?<VectorWorkspace id={vectorId}/>:<WorkspaceMap />}</React.Suspense> : workspace ? (
           <ResizableGroup className="workspace" storageKey="explore" panelIds={[
-            ...(!discoveryCollapsed ? ['discovery-pane'] : []), 'explore-map-pane', ...(hasInspector ? ['inspector-pane'] : []),
+            ...(!discoveryCollapsed ? ['discovery-pane'] : []), exploreEntry ? 'source-content-pane' : exploreDatasetId ? 'dataset-content-pane' : 'explore-map-pane', ...(hasInspector ? ['inspector-pane'] : []),
           ]}>
-            {!discoveryCollapsed && <ResizablePanel id="discovery-pane" defaultSize={300} minSize={240} maxSize={520} groupResizeBehavior="preserve-pixel-size"><aside className="discovery" id="explore-discovery">
+            {!discoveryCollapsed && <ResizablePanel id="discovery-pane" defaultSize={360} minSize={340} maxSize={520} groupResizeBehavior="preserve-pixel-size"><aside className="discovery" id="explore-discovery">
               <div className="panel-heading">
                 <div>
-                  <h1>{t("Imagery scenes")}</h1>
+                  <h1>{t('Search results')}</h1>
                 </div>
                 <div className="scene-panel-actions">
-                  <Button variant="quiet" size="icon" aria-label={t("Select filtered · {count}", { count: filtered.length })} tooltip={t("Select filtered · {count}", { count: filtered.length })} disabled={!filtered.length} onClick={() => updateSelection(current => [...new Set([...current, ...filtered.map(scene => scene.id)])])}><ListChecks size={18}/></Button>
+                  {!exploreDatasetId && !exploreEntry && <Button variant="quiet" size="icon" aria-label={t("Select filtered · {count}", { count: filtered.length })} tooltip={t("Select filtered · {count}", { count: filtered.length })} disabled={!filtered.length} onClick={() => updateSelection(current => [...new Set([...current, ...filtered.map(scene => scene.id)])])}><ListChecks size={18}/></Button>}
                   <Button variant="quiet" size="icon" aria-label={t("Hide scene list")} title={t("Hide scene list")} aria-controls="explore-discovery" aria-expanded={true} onClick={() => setDiscoveryCollapsed(true)}><PanelLeftClose size={18} /></Button>
                 </div>
               </div>
-              <CatalogSourcePanel provider={sourceProvider} onOpenStac={() => setStacOpen(true)} onOpenWcs={() => setWcsOpen(true)} onChange={chooseSource}/>
-              <Button className="area-picker" onClick={() => setModal("area")}>
+              <CatalogSourcePanel provider={sourceProvider} datasetId={exploreDatasetId} dataset={activeDataset} entry={exploreEntry} disabled={datasetMutation} onChooseChannel={chooseSource} pickerOpen={sourcePickerOpen} pickerTriggerRef={sourcePickerTrigger} onOpenPicker={() => setSourcePickerOpen(true)} onOpenStac={() => openSourceEntry('custom-stac-api')} onOpenWcs={() => openSourceEntry('wcs-service')} onOpenEarthEngine={() => openSourceEntry('earth-engine-export')}/>
+              <Button className="area-picker" disabled={datasetMutation} onClick={() => setModal("area")}>
                 <MapPin size={17} />
                 <span>
                   <strong>{t(bbox ? areaName : "Choose a search area")}</strong>
@@ -564,8 +672,9 @@ function AppContent() {
                 </span>
                 <ChevronDown size={16} />
               </Button>
-              {appliedSearch && !isElevation && <div className="catalog-active-filters">{date(appliedSearch.start)} – {date(appliedSearch.end)}{!isAerial && !isComposite && !isRadar && <> · {t("clouds {minimum}–{maximum}", { minimum: number(appliedSearch.cloudMin / 100, { style: "percent" }), maximum: number(appliedSearch.cloud / 100, { style: "percent" }) })}</>}</div>}
-              <>
+              {(exploreDatasetId || exploreEntry) && <div className="public-dataset-sidebar-host" ref={setDatasetSidebar}/>}
+              {!exploreDatasetId && !exploreEntry && appliedSearch && !isElevation && <div className="catalog-active-filters">{date(appliedSearch.start)} – {date(appliedSearch.end)}{!isAerial && !isComposite && !isRadar && <> · {t("clouds {minimum}–{maximum}", { minimum: number(appliedSearch.cloudMin / 100, { style: "percent" }), maximum: number(appliedSearch.cloud / 100, { style: "percent" }) })}</>}</div>}
+              {!exploreDatasetId && !exploreEntry && <>
                   <label className="search-input scene-search">
                     <Search size={16} />
                     <Input aria-label={t("Search scenes")} value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t(isElevation ? "Search elevation tile" : "Search scene ID or date")} />
@@ -578,7 +687,7 @@ function AppContent() {
                   </div>
                   <div className="results-heading">
                     <span className="results-count">
-                      <strong>{filtered.length}</strong><span className="results-count-label"> {t(isElevation ? "elevation tiles" : "scenes")}</span>
+                      <strong>{filtered.length}</strong><span className="results-count-label"> {t(isNum ? "source tiles" : isElevation ? "elevation tiles" : "scenes")}</span>
                     </span>
                     <div className="results-actions">
                       <Button size="sm" icon={SlidersHorizontal} className="filter-toggle" aria-label={t("Filters")} aria-haspopup="dialog" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(true)}><span className="filter-toggle-label">{t("Filters")}</span></Button>
@@ -589,7 +698,7 @@ function AppContent() {
                     </div>
                   </div>
                   <div className="scene-list" ref={sceneListRef}>
-                    {liveState === "loading" && !catalog ? <div className="loading-state" role="status"><Spinner />{t("Searching {source}…", { source: sourceProvider.name })}</div> : !catalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t(isElevation ? "Choose a search area to find public elevation tiles." : "Set your area and dates, choose a data source, then search for imagery.")}</EmptyState> : !filtered.length ? (
+                    {liveState === "loading" && !catalog ? <div className="loading-state" role="status"><Spinner />{t("Searching {source}…", { source: sourceProvider.name })}</div> : !catalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t(isNum ? "Choose an area to find SRTM NUM source tiles." : isNum ? "Choose an area to find SRTM NUM source tiles." : isElevation ? "Choose a search area to find public elevation tiles." : "Set your area and dates, choose a data source, then search for imagery.")}</EmptyState> : !filtered.length ? (
                       <EmptyState
                         icon={Search}
                         title={t("No matching scenes")}
@@ -604,57 +713,40 @@ function AppContent() {
                             }}
                           >{t("Reset filters")}</Button>
                         }
-                      >{t(query ? "No scene ID or date matches this text." : isRadar ? "Try a wider date range, another orbit or polarization." : isComposite ? "Try a wider composite period or a different area." : isAerial ? "No NAIP imagery covers this area and date range. Coverage is limited to published US aerial acquisitions." : isSrtm ? "No SRTMGL1 tiles cover this area. Published land coverage extends from 56° S to 60° N." : isElevation ? "No published elevation tiles cover this area. Coverage depends on the selected product; ocean tiles are absent." : "Try a wider date range or allow more cloud cover.")}</EmptyState>
+                      >{t(query ? "No scene ID or date matches this text." : isRadar ? "Try a wider date range, another orbit or polarization." : isComposite ? "Try a wider composite period or a different area." : isAerial ? "No NAIP imagery covers this area and date range. Coverage is limited to published US aerial acquisitions." : isNum ? "No SRTM NUM source tiles cover this area." : isSrtm ? "No SRTMGL1 tiles cover this area. Published land coverage extends from 56° S to 60° N." : isElevation ? "No published elevation tiles cover this area. Coverage depends on the selected product; ocean tiles are absent." : "Try a wider date range or allow more cloud cover.")}</EmptyState>
                     ) : (
                       filtered.slice(0, visibleListCount).map((s) => (
-                        <Button variant="quiet" size="row" aria-pressed={selectedIds.includes(s.id)}
-                          key={s.id}
-                          className={
-                            "scene " + (selectedIds.includes(s.id) ? "selected" : "")
-                          }
-                          onClick={() => toggleScene(s.id)}
-                          aria-label={t("Select scene {date} {id}", { date: isElevation ? demTileLabel(s.id) : compositePeriodLabel(s, date), id: s.id })}
-                        >
-                          {previewKind === 'elevation' ? <span className="catalog-elevation-tile" aria-label={t('Elevation tile, {id}',{id:demTileLabel(s.id)})}><Mountain size={25} aria-hidden="true"/><span>{number(s.gsd)} m</span></span> : <SceneThumbnail
+                        <ExploreResultRow key={s.id} selected={selectedIds.includes(s.id)} onSelect={()=>toggleScene(s.id)}
+                          selectionLabel={t("Select scene {date} {id}", { date: isElevation ? demTileLabel(s.id) : compositePeriodLabel(s, date), id: s.id })}
+                          onFocus={()=>setSelected(s)} focusLabel={t('Locate scene {id}',{id:s.id})}
+                          title={isElevation?demTileLabel(s.id):`${compositePeriodLabel(s,date,locale)} · ${s.properties['grid:code']||s.id}`}
+                          thumbnail={previewKind === 'elevation' ? <span className="catalog-elevation-tile" aria-label={t('Elevation tile, {id}',{id:demTileLabel(s.id)})}><Mountain size={20} aria-hidden="true"/></span> : <SceneThumbnail
                             src={catalogBrowsePreview(s)}
-                            alt={isVegetation ? t('Vegetation index browse image') : isRadar ? t('Radar backscatter browse image') : isElevation ? t('Elevation browse preview, {id}', { id: demTileLabel(s.id) }) : t("True-color preview, {date}", { date: compositePeriodLabel(s, date) })}
+                            alt={isNum ? t('SRTM NUM source codes') : isVegetation ? t('Vegetation index browse image') : isRadar ? t('Radar backscatter browse image') : isElevation ? t('Elevation browse preview, {id}', { id: demTileLabel(s.id) }) : t("True-color preview, {date}", { date: compositePeriodLabel(s, date) })}
                           />}
-                          <div className="scene-info">
-                            <strong title={isComposite ? compositePeriodLabel(s, date) : undefined}>{isElevation ? demTileLabel(s.id) : compositePeriodLabel(s, date, locale)}</strong>
-                            <span>
-                              {t(scenePlatformLabel(s))}{" "}
-                              <span className="muted">{isRadar ? '· IW RTC' : isViirs ? '· 8-day · v002' : isVegetation ? '· 16-day · v6.1' : isComposite ? '· 8-day · v6.1' : isAerial ? '· RGB + NIR' : isSrtm ? '· v003' : isElevation ? `· ${copDemLabel([s])}` : s.provider === 'nasa-earthdata' ? '· v2.0' : s.provider === 'planetary-landsat' ? '· L2' : t("· L2A")}</span>
-                            </span>
-                            <small>
-                              {isRadar ? <span>{s.properties['sar:polarizations']?.join(' / ')} · {t(s.properties['sat:orbit_state'] === 'ascending' ? 'Ascending' : s.properties['sat:orbit_state'] === 'descending' ? 'Descending' : 'Orbit unavailable')}</span> : isComposite ? <span>{t(isVegetation ? '250 m · 16-day composite' : isViirs ? '1 km · 8-day composite' : '500 m · 8-day composite')}</span> : isAerial ? <span>{t('{resolution} meters', {resolution:number(s.gsd)})}</span> : isElevation ? <span>{isSrtm ? 'Int16 · EGM96' : 'Float32 · EGM2008'}</span> : <><Cloud size={12} />
-                              {s.cloud == null ? t("Unknown") : number(s.cloud / 100, { style: "percent", maximumFractionDigits: 1 })}<span>{s.gsd ? t(canLoadMap ? "{resolution} m RGB" : "{resolution} meters", { resolution: number(s.gsd) }) : t("Preview")}</span></>}
-                            </small>
-                          </div>
-                          {selectedIds.includes(s.id) && (
-                            <CheckCircle2
-                              className="selection-check"
-                              size={16}
-                            />
-                          )}
-                        </Button>
+                          meta={<>{t(scenePlatformLabel(s))} · {s.gsd?`${number(s.gsd)} m`:t('Preview')}{isRadar?<> · {s.properties['sar:polarizations']?.join('/')}</>:!isElevation&&!isComposite&&!isAerial&&<> · <Cloud size={12}/>{s.cloud==null?t('Unknown'):number(s.cloud/100,{style:'percent',maximumFractionDigits:1})}</>}</>}
+                          actions={canLoadSelectedMap&&<Button variant="quiet" size="icon" icon={Eye} disabled={preparingImagery||awaitingSelectedGrid} aria-label={t('Preview {name}',{name:s.id})} tooltip={t('Preview')} onClick={()=>loadSelected([s.id])}/>}/>
                       ))
                     )}
                     {filtered.length > visibleListCount && <div ref={listEndRef} className="catalog-list-progress" role="status">{t("Showing {shown} of {total} scenes · scroll for more", { shown: visibleListCount, total: filtered.length })}</div>}
                   </div>
-                  {catalog && selectedIds.length > 0 && <div className="catalog-selection-actions">
-                    <div><strong title={t("Click footprints or drag a box on the map to choose scenes.")}>{t("{count} scenes selected", { count: selectedIds.length })}</strong><Button variant="quiet" size="xs" onClick={() => updateSelection([])}>{t("Clear selection")}</Button></div>
-                    {canLoadMap && <Button primary onClick={loadSelected} disabled={awaitingSelectedGrid || preparingImagery || !selectedIds.length || selectedIds.length > 16}>{awaitingSelectedGrid ? <><Spinner />{t('Reading imagery metadata…')}</> : preparingImagery ? <><Spinner />{t('Preparing imagery access…')}</> : t("Load selected imagery · {count}", { count: selectedIds.length })}</Button>}
-                    {sourceProvider.download && (exploringProjectId || !canLoadMap ? (!exploringProjectId || currentProject) && <DownloadAssetButton key={[exploringProjectId, ...downloadScenes.map(scene => scene.id)].join('|')} scene={selected || downloadScenes[0]} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} project={currentProject || undefined} onProjectUpdated={setActiveProject} onOpenProject={openProject}/> : <SaveProjectButton scenes={selectedIds.map(id => sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project => openProject(project.id)}/>)}
-                    {canLoadMap && selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 COGs for this browser map. Narrow the filters or clear some scenes.")}</span>}
-                  </div>}
+                  {catalog && <SelectionActions count={selectedIds.length} onClear={()=>updateSelection([])}
+                    preview={canLoadSelectedMap&&<Button variant="secondary" icon={Layers} onClick={loadSelected} disabled={awaitingSelectedGrid||preparingImagery||!selectedIds.length||selectedIds.length>16}>{preparingImagery||awaitingSelectedGrid?<Spinner/>:t('Preview selected')}</Button>}
+                    download={sourceProvider.download&&(selectedIds.length?(!exploringProjectId&&canLoadMap&&!originalsReleased(sourceProvider)?<SaveProjectButton scenes={selectedIds.map(id=>sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project=>openProject(project.id)}/>:(!exploringProjectId||currentProject)&&<DownloadAssetButton key={[exploringProjectId,...downloadScenes.map(scene=>scene.id)].join('|')} scene={downloadScenes.find(scene=>scene.id===selected?.id)||downloadScenes[0]} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} project={currentProject||undefined} onProjectUpdated={setActiveProject} onOpenProject={openProject} triggerVariant="primary" triggerLabel={t('Save and download')}/>):<Button variant="primary" icon={Download} disabled>{t('Save and download')}</Button>)}>
+                    {canLoadSelectedMap && selectedIds.length > 16 && <span className="selection-limit">{t("Select at most 16 map layers. Narrow the filters or clear some scenes.")}</span>}
+                  </SelectionActions>}
                   <div className="panel-foot">
                     <Database size={13} />
                     <span>{sourceProvider.name} · {t("live HTTPS catalog")}{catalog && <> · {t("{count} footprints on map", { count: footprintCount })}</>}</span>
                   </div>
-              </>
+              </>}
             </aside></ResizablePanel>}
             {!discoveryCollapsed && <ResizeHandle label={t('Resize imagery list')} hint={resizeHint}/>}
-            <ResizablePanel id="explore-map-pane" className="explore-map-content" minSize={240}>
+            {exploreEntry ? <ResizablePanel id="source-content-pane" minSize={240}>
+              <ConnectedSourceExplorer key={exploreEntry.id} entry={exploreEntry} areaBounds={bbox} areaGeometry={areaPolygon?.geometry} areaPolygon={areaPolygon} currentProject={currentProject} sidebarTarget={datasetSidebar} listHidden={discoveryCollapsed} onShowList={()=>setDiscoveryCollapsed(false)} onRequestArea={()=>{if(!datasetMutation)setModal('area');}} onMutationChange={setDatasetMutation} onContextChange={setGSCloudContext}/>
+            </ResizablePanel> : exploreDatasetId ? <ResizablePanel id="dataset-content-pane" minSize={240}>
+              <PublicDatasetExplorer key={exploreDatasetId} datasetId={exploreDatasetId} onOpenProject={openProject} areaBounds={bbox} areaGeometry={areaPolygon?.geometry} currentProject={currentProject} sidebarTarget={datasetSidebar} autoSearch searchRevision={datasetSearchRevision} listHidden={discoveryCollapsed} onShowList={()=>setDiscoveryCollapsed(false)} onRequestArea={()=>{if(!datasetMutation)setModal('area');}} onCatalogChange={setPublicDatasets} onRequestChange={setDatasetRequest} onMutationChange={setDatasetMutation} onBoundsChange={value => { setSearchInput(current => ({...current,bbox:value})); setAreaPolygon(null); }}/>
+            </ResizablePanel> : <><ResizablePanel id="explore-map-pane" className="explore-map-content" minSize={240}>
             {scenes.length ? <main className="map-workspace">
               <div className="map-toolbar">
                 <div className="map-view-controls">
@@ -671,6 +763,7 @@ function AppContent() {
                 </div>
                 <div className="toolbar-end">
                   <div className="map-controls" role="group" aria-label={t("Map controls")}>
+                    {loadedScenes.length>0 && <Button variant="secondary" size="icon" className="map-icon" icon={Trash2} aria-label={t('Clear map previews')} title={t('Clear map previews')} onClick={clearMapPreviews}/>}
                     <Button variant="secondary" size="icon" className={"map-icon " + (!boxSelect ? "control-active" : "")} aria-pressed={!boxSelect} aria-label={t("Click scene footprints")} title={t("Click scene footprints")} onClick={() => setBoxSelect(false)}><MousePointer2 size={17} /></Button>
                     <Button variant="secondary" size="icon" className={"map-icon " + (boxSelect ? "control-active" : "")} aria-pressed={boxSelect} aria-label={t("Drag a box to select scene footprints")} title={t("Drag a box to select scene footprints")} onClick={() => setBoxSelect(true)}><SquareDashed size={17} /></Button>
                     <span className="control-separator" aria-hidden="true" />
@@ -688,7 +781,7 @@ function AppContent() {
               </div>
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap ref={exploreMap} scene={mapScene || scenes[0]} scenes={filtered} loadedScenes={visibleLoadedScenes} selectedIds={selectedIds} focusedIds={mapMatches} activeSceneId={mapScene?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} previewChannel={previewChannel} onFootprintsPick={ids => { setMapMatches(ids); if (ids.length) setInspector(true); }} onFootprintsChange={setFootprintCount} />
+                  <ExploreMap ref={exploreMap} scene={mapScene || scenes[0]} scenes={filtered} {...(previewKind ? {previewScenes:visibleLoadedScenes} : {loadedScenes:visibleLoadedScenes})} selectedIds={selectedIds} focusedIds={mapMatches} activeSceneId={mapScene?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} previewChannel={previewChannel} onFootprintsPick={ids => { setMapMatches(ids); if (ids.length) setInspector(true); }} onFootprintsChange={setFootprintCount} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
@@ -726,7 +819,7 @@ function AppContent() {
                 </div>
               )}
               <div className="map-attribution" ref={attributionRef}>
-                <span>{t(isViirs ? "NASA/NOAA VIIRS composites ({year}) · {source} · Natural Earth overview" : isComposite ? "NASA MODIS composites ({year}) · {source} · Natural Earth overview" : isAerial ? "USDA NAIP aerial imagery ({year}) · {source} · Natural Earth overview" : isSrtm ? "NASA SRTMGL1 v003 · {source} · Natural Earth overview" : isElevation ? "Copernicus DEM · {source} · Natural Earth overview" : sourceProvider.id === 'planetary-landsat' ? "USGS Landsat data ({year}) · {source} · Natural Earth overview" : sourceProvider.id === 'nasa-earthdata' ? "NASA HLS data ({year}) · {source} · Natural Earth overview" : "Copernicus Sentinel data ({year}) · {source} · Natural Earth overview", { source: sourceProvider.name, year: (selected || scenes[0]).date.slice(0, 4) })}</span>
+                <span>{t(isNum ? "NASA SRTMGL1N v003 · {source} · Natural Earth overview" : isViirs ? "NASA/NOAA VIIRS composites ({year}) · {source} · Natural Earth overview" : isComposite ? "NASA MODIS composites ({year}) · {source} · Natural Earth overview" : isAerial ? "USDA NAIP aerial imagery ({year}) · {source} · Natural Earth overview" : isSrtm ? "NASA SRTMGL1 v003 · {source} · Natural Earth overview" : isElevation ? "Copernicus DEM · {source} · Natural Earth overview" : sourceProvider.id === 'planetary-landsat' ? "USGS Landsat data ({year}) · {source} · Natural Earth overview" : sourceProvider.id === 'nasa-earthdata' ? "NASA HLS data ({year}) · {source} · Natural Earth overview" : "Copernicus Sentinel data ({year}) · {source} · Natural Earth overview", { source: sourceProvider.name, year: (selected || scenes[0]).date.slice(0, 4) })}</span>
                 <Button variant="quiet" disabled={!selected} onClick={() => setModal("provenance")}>{t(isVegetation ? 'Online index preview · source details' : previewKind ? 'Online map preview · source details' : visibleLoadedScenes.length ? "Georeferenced COG display · source details" : "Scene footprints · source details")}<Info size={12} />
                 </Button>
               </div>
@@ -742,7 +835,7 @@ function AppContent() {
                   </div>
                 </div>
               </div>}
-            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t(liveState === "loading" ? "Catalog footprints will appear here as pages arrive." : isElevation ? "Choose a search area to find public elevation tiles." : isRadar ? "Choose an area, dates and orbit to find radar footprints." : "Choose an area, dates and cloud limit to find imagery footprints.")}</EmptyState></main>}
+            </main> : <main className="catalog-blank"><EmptyState icon={Search} title={t(liveState === "loading" ? "Searching your area" : liveCatalog ? "No scenes for this search" : "Choose your next observation")}>{t(liveState === "loading" ? "Catalog footprints will appear here as pages arrive." : isNum ? "Choose an area to find SRTM NUM source tiles." : isElevation ? "Choose a search area to find public elevation tiles." : isRadar ? "Choose an area, dates and orbit to find radar footprints." : "Choose an area, dates and cloud limit to find imagery footprints.")}</EmptyState></main>}
             </ResizablePanel>
             {hasInspector && <ResizeHandle label={t('Resize details panel')} hint={resizeHint}/>}
             {hasInspector && <ResizablePanel id="inspector-pane" defaultSize={280} minSize={220} maxSize={480} groupResizeBehavior="preserve-pixel-size">
@@ -755,7 +848,7 @@ function AppContent() {
                 <Input type="checkbox" checked={selectedIds.includes(scene.id)} onChange={() => toggleScene(scene.id)} aria-label={t("Select scene {date} {id}", { date: date(scene.date), id: scene.id })} />
                 <span><strong>{date(scene.date)}</strong><small>{scene.properties["grid:code"] || scene.id} · {scene.cloud == null ? t("Unknown") : number(scene.cloud / 100, { style: "percent", maximumFractionDigits: 1 })}</small></span>
               </label>)}</div>
-              {canLoadMap && <div className="inspector-bottom"><Button primary onClick={loadSelected} disabled={awaitingSelectedGrid || preparingImagery || !selectedIds.length || selectedIds.length > 16}>{awaitingSelectedGrid ? t('Reading imagery metadata…') : t("Load selected imagery · {count}", { count: selectedIds.length })}</Button></div>}
+              {canLoadSelectedMap && <div className="inspector-bottom"><Button primary onClick={loadSelected} disabled={awaitingSelectedGrid || preparingImagery || !selectedIds.length || selectedIds.length > 16}>{awaitingSelectedGrid ? t('Reading imagery metadata…') : t("Load selected imagery · {count}", { count: selectedIds.length })}</Button></div>}
             </aside> : selected && (
               <aside className="inspector">
                 <div className="inspector-heading">
@@ -769,28 +862,29 @@ function AppContent() {
                   </Button>
                 </div>
                 <h2>{t(selected.dataset || "Sentinel-2 L2A")}</h2>
-                <p className="muted">{t(isAerial ? 'Aerial imagery · four original channels' : isSrtm ? "SRTMGL1 v003 · February 2000 · 1 arc-second" : isElevation ? "Digital surface model · 2021 public release" : isVegetation ? "Vegetation index collection" : "Surface reflectance collection")}</p>
-                {loadedScenes.length > 1 && <Disclosure className="loaded-layer-disclosure" summary={t("Loaded layers · {count}", { count: loadedScenes.length })}>
+                <p className="muted">{t(isNum ? 'SRTM NUM · February 2000 · original source codes' : isAerial ? 'Aerial imagery · four original channels' : isSrtm ? "SRTMGL1 v003 · February 2000 · 1 arc-second" : isElevation ? "Digital surface model · 2021 public release" : isVegetation ? "Vegetation index collection" : "Surface reflectance collection")}</p>
+                {loadedScenes.length > 0 && <Disclosure className="loaded-layer-disclosure" summary={t("Loaded layers · {count}", { count: loadedScenes.length })}>
                   <p>{t("Overlapping COGs cover one another. Hide a layer here or change the front layer in the map toolbar.")}</p>
                   {loadedScenes.slice().reverse().map(scene => <label key={scene.id} className="loaded-layer-row">
-                    <Input type="checkbox" checked={visibleLoadedIds.includes(scene.id)} disabled={visibleLoadedIds.length === 1 && visibleLoadedIds.includes(scene.id)} onChange={event => {
+                    <Input type="checkbox" checked={visibleLoadedIds.includes(scene.id)} onChange={event => {
                       const next = event.currentTarget.checked ? [...visibleLoadedIds, scene.id] : visibleLoadedIds.filter(id => id !== scene.id);
                       setVisibleLoadedIds(next);
-                      if (!next.includes(selected.id)) setSelected(loadedScenes.find(item => next.includes(item.id) && (!activeDay || item.date.slice(0, 10) === activeDay)) || null);
+                      if (next.length && !next.includes(selected.id)) setSelected(loadedScenes.find(item => next.includes(item.id) && (!activeDay || item.date.slice(0, 10) === activeDay)) || selected);
                     }} aria-label={t("Show imagery layer {date} {id}", { date: date(scene.date), id: scene.id })} />
                     <span>{date(scene.date)} · {scene.properties["grid:code"] || scene.id}</span>
                   </label>)}
+                  <Button variant="secondary" size="sm" onClick={clearMapPreviews}>{t('Clear map previews')}</Button>
                 </Disclosure>}
                 <div className="detail-section">
-                  <h3>{t(isElevation ? "Surface elevation" : "Observation")}</h3>
+                  <h3>{t(isNum ? 'SRTM NUM source codes' : isElevation ? "Surface elevation" : "Observation")}</h3>
                   <dl>
-                    {isElevation ? <><dt>{t("Height reference")}</dt><dd>{isSrtm ? 'EGM96 · EPSG:5773' : 'EGM2008 · EPSG:3855'}</dd><dt>{t("Height unit")}</dt><dd>{t("metres")}</dd></> : <><dt>{t(isComposite ? "Composite period" : "Acquired")}</dt>
+                    {isNum ? <><dt>{t("Data type")}</dt><dd>UInt8 · NUM</dd><dt>{t("Observation period")}</dt><dd>2000-02-11 – 2000-02-21</dd></> : isElevation ? <><dt>{t("Height reference")}</dt><dd>{isSrtm ? 'EGM96 · EPSG:5773' : 'EGM2008 · EPSG:3855'}</dd><dt>{t("Height unit")}</dt><dd>{t("metres")}</dd></> : <><dt>{t(isComposite ? "Composite period" : "Acquired")}</dt>
                     <dd>{compositePeriodLabel(selected, date)}</dd>
                     {!isAerial && !isComposite && !isRadar && <><dt>{t("Scene clouds")}</dt>
                     <dd>{selected.cloud == null ? t("Unknown") : number(selected.cloud / 100, { style: "percent", maximumFractionDigits: 2 })}</dd></>}</>}
                     {isRadar && <><dt>{t('Polarization')}</dt><dd>{selected.properties['sar:polarizations']?.join(' / ')}</dd><dt>{t('Orbit direction')}</dt><dd>{t(selected.properties['sat:orbit_state'] === 'ascending' ? 'Ascending' : selected.properties['sat:orbit_state'] === 'descending' ? 'Descending' : 'Orbit unavailable')}</dd></>}
                     <dt>{t(isElevation ? "Nominal resolution" : canLoadMap ? "RGB resolution" : "Spatial resolution")}</dt>
-                    <dd>{isSrtm ? t('1 arc-second · approximately 30 m') : selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("Not specified")}</dd>
+                    <dd>{isNum ? t('1 arc-second Point grid') : isSrtm ? t('1 arc-second · approximately 30 m') : selected.gsd ? t("{resolution} meters", { resolution: number(selected.gsd) }) : t("Not specified")}</dd>
                     <dt>{t("Source grid")}</dt>
                     <dd className="mono">{selected.crs || t("Not specified")}</dd>
                   </dl>
@@ -817,7 +911,7 @@ function AppContent() {
                 {!sourceProvider.download && <div className="inspector-bottom"><Button asChild><a href={sourceProvider.id === 'nasa-earthdata' ? 'https://search.earthdata.nasa.gov/' : 'https://browser.dataspace.copernicus.eu/'} target="_blank" rel="noreferrer"><ExternalLink size={16}/>{t(sourceProvider.id === 'nasa-earthdata' ? 'Open Earthdata Search' : 'Open Copernicus Browser')}</a></Button></div>}
               </aside>
             )}
-            </ResizablePanel>}
+            </ResizablePanel>}</>}
           </ResizableGroup>
         ) : (
           <main className="content-page">
@@ -828,6 +922,17 @@ function AppContent() {
               <>
                 <LibraryPage focusedProjectId={focusedProjectId} onOpenProject={openProject} onCloseProject={() => go('My Data')} onContinueExploring={continueInProject} areaBounds={bbox} areaPolygon={areaPolygon}/>
               </>
+            ) : page === "Account" ? (
+              <AccountPage/>
+            ) : page === "Imagery monitoring" ? (
+              <ImageryMonitoringPage initialArea={areaPolygon} onOpenAgent={()=>setAgentOpen(true)} onExplore={()=>go('Explore')} onPreviewArea={monitor=>{
+                const geometry=monitor.config.geometry;
+                const points=(geometry.type==='Polygon'?geometry.coordinates:geometry.coordinates.flat()).flat();
+                const bounds=[Math.min(...points.map(p=>p[0])),Math.min(...points.map(p=>p[1])),Math.max(...points.map(p=>p[0])),Math.max(...points.map(p=>p[1]))];
+                const now=new Date(),start=new Date(now.getTime()-monitor.config.lookbackDays*86400000);
+                const next={...defaultLiveSearch(now),provider:monitor.config.sourceId,bbox:bounds.join(', '),cloud:monitor.config.cloudMax,start:start.toISOString().slice(0,10)};
+                setSearchInput(next);setAreaPolygon({geometry,bounds,place:{name:monitor.config.name}});go('Explore');runSearch(next);
+              }}/>
             ) : page === "Settings" ? (
               <SettingsPage theme={theme} onThemeChange={setTheme} onOpenRasterSources={() => setStacOpen(true)} onOpenCoverageSources={() => setWcsOpen(true)} areaBounds={bbox}/>
             ) : (
@@ -843,11 +948,15 @@ function AppContent() {
       </ResizablePanel>}
       {agentVisible && workAreaVisible && <ResizeHandle key="agent-divider" label={t('Resize Agent panel')} hint={resizeHint}/>}
       {agentVisible && <ResizablePanel key="agent-pane" id="agent-pane" defaultSize={previewing ? '42%' : home ? undefined : 360} minSize={home||previewing ? 320 : 280} maxSize={home||previewing ? undefined : 640} groupResizeBehavior="preserve-pixel-size">
-        <AgentPanel closeRef={agentClose} variant={home ? 'home' : 'sidebar'} onChooseSource={exploreSource} onOpenSourceEntry={openSourceEntry} onPreviewPlan={setMapPreview} context={agentMapContext({page,input:searchInput,appliedSearch,areaPolygon,projectId:currentProject?.id || focusedProjectId})} onClose={() => {setMapPreview(null);setAgentOpen(false);}} onOpenProject={openProject} onOpenTasks={id => { location.hash = 'Tasks?job=' + id; }} onOpenResult={view=>{location.hash='Workspace?'+(view.kind==='vector'?'vector':'file')+'='+view.id;}}/>
+        <AgentPanel datasetId={page === "Explore" ? exploreDatasetId : null} closeRef={agentClose} draftStore={agentDrafts} sessionViewStore={agentSessionViews} variant={home ? 'home' : 'sidebar'} scene={agentScene({page,projectId:currentProject?.id || focusedProjectId,hash:location.hash})} preferredSessionId={agentSessions[home?'conversation':'workspace']} onSessionTargetChange={id=>rememberAgentSession(home?'conversation':'workspace',id)} onContinueInConversation={id=>{rememberAgentSession('conversation',id);setMapPreview(null);go('Home');}} onChooseSource={exploreSource} onOpenSourceEntry={openSourceEntry} onPreviewPlan={setMapPreview} context={exploreEntry ? gscloudMapContext({page,entry:exploreEntry,context:gscloudContext,bounds:bbox,geometry:areaPolygon?.geometry,projectId:currentProject?.id||focusedProjectId}) : agentMapContext({page,input:searchInput,appliedSearch,areaPolygon,datasetId:exploreDatasetId,datasetRequest,projectId:currentProject?.id || focusedProjectId,catalog,liveState,filteredScenes:filtered,selectedIds,loadedIds,visibleLoadedIds,focusedItemId:selected?.id,activeDay,query,sort})} onClose={() => {setMapPreview(null);setAgentOpen(false);}} onOpenProject={openProject} onOpenTasks={(id,sessionId) => {if(sessionId)rememberAgentSession('workspace',sessionId);location.hash = 'Tasks?job=' + id; }} onOpenResult={view=>setMapPreview({view})}/>
       </ResizablePanel>}
       {previewing&&<ResizeHandle key="agent-map-preview-divider" label={t('Resize map preview panel')} hint={resizeHint}/>}
       {previewing&&<ResizablePanel key="agent-map-preview-pane" id="agent-map-preview-pane" defaultSize="58%" minSize={320}>
-        <React.Suspense fallback={<p role="status"><Spinner/>{t('Reading task area…')}</p>}><AgentPlanMapPreview {...mapPreview} onClose={()=>setMapPreview(null)}/></React.Suspense>
+        <React.Suspense fallback={<p role="status"><Spinner/>{t('Reading task area…')}</p>}>
+          {mapPreview.view?<section className="agent-result-map-panel" aria-label={t('Result preview')}><header><Layers size={16}/><strong>{t('Result preview')}</strong><Button variant="quiet" size="icon" icon={X} aria-label={t('Close result preview')} tooltip={t('Close result preview')} onClick={()=>setMapPreview(null)}/></header>
+            {mapPreview.view.kind==='archive'?<AgentArchiveResult key={mapPreview.view.id} id={mapPreview.view.id}/>:mapPreview.view.kind==='vector'?<VectorWorkspace key={mapPreview.view.id} id={mapPreview.view.id}/>:<WorkspaceMap key={mapPreview.view.id} fileId={mapPreview.view.id} compact/>}
+          </section>:<AgentPlanMapPreview {...mapPreview} onClose={()=>setMapPreview(null)}/>}
+        </React.Suspense>
       </ResizablePanel>}
       </ResizableGroup>
       {filtersOpen && page === 'Explore' && <CatalogFilters initialValues={searchInput} onClose={() => setFiltersOpen(false)} onApply={applyFilters} onArea={values => {
@@ -856,12 +965,9 @@ function AppContent() {
         setModal('area');
       }} />}
       {wcsOpen && <WcsSourceDialog areaBounds={bbox} currentProject={currentProject} onClose={() => setWcsOpen(false)}/>}
+      {earthEngineOpen && <EarthEngineDialog areaBounds={bbox} itemId={selected?.id} onClose={() => setEarthEngineOpen(false)}/>}
+      {sourcePickerOpen && <SourcePickerDialog selectedSourceId={exploreEntry?.id || (exploreDatasetId ? SOURCE_DIRECTORY.find(source => source.action?.datasetId === exploreDatasetId)?.id : sourceProvider.id)} disabled={datasetMutation} returnFocusRef={sourcePickerTrigger} onChoose={chooseSource} onOpenEntry={openSourceEntry} onClose={() => setSourcePickerOpen(false)}/>}
       {stacOpen && <StacSourceDialog areaBounds={bbox} currentProject={currentProject} onClose={() => setStacOpen(false)}/>}
-      {sourceEntry?.kind === 'stac' && <StacSourceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} initialKind={sourceEntry.sourceType} areaBounds={bbox} currentProject={currentProject} onClose={()=>setSourceEntry(null)}/>}
-      {sourceEntry?.kind === 'wcs' && <WcsSourceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} areaBounds={bbox} currentProject={currentProject} onClose={()=>setSourceEntry(null)}/>}
-      {sourceEntry?.kind === 'map' && <MapServiceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} initialProtocol={sourceEntry.protocol} initialPreset={sourceEntry.preset} areaBounds={bbox} areaPolygon={areaPolygon} onClose={()=>setSourceEntry(null)}/>}
-      {sourceEntry?.kind === 'vector' && <FeatureServiceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} initialProtocol={sourceEntry.protocol} areaBounds={bbox} areaPolygon={areaPolygon} onClose={()=>setSourceEntry(null)}/>}
-      {sourceEntry?.kind === 'tiles' && <TileSourceDialog key={`${sourceEntry.id}:${sourceEntry.generation}`} areaBounds={bbox} onClose={()=>setSourceEntry(null)}/>}
       {modal && (
         <Modal closeLabel={t("Close dialog")}
           title={
@@ -889,12 +995,12 @@ function AppContent() {
                 <dt>{t("Metadata fetched")}</dt>
                 <dd>{date(catalog.retrievedAt)}</dd>
                 <dt>{t("Map source")}</dt>
-                <dd>{t(isRadar ? 'Online radar previews display original linear gamma0 as −30–0 dB grayscale for the selected polarization. Downloads keep the original Float32 values. No extra calibration or speckle filtering is applied.' : isViirs ? 'VIIRS footprints and public browse images. Authorized downloads retain the complete original HDF5. Prepare M5, M4 and M3 in the project to view and process local science bands; no QA mask is applied.' : isVegetation ? 'Online NDVI/EVI previews use Planetary Computer PNG tiles in Web Mercator, colored from −0.2 to 1.0 with the RdYlGn palette. No quality mask is applied. Original downloads retain signed DN and the sinusoidal grid; science and QA layers are available separately.' : isComposite ? 'Online MODIS RGB previews use bands 1, 4 and 3 with reflectance 0–0.3 and gamma 2.2. Downloads retain signed DN and the sinusoidal grid. No quality mask is applied; QA layers are separate.' : isAerial ? 'Original four-band aerial COG; RGB display uses bands 1–3. Near-infrared is retained and can be read from downloaded originals in Workspace.' : isSrtm ? 'SRTM tile footprints and provider browse images. Download original HGT ZIPs to inspect signed heights in Workspace.' : isElevation ? 'Online height previews read original Float32 COG samples and preserve the Point grid. Grayscale stretches −100–1000 metres above EGM2008 for display only. Downloaded originals can be queried in Workspace.' : sourceProvider.id === 'planetary-landsat' ? 'Original red, green and blue COGs; display reflectance 0–0.3 with gamma 2.2. Downloads retain original DN.' : canLoadMap ? 'Georeferenced true-color COG; list thumbnails are provider previews' : sourceProvider.id === 'copernicus' ? 'Scene footprints and provider thumbnails; original downloads are complete SAFE product archives' : sourceProvider.download ? 'Scene footprints and provider thumbnails; downloads contain original reflectance bands' : 'Scene footprints and provider thumbnails; original product access requires authorization')}</dd>
+                <dd>{t(isNum ? NUM_NOTICE : isRadar ? 'Online radar previews display original linear gamma0 as −30–0 dB grayscale for the selected polarization. Downloads keep the original Float32 values. No extra calibration or speckle filtering is applied.' : isViirs ? 'VIIRS footprints and public browse images. Authorized downloads retain the complete original HDF5. Prepare M5, M4 and M3 in the project to view and process local science bands; no QA mask is applied.' : isVegetation ? 'Online NDVI/EVI previews use Planetary Computer PNG tiles in Web Mercator, colored from −0.2 to 1.0 with the RdYlGn palette. No quality mask is applied. Original downloads retain signed DN and the sinusoidal grid; science and QA layers are available separately.' : isComposite ? 'Online MODIS RGB previews use bands 1, 4 and 3 with reflectance 0–0.3 and gamma 2.2. Downloads retain signed DN and the sinusoidal grid. No quality mask is applied; QA layers are separate.' : isAerial ? 'Original four-band aerial COG; RGB display uses bands 1–3. Near-infrared is retained and can be read from downloaded originals in Workspace.' : isSrtm ? 'SRTM tile footprints and provider browse images. Download original HGT ZIPs to inspect signed heights in Workspace.' : isElevation ? 'Online height previews read original Float32 COG samples and preserve the Point grid. Grayscale stretches −100–1000 metres above EGM2008 for display only. Downloaded originals can be queried in Workspace.' : sourceProvider.id === 'planetary-landsat' ? 'Original red, green and blue COGs; display reflectance 0–0.3 with gamma 2.2. Downloads retain original DN.' : canLoadMap ? 'Georeferenced true-color COG; list thumbnails are provider previews' : sourceProvider.id === 'copernicus' ? 'Scene footprints and provider thumbnails; original downloads are complete SAFE product archives' : sourceProvider.download ? 'Scene footprints and provider thumbnails; downloads contain original reflectance bands' : 'Scene footprints and provider thumbnails; original product access requires authorization')}</dd>
                 {!isElevation && !isAerial && !isComposite && !isRadar && <><dt>{t("Cloud cover")}</dt>
                 <dd>{t("Full scene, not AOI-specific")}</dd></>}
               </dl>
               <p>
-                {t(isRadar ? "RTC is a provider-derived radar product. Its calibration and terrain correction come from the provider; this application does not claim to process raw GRD or SLC." : isViirs ? "VIIRS pixels are selected within an 8-day composite period. Browse images do not prove cloud-free coverage or original-data access." : isVegetation ? "Different pixels in a 16-day composite may represent different observation dates. No QA mask is applied here; the index layers do not prove cloud-free coverage." : isComposite ? "NASA MODIS uses per-pixel observations selected within an 8-day period. No scene-cloud filter or automatic quality masking is applied." : isAerial ? "USDA NAIP is aerial imagery with red, green, blue and near-infrared channels. Dates vary by state; cloud filtering does not apply." : isSrtm ? "SRTMGL1 v003 is a void-filled surface elevation product. It uses EGM96 and shared boundary samples; it is not interchangeable with Copernicus DEM." : isElevation ? "This public DSM includes buildings and vegetation. Coverage is limited to published land tiles; missing tiles are not filled with invented heights." : "Catalog pages load automatically for the submitted area, dates and cloud limit. Footprints locate scenes. A thumbnail is a preview; loading COGs and downloading original files are separate actions.")}
+                {t(isNum ? NUM_NOTICE : isRadar ? "RTC is a provider-derived radar product. Its calibration and terrain correction come from the provider; this application does not claim to process raw GRD or SLC." : isViirs ? "VIIRS pixels are selected within an 8-day composite period. Browse images do not prove cloud-free coverage or original-data access." : isVegetation ? "Different pixels in a 16-day composite may represent different observation dates. No QA mask is applied here; the index layers do not prove cloud-free coverage." : isComposite ? "NASA MODIS uses per-pixel observations selected within an 8-day period. No scene-cloud filter or automatic quality masking is applied." : isAerial ? "USDA NAIP is aerial imagery with red, green, blue and near-infrared channels. Dates vary by state; cloud filtering does not apply." : isSrtm ? "SRTMGL1 v003 is a void-filled surface elevation product. It uses EGM96 and shared boundary samples; it is not interchangeable with Copernicus DEM." : isElevation ? "This public DSM includes buildings and vegetation. Coverage is limited to published land tiles; missing tiles are not filled with invented heights." : "Catalog pages load automatically for the submitted area, dates and cloud limit. Footprints locate scenes. A thumbnail is a preview; loading COGs and downloading original files are separate actions.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">

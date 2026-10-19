@@ -6,7 +6,8 @@ import { join } from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
 import { AgentService } from './service.mjs';
 import { BRIDGE_MODEL } from './protocol.mjs';
-import { TASK_PLANNING_INSTRUCTIONS } from './task-categories.mjs';
+import { DEVELOPER_INSTRUCTIONS } from './instructions.mjs';
+import { TOOL_LOADER } from './tool-catalog.mjs';
 import { DECISION_TOOL } from './decisions.mjs';
 import { GOAL_TOOLS } from './goals.mjs';
 const config = { label:'Test', protocol:'openai-compatible', baseUrl:'https://example.com/v1', model:'test-model', apiKey:'private-test-key' };
@@ -22,6 +23,144 @@ function rig(home, additional = {}) {
   return { service, calls, threadId, turnId, event(value){event(value);} };
 }
 const tick = () => new Promise(resolve => setImmediate(resolve));
+
+test('malformed dataset plans are recorded and corrected using the pinned schema before native IPC',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-dataset-arguments-')),native=[];
+  const r=rig(home,{callTool:async(name,args)=>{native.push({name,args});return {planId:randomUUID(),kind:'project',status:'pending',jobs:[]};}});
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,[{name:'geod_stac_project_plan',inputSchema:{type:'object',properties:{name:{},bounds:{},selections:{}},required:['bounds','selections'],additionalProperties:false}}]);
+  await r.service.send({text:'Prepare WorldCover for review'});await ready(r.service);
+  const call=arguments_=>r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_stac_project_plan',arguments:arguments_});
+  await assert.rejects(call({connectionId:randomUUID(),name:'Sample'}),error=>error.required?.includes('bounds'));
+  assert.equal(native.length,0);assert.equal(r.service.active.session.entries.at(-1).status,'failed');assert.equal(r.service.active.session.entries.at(-1).failureCode,'argument-schema');
+  await call({name:'Sample',bounds:[1,2,3,4],selections:[{snapshotId:'a'.repeat(64),assetKey:'data'}]});
+  assert.equal(native.length,1);assert.equal(native[0].args.selections[0].assetKey,'data');
+});
+
+test('capability-only reads cannot keep a failed acquisition automatically continuing',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-status-progress-'));
+  const r=rig(home,{callTool:async name=>name==='geod_sources_list'?{sources:[]}:{searchId:randomUUID(),query:{bounds:[1,1,2,2]},items:[],moreAvailable:false}});
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,['geod_sources_list','geod_scene_search'].map(name=>({name,inputSchema:{type:'object'}})));
+  await r.service.send({text:'Find and download one original'});await ready(r.service);
+  await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_sources_list',arguments:{}});
+  assert(!r.service.active.goalProgress,'capabilities do not prove a new delivery step');
+  await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_scene_search',arguments:{bounds:[1,1,2,2]}});
+  assert.equal(r.service.active.goalProgress,true,'a fresh native search can advance planning');
+});
+
+test('usage and activated tools follow the human request through compaction and restart, not later requests or session-list duplication',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-usage-scope-'));let bridge;
+  const r=rig(home,{bridgeFactory:async options=>{bridge=options;return {baseUrl:'http://127.0.0.1:1/v1',resetBudget(){},async close(){}};}});
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,[...definitions,TOOL_LOADER]);
+  await r.service.send({text:'Inspect saved projects'});await ready(r.service);
+  const session=r.service.active.session,requestId=session.entries.at(-1).id;
+  await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:TOOL_LOADER.name,arguments:{groups:['projects']}});
+  assert(bridge.selectionContext(session.id).loadedGroups.includes('projects'));assert.equal(bridge.selectionContext(randomUUID()),null);
+  const usage={input_tokens:100,output_tokens:10,total_tokens:110,input_tokens_details:{cached_tokens:80,cache_write_tokens:null},output_tokens_details:{reasoning_tokens:5}};
+  const receipt=id=>({id:'resp_'+id.repeat(32),at:new Date().toISOString(),state:'completed',usage,context:{toolCount:3}});
+  const firstOwner=bridge.usageContext(session.id);await bridge.onUsage(receipt('a'),firstOwner);
+  r.service.active.compacting=true;await bridge.onUsage(receipt('b'),bridge.usageContext(session.id));r.service.active.compacting=false;
+  r.service.active.origin='workflow';await bridge.onUsage(receipt('c'),bridge.usageContext(session.id));
+  assert(session.usage.records.every(row=>row.requestId===requestId));
+  assert.deepEqual(session.usage.records.map(row=>row.origin),['human','compaction','workflow']);
+  assert(!('usage' in r.service.snapshot().sessions[0]));
+  await r.service.finish('completed');await r.service.send({sessionId:session.id,text:'你好'});await ready(r.service);
+  assert.deepEqual(bridge.selectionContext(session.id).loadedGroups,[]);assert.deepEqual(bridge.selectionContext(session.id).calledTools,[]);
+  await bridge.onUsage(receipt('d'),bridge.usageContext(session.id));assert.notEqual(session.usage.records.at(-1).requestId,requestId);
+  await bridge.onUsage(receipt('e'),firstOwner);assert.equal(session.usage.records.at(-1).requestId,requestId);
+  await r.service.finish('completed');await r.service.close();
+  const restored=rig(home);await restored.service.open();assert.equal(restored.service.sessions[0].usage.totals.total,550);await restored.service.close();
+});
+
+test('scene handoff preserves one task history but Home clears the live map and plan scopes stay pinned through confirmation',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-scene-handoff-')),planId=randomUUID(),replacement=randomUUID();
+  const tools=['geod_workspace_context','geod_download_plan'].map(name=>({name,inputSchema:{type:'object'}}));
+  const r=rig(home,{callTool:async(name,args,scope)=>name==='geod_workspace_context'?{context:scope.context}:{planId,kind:'download',status:'pending',jobs:[]}});
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,tools);
+  const context={page:'Explore',provider:'earth-search',bounds:[-14,-12,51,37]},scene={kind:'workspace',page:'Explore'};
+  await r.service.send({text:'Prepare a review for selected imagery',context,scene});await ready(r.service);
+  const id=r.service.selectedId;
+  await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_download_plan',arguments:{}});await r.service.finish('completed');
+  await r.service.send({sessionId:id,text:'Explain this pending task',context:null,scene:{kind:'conversation',page:'Home'}});await ready(r.service);
+  const reply=await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_workspace_context',arguments:{}});
+  assert.equal(reply.context,null);assert.equal(reply.scene.kind,'conversation');assert.equal(r.service.selectedId,id);
+  assert.equal(r.service.sessions[0].entries.filter(entry=>entry.type==='user').length,2);
+  await r.service.finish('completed');
+  await r.service.recordPlanRevision({sessionId:id,originalPlanId:planId,planId:replacement,kind:'download'});
+  assert.deepEqual(r.service.sessions[0].planScopes[replacement],{scene,context});
+  await r.service.recordControl({sessionId:id,text:'Confirm',action:'confirm',plans:[{planId:replacement,kind:'download',status:'submitted',jobs:[]}],executionMode:'confirm-each',executionBinding:randomUUID()});
+  assert.deepEqual(r.service.sessions[0].workflow.context,context);
+  assert.deepEqual(r.service.sessions[0].workflow.scene,scene);
+  assert(!('planScopes' in r.service.snapshot().selected));assert(!('lastContext' in r.service.snapshot().sessions[0]));
+  await r.service.continueWorkflow(r.service.sessions[0],[],'confirm-each',context);await ready(r.service);
+  assert.deepEqual(r.service.active.scene,scene);assert.deepEqual(r.service.active.context,context);
+  assert.deepEqual(r.service.sessions[0].lastScene,{kind:'conversation',page:'Home'});
+  assert.equal(r.service.sessions[0].lastContext,null);await r.service.finish('completed');
+  await r.service.close();const reopened=rig(home);await reopened.service.open();
+  assert.deepEqual(reopened.service.sessions[0].planScopes[planId],{scene,context});await reopened.service.close();
+});
+
+test('current catalog questions use the attached request snapshot and a later turn receives updated list filters',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-catalog-context-')), reads=[];
+  const r=rig(home,{callTool:async(name,args,scope)=>{reads.push({name,context:structuredClone(scope.context)});return {context:scope.context};}});
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,[{name:'geod_workspace_context',inputSchema:{type:'object'}}]);
+  const context={page:'Explore',provider:'earth-search',bounds:[-14,-12,51,37],cloudMin:0,cloudMax:0,catalog:{totalCount:162,filteredCount:162,complete:true,state:'ready'}};
+  await r.service.send({text:'现在有多少景影像',context});await ready(r.service);
+  context.catalog.totalCount=999; // The active request owns an immutable snapshot.
+  const first=await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_workspace_context',arguments:{}});
+  assert.equal(first.context.catalog.totalCount,162);
+  assert(r.calls.some(call=>JSON.stringify(call).includes('filteredCount=visible list')));
+  await r.service.finish('completed');
+  await r.service.send({sessionId:r.service.selectedId,text:'这个日期呢',context:{...context,catalog:{totalCount:162,filteredCount:15,activeDate:'2026-10-10',complete:true,state:'ready'}}});await ready(r.service);
+  const next=await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_workspace_context',arguments:{}});
+  assert.equal(next.context.catalog.filteredCount,15);assert.equal(reads.length,2);
+  assert(r.service.snapshot().selected.entries.at(-1).record.result.context.catalog.totalCount===162);
+});
+test('snapshot retains the engine turn through intermediate completion and automatic compaction, then clears it at turn completion',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-turn-activity-')),r=rig(home);
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,definitions);await r.service.send({text:'Find imagery'});await ready(r.service);
+  const activity={sessionId:r.service.selectedId,kind:'turn',turnId:r.turnId};assert.deepEqual(r.service.snapshot().activity,activity);
+  r.event({method:'item/completed',params:{threadId:r.threadId,item:{id:'note',type:'agentMessage',text:'Now searching'}}});
+  assert.deepEqual(r.service.snapshot().activity,activity);assert.equal(r.service.snapshot().selected.entries.at(-1).status,'completed');
+  r.event({method:'item/started',params:{threadId:r.threadId,item:{id:'compact',type:'contextCompaction'}}});
+  assert.deepEqual(r.service.snapshot().activity,activity);assert.equal(r.service.snapshot().selected.contextState.status,'organizing');
+  r.event({method:'item/completed',params:{threadId:r.threadId,item:{id:'compact',type:'contextCompaction'}}});
+  assert.deepEqual(r.service.snapshot().activity,activity);await r.service.finish('failed','Controlled failure');assert.equal(r.service.snapshot().activity,null);
+  assert.equal(r.service.snapshot().selected.entries.at(-1).phase,'progress');
+});
+test('engine turn and reply phases persist without letting commentary replace a final response',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-chat-phases-')),r=rig(home);
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,definitions);await r.service.send({text:'Read projects'});await ready(r.service);
+  r.event({method:'item/completed',params:{threadId:r.threadId,item:{id:'progress',type:'agentMessage',phase:'commentary',text:'Checking the saved projects'}}});
+  await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_projects_list',arguments:{}});
+  r.event({method:'item/completed',params:{threadId:r.threadId,item:{id:'answer',type:'agentMessage',phase:'final_answer',text:'Projects read'}}});
+  await r.service.finish('completed');await r.service.close();
+  const saved=JSON.parse(await readFile(join(home,'sessions.json'),'utf8'));
+  const entries=saved.sessions[0].entries;
+  assert.deepEqual(entries.filter(entry=>entry.type==='assistant').map(entry=>[entry.phase,entry.turnId]),[['progress',r.turnId],['final',r.turnId]]);
+  assert.equal(entries.find(entry=>entry.type==='tool').turnId,r.turnId);
+});
+test('tool display receipts persist actual native results and elapsed time across restart without storing source addresses or credentials',async t=>{
+  const home=await mkdtemp(join(tmpdir(),'geod-tool-display-'));
+  const r=rig(home,{callTool:async()=>({candidates:[{name:'Berlin',countryCode:'DEU',adminLevel:1}],matchCount:1,source:'https://example.test/private',password:'private'})});
+  t.after(async()=>{await r.service.close();await rm(home,{recursive:true,force:true});});
+  await r.service.open();await r.service.configure(config,[{name:'geod_region_search',inputSchema:{type:'object'}}]);
+  await r.service.send({text:'Find Berlin'});await ready(r.service);
+  await r.service.tool({threadId:r.threadId,turnId:r.turnId,tool:'geod_region_search',arguments:{query:'Berlin',countryCode:'DEU'}});
+  const entry=r.service.snapshot().selected.entries.at(-1);
+  assert.deepEqual(entry.summary,{kind:'places',count:1,total:1});assert.equal(entry.record.input.query,'Berlin');
+  assert.equal(entry.record.result.candidates[0].name,'Berlin');assert(Number.isSafeInteger(entry.record.durationMs));
+  assert(!JSON.stringify(entry.record).includes('private'));assert(entry.record.limited);
+  await r.service.finish('completed');await r.service.close();
+  const reopened=rig(home);await reopened.service.open();t.after(()=>reopened.service.close());
+  assert.deepEqual(reopened.service.snapshot().selected.entries.at(-1).record,entry.record);
+});
 test('legacy unanswered missing-boundary cards retire on matching native geometry and remain persisted without granting approval',async t=>{
   const home=await mkdtemp(join(tmpdir(),'geod-legacy-boundary-')),reference={id:randomUUID(),sha256:'a'.repeat(64)},bounds=[-74.258843,40.476578,-73.700169,40.917705];let nativeReads=0;
   const r=rig(home,{callTool:async(name)=>{
@@ -121,20 +260,20 @@ test('general task policy reaches fresh, resumed and compacted conversations wit
   await r.service.open(); await r.service.configure(config, definitions);
   await r.service.send({ text: 'Prepare data for my research.' }); await ready(r.service);
   const started = r.calls.find(call => Array.isArray(call) && call[0] === 'thread/start')[1];
-  assert(started.developerInstructions.includes(TASK_PLANNING_INSTRUCTIONS));
-  assert.deepEqual(started.dynamicTools, [...definitions, DECISION_TOOL, ...GOAL_TOOLS]);
+  assert(started.developerInstructions.includes(DEVELOPER_INSTRUCTIONS));
+  assert.deepEqual(started.dynamicTools, [...definitions, DECISION_TOOL, ...GOAL_TOOLS,TOOL_LOADER]);
   assert.equal(started.sandbox, 'read-only');
   await r.service.finish('completed');
   const sessionId = r.service.selectedId;
   await r.service.send({ sessionId, text: 'Keep the same required outputs.' }); await ready(r.service);
   const resumed = r.calls.filter(call => Array.isArray(call) && call[0] === 'thread/resume').at(-1)[1];
-  assert(resumed.developerInstructions.includes(TASK_PLANNING_INSTRUCTIONS));
+  assert(resumed.developerInstructions.includes(DEVELOPER_INSTRUCTIONS));
   assert(resumed.developerInstructions.includes('Native conversation permission is authoritative'));
   assert.equal(resumed.threadId, r.threadId);
   await r.service.finish('completed');
   await r.service.compact({ sessionId }); await r.service.turnTask;
   const compacted = r.calls.filter(call => Array.isArray(call) && call[0] === 'thread/resume').at(-1)[1];
-  assert(compacted.developerInstructions.includes(TASK_PLANNING_INSTRUCTIONS));
+  assert(compacted.developerInstructions.includes(DEVELOPER_INSTRUCTIONS));
   assert.equal(compacted.sandbox, 'read-only');
   assert(r.calls.some(call => Array.isArray(call) && call[0] === 'thread/compact/start'));
   await r.service.finish('completed');
@@ -218,16 +357,16 @@ test('orchestrator text route is independent of the selected upstream model and 
   assert(instructions.includes('geod_jobs_list or geod_job_status'));
   assert(instructions.includes('pass the actual projectId to geod_jobs_list'));
   assert(instructions.includes('Native conversation permission is authoritative'));
-  assert(instructions.includes('geod_place_search with kind=city'));
-  assert(instructions.includes('geod_workspace_context.searchDefaults'));
+  assert(instructions.includes('place_search as a separate city gazetteer fallback'));
+  assert(instructions.includes('native searchDefaults'));
   assert(instructions.includes('cloudMax=100'));
-  assert(instructions.includes('Before every area review call geod_scene_coverage'));
+  assert(instructions.includes('For area delivery call scene_coverage'));
   assert(instructions.includes('download-review preparation can be retried without an existing queued task'));
   assert(instructions.includes('A retry does not by itself confirm or execute a new plan'));
-  assert(instructions.includes('never claim text confirmation is unsupported or require a card click'));
+  assert(instructions.includes('never require a card click instead'));
   const base=r.calls.find(([method])=>method==='thread/start')[1].baseInstructions;
   assert(!base.includes('Ask for missing region/time/source/output'));
-  assert(base.includes('A place explicitly named by the human overrides an unrelated map area'));
+  assert(instructions.includes('A named new place overrides ambient area'));
   assert.equal(r.service.snapshot().model.model,upstream.model);
   assert.equal(r.service.snapshot().selected.modelId,upstream.model);
   assert.equal(r.service.snapshot().selected.modelConnectionId,connection.id);
@@ -324,7 +463,7 @@ test('tool upgrades preserve the app conversation, native references and permiss
   assert.equal(upgraded.executionBinding,binding);assert.equal(upgraded.executionMode,'full-access');
   assert(upgraded.entries.some(entry=>entry.references?.some(ref=>ref.id===planId)));
   await r.service.send({sessionId:id,text:'Continue the previous request.',executionMode:'full-access',executionBinding:binding});await ready(r.service);
-  const start=r.calls.find(([method])=>method==='thread/start');assert.deepEqual(start[1].dynamicTools,[...newTools,DECISION_TOOL,...GOAL_TOOLS]);
+  const start=r.calls.find(([method])=>method==='thread/start');assert.deepEqual(start[1].dynamicTools,[...newTools,DECISION_TOOL,...GOAL_TOOLS,TOOL_LOADER]);
   assert(!r.calls.some(([method])=>method==='thread/resume'));
   const turn=r.calls.filter(([method])=>method==='turn/start').at(-1)[1];
   assert(turn.input[0].text.includes('HISTORICAL DATA'));assert(turn.input[0].text.includes('New York imagery'));

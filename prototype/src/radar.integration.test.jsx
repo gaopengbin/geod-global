@@ -26,7 +26,7 @@ it('radar download defaults to all available polarizations and describes origina
   wrap(<DownloadAssetButton scene={scene} areaBounds={project.bounds} areaName="Radar"/>);
   await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
   expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('VV / VH');
-  expect(screen.getByText(/2 source files to download/)).toBeTruthy(); expect(screen.getByText(/up to 4 GiB/)).toBeTruthy();
+  expect(screen.getByText(/2 source files to download/)).toBeTruthy(); await userEvent.click(screen.getByRole('button',{name:'Download contents'}));expect(screen.getByText(/up to 4 GiB/)).toBeTruthy();await userEvent.keyboard('{Escape}');
   expect(screen.queryByText(/True-color GeoTIFF/)).toBeNull();
 });
 it('radar project offers verified polarization processing only when all original sources are ready',async()=>{

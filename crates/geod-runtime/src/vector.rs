@@ -11,7 +11,9 @@ use std::{
 use uuid::Uuid;
 pub mod geopackage;
 pub mod local_osm;
+pub mod official_packages;
 mod osm;
+pub mod parquet_original;
 pub mod reads;
 mod review;
 pub use review::VectorApproval;
@@ -22,6 +24,25 @@ mod tests;
 pub const MAX_BYTES: usize = 20 * 1024 * 1024;
 pub const MAX_FEATURES: usize = 50_000;
 pub const MAX_COORDINATES: usize = 500_000;
+
+/// Identify the retained, already validated source bytes for original export.
+/// This does not authorize a format or decode a source: vector_original_bytes
+/// verifies the saved provenance, full geometry and original checksum first.
+pub(crate) fn original_content_type(bytes: &[u8]) -> &'static str {
+    if bytes.starts_with(b"SQLite format 3\0") {
+        "application/geopackage+sqlite3"
+    } else if bytes.starts_with(b"PK\x03\x04") {
+        "application/zip"
+    } else if bytes.starts_with(&[0x1f, 0x8b, 0x08]) {
+        "application/gzip"
+    } else if local_osm::is_xml(bytes) {
+        "application/xml"
+    } else if local_osm::is_pbf(bytes) {
+        "application/vnd.openstreetmap.data+pbf"
+    } else {
+        "application/json"
+    }
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -57,6 +78,10 @@ pub struct VectorAsset {
     pub local_osm: Option<local_osm::Provenance>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub agent_approval: Option<VectorApproval>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub official_package: Option<official_packages::Provenance>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geo_parquet: Option<parquet_original::Provenance>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -223,7 +248,31 @@ fn normalize_kind(
     if bytes.is_empty() || bytes.len() > MAX_BYTES {
         return Err("Vector file must contain at most 20 MiB".into());
     }
-    let raw: Value = if local_osm::is_xml(bytes) || local_osm::is_pbf(bytes) {
+    if let Some(source) = &asset.official_package {
+        source.validate_original(bytes)?;
+        if asset.storage_mode != "managed"
+            || asset.remote_source.is_some()
+            || asset.osm_source.is_some()
+            || asset.osm_conversion.is_some()
+            || asset.geo_package.is_some()
+            || asset.local_osm.is_some()
+            || container.is_some()
+        {
+            return Err(
+                "Official vector packages require distinct managed publisher originals".into(),
+            );
+        }
+    }
+    let raw: Value = if bytes.starts_with(&[0x1f, 0x8b]) {
+        if asset
+            .official_package
+            .as_ref()
+            .is_none_or(|p| p.package.format != "geojsonl-gzip")
+        {
+            return Err("Gzip GeoJSONL requires a reviewed official vector package receipt".into());
+        }
+        official_packages::decode_gzip_jsonl(bytes)?
+    } else if local_osm::is_xml(bytes) || local_osm::is_pbf(bytes) {
         if asset.remote_source.is_some()
             || asset.osm_source.is_some()
             || asset.osm_conversion.is_some()
@@ -350,8 +399,25 @@ fn normalize_kind(
         } else {
             raw
         };
-        (value, "geojson", None)
+        (
+            value,
+            if bytes.starts_with(&[0x1f, 0x8b]) {
+                "geojsonl-gzip"
+            } else if asset.geo_parquet.is_some() {
+                "geoparquet-preview"
+            } else {
+                "geojson"
+            },
+            None,
+        )
     };
+    if let Some(source) = asset
+        .remote_source
+        .as_ref()
+        .filter(|source| source.geoboundaries.is_some())
+    {
+        crate::features::geoboundaries::normalize_for_display(&mut data, source)?;
+    }
     if data["type"] != "FeatureCollection" || data.get("crs").is_some() {
         return Err(
             "Open RFC 7946 GeoJSON in WGS84; legacy CRS declarations are not guessed".into(),
@@ -419,6 +485,37 @@ fn normalize_kind(
         asset.attribution = None;
         asset.license_url = None;
     }
+    if let Some(source) = &asset.official_package {
+        if source.package.format != format || (format != "shapefile" && format != "geojsonl-gzip") {
+            return Err(
+                "Official vector original no longer matches its publisher package format".into(),
+            );
+        }
+        asset.attribution = Some(source.package.attribution.clone());
+        asset.license_url = Some(source.package.license_url.clone());
+        asset.data_timestamp = source.package.data_timestamp.clone();
+    }
+    if let Some(source) = &asset.geo_parquet {
+        source.validate()?;
+        if format != "geoparquet-preview"
+            || source.preview_feature_count != asset.feature_count
+            || asset.storage_mode != "managed"
+            || asset.official_package.is_some()
+            || asset.remote_source.is_some()
+            || asset.osm_source.is_some()
+            || asset.local_osm.is_some()
+            || asset.geo_package.is_some()
+            || asset.shapefile.is_some()
+        {
+            return Err(
+                "GeoParquet preview requires its distinct complete original-container provenance"
+                    .into(),
+            );
+        }
+        asset.attribution = Some(source.attribution.clone());
+        asset.license_url = Some(source.license_url.clone());
+        asset.data_timestamp = None;
+    }
     Ok(VectorInspection {
         asset,
         geojson: data,
@@ -446,6 +543,8 @@ fn initial(title: &str, mode: &str) -> Result<VectorAsset> {
         shapefile: None,
         local_osm: None,
         agent_approval: None,
+        official_package: None,
+        geo_parquet: None,
         attribution: None,
         license_url: None,
         data_timestamp: None,
@@ -486,7 +585,9 @@ fn read(path: &Path) -> Result<Vec<u8>> {
     Ok(bytes)
 }
 fn source_extension(asset: &VectorAsset) -> &'static str {
-    if asset.geo_package.is_some() {
+    if asset.format == "geojsonl-gzip" {
+        "csv.gz"
+    } else if asset.geo_package.is_some() {
         "gpkg"
     } else if asset.shapefile.is_some() {
         "zip"
@@ -641,9 +742,48 @@ pub(crate) async fn load(root: &Path) -> Result<BTreeMap<String, Record>> {
             }
             None => r.asset.coordinate_count == 0,
         };
-        let osm_metadata = if ["overpass-json", "osm-xml", "osm-pbf"]
-            .contains(&r.asset.format.as_str())
-        {
+        if let Some(source) = &r.asset.official_package {
+            source.validate()?;
+            if r.asset.storage_mode != "managed"
+                || source.bytes != r.asset.bytes
+                || source.sha256 != r.asset.source_sha256
+                || source.package.format != r.asset.format
+                || r.asset.remote_source.is_some()
+                || r.asset.osm_source.is_some()
+                || r.asset.osm_conversion.is_some()
+                || r.asset.geo_package.is_some()
+                || r.asset.local_osm.is_some()
+            {
+                return Err("Invalid saved official vector package metadata".into());
+            }
+        }
+        if r.asset.format == "geojsonl-gzip" && r.asset.official_package.is_none() {
+            return Err("Gzip GeoJSONL requires recorded official package provenance".into());
+        }
+        if let Some(source) = &r.asset.geo_parquet {
+            source.validate()?;
+            if r.asset.format != "geoparquet-preview"
+                || source.preview_feature_count != r.asset.feature_count
+                || r.asset.storage_mode != "managed"
+                || r.asset.official_package.is_some()
+                || r.asset.remote_source.is_some()
+                || r.asset.osm_source.is_some()
+                || r.asset.local_osm.is_some()
+                || r.asset.geo_package.is_some()
+                || r.asset.shapefile.is_some()
+            {
+                return Err("Invalid saved GeoParquet preview metadata".into());
+            }
+        }
+        let osm_metadata = if let Some(source) = &r.asset.geo_parquet {
+            r.asset.attribution.as_deref() == Some(source.attribution.as_str())
+                && r.asset.license_url.as_deref() == Some(source.license_url.as_str())
+                && r.asset.data_timestamp.is_none()
+        } else if let Some(source) = &r.asset.official_package {
+            r.asset.attribution.as_deref() == Some(source.package.attribution.as_str())
+                && r.asset.license_url.as_deref() == Some(source.package.license_url.as_str())
+                && r.asset.data_timestamp == source.package.data_timestamp
+        } else if ["overpass-json", "osm-xml", "osm-pbf"].contains(&r.asset.format.as_str()) {
             r.asset.attribution.as_deref() == Some("© OpenStreetMap contributors")
                 && r.asset.license_url.as_deref() == Some("https://www.openstreetmap.org/copyright")
                 && (r.asset.local_osm.is_some()
@@ -662,6 +802,8 @@ pub(crate) async fn load(root: &Path) -> Result<BTreeMap<String, Record>> {
             || !["managed", "reference"].contains(&r.asset.storage_mode.as_str())
             || ![
                 "geojson",
+                "geojsonl-gzip",
+                "geoparquet-preview",
                 "overpass-json",
                 "wfs-snapshot",
                 "geopackage",
@@ -670,6 +812,7 @@ pub(crate) async fn load(root: &Path) -> Result<BTreeMap<String, Record>> {
                 "osm-pbf",
             ]
             .contains(&r.asset.format.as_str())
+            || (r.asset.format == "geoparquet-preview") != r.asset.geo_parquet.is_some()
             || (r.asset.format == "geopackage") != r.asset.geo_package.is_some()
             || (r.asset.format == "shapefile") != r.asset.shapefile.is_some()
             || ["osm-xml", "osm-pbf"].contains(&r.asset.format.as_str())
@@ -945,6 +1088,9 @@ impl JobManager {
             .ok_or("Unknown vector file")?;
         let root = self.inner.root.clone();
         tokio::task::spawn_blocking(move || {
+            if let Some(source) = &record.asset.geo_parquet {
+                parquet_original::verify_saved_original(&root, source)?;
+            }
             let bytes = read_record_source(&root, &record)?;
             if hash(&bytes) != record.asset.source_sha256 {
                 return Err(
@@ -981,6 +1127,9 @@ impl JobManager {
     }
     pub async fn vector_original_bytes(&self, id: &str) -> Result<Vec<u8>> {
         let inspection = self.inspect_vector(id).await?;
+        if inspection.asset.geo_parquet.is_some() {
+            return Err("Complete GeoParquet originals use the streamed original-container export; the GeoJSON preview is not the original".into());
+        }
         let record = self
             .inner
             .vectors
@@ -1003,10 +1152,27 @@ impl JobManager {
         .map_err(io_error)?
     }
     pub async fn export_vector_original_path(&self, id: &str, path: PathBuf) -> Result<()> {
+        let asset = self.inspect_vector(id).await?.asset;
+        if let Some(source) = asset.geo_parquet {
+            let original = parquet_original::verify_saved_original(&self.inner.root, &source)?;
+            let (parent, destination) = self.vector_export_destination(path).await?;
+            return tokio::task::spawn_blocking(move || {
+                let mut input=std::fs::File::open(original).map_err(io_error)?;
+                let mut temporary=tempfile::NamedTempFile::new_in(parent).map_err(io_error)?;
+                let copied=std::io::copy(&mut input,&mut temporary).map_err(io_error)?;
+                temporary.as_file().sync_all().map_err(io_error)?;
+                let (bytes,sha)=parquet_original::digest_file(temporary.path())?;
+                if copied!=source.original_bytes || bytes!=source.original_bytes || sha!=source.original_sha256 {
+                    return Err("Complete GeoParquet original changed while exporting; destination was not replaced".into());
+                }
+                temporary.persist(destination).map_err(io_error)?;
+                Ok(())
+            }).await.map_err(io_error)?;
+        }
         let bytes = self.vector_original_bytes(id).await?;
         self.save_vector_export(path, bytes).await
     }
-    async fn save_vector_export(&self, path: PathBuf, bytes: Vec<u8>) -> Result<()> {
+    async fn vector_export_destination(&self, path: PathBuf) -> Result<(PathBuf, PathBuf)> {
         let parent = path
             .parent()
             .ok_or("Export destination has no parent folder")?
@@ -1040,6 +1206,10 @@ impl JobManager {
                 return Err("Export must not overwrite a registered vector source".into());
             }
         }
+        Ok((parent, destination))
+    }
+    async fn save_vector_export(&self, path: PathBuf, bytes: Vec<u8>) -> Result<()> {
+        let (parent, destination) = self.vector_export_destination(path).await?;
         tokio::task::spawn_blocking(move || {
             use std::io::Write;
             let mut file = tempfile::NamedTempFile::new_in(parent).map_err(io_error)?;

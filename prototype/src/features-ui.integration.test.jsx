@@ -63,6 +63,7 @@ it('refresh preserves ArcGIS protocol and exposes excluded layers only on demand
   await screen.findByText('Point features');expect(screen.getByText(/Up to 25 batches, 5,000 features/)).toBeTruthy();
   const excluded=screen.getByRole('button',{name:'1 unavailable layers'});expect(excluded.getAttribute('aria-expanded')).toBe('false');expect(screen.queryByText(/Z, M and declared/)).toBeNull();
   await user.click(excluded);expect(screen.getByText('Z, M and declared curve layers need a separate geometry adapter')).toBeTruthy();
+  await user.keyboard('{Escape}');
   await user.click(screen.getByRole('button',{name:'Refresh service collections'}));
   await waitFor(()=>expect(featureRequest).toHaveBeenCalledWith('connect',{name:arcgisService.name,url:arcgisService.url,protocol:'ArcGIS'}));
   expect(screen.getByRole('button',{name:'Get features and save'}).disabled).toBe(false);
@@ -143,7 +144,8 @@ it('WFS prefers advertised GML and submits a separately chosen GeoJSON service r
 it('WFS refresh preserves protocol and presents unsupported types and access declarations as text',async()=>{
   featureRequest.mockImplementation(async op=>op==='list'?[wfsService]:wfsService);const user=userEvent.setup();render(<FeatureServiceDialog areaBounds={[10,20,11,21]} onClose={()=>{}} onImported={()=>{}}/>);
   await screen.findByText('WFS lake polygons');expect(screen.getByText(/Up to 250 pages, 50,000 features/)).toBeTruthy();const disclosure=screen.getByRole('button',{name:'1 unavailable feature types'});expect(disclosure.getAttribute('aria-expanded')).toBe('false');expect(screen.queryByText('Nested properties are not supported')).toBeNull();
-  await user.click(disclosure);expect(screen.getByText('Nested properties are not supported')).toBeTruthy();await user.click(screen.getByRole('button',{name:'Collection source and license'}));expect(screen.getByText(wfsService.wfs.accessConstraints)).toBeTruthy();expect(document.querySelector('img')).toBeNull();expect(screen.getByText('NONE')).toBeTruthy();expect(screen.getByText(/No dataset license link declared/)).toBeTruthy();
+  await user.click(disclosure);expect(screen.getByText('Nested properties are not supported')).toBeTruthy();await user.keyboard('{Escape}');await user.click(screen.getByRole('button',{name:'Collection source and license'}));expect(screen.getByText(wfsService.wfs.accessConstraints)).toBeTruthy();expect(document.querySelector('img')).toBeNull();expect(screen.getByText('NONE')).toBeTruthy();expect(screen.getByText(/No dataset license link declared/)).toBeTruthy();
+  await user.keyboard('{Escape}');
   await user.click(screen.getByRole('button',{name:'Refresh service collections'}));await waitFor(()=>expect(featureRequest).toHaveBeenCalledWith('connect',{name:wfsService.name,url:wfsService.url,protocol:'WFS2'}));
 });
 it('an entirely excluded WFS service remains inspectable without claiming GeoJSON support',async()=>{

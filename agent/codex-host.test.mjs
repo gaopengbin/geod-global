@@ -2,6 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { safeToolFailure } from './codex-host.mjs';
 
+test('bounded catalog and schema failures provide corrective guidance without relaxing permissions or echoing private errors',()=>{
+  assert.match(safeToolFailure(new Error('Agent result exceeds 32 KiB.')),/filters or pagination/);
+  assert.match(safeToolFailure(new Error('Invalid coverage selection.')),/not an extra bounds parameter/);
+  assert.match(safeToolFailure(new Error('Invalid Agent tool arguments.')),/correct the call once/);
+  assert.match(safeToolFailure(new Error('Enter an ISO 3166-1 alpha-3 country code')),/separately from bounds/);
+  assert.equal(safeToolFailure(new Error('Agent result exceeds 32 KiB. private-token')),safeToolFailure(new Error('unrecognized')));
+});
+
 test('expired searches instruct a read-only refresh of the same scope instead of stopping recoverable work',()=>{
   const message='Scene search is stale or belongs to another conversation. Search again.';
   const instruction=safeToolFailure(new Error(message));

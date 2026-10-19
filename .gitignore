@@ -2,10 +2,12 @@ node_modules/
 target/
 src-tauri/gen/
 .geod-global/
+.geod-service/
 dist/
 .vite/
 .cache/
 .verification/
+prototype/.qa-live-scenes/
 .agent-runtime/
 .venv/
 __pycache__/
@@ -17,3 +19,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 GeoD-Global-Spec/contracts/verification-result.json
+
+# Local brand explorations and research captures are retained on disk.
+# The approved 1.1 kit and production exports/provenance remain source assets.
+design/brand/*
+!design/brand/geod-global-brand-kit-1.1/
+exa-results/

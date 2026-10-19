@@ -1,0 +1,18 @@
+[
+  {
+    "datasetId": "ghsl-smod", "bounds": [116.3,39.8,116.5,40], "year": 2020, "layer": "settlement-class", "assetKey": "raster",
+    "assetContains": "GHS_SMOD_E2020_GLOBE_R2023A_4326_30ss_V2_0.tif", "expectedShape": [21384,43202], "expectedBytes": 20566541,
+    "expectedSha256": "20661ac0f98166bd2253ce1155e131d589b0100fc2d5eed9dc7c632228071416",
+    "sampleCoordinates": [[35568,5903],[21600,10691],[0,0],[1,1329],[10204,963],[23882,2327],[0,502],[43201,502]], "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {"column":35568,"row":5903,"values":[30],"noData":[false]},
+      {"column":21600,"row":10691,"values":[10],"noData":[false]},
+      {"column":0,"row":0,"values":[-200],"noData":[true]},
+      {"column":1,"row":1329,"values":[0],"noData":[false]},
+      {"column":10204,"row":963,"values":[11],"noData":[false]},
+      {"column":23882,"row":2327,"values":[30],"noData":[false]},
+      {"column":0,"row":502,"values":[10],"noData":[false]},
+      {"column":43201,"row":502,"values":[10],"noData":[false]}
+    ]
+  }
+]

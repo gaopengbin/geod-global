@@ -181,6 +181,7 @@ struct Inner {
     http: reqwest::Client,
     vault: Arc<dyn Vault>,
     state: Mutex<AccountState>,
+    official_changed: std::sync::RwLock<Option<Arc<dyn Fn() + Send + Sync>>>,
 }
 pub struct Prepared {
     url: String,
@@ -247,6 +248,7 @@ impl DesktopIdentity {
             http,
             vault,
             state: Mutex::new(state),
+            official_changed: std::sync::RwLock::new(None),
         })))
     }
     async fn json(
@@ -297,6 +299,97 @@ impl DesktopIdentity {
         };
         json!({"configured":true,"ready":state.ready,"status":status,"user":state.user,"providers":state.providers,
             "busy":state.pending.is_some(),"remembered":state.remembered,"error":state.error})
+    }
+    pub async fn official(&self, operation: &str, payload: Value) -> Result<Value, String> {
+        let (method, path, data) = official_endpoint(operation, payload)?;
+        let token = {
+            let state = self.0.state.lock().await;
+            if operation != "capabilities" && state.expires <= chrono::Utc::now().timestamp() {
+                return Ok(json!({"error":"sign_in_required"}));
+            }
+            state.token.clone()
+        };
+        if operation != "capabilities" && token.is_none() {
+            return Ok(json!({"error":"sign_in_required"}));
+        }
+        let service_origin = if cfg!(debug_assertions) {
+            let raw = std::env::var("GEOD_GLOBAL_DEV_SERVICE_ORIGIN")
+                .unwrap_or_else(|_| self.0.origin.clone());
+            validate_origin(&raw)?;
+            if raw != self.0.origin && !raw.starts_with("http://127.0.0.1:") {
+                return Err("Invalid official service origin.".into());
+            }
+            raw
+        } else {
+            self.0.origin.clone()
+        };
+        let mut request = self
+            .0
+            .http
+            .request(method, format!("{}{}", service_origin, path));
+        if let Some(token) = token {
+            request = request.bearer_auth(token.as_str());
+        }
+        if let Some(data) = data {
+            request = request
+                .header("Content-Type", "application/json")
+                .body(data.to_string());
+        }
+        let mut response = request
+            .send()
+            .await
+            .map_err(|_| "Official service is unavailable.")?;
+        if response.status().as_u16() == 404 {
+            return Ok(json!({"error":"service_not_deployed"}));
+        }
+        let status = response.status();
+        let mut bytes = Vec::new();
+        while let Some(chunk) = response
+            .chunk()
+            .await
+            .map_err(|_| "Official service is unavailable.")?
+        {
+            if bytes.len() + chunk.len() > 1024 * 1024 {
+                return Err("Official service response could not be verified.".into());
+            }
+            bytes.extend_from_slice(&chunk);
+        }
+        let value: Value = serde_json::from_slice(&bytes)
+            .map_err(|_| "Official service response could not be verified.")?;
+        if value["product"] != PRODUCT || value["version"] != 1 {
+            return Err("Official service response could not be verified.".into());
+        }
+        if !status.is_success() && value["error"].as_str().is_none() {
+            return Err("Official service is unavailable.".into());
+        }
+        if status.is_success()
+            && value.get("error").is_none()
+            && ![
+                "capabilities",
+                "account",
+                "monitors",
+                "quotes",
+                "notifications",
+                "orders",
+            ]
+            .contains(&operation)
+        {
+            let callback = self
+                .0
+                .official_changed
+                .read()
+                .ok()
+                .and_then(|value| value.clone());
+            if let Some(callback) = callback {
+                callback();
+            }
+        }
+        Ok(value)
+    }
+    pub fn on_official_change(&self, callback: impl Fn() + Send + Sync + 'static) {
+        if let Ok(mut value) = self.0.official_changed.write() {
+            *value = Some(Arc::new(callback));
+        }
     }
     pub async fn snapshot(&self, refresh: bool) -> Value {
         let mut state = self.0.state.lock().await;
@@ -790,9 +883,130 @@ pub async fn identity_logout(
     identity.logout().await
 }
 
+fn official_endpoint(
+    operation: &str,
+    mut payload: Value,
+) -> Result<(reqwest::Method, String, Option<Value>), String> {
+    use reqwest::Method;
+    let invalid = || "Invalid official service request.".to_string();
+    if !payload.is_object() || payload.to_string().len() > 65536 {
+        return Err(invalid());
+    }
+    let read = match operation {
+        "capabilities" => Some("capabilities"),
+        "account" => Some("account"),
+        "monitors" => Some("monitors"),
+        "notifications" => Some("notifications"),
+        "quotes" => Some("monitor-quotes"),
+        "orders" => Some("orders"),
+        _ => None,
+    };
+    if let Some(path) = read {
+        if !payload.as_object().unwrap().is_empty() {
+            return Err(invalid());
+        }
+        return Ok((Method::GET, format!("/api/services/v1/{path}"), None));
+    }
+    let direct = match operation {
+        "quoteMonitor" => Some("monitor-quotes"),
+        "readNotifications" => Some("notifications/read"),
+        "checkout" => Some("checkout"),
+        "restorePurchases" => Some("restore-purchases"),
+        _ => None,
+    };
+    if let Some(path) = direct {
+        return Ok((
+            Method::POST,
+            format!("/api/services/v1/{path}"),
+            Some(payload),
+        ));
+    }
+    let id = payload
+        .as_object_mut()
+        .unwrap()
+        .remove("id")
+        .and_then(|v| v.as_str().map(str::to_string))
+        .ok_or_else(invalid)?;
+    if id.len() != 32 || !id.bytes().all(|c| c.is_ascii_hexdigit()) {
+        return Err(invalid());
+    }
+    let path = match operation {
+        "acceptMonitor" => format!("monitor-quotes/{id}/accept"),
+        "controlMonitor" => format!("monitors/{id}/control"),
+        "runMonitor" => format!("monitors/{id}/run"),
+        "refundRequest" => format!("orders/{id}/refund-request"),
+        _ => return Err(invalid()),
+    };
+    Ok((
+        Method::POST,
+        format!("/api/services/v1/{path}"),
+        Some(payload),
+    ))
+}
+
+#[tauri::command]
+pub async fn official_request(
+    lifecycle: State<'_, DesktopLifecycle>,
+    identity: State<'_, DesktopIdentity>,
+    app: AppHandle,
+    operation: String,
+    payload: Option<Value>,
+) -> Result<Value, String> {
+    let _guard = lifecycle.enter()?;
+    let mut value = identity
+        .official(&operation, payload.unwrap_or_else(|| json!({})))
+        .await?;
+    if operation == "checkout" && value.get("error").is_none() {
+        let raw = value["order"]["checkoutUrl"]
+            .as_str()
+            .ok_or("Payment page could not be verified.")?;
+        let url = url::Url::parse(raw).map_err(|_| "Payment page could not be verified.")?;
+        if url.scheme() != "https"
+            || url.host_str() != Some("checkout.stripe.com")
+            || !url.username().is_empty()
+            || url.password().is_some()
+            || url.port().is_some()
+        {
+            return Err("Payment page could not be verified.".into());
+        }
+        app.opener()
+            .open_url(raw, None::<&str>)
+            .map_err(|_| "Payment browser could not be opened. Try again.")?;
+        value["order"]
+            .as_object_mut()
+            .unwrap()
+            .remove("checkoutUrl");
+        value["order"]["browserOpened"] = json!(true);
+    }
+    Ok(value)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn official_bridge_uses_only_fixed_routes_and_never_accepts_urls_or_privileged_operations() {
+        assert_eq!(
+            official_endpoint("account", json!({})).unwrap().1,
+            "/api/services/v1/account"
+        );
+        let (method, path, body) =
+            official_endpoint("acceptMonitor", json!({"id":"a".repeat(32),"hash":"hash"})).unwrap();
+        assert_eq!(method, reqwest::Method::POST);
+        assert!(path.ends_with("/accept"));
+        assert_eq!(body.unwrap(), json!({"hash":"hash"}));
+        for operation in [
+            "grantPro",
+            "consume",
+            "https://attacker.invalid",
+            "../account",
+        ] {
+            assert!(official_endpoint(operation, json!({})).is_err());
+        }
+        assert!(official_endpoint("controlMonitor", json!({"id":"../../private"})).is_err());
+        assert!(official_endpoint("account", json!({"url":"https://attacker.invalid"})).is_err());
+        assert!(official_endpoint("quoteMonitor", json!({"name":"x".repeat(70000)})).is_err());
+    }
     use std::sync::{
         atomic::{AtomicBool, Ordering},
         Mutex as StdMutex,

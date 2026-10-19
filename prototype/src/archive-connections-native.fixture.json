@@ -1,0 +1,1215 @@
+{
+  "capturedAt": "2026-10-14T09:54:11.805Z",
+  "method": "actual normal native POST datasets/connect plus saved source snapshots; no original download",
+  "receipts": [
+    {
+      "request": {
+        "datasetId": "fabdem",
+        "bounds": [
+          50.2,
+          8.2,
+          50.8,
+          9.8
+        ],
+        "layer": "elevation"
+      },
+      "connection": {
+        "plan": {
+          "dataset": {
+            "id": "fabdem",
+            "title": "FABDEM V1-2 · terrain elevation",
+            "category": "elevation",
+            "description": "Forest And Buildings removed Copernicus DEM: modeled removal of tree and building height biases from Copernicus GLO-30. Reviewed scope is the N08E050 and N09E050 1° original tiles in one author-published 10° ZIP. No alternate Copernicus DEM, Fathom DEM, global claim or generated AOI raster is substituted.",
+            "version": "FABDEM V1-2 · January 2023 release · two reviewed original tiles",
+            "license": "CC BY-NC-SA 4.0 · non-commercial; commercial use requires a separate Fathom licence",
+            "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "attribution": "Neal, J., Hawker, L., Uhe, P., Paulo, L., Sosa, J., Savage, J. and Sampson, C. (2023), FABDEM V1-2, University of Bristol, doi:10.5523/bris.s5hqmjcdj8yo2ibzi9b4ew3sn. Hawker et al. (2022), A 30 m global map of elevation with forests and buildings removed, Environmental Research Letters 17, 024016, doi:10.1088/1748-9326/ac4d4f. Retain licence, attribution, selected tile and release. The original publisher readme at https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/readme.txt also requires retention of its Copernicus WorldDEM-30 attribution and liability statements: DLR 2010–2014 / Airbus 2014–2018, provided under Copernicus by EU and ESA, all rights reserved; organisations managing Copernicus incur no liability for data use. Preserve those original statements with any external use. Commercial enquiries: fabdem@fathom.global.",
+            "documentationUrl": "https://research-information.bris.ac.uk/en/datasets/fabdem-v1-2/",
+            "nominalResolution": "1 arc-second (approximately 30 m at equator); original 3600 × 3600 Point grid",
+            "unit": "metres",
+            "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed.",
+            "years": [],
+            "requiresCountry": false,
+            "layers": [
+              {
+                "id": "elevation",
+                "title": "Terrain elevation · original metres",
+                "unit": "m",
+                "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed.",
+                "scale": 1,
+                "offset": 0,
+                "nodata": -9999
+              }
+            ],
+            "defaultLayer": "elevation",
+            "warnings": [
+              "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+              "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+              "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported."
+            ],
+            "limits": [
+              "One complete 21,627,700-byte publisher ZIP and two eligible 3600 × 3600 Float32 members only; actual Point grid footprints determine selection. Original archive/member hashes, bytes and embedded NoData are retained. Existing 512 MiB transfer, safe ZIP-member, native decoding and preview budgets remain unchanged."
+            ]
+          },
+          "request": {
+            "datasetId": "fabdem",
+            "bounds": [
+              50.2,
+              8.2,
+              50.8,
+              9.8
+            ],
+            "layer": "elevation"
+          },
+          "sources": [
+            {
+              "id": "N08E050_FABDEM_V1-2",
+              "title": "FABDEM V1-2 N08E050",
+              "bounds": [
+                49.99986111111111,
+                8.000138888888891,
+                50.99986111111111,
+                9.00013888888889
+              ],
+              "stac": {
+                "name": "FABDEM V1-2 N08E050",
+                "url": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+                "kind": "raster"
+              }
+            },
+            {
+              "id": "N09E050_FABDEM_V1-2",
+              "title": "FABDEM V1-2 N09E050",
+              "bounds": [
+                49.99986111111111,
+                9.000138888888891,
+                50.99986111111111,
+                10.00013888888889
+              ],
+              "stac": {
+                "name": "FABDEM V1-2 N09E050",
+                "url": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+                "kind": "raster"
+              }
+            }
+          ],
+          "warnings": [
+            "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+            "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+            "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported.",
+            "One complete 21,627,700-byte publisher ZIP and two eligible 3600 × 3600 Float32 members only; actual Point grid footprints determine selection. Original archive/member hashes, bytes and embedded NoData are retained. Existing 512 MiB transfer, safe ZIP-member, native decoding and preview budgets remain unchanged.",
+            "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+          ]
+        },
+        "stacConnections": [
+          {
+            "id": "dfa4c2df-8e55-48b7-808a-e89cc299f39c",
+            "name": "FABDEM V1-2 N08E050",
+            "url": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+            "kind": "raster",
+            "connectedAt": "2026-10-14T09:53:59.715434100+00:00",
+            "collections": [],
+            "capabilities": {
+              "searchGet": false,
+              "searchPost": false
+            },
+            "snapshotIds": [
+              "a2d256e5b2925351de4f5f226171aa30d58a689fa6cba705c8cc9843140445d5"
+            ],
+            "searchUrl": null,
+            "searchMethod": "GET",
+            "metadataSha256": [
+              "cad66711d62ba3ddf6e508e81b1b7529deb52f4dee02b5f152039af41f7f107d"
+            ],
+            "metadataDocuments": []
+          },
+          {
+            "id": "dfa4c2df-8e55-48b7-808a-e89cc299f39c",
+            "name": "FABDEM V1-2 N09E050",
+            "url": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+            "kind": "raster",
+            "connectedAt": "2026-10-14T09:54:01.098543900+00:00",
+            "collections": [],
+            "capabilities": {
+              "searchGet": false,
+              "searchPost": false
+            },
+            "snapshotIds": [
+              "a753d145f75631d174a7115bc4eaa9822be99d475615be26ebcbd03e459b4dbe"
+            ],
+            "searchUrl": null,
+            "searchMethod": "GET",
+            "metadataSha256": [
+              "35eb06536eae4b1c60c9fed6b513af0b2b375e8e44adaa87f1a1e95545badb05"
+            ],
+            "metadataDocuments": []
+          }
+        ],
+        "wcsConnections": [],
+        "failures": [],
+        "complete": true
+      },
+      "snapshots": [
+        {
+          "id": "a2d256e5b2925351de4f5f226171aa30d58a689fa6cba705c8cc9843140445d5",
+          "connectionId": "dfa4c2df-8e55-48b7-808a-e89cc299f39c",
+          "collectionId": null,
+          "itemId": "cad66711d62ba3ddf6e508e81b1b7529deb52f4dee02b5f152039af41f7f107d",
+          "title": "FABDEM V1-2 N08E050",
+          "datetime": null,
+          "startDatetime": null,
+          "endDatetime": null,
+          "bbox": [
+            49.99986111111111,
+            8.000138888888891,
+            50.99986111111111,
+            9.00013888888889
+          ],
+          "geometry": null,
+          "properties": {
+            "datasetPreset": {
+              "dataset": {
+                "attribution": "Neal, J., Hawker, L., Uhe, P., Paulo, L., Sosa, J., Savage, J. and Sampson, C. (2023), FABDEM V1-2, University of Bristol, doi:10.5523/bris.s5hqmjcdj8yo2ibzi9b4ew3sn. Hawker et al. (2022), A 30 m global map of elevation with forests and buildings removed, Environmental Research Letters 17, 024016, doi:10.1088/1748-9326/ac4d4f. Retain licence, attribution, selected tile and release. The original publisher readme at https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/readme.txt also requires retention of its Copernicus WorldDEM-30 attribution and liability statements: DLR 2010–2014 / Airbus 2014–2018, provided under Copernicus by EU and ESA, all rights reserved; organisations managing Copernicus incur no liability for data use. Preserve those original statements with any external use. Commercial enquiries: fabdem@fathom.global.",
+                "category": "elevation",
+                "defaultLayer": "elevation",
+                "description": "Forest And Buildings removed Copernicus DEM: modeled removal of tree and building height biases from Copernicus GLO-30. Reviewed scope is the N08E050 and N09E050 1° original tiles in one author-published 10° ZIP. No alternate Copernicus DEM, Fathom DEM, global claim or generated AOI raster is substituted.",
+                "documentationUrl": "https://research-information.bris.ac.uk/en/datasets/fabdem-v1-2/",
+                "id": "fabdem",
+                "layers": [
+                  {
+                    "id": "elevation",
+                    "nodata": -9999,
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "Terrain elevation · original metres",
+                    "unit": "m",
+                    "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+                  }
+                ],
+                "license": "CC BY-NC-SA 4.0 · non-commercial; commercial use requires a separate Fathom licence",
+                "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                "limits": [
+                  "One complete 21,627,700-byte publisher ZIP and two eligible 3600 × 3600 Float32 members only; actual Point grid footprints determine selection. Original archive/member hashes, bytes and embedded NoData are retained. Existing 512 MiB transfer, safe ZIP-member, native decoding and preview budgets remain unchanged."
+                ],
+                "nominalResolution": "1 arc-second (approximately 30 m at equator); original 3600 × 3600 Point grid",
+                "requiresCountry": false,
+                "title": "FABDEM V1-2 · terrain elevation",
+                "unit": "metres",
+                "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed.",
+                "version": "FABDEM V1-2 · January 2023 release · two reviewed original tiles",
+                "warnings": [
+                  "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+                  "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+                  "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported."
+                ],
+                "years": []
+              },
+              "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+              "layer": {
+                "id": "elevation",
+                "nodata": -9999,
+                "offset": 0,
+                "scale": 1,
+                "title": "Terrain elevation · original metres",
+                "unit": "m",
+                "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+              },
+              "request": {
+                "bounds": [
+                  50.2,
+                  8.2,
+                  50.8,
+                  9.8
+                ],
+                "datasetId": "fabdem",
+                "layer": "elevation"
+              },
+              "schemaVersion": 2,
+              "sourceBounds": [
+                49.99986111111111,
+                8.000138888888891,
+                50.99986111111111,
+                9.00013888888889
+              ],
+              "sourceId": "N08E050_FABDEM_V1-2",
+              "sourceTitle": "FABDEM V1-2 N08E050"
+            }
+          },
+          "assets": [
+            {
+              "key": "raster",
+              "title": "FABDEM V1-2 N08E050",
+              "href": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+              "mediaType": "application/zip",
+              "roles": [
+                "data"
+              ],
+              "eligible": true,
+              "reason": null,
+              "metadata": {
+                "cogLayout": "original ZIP; selected whole TIFF remains separately checksummed",
+                "contentLength": 16,
+                "contentRange": "bytes 0-15/21627700",
+                "datasetPreset": {
+                  "dataset": {
+                    "attribution": "Neal, J., Hawker, L., Uhe, P., Paulo, L., Sosa, J., Savage, J. and Sampson, C. (2023), FABDEM V1-2, University of Bristol, doi:10.5523/bris.s5hqmjcdj8yo2ibzi9b4ew3sn. Hawker et al. (2022), A 30 m global map of elevation with forests and buildings removed, Environmental Research Letters 17, 024016, doi:10.1088/1748-9326/ac4d4f. Retain licence, attribution, selected tile and release. The original publisher readme at https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/readme.txt also requires retention of its Copernicus WorldDEM-30 attribution and liability statements: DLR 2010–2014 / Airbus 2014–2018, provided under Copernicus by EU and ESA, all rights reserved; organisations managing Copernicus incur no liability for data use. Preserve those original statements with any external use. Commercial enquiries: fabdem@fathom.global.",
+                    "category": "elevation",
+                    "defaultLayer": "elevation",
+                    "description": "Forest And Buildings removed Copernicus DEM: modeled removal of tree and building height biases from Copernicus GLO-30. Reviewed scope is the N08E050 and N09E050 1° original tiles in one author-published 10° ZIP. No alternate Copernicus DEM, Fathom DEM, global claim or generated AOI raster is substituted.",
+                    "documentationUrl": "https://research-information.bris.ac.uk/en/datasets/fabdem-v1-2/",
+                    "id": "fabdem",
+                    "layers": [
+                      {
+                        "id": "elevation",
+                        "nodata": -9999,
+                        "offset": 0,
+                        "scale": 1,
+                        "title": "Terrain elevation · original metres",
+                        "unit": "m",
+                        "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+                      }
+                    ],
+                    "license": "CC BY-NC-SA 4.0 · non-commercial; commercial use requires a separate Fathom licence",
+                    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                    "limits": [
+                      "One complete 21,627,700-byte publisher ZIP and two eligible 3600 × 3600 Float32 members only; actual Point grid footprints determine selection. Original archive/member hashes, bytes and embedded NoData are retained. Existing 512 MiB transfer, safe ZIP-member, native decoding and preview budgets remain unchanged."
+                    ],
+                    "nominalResolution": "1 arc-second (approximately 30 m at equator); original 3600 × 3600 Point grid",
+                    "requiresCountry": false,
+                    "title": "FABDEM V1-2 · terrain elevation",
+                    "unit": "metres",
+                    "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed.",
+                    "version": "FABDEM V1-2 · January 2023 release · two reviewed original tiles",
+                    "warnings": [
+                      "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+                      "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+                      "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported."
+                    ],
+                    "years": []
+                  },
+                  "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+                  "layer": {
+                    "id": "elevation",
+                    "nodata": -9999,
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "Terrain elevation · original metres",
+                    "unit": "m",
+                    "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+                  },
+                  "request": {
+                    "bounds": [
+                      50.2,
+                      8.2,
+                      50.8,
+                      9.8
+                    ],
+                    "datasetId": "fabdem",
+                    "layer": "elevation"
+                  },
+                  "schemaVersion": 2,
+                  "sourceBounds": [
+                    49.99986111111111,
+                    8.000138888888891,
+                    50.99986111111111,
+                    9.00013888888889
+                  ],
+                  "sourceId": "N08E050_FABDEM_V1-2",
+                  "sourceTitle": "FABDEM V1-2 N08E050"
+                },
+                "file:checksum": "1220be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+                "file:size": 21627700,
+                "headerHex": "504b0304140000000000fd7b4355b881",
+                "href": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+                "kind": "reviewed-raster-archive",
+                "probeStatus": 206,
+                "reviewedArchive": {
+                  "archiveBytes": 21627700,
+                  "archiveSha256": "be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+                  "member": "N08E050_FABDEM_V1-2.tif",
+                  "memberBytes": 5592127,
+                  "memberSha256": "6a8988122a922f0f11a059829c4ecfc5451364eca1b38708d02bf789668b7837"
+                }
+              }
+            }
+          ],
+          "retrievedAt": "2026-10-14T09:53:59.715434100+00:00",
+          "documentSha256": "cad66711d62ba3ddf6e508e81b1b7529deb52f4dee02b5f152039af41f7f107d",
+          "temporalStatus": "missing",
+          "warnings": [
+            "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+            "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+            "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported.",
+            "Dataset preset metadata is a client declaration based on publisher documentation. It does not prove scientific validity, native-file metadata or valid-data coverage. The release/model epoch is not a scene acquisition time.",
+            "Direct raster source has no declared acquisition time; COG layout is not validated."
+          ],
+          "provenance": {
+            "documentUrl": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+            "metadataDocuments": [],
+            "search": null,
+            "collection": null
+          }
+        },
+        {
+          "id": "a753d145f75631d174a7115bc4eaa9822be99d475615be26ebcbd03e459b4dbe",
+          "connectionId": "dfa4c2df-8e55-48b7-808a-e89cc299f39c",
+          "collectionId": null,
+          "itemId": "35eb06536eae4b1c60c9fed6b513af0b2b375e8e44adaa87f1a1e95545badb05",
+          "title": "FABDEM V1-2 N09E050",
+          "datetime": null,
+          "startDatetime": null,
+          "endDatetime": null,
+          "bbox": [
+            49.99986111111111,
+            9.000138888888891,
+            50.99986111111111,
+            10.00013888888889
+          ],
+          "geometry": null,
+          "properties": {
+            "datasetPreset": {
+              "dataset": {
+                "attribution": "Neal, J., Hawker, L., Uhe, P., Paulo, L., Sosa, J., Savage, J. and Sampson, C. (2023), FABDEM V1-2, University of Bristol, doi:10.5523/bris.s5hqmjcdj8yo2ibzi9b4ew3sn. Hawker et al. (2022), A 30 m global map of elevation with forests and buildings removed, Environmental Research Letters 17, 024016, doi:10.1088/1748-9326/ac4d4f. Retain licence, attribution, selected tile and release. The original publisher readme at https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/readme.txt also requires retention of its Copernicus WorldDEM-30 attribution and liability statements: DLR 2010–2014 / Airbus 2014–2018, provided under Copernicus by EU and ESA, all rights reserved; organisations managing Copernicus incur no liability for data use. Preserve those original statements with any external use. Commercial enquiries: fabdem@fathom.global.",
+                "category": "elevation",
+                "defaultLayer": "elevation",
+                "description": "Forest And Buildings removed Copernicus DEM: modeled removal of tree and building height biases from Copernicus GLO-30. Reviewed scope is the N08E050 and N09E050 1° original tiles in one author-published 10° ZIP. No alternate Copernicus DEM, Fathom DEM, global claim or generated AOI raster is substituted.",
+                "documentationUrl": "https://research-information.bris.ac.uk/en/datasets/fabdem-v1-2/",
+                "id": "fabdem",
+                "layers": [
+                  {
+                    "id": "elevation",
+                    "nodata": -9999,
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "Terrain elevation · original metres",
+                    "unit": "m",
+                    "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+                  }
+                ],
+                "license": "CC BY-NC-SA 4.0 · non-commercial; commercial use requires a separate Fathom licence",
+                "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                "limits": [
+                  "One complete 21,627,700-byte publisher ZIP and two eligible 3600 × 3600 Float32 members only; actual Point grid footprints determine selection. Original archive/member hashes, bytes and embedded NoData are retained. Existing 512 MiB transfer, safe ZIP-member, native decoding and preview budgets remain unchanged."
+                ],
+                "nominalResolution": "1 arc-second (approximately 30 m at equator); original 3600 × 3600 Point grid",
+                "requiresCountry": false,
+                "title": "FABDEM V1-2 · terrain elevation",
+                "unit": "metres",
+                "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed.",
+                "version": "FABDEM V1-2 · January 2023 release · two reviewed original tiles",
+                "warnings": [
+                  "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+                  "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+                  "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported."
+                ],
+                "years": []
+              },
+              "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+              "layer": {
+                "id": "elevation",
+                "nodata": -9999,
+                "offset": 0,
+                "scale": 1,
+                "title": "Terrain elevation · original metres",
+                "unit": "m",
+                "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+              },
+              "request": {
+                "bounds": [
+                  50.2,
+                  8.2,
+                  50.8,
+                  9.8
+                ],
+                "datasetId": "fabdem",
+                "layer": "elevation"
+              },
+              "schemaVersion": 2,
+              "sourceBounds": [
+                49.99986111111111,
+                9.000138888888891,
+                50.99986111111111,
+                10.00013888888889
+              ],
+              "sourceId": "N09E050_FABDEM_V1-2",
+              "sourceTitle": "FABDEM V1-2 N09E050"
+            }
+          },
+          "assets": [
+            {
+              "key": "raster",
+              "title": "FABDEM V1-2 N09E050",
+              "href": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+              "mediaType": "application/zip",
+              "roles": [
+                "data"
+              ],
+              "eligible": true,
+              "reason": null,
+              "metadata": {
+                "cogLayout": "original ZIP; selected whole TIFF remains separately checksummed",
+                "contentLength": 16,
+                "contentRange": "bytes 0-15/21627700",
+                "datasetPreset": {
+                  "dataset": {
+                    "attribution": "Neal, J., Hawker, L., Uhe, P., Paulo, L., Sosa, J., Savage, J. and Sampson, C. (2023), FABDEM V1-2, University of Bristol, doi:10.5523/bris.s5hqmjcdj8yo2ibzi9b4ew3sn. Hawker et al. (2022), A 30 m global map of elevation with forests and buildings removed, Environmental Research Letters 17, 024016, doi:10.1088/1748-9326/ac4d4f. Retain licence, attribution, selected tile and release. The original publisher readme at https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/readme.txt also requires retention of its Copernicus WorldDEM-30 attribution and liability statements: DLR 2010–2014 / Airbus 2014–2018, provided under Copernicus by EU and ESA, all rights reserved; organisations managing Copernicus incur no liability for data use. Preserve those original statements with any external use. Commercial enquiries: fabdem@fathom.global.",
+                    "category": "elevation",
+                    "defaultLayer": "elevation",
+                    "description": "Forest And Buildings removed Copernicus DEM: modeled removal of tree and building height biases from Copernicus GLO-30. Reviewed scope is the N08E050 and N09E050 1° original tiles in one author-published 10° ZIP. No alternate Copernicus DEM, Fathom DEM, global claim or generated AOI raster is substituted.",
+                    "documentationUrl": "https://research-information.bris.ac.uk/en/datasets/fabdem-v1-2/",
+                    "id": "fabdem",
+                    "layers": [
+                      {
+                        "id": "elevation",
+                        "nodata": -9999,
+                        "offset": 0,
+                        "scale": 1,
+                        "title": "Terrain elevation · original metres",
+                        "unit": "m",
+                        "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+                      }
+                    ],
+                    "license": "CC BY-NC-SA 4.0 · non-commercial; commercial use requires a separate Fathom licence",
+                    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                    "limits": [
+                      "One complete 21,627,700-byte publisher ZIP and two eligible 3600 × 3600 Float32 members only; actual Point grid footprints determine selection. Original archive/member hashes, bytes and embedded NoData are retained. Existing 512 MiB transfer, safe ZIP-member, native decoding and preview budgets remain unchanged."
+                    ],
+                    "nominalResolution": "1 arc-second (approximately 30 m at equator); original 3600 × 3600 Point grid",
+                    "requiresCountry": false,
+                    "title": "FABDEM V1-2 · terrain elevation",
+                    "unit": "metres",
+                    "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed.",
+                    "version": "FABDEM V1-2 · January 2023 release · two reviewed original tiles",
+                    "warnings": [
+                      "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+                      "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+                      "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported."
+                    ],
+                    "years": []
+                  },
+                  "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+                  "layer": {
+                    "id": "elevation",
+                    "nodata": -9999,
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "Terrain elevation · original metres",
+                    "unit": "m",
+                    "valueInterpretation": "Original Float32 modeled terrain elevation in metres, scale 1 and offset 0; NoData -9999. Preserve zero and negative elevations as valid values. Original Point registration shifts the reported outer-edge footprint by half a cell; filenames are not exact bounding boxes. No datum transformation, height correction, clipping, reprojection, resampling or scalar mask inference is performed."
+                  },
+                  "request": {
+                    "bounds": [
+                      50.2,
+                      8.2,
+                      50.8,
+                      9.8
+                    ],
+                    "datasetId": "fabdem",
+                    "layer": "elevation"
+                  },
+                  "schemaVersion": 2,
+                  "sourceBounds": [
+                    49.99986111111111,
+                    9.000138888888891,
+                    50.99986111111111,
+                    10.00013888888889
+                  ],
+                  "sourceId": "N09E050_FABDEM_V1-2",
+                  "sourceTitle": "FABDEM V1-2 N09E050"
+                },
+                "file:checksum": "1220be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+                "file:size": 21627700,
+                "headerHex": "504b0304140000000000fd7b4355b881",
+                "href": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+                "kind": "reviewed-raster-archive",
+                "probeStatus": 206,
+                "reviewedArchive": {
+                  "archiveBytes": 21627700,
+                  "archiveSha256": "be348eecf2fb835792c1d446d5528a34956a8509c37004da9b72101c313cacfe",
+                  "member": "N09E050_FABDEM_V1-2.tif",
+                  "memberBytes": 16035307,
+                  "memberSha256": "c8d2ffb9777dddabefa856636a072af81563eb9fed3bf3cfcfebfe95a9ed9928"
+                }
+              }
+            }
+          ],
+          "retrievedAt": "2026-10-14T09:54:01.098543900+00:00",
+          "documentSha256": "35eb06536eae4b1c60c9fed6b513af0b2b375e8e44adaa87f1a1e95545badb05",
+          "temporalStatus": "missing",
+          "warnings": [
+            "Only two fully checked 1° members of N00E050-N10E060_FABDEM_V1-2.zip are eligible. The complete official ZIP is downloaded and preserved with its SHA-256; the selected whole TIFF is extracted byte-for-byte and has its own independent SHA-256. The ZIP is not falsely presented as a TIFF or as publisher STAC.",
+            "FABDEM is a derived terrain model with forest/building bias removal, not surveyed bare-earth truth or the original Copernicus surface DEM. Publication in 2023 is not a 2023 observation. No date selector applies.",
+            "The licence is CC BY-NC-SA 4.0. Non-commercial attribution and ShareAlike terms apply; commercial use requires separate permission. Some published bundles exceed 512 MiB and remain unsupported.",
+            "Dataset preset metadata is a client declaration based on publisher documentation. It does not prove scientific validity, native-file metadata or valid-data coverage. The release/model epoch is not a scene acquisition time.",
+            "Direct raster source has no declared acquisition time; COG layout is not validated."
+          ],
+          "provenance": {
+            "documentUrl": "https://data.bris.ac.uk/datasets/s5hqmjcdj8yo2ibzi9b4ew3sn/N00E050-N10E060_FABDEM_V1-2.zip",
+            "metadataDocuments": [],
+            "search": null,
+            "collection": null
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "datasetId": "glc-fcs10",
+        "bounds": [
+          -173,
+          68,
+          -171,
+          69
+        ],
+        "layer": "classes",
+        "year": 2023
+      },
+      "connection": {
+        "plan": {
+          "dataset": {
+            "id": "glc-fcs10",
+            "title": "GLC_FCS10 · 2023 land-cover classes",
+            "category": "land-cover",
+            "description": "Original 2023 categorical land-cover maps generated from Sentinel-1 and Sentinel-2 time-series observations. The reviewed scope is six whole W175 TIFF members in the author's W175-W180 ZIP; the four W180 members retain 180–185° coordinates and are not silently shifted or registered. This is GLC_FCS10 itself, not a GEE export, another land-cover product or original sensor bands.",
+            "version": "GLC_FCS10 v1 · 2023 reference map · published 2025-01-24",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "attribution": "Liu, Liangyun and Zhang, Xiao (2025), GLC_FCS10, doi:10.5281/zenodo.14729665. Zhang et al. (2025), Earth System Science Data 17, 4039–4062, doi:10.5194/essd-17-4039-2025. Retain the author licence, record version and publisher legend for class interpretation.",
+            "documentationUrl": "https://zenodo.org/records/14729665",
+            "nominalResolution": "10 m nominal; original EPSG:4326 spacing 0.00008983152841195215°",
+            "unit": "class code",
+            "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred.",
+            "years": [
+              2023
+            ],
+            "defaultYear": 2023,
+            "requiresCountry": false,
+            "layers": [
+              {
+                "id": "classes",
+                "title": "Land-cover class · original code",
+                "unit": "class code",
+                "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred.",
+                "scale": 1,
+                "offset": 0
+              }
+            ],
+            "defaultLayer": "classes",
+            "warnings": [
+              "Only six completely checked W175N55/N60/N65/N70/S10/S15 original TIFFs are eligible. Every selection downloads and preserves the whole 117,500,101-byte author ZIP and extracts the selected complete TIFF with separate byte lengths, SHA-256 and ZIP CRC checks; it does not clip or fabricate an AOI file.",
+              "Four W180 members have original longitudes near 180–185°. They remain preserved in the original archive but are excluded from this recipe because the existing geographic footprint contract cannot represent them. No datum/longitude rewrite, wrap, reprojection or alternate tile is substituted.",
+              "The source TIFFs contain tiled LZW data without internal overviews. Native previews must stay within their existing chunk, cumulative decoding, grid, axis, memory and time budgets; a valid archive or resolver result alone does not prove a successful preview.",
+              "A grayscale preview displays original class indices, not continuous quantities. The actual TIFFs declare no NoData, and no class-code-to-quality mask or regional accuracy is invented."
+            ],
+            "limits": [
+              "Fixed author v1 ZIP, 2023 map and six exact original members only. The 512 MiB archive/member ceilings and existing raster budgets remain unchanged. Bounds come from original embedded transforms, including actual small overlaps; the filename is not an exact footprint. Other longitude bundles, dates, classes and global coverage remain unverified."
+            ]
+          },
+          "request": {
+            "datasetId": "glc-fcs10",
+            "bounds": [
+              -173,
+              68,
+              -171,
+              69
+            ],
+            "year": 2023,
+            "layer": "classes"
+          },
+          "sources": [
+            {
+              "id": "GLC_FCS10_2023_W175N70",
+              "title": "GLC_FCS10 2023 W175N70",
+              "bounds": [
+                -175.00008184709668,
+                64.99993800220669,
+                -169.99996914415902,
+                70.00005070514436
+              ],
+              "stac": {
+                "name": "GLC_FCS10 2023 W175N70",
+                "url": "https://zenodo.org/records/14729665/files/GLC_FCS10maps_2023_W175-W180.zip",
+                "kind": "raster"
+              }
+            }
+          ],
+          "warnings": [
+            "Only six completely checked W175N55/N60/N65/N70/S10/S15 original TIFFs are eligible. Every selection downloads and preserves the whole 117,500,101-byte author ZIP and extracts the selected complete TIFF with separate byte lengths, SHA-256 and ZIP CRC checks; it does not clip or fabricate an AOI file.",
+            "Four W180 members have original longitudes near 180–185°. They remain preserved in the original archive but are excluded from this recipe because the existing geographic footprint contract cannot represent them. No datum/longitude rewrite, wrap, reprojection or alternate tile is substituted.",
+            "The source TIFFs contain tiled LZW data without internal overviews. Native previews must stay within their existing chunk, cumulative decoding, grid, axis, memory and time budgets; a valid archive or resolver result alone does not prove a successful preview.",
+            "A grayscale preview displays original class indices, not continuous quantities. The actual TIFFs declare no NoData, and no class-code-to-quality mask or regional accuracy is invented.",
+            "Fixed author v1 ZIP, 2023 map and six exact original members only. The 512 MiB archive/member ceilings and existing raster budgets remain unchanged. Bounds come from original embedded transforms, including actual small overlaps; the filename is not an exact footprint. Other longitude bundles, dates, classes and global coverage remain unverified.",
+            "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+          ]
+        },
+        "stacConnections": [
+          {
+            "id": "dcf277b6-1a8a-4116-bb77-50b1a14fcd84",
+            "name": "GLC_FCS10 2023 W175N70",
+            "url": "https://zenodo.org/records/14729665/files/GLC_FCS10maps_2023_W175-W180.zip",
+            "kind": "raster",
+            "connectedAt": "2026-10-14T09:54:02.462277700+00:00",
+            "collections": [],
+            "capabilities": {
+              "searchGet": false,
+              "searchPost": false
+            },
+            "snapshotIds": [
+              "ad852fee63806109674a455b4682b49388b25bf140dafed373724988d7d30be2"
+            ],
+            "searchUrl": null,
+            "searchMethod": "GET",
+            "metadataSha256": [
+              "0fc24bbeee79a60c9b242272e4c31940c983390a1163f3bfdf90d6958a452da7"
+            ],
+            "metadataDocuments": []
+          }
+        ],
+        "wcsConnections": [],
+        "failures": [],
+        "complete": true
+      },
+      "snapshots": [
+        {
+          "id": "ad852fee63806109674a455b4682b49388b25bf140dafed373724988d7d30be2",
+          "connectionId": "dcf277b6-1a8a-4116-bb77-50b1a14fcd84",
+          "collectionId": null,
+          "itemId": "0fc24bbeee79a60c9b242272e4c31940c983390a1163f3bfdf90d6958a452da7",
+          "title": "GLC_FCS10 2023 W175N70",
+          "datetime": null,
+          "startDatetime": null,
+          "endDatetime": null,
+          "bbox": [
+            -175.00008184709668,
+            64.99993800220669,
+            -169.99996914415902,
+            70.00005070514436
+          ],
+          "geometry": null,
+          "properties": {
+            "datasetPreset": {
+              "dataset": {
+                "attribution": "Liu, Liangyun and Zhang, Xiao (2025), GLC_FCS10, doi:10.5281/zenodo.14729665. Zhang et al. (2025), Earth System Science Data 17, 4039–4062, doi:10.5194/essd-17-4039-2025. Retain the author licence, record version and publisher legend for class interpretation.",
+                "category": "land-cover",
+                "defaultLayer": "classes",
+                "defaultYear": 2023,
+                "description": "Original 2023 categorical land-cover maps generated from Sentinel-1 and Sentinel-2 time-series observations. The reviewed scope is six whole W175 TIFF members in the author's W175-W180 ZIP; the four W180 members retain 180–185° coordinates and are not silently shifted or registered. This is GLC_FCS10 itself, not a GEE export, another land-cover product or original sensor bands.",
+                "documentationUrl": "https://zenodo.org/records/14729665",
+                "id": "glc-fcs10",
+                "layers": [
+                  {
+                    "id": "classes",
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "Land-cover class · original code",
+                    "unit": "class code",
+                    "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred."
+                  }
+                ],
+                "license": "CC BY 4.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+                "limits": [
+                  "Fixed author v1 ZIP, 2023 map and six exact original members only. The 512 MiB archive/member ceilings and existing raster budgets remain unchanged. Bounds come from original embedded transforms, including actual small overlaps; the filename is not an exact footprint. Other longitude bundles, dates, classes and global coverage remain unverified."
+                ],
+                "nominalResolution": "10 m nominal; original EPSG:4326 spacing 0.00008983152841195215°",
+                "requiresCountry": false,
+                "title": "GLC_FCS10 · 2023 land-cover classes",
+                "unit": "class code",
+                "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred.",
+                "version": "GLC_FCS10 v1 · 2023 reference map · published 2025-01-24",
+                "warnings": [
+                  "Only six completely checked W175N55/N60/N65/N70/S10/S15 original TIFFs are eligible. Every selection downloads and preserves the whole 117,500,101-byte author ZIP and extracts the selected complete TIFF with separate byte lengths, SHA-256 and ZIP CRC checks; it does not clip or fabricate an AOI file.",
+                  "Four W180 members have original longitudes near 180–185°. They remain preserved in the original archive but are excluded from this recipe because the existing geographic footprint contract cannot represent them. No datum/longitude rewrite, wrap, reprojection or alternate tile is substituted.",
+                  "The source TIFFs contain tiled LZW data without internal overviews. Native previews must stay within their existing chunk, cumulative decoding, grid, axis, memory and time budgets; a valid archive or resolver result alone does not prove a successful preview.",
+                  "A grayscale preview displays original class indices, not continuous quantities. The actual TIFFs declare no NoData, and no class-code-to-quality mask or regional accuracy is invented."
+                ],
+                "years": [
+                  2023
+                ]
+              },
+              "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+              "layer": {
+                "id": "classes",
+                "offset": 0,
+                "scale": 1,
+                "title": "Land-cover class · original code",
+                "unit": "class code",
+                "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred."
+              },
+              "request": {
+                "bounds": [
+                  -173,
+                  68,
+                  -171,
+                  69
+                ],
+                "datasetId": "glc-fcs10",
+                "layer": "classes",
+                "year": 2023
+              },
+              "schemaVersion": 2,
+              "sourceBounds": [
+                -175.00008184709668,
+                64.99993800220669,
+                -169.99996914415902,
+                70.00005070514436
+              ],
+              "sourceId": "GLC_FCS10_2023_W175N70",
+              "sourceTitle": "GLC_FCS10 2023 W175N70"
+            }
+          },
+          "assets": [
+            {
+              "key": "raster",
+              "title": "GLC_FCS10 2023 W175N70",
+              "href": "https://zenodo.org/records/14729665/files/GLC_FCS10maps_2023_W175-W180.zip",
+              "mediaType": "application/zip",
+              "roles": [
+                "data"
+              ],
+              "eligible": true,
+              "reason": null,
+              "metadata": {
+                "cogLayout": "original ZIP; selected whole TIFF remains separately checksummed",
+                "contentLength": 16,
+                "contentRange": "bytes 0-15/117500101",
+                "datasetPreset": {
+                  "dataset": {
+                    "attribution": "Liu, Liangyun and Zhang, Xiao (2025), GLC_FCS10, doi:10.5281/zenodo.14729665. Zhang et al. (2025), Earth System Science Data 17, 4039–4062, doi:10.5194/essd-17-4039-2025. Retain the author licence, record version and publisher legend for class interpretation.",
+                    "category": "land-cover",
+                    "defaultLayer": "classes",
+                    "defaultYear": 2023,
+                    "description": "Original 2023 categorical land-cover maps generated from Sentinel-1 and Sentinel-2 time-series observations. The reviewed scope is six whole W175 TIFF members in the author's W175-W180 ZIP; the four W180 members retain 180–185° coordinates and are not silently shifted or registered. This is GLC_FCS10 itself, not a GEE export, another land-cover product or original sensor bands.",
+                    "documentationUrl": "https://zenodo.org/records/14729665",
+                    "id": "glc-fcs10",
+                    "layers": [
+                      {
+                        "id": "classes",
+                        "offset": 0,
+                        "scale": 1,
+                        "title": "Land-cover class · original code",
+                        "unit": "class code",
+                        "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred."
+                      }
+                    ],
+                    "license": "CC BY 4.0",
+                    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+                    "limits": [
+                      "Fixed author v1 ZIP, 2023 map and six exact original members only. The 512 MiB archive/member ceilings and existing raster budgets remain unchanged. Bounds come from original embedded transforms, including actual small overlaps; the filename is not an exact footprint. Other longitude bundles, dates, classes and global coverage remain unverified."
+                    ],
+                    "nominalResolution": "10 m nominal; original EPSG:4326 spacing 0.00008983152841195215°",
+                    "requiresCountry": false,
+                    "title": "GLC_FCS10 · 2023 land-cover classes",
+                    "unit": "class code",
+                    "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred.",
+                    "version": "GLC_FCS10 v1 · 2023 reference map · published 2025-01-24",
+                    "warnings": [
+                      "Only six completely checked W175N55/N60/N65/N70/S10/S15 original TIFFs are eligible. Every selection downloads and preserves the whole 117,500,101-byte author ZIP and extracts the selected complete TIFF with separate byte lengths, SHA-256 and ZIP CRC checks; it does not clip or fabricate an AOI file.",
+                      "Four W180 members have original longitudes near 180–185°. They remain preserved in the original archive but are excluded from this recipe because the existing geographic footprint contract cannot represent them. No datum/longitude rewrite, wrap, reprojection or alternate tile is substituted.",
+                      "The source TIFFs contain tiled LZW data without internal overviews. Native previews must stay within their existing chunk, cumulative decoding, grid, axis, memory and time budgets; a valid archive or resolver result alone does not prove a successful preview.",
+                      "A grayscale preview displays original class indices, not continuous quantities. The actual TIFFs declare no NoData, and no class-code-to-quality mask or regional accuracy is invented."
+                    ],
+                    "years": [
+                      2023
+                    ]
+                  },
+                  "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+                  "layer": {
+                    "id": "classes",
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "Land-cover class · original code",
+                    "unit": "class code",
+                    "valueInterpretation": "Original single-band UInt8 categorical codes, scale 1 and offset 0. The actual TIFFs declare no NoData; zero and every stored code remain raw values and are not converted into a missing-data mask. Consult the publisher classification legend for class meanings. The 2023 reference year and 2025 publication are not individual image acquisition dates; no physical reflectance or spectral bands are inferred."
+                  },
+                  "request": {
+                    "bounds": [
+                      -173,
+                      68,
+                      -171,
+                      69
+                    ],
+                    "datasetId": "glc-fcs10",
+                    "layer": "classes",
+                    "year": 2023
+                  },
+                  "schemaVersion": 2,
+                  "sourceBounds": [
+                    -175.00008184709668,
+                    64.99993800220669,
+                    -169.99996914415902,
+                    70.00005070514436
+                  ],
+                  "sourceId": "GLC_FCS10_2023_W175N70",
+                  "sourceTitle": "GLC_FCS10 2023 W175N70"
+                },
+                "file:checksum": "122060ad302c2e103fb828e2afed348826226db1417704a0902e5e854eaa55a4fae2",
+                "file:size": 117500101,
+                "headerHex": "504b03041400000008000b709c598918",
+                "href": "https://zenodo.org/records/14729665/files/GLC_FCS10maps_2023_W175-W180.zip",
+                "kind": "reviewed-raster-archive",
+                "probeStatus": 206,
+                "reviewedArchive": {
+                  "archiveBytes": 117500101,
+                  "archiveSha256": "60ad302c2e103fb828e2afed348826226db1417704a0902e5e854eaa55a4fae2",
+                  "member": "GLC_FCS10_2023_W175N70.tif",
+                  "memberBytes": 47037152,
+                  "memberSha256": "3e70e7329591c26a90554ec67d4079181260162ce35b1d6df206fcff38c35503"
+                }
+              }
+            }
+          ],
+          "retrievedAt": "2026-10-14T09:54:02.462277700+00:00",
+          "documentSha256": "0fc24bbeee79a60c9b242272e4c31940c983390a1163f3bfdf90d6958a452da7",
+          "temporalStatus": "missing",
+          "warnings": [
+            "Only six completely checked W175N55/N60/N65/N70/S10/S15 original TIFFs are eligible. Every selection downloads and preserves the whole 117,500,101-byte author ZIP and extracts the selected complete TIFF with separate byte lengths, SHA-256 and ZIP CRC checks; it does not clip or fabricate an AOI file.",
+            "Four W180 members have original longitudes near 180–185°. They remain preserved in the original archive but are excluded from this recipe because the existing geographic footprint contract cannot represent them. No datum/longitude rewrite, wrap, reprojection or alternate tile is substituted.",
+            "The source TIFFs contain tiled LZW data without internal overviews. Native previews must stay within their existing chunk, cumulative decoding, grid, axis, memory and time budgets; a valid archive or resolver result alone does not prove a successful preview.",
+            "A grayscale preview displays original class indices, not continuous quantities. The actual TIFFs declare no NoData, and no class-code-to-quality mask or regional accuracy is invented.",
+            "Dataset preset metadata is a client declaration based on publisher documentation. It does not prove scientific validity, native-file metadata or valid-data coverage. The release/model epoch is not a scene acquisition time.",
+            "Direct raster source has no declared acquisition time; COG layout is not validated."
+          ],
+          "provenance": {
+            "documentUrl": "https://zenodo.org/records/14729665/files/GLC_FCS10maps_2023_W175-W180.zip",
+            "metadataDocuments": [],
+            "search": null,
+            "collection": null
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "datasetId": "glc-fcs30d",
+        "bounds": [
+          -173,
+          68,
+          -171,
+          69
+        ],
+        "layer": "classes-1985",
+        "year": 1985
+      },
+      "connection": {
+        "plan": {
+          "dataset": {
+            "id": "glc-fcs30d",
+            "title": "GLC_FCS30D · 1985 land-cover classes",
+            "category": "land-cover",
+            "description": "The author's original GLC_FCS30D historical classification product. Reviewed scope is eight whole three-band TIFF members in one complete W175-W180 ZIP. Native first-band display represents 1985; the unchanged file and raw pixel arrays also retain the 1990 and 1995 classifications. The separate 23-band annual files are preserved in the complete archive but remain unsupported for inspection; no band is dropped or rewritten.",
+            "version": "GLC_FCS30D author archive · three historical bands 1985/1990/1995",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "attribution": "Liu, Liangyun and Zhang, Xiao, GLC_FCS30D, doi:10.5281/zenodo.8239305. Zhang et al., Earth System Science Data 16, 1353–1381, doi:10.5194/essd-16-1353-2024. Preserve author licence, original file naming, record version and the published user guide/35-class legend. The guide recommends contacting the authors about scientific use and acknowledging their contribution; no contact or co-authorship is fabricated.",
+            "documentationUrl": "https://zenodo.org/records/8239305",
+            "nominalResolution": "30 m nominal; original EPSG:4326 spacing 0.00026949458523585647°",
+            "unit": "class code",
+            "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display.",
+            "years": [
+              1985
+            ],
+            "defaultYear": 1985,
+            "requiresCountry": false,
+            "layers": [
+              {
+                "id": "classes-1985",
+                "title": "1985 class display · whole three-period original",
+                "unit": "class code",
+                "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display.",
+                "scale": 1,
+                "offset": 0
+              }
+            ],
+            "defaultLayer": "classes-1985",
+            "warnings": [
+              "The complete author ZIP is 220,928,112 bytes with 16 TIFFs. Eight accepted 1985/1990/1995 three-band members are selected by their exact embedded footprints; the whole archive and the selected whole TIFF have independent SHA-256 and byte-length receipts. No AOI clipping, band extraction, generated STAC or TIFF MIME for the ZIP is fabricated.",
+              "The publisher guide establishes three pre-2000 bands: 1985, 1990 and 1995. The separate annual originals have 23 bands covering 2000–2022 and exceed the existing 1–16 samples limit. They remain unregistered; there is no 2000 band in the old 19852000-named three-band member.",
+              "The original TIFF RGB tag does not change the historical classification semantics. Display uses only the 1985 class-code band as grayscale; raw inspection returns all three original year values. No RGB photograph, sensor calibration, temporal average, new classification or change estimate is inferred.",
+              "The actual TIFF has no declared scalar NoData; publisher filled class codes 0 and 250 should be handled in scientific analysis according to the guide. A native noData=false reflects the embedded scalar declaration and does not prove a scientifically usable observation.",
+              "These originals have no internal overviews. Only exact accepted SHA-256 and unchanged profiles may use a lower-detail browsing preview selected within the existing cumulative decoding budget. Original files and full-resolution pixel values remain unchanged."
+            ],
+            "limits": [
+              "One exact author ZIP and eight accepted 18554 × 18554 × 3 UInt8 tiled LZW members only. Original small grid overlaps and all three class-year channels are preserved. Fixed first-band display is 1985. Other periods, longitude bundles and 23-band annual originals remain unsupported; existing 512 MiB transfer/preview, chunk, memory and timeout limits are unchanged."
+            ]
+          },
+          "request": {
+            "datasetId": "glc-fcs30d",
+            "bounds": [
+              -173,
+              68,
+              -171,
+              69
+            ],
+            "year": 1985,
+            "layer": "classes-1985"
+          },
+          "sources": [
+            {
+              "id": "GLC_FCS30_19852000_5yearsMap_V1_W175N70",
+              "title": "GLC_FCS30D 1985 · W175N70",
+              "bounds": [
+                -175,
+                64.99979746553392,
+                -169.99979746553393,
+                70
+              ],
+              "stac": {
+                "name": "GLC_FCS30D 1985 · W175N70",
+                "url": "https://zenodo.org/records/8239305/files/GLC_FCS30D_19852022maps_W175-W180.zip",
+                "kind": "raster"
+              }
+            }
+          ],
+          "warnings": [
+            "The complete author ZIP is 220,928,112 bytes with 16 TIFFs. Eight accepted 1985/1990/1995 three-band members are selected by their exact embedded footprints; the whole archive and the selected whole TIFF have independent SHA-256 and byte-length receipts. No AOI clipping, band extraction, generated STAC or TIFF MIME for the ZIP is fabricated.",
+            "The publisher guide establishes three pre-2000 bands: 1985, 1990 and 1995. The separate annual originals have 23 bands covering 2000–2022 and exceed the existing 1–16 samples limit. They remain unregistered; there is no 2000 band in the old 19852000-named three-band member.",
+            "The original TIFF RGB tag does not change the historical classification semantics. Display uses only the 1985 class-code band as grayscale; raw inspection returns all three original year values. No RGB photograph, sensor calibration, temporal average, new classification or change estimate is inferred.",
+            "The actual TIFF has no declared scalar NoData; publisher filled class codes 0 and 250 should be handled in scientific analysis according to the guide. A native noData=false reflects the embedded scalar declaration and does not prove a scientifically usable observation.",
+            "These originals have no internal overviews. Only exact accepted SHA-256 and unchanged profiles may use a lower-detail browsing preview selected within the existing cumulative decoding budget. Original files and full-resolution pixel values remain unchanged.",
+            "One exact author ZIP and eight accepted 18554 × 18554 × 3 UInt8 tiled LZW members only. Original small grid overlaps and all three class-year channels are preserved. Fixed first-band display is 1985. Other periods, longitude bundles and 23-band annual originals remain unsupported; existing 512 MiB transfer/preview, chunk, memory and timeout limits are unchanged.",
+            "Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used."
+          ]
+        },
+        "stacConnections": [
+          {
+            "id": "4e065c48-736d-4e7d-a701-95b46bd0e72a",
+            "name": "GLC_FCS30D 1985 · W175N70",
+            "url": "https://zenodo.org/records/8239305/files/GLC_FCS30D_19852022maps_W175-W180.zip",
+            "kind": "raster",
+            "connectedAt": "2026-10-14T09:54:07.659042200+00:00",
+            "collections": [],
+            "capabilities": {
+              "searchGet": false,
+              "searchPost": false
+            },
+            "snapshotIds": [
+              "38b2022b65cc98360bc626d2ca0e56e14f4734b1dc61b63329a872b28bb1ba5e"
+            ],
+            "searchUrl": null,
+            "searchMethod": "GET",
+            "metadataSha256": [
+              "acf4c9a787495aa019318e2ce4ab591fa187f6aabf4abee208e1c7fd5626e011"
+            ],
+            "metadataDocuments": []
+          }
+        ],
+        "wcsConnections": [],
+        "failures": [],
+        "complete": true
+      },
+      "snapshots": [
+        {
+          "id": "38b2022b65cc98360bc626d2ca0e56e14f4734b1dc61b63329a872b28bb1ba5e",
+          "connectionId": "4e065c48-736d-4e7d-a701-95b46bd0e72a",
+          "collectionId": null,
+          "itemId": "acf4c9a787495aa019318e2ce4ab591fa187f6aabf4abee208e1c7fd5626e011",
+          "title": "GLC_FCS30D 1985 · W175N70",
+          "datetime": null,
+          "startDatetime": null,
+          "endDatetime": null,
+          "bbox": [
+            -175,
+            64.99979746553392,
+            -169.99979746553393,
+            70
+          ],
+          "geometry": null,
+          "properties": {
+            "datasetPreset": {
+              "dataset": {
+                "attribution": "Liu, Liangyun and Zhang, Xiao, GLC_FCS30D, doi:10.5281/zenodo.8239305. Zhang et al., Earth System Science Data 16, 1353–1381, doi:10.5194/essd-16-1353-2024. Preserve author licence, original file naming, record version and the published user guide/35-class legend. The guide recommends contacting the authors about scientific use and acknowledging their contribution; no contact or co-authorship is fabricated.",
+                "category": "land-cover",
+                "defaultLayer": "classes-1985",
+                "defaultYear": 1985,
+                "description": "The author's original GLC_FCS30D historical classification product. Reviewed scope is eight whole three-band TIFF members in one complete W175-W180 ZIP. Native first-band display represents 1985; the unchanged file and raw pixel arrays also retain the 1990 and 1995 classifications. The separate 23-band annual files are preserved in the complete archive but remain unsupported for inspection; no band is dropped or rewritten.",
+                "documentationUrl": "https://zenodo.org/records/8239305",
+                "id": "glc-fcs30d",
+                "layers": [
+                  {
+                    "id": "classes-1985",
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "1985 class display · whole three-period original",
+                    "unit": "class code",
+                    "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display."
+                  }
+                ],
+                "license": "CC BY 4.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+                "limits": [
+                  "One exact author ZIP and eight accepted 18554 × 18554 × 3 UInt8 tiled LZW members only. Original small grid overlaps and all three class-year channels are preserved. Fixed first-band display is 1985. Other periods, longitude bundles and 23-band annual originals remain unsupported; existing 512 MiB transfer/preview, chunk, memory and timeout limits are unchanged."
+                ],
+                "nominalResolution": "30 m nominal; original EPSG:4326 spacing 0.00026949458523585647°",
+                "requiresCountry": false,
+                "title": "GLC_FCS30D · 1985 land-cover classes",
+                "unit": "class code",
+                "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display.",
+                "version": "GLC_FCS30D author archive · three historical bands 1985/1990/1995",
+                "warnings": [
+                  "The complete author ZIP is 220,928,112 bytes with 16 TIFFs. Eight accepted 1985/1990/1995 three-band members are selected by their exact embedded footprints; the whole archive and the selected whole TIFF have independent SHA-256 and byte-length receipts. No AOI clipping, band extraction, generated STAC or TIFF MIME for the ZIP is fabricated.",
+                  "The publisher guide establishes three pre-2000 bands: 1985, 1990 and 1995. The separate annual originals have 23 bands covering 2000–2022 and exceed the existing 1–16 samples limit. They remain unregistered; there is no 2000 band in the old 19852000-named three-band member.",
+                  "The original TIFF RGB tag does not change the historical classification semantics. Display uses only the 1985 class-code band as grayscale; raw inspection returns all three original year values. No RGB photograph, sensor calibration, temporal average, new classification or change estimate is inferred.",
+                  "The actual TIFF has no declared scalar NoData; publisher filled class codes 0 and 250 should be handled in scientific analysis according to the guide. A native noData=false reflects the embedded scalar declaration and does not prove a scientifically usable observation.",
+                  "These originals have no internal overviews. Only exact accepted SHA-256 and unchanged profiles may use a lower-detail browsing preview selected within the existing cumulative decoding budget. Original files and full-resolution pixel values remain unchanged."
+                ],
+                "years": [
+                  1985
+                ]
+              },
+              "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+              "layer": {
+                "id": "classes-1985",
+                "offset": 0,
+                "scale": 1,
+                "title": "1985 class display · whole three-period original",
+                "unit": "class code",
+                "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display."
+              },
+              "request": {
+                "bounds": [
+                  -173,
+                  68,
+                  -171,
+                  69
+                ],
+                "datasetId": "glc-fcs30d",
+                "layer": "classes-1985",
+                "year": 1985
+              },
+              "schemaVersion": 2,
+              "sourceBounds": [
+                -175,
+                64.99979746553392,
+                -169.99979746553393,
+                70
+              ],
+              "sourceId": "GLC_FCS30_19852000_5yearsMap_V1_W175N70",
+              "sourceTitle": "GLC_FCS30D 1985 · W175N70"
+            }
+          },
+          "assets": [
+            {
+              "key": "raster",
+              "title": "GLC_FCS30D 1985 · W175N70",
+              "href": "https://zenodo.org/records/8239305/files/GLC_FCS30D_19852022maps_W175-W180.zip",
+              "mediaType": "application/zip",
+              "roles": [
+                "data"
+              ],
+              "eligible": true,
+              "reason": null,
+              "metadata": {
+                "cogLayout": "original ZIP; selected whole TIFF remains separately checksummed",
+                "contentLength": 16,
+                "contentRange": "bytes 0-15/220928112",
+                "datasetPreset": {
+                  "dataset": {
+                    "attribution": "Liu, Liangyun and Zhang, Xiao, GLC_FCS30D, doi:10.5281/zenodo.8239305. Zhang et al., Earth System Science Data 16, 1353–1381, doi:10.5194/essd-16-1353-2024. Preserve author licence, original file naming, record version and the published user guide/35-class legend. The guide recommends contacting the authors about scientific use and acknowledging their contribution; no contact or co-authorship is fabricated.",
+                    "category": "land-cover",
+                    "defaultLayer": "classes-1985",
+                    "defaultYear": 1985,
+                    "description": "The author's original GLC_FCS30D historical classification product. Reviewed scope is eight whole three-band TIFF members in one complete W175-W180 ZIP. Native first-band display represents 1985; the unchanged file and raw pixel arrays also retain the 1990 and 1995 classifications. The separate 23-band annual files are preserved in the complete archive but remain unsupported for inspection; no band is dropped or rewritten.",
+                    "documentationUrl": "https://zenodo.org/records/8239305",
+                    "id": "glc-fcs30d",
+                    "layers": [
+                      {
+                        "id": "classes-1985",
+                        "offset": 0,
+                        "scale": 1,
+                        "title": "1985 class display · whole three-period original",
+                        "unit": "class code",
+                        "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display."
+                      }
+                    ],
+                    "license": "CC BY 4.0",
+                    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+                    "limits": [
+                      "One exact author ZIP and eight accepted 18554 × 18554 × 3 UInt8 tiled LZW members only. Original small grid overlaps and all three class-year channels are preserved. Fixed first-band display is 1985. Other periods, longitude bundles and 23-band annual originals remain unsupported; existing 512 MiB transfer/preview, chunk, memory and timeout limits are unchanged."
+                    ],
+                    "nominalResolution": "30 m nominal; original EPSG:4326 spacing 0.00026949458523585647°",
+                    "requiresCountry": false,
+                    "title": "GLC_FCS30D · 1985 land-cover classes",
+                    "unit": "class code",
+                    "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display.",
+                    "version": "GLC_FCS30D author archive · three historical bands 1985/1990/1995",
+                    "warnings": [
+                      "The complete author ZIP is 220,928,112 bytes with 16 TIFFs. Eight accepted 1985/1990/1995 three-band members are selected by their exact embedded footprints; the whole archive and the selected whole TIFF have independent SHA-256 and byte-length receipts. No AOI clipping, band extraction, generated STAC or TIFF MIME for the ZIP is fabricated.",
+                      "The publisher guide establishes three pre-2000 bands: 1985, 1990 and 1995. The separate annual originals have 23 bands covering 2000–2022 and exceed the existing 1–16 samples limit. They remain unregistered; there is no 2000 band in the old 19852000-named three-band member.",
+                      "The original TIFF RGB tag does not change the historical classification semantics. Display uses only the 1985 class-code band as grayscale; raw inspection returns all three original year values. No RGB photograph, sensor calibration, temporal average, new classification or change estimate is inferred.",
+                      "The actual TIFF has no declared scalar NoData; publisher filled class codes 0 and 250 should be handled in scientific analysis according to the guide. A native noData=false reflects the embedded scalar declaration and does not prove a scientifically usable observation.",
+                      "These originals have no internal overviews. Only exact accepted SHA-256 and unchanged profiles may use a lower-detail browsing preview selected within the existing cumulative decoding budget. Original files and full-resolution pixel values remain unchanged."
+                    ],
+                    "years": [
+                      1985
+                    ]
+                  },
+                  "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+                  "layer": {
+                    "id": "classes-1985",
+                    "offset": 0,
+                    "scale": 1,
+                    "title": "1985 class display · whole three-period original",
+                    "unit": "class code",
+                    "valueInterpretation": "Original three-band UInt8 categorical arrays, scale 1 and offset 0. Publisher guide defines band order as 1985, 1990 and 1995, despite the old filename containing 19852000 and TIFF photometric tag RGB. These channels are classification years, not red/green/blue sensor bands. The guide identifies 0 and 250 as filled codes, while the actual TIFFs declare no scalar NoData; raw values and null embedded NoData are retained separately, without a synthetic mask. The first-band grayscale preview is 1985 only; the other years are not silently selected for display."
+                  },
+                  "request": {
+                    "bounds": [
+                      -173,
+                      68,
+                      -171,
+                      69
+                    ],
+                    "datasetId": "glc-fcs30d",
+                    "layer": "classes-1985",
+                    "year": 1985
+                  },
+                  "schemaVersion": 2,
+                  "sourceBounds": [
+                    -175,
+                    64.99979746553392,
+                    -169.99979746553393,
+                    70
+                  ],
+                  "sourceId": "GLC_FCS30_19852000_5yearsMap_V1_W175N70",
+                  "sourceTitle": "GLC_FCS30D 1985 · W175N70"
+                },
+                "file:checksum": "1220776db9239579e2f954621d8fb028be1f1e2bc7b13f4ae02292220459eab81e7f",
+                "file:size": 220928112,
+                "headerHex": "504b0304140000000800c7a8e1569f36",
+                "href": "https://zenodo.org/records/8239305/files/GLC_FCS30D_19852022maps_W175-W180.zip",
+                "kind": "reviewed-raster-archive",
+                "probeStatus": 206,
+                "reviewedArchive": {
+                  "archiveBytes": 220928112,
+                  "archiveSha256": "776db9239579e2f954621d8fb028be1f1e2bc7b13f4ae02292220459eab81e7f",
+                  "member": "GLC_FCS30_19852000_5yearsMap_V1_W175N70.tif",
+                  "memberBytes": 13919236,
+                  "memberSha256": "0f5f30202efdd1cfa5e8add2c5869f67f8ca529d70aee0b58a44beb9940fddd9"
+                }
+              }
+            }
+          ],
+          "retrievedAt": "2026-10-14T09:54:07.659042200+00:00",
+          "documentSha256": "acf4c9a787495aa019318e2ce4ab591fa187f6aabf4abee208e1c7fd5626e011",
+          "temporalStatus": "missing",
+          "warnings": [
+            "The complete author ZIP is 220,928,112 bytes with 16 TIFFs. Eight accepted 1985/1990/1995 three-band members are selected by their exact embedded footprints; the whole archive and the selected whole TIFF have independent SHA-256 and byte-length receipts. No AOI clipping, band extraction, generated STAC or TIFF MIME for the ZIP is fabricated.",
+            "The publisher guide establishes three pre-2000 bands: 1985, 1990 and 1995. The separate annual originals have 23 bands covering 2000–2022 and exceed the existing 1–16 samples limit. They remain unregistered; there is no 2000 band in the old 19852000-named three-band member.",
+            "The original TIFF RGB tag does not change the historical classification semantics. Display uses only the 1985 class-code band as grayscale; raw inspection returns all three original year values. No RGB photograph, sensor calibration, temporal average, new classification or change estimate is inferred.",
+            "The actual TIFF has no declared scalar NoData; publisher filled class codes 0 and 250 should be handled in scientific analysis according to the guide. A native noData=false reflects the embedded scalar declaration and does not prove a scientifically usable observation.",
+            "These originals have no internal overviews. Only exact accepted SHA-256 and unchanged profiles may use a lower-detail browsing preview selected within the existing cumulative decoding budget. Original files and full-resolution pixel values remain unchanged.",
+            "Dataset preset metadata is a client declaration based on publisher documentation. It does not prove scientific validity, native-file metadata or valid-data coverage. The release/model epoch is not a scene acquisition time.",
+            "Direct raster source has no declared acquisition time; COG layout is not validated."
+          ],
+          "provenance": {
+            "documentUrl": "https://zenodo.org/records/8239305/files/GLC_FCS30D_19852022maps_W175-W180.zip",
+            "metadataDocuments": [],
+            "search": null,
+            "collection": null
+          }
+        }
+      ]
+    }
+  ]
+}

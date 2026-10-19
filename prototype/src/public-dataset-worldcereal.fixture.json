@@ -1,0 +1,1586 @@
+{
+  "evidence": {
+    "origin": "Native standalone-item metadata recorded during full-file acceptance; test fixture is not download proof",
+    "checkedAt": "2026-10-12T06:24:40.069345+00:00",
+    "binarySha256": "32a0af3544b9ad7451ba267613f2bbb6990a6292d42a821f10252e9e449ef04d"
+  },
+  "dataset": {
+    "id": "worldcereal",
+    "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+    "category": "agriculture",
+    "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+    "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+    "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+    "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+    "unit": "original categorical codes; asset-specific confidence",
+    "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+    "years": [
+      2021
+    ],
+    "defaultYear": 2021,
+    "requiresCountry": false,
+    "layers": [
+      {
+        "id": "temporarycrops",
+        "title": "Annual temporary crops",
+        "unit": "class code",
+        "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+        "seasons": [
+          "tc-annual"
+        ]
+      },
+      {
+        "id": "activecropland",
+        "title": "Active cropland · winter-cereals window",
+        "unit": "class code",
+        "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+        "seasons": [
+          "tc-wintercereals"
+        ]
+      },
+      {
+        "id": "maize-main",
+        "title": "Maize crop type · main season",
+        "unit": "class code",
+        "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+        "seasons": [
+          "tc-maize-main"
+        ]
+      },
+      {
+        "id": "maize-active",
+        "title": "Active cropland · main maize-season window",
+        "unit": "class code",
+        "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+        "seasons": [
+          "tc-maize-main"
+        ]
+      },
+      {
+        "id": "maize-irrigation",
+        "title": "Active irrigation · main maize-season window",
+        "unit": "class code",
+        "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+        "seasons": [
+          "tc-maize-main"
+        ]
+      },
+      {
+        "id": "wintercereals",
+        "title": "Winter-cereals crop type",
+        "unit": "class code",
+        "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+        "seasons": [
+          "tc-wintercereals"
+        ]
+      },
+      {
+        "id": "wintercereals-irrigation",
+        "title": "Active irrigation · winter-cereals window",
+        "unit": "class code",
+        "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+        "seasons": [
+          "tc-wintercereals"
+        ]
+      }
+    ],
+    "defaultLayer": "temporarycrops",
+    "discovery": "stac-items",
+    "regions": [
+      {
+        "id": "9026",
+        "title": "Mauritius / Réunion · AEZ 9026",
+        "bounds": [
+          53.864516174824,
+          -22.69539316166828,
+          59.99509950815733,
+          -18.981793161668282
+        ]
+      }
+    ],
+    "seasons": [
+      {
+        "id": "tc-annual",
+        "title": "Annual temporary-crop period · actual AEZ dates"
+      },
+      {
+        "id": "tc-maize-main",
+        "title": "Main maize-season window · actual AEZ dates"
+      },
+      {
+        "id": "tc-wintercereals",
+        "title": "Winter-cereals season window · actual AEZ dates"
+      }
+    ],
+    "warnings": [
+      "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+      "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+      "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+      "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+      "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+      "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+      "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+    ],
+    "limits": [
+      "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+      "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+    ]
+  },
+  "request": {
+    "datasetId": "worldcereal",
+    "bounds": [
+      57.61593284149066,
+      -20.059293161668283,
+      57.623932841490664,
+      -20.051293161668283
+    ],
+    "year": 2021,
+    "layer": "activecropland",
+    "region": "9026",
+    "season": "tc-wintercereals"
+  },
+  "plan": {
+    "dataset": {
+      "id": "worldcereal",
+      "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+      "category": "agriculture",
+      "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+      "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+      "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+      "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+      "unit": "original categorical codes; asset-specific confidence",
+      "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+      "years": [
+        2021
+      ],
+      "defaultYear": 2021,
+      "requiresCountry": false,
+      "layers": [
+        {
+          "id": "temporarycrops",
+          "title": "Annual temporary crops",
+          "unit": "class code",
+          "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+          "seasons": [
+            "tc-annual"
+          ]
+        },
+        {
+          "id": "activecropland",
+          "title": "Active cropland · winter-cereals window",
+          "unit": "class code",
+          "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+          "seasons": [
+            "tc-wintercereals"
+          ]
+        },
+        {
+          "id": "maize-main",
+          "title": "Maize crop type · main season",
+          "unit": "class code",
+          "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+          "seasons": [
+            "tc-maize-main"
+          ]
+        },
+        {
+          "id": "maize-active",
+          "title": "Active cropland · main maize-season window",
+          "unit": "class code",
+          "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+          "seasons": [
+            "tc-maize-main"
+          ]
+        },
+        {
+          "id": "maize-irrigation",
+          "title": "Active irrigation · main maize-season window",
+          "unit": "class code",
+          "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+          "seasons": [
+            "tc-maize-main"
+          ]
+        },
+        {
+          "id": "wintercereals",
+          "title": "Winter-cereals crop type",
+          "unit": "class code",
+          "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+          "seasons": [
+            "tc-wintercereals"
+          ]
+        },
+        {
+          "id": "wintercereals-irrigation",
+          "title": "Active irrigation · winter-cereals window",
+          "unit": "class code",
+          "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+          "seasons": [
+            "tc-wintercereals"
+          ]
+        }
+      ],
+      "defaultLayer": "temporarycrops",
+      "discovery": "stac-items",
+      "regions": [
+        {
+          "id": "9026",
+          "title": "Mauritius / Réunion · AEZ 9026",
+          "bounds": [
+            53.864516174824,
+            -22.69539316166828,
+            59.99509950815733,
+            -18.981793161668282
+          ]
+        }
+      ],
+      "seasons": [
+        {
+          "id": "tc-annual",
+          "title": "Annual temporary-crop period · actual AEZ dates"
+        },
+        {
+          "id": "tc-maize-main",
+          "title": "Main maize-season window · actual AEZ dates"
+        },
+        {
+          "id": "tc-wintercereals",
+          "title": "Winter-cereals season window · actual AEZ dates"
+        }
+      ],
+      "warnings": [
+        "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+        "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+        "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+        "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+        "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+        "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+        "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+      ],
+      "limits": [
+        "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+        "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+      ]
+    },
+    "request": {
+      "datasetId": "worldcereal",
+      "bounds": [
+        57.61593284149066,
+        -20.059293161668283,
+        57.623932841490664,
+        -20.051293161668283
+      ],
+      "year": 2021,
+      "layer": "activecropland",
+      "region": "9026",
+      "season": "tc-wintercereals"
+    },
+    "sources": [
+      {
+        "id": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+        "title": "WorldCereal activecropland · AEZ 9026 · tc-wintercereals",
+        "bounds": [
+          53.864516174824,
+          -22.695360250867942,
+          59.99502963949716,
+          -18.981793161668282
+        ],
+        "stac": {
+          "name": "WorldCereal activecropland · AEZ 9026 · tc-wintercereals",
+          "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+          "kind": "item"
+        },
+        "region": "9026",
+        "season": "tc-wintercereals",
+        "startDatetime": "2021-04-03T00:00:00Z",
+        "endDatetime": "2021-11-09T23:59:59Z"
+      }
+    ],
+    "warnings": [
+      "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+      "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+      "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+      "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+      "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+      "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+      "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend.",
+      "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+      "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted.",
+      "The reviewed finite regional index selects actual standalone publisher STAC items whose declared bounding boxes intersect the map area. Actual AEZ season dates are retained; 2021 is a reference year rather than a calendar-month scene filter. A bounding-box match does not establish valid-crop coverage. Connecting archives metadata only, with no original-file job or paid computation."
+    ]
+  },
+  "connection": {
+    "plan": {
+      "dataset": {
+        "id": "worldcereal",
+        "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+        "category": "agriculture",
+        "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+        "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+        "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+        "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+        "unit": "original categorical codes; asset-specific confidence",
+        "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+        "years": [
+          2021
+        ],
+        "defaultYear": 2021,
+        "requiresCountry": false,
+        "layers": [
+          {
+            "id": "temporarycrops",
+            "title": "Annual temporary crops",
+            "unit": "class code",
+            "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+            "seasons": [
+              "tc-annual"
+            ]
+          },
+          {
+            "id": "activecropland",
+            "title": "Active cropland · winter-cereals window",
+            "unit": "class code",
+            "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+            "seasons": [
+              "tc-wintercereals"
+            ]
+          },
+          {
+            "id": "maize-main",
+            "title": "Maize crop type · main season",
+            "unit": "class code",
+            "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+            "seasons": [
+              "tc-maize-main"
+            ]
+          },
+          {
+            "id": "maize-active",
+            "title": "Active cropland · main maize-season window",
+            "unit": "class code",
+            "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+            "seasons": [
+              "tc-maize-main"
+            ]
+          },
+          {
+            "id": "maize-irrigation",
+            "title": "Active irrigation · main maize-season window",
+            "unit": "class code",
+            "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+            "seasons": [
+              "tc-maize-main"
+            ]
+          },
+          {
+            "id": "wintercereals",
+            "title": "Winter-cereals crop type",
+            "unit": "class code",
+            "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+            "seasons": [
+              "tc-wintercereals"
+            ]
+          },
+          {
+            "id": "wintercereals-irrigation",
+            "title": "Active irrigation · winter-cereals window",
+            "unit": "class code",
+            "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+            "seasons": [
+              "tc-wintercereals"
+            ]
+          }
+        ],
+        "defaultLayer": "temporarycrops",
+        "discovery": "stac-items",
+        "regions": [
+          {
+            "id": "9026",
+            "title": "Mauritius / Réunion · AEZ 9026",
+            "bounds": [
+              53.864516174824,
+              -22.69539316166828,
+              59.99509950815733,
+              -18.981793161668282
+            ]
+          }
+        ],
+        "seasons": [
+          {
+            "id": "tc-annual",
+            "title": "Annual temporary-crop period · actual AEZ dates"
+          },
+          {
+            "id": "tc-maize-main",
+            "title": "Main maize-season window · actual AEZ dates"
+          },
+          {
+            "id": "tc-wintercereals",
+            "title": "Winter-cereals season window · actual AEZ dates"
+          }
+        ],
+        "warnings": [
+          "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+          "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+          "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+          "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+          "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+          "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+          "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+        ],
+        "limits": [
+          "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+          "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+        ]
+      },
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          57.61593284149066,
+          -20.059293161668283,
+          57.623932841490664,
+          -20.051293161668283
+        ],
+        "year": 2021,
+        "layer": "activecropland",
+        "region": "9026",
+        "season": "tc-wintercereals"
+      },
+      "sources": [
+        {
+          "id": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+          "title": "WorldCereal activecropland · AEZ 9026 · tc-wintercereals",
+          "bounds": [
+            53.864516174824,
+            -22.695360250867942,
+            59.99502963949716,
+            -18.981793161668282
+          ],
+          "stac": {
+            "name": "WorldCereal activecropland · AEZ 9026 · tc-wintercereals",
+            "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+            "kind": "item"
+          },
+          "region": "9026",
+          "season": "tc-wintercereals",
+          "startDatetime": "2021-04-03T00:00:00Z",
+          "endDatetime": "2021-11-09T23:59:59Z"
+        }
+      ],
+      "warnings": [
+        "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+        "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+        "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+        "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+        "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+        "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+        "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend.",
+        "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+        "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted.",
+        "The reviewed finite regional index selects actual standalone publisher STAC items whose declared bounding boxes intersect the map area. Actual AEZ season dates are retained; 2021 is a reference year rather than a calendar-month scene filter. A bounding-box match does not establish valid-crop coverage. Connecting archives metadata only, with no original-file job or paid computation."
+      ]
+    },
+    "stacConnections": [
+      {
+        "id": "9ecd8b7e-f161-4358-8000-fba2f6e71de5",
+        "name": "WorldCereal activecropland · AEZ 9026 · tc-wintercereals",
+        "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+        "kind": "item",
+        "connectedAt": "2026-10-12T06:24:40.889321700+00:00",
+        "collections": [],
+        "capabilities": {
+          "searchGet": false,
+          "searchPost": false
+        },
+        "snapshotIds": [
+          "6395d03d1d6a2ff379141fef2f06c76f67435313025a4c1fa7cac2c64489dd3c"
+        ],
+        "searchUrl": null,
+        "searchMethod": "GET",
+        "metadataSha256": [
+          "ad8e24d18d0090997f47ec51543e8953f27d9338244349003d3de747b0d78d7d"
+        ],
+        "metadataDocuments": [
+          {
+            "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+            "sha256": "ad8e24d18d0090997f47ec51543e8953f27d9338244349003d3de747b0d78d7d"
+          }
+        ]
+      }
+    ],
+    "wcsConnections": [],
+    "failures": [],
+    "complete": true
+  },
+  "snapshot": {
+    "id": "6395d03d1d6a2ff379141fef2f06c76f67435313025a4c1fa7cac2c64489dd3c",
+    "connectionId": "9ecd8b7e-f161-4358-8000-fba2f6e71de5",
+    "collectionId": "esa_worldcereal_activecropland",
+    "itemId": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+    "title": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+    "datetime": "2021-04-03T00:00:00Z",
+    "startDatetime": "2021-04-03T00:00:00Z",
+    "endDatetime": "2021-11-09T23:59:59Z",
+    "bbox": [
+      53.864516174824,
+      -22.695360250867942,
+      59.99502963949716,
+      -18.981793161668282
+    ],
+    "geometry": {
+      "coordinates": [
+        [
+          [
+            59.99502963949716,
+            -22.695360250867942
+          ],
+          [
+            59.99502963949716,
+            -18.981793161668282
+          ],
+          [
+            53.864516174824,
+            -18.981793161668282
+          ],
+          [
+            53.864516174824,
+            -22.695360250867942
+          ],
+          [
+            59.99502963949716,
+            -22.695360250867942
+          ]
+        ]
+      ],
+      "type": "Polygon"
+    },
+    "properties": {
+      "created": "2023-04-25T03:20:10Z",
+      "datetime": "2021-04-03T00:00:00Z",
+      "end_datetime": "2021-11-09T23:59:59Z",
+      "odc:dataset_version": "v1.0.0",
+      "odc:file_format": "GeoTIFF",
+      "odc:producer": "https://vito.be/",
+      "odc:product": "esa_worldcereal_activecropland",
+      "odc:product_family": "esa_worldcereal",
+      "odc:region_code": "9026",
+      "platform": "esa worldcereal project",
+      "proj:code": "EPSG:4326",
+      "proj:shape": [
+        44563,
+        73566
+      ],
+      "proj:transform": [
+        0.0000833335163618134,
+        0,
+        53.864516174824,
+        0,
+        -0.00008333296881268452,
+        -18.981793161668282,
+        0,
+        0,
+        1
+      ],
+      "start_datetime": "2021-04-03T00:00:00Z"
+    },
+    "assets": [
+      {
+        "key": "classification",
+        "title": "classification",
+        "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+        "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "roles": [
+          "data"
+        ],
+        "eligible": true,
+        "reason": null,
+        "metadata": {
+          "eo:bands": [
+            {
+              "name": "classification"
+            }
+          ],
+          "href": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+          "proj:code": "EPSG:4326",
+          "proj:shape": [
+            44563,
+            73566
+          ],
+          "proj:transform": [
+            0.0000833335163618134,
+            0,
+            53.864516174824,
+            0,
+            -0.00008333296881268452,
+            -18.981793161668282,
+            0,
+            0,
+            1
+          ],
+          "roles": [
+            "data"
+          ],
+          "title": "classification",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        },
+        "originalHref": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+        "transportAdapter": "deafrica-worldcereal-public-s3"
+      }
+    ],
+    "retrievedAt": "2026-10-12T06:24:40.889321700+00:00",
+    "documentSha256": "ad8e24d18d0090997f47ec51543e8953f27d9338244349003d3de747b0d78d7d",
+    "temporalStatus": "instant",
+    "warnings": [
+      "The archived publisher item and original S3 asset metadata are unchanged. A separate native receipt maps only the reviewed public WorldCereal assets to the fixed DE Africa regional HTTPS endpoint.",
+      "This standalone publisher item has no collection link. Collection metadata/license was not retrieved; documented preset declarations are separate client provenance, not publisher properties.",
+      "Seasonal category 254 is valid no-crop data, not NoData. Classification and confidence assets retain their independent original grid declarations."
+    ],
+    "provenance": {
+      "documentUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+      "metadataDocuments": [
+        {
+          "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09.stac-item.json",
+          "sha256": "ad8e24d18d0090997f47ec51543e8953f27d9338244349003d3de747b0d78d7d"
+        }
+      ],
+      "search": null,
+      "collection": null,
+      "reviewedDataset": {
+        "schemaVersion": 2,
+        "dataset": {
+          "id": "worldcereal",
+          "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+          "category": "agriculture",
+          "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+          "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+          "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+          "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+          "unit": "original categorical codes; asset-specific confidence",
+          "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+          "years": [
+            2021
+          ],
+          "defaultYear": 2021,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "temporarycrops",
+              "title": "Annual temporary crops",
+              "unit": "class code",
+              "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+              "seasons": [
+                "tc-annual"
+              ]
+            },
+            {
+              "id": "activecropland",
+              "title": "Active cropland · winter-cereals window",
+              "unit": "class code",
+              "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+              "seasons": [
+                "tc-wintercereals"
+              ]
+            },
+            {
+              "id": "maize-main",
+              "title": "Maize crop type · main season",
+              "unit": "class code",
+              "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+              "seasons": [
+                "tc-maize-main"
+              ]
+            },
+            {
+              "id": "maize-active",
+              "title": "Active cropland · main maize-season window",
+              "unit": "class code",
+              "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+              "seasons": [
+                "tc-maize-main"
+              ]
+            },
+            {
+              "id": "maize-irrigation",
+              "title": "Active irrigation · main maize-season window",
+              "unit": "class code",
+              "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+              "seasons": [
+                "tc-maize-main"
+              ]
+            },
+            {
+              "id": "wintercereals",
+              "title": "Winter-cereals crop type",
+              "unit": "class code",
+              "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+              "seasons": [
+                "tc-wintercereals"
+              ]
+            },
+            {
+              "id": "wintercereals-irrigation",
+              "title": "Active irrigation · winter-cereals window",
+              "unit": "class code",
+              "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+              "seasons": [
+                "tc-wintercereals"
+              ]
+            }
+          ],
+          "defaultLayer": "temporarycrops",
+          "discovery": "stac-items",
+          "regions": [
+            {
+              "id": "9026",
+              "title": "Mauritius / Réunion · AEZ 9026",
+              "bounds": [
+                53.864516174824,
+                -22.69539316166828,
+                59.99509950815733,
+                -18.981793161668282
+              ]
+            }
+          ],
+          "seasons": [
+            {
+              "id": "tc-annual",
+              "title": "Annual temporary-crop period · actual AEZ dates"
+            },
+            {
+              "id": "tc-maize-main",
+              "title": "Main maize-season window · actual AEZ dates"
+            },
+            {
+              "id": "tc-wintercereals",
+              "title": "Winter-cereals season window · actual AEZ dates"
+            }
+          ],
+          "warnings": [
+            "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+            "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+            "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+            "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+            "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+            "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+            "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+          ],
+          "limits": [
+            "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+            "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+          ]
+        },
+        "request": {
+          "datasetId": "worldcereal",
+          "bounds": [
+            57.61593284149066,
+            -20.059293161668283,
+            57.623932841490664,
+            -20.051293161668283
+          ],
+          "year": 2021,
+          "layer": "activecropland",
+          "region": "9026",
+          "season": "tc-wintercereals"
+        },
+        "layer": {
+          "id": "activecropland",
+          "title": "Active cropland · winter-cereals window",
+          "unit": "class code",
+          "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+          "seasons": [
+            "tc-wintercereals"
+          ]
+        },
+        "sourceId": "4781cb6a-e2a7-572d-99c8-5a9efcf76381",
+        "sourceTitle": "WorldCereal activecropland · AEZ 9026 · tc-wintercereals",
+        "sourceBounds": [
+          53.864516174824,
+          -22.695360250867942,
+          59.99502963949716,
+          -18.981793161668282
+        ],
+        "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately"
+      },
+      "assetTransports": [
+        {
+          "assetKey": "classification",
+          "originalHref": "s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+          "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/activecropland/tc-wintercereals/9026/2021/9026_tc-wintercereals_activecropland_2021-04-03_2021-11-09_classification.tif",
+          "adapter": "deafrica-worldcereal-public-s3"
+        }
+      ]
+    }
+  },
+  "confidenceCase": {
+    "request": {
+      "datasetId": "worldcereal",
+      "bounds": [
+        57.61593284149066,
+        -20.059293161668283,
+        57.623932841490664,
+        -20.051293161668283
+      ],
+      "year": 2021,
+      "layer": "temporarycrops",
+      "region": "9026",
+      "season": "tc-annual"
+    },
+    "plan": {
+      "dataset": {
+        "id": "worldcereal",
+        "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+        "category": "agriculture",
+        "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+        "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+        "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+        "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+        "unit": "original categorical codes; asset-specific confidence",
+        "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+        "years": [
+          2021
+        ],
+        "defaultYear": 2021,
+        "requiresCountry": false,
+        "layers": [
+          {
+            "id": "temporarycrops",
+            "title": "Annual temporary crops",
+            "unit": "class code",
+            "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+            "seasons": [
+              "tc-annual"
+            ]
+          },
+          {
+            "id": "activecropland",
+            "title": "Active cropland · winter-cereals window",
+            "unit": "class code",
+            "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+            "seasons": [
+              "tc-wintercereals"
+            ]
+          },
+          {
+            "id": "maize-main",
+            "title": "Maize crop type · main season",
+            "unit": "class code",
+            "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+            "seasons": [
+              "tc-maize-main"
+            ]
+          },
+          {
+            "id": "maize-active",
+            "title": "Active cropland · main maize-season window",
+            "unit": "class code",
+            "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+            "seasons": [
+              "tc-maize-main"
+            ]
+          },
+          {
+            "id": "maize-irrigation",
+            "title": "Active irrigation · main maize-season window",
+            "unit": "class code",
+            "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+            "seasons": [
+              "tc-maize-main"
+            ]
+          },
+          {
+            "id": "wintercereals",
+            "title": "Winter-cereals crop type",
+            "unit": "class code",
+            "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+            "seasons": [
+              "tc-wintercereals"
+            ]
+          },
+          {
+            "id": "wintercereals-irrigation",
+            "title": "Active irrigation · winter-cereals window",
+            "unit": "class code",
+            "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+            "seasons": [
+              "tc-wintercereals"
+            ]
+          }
+        ],
+        "defaultLayer": "temporarycrops",
+        "discovery": "stac-items",
+        "regions": [
+          {
+            "id": "9026",
+            "title": "Mauritius / Réunion · AEZ 9026",
+            "bounds": [
+              53.864516174824,
+              -22.69539316166828,
+              59.99509950815733,
+              -18.981793161668282
+            ]
+          }
+        ],
+        "seasons": [
+          {
+            "id": "tc-annual",
+            "title": "Annual temporary-crop period · actual AEZ dates"
+          },
+          {
+            "id": "tc-maize-main",
+            "title": "Main maize-season window · actual AEZ dates"
+          },
+          {
+            "id": "tc-wintercereals",
+            "title": "Winter-cereals season window · actual AEZ dates"
+          }
+        ],
+        "warnings": [
+          "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+          "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+          "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+          "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+          "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+          "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+          "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+        ],
+        "limits": [
+          "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+          "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+        ]
+      },
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          57.61593284149066,
+          -20.059293161668283,
+          57.623932841490664,
+          -20.051293161668283
+        ],
+        "year": 2021,
+        "layer": "temporarycrops",
+        "region": "9026",
+        "season": "tc-annual"
+      },
+      "sources": [
+        {
+          "id": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+          "title": "WorldCereal temporarycrops · AEZ 9026 · tc-annual",
+          "bounds": [
+            53.864516174824,
+            -22.69539316166828,
+            59.99509950815733,
+            -18.981793161668282
+          ],
+          "stac": {
+            "name": "WorldCereal temporarycrops · AEZ 9026 · tc-annual",
+            "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+            "kind": "item"
+          },
+          "region": "9026",
+          "season": "tc-annual",
+          "startDatetime": "2020-11-09T00:00:00Z",
+          "endDatetime": "2021-11-09T23:59:59Z"
+        }
+      ],
+      "warnings": [
+        "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+        "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+        "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+        "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+        "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+        "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+        "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend.",
+        "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+        "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted.",
+        "The reviewed finite regional index selects actual standalone publisher STAC items whose declared bounding boxes intersect the map area. Actual AEZ season dates are retained; 2021 is a reference year rather than a calendar-month scene filter. A bounding-box match does not establish valid-crop coverage. Connecting archives metadata only, with no original-file job or paid computation."
+      ]
+    },
+    "connection": {
+      "plan": {
+        "dataset": {
+          "id": "worldcereal",
+          "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+          "category": "agriculture",
+          "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+          "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+          "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+          "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+          "unit": "original categorical codes; asset-specific confidence",
+          "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+          "years": [
+            2021
+          ],
+          "defaultYear": 2021,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "temporarycrops",
+              "title": "Annual temporary crops",
+              "unit": "class code",
+              "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+              "seasons": [
+                "tc-annual"
+              ]
+            },
+            {
+              "id": "activecropland",
+              "title": "Active cropland · winter-cereals window",
+              "unit": "class code",
+              "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+              "seasons": [
+                "tc-wintercereals"
+              ]
+            },
+            {
+              "id": "maize-main",
+              "title": "Maize crop type · main season",
+              "unit": "class code",
+              "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+              "seasons": [
+                "tc-maize-main"
+              ]
+            },
+            {
+              "id": "maize-active",
+              "title": "Active cropland · main maize-season window",
+              "unit": "class code",
+              "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+              "seasons": [
+                "tc-maize-main"
+              ]
+            },
+            {
+              "id": "maize-irrigation",
+              "title": "Active irrigation · main maize-season window",
+              "unit": "class code",
+              "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+              "seasons": [
+                "tc-maize-main"
+              ]
+            },
+            {
+              "id": "wintercereals",
+              "title": "Winter-cereals crop type",
+              "unit": "class code",
+              "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+              "seasons": [
+                "tc-wintercereals"
+              ]
+            },
+            {
+              "id": "wintercereals-irrigation",
+              "title": "Active irrigation · winter-cereals window",
+              "unit": "class code",
+              "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+              "seasons": [
+                "tc-wintercereals"
+              ]
+            }
+          ],
+          "defaultLayer": "temporarycrops",
+          "discovery": "stac-items",
+          "regions": [
+            {
+              "id": "9026",
+              "title": "Mauritius / Réunion · AEZ 9026",
+              "bounds": [
+                53.864516174824,
+                -22.69539316166828,
+                59.99509950815733,
+                -18.981793161668282
+              ]
+            }
+          ],
+          "seasons": [
+            {
+              "id": "tc-annual",
+              "title": "Annual temporary-crop period · actual AEZ dates"
+            },
+            {
+              "id": "tc-maize-main",
+              "title": "Main maize-season window · actual AEZ dates"
+            },
+            {
+              "id": "tc-wintercereals",
+              "title": "Winter-cereals season window · actual AEZ dates"
+            }
+          ],
+          "warnings": [
+            "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+            "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+            "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+            "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+            "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+            "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+            "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+          ],
+          "limits": [
+            "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+            "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+          ]
+        },
+        "request": {
+          "datasetId": "worldcereal",
+          "bounds": [
+            57.61593284149066,
+            -20.059293161668283,
+            57.623932841490664,
+            -20.051293161668283
+          ],
+          "year": 2021,
+          "layer": "temporarycrops",
+          "region": "9026",
+          "season": "tc-annual"
+        },
+        "sources": [
+          {
+            "id": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+            "title": "WorldCereal temporarycrops · AEZ 9026 · tc-annual",
+            "bounds": [
+              53.864516174824,
+              -22.69539316166828,
+              59.99509950815733,
+              -18.981793161668282
+            ],
+            "stac": {
+              "name": "WorldCereal temporarycrops · AEZ 9026 · tc-annual",
+              "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+              "kind": "item"
+            },
+            "region": "9026",
+            "season": "tc-annual",
+            "startDatetime": "2020-11-09T00:00:00Z",
+            "endDatetime": "2021-11-09T23:59:59Z"
+          }
+        ],
+        "warnings": [
+          "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+          "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+          "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+          "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+          "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+          "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+          "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend.",
+          "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+          "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted.",
+          "The reviewed finite regional index selects actual standalone publisher STAC items whose declared bounding boxes intersect the map area. Actual AEZ season dates are retained; 2021 is a reference year rather than a calendar-month scene filter. A bounding-box match does not establish valid-crop coverage. Connecting archives metadata only, with no original-file job or paid computation."
+        ]
+      },
+      "stacConnections": [
+        {
+          "id": "5d094811-b37b-4f9e-81d5-581ce9ed46f6",
+          "name": "WorldCereal temporarycrops · AEZ 9026 · tc-annual",
+          "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+          "kind": "item",
+          "connectedAt": "2026-10-12T06:29:19.484839600+00:00",
+          "collections": [],
+          "capabilities": {
+            "searchGet": false,
+            "searchPost": false
+          },
+          "snapshotIds": [
+            "e0d54f6d1ba60f4535246e6abb410edd151bf847839e4da70248914ec0804fef"
+          ],
+          "searchUrl": null,
+          "searchMethod": "GET",
+          "metadataSha256": [
+            "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d"
+          ],
+          "metadataDocuments": [
+            {
+              "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+              "sha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d"
+            }
+          ]
+        }
+      ],
+      "wcsConnections": [],
+      "failures": [],
+      "complete": true
+    },
+    "snapshot": {
+      "id": "e0d54f6d1ba60f4535246e6abb410edd151bf847839e4da70248914ec0804fef",
+      "connectionId": "5d094811-b37b-4f9e-81d5-581ce9ed46f6",
+      "collectionId": "esa_worldcereal_temporarycrops",
+      "itemId": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+      "title": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+      "datetime": "2020-11-09T00:00:00Z",
+      "startDatetime": "2020-11-09T00:00:00Z",
+      "endDatetime": "2021-11-09T23:59:59Z",
+      "bbox": [
+        53.864516174824,
+        -22.69539316166828,
+        59.99509950815733,
+        -18.981793161668282
+      ],
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              59.994916174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.69539316166828
+            ],
+            [
+              53.864516174824,
+              -22.695376495001614
+            ],
+            [
+              53.864516174824,
+              -18.981793161668282
+            ],
+            [
+              59.994916174824,
+              -18.981793161668282
+            ],
+            [
+              59.99509950815733,
+              -18.981793161668282
+            ],
+            [
+              59.99509950815733,
+              -22.695376495001614
+            ],
+            [
+              59.994916174824,
+              -22.695376495001614
+            ],
+            [
+              59.994916174824,
+              -22.69539316166828
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "created": "2023-04-12T10:17:08Z",
+        "datetime": "2020-11-09T00:00:00Z",
+        "end_datetime": "2021-11-09T23:59:59Z",
+        "odc:dataset_version": "v1.0.0",
+        "odc:file_format": "GeoTIFF",
+        "odc:producer": "https://vito.be/",
+        "odc:product": "esa_worldcereal_temporarycrops",
+        "odc:product_family": "esa_worldcereal",
+        "odc:region_code": "9026",
+        "platform": "esa worldcereal project",
+        "proj:code": "EPSG:4326",
+        "proj:shape": [
+          44563,
+          73567
+        ],
+        "proj:transform": [
+          0.00008333333333333334,
+          0,
+          53.864516174824,
+          0,
+          -0.00008333333333333332,
+          -18.981793161668282,
+          0,
+          0,
+          1
+        ],
+        "start_datetime": "2020-11-09T00:00:00Z"
+      },
+      "assets": [
+        {
+          "key": "classification",
+          "title": "classification",
+          "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+          "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "eligible": true,
+          "reason": null,
+          "metadata": {
+            "eo:bands": [
+              {
+                "name": "classification"
+              }
+            ],
+            "href": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+            "proj:code": "EPSG:4326",
+            "proj:shape": [
+              44563,
+              73567
+            ],
+            "proj:transform": [
+              0.00008333333333333334,
+              0,
+              53.864516174824,
+              0,
+              -0.00008333333333333332,
+              -18.981793161668282,
+              0,
+              0,
+              1
+            ],
+            "roles": [
+              "data"
+            ],
+            "title": "classification",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+          },
+          "originalHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+          "transportAdapter": "deafrica-worldcereal-public-s3"
+        },
+        {
+          "key": "confidence",
+          "title": "confidence",
+          "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+          "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "eligible": true,
+          "reason": null,
+          "metadata": {
+            "eo:bands": [
+              {
+                "name": "confidence"
+              }
+            ],
+            "href": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+            "proj:code": "EPSG:4326",
+            "proj:shape": [
+              9284,
+              15326
+            ],
+            "proj:transform": [
+              0.0004,
+              0,
+              53.864516174824,
+              0,
+              -0.0004,
+              -18.981793161668282,
+              0,
+              0,
+              1
+            ],
+            "roles": [
+              "data"
+            ],
+            "title": "confidence",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+          },
+          "originalHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+          "transportAdapter": "deafrica-worldcereal-public-s3"
+        }
+      ],
+      "retrievedAt": "2026-10-12T06:29:19.484839600+00:00",
+      "documentSha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d",
+      "temporalStatus": "instant",
+      "warnings": [
+        "The archived publisher item and original S3 asset metadata are unchanged. A separate native receipt maps only the reviewed public WorldCereal assets to the fixed DE Africa regional HTTPS endpoint.",
+        "This standalone publisher item has no collection link. Collection metadata/license was not retrieved; documented preset declarations are separate client provenance, not publisher properties.",
+        "Seasonal category 254 is valid no-crop data, not NoData. Classification and confidence assets retain their independent original grid declarations."
+      ],
+      "provenance": {
+        "documentUrl": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+        "metadataDocuments": [
+          {
+            "url": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09.stac-item.json",
+            "sha256": "3094d656424fa2d224516b716ee823a6cec062811b7212c59d9a86de6127f36d"
+          }
+        ],
+        "search": null,
+        "collection": null,
+        "reviewedDataset": {
+          "schemaVersion": 2,
+          "dataset": {
+            "id": "worldcereal",
+            "title": "ESA WorldCereal · Mauritius / Réunion · DE Africa archive",
+            "category": "agriculture",
+            "description": "Seven model-derived annual/seasonal crop themes from ESA WorldCereal, accessed through Digital Earth Africa's public regional copy. This reviewed release supports the actual standalone publisher items for Mauritius/Réunion (AEZ 9026), reference year 2021; it is not a global scene search or a guarantee of agricultural accuracy.",
+            "version": "WorldCereal v1.0.0 · DE Africa AEZ 9026 / 2021 reviewed item index",
+            "license": "CC BY 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+            "attribution": "ESA WorldCereal consortium / VITO; contains modified Copernicus Sentinel data (2020–2021). Regional distribution: Digital Earth Africa, public deafrica-input-datasets archive. Cite the original item, AEZ, actual season, product version and access date.",
+            "documentationUrl": "https://docs.digitalearthafrica.org/en/latest/data_specs/ESA_World_Cereal_specs.html",
+            "nominalResolution": "10 m classification (approximately 1/12000 degree); confidence assets have independent publisher grids",
+            "unit": "original categorical codes; asset-specific confidence",
+            "valueInterpretation": "Original categorical classification samples, not optical reflectance or observed crop yield. Annual temporary crops, crop-type classes, seasonal active cropland and seasonal active irrigation have different meanings. 254 is a valid no-crop category in seasonal products; it must not be treated as NoData. Embedded TIFF masks and each asset's independent grid are retained without reclassification or calibration.",
+            "years": [
+              2021
+            ],
+            "defaultYear": 2021,
+            "requiresCountry": false,
+            "layers": [
+              {
+                "id": "temporarycrops",
+                "title": "Annual temporary crops",
+                "unit": "class code",
+                "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+                "seasons": [
+                  "tc-annual"
+                ]
+              },
+              {
+                "id": "activecropland",
+                "title": "Active cropland · winter-cereals window",
+                "unit": "class code",
+                "valueInterpretation": "0 inactive, 100 active, 254 no crop. Seasonal activity on the temporary-crop mask; this is not a winter-cereals-only crop-type class.",
+                "seasons": [
+                  "tc-wintercereals"
+                ]
+              },
+              {
+                "id": "maize-main",
+                "title": "Maize crop type · main season",
+                "unit": "class code",
+                "valueInterpretation": "Original main-season maize classification, with publisher codes and masks retained. This theme identifies crop type rather than all active cropland.",
+                "seasons": [
+                  "tc-maize-main"
+                ]
+              },
+              {
+                "id": "maize-active",
+                "title": "Active cropland · main maize-season window",
+                "unit": "class code",
+                "valueInterpretation": "0 inactive, 100 active, 254 no crop. Activity on temporary cropland in the main maize-season window; not a maize-only classification.",
+                "seasons": [
+                  "tc-maize-main"
+                ]
+              },
+              {
+                "id": "maize-irrigation",
+                "title": "Active irrigation · main maize-season window",
+                "unit": "class code",
+                "valueInterpretation": "Original active-irrigation classification on temporary cropland during the main maize-season window. It does not identify exclusively irrigated maize or irrigation infrastructure.",
+                "seasons": [
+                  "tc-maize-main"
+                ]
+              },
+              {
+                "id": "wintercereals",
+                "title": "Winter-cereals crop type",
+                "unit": "class code",
+                "valueInterpretation": "Original seasonal winter-cereals classification, distinct from the general active-cropland theme. Preserve the publisher's categorical legend.",
+                "seasons": [
+                  "tc-wintercereals"
+                ]
+              },
+              {
+                "id": "wintercereals-irrigation",
+                "title": "Active irrigation · winter-cereals window",
+                "unit": "class code",
+                "valueInterpretation": "Original active-irrigation classification on temporary cropland during the winter-cereals season window. It does not identify exclusively irrigated winter cereals.",
+                "seasons": [
+                  "tc-wintercereals"
+                ]
+              }
+            ],
+            "defaultLayer": "temporarycrops",
+            "discovery": "stac-items",
+            "regions": [
+              {
+                "id": "9026",
+                "title": "Mauritius / Réunion · AEZ 9026",
+                "bounds": [
+                  53.864516174824,
+                  -22.69539316166828,
+                  59.99509950815733,
+                  -18.981793161668282
+                ]
+              }
+            ],
+            "seasons": [
+              {
+                "id": "tc-annual",
+                "title": "Annual temporary-crop period · actual AEZ dates"
+              },
+              {
+                "id": "tc-maize-main",
+                "title": "Main maize-season window · actual AEZ dates"
+              },
+              {
+                "id": "tc-wintercereals",
+                "title": "Winter-cereals season window · actual AEZ dates"
+              }
+            ],
+            "warnings": [
+              "Availability is limited to the seven reviewed AEZ 9026 / reference-year 2021 publisher items. An omitted region matches the current map area against their actual published bounding boxes; an area outside the reviewed region fails explicitly. No different AEZ, season, year or product is substituted.",
+              "Reference year 2021 does not mean a January–December observation interval. For this AEZ the annual period is 2020-11-09 to 2021-11-09, the main maize-season window is 2020-11-11 to 2021-05-08, and the winter-cereals window is 2021-04-03 to 2021-11-09. Seasonal activity and irrigation do not imply a crop-type-only mask.",
+              "Publisher STAC items contain original s3 asset URLs. Only the exact reviewed public bucket, regional endpoint and matching item assets receive a native HTTPS transport receipt; the archived item, asset metadata and original s3 href remain unchanged. No AWS account, temporary signature or private bucket is used.",
+              "The standalone items have no collection link, so collection metadata is not retrieved. CC BY 4.0 is a separate documented distribution/TIFF declaration, not an invented STAC collection license. Source-metadata completion does not mean that the collection declaration or valid-pixel coverage has been verified.",
+              "The complete regional original is downloaded without clipping. Publisher item bbox and original raster bounds can differ slightly (about 0.2 pixel in the annual example); bbox intersection is not exact geometric or valid-crop coverage. Confidence files are independent assets and must retain their own projection/shape/transform rather than inheriting the classification grid.",
+              "Classification 254 means no crop in relevant seasonal themes; only the embedded missing-data mask is used by native inspection. A numerical thumbnail is not a scientific accuracy assessment or evidence that any particular pixel contains crops.",
+              "The reviewed annual confidence original contains some raw values 101–253 although its TIFF legend describes confidence as 0–100. Original values are preserved without clipping, conversion to a percentage or inferred calibration. Category 254 remains valid no-crop data; 255 is used as NoData only through the original embedded TIFF declaration. Consult the publisher before scientific interpretation of values outside its legend."
+            ],
+            "limits": [
+              "Up to 8 reviewed regional items per selection; this release currently contains one AEZ and seven distinct themes, not seven satellite platforms or global coverage.",
+              "Each original file remains limited to 512 MiB. Tiled TIFF axes are limited to 131,072 pixels and 8 billion grid pixels; stripped TIFF axes remain limited to 65,536. Native decoding retains 128 MiB chunk, 32 MiB intermediate, 512 MiB preview-budget and 30-second review bounds. Other publisher AEZ files can exceed these limits and are not silently substituted."
+            ]
+          },
+          "request": {
+            "datasetId": "worldcereal",
+            "bounds": [
+              57.61593284149066,
+              -20.059293161668283,
+              57.623932841490664,
+              -20.051293161668283
+            ],
+            "year": 2021,
+            "layer": "temporarycrops",
+            "region": "9026",
+            "season": "tc-annual"
+          },
+          "layer": {
+            "id": "temporarycrops",
+            "title": "Annual temporary crops",
+            "unit": "class code",
+            "valueInterpretation": "0 other land cover/use, 100 temporary crops. This annual crop mask is not a specific crop-type classification.",
+            "seasons": [
+              "tc-annual"
+            ]
+          },
+          "sourceId": "f0171537-29fa-5b1e-8adb-0706d129fbbb",
+          "sourceTitle": "WorldCereal temporarycrops · AEZ 9026 · tc-annual",
+          "sourceBounds": [
+            53.864516174824,
+            -22.69539316166828,
+            59.99509950815733,
+            -18.981793161668282
+          ],
+          "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately"
+        },
+        "assetTransports": [
+          {
+            "assetKey": "classification",
+            "originalHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+            "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+            "adapter": "deafrica-worldcereal-public-s3"
+          },
+          {
+            "assetKey": "confidence",
+            "originalHref": "s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+            "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+            "adapter": "deafrica-worldcereal-public-s3"
+          }
+        ]
+      }
+    }
+  }
+}

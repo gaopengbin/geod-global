@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/gaopengbin/geod-agent",
+  "version": "0.2.5",
+  "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf",
+  "license": "MIT",
+  "sources": [
+    {
+      "path": "apps/geod-agent-desktop/src-tauri/model-input-context.mjs",
+      "sha256": "1dcb34460eb1f242a5e3eecc0a0b2c0f8ce7f9365165522d8631d5f8377ca8f3",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    },
+    {
+      "path": "apps/geod-agent-desktop/src/turn-token-usage.ts",
+      "sha256": "fa31780f1c5ce9bc930dcef6ec0efcb3efdc34c7420abfc601ff495c07810b38",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    },
+    {
+      "path": "apps/geod-agent-desktop/src/turn-token-usage-footer.tsx",
+      "sha256": "58d7d77f43da15477fe1c8c78367ea2dbc31ff936091ee893a5bc8ebc68e3270",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    }
+  ],
+  "adaptations": [
+    "Current-request tool-family selection and no-tool greeting projection; native policies restored for work and compaction",
+    "Per-human-request actual token receipts including background continuation, context compaction and unknown failed attempts",
+    "Global keeps its native orchestration, approval boundary, result verification and original history. No runtime dependency on the source checkout."
+  ],
+  "notPorted": [
+    "General history archive and lookup tools",
+    "Whole upstream scheduling or parallel execution engine",
+    "Provider billing or price estimates"
+  ]
+}

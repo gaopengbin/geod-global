@@ -3,6 +3,16 @@ import assert from 'node:assert/strict';
 import { subscribeAgentUpdates, validAgentContext, validateConnectionTest, validateAgentImage, validateAgentImagePreview, validateAgentImageStorage, validateAgentDocument, validateAgentDocumentPreview, validateAgentAttachmentStorage, validateAgentSnapshot, validatePlanRevisionDraft } from './agent-client.js';
 import { MODEL_CAPABILITIES, MODEL_PROVIDERS, groupedConnections, modelCapabilities } from './agent-model-registry.js';
 import {readFileSync} from 'node:fs';
+import {startToolRecord,finishToolRecord} from '../../agent/tool-record.mjs';
+
+test('snapshot accepts bounded native display receipts but rejects injected data and records attached to model text',()=>{
+  const record=finishToolRecord(startToolRecord({query:'Berlin'},0),{candidates:[{name:'Berlin'}]},250);
+  const entry={type:'tool',status:'completed',name:'geod_region_search',references:[],record};
+  const value={...base,selected:{id:'a1234567-1234-1234-1234-123456789abc',status:'completed',entries:[entry]}};
+  assert.equal(validateAgentSnapshot(value),value);
+  for(const changed of [{...entry,record:{...record,input:{url:'https://private.test'}}},{...entry,record:{...record,approved:true}},
+    {...entry,type:'assistant',text:'Untrusted result'}])assert.throws(()=>validateAgentSnapshot({...value,selected:{...value.selected,entries:[changed]}}));
+});
 
 test('stream signals only invalidate a native snapshot; transcript payloads are refused',async t=>{
   const previous=globalThis.window;t.after(()=>{if(previous===undefined)delete globalThis.window;else globalThis.window=previous;});
@@ -20,6 +30,8 @@ test('connection test receiver rejects unproved success and unknown private fiel
   assert.throws(()=>validateConnectionTest({...value,functionCalls:false}));
   assert.throws(()=>validateConnectionTest({...value,apiKey:'private'}));
   assert.throws(()=>validateConnectionTest({...value,latencyMs:-1}));
+  assert.equal(validateConnectionTest({...value,latencyMs:75001}).status,'passed');
+  assert.throws(()=>validateConnectionTest({...value,latencyMs:90001}));
   const failed={...value,status:'failed',functionCalls:false,message:'Agent model authorization was rejected.'};
   assert.equal(validateConnectionTest(failed),failed);
   assert.throws(()=>validateConnectionTest({...failed,message:undefined}));
@@ -53,6 +65,15 @@ test('Office previews keep native text and accept only matching format metadata'
     assert.throws(()=>validateAgentDocumentPreview({...preview,text:preview.text+'changed'}));}
 });
 const base={version:1,revision:0,mode:'read-only',runtimeAvailable:false,configured:false,busy:false,sessions:[],selected:null};
+test('native activity has a bounded session and turn identity and cannot invent execution permissions',()=>{
+  const id='a1234567-1234-1234-1234-123456789abc';
+  const value={...base,busy:true,sessions:[{id,title:'Actual turn',status:'running'}],activity:{sessionId:id,kind:'turn',turnId:'turn-1'}};
+  assert.equal(validateAgentSnapshot(value),value);
+  assert.doesNotThrow(()=>validateAgentSnapshot({...value,activity:{...value.activity,kind:'compaction',turnId:null}}));
+  for(const activity of [{...value.activity,kind:'completed'},{...value.activity,approved:true},{...value.activity,turnId:'https://private.test'},
+    {...value.activity,sessionId:'b1234567-1234-1234-1234-123456789abc'},{...value.activity,kind:'compaction'}])assert.throws(()=>validateAgentSnapshot({...value,activity}));
+  assert.throws(()=>validateAgentSnapshot({...value,busy:false}));
+});
 test('goal snapshots reject fabricated completion, duplicate outputs, hidden fields and unbounded continuation',()=>{
   const goal={version:1,id:'b1234567-1234-1234-1234-123456789abc',objective:'Deliver imagery.',requestText:'Download imagery.',outputs:[{id:'image',label:'Imagery',kind:'raster',state:'missing',verifiedIds:[],planId:null,entryId:null}],planIds:[],status:'active',engine:null,continuations:0,updatedAt:'2026-10-07T00:00:00Z',checkedAt:null,reason:null};
   const snapshot={...base,selected:{id:'a1234567-1234-1234-1234-123456789abc',status:'completed',entries:[],goal}};
@@ -116,6 +137,8 @@ test('document previews validate UTF-8 metadata and attachment storage returns o
 });
 test('context status reflects only bounded checkpoint and usage metadata',()=>{
   const state={status:'ready',count:1,lastCompletedAt:'2026-10-06T04:00:00Z',usedTokens:1000,windowTokens:32768};assert(validAgentContext(state));
+  assert(validAgentContext({...state,usedTokens:1_200_000,windowTokens:2_097_152}));
+  assert(!validAgentContext({...state,windowTokens:4_194_305}));
   for(const changed of [{...state,status:'submitted'},{...state,count:-1},{...state,lastCompletedAt:'not-a-date'},{...state,usedTokens:1.2},{...state,windowTokens:0},{...state,summary:'model-authored data'}])assert(!validAgentContext(changed));
 });
 test('native image data accepts only bounded PNG previews and path-free user references',()=>{
@@ -160,6 +183,32 @@ test('verified vector links keep native IDs and reject false or unbounded verifi
     assert.throws(()=>validateAgentSnapshot({...value,selected:{...value.selected,entries:[{...entry,summary}]}}));
   }
   assert.throws(()=>validateAgentSnapshot({...value,selected:{...value.selected,entries:[{...entry,references:[{kind:'vector',id:'../path',label:'Bad'}]}]}}));
+});
+test('geoBoundaries reviews accept whole-country null-page extraction and bind submitted release metadata',()=>{
+  const id='a1234567-1234-1234-1234-123456789abc';
+  const boundarySource={countryIso3:'CHN',adminLevel:'ADM1',metadataSha256:'a'.repeat(64),releaseRef:'9469f09',discoverySha256:'b'.repeat(64)};
+  const review={serviceId:id,serviceSha256:'c'.repeat(64),collectionId:'ADM1',collectionTitle:'China · ADM1',protocol:'geoBoundaries',name:'Reviewed country ADM1',pageSize:null,responseFormat:null,selection:'geoboundaries-full-administrative-level',liveAvailabilityChecked:false,clipped:false,boundarySource};
+  const plan={planId:id,planHash:'d'.repeat(64),kind:'vector',status:'pending',source:'Saved geoBoundaries',bounds:[0,0,1,1],boundsCrs:'EPSG:4326',polygon:null,replacedBy:null,expiresAt:'2026-10-13T12:00:00Z',approvalRequired:true,expectedBytes:null,jobs:[],notes:['Downloads the complete published country administrative level; the map area is reference only, without filtering or clipping.'],vectorReview:review,vector:null};
+  const fixture={...base,mode:'review-first',plans:[plan]};
+  assert.equal(validateAgentSnapshot(fixture).plans[0],plan);
+  const vector={id:'b1234567-1234-1234-1234-123456789abc',name:review.name,format:'geojson',bytes:14842,featureCount:34,coordinateCount:253,sourceSha256:'e'.repeat(64),geojsonSha256:'f'.repeat(64),verified:true,boundarySource:{...boundarySource}};
+  assert.equal(validateAgentSnapshot({...fixture,plans:[{...plan,status:'submitted',vector}]}).plans[0].vector.featureCount,34);
+  for(const changed of [
+    {pageSize:200},{responseFormat:'application/json'},{selection:'bbox-full-features'},
+    {protocol:'OGC API Features',pageSize:200,selection:'bbox-full-features'},
+    {boundarySource:null},{boundarySource:{...boundarySource,fileSha256:'0'.repeat(64)}},
+    {boundarySource:{...boundarySource,countryIso3:'ALL'}},
+    {boundarySource:{...boundarySource,adminLevel:'ADM0'}},
+    {boundarySource:{...boundarySource,releaseRef:'main'}},
+    {boundarySource:{...boundarySource,metadataSha256:'not-a-hash'}},
+  ]) assert.throws(()=>validateAgentSnapshot({...fixture,plans:[{...plan,vectorReview:{...review,...changed}}]}));
+  // Well-formed replacement metadata is still a different reviewed source.
+  for(const changed of [{countryIso3:'DEU'},{adminLevel:'ADM0'},{metadataSha256:'0'.repeat(64)},{releaseRef:'f41b8c3'},{discoverySha256:'1'.repeat(64)}]){
+    assert.throws(()=>validateAgentSnapshot({...fixture,plans:[{...plan,status:'submitted',vector:{...vector,boundarySource:{...boundarySource,...changed}}}]}));
+  }
+  for(const changed of [{boundarySource:null},{format:'overpass-json'},{boundarySource:{...boundarySource,sourceFile:'private'}}]){
+    assert.throws(()=>validateAgentSnapshot({...fixture,plans:[{...plan,status:'submitted',vector:{...vector,...changed}}]}));
+  }
 });
 test('human revision forms retain the native CRS and closed fields without source paths or arbitrary selections',()=>{
   const common={planId:'a1234567-1234-1234-1234-123456789abc',planHash:'a'.repeat(64)};
@@ -214,6 +263,15 @@ test('registry snapshots accept bounded groups and reject forged protocols, avai
   const registry={version:1,selectedId:first.id,connections:[first,second]};
   const snapshot={...base,model:{...first,capabilities:{...first.capabilities}},registry};
   assert.equal(validateAgentSnapshot(snapshot),snapshot);
+  for(const size of [null,8192,131072,1048576,4194304]) {
+    const sized={...first,contextWindow:size};
+    assert.equal(validateAgentSnapshot({...snapshot,model:sized,registry:{...registry,connections:[sized,second]}}).model.contextWindow,size);
+  }
+  for(const size of [0,8191,4194305,1.5,'131072',true]) {
+    const sized={...first,contextWindow:size};
+    assert.throws(()=>validateAgentSnapshot({...snapshot,model:sized,registry:{...registry,connections:[sized,second]}}));
+  }
+  assert.throws(()=>validateAgentSnapshot({...snapshot,model:{...first,contextWindow:131072}}));
   assert.deepEqual(groupedConnections([second,first]).map(group=>[group.id,group.connections[0].id]),[['openai',first.id],['deepseek',second.id]]);
   assert.deepEqual(MODEL_PROVIDERS.map(provider=>provider.id),['openai','deepseek','anthropic','google','custom']);
   for (const [provider,protocol] of [['anthropic','anthropic-messages'],['google','google-generative-ai'],['custom','google-generative-ai'],['openai','openai-responses'],['custom','openai-responses']]) {

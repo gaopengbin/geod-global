@@ -1,0 +1,57 @@
+{
+  "schema": "geod-global-agent-connection-bubble-qa/v1",
+  "checkedAt": "2026-10-10T00:30:00+08:00",
+  "changes": {
+    "userBubble": "Shared accent tint at 16 percent, with existing theme text colors",
+    "visibleUserHeader": false,
+    "toolChoice": "auto",
+    "outputCapacity": "Same policy as conversations; includes thinking output",
+    "probeTimeoutMs": 75000,
+    "nativeProbeRpcTimeoutMs": 90000,
+    "partialResult": "Text connectivity remains distinct from tool-call verification"
+  },
+  "regression": {
+    "connectionProbeAndClientTests": {"passed": 34, "failed": 0},
+    "agentPanelIntegrationTests": {"passed": 82, "failed": 0},
+    "nativeRegistryTests": {"passed": 11, "failed": 0},
+    "frontendBuild": "passed",
+    "preparedAgentRuntime": "passed",
+    "desktopBuild": "passed"
+  },
+  "liveDiagnostic": {
+    "endpoint": "https://api.deepseek.com/",
+    "model": "deepseek-flash",
+    "contextWindow": 300000,
+    "oldProbe": {"text": true, "functionCalls": false, "rejectedStep": 2, "httpStatus": 400},
+    "fixedProbe": {"status": "passed", "text": true, "functionCalls": true, "latencyMs": 1254},
+    "totalRequests": 4,
+    "credentialsWritten": false,
+    "registryChanged": false,
+    "conversationOrGeographicDataSent": false,
+    "upstreamErrorBodySaved": false
+  },
+  "browserVisualCheck": {
+    "surface": "Actual production AgentPanel in a labelled, isolated UI fixture",
+    "themes": ["light", "dark"],
+    "narrowFrameWidthPx": 390,
+    "userLabelAbsent": true,
+    "partialResultAndActionsVisible": true,
+    "nativeWindowVisualAcceptance": false,
+    "screenshots": [
+      ".verification/connection-test-fix/bubble-detail.png",
+      ".verification/connection-test-fix/bubble-dark.png",
+      ".verification/connection-test-fix/connection-passed.png",
+      ".verification/connection-test-fix/partial-narrow.png"
+    ]
+  },
+  "localRuntime": {
+    "restarted": true,
+    "activeJobsBeforeRestart": 0,
+    "activeAgentTurnsBeforeRestart": 0,
+    "guiSubsystem": 2,
+    "settingsAndHistoryPreserved": true,
+    "installerCreated": false,
+    "published": false
+  },
+  "references": ["https://api-docs.deepseek.com/api/create-chat-completion/"]
+}

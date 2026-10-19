@@ -1,0 +1,1614 @@
+[
+  {
+    "datasetId": "jaxa-amsr2-soil-moisture",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-W.AMSR2_standard.L3-SMC.nighttime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "collection",
+      "stac_version": "1.0.0",
+      "description": "Soil Moisture Content product in GCOM-W AMSR2 Level-3 Standard product Version 3.",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "Soil Moisture Content (Nighttime/Monthly)"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "title": "Soil Moisture Content (Nighttime/Monthly)",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2012-07-02T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "SMC",
+        "AMSR2",
+        "GCOM-W",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "Japan Aerospace Exploration Agency (JAXA)",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "JAXA GCOM Project",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://suzaku.eorc.jaxa.jp/GCOM/index.html"
+        },
+        {
+          "name": "JAXA Earth Observation Research Center (EORC)",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/en/"
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "GCOM-W"
+        ],
+        "instrument": [
+          "AMSR2"
+        ],
+        "mission": [
+          "Global Change Observation Mission (GCOM)"
+        ],
+        "je:stac_version": [
+          "v1"
+        ],
+        "je:stac_date_format": [
+          "YYYY-MM"
+        ],
+        "je:cog_level_max": [
+          1
+        ],
+        "je:ppu_max": [
+          10
+        ],
+        "je:sources": [
+          {
+            "doi": "10.57746/EO.01gs73b17zekqwyj4hh9xpqgy7",
+            "citation": "Japan Aerospace Exploration Agency. 2012. GCOM-W/AMSR2 L3 Soil Moisture Content (1-Month, 0.1 deg).",
+            "version": "3"
+          }
+        ],
+        "je:epsg": [
+          4326
+        ]
+      },
+      "assets": {
+        "SMC": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff",
+          "title": "Soil Moisture Content (Nighttime/Monthly)",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-lst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-LST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "collection",
+      "stac_version": "1.0.0",
+      "description": "Land surface temperature product in GCOM-C SGLI Level-3 Standard product Version 3.",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "Land Surface Temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "title": "Land Surface Temperature (Daytime/Monthly)",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2018-01-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "LST",
+        "SGLI",
+        "GCOM-C",
+        "GCOM",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "Japan Aerospace Exploration Agency (JAXA)",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "JAXA/GCOM-C science project",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://suzaku.eorc.jaxa.jp/GCOM_C/index.html"
+        },
+        {
+          "name": "JAXA Earth Observation Research Center (EORC)",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/en/"
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "Global Change Observation Mission - Climate (GCOM-C)"
+        ],
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": [
+          "Global Change Observation Mission"
+        ],
+        "je:stac_version": [
+          "v1"
+        ],
+        "je:stac_date_format": [
+          "YYYY-MM"
+        ],
+        "je:cog_level_max": [
+          1
+        ],
+        "je:ppu_max": [
+          40
+        ],
+        "je:sources": [
+          {
+            "doi": "10.57746/EO.01gs73bfs5sbzhyxg4j9ytajsa",
+            "citation": "Japan Aerospace Exploration Agency. 2018. GCOM-C/SGLI L3 Map Land surface temperature (LST) (1-Month,1/24 deg).",
+            "version": "3"
+          }
+        ],
+        "je:epsg": [
+          4326
+        ]
+      },
+      "assets": {
+        "LST": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff",
+          "title": "Land Surface Temperature (Daytime/Monthly)",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  }
+]

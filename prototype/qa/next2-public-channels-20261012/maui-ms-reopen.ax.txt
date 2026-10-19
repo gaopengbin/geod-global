@@ -1,0 +1,43 @@
+Browser tab: 1, Title: "GeoD Global · 本地工作空间", URL: "http://127.0.0.1:4317/#My%20Data?project=2369d5f3-17a1-4e7b-be97-9cdab20b92d3".
+1 AXWebArea GeoD Global · 本地工作空间, URL: 127.0.0.1:4317/#My%20Data?project=2369d5f3-17a1-4e7b-be97-9cdab20b92d3
+	2 container 检查原始栅格, ID: radix-_r_g_
+		3 container
+			4 heading 检查原始栅格, Value: 2, ID: radix-_r_h_
+				5 text 检查原始栅格
+			6 button 关闭
+		7 container
+			8 text 4/122000312222/10300100EB15FF00 · Multispectral Image  · ms_analytic 原件保留独立有效性掩膜。预览和 NoData 标记仅依据 TIFF 单一缺失值声明，零值或未标为缺失的像元不证明有效影像覆盖。
+			9 container 已定位的原始栅格
+			10 container
+				11 button 定位原始栅格
+				12 button 放大
+				13 button 缩小
+			14 text 点击栅格读取原始像素。地图使用文件中的空间网格和第一波段显示预览。
+			15 text 2,583  ×  2,583  ·  波段数 :  8  ·  EPSG:32604
+			16 container
+				17 text 列号（从 0 开始）
+				18 text field (settable) Description: 像素列号, Value: 1449
+			19 container
+				20 text 行号（从 0 开始）
+				21 text field (settable) Description: 像素行号, Value: 2452
+			22 button 读取原始像素
+			23 text 波段 1 : 
+			24 text 95
+			25 text 波段 2 : 
+			26 text 296
+			27 text 波段 3 : 
+			28 text 469
+			29 text 波段 4 : 
+			30 text 512
+			31 text 波段 5 : 
+			32 text 524
+			33 text 波段 6 : 
+			34 text 1158
+			35 text 波段 7 : 
+			36 text 1741
+			37 text 波段 8 : 
+			38 text 1925
+			39 button (collapsed) 文件元数据与显示, Secondary Actions: Expand
+			40 button (collapsed) 原始条目元数据, Secondary Actions: Expand
+
+The focused UI element is 1 AXWebArea GeoD Global · 本地工作空间, URL: 127.0.0.1:4317/#My%20Data?project=2369d5f3-17a1-4e7b-be97-9cdab20b92d3

@@ -1,0 +1,478 @@
+{
+  "schema": "geod-agent-gscloud-live-acceptance/v1",
+  "date": "2026-10-15",
+  "validation": "actual saved DeepSeek connection, native tools and real provider responses; no synthetic model output",
+  "model": {
+    "provider": "DeepSeek official",
+    "model": "deepseek-flash",
+    "configuredContextTokens": 300000
+  },
+  "isolation": {
+    "separateQaStore": true,
+    "realUserRegistryUnchanged": true,
+    "realUserJobs": 110,
+    "realUserSessions": 13
+  },
+  "gscloudQuery": {
+    "productId": "421",
+    "bounds": [
+      116.2,
+      40.1,
+      116.4,
+      40.3
+    ],
+    "start": "1980-01-01",
+    "end": "2026-10-15",
+    "presence": "has"
+  },
+  "baselineCases": [
+    {
+      "case": "search",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 16.8,
+      "modelRequests": 7,
+      "usage": {
+        "cachedInput": 72448,
+        "input": 99976,
+        "output": 2275,
+        "reasoningOutput": 1557,
+        "total": 102251
+      },
+      "tools": [
+        {
+          "name": "geod_workspace_context",
+          "status": "completed"
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed"
+        },
+        {
+          "name": "geod_dataset_catalog",
+          "status": "failed"
+        },
+        {
+          "name": "geod_stac_connections",
+          "status": "completed"
+        },
+        {
+          "name": "geod_tools_load",
+          "status": "completed"
+        },
+        {
+          "name": "geod_gscloud_products",
+          "status": "completed"
+        },
+        {
+          "name": "geod_gscloud_search",
+          "status": "completed"
+        },
+        {
+          "name": "geod_gscloud_detail",
+          "status": "completed"
+        }
+      ],
+      "jobs": 0,
+      "lastFinalReply": "已完成检索与核对（只读，未下载）。\n\n**当前产品**：GSCloud 421 — GDEMV2 30M 分辨率数字高程数据（DEM 系列，下载需官方账号）\n**当前范围与筛选**：116.2–116.4°E, 40.1–40.3°N；1980-01-01 至 2026-10-15；presence=has\n\n**已收录数据（共 1 条，不足两条）**\n1. `ASTGTM2_N40E116`（行 40 / 列 116，状态 available，cloud 无）\n\n**详情核对**：ASTGTM2_N40E116 的实际足迹为 116.0000–117.0001°E、40.0000–41.0001°N 的 1°×1° 瓦片，完全覆盖你的 AOI；声明文件大小与观测时间为空（未知，非零），下载状态为 account-required。\n\n说明：产品目录查询中 421 仅匹配到 310 条目（ASTER GDEM 30M）相关信息，421 本身未在该名称筛选中返回；检索与详情均为元数据，不代表原文件可下载或已授权。需要下载时请另行确认。"
+    },
+    {
+      "case": "count",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 3.06,
+      "modelRequests": 2,
+      "usage": {
+        "cachedInput": 22144,
+        "input": 26084,
+        "output": 216,
+        "reasoningOutput": 8,
+        "total": 26300
+      },
+      "tools": [
+        {
+          "name": "geod_workspace_context",
+          "status": "completed"
+        }
+      ],
+      "jobs": 0,
+      "lastFinalReply": "当前列表状态（仅读取，未重新检索、未下载）：\n\n- 总数：1 条（totalCount=1，filteredCount=1，列表完整 complete=true）\n- 已选中：1 条 → `ASTGTM2_N40E116`（selectedCount=1）\n- 当前为 Explore 页、GSCloud 产品 421，范围 116.2–116.4°E / 40.1–40.3°N，日期 1980-01-01 至 2026-10-15，presence=has；快照时间 2026-10-15T10:09:37 UTC。\n\n说明：visibleItemIds 为空、loadedCount=0，表示当前窗口未加载可见行明细，不等于零条；这些计数是列表状态，不代表已下载或面积覆盖。"
+    },
+    {
+      "case": "download",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 7.22,
+      "modelRequests": 1,
+      "usage": {
+        "cachedInput": 7296,
+        "input": 17707,
+        "output": 953,
+        "reasoningOutput": 716,
+        "total": 18660
+      },
+      "tools": [],
+      "jobs": 0,
+      "lastFinalReply": "核实结果：**我这边没有可用的原生 Agent 下载工具来启动这份数据云原件的下载。**\n\n- 我当前只有数据云的只读工具（产品目录 / 检索 / 详情），它们明确不启动下载（downloadsStarted=false），也不是下载入口。\n- 该条原件状态为 `account-required`，且产品下载能力为 `official-account-required`，需要官方地理空间数据云账号（可能还需预订/配额）。\n- 未更换图源，也未声称完成下载；目前**未产生任何下载任务或文件**。\n\n**具体入口**：请在地理空间数据云产品页（产品 421 GDEMV2 30M 数字高程数据，条目 `ASTGTM2_N40E116`）使用应用内的数据云下载控件执行——应用支持对已核实的公开地形 ZIP（含 421 ASTER V2）下载，但该操作需由你在客户端登录官方账号后触发，Agent 无法代为发起或授权。\n\n如果你需要在应用内查看该条目，我可以帮你打开对应的工作区结果；下载本身仍需你在上述入口确认。"
+    },
+    {
+      "case": "home",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "conversation",
+        "page": "Home"
+      },
+      "elapsedSeconds": 5.12,
+      "modelRequests": 2,
+      "usage": {
+        "cachedInput": 25472,
+        "input": 26088,
+        "output": 560,
+        "reasoningOutput": 347,
+        "total": 26648
+      },
+      "tools": [
+        {
+          "name": "geod_workspace_context",
+          "status": "completed"
+        }
+      ],
+      "jobs": 0,
+      "lastFinalReply": "当前上下文里没有可统计的影像列表。\n\n原因：本次入口是 **Home 页**，`geod_workspace_context` 返回 `context: null`，即没有附加 Explore 地图/目录、也没有选中的项目或任务；所以「多少景影像」目前是**未知**，而不是 0 景。\n\n如果你指的是某一次检索的结果，请告诉我：\n\n- 要看哪个区域的影像（地名或已保存项目/任务名）\n- 影像来源/产品（不指定则按默认：Sentinel-2 L2A 视觉波段，2026-09-16 ~ 2026-10-15，云量上限 100）\n- 是否需要限定日期或云量\n\n给出区域后我就能读取实际目录并返回可见景数（含是否完整/加载中）。此前对话中已存在的目标与已提交方案范围我不会改动。"
+    }
+  ],
+  "finalCases": [
+    {
+      "case": "search",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 6.17,
+      "modelRequests": 3,
+      "usage": {
+        "cachedInput": 29568,
+        "input": 30940,
+        "output": 649,
+        "reasoningOutput": 185,
+        "total": 31589
+      },
+      "tools": [
+        {
+          "name": "geod_gscloud_search",
+          "status": "completed"
+        },
+        {
+          "name": "geod_gscloud_detail",
+          "status": "completed"
+        }
+      ],
+      "jobs": 0,
+      "lastFinalReply": "当前产品（GDEMV2 30M 数字高程，产品 421）在该范围内仅收录 1 条：\n\n1. **ASTGTM2_N40E116** — 状态：可用（需自有账号才能下载）\n\n核对详情（该条）：\n- 覆盖经纬度范围约 116.0–117.0°E，40.0–41.0°N（1°×1° 瓦片），来源落图范围为多边形，完整包含你给的 116.2–116.4°E、40.1–40.3°N。\n- 该条目未提供文件大小、云量、时间字段（DEM 参考数据，非按日期观测）。\n- 下载状态为「需账号」，代理解析仅提供元数据，未开始任何下载。\n\n已按要求保持现有产品、区域与筛选条件，不进行下载。如需获取原始瓦片，请在后端界面走：Explore > Geospatial Data Cloud > 连接 GSCloud 账号 > 选择产品/结果 > 下载所选原始文件。"
+    },
+    {
+      "case": "count",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 1.56,
+      "modelRequests": 1,
+      "usage": {
+        "cachedInput": 11008,
+        "input": 11336,
+        "output": 86,
+        "reasoningOutput": 39,
+        "total": 11422
+      },
+      "tools": [],
+      "jobs": 0,
+      "lastFinalReply": "当前列表共 **1 条**（全部返回且通过筛选，仅 1 页）。选中项：**ASTGTM2_N40E116**（未截断）。\n\n未重新检索、未下载。"
+    },
+    {
+      "case": "filtered",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 1.55,
+      "modelRequests": 1,
+      "usage": {
+        "cachedInput": 11392,
+        "input": 11727,
+        "output": 109,
+        "reasoningOutput": 44,
+        "total": 11836
+      },
+      "tools": [],
+      "jobs": 0,
+      "lastFinalReply": "筛选后当前列表显示 **0 条**（共返回 1 条，被文字筛选全部排除）。选中的仍是 **ASTGTM2_N40E116**（选中状态保留，但当前筛选结果中不显示）。\n\n仅读取本次工作区状态，未重新检索、未下载。"
+    },
+    {
+      "case": "download",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 3.09,
+      "modelRequests": 1,
+      "usage": {
+        "cachedInput": 11776,
+        "input": 12154,
+        "output": 333,
+        "reasoningOutput": 168,
+        "total": 12487
+      },
+      "tools": [],
+      "jobs": 0,
+      "lastFinalReply": "无法执行：当前原生 Agent 工具对地理空间数据云只有**元数据读取能力**（产品/检索/详情），下载能力明确为不可用——检索与详情返回的访问声明为：Agent 下载 = 否、归档栅格预览 = 否、桌面端原始下载 = 是、且需要自有账号（代理解析从未开始任何下载）。\n\n具体入口（请在后端界面自行操作）：\n**Explore > Geospatial Data Cloud（地理空间数据云）> 连接 GSCloud 账号 > 选择产品/结果 > 下载所选原始文件**\n\n保持来源为地理空间数据云（产品 421，GDEMV2 30M），选中项 ASTGTM2_N40E116。未更换图源，也未声称已完成下载。"
+    },
+    {
+      "case": "home",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "conversation",
+        "page": "Home"
+      },
+      "elapsedSeconds": 2.61,
+      "modelRequests": 2,
+      "usage": {
+        "cachedInput": 24448,
+        "input": 25004,
+        "output": 174,
+        "reasoningOutput": 59,
+        "total": 25178
+      },
+      "tools": [
+        {
+          "name": "geod_workspace_context",
+          "status": "completed"
+        }
+      ],
+      "jobs": 0,
+      "lastFinalReply": "现在没有可统计的影像列表。当前在 Home 页，没有挂载的搜索结果或目录（context 为 null），所以\"景数\"是未知，而不是 0。\n\n如果你想统计某个区域的影像，请告诉我目标区域（地名或选择范围），我按默认最新影像（Sentinel-2 L2A，近 30 天，云量 ≤100%）发起检索后即可给出景数。"
+    },
+    {
+      "case": "product",
+      "status": "completed",
+      "error": null,
+      "scene": {
+        "kind": "workspace",
+        "page": "Explore"
+      },
+      "elapsedSeconds": 2.62,
+      "modelRequests": 2,
+      "usage": {
+        "cachedInput": 26496,
+        "input": 32721,
+        "output": 146,
+        "reasoningOutput": 0,
+        "total": 32867
+      },
+      "tools": [
+        {
+          "name": "geod_gscloud_products",
+          "status": "completed"
+        }
+      ],
+      "jobs": 0,
+      "lastFinalReply": "按精确 productId=421 核对结果：\n\n- **421** = 所属系列「DEM 数字高程数据」，产品标题「**GDEMV2 30M 分辨率数字高程数据**」（ASTER GDEM V2，30 米分辨率数字高程模型）。\n- 目录共 124 个产品，按该 ID 精确匹配到 1 个；下载能力为「需官方账号」。\n\n未做名称模糊匹配、未检索影像、未下载。"
+    }
+  ],
+  "searchComparison": {
+    "before": {
+      "elapsedSeconds": 16.8,
+      "modelRequests": 7,
+      "usage": {
+        "cachedInput": 72448,
+        "input": 99976,
+        "output": 2275,
+        "reasoningOutput": 1557,
+        "total": 102251
+      }
+    },
+    "after": {
+      "elapsedSeconds": 6.17,
+      "modelRequests": 3,
+      "usage": {
+        "cachedInput": 29568,
+        "input": 30940,
+        "output": 649,
+        "reasoningOutput": 185,
+        "total": 31589
+      }
+    },
+    "totalTokenReductionPercent": 69.11,
+    "limits": "One observed task, warm provider cache; total includes cached input. No cold-cache cost or latency guarantee."
+  },
+  "sclOriginalControl": {
+    "source": "Earth Search Sentinel-2 L2A",
+    "scene": {
+      "kind": "conversation",
+      "page": "Home"
+    },
+    "bounds": [
+      -122.55,
+      37.68,
+      -122.32,
+      37.84
+    ],
+    "start": "2025-06-25",
+    "end": "2025-06-30",
+    "cloudMax": 100,
+    "originalsOnly": true,
+    "crop": false,
+    "mosaic": false,
+    "createProject": false,
+    "jobsBeforeConfirmation": 0,
+    "confirmation": "test-operator native immutable review confirmation",
+    "jobsAfterConfirmation": 1,
+    "job": {
+      "id": "c16842ae-1153-4020-a803-1af3836ca5b2",
+      "itemId": "S2C_10SEG_20250627_0_L2A",
+      "assetKey": "scl",
+      "bytes": 2249570,
+      "sha256": "b85454c5fbaec6f86bcc60be45fa16312c21cb0e38da8a248d980ad5b81f4707",
+      "status": "succeeded"
+    },
+    "raster": {
+      "width": 5490,
+      "height": 5490,
+      "bandCount": 1,
+      "dataType": "UInt8",
+      "crs": "EPSG:32610",
+      "pixelSize": [
+        20.0,
+        20.0
+      ],
+      "nodata": 0.0,
+      "sha256": "b85454c5fbaec6f86bcc60be45fa16312c21cb0e38da8a248d980ad5b81f4707"
+    },
+    "goalStatus": "complete",
+    "automaticContinuations": 1,
+    "modelRequests": 8,
+    "usage": {
+      "cachedInput": 124800,
+      "input": 142922,
+      "output": 2518,
+      "reasoningOutput": 1271,
+      "total": 145440
+    },
+    "tools": [
+      {
+        "name": "geod_goal_define",
+        "status": "completed"
+      },
+      {
+        "name": "geod_sources_list",
+        "status": "completed"
+      },
+      {
+        "name": "geod_scene_search",
+        "status": "completed"
+      },
+      {
+        "name": "geod_download_plan",
+        "status": "completed"
+      },
+      {
+        "name": "geod_goal_bind",
+        "status": "completed"
+      },
+      {
+        "name": "geod_plan_execute",
+        "status": "completed"
+      },
+      {
+        "name": "geod_job_status",
+        "status": "completed"
+      },
+      {
+        "name": "geod_raster_inspect",
+        "status": "completed"
+      },
+      {
+        "name": "geod_workspace_open",
+        "status": "completed"
+      },
+      {
+        "name": "geod_goal_check",
+        "status": "completed"
+      }
+    ],
+    "workspaceOpen": {
+      "requested": true,
+      "fileVerified": true,
+      "frontendAcknowledged": false,
+      "pixelsVisuallyVerified": false
+    },
+    "lastFinalReply": "已完成（全部核验通过）：\n\n- **成果**：Sentinel-2 L2A SCL 原始分类层 GeoTIFF — 场景 S2C_10SEG_20250627_0_L2A（2025-06-27，Earth Search）\n- **任务**：status=succeeded、settled=true，下载 2,249,570 字节，与远端字节数一致\n- **校验**：SHA-256 = b85454c5fbaec6f86bcc60be45fa16312c21cb0e38da8a248d980ad5b81f4707（任务记录与文件实测一致）\n- **栅格**：单波段 UInt8，EPSG:32610，5490×5490，20 m，NoData=0；分类统计含植被 717 万、水体 537 万、高概率云 972 万等 11 类有效值\n- **打开**：已请求在工作区打开该成果（打开回执不等于像素已渲染）\n\n仅下载该一景 SCL 原文件，未裁剪、未拼接、未建工程。注：这是文件签名/字节数/校验值层面的验证，不含科学精度或矩形全覆盖确认。"
+  },
+  "currentBoundaries": {
+    "gscloudAgent": [
+      "products",
+      "search",
+      "detail"
+    ],
+    "gscloudAgentDownload": false,
+    "gscloudDesktopOriginalProductIds": [
+      "305",
+      "307",
+      "308",
+      "310",
+      "421",
+      "aeab8000652a45b38afbb7ff023ddabb"
+    ],
+    "gscloudArchiveRasterPreview": false,
+    "allSourcesAccepted": false,
+    "nativeWindowVisuallyVerifiedThisRun": false
+  },
+  "checks": {
+    "agentNodeTestsPassed": 158,
+    "gscloudRustTestsPassed": 11,
+    "gscloudIgnoredTests": 5,
+    "nativeExecutionPolicyTestsPassed": 5,
+    "nativeSelectionTestsPassed": 4,
+    "nativeSelectionIgnoredTests": 1,
+    "liveSavedModelNativeBridgePassed": 1,
+    "dependencyIsolation": "passed",
+    "registeredCommandAcl": "passed",
+    "registeredCommands": 165,
+    "scopedDiffCheck": "passed"
+  },
+  "desktopBuild": {
+    "command": "cargo build --locked --offline -p geod-global-desktop --features custom-protocol",
+    "passed": true,
+    "binarySha256": "af5af20b1cf4a077e6205fb64577a96d706ce2fdfac23c004f662c7196e26285",
+    "binaryBytes": 159368704,
+    "agentBundleSha256": "9e0599281c13f0dd9bbe521c15b946e7627b33f61d1caf066fe107ed76f5fdbf",
+    "startedProcessId": 221220,
+    "launchObservedRunning": true,
+    "nativeWindowVisuallyVerified": false,
+    "recordedAt": "2026-10-15T10:37:37.449753+00:00",
+    "processResponding": true,
+    "startupStderrBytes": 0
+  }
+}

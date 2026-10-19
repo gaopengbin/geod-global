@@ -121,7 +121,7 @@ export class GoalCoordinator {
           if (!Array.isArray(plan.jobs) || !plan.jobs.length || plan.jobs.length > 32 || plan.jobs.some(job => !UUID.test(job.id))) throw Error('Plan has no actual output tasks.');
           if (plan.jobs.some(job => ['failed', 'cancelled', 'interrupted'].includes(job.status))) throw Error('Task failed or stopped.');
           if (plan.jobs.some(job => job.status !== 'succeeded' || job.settled !== true)) { output.state = 'waiting'; waitingJobs = true; continue; }
-          const tool = { raster: 'geod_raster_inspect', rgb: 'geod_rgb_inspect', stac: 'geod_stac_inspect', wcs: 'geod_wcs_inspect' }[output.kind];
+          const tool = { raster: 'geod_raster_inspect', rgb: 'geod_rgb_inspect', stac: 'geod_stac_inspect', wcs: 'geod_wcs_inspect', archive: 'geod_gscloud_archive_inspect' }[output.kind];
           for (const job of plan.jobs) {
             const file = await this.service.callTool(tool, { id: job.id }, scope);
             if (!HASH.test(file.sha256 ?? file.artifact?.sha256) || file.jobId !== undefined && file.jobId !== job.id || file.artifact?.jobId !== undefined && file.artifact.jobId !== job.id) throw Error('File verification failed.');

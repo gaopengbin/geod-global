@@ -1,6 +1,9 @@
 {
   "schema": "geod-agent-runtime-notices/v1",
-  "runtimeVersions": { "node": "24.14.0", "codex": "0.159.2" },
+  "runtimeVersions": {
+    "node": "24.14.0",
+    "codex": "0.159.2"
+  },
   "codexCommit": "ff6aec96948b70d94983af2641a6b67c94faeff5",
   "records": [
     {
@@ -62,6 +65,16 @@
       "source": "https://raw.githubusercontent.com/vercel/ai/eb93c81f2d6200e0732745d0cd582600fe4c5055/LICENSE",
       "sha256": "b4f9adb7c568904834d0dd6cc98d16c390d21ca32fc17ae7a267715269bd5529",
       "bytes": 552
+    },
+    {
+      "file": "GeoD-Agent-v0.2.5-LICENSE.txt",
+      "component": "GeoD Agent source adaptations",
+      "version": "0.2.5",
+      "license": "MIT",
+      "kind": "complete upstream license and copyright",
+      "source": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/LICENSE",
+      "sha256": "f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191",
+      "bytes": 1072
     }
   ]
 }

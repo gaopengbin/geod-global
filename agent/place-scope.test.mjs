@@ -1,6 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {beforePlaceTool,afterPlaceTool,failedPlaceTool,toolFailureCode,CITY_SCOPE_ERROR,STORAGE_SCOPE_ERROR} from './place-scope.mjs';
+test('a corrected county/district query and its matching verified polygon unlock the exact area after a mistaken city lookup',()=>{
+  const active={},area=[-73.962479436,40.542904225,-73.700021352,40.805405281];
+  beforePlaceTool(active,'geod_place_search',{query:'Queens',kind:'city'});
+  afterPlaceTool(active,'geod_place_search',{candidates:[{kind:'city',name:'Queensbury',bounds:[-73.76,43.25,-73.59,43.49]}]});
+  const candidate={id:'gb:county',name:'Queens',adminLevel:2,countryCode:'USA',bounds:area};
+  afterPlaceTool(active,'geod_region_search',{query:'Queens',candidates:[candidate]});
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:area}));
+  const polygon={name:'Queens',boundary:{id:'native',sha256:'a'.repeat(64)},geometryType:'Polygon',bounds:area,provenance:{countryCode:'USA',adminLevel:2}};
+  for(const changed of [{...polygon,name:'Other county'},{...polygon,provenance:{countryCode:'CAN',adminLevel:2}},{...polygon,provenance:{countryCode:'USA',adminLevel:1}},
+    {...polygon,bounds:[-80,40,-70,45]}]){
+    afterPlaceTool(active,'geod_boundary_read',changed);assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:area}));
+  }
+  afterPlaceTool(active,'geod_boundary_read',polygon);assert.doesNotThrow(()=>beforePlaceTool(active,'geod_scene_search',{bounds:area}));
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:[-74,40.5,-73.7,40.9]}));
+  beforePlaceTool(active,'geod_place_search',{query:'New York City',kind:'city'});afterPlaceTool(active,'geod_place_search',{candidates:[]});
+  afterPlaceTool(active,'geod_region_search',{query:'Queens',candidates:[candidate]});afterPlaceTool(active,'geod_boundary_read',polygon);
+  assert.throws(()=>beforePlaceTool(active,'geod_scene_search',{bounds:area}));
+});
 test('expiry records a safe recoverable category and does not poison geographic lookups',()=>{
   const active={};beforePlaceTool(active,'geod_place_search',{kind:'city',query:'Requested city'});
   const city=[-74.2,40.4,-73.7,41.0];afterPlaceTool(active,'geod_place_search',{candidates:[{kind:'city',bounds:city}]});

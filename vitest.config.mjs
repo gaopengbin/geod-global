@@ -6,6 +6,9 @@ export default defineConfig({
     include: ['prototype/src/*.integration.test.jsx'],
     setupFiles: ['./prototype/src/ui-test-setup.js'],
     restoreMocks: true,
+    // GIS/Agent suites each build a full DOM and map module graph. Unbounded
+    // workers starve timers and leak timed-out interactions into later tests.
+    maxWorkers: 2,
     // Inline OL so the COG adapter tests replace geotiff transport without
     // bypassing OpenLayers' actual asynchronous grid/view configuration.
     server: { deps: { inline: ['ol'] } },

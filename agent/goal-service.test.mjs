@@ -12,7 +12,7 @@ async function rig(t){
   const service=await new AgentService({home,executable:'controlled-test',callTool:async(name,args)=>{
     calls.push({name,args});if(name==='geod_plan_status'||name==='geod_download_plan')return structuredClone(plan);
     if(name==='geod_execution_policy')return {mode:'confirm-each'};
-    if(name==='geod_raster_inspect')return {jobId:plan.jobs[0].id,sha256:'a'.repeat(64)};
+    if(name==='geod_raster_inspect'||name==='geod_gscloud_archive_inspect')return {jobId:args.id,sha256:'a'.repeat(64)};
     return {};
   },bridgeFactory:async options=>{beforeComplete=options.beforeComplete;return {baseUrl:'http://127.0.0.1:1/v1',resetBudget:async()=>{},close:async()=>{}};},
   hostFactory:async()=>({rpc:async(method,args)=>{
@@ -30,7 +30,9 @@ async function rig(t){
 test('reply completion waits for native confirmation, then verifies the final actual plan rather than treating the reply as success',async t=>{
   const r=await rig(t);await r.send();await r.tool('geod_goal_define',{objective:'Deliver the requested imagery.',outputs:[{id:'image',label:'Requested original imagery',kind:'raster'}]});
   await r.tool('geod_download_plan',{});await r.tool('geod_goal_bind',{outputId:'image',planId:r.plan.planId});await r.beforeComplete();
+  const activities=[];r.service.onChange=()=>activities.push(r.service.snapshot().activity);
   await r.service.finish('completed');assert.equal(r.service.snapshot().selected.goal.status,'waiting_confirmation');
+  assert.equal(activities.at(-1),null,'Native goal verification must notify the UI when the turn actually ends');
   const turns=r.calls.filter(call=>call.method==='turn/start').length;await r.service.workflow.tick();assert.equal(r.calls.filter(call=>call.method==='turn/start').length,turns);
   assert.equal(r.service.snapshot().selected.goal.engine.status,'paused');
   r.plan.status='submitted';r.plan.jobs[0].status='succeeded';r.plan.jobs[0].settled=true;
@@ -38,6 +40,34 @@ test('reply completion waits for native confirmation, then verifies the final ac
   assert.equal(r.service.snapshot().selected.goal.status,'complete');assert(r.calls.some(call=>call.name==='geod_raster_inspect'));
   assert(!r.calls.some(call=>call.name==='geod_plan_execute'));
 });
+test('archive goals wait for every confirmed ZIP and verify originals without a raster decoder',async t=>{
+  const r=await rig(t);await r.send();
+  await r.tool('geod_goal_define',{objective:'Deliver the selected GSCloud ZIP originals.',outputs:[{id:'zip',label:'Original ZIPs',kind:'archive'}]});
+  await r.tool('geod_download_plan',{});await r.tool('geod_goal_bind',{outputId:'zip',planId:r.plan.planId});
+  await r.beforeComplete();await r.service.finish('completed');assert.equal(r.service.snapshot().selected.goal.status,'waiting_confirmation');
+  r.plan.status='submitted';r.plan.jobs.push({id:randomUUID(),status:'queued',settled:false});r.plan.jobs[0].status='succeeded';r.plan.jobs[0].settled=true;
+  await r.send({sessionId:r.service.selectedId,text:'Verify the original ZIP delivery.'});await r.tool('geod_goal_check',{});
+  assert.equal(r.service.snapshot().selected.goal.status,'waiting_jobs');
+  r.plan.jobs[1].status='succeeded';r.plan.jobs[1].settled=true;
+  await r.tool('geod_goal_check',{});
+  assert.equal(r.service.snapshot().selected.goal.status,'complete');
+  assert.equal(r.service.snapshot().selected.goal.outputs[0].verifiedIds.length,2);
+  assert(r.calls.some(call=>call.name==='geod_gscloud_archive_inspect'));
+  assert(!r.calls.some(call=>call.name==='geod_raster_inspect'||call.name==='geod_plan_execute'));
+});
+
+test('replayed native confirmation adds no workflow, reply or model request after submission',async t=>{
+  const r=await rig(t);await r.send();await r.tool('geod_download_plan',{});await r.service.finish('completed');
+  r.plan.status='submitted';const binding=randomUUID(),sessionId=r.service.selectedId;
+  const control={sessionId,text:'',action:'confirm',plans:[r.plan],executionMode:'confirm-each',executionBinding:binding};
+  await r.service.recordControl(control);
+  const session=r.service.sessions.find(session=>session.id===sessionId);session.workflow.status='completed';session.workflow.pendingPlans=[];
+  const entries=JSON.stringify(session.entries),workflow=JSON.stringify(session.workflow),turns=r.calls.filter(call=>call.method==='turn/start').length;
+  await r.service.recordControl(control);await r.service.workflow.tick();
+  assert.equal(JSON.stringify(session.entries),entries);assert.equal(JSON.stringify(session.workflow),workflow);
+  assert.equal(r.calls.filter(call=>call.method==='turn/start').length,turns);
+});
+
 test('persisted goals recover paused with the complete manifest, and native clear never removes data or grants permission',async t=>{
   const r=await rig(t);await r.send();await r.tool('geod_goal_define',{objective:'Get imagery and requested statistics.',outputs:[{id:'image',label:'Imagery',kind:'raster'},{id:'table',label:'CSV statistics',kind:'unavailable'}]});
   await r.beforeComplete();await r.service.finish('completed');assert.equal(r.service.snapshot().selected.goal.status,'needs_attention');

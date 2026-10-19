@@ -122,7 +122,9 @@ fn verified(inspection: &super::VectorInspection) -> Value {
         "representation":"native normalized WGS84 GeoJSON; original file and converted representation have separate hashes"})
 }
 fn protocol(service: &crate::features::FeatureService) -> &'static str {
-    if service.wfs.is_some() {
+    if service.geoboundaries.is_some() {
+        "geoBoundaries"
+    } else if service.wfs.is_some() {
         "WFS2"
     } else if service.overpass.is_some() {
         "Overpass"

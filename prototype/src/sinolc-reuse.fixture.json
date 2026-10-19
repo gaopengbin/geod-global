@@ -1,0 +1,2027 @@
+{
+  "notice": "Transport/UI regression playback of the saved SinoLC whole-original job and pinned source, captured 2026-10-14. This replay is not live download, raster decoding or GUI acceptance.",
+  "job": {
+    "id": "5126af30-4d4e-49b4-a255-7fbb91e25727",
+    "status": "succeeded",
+    "title": "SinoLC-1 Shanghai · March 2023 whole classification original · SinoLC-1 Shanghai · March 2023 whole classification original",
+    "itemId": "92344ae09f4f6ea2859d2c0199292c9e2498cc18f23d95ebfb5b1c05fbb73527",
+    "assetKey": "stac_asset",
+    "href": "https://zenodo.org/records/7709370/files/East_Shanghai.zip",
+    "mediaType": "application/zip",
+    "sha256": "f128cae66f38c546a850af767b42b85d29fd0c4d71ee3bb325e30b962d58d268",
+    "bytesDownloaded": 365818022,
+    "stacSource": {
+      "snapshotId": "b4c19eef5e4b049c9918fb6b92bc41828b54b498888252fbb8329454cf3a0765",
+      "assetKey": "raster"
+    }
+  },
+  "snapshot": {
+    "id": "b4c19eef5e4b049c9918fb6b92bc41828b54b498888252fbb8329454cf3a0765",
+    "connectionId": "c6970f3e-dd55-4860-adf4-c85a0d8a8b88",
+    "collectionId": null,
+    "itemId": "92344ae09f4f6ea2859d2c0199292c9e2498cc18f23d95ebfb5b1c05fbb73527",
+    "title": "SinoLC-1 Shanghai · March 2023 whole classification original",
+    "datetime": null,
+    "startDatetime": null,
+    "endDatetime": null,
+    "bbox": [
+      120.85235595703125,
+      30.653743743896484,
+      122.26856231689453,
+      31.8768310546875
+    ],
+    "geometry": null,
+    "properties": {
+      "datasetPreset": {
+        "dataset": {
+          "attribution": "Zhuohong Li et al., SinoLC-1, doi:10.5281/zenodo.7709370; Earth System Science Data 15, 4749–4780 (2023), doi:10.5194/essd-15-4749-2023. Preserve the fixed historical Shanghai original, author class legend, source version, attribution and full archive/member checksums. The classification data licence does not license redistribution of its input Google Earth imagery.",
+          "category": "land-cover",
+          "defaultLayer": "classes",
+          "description": "The complete publisher's historical Shanghai land-cover original in the fixed March 2023 East-of-China release. One full ZIP and its unchanged full single-band GeoTIFF are stored with independent byte/SHA receipts. This is an explicitly reviewed large tiled grid, not nationwide discovery, an RGB image, a clipped AOI export or an annual observation map.",
+          "documentationUrl": "https://zenodo.org/records/7709370",
+          "id": "sinolc-1",
+          "layers": [
+            {
+              "id": "classes",
+              "nodata": 0.0,
+              "offset": 0.0,
+              "scale": 1.0,
+              "title": "Shanghai land-cover classes · unchanged whole original",
+              "unit": "class code",
+              "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement."
+            }
+          ],
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "limits": [
+            "One fixed Shanghai full publisher ZIP/member only, each within the existing 512 MiB source/expanded-file budget. No city substitution, clipping, reprojection, source downsampling, other years, national batch or arbitrary large raster is authorized. Complete original export and lower-detail display retain separate identities; software/UI acceptance is a separate gate."
+          ],
+          "nominalResolution": "1 m nominal classification; unchanged EPSG:4326 Area spacing 0.000010728836059570312 degrees, not a metre-valued TIFF unit",
+          "requiresCountry": false,
+          "title": "SinoLC-1 · Shanghai original classification",
+          "unit": "class code",
+          "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement.",
+          "version": "East of China, March 2023 fixed original",
+          "warnings": [
+            "This exact original is 132000 × 114000 (15048000000 grid pixels) in 230136 256 × 256 LZW tiles and has no overview. It exceeds ordinary axis/grid/chunk ceilings. Only the independently verified whole-member SHA and full physical profile may use the explicit reviewed large-grid policy; ordinary source limits remain unchanged.",
+            "Each original tile is at most 65536 decoded UInt8 bytes. Browsing chooses a lower-detail display within the unchanged 128 MiB per-chunk, 512 MiB cumulative preview and per-stage cooperative 30-second deadlines; no hard 30-second promise is made for a complete file hash/inspection. Full source bytes, original grid and full-resolution raw samples remain unchanged. A browsing PNG is not the full-resolution original.",
+            "The source mosaic was selected from the December 2021 Google Earth version, with actual source imagery captured across years. The publisher's separate 0.3-degree capture-time map gives Shanghai coarse-cell values including 2019, 2020 and 2021; it does not establish a common or per-pixel 1-m observation year. Publication in 2023 is not an observation date.",
+            "This fixed historical original retains its original edges and any overlap artefacts. The later author 2026 edge-fix script is not silently applied, and no new corrected original is fabricated.",
+            "The exact original ColorMap matches all eleven publisher class colors. Legend source: https://essd.copernicus.org/articles/15/4749/2023/essd-15-4749-2023-t02.png (SHA 9947f5aacde0e73336520fb5de39c5ecff07469831260bf8c546e98c00c2d5a9). The original TIFF photometric tag is BlackIsZero (1), separately from its ColorMap; map colors express categorical classes, not RGB sensor bands.",
+            "Author guide: https://zenodo.org/records/8214871. Timing evidence only: https://zenodo.org/records/8214467/files/Image_capture_time.tif (262584 bytes, SHA b233db58213971f8cc8eb6c77c8c249951235ab925772999fb16d0e70244b7ac, 0.3° grid). It is not selected as the land-cover product."
+          ],
+          "years": []
+        },
+        "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+        "layer": {
+          "id": "classes",
+          "nodata": 0.0,
+          "offset": 0.0,
+          "scale": 1.0,
+          "title": "Shanghai land-cover classes · unchanged whole original",
+          "unit": "class code",
+          "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement."
+        },
+        "request": {
+          "bounds": [
+            121.4,
+            31.1,
+            121.5,
+            31.2
+          ],
+          "datasetId": "sinolc-1",
+          "layer": "classes"
+        },
+        "schemaVersion": 2,
+        "sourceBounds": [
+          120.85235595703125,
+          30.653743743896484,
+          122.26856231689453,
+          31.8768310546875
+        ],
+        "sourceId": "East_Shanghai",
+        "sourceTitle": "SinoLC-1 Shanghai · March 2023 whole classification original"
+      }
+    },
+    "assets": [
+      {
+        "key": "raster",
+        "title": "SinoLC-1 Shanghai · March 2023 whole classification original",
+        "href": "https://zenodo.org/records/7709370/files/East_Shanghai.zip",
+        "mediaType": "application/zip",
+        "roles": [
+          "data"
+        ],
+        "eligible": true,
+        "reason": null,
+        "metadata": {
+          "cogLayout": "original ZIP; selected whole TIFF remains separately checksummed",
+          "contentLength": 16,
+          "contentRange": "bytes 0-15/365818022",
+          "datasetPreset": {
+            "dataset": {
+              "attribution": "Zhuohong Li et al., SinoLC-1, doi:10.5281/zenodo.7709370; Earth System Science Data 15, 4749–4780 (2023), doi:10.5194/essd-15-4749-2023. Preserve the fixed historical Shanghai original, author class legend, source version, attribution and full archive/member checksums. The classification data licence does not license redistribution of its input Google Earth imagery.",
+              "category": "land-cover",
+              "defaultLayer": "classes",
+              "description": "The complete publisher's historical Shanghai land-cover original in the fixed March 2023 East-of-China release. One full ZIP and its unchanged full single-band GeoTIFF are stored with independent byte/SHA receipts. This is an explicitly reviewed large tiled grid, not nationwide discovery, an RGB image, a clipped AOI export or an annual observation map.",
+              "documentationUrl": "https://zenodo.org/records/7709370",
+              "id": "sinolc-1",
+              "layers": [
+                {
+                  "id": "classes",
+                  "nodata": 0.0,
+                  "offset": 0.0,
+                  "scale": 1.0,
+                  "title": "Shanghai land-cover classes · unchanged whole original",
+                  "unit": "class code",
+                  "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement."
+                }
+              ],
+              "license": "CC BY 4.0",
+              "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+              "limits": [
+                "One fixed Shanghai full publisher ZIP/member only, each within the existing 512 MiB source/expanded-file budget. No city substitution, clipping, reprojection, source downsampling, other years, national batch or arbitrary large raster is authorized. Complete original export and lower-detail display retain separate identities; software/UI acceptance is a separate gate."
+              ],
+              "nominalResolution": "1 m nominal classification; unchanged EPSG:4326 Area spacing 0.000010728836059570312 degrees, not a metre-valued TIFF unit",
+              "requiresCountry": false,
+              "title": "SinoLC-1 · Shanghai original classification",
+              "unit": "class code",
+              "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement.",
+              "version": "East of China, March 2023 fixed original",
+              "warnings": [
+                "This exact original is 132000 × 114000 (15048000000 grid pixels) in 230136 256 × 256 LZW tiles and has no overview. It exceeds ordinary axis/grid/chunk ceilings. Only the independently verified whole-member SHA and full physical profile may use the explicit reviewed large-grid policy; ordinary source limits remain unchanged.",
+                "Each original tile is at most 65536 decoded UInt8 bytes. Browsing chooses a lower-detail display within the unchanged 128 MiB per-chunk, 512 MiB cumulative preview and per-stage cooperative 30-second deadlines; no hard 30-second promise is made for a complete file hash/inspection. Full source bytes, original grid and full-resolution raw samples remain unchanged. A browsing PNG is not the full-resolution original.",
+                "The source mosaic was selected from the December 2021 Google Earth version, with actual source imagery captured across years. The publisher's separate 0.3-degree capture-time map gives Shanghai coarse-cell values including 2019, 2020 and 2021; it does not establish a common or per-pixel 1-m observation year. Publication in 2023 is not an observation date.",
+                "This fixed historical original retains its original edges and any overlap artefacts. The later author 2026 edge-fix script is not silently applied, and no new corrected original is fabricated.",
+                "The exact original ColorMap matches all eleven publisher class colors. Legend source: https://essd.copernicus.org/articles/15/4749/2023/essd-15-4749-2023-t02.png (SHA 9947f5aacde0e73336520fb5de39c5ecff07469831260bf8c546e98c00c2d5a9). The original TIFF photometric tag is BlackIsZero (1), separately from its ColorMap; map colors express categorical classes, not RGB sensor bands.",
+                "Author guide: https://zenodo.org/records/8214871. Timing evidence only: https://zenodo.org/records/8214467/files/Image_capture_time.tif (262584 bytes, SHA b233db58213971f8cc8eb6c77c8c249951235ab925772999fb16d0e70244b7ac, 0.3° grid). It is not selected as the land-cover product."
+              ],
+              "years": []
+            },
+            "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+            "layer": {
+              "id": "classes",
+              "nodata": 0.0,
+              "offset": 0.0,
+              "scale": 1.0,
+              "title": "Shanghai land-cover classes · unchanged whole original",
+              "unit": "class code",
+              "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement."
+            },
+            "request": {
+              "bounds": [
+                121.4,
+                31.1,
+                121.5,
+                31.2
+              ],
+              "datasetId": "sinolc-1",
+              "layer": "classes"
+            },
+            "schemaVersion": 2,
+            "sourceBounds": [
+              120.85235595703125,
+              30.653743743896484,
+              122.26856231689453,
+              31.8768310546875
+            ],
+            "sourceId": "East_Shanghai",
+            "sourceTitle": "SinoLC-1 Shanghai · March 2023 whole classification original"
+          },
+          "file:checksum": "1220f128cae66f38c546a850af767b42b85d29fd0c4d71ee3bb325e30b962d58d268",
+          "file:size": 365818022,
+          "headerHex": "504b0304140000000800fb493c55881e",
+          "href": "https://zenodo.org/records/7709370/files/East_Shanghai.zip",
+          "kind": "reviewed-raster-archive",
+          "probeStatus": 206,
+          "reviewedArchive": {
+            "archiveBytes": 365818022,
+            "archiveSha256": "f128cae66f38c546a850af767b42b85d29fd0c4d71ee3bb325e30b962d58d268",
+            "member": "East_Shanghai.tif",
+            "memberBytes": 427679242,
+            "memberSha256": "5cd5c24c414fdb3cadb89c53429d5987de70ea605e0100a9b4a83a2257b48830"
+          }
+        }
+      }
+    ],
+    "retrievedAt": "2026-10-14T12:12:01.650873300+00:00",
+    "documentSha256": "92344ae09f4f6ea2859d2c0199292c9e2498cc18f23d95ebfb5b1c05fbb73527",
+    "temporalStatus": "missing",
+    "warnings": [
+      "This exact original is 132000 × 114000 (15048000000 grid pixels) in 230136 256 × 256 LZW tiles and has no overview. It exceeds ordinary axis/grid/chunk ceilings. Only the independently verified whole-member SHA and full physical profile may use the explicit reviewed large-grid policy; ordinary source limits remain unchanged.",
+      "Each original tile is at most 65536 decoded UInt8 bytes. Browsing chooses a lower-detail display within the unchanged 128 MiB per-chunk, 512 MiB cumulative preview and per-stage cooperative 30-second deadlines; no hard 30-second promise is made for a complete file hash/inspection. Full source bytes, original grid and full-resolution raw samples remain unchanged. A browsing PNG is not the full-resolution original.",
+      "The source mosaic was selected from the December 2021 Google Earth version, with actual source imagery captured across years. The publisher's separate 0.3-degree capture-time map gives Shanghai coarse-cell values including 2019, 2020 and 2021; it does not establish a common or per-pixel 1-m observation year. Publication in 2023 is not an observation date.",
+      "This fixed historical original retains its original edges and any overlap artefacts. The later author 2026 edge-fix script is not silently applied, and no new corrected original is fabricated.",
+      "The exact original ColorMap matches all eleven publisher class colors. Legend source: https://essd.copernicus.org/articles/15/4749/2023/essd-15-4749-2023-t02.png (SHA 9947f5aacde0e73336520fb5de39c5ecff07469831260bf8c546e98c00c2d5a9). The original TIFF photometric tag is BlackIsZero (1), separately from its ColorMap; map colors express categorical classes, not RGB sensor bands.",
+      "Author guide: https://zenodo.org/records/8214871. Timing evidence only: https://zenodo.org/records/8214467/files/Image_capture_time.tif (262584 bytes, SHA b233db58213971f8cc8eb6c77c8c249951235ab925772999fb16d0e70244b7ac, 0.3° grid). It is not selected as the land-cover product.",
+      "Dataset preset metadata is a client declaration based on publisher documentation. It does not prove scientific validity, native-file metadata or valid-data coverage. The release/model epoch is not a scene acquisition time.",
+      "Direct raster source has no declared acquisition time; COG layout is not validated."
+    ],
+    "provenance": {
+      "documentUrl": "https://zenodo.org/records/7709370/files/East_Shanghai.zip",
+      "metadataDocuments": [],
+      "search": null,
+      "collection": null
+    }
+  },
+  "inspection": {
+    "categoricalEncoding": {
+      "classes": [
+        {
+          "code": 1,
+          "name": "Traffic route",
+          "rgb": [
+            255,
+            0,
+            0
+          ]
+        },
+        {
+          "code": 2,
+          "name": "Tree cover",
+          "rgb": [
+            0,
+            100,
+            0
+          ]
+        },
+        {
+          "code": 3,
+          "name": "Shrubland",
+          "rgb": [
+            255,
+            190,
+            35
+          ]
+        },
+        {
+          "code": 4,
+          "name": "Grassland",
+          "rgb": [
+            233,
+            255,
+            190
+          ]
+        },
+        {
+          "code": 5,
+          "name": "Cropland",
+          "rgb": [
+            255,
+            235,
+            175
+          ]
+        },
+        {
+          "code": 6,
+          "name": "Building",
+          "rgb": [
+            255,
+            170,
+            0
+          ]
+        },
+        {
+          "code": 7,
+          "name": "Barren and sparse vegetation",
+          "rgb": [
+            180,
+            180,
+            180
+          ]
+        },
+        {
+          "code": 8,
+          "name": "Snow and ice",
+          "rgb": [
+            240,
+            240,
+            240
+          ]
+        },
+        {
+          "code": 9,
+          "name": "Water",
+          "rgb": [
+            0,
+            100,
+            200
+          ]
+        },
+        {
+          "code": 10,
+          "name": "Wetland",
+          "rgb": [
+            0,
+            150,
+            160
+          ]
+        },
+        {
+          "code": 12,
+          "name": "Moss and lichen",
+          "rgb": [
+            250,
+            230,
+            160
+          ]
+        }
+      ],
+      "datasetId": "sinolc-1",
+      "legendSha256": "9947f5aacde0e73336520fb5de39c5ecff07469831260bf8c546e98c00c2d5a9",
+      "legendUrl": "https://essd.copernicus.org/articles/15/4749/2023/essd-15-4749-2023-t02.png",
+      "nodata": 0,
+      "originalMemberSha256": "5cd5c24c414fdb3cadb89c53429d5987de70ea605e0100a9b4a83a2257b48830",
+      "palette": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          100,
+          0,
+          255
+        ],
+        [
+          255,
+          190,
+          35,
+          255
+        ],
+        [
+          233,
+          255,
+          190,
+          255
+        ],
+        [
+          255,
+          235,
+          175,
+          255
+        ],
+        [
+          255,
+          170,
+          0,
+          255
+        ],
+        [
+          180,
+          180,
+          180,
+          255
+        ],
+        [
+          240,
+          240,
+          240,
+          255
+        ],
+        [
+          0,
+          100,
+          200,
+          255
+        ],
+        [
+          0,
+          150,
+          160,
+          255
+        ],
+        [
+          0,
+          205,
+          115,
+          255
+        ],
+        [
+          250,
+          230,
+          160,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          255
+        ]
+      ],
+      "rendering": "exact original class ColorMap; unlisted codes retain their palette but no class meaning is invented",
+      "schema": "geod-sinolc-class-palette/v1",
+      "unit": "class code",
+      "unlistedCodes": [
+        11,
+        250,
+        255
+      ]
+    },
+    "archiveOriginal": {
+      "archiveFile": "5126af30-4d4e-49b4-a255-7fbb91e25727.zip",
+      "archiveUrl": "https://zenodo.org/records/7709370/files/East_Shanghai.zip",
+      "jobId": "5126af30-4d4e-49b4-a255-7fbb91e25727",
+      "memberFile": "5126af30-4d4e-49b4-a255-7fbb91e25727.member.tif",
+      "schemaVersion": 1,
+      "selection": {
+        "archiveBytes": 365818022,
+        "archiveSha256": "f128cae66f38c546a850af767b42b85d29fd0c4d71ee3bb325e30b962d58d268",
+        "member": "East_Shanghai.tif",
+        "memberBytes": 427679242,
+        "memberSha256": "5cd5c24c414fdb3cadb89c53429d5987de70ea605e0100a9b4a83a2257b48830"
+      },
+      "sourcePin": {
+        "assetKey": "raster",
+        "snapshotId": "b4c19eef5e4b049c9918fb6b92bc41828b54b498888252fbb8329454cf3a0765"
+      },
+      "sourceProvenance": {
+        "dataset": {
+          "attribution": "Zhuohong Li et al., SinoLC-1, doi:10.5281/zenodo.7709370; Earth System Science Data 15, 4749–4780 (2023), doi:10.5194/essd-15-4749-2023. Preserve the fixed historical Shanghai original, author class legend, source version, attribution and full archive/member checksums. The classification data licence does not license redistribution of its input Google Earth imagery.",
+          "category": "land-cover",
+          "defaultLayer": "classes",
+          "description": "The complete publisher's historical Shanghai land-cover original in the fixed March 2023 East-of-China release. One full ZIP and its unchanged full single-band GeoTIFF are stored with independent byte/SHA receipts. This is an explicitly reviewed large tiled grid, not nationwide discovery, an RGB image, a clipped AOI export or an annual observation map.",
+          "documentationUrl": "https://zenodo.org/records/7709370",
+          "id": "sinolc-1",
+          "layers": [
+            {
+              "id": "classes",
+              "nodata": 0.0,
+              "offset": 0.0,
+              "scale": 1.0,
+              "title": "Shanghai land-cover classes · unchanged whole original",
+              "unit": "class code",
+              "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement."
+            }
+          ],
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "limits": [
+            "One fixed Shanghai full publisher ZIP/member only, each within the existing 512 MiB source/expanded-file budget. No city substitution, clipping, reprojection, source downsampling, other years, national batch or arbitrary large raster is authorized. Complete original export and lower-detail display retain separate identities; software/UI acceptance is a separate gate."
+          ],
+          "nominalResolution": "1 m nominal classification; unchanged EPSG:4326 Area spacing 0.000010728836059570312 degrees, not a metre-valued TIFF unit",
+          "requiresCountry": false,
+          "title": "SinoLC-1 · Shanghai original classification",
+          "unit": "class code",
+          "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement.",
+          "version": "East of China, March 2023 fixed original",
+          "warnings": [
+            "This exact original is 132000 × 114000 (15048000000 grid pixels) in 230136 256 × 256 LZW tiles and has no overview. It exceeds ordinary axis/grid/chunk ceilings. Only the independently verified whole-member SHA and full physical profile may use the explicit reviewed large-grid policy; ordinary source limits remain unchanged.",
+            "Each original tile is at most 65536 decoded UInt8 bytes. Browsing chooses a lower-detail display within the unchanged 128 MiB per-chunk, 512 MiB cumulative preview and per-stage cooperative 30-second deadlines; no hard 30-second promise is made for a complete file hash/inspection. Full source bytes, original grid and full-resolution raw samples remain unchanged. A browsing PNG is not the full-resolution original.",
+            "The source mosaic was selected from the December 2021 Google Earth version, with actual source imagery captured across years. The publisher's separate 0.3-degree capture-time map gives Shanghai coarse-cell values including 2019, 2020 and 2021; it does not establish a common or per-pixel 1-m observation year. Publication in 2023 is not an observation date.",
+            "This fixed historical original retains its original edges and any overlap artefacts. The later author 2026 edge-fix script is not silently applied, and no new corrected original is fabricated.",
+            "The exact original ColorMap matches all eleven publisher class colors. Legend source: https://essd.copernicus.org/articles/15/4749/2023/essd-15-4749-2023-t02.png (SHA 9947f5aacde0e73336520fb5de39c5ecff07469831260bf8c546e98c00c2d5a9). The original TIFF photometric tag is BlackIsZero (1), separately from its ColorMap; map colors express categorical classes, not RGB sensor bands.",
+            "Author guide: https://zenodo.org/records/8214871. Timing evidence only: https://zenodo.org/records/8214467/files/Image_capture_time.tif (262584 bytes, SHA b233db58213971f8cc8eb6c77c8c249951235ab925772999fb16d0e70244b7ac, 0.3° grid). It is not selected as the land-cover product."
+          ],
+          "years": []
+        },
+        "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately",
+        "layer": {
+          "id": "classes",
+          "nodata": 0.0,
+          "offset": 0.0,
+          "scale": 1.0,
+          "title": "Shanghai land-cover classes · unchanged whole original",
+          "unit": "class code",
+          "valueInterpretation": "Original UInt8 categorical codes, scale 1 and offset 0. Embedded scalar NoData is 0. Publisher legend: 1 Traffic route, 2 Tree cover, 3 Shrubland, 4 Grassland, 5 Cropland, 6 Building, 7 Barren and sparse vegetation, 8 Snow and ice, 9 Water, 10 Wetland, 12 Moss and lichen. Class 11 is not listed in the guide despite having an embedded green palette entry; 250 and 255 are not declared NoData or guide-defined fill codes. Their raw values and original palette are retained without inventing class meaning. This is a predicted classification, not quantitative reflectance or a calibrated land measurement."
+        },
+        "request": {
+          "bounds": [
+            121.4,
+            31.1,
+            121.5,
+            31.2
+          ],
+          "datasetId": "sinolc-1",
+          "layer": "classes"
+        },
+        "schemaVersion": 2,
+        "sourceBounds": [
+          120.85235595703125,
+          30.653743743896484,
+          122.26856231689453,
+          31.8768310546875
+        ],
+        "sourceId": "East_Shanghai",
+        "sourceTitle": "SinoLC-1 Shanghai · March 2023 whole classification original"
+      }
+    },
+    "jobId": "5126af30-4d4e-49b4-a255-7fbb91e25727",
+    "sha256": "5cd5c24c414fdb3cadb89c53429d5987de70ea605e0100a9b4a83a2257b48830",
+    "width": 132000,
+    "height": 114000,
+    "storageLayout": "tile",
+    "bands": [
+      {
+        "index": 1,
+        "dataType": "UInt8",
+        "nodata": 0
+      }
+    ],
+    "crs": "EPSG:4326",
+    "horizontalCrs": "EPSG:4326",
+    "sourceModelPixelScale": [
+      1.0728836059570312e-05,
+      1.0728836059570312e-05,
+      0.0
+    ],
+    "sourceModelTiepoint": [
+      0.0,
+      0.0,
+      0.0,
+      120.85235595703125,
+      31.8768310546875,
+      0.0
+    ],
+    "transform": [
+      1.0728836059570312e-05,
+      0.0,
+      120.85235595703125,
+      0.0,
+      -1.0728836059570312e-05,
+      31.8768310546875
+    ],
+    "bounds": [
+      120.85235595703125,
+      30.653743743896484,
+      122.26856231689453,
+      31.8768310546875
+    ],
+    "pixelInterpretation": "area",
+    "previewDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAeCAYAAABJ/8wUAAAC8klEQVR4nM1XPZbaQAzW8JImdSi4QW4Q2m1olmLd+AS+BCfYS/gETsEW3oaG1mlyDQrSpEmTQnmfZjQj/wDDwuZF7/mBh7H16dMnjZjRf2Ifcjbxccv23s0Ld28gs4s7KuLX7x/T/b4YAXt/IFXHRB2tXz7HJbcjcpuFByO//4vU1EtnnblNQVwT0fFANBdmyBEJWNl7g+U/XHXMz4f04KaQT37emrVFCuDdgMACO7xayu3rp5Yef6+JHvpgANh9++UXfnzJAnY9nZXVxZJ4Nfg9gAKg9uknPX79k1Vtt5dh1bEwpKzsfcrkfl4QHQepO8HO7C2OyVq9dK4kh2jFkUkTQETd3KWhNcRUElGDSA9ENbGzbCo4gKp1bSFMQcxRL3QalMsCARtSXxK5ypRtqKq3dl2XBaL0bKCZ2XIFKKxRnd6j7PVAZlieRhrPSKwQsIKrJGlwcC4Aqo5FL0QO7PjuS5xzJJwF4na+V/QMlWAB4oIJqGVkUcQ7L5xqBGAiw1O+phYZEQjtXewVkhbzOXpRSU6eA1CksbyuNUwzsi98KhBh0IQ4LxMY0Y0a1hEtnmsmylw78hlGJoE4RKMvtalQpwDVmP1VqKJdSqmcS6as/ToYvgIIg2KUK67GvAANCk7VQknLiWyAiYUAekI9U0UCJM4WVecVHnpFPGHDIYf19qkdp0YDgDBVSxXJWSOWMbcIEN+GoYeDXy3D7AF9IGqlvSQ5bUcM4DxRdlap1Ncv67TnApjUiI5bjoBEkF1iwpoeZqG3KFPyPTQ4sDYcD64+fdu2ZUQSO2g4QTVNmMaEOeO8B/KUowtD02iRtRfAAoBe31Bn80J0ILoIw5B3GPZDQ2YEuMTKuGr2gfYhiOGhp2MipnrV1t7stywC9GZxdiQYA3lIUWh6YpvXkg6Gvxm2N2gfGYEKwp7UnD578heS8Zx7ogwOLGCN8tIIIMVw66jIoSlpSYMJrYp7/evLfgkrO0GE9/7bmT+zhjzLwPMO9hdM4J80EOLWkQAAAABJRU5ErkJggg==",
+    "previewWidth": 34,
+    "previewHeight": 30,
+    "displayBand": 1,
+    "displayRange": [
+      1.0,
+      10.0
+    ],
+    "limitations": [
+      "COG layout conformance has not been validated.",
+      "Only this exact SHA-256 and complete profile-reviewed SinoLC Shanghai original is admitted with its fixed 132000 × 114000 grid and 230136 indexed tiles. Ordinary axis, 8-billion-pixel and chunk ceilings remain unchanged. Reading uses individual 256 × 256 UInt8 tiles; no whole-grid array is allocated. The original grid and classification values are retained, with the existing 128 MiB per-chunk, 512 MiB cumulative preview and timeout limits.",
+      "The SinoLC preview maps unchanged class codes through this original's exact ColorMap. It displays categorical colors, not RGB sensor bands or a numerical grayscale calibration. Embedded NoData 0 is transparent; unlisted codes retain their original color without an invented class meaning.",
+      "This exact SHA-256 and profile-reviewed original has no embedded overview. Its display preview uses the largest pixel grid that fits the unchanged 512 MiB cumulative chunk budget. This low-detail class-color preview is for browsing only; original bytes, full-resolution raw pixel values, class codes and georeference are unchanged."
+    ]
+  }
+}

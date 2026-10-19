@@ -2,6 +2,283 @@
 use super::*;
 use crate::features::{Collection, FeatureService, PageReceipt, Provenance, Snapshot};
 
+fn boundary_layer(git_ref: &str) -> crate::features::geoboundaries::Layer {
+    let url = format!("https://github.com/wmgeolab/geoBoundaries/raw/{git_ref}/releaseData/gbOpen/CHN/ADM1/geoBoundaries-CHN-ADM1.geojson");
+    let metadata = json!({"boundaryID":"CHN-ADM1-synthetic","boundaryISO":"CHN","boundaryName":"China","boundaryType":"ADM1","boundaryYearRepresented":"2019","boundarySource":"Synthetic boundary review fixture","boundaryLicense":"Public Domain","licenseSource":"example.org/license","sourceDataUpdateDate":"Jan 19, 2023","buildDate":"Dec 12, 2023","admUnitCount":"1","gjDownloadURL":url});
+    crate::features::geoboundaries::Layer {
+        boundary_id: "CHN-ADM1-synthetic".into(),
+        country_iso3: "CHN".into(),
+        country_name: "China".into(),
+        admin_level: "ADM1".into(),
+        year_represented: "2019".into(),
+        original_source: "Synthetic boundary review fixture".into(),
+        original_license: "Public Domain".into(),
+        license_source: "example.org/license".into(),
+        source_data_update_date: "Jan 19, 2023".into(),
+        build_date: "Dec 12, 2023".into(),
+        unit_count: 1,
+        release_ref: git_ref.into(),
+        download_url: url,
+        metadata_sha256: digest(&serde_json::to_vec(&metadata).unwrap()),
+        metadata,
+    }
+}
+
+async fn boundary_review_fixture() -> (tempfile::TempDir, JobManager, Plan, FeatureService) {
+    let (dir, manager, id, session) = setup().await;
+    let layer = boundary_layer("9469f09");
+    let root = "https://www.geoboundaries.org/api/current/gbOpen/CHN/ALL/";
+    let mut service = manager
+        .inner
+        .feature_services
+        .lock()
+        .await
+        .get(&id)
+        .unwrap()
+        .clone();
+    service.name = "Synthetic geoBoundaries review".into();
+    service.url = root.into();
+    service.title = "Synthetic gbOpen country".into();
+    service.geoboundaries = Some(crate::features::geoboundaries::Service {
+        release_type: "gbOpen".into(),
+        country_iso3: "CHN".into(),
+        discovery_receipt: PageReceipt {
+            url: root.into(),
+            sha256: "a".repeat(64),
+            bytes: 1234,
+            returned: 1,
+            parameters: None,
+        },
+    });
+    service.collections = vec![Collection {
+        id: "ADM1".into(),
+        title: "China · ADM1".into(),
+        description: "Synthetic complete country file".into(),
+        items_url: "https://www.geoboundaries.org/api/current/gbOpen/CHN/ADM1/".into(),
+        license_links: vec!["https://creativecommons.org/licenses/by/4.0/".into()],
+        arcgis: None,
+        wfs: None,
+        geoboundaries: Some(layer),
+    }];
+    manager
+        .inner
+        .feature_services
+        .lock()
+        .await
+        .insert(id.clone(), service.clone());
+    let reviewed = call(manager.clone(), &session, "geod_vector_extract_plan", json!({"serviceId":id,"collectionId":"ADM1","bounds":[0,0,1,1],"name":"Reviewed country ADM1"}), None).await.unwrap();
+    assert_eq!(
+        reviewed["vectorReview"]["selection"],
+        "geoboundaries-full-administrative-level"
+    );
+    assert!(reviewed["vectorReview"]["pageSize"].is_null());
+    assert!(reviewed["notes"][0]
+        .as_str()
+        .unwrap()
+        .contains("reference only"));
+    let plan = native_plan(&manager, &session, &reviewed).await;
+    (dir, manager, plan, service)
+}
+
+fn boundary_snapshot(
+    plan: &Plan,
+    layer: crate::features::geoboundaries::Layer,
+    discovery: PageReceipt,
+) -> Snapshot {
+    let Action::Vector { scope } = &plan.action else {
+        panic!()
+    };
+    let data = json!({"type":"FeatureCollection","features":[{"type":"Feature","properties":{"shapeID":"synthetic-one","shapeName":"Synthetic province","shapeGroup":"CHN","shapeType":"ADM1"},"geometry":{"type":"Polygon","coordinates":[[[110.,30.],[110.1,30.],[110.1,30.1],[110.,30.]]]}}]});
+    let original = serde_json::to_vec(&data).unwrap();
+    let source = Provenance {
+        service_url: scope.service_url.clone(),
+        service_name: scope.service_name.clone(),
+        collection_id: scope.request.collection_id.clone(),
+        collection_title: scope.collection_title.clone(),
+        license_links: vec!["https://creativecommons.org/licenses/by/4.0/".into()],
+        requested_bounds: scope.request.bounds,
+        area_geometry: scope.request.area_geometry.clone(),
+        requested_at: now(),
+        pages: vec![PageReceipt {
+            url: layer.download_url.clone(),
+            sha256: digest(&original),
+            bytes: original.len(),
+            returned: 1,
+            parameters: None,
+        }],
+        number_matched: Some(1),
+        feature_count: 1,
+        selection: "geoboundaries-full-administrative-level".into(),
+        arcgis: None,
+        wfs: None,
+        geoboundaries: Some(crate::features::geoboundaries::Snapshot {
+            release_type: "gbOpen".into(),
+            resolved_release_commit: layer.release_ref.clone(),
+            layer,
+            discovery_receipt: discovery,
+            source_crs: None,
+            attribution: "geoBoundaries · William & Mary geoLab · CC BY 4.0".into(),
+            geometry_selection: "geoboundaries-full-administrative-level".into(),
+        }),
+    };
+    source.validate(1).unwrap();
+    let mut managed = data;
+    managed["geodSource"] = serde_json::to_value(&source).unwrap();
+    Snapshot::Features(
+        crate::vector::ImportVectorRequest {
+            name: scope.name.clone(),
+            text: serde_json::to_string(&managed).unwrap(),
+        },
+        source,
+    )
+}
+
+#[tokio::test]
+async fn geoboundaries_review_pins_metadata_and_whole_country_result_without_bbox_filtering() {
+    let (_dir, manager, plan, service) = boundary_review_fixture().await;
+    let Action::Vector { scope } = &plan.action else {
+        panic!()
+    };
+    let selected = scope.geoboundaries.as_ref().unwrap();
+    assert_eq!(
+        Some(&selected.layer),
+        service.collections[0].geoboundaries.as_ref()
+    );
+    scope.verify_service(&service).unwrap();
+    let asset = manager
+        .import_feature_snapshot(
+            boundary_snapshot(
+                &plan,
+                selected.layer.clone(),
+                selected.discovery_receipt.clone(),
+            ),
+            Some((plan.vector_id(), plan.vector_approval(), scope.name.clone())),
+        )
+        .await
+        .unwrap();
+    validate_result(&plan, &asset).unwrap();
+    assert_eq!(asset.feature_count, 1);
+    assert!(asset.bounds.unwrap()[0] > scope.request.bounds[2]);
+    let view = status(&manager, &plan).await.unwrap();
+    assert_eq!(view["status"], "submitted");
+    assert_eq!(
+        view["vectorReview"]["boundarySource"],
+        view["vector"]["boundarySource"]
+    );
+    assert_eq!(
+        view["vectorReview"]["boundarySource"]["metadataSha256"],
+        selected.layer.metadata_sha256
+    );
+    assert!(view["vectorReview"]["boundarySource"]
+        .get("fileSha256")
+        .is_none());
+    assert!(manager.list().await.is_empty());
+}
+
+#[tokio::test]
+async fn geoboundaries_result_rejects_a_self_consistent_other_release_and_discovery_receipt() {
+    let (_dir, manager, plan, service) = boundary_review_fixture().await;
+    let Action::Vector { scope } = &plan.action else {
+        panic!()
+    };
+    let selected = scope.geoboundaries.as_ref().unwrap();
+    let asset = manager
+        .import_feature_snapshot(
+            boundary_snapshot(
+                &plan,
+                selected.layer.clone(),
+                selected.discovery_receipt.clone(),
+            ),
+            Some((plan.vector_id(), plan.vector_approval(), scope.name.clone())),
+        )
+        .await
+        .unwrap();
+    let mut replaced = asset.clone();
+    let source = replaced.remote_source.as_mut().unwrap();
+    let newer = boundary_layer("f41b8c3");
+    source.pages[0].url = newer.download_url.clone();
+    let gb = source.geoboundaries.as_mut().unwrap();
+    gb.resolved_release_commit = newer.release_ref.clone();
+    gb.layer = newer;
+    // Internally valid metadata, same country/ADM/title/query and approval.
+    // The selected-review binding, rather than generic schema checks, rejects it.
+    source.validate(1).unwrap();
+    assert!(validate_result(&plan, &replaced)
+        .unwrap_err()
+        .contains("confirmed review"));
+    replaced = asset.clone();
+    replaced
+        .remote_source
+        .as_mut()
+        .unwrap()
+        .geoboundaries
+        .as_mut()
+        .unwrap()
+        .discovery_receipt
+        .sha256 = "b".repeat(64);
+    replaced
+        .remote_source
+        .as_ref()
+        .unwrap()
+        .validate(1)
+        .unwrap();
+    assert!(validate_result(&plan, &replaced).is_err());
+    let mut refreshed = service.clone();
+    refreshed.collections[0].geoboundaries = Some(boundary_layer("f41b8c3"));
+    assert!(scope.verify_service(&refreshed).is_err());
+    let mut missing = scope.clone();
+    missing.geoboundaries = None;
+    assert!(missing.validate().is_err());
+    let mut changed = scope.clone();
+    changed.geoboundaries.as_mut().unwrap().layer.metadata["boundaryYearRepresented"] =
+        json!("2025");
+    assert!(changed.validate().is_err());
+}
+
+#[tokio::test]
+async fn geoboundaries_recovery_never_registers_another_release_as_the_confirmed_result() {
+    let (_dir, manager, plan, _service) = boundary_review_fixture().await;
+    let Action::Vector { scope } = &plan.action else {
+        panic!()
+    };
+    let selected = scope.geoboundaries.as_ref().unwrap();
+    let wrong = manager
+        .import_feature_snapshot(
+            boundary_snapshot(
+                &plan,
+                boundary_layer("f41b8c3"),
+                selected.discovery_receipt.clone(),
+            ),
+            Some((plan.vector_id(), plan.vector_approval(), scope.name.clone())),
+        )
+        .await
+        .unwrap();
+    assert!(status(&manager, &plan).await.is_err());
+    let record = manager
+        .inner
+        .vectors
+        .lock()
+        .await
+        .remove(&wrong.id)
+        .unwrap();
+    tokio::fs::write(manager.inner.root.join("vectors.json"), b"{}")
+        .await
+        .unwrap();
+    let directory = manager.inner.root.join("agent-vector-pending");
+    tokio::fs::create_dir_all(&directory).await.unwrap();
+    let marker = directory.join(format!("{}.json", wrong.id));
+    tokio::fs::write(&marker, serde_json::to_vec(&record).unwrap())
+        .await
+        .unwrap();
+    assert!(commit(&manager, &plan)
+        .await
+        .unwrap_err()
+        .contains("confirmed review"));
+    assert!(manager.list_vectors().await.is_empty());
+    assert!(manager.list().await.is_empty());
+    assert!(marker.exists());
+}
+
 async fn setup() -> (tempfile::TempDir, JobManager, String, String) {
     let dir = tempfile::tempdir().unwrap();
     let manager = JobManager::open(dir.path()).await.unwrap();
@@ -15,6 +292,7 @@ async fn setup() -> (tempfile::TempDir, JobManager, String, String) {
         connected_at: now(),
         arcgis: None,
         overpass: None,
+        geoboundaries: None,
         wfs: None,
         collections: vec![Collection {
             id: "lakes".into(),
@@ -23,6 +301,7 @@ async fn setup() -> (tempfile::TempDir, JobManager, String, String) {
             items_url: "https://example.com/api/collections/lakes/items?f=json".into(),
             license_links: vec![],
             arcgis: None,
+            geoboundaries: None,
             wfs: None,
         }],
     };
@@ -74,6 +353,7 @@ fn snapshot(plan: &Plan) -> Snapshot {
         feature_count: 1,
         selection: "bbox-full-features".into(),
         arcgis: None,
+        geoboundaries: None,
         wfs: None,
         pages: vec![PageReceipt {
             url: "https://example.com/api/collections/lakes/items?f=json&bbox=0,0,1,1&limit=2"

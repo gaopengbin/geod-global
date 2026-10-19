@@ -1,14 +1,18 @@
 /* Library composition uses the same shared controls, tokens and spacing. */
-.data-library-page { display: grid; grid-template-columns:minmax(0,1fr); min-width:0; gap: 12px; }
-.data-library-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 24px; min-height: 40px; border-bottom: 1px solid var(--line); }
-.data-library-heading > .bui-segmented { border: 0; min-width:0; max-width:100%; gap:16px; overflow-x:auto; }
-.data-library-heading > .bui-segmented[data-variant=navigation] .bui-segmented-item { min-height: 40px; padding-block: 8px; flex-shrink: 0; }
+.data-library-page { display: grid; grid-template-columns:minmax(0,1fr); min-width:0; gap: var(--control-gap); }
+.data-library-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 16px; min-height: var(--panel-header-height); border-bottom: 1px solid var(--line); }
+.data-library-navigation { display:flex; align-items:center; gap:12px; min-width:0; max-width:100%; }
+.data-library-navigation > .bui-segmented { border: 0; min-width:0; max-width:100%; gap:16px; overflow-x:auto; }
+.data-library-navigation > .bui-segmented[data-variant=navigation] .bui-segmented-item { min-height: 40px; padding-block: 8px; flex-shrink: 0; }
+.data-library-navigation > .bui-button { flex:none; }
+.data-library-more { display:grid; gap:3px; min-width:200px; padding:6px; }
+.data-library-more .bui-button { justify-content:flex-start; }
 /* The shared underline sits outside its own bordered navigation. Here the
    heading owns that border, so keep it inside the scrollable tab row instead
    of creating a one-pixel vertical overflow. */
-.data-library-heading > .bui-segmented[data-variant=navigation] .bui-segmented-item::after { bottom: 0; }
+.data-library-navigation > .bui-segmented[data-variant=navigation] .bui-segmented-item::after { bottom: 0; }
 .data-library-heading .bui-segmented-item:focus-visible { outline-offset: -3px; }
 .data-library-view { min-width: 0; animation: fade-up var(--motion-normal) var(--motion-ease); }
 .data-library-page .library-toolbar, .data-library-page .projects-heading { background: var(--page); padding: 0; }
 .data-library-page .projects-library, .data-library-page .runtime-library { margin: 0; }
-.data-library-page .projects-heading h2 { font-size: 14px; }
+.data-library-page .projects-heading h2 { font-size: var(--text-body); line-height: var(--leading-body); }

@@ -1,0 +1,29 @@
+{
+  "scope": "Actual Explore UI generated a fresh official numerical region; actual browser TIFF and whole ZIP exports independently verified",
+  "id": "bdc8afe6-4dd8-45ad-b01d-6b75366255bd",
+  "bounds": [
+    -30.1,
+    40.0,
+    -30.0,
+    40.1
+  ],
+  "archiveBytes": 421346,
+  "archiveSha256": "31926c37d1efab247311f6b8051685de54bf8b0991b256ac2fdb032078729c4f",
+  "rasterBytes": 8992,
+  "rasterSha256": "c96b1b1905403c5b8462ab32bfb5ae48c754ac2b0d9aeb7648331b9c27ea595e",
+  "previewPngSha256": "e331484751c931c4b314d5b0c3dad10efeeec4571f2877eeaacef712717a0e77",
+  "independentPixels": 576,
+  "nativeRawSamples": 5,
+  "guiMapAndPixel": true,
+  "browserDualExports": true,
+  "myDataGuiReopened": true,
+  "restartAccepted": true,
+  "publisherStaticWholeOriginal": false,
+  "originalBacklogCleared": false,
+  "observedAt": "2026-10-14T12:37:25.215850+00:00",
+  "libraryGenerationControlsAbsent": true,
+  "myDataGuiReopenedAt": "2026-10-14T12:42:25.338594+00:00",
+  "restartNativeInspectionEqual": true,
+  "restartGuiMapAndPixel": true,
+  "restartVerifiedAt": "2026-10-14T13:34:03.011559+00:00"
+}

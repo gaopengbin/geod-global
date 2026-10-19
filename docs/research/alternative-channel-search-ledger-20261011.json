@@ -1,0 +1,364 @@
+{
+  "researchedAt": "2026-10-11",
+  "scope": "Community-first discovery, not download verification",
+  "searches": [
+    {
+      "key": "exa_chinese",
+      "textCharacters": 10105,
+      "results": [
+        {
+          "title": "地理空间数据云",
+          "url": "https://www.gscloud.cn/",
+          "published": "N/A"
+        },
+        {
+          "title": "免费下载高清卫星影像！",
+          "url": "https://mp.weixin.qq.com/s/bd8wmr3bHidLdUrbGIsutA",
+          "published": "N/A"
+        },
+        {
+          "title": "各类遥感影像数据下载网站-腾讯云开发者社区-腾讯云",
+          "url": "https://developer.cloud.tencent.com/article/2523270",
+          "published": "2025-05-21T00:00:00.000Z"
+        },
+        {
+          "title": "地理空间数据云",
+          "url": "https://gscloud.cn/home",
+          "published": "N/A"
+        },
+        {
+          "title": "百度网盘可免费下载全国高清卫星影像啦！",
+          "url": "https://mp.weixin.qq.com/s/i8o1Zt6Wx_B6A1wos2zVsg",
+          "published": "N/A"
+        },
+        {
+          "title": "免费遥感影像数据下载网址汇总-2022年6月更新",
+          "url": "https://www.cnblogs.com/enviidl/p/16333785.html",
+          "published": "2022-06-01T00:00:00.000Z"
+        },
+        {
+          "title": "免费从网盘下载的影像和高程DEM如何使用？-高程DEM-高清卫星影像下载_私有化地图部署_离线地图瓦片发布_谷歌卫星地图下载器-水经注GIS",
+          "url": "https://rivermap.cn/docs/show-2277.html",
+          "published": "N/A"
+        },
+        {
+          "title": "全国33.7GB谷歌地球高程DEM数据免费送啦！直接从网盘火速抱走！",
+          "url": "https://mp.weixin.qq.com/s/nuLXGnNRnLKDG_Ue8J6ARg",
+          "published": "N/A"
+        },
+        {
+          "title": "高分卫星、环境卫星、资源卫星等遥感影像下载-腾讯云开发者社区-腾讯云",
+          "url": "https://cloud.tencent.com/developer/article/2514795",
+          "published": "N/A"
+        },
+        {
+          "title": "地理空间数据云",
+          "url": "https://www.gscloud.cn/sources/details/300?pid=291",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "exa_parent_0",
+      "textCharacters": 15035,
+      "results": [
+        {
+          "title": "Landsat 8 免费下载渠道：USGS、AWS、地理空间数据云（2026更新） · 找数据指南｜数聚天成 DeepSData",
+          "url": "https://www.deepsdata.com/guide/landsat8-free-download-2026.html",
+          "published": "N/A"
+        },
+        {
+          "title": "Landsat影像哪里下载?免费获取渠道有哪些? – GIS研习社",
+          "url": "https://www.gisyxs.com/p/1517.html",
+          "published": "2025-12-15T17:00:56.000Z"
+        },
+        {
+          "title": "从USGS到地理空间数据云：手把手教你免费下载Landsat 8/9卫星影像（附Python脚本） - CSDN文库",
+          "url": "https://wenku.csdn.net/answer/b5yninx7x35",
+          "published": "2026-04-08T00:00:00.000Z"
+        },
+        {
+          "title": "Google Earth Engine 下载遥感影像——以Landsat 8数据为例_Kieary的技术博客_51CTO博客",
+          "url": "https://blog.51cto.com/u_14682436/5785449",
+          "published": "2022-10-21T23:14:25.000Z"
+        },
+        {
+          "title": "【GEE】基于GEE可视化和下载Landsat8 L1C数据（镶嵌、裁剪） - RS迷途小书童 - 博客园",
+          "url": "https://www.cnblogs.com/RSran/p/18000915",
+          "published": "2024-02-01T00:00:00.000Z"
+        },
+        {
+          "title": "基于 GEE 快速获取研究区的 Landsat 无云影像_gee获取landsat-CSDN博客",
+          "url": "https://blog.csdn.net/ZK180531/article/details/152461749",
+          "published": "2025-10-03T00:00:00.000Z"
+        },
+        {
+          "title": "xhong/open-earthdata-cli: 用于NASA Earthdata, Microsoft Planetary Computer,OpenTopography, 阿里云DataV等开放数据平台的数据自动化下载与预处理工具。 - open-earthdata-cli - CVEO Git Repository",
+          "url": "https://git.chenguanzhou.com/xhong/open-earthdata-cli",
+          "published": "N/A"
+        },
+        {
+          "title": "java实时下载 遥感数据 如何下载遥感影像图_mob64ca140dc73b的技术博客_51CTO博客",
+          "url": "https://blog.51cto.com/u_16213673/14082073",
+          "published": "2025-07-23T12:40:35.000Z"
+        }
+      ]
+    },
+    {
+      "key": "exa_parent_1",
+      "textCharacters": 14381,
+      "results": [
+        {
+          "title": "OpenTopography: Home",
+          "url": "https://opentopography.org/",
+          "published": "N/A"
+        },
+        {
+          "title": "全球免费下载高程DEM数据整理",
+          "url": "https://blog.csdn.net/weixin_42311008/article/details/129495820",
+          "published": "N/A"
+        },
+        {
+          "title": "QGIS下载各种DEM的插件（SRTM 90m/30m -ALOS 30m -Cop 30m/90m-NASADEM Global DEM）_opentopography dem downloader-CSDN博客",
+          "url": "https://blog.csdn.net/qq_41159191/article/details/126958851",
+          "published": "N/A"
+        },
+        {
+          "title": "关于地理数据收集与处理的基本工具推荐(3)--最新30m的DEM与DSM数据免费下载",
+          "url": "https://blog.csdn.net/weixin_42101836/article/details/103997959",
+          "published": "N/A"
+        },
+        {
+          "title": "QGIS：使用OpenTopography DEM Downloader插件下载多款DEM数据-CSDN博客",
+          "url": "https://blog.csdn.net/weixin_43416590/article/details/151763843",
+          "published": "2025-09-16T12:29:20.000Z"
+        },
+        {
+          "title": "全球级DEM数据汇总_前端_cyber_room-华为AI开发者空间",
+          "url": "https://huaweicloud.csdn.net/67a95c632db35d119540aca1.html",
+          "published": "2025-02-10T00:00:00.000Z"
+        },
+        {
+          "title": "免费 DEM 数据：数字高程模型去哪里下载 | STREAM Terrain",
+          "url": "https://www.streamterrain.com/zh/blog/free-dem-data-sources",
+          "published": "2026-09-25T12:01:24.000Z"
+        },
+        {
+          "title": "数字高程模型（DEM）公开数据集介绍与下载指南-EW帮帮网",
+          "url": "https://www.ewbang.com/community/article/details/1000234349.html",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "exa_parent_2",
+      "textCharacters": 14741,
+      "results": [
+        {
+          "title": "aprilabdotdev/fast-download-asf-s1",
+          "url": "https://github.com/aprilabdotdev/fast-download-asf-s1",
+          "published": "2021-11-21T14:34:27.000Z"
+        },
+        {
+          "title": "ASF上用python脚本下载哨兵数据_deanyuancn的技术博客_51CTO博客",
+          "url": "https://blog.51cto.com/u_13544/13277282",
+          "published": "2025-02-11T00:00:00.000Z"
+        },
+        {
+          "title": "Sentinel系列数据下载总结——python批量下载",
+          "url": "https://mp.weixin.qq.com/s/kuyYt9ClEhb-gpQYZY3tcg",
+          "published": "N/A"
+        },
+        {
+          "title": "各类遥感影像数据下载网站-腾讯云开发者社区-腾讯云",
+          "url": "https://developer.cloud.tencent.com/article/2523270",
+          "published": "2025-05-21T00:00:00.000Z"
+        },
+        {
+          "title": "Sentinel-1数据下载（ASF）_sentinel_immi-DAMO开发者矩阵",
+          "url": "https://devpress.csdn.net/v1/article/detail/149004064",
+          "published": "N/A"
+        },
+        {
+          "title": "欢迎使用我写的批量下载哨兵1卫星轨道数据的Python包~_sentineleof-CSDN博客",
+          "url": "https://blog.csdn.net/weixin_64989228/article/details/143534184",
+          "published": "2024-11-05T15:29:56.000Z"
+        },
+        {
+          "title": "jinhucoco/insar-genie",
+          "url": "https://github.com/jinhucoco/asf-sentinel1-download",
+          "published": "N/A"
+        },
+        {
+          "title": "Sentinel-1 SAR数据与精密轨道数据下载_阿拉斯加哨兵数据下载-CSDN博客",
+          "url": "https://blog.csdn.net/qq_49163550/article/details/124148789",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "exa_more_0",
+      "textCharacters": 8089,
+      "results": [
+        {
+          "title": "地理空间数据云",
+          "url": "https://gscloud.cn/home",
+          "published": "N/A"
+        },
+        {
+          "title": "地图数据服务",
+          "url": "https://www.xfyun.cn/solutions/mapdata",
+          "published": "N/A"
+        },
+        {
+          "title": "中国遥感卫星地面站数据共享门户",
+          "url": "https://www.noda.ac.cn/rsgs/datasharing/aboutEverybody",
+          "published": "N/A"
+        },
+        {
+          "title": "地理空间数据云",
+          "url": "https://www.gscloud.cn/",
+          "published": "N/A"
+        },
+        {
+          "title": "数据资源-星图云开放平台",
+          "url": "https://open.geovisearth.com/service/resource",
+          "published": "N/A"
+        },
+        {
+          "title": "风云卫星遥感数据服务网",
+          "url": "https://data.nsmc.org.cn/DataPortal/cn/home/index.html",
+          "published": "N/A"
+        },
+        {
+          "title": "首页--遥感数据专题库",
+          "url": "https://gre.geodata.cn/rmdb/",
+          "published": "N/A"
+        },
+        {
+          "title": "各类遥感影像数据下载网站-腾讯云开发者社区-腾讯云",
+          "url": "https://cloud.tencent.com/developer/article/2523270",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "exa_more_1",
+      "textCharacters": 16753,
+      "results": [
+        {
+          "title": "Programmatically retrieving Landsat 8 Satellite Images?",
+          "url": "https://gis.stackexchange.com/questions/72816/programmatically-retrieving-landsat-8-satellite-images",
+          "published": "N/A"
+        },
+        {
+          "title": "Landsat Data Access | U.S. Geological Survey",
+          "url": "https://www.usgs.gov/landsat-missions/landsat-data-access",
+          "published": "N/A"
+        },
+        {
+          "title": "Landsat Collections in Earth Engine",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/landsat",
+          "published": "N/A"
+        },
+        {
+          "title": "vascobnunes/fetchLandsatSentinelFromGoogleCloud",
+          "url": "https://github.com/vascobnunes/fetchLandsatSentinelFromGoogleCloud",
+          "published": "N/A"
+        },
+        {
+          "title": "yannforget/pylandsat",
+          "url": "https://github.com/yannforget/pylandsat",
+          "published": "N/A"
+        },
+        {
+          "title": "Timeline for  Exporting full Landsat image to GeoTIFF in Google Earth Engine?",
+          "url": "https://gis.stackexchange.com/posts/333060/timeline",
+          "published": "N/A"
+        },
+        {
+          "title": "Bulk download from GCS - ACOLITE forum",
+          "url": "https://odnature.naturalsciences.be/remsem/acolite-forum/viewtopic.php?f=5&t=134",
+          "published": "N/A"
+        },
+        {
+          "title": "Satellite Imagery Search Browser: View, Analyze, Download",
+          "url": "https://eos.com/landviewer/",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "exa_more_2",
+      "textCharacters": 11102,
+      "results": [
+        {
+          "title": "AI Earth ——暨GEE\\PIE之后，AIE已经悄然上线了，阿里云开发者模式上线-阿里云开发者社区",
+          "url": "https://developer.aliyun.com/article/1056749",
+          "published": "2022-10-22T21:23:10.000Z"
+        },
+        {
+          "title": "SEN12MS|遥感数据集|地球观测数据集",
+          "url": "https://www.selectdataset.com/dataset/19c93fbee17b0e9602b7916d46b26a44/sen12ms",
+          "published": "2026-07-12T11:30:21.000Z"
+        },
+        {
+          "title": "Earth Engine Data Catalog  |  Google for Developers",
+          "url": "https://developers.google.cn/earth-engine/datasets?hl=zh-cn",
+          "published": "N/A"
+        },
+        {
+          "title": "功能介绍_PIE-Engine Server部署_实施步骤_航天宏图地球科学引擎解决方案实践_地图-华为云",
+          "url": "https://support.huaweicloud.com/pie-engine-mapslt/pie-engine_07.html",
+          "published": "N/A"
+        },
+        {
+          "title": "PIE-engine 教程 ——MODIS影像去云教程(山西省为例)-阿里云开发者社区",
+          "url": "https://developer.aliyun.com/article/1056693",
+          "published": "2022-10-22T20:41:17.000Z"
+        },
+        {
+          "title": "国产OGE引擎：开启数字孪生地球新时代_云平台_此星光明-AtomGit开源社区",
+          "url": "https://gitcode.csdn.net/69cf262d0a2f6a37c59cae33.html",
+          "published": "2026-04-03T00:00:00.000Z"
+        },
+        {
+          "title": "LAADS DAAC | NASA",
+          "url": "http://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MYD09_c61.fs",
+          "published": "N/A"
+        },
+        {
+          "title": "xhong/open-earthdata-cli: 用于NASA Earthdata, Microsoft Planetary Computer,OpenTopography, 阿里云DataV等开放数据平台的数据自动化下载与预处理工具。 - open-earthdata-cli - CVEO Git Repository",
+          "url": "https://git.chenguanzhou.com/xhong/open-earthdata-cli",
+          "published": "N/A"
+        }
+      ]
+    },
+    {
+      "key": "exa_esri",
+      "textCharacters": 15278,
+      "results": [
+        {
+          "title": "Living Atlas: Imagery and Elevation",
+          "url": "https://www.esri.com/content/dam/esrisites/en-us/events/conferences/2021/user-conference/tech-sessions/12946-living-atlas-imagery-and-elevation.pdf",
+          "published": "N/A"
+        },
+        {
+          "title": "Types of service data | Documentation | Esri Developer",
+          "url": "https://developers.arcgis.com/documentation/portal-and-data-services/data-services/image-services/types-of-service-data/",
+          "published": "N/A"
+        },
+        {
+          "title": "Export Image | ArcGIS REST APIs | Esri Developer",
+          "url": "https://developers.arcgis.com/rest/services-reference/enterprise/export-image/",
+          "published": "N/A"
+        },
+        {
+          "title": "Landsat8_PanSharpened (ImageServer)",
+          "url": "https://landsat2.arcgis.com/arcgis/rest/services/Landsat8_PanSharpened/ImageServer",
+          "published": "N/A"
+        }
+      ]
+    }
+  ]
+}

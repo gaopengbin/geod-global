@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-12",
+  "recordedAt": "2026-10-12T06:57:05.780574+00:00",
+  "status": "passed-real-browser-and-native-originals",
+  "scope": "WorldCereal AEZ 9026, Mauritius/Reunion, reference 2021; seven themes; not global coverage.",
+  "runtimeSha256": "32a0af3544b9ad7451ba267613f2bbb6990a6292d42a821f10252e9e449ef04d",
+  "ui": "http://127.0.0.1:4317/#Explore",
+  "native": "http://127.0.0.1:4318",
+  "projectId": "b9f382cd-0c38-47f2-8ff1-56a7fc825395",
+  "projectName": "WorldCereal 浏览器验收 · 年度分类与置信度",
+  "bounds": [
+    57.61593284149066,
+    -20.059293161668283,
+    57.623932841490664,
+    -20.051293161668283
+  ],
+  "observedSteps": [
+    "Original Explore data-source dropdown: 30 options, 15 provider entries and 15 curated products.",
+    "Selected WorldCereal in existing dropdown; correct finite region/reference year and actual-season controls.",
+    "Resolved real standalone publisher item, annual period 2020-11-09 to 2021-11-09.",
+    "Switched annual layer to maize-active; actual maize season selected, old review cleared, entered AOI retained.",
+    "China AOI 116,39,117,40 rejected without replacing it with the sample region.",
+    "Read actual publisher JSON; both assets initially unchecked, no transfer before explicit download.",
+    "Original S3 href and fixed public HTTPS transport visible; raw publisher shape/properties unchanged.",
+    "Confidence legend/value discrepancy warning visible beside its asset checkbox.",
+    "Selected classification and confidence, saved one project, explicitly started two complete-original downloads.",
+    "Both local native grayscale previews rendered in My Data. Browser reload restored the same project and files.",
+    "Classification inspector displayed 73567 x 44563 / EPSG:4326 and raw pixel 100.",
+    "Confidence inspector displayed independent 15326 x 9284 / EPSG:4326 / 0.0004 degree grid and raw pixel 54.",
+    "768 x 800 viewport: page scrollWidth 768, dialog bounds x20..748, width/scrollWidth 728; controls usable.",
+    "Temporary viewport override reset; returned to Explore with WorldCereal and actual item; tab retained."
+  ],
+  "jobBoundary": {
+    "beforeWorldCerealDownloads": 5,
+    "afterTwoDownloadsAndMetadataReadback": 7,
+    "active": 0,
+    "extraDownloadsForFinalInspection": 0
+  },
+  "assets": [
+    {
+      "assetKey": "classification",
+      "jobId": "d0f59cb4-94fc-43d7-84a6-ffd45d808d8f",
+      "snapshotId": "1fe87090f776ddd0650b1977315dc827ba2cf2427117458070fb84264ad56446",
+      "status": "succeeded",
+      "bytes": 6310865,
+      "sha256": "a4c3735e77d6784e1f85312a8b3e7ccdf9f650fd1ee541708ca9266969ca65dd",
+      "transfer": {
+        "mode": "fresh",
+        "resumedBytes": 0
+      },
+      "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_classification.tif",
+      "createdAt": "2026-10-12T06:42:17.739962900+00:00",
+      "settledAt": "2026-10-12T06:42:28.575067600+00:00",
+      "grid": {
+        "width": 73567,
+        "height": 44563,
+        "bands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": 255
+          }
+        ],
+        "crs": "EPSG:4326",
+        "transform": [
+          8.333333333333334e-05,
+          0.0,
+          53.864516174824,
+          0.0,
+          -8.333333333333332e-05,
+          -18.981793161668282
+        ],
+        "bounds": [
+          53.864516174824,
+          -22.695376495001614,
+          59.99509950815733,
+          -18.981793161668282
+        ]
+      },
+      "pixel": {
+        "jobId": "d0f59cb4-94fc-43d7-84a6-ffd45d808d8f",
+        "sha256": "a4c3735e77d6784e1f85312a8b3e7ccdf9f650fd1ee541708ca9266969ca65dd",
+        "column": 45065,
+        "row": 12882,
+        "values": [
+          100
+        ],
+        "noData": [
+          false
+        ]
+      },
+      "independentReference": "Same original pixel read with Rasterio, matched UI and native API."
+    },
+    {
+      "assetKey": "confidence",
+      "jobId": "f8720a45-5bac-43eb-bf74-8f9e27e462f9",
+      "snapshotId": "1fe87090f776ddd0650b1977315dc827ba2cf2427117458070fb84264ad56446",
+      "status": "succeeded",
+      "bytes": 2038416,
+      "sha256": "418ac67a78a94c33824519b2cb9c55976b8bb62f6f47f5eb69309cfea9d162df",
+      "transfer": {
+        "mode": "fresh",
+        "resumedBytes": 0
+      },
+      "href": "https://deafrica-input-datasets.s3.af-south-1.amazonaws.com/esa_worldcereal/temporarycrops/tc-annual/9026/2021/9026_tc-annual_temporarycrops_2020-11-09_2021-11-09_confidence.tif",
+      "createdAt": "2026-10-12T06:42:17.741242500+00:00",
+      "settledAt": "2026-10-12T06:42:23.066875900+00:00",
+      "grid": {
+        "width": 15326,
+        "height": 9284,
+        "bands": [
+          {
+            "index": 1,
+            "dataType": "UInt8",
+            "nodata": 255
+          }
+        ],
+        "crs": "EPSG:4326",
+        "transform": [
+          0.0004,
+          0.0,
+          53.864516174824,
+          0.0,
+          -0.0004,
+          -18.981793161668282
+        ],
+        "bounds": [
+          53.864516174824,
+          -22.69539316166828,
+          59.994916174824,
+          -18.981793161668282
+        ]
+      },
+      "pixel": {
+        "jobId": "f8720a45-5bac-43eb-bf74-8f9e27e462f9",
+        "sha256": "418ac67a78a94c33824519b2cb9c55976b8bb62f6f47f5eb69309cfea9d162df",
+        "column": 9388,
+        "row": 2683,
+        "values": [
+          54
+        ],
+        "noData": [
+          false
+        ]
+      },
+      "independentReference": "Same original pixel read with Rasterio, matched UI and native API."
+    }
+  ],
+  "screenshots": [
+    {
+      "file": ".verification/public-datasets-ui-20261012/worldcereal-explore-entry.jpg",
+      "sha256": "6e7a8b4593886171a8f95303d2d09d04f2bc70fa8e67776499228048416637d3"
+    },
+    {
+      "file": ".verification/public-datasets-ui-20261012/worldcereal-classification-pixel.jpg",
+      "sha256": "cea996ba9a65f15bbcea47ec77cc7f6e1d55327bd116ae901ff3ab7b769977c4"
+    },
+    {
+      "file": ".verification/public-datasets-ui-20261012/worldcereal-project-reopened.jpg",
+      "sha256": "95c490e4389105cd65219f99a22daf647ba3833478460b93481bfde75ea7fa42"
+    },
+    {
+      "file": ".verification/public-datasets-ui-20261012/worldcereal-confidence-grid.jpg",
+      "sha256": "7b03a5d4ebec9ea2d3e9bb64e810abbd7bffc0f188ea7df22974cd048fe4690f"
+    },
+    {
+      "file": ".verification/public-datasets-ui-20261012/worldcereal-inspector-768.jpg",
+      "sha256": "9d34286acb453ddcd46993e115ac037aba3cfaa647d81adc19e86cd90d2018ec"
+    }
+  ],
+  "checks": {
+    "frontendNodeTestsPassed": 367,
+    "agentTestsPassed": 149,
+    "frontendIntegrationFilesPassed": 47,
+    "frontendIntegrationTestsPassed": 448,
+    "runtimeTestsPassed": 664,
+    "runtimeOptInIgnored": 15,
+    "desktopTestsPassed": 56,
+    "desktopOptInIgnored": 27,
+    "clippyWarningsDenied": "passed",
+    "cargoFmt": "passed",
+    "productionBuild": "passed"
+  },
+  "limitations": [
+    "Screenshots are local proof files under ignored .verification, not redistributed publisher data.",
+    "Native preview uses bounded grayscale/overviews; acceptance report separately full-decodes all eight originals.",
+    "File validity and categorical values do not prove crop accuracy or AOI scientific coverage.",
+    "Confidence values outside its documented 0-100 legend remain unmodified and require publisher interpretation.",
+    "This readback does not create jobs, restart the service, or repeat original downloads."
+  ]
+}

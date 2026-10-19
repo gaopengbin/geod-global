@@ -32,7 +32,7 @@ it.each([[scene,'GLO-30 Public'],[scene90,'GLO-90']])('DEM download creates a na
   const combo=screen.getByRole('combobox',{name:'Download content'});expect(combo.textContent).toContain('Float32');
   await user.click(combo);expect(screen.getAllByRole('option')).toHaveLength(1);await user.keyboard('{Escape}');
   expect(screen.queryByText('Manage authorization')).toBeNull();
-  await user.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await user.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.map(([op])=>op)).toEqual(['createProject','downloadProject']);
   expect(runtimeRequest.mock.calls[1][1].assetKey).toBe('elevation');

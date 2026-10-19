@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-09",
+  "scope": "Selected Agent conversation layout and native delivery references",
+  "checks": {
+    "uiSuitePassed": 383,
+    "agentSuiteAfterUserMessageVisibilityFixPassed": 76,
+    "nativeDeliverySelectorTestsPassed": 5,
+    "frontendBuild": "passed",
+    "developmentDesktopBuild": "passed",
+    "developmentDesktopStarted": true,
+    "installerCreated": false,
+    "isolationCheck": "passed",
+    "diffWhitespaceCheck": "passed"
+  },
+  "browserVerification": {
+    "method": "Read-only replay of the user's persisted completed Manhattan conversation and SHA-256-checked local GeoTIFF thumbnails through the production Agent components",
+    "widths": [1280, 390],
+    "leftConversationList": true,
+    "rightNativeResults": true,
+    "wholeProcessCollapsedByDefault": true,
+    "summaryRetained": true,
+    "allUserMessagesRemainOutsideCollapsedProcess": true,
+    "expandedConversationRetainsChronologicalOrder": true,
+    "resultTaskExpandsAndFocusesExactPlan": true,
+    "narrowPanelsCloseWithEscapeAndRestoreFocus": true,
+    "horizontalOverflow": false,
+    "modelCallsOrTaskMutations": false
+  },
+  "limits": [
+    "Browser replay verifies presentation; it is not a new native download acceptance run.",
+    "Native app compilation and startup were verified; native window pixels were not available to the UI automation surface."
+  ]
+}

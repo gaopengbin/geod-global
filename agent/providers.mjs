@@ -2,6 +2,7 @@ import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { compatibleUsage } from './usage.mjs';
 
 export const PROTOCOLS = Object.freeze(['openai-compatible', 'openai-responses', 'anthropic-messages', 'google-generative-ai']);
 export const PROVIDERS = Object.freeze(['openai', 'deepseek', 'anthropic', 'google', 'custom']);
@@ -39,7 +40,7 @@ export function modelAdapter(config) {
     }}).languageModel(config.model), providerOptions:{},
   };
   if (config.protocol === 'openai-compatible') return {
-    model:createOpenAICompatible({...settings, name:'geodModel', includeUsage:true}).chatModel(config.model),
+    model:createOpenAICompatible({...settings, name:'geodModel', includeUsage:true, convertUsage:compatibleUsage}).chatModel(config.model),
     // These current DeepSeek models default to high thinking effort. Use the
     // documented low setting for interactive task planning, retaining thinking
     // and its full tool history without changing the chosen model or endpoint.

@@ -10,7 +10,7 @@ test('desktop policy permits COG fetch and local decode without remote script ex
     const missingCog = structuredClone(config);
     missingCog.app.security[directive] = config.app.security[directive].replace(/connect-src[^;]+/, value => value.replace(' https://sentinel-cogs.s3.us-west-2.amazonaws.com', ''));
     assert.throws(() => verifyDesktopCspConfig(missingCog), /COG requests/);
-    for (const origin of ['https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com','https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com','geod-elevation:','http://geod-elevation.localhost']) {
+    for (const origin of ['https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com','https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com','geod-elevation:','http://geod-elevation.localhost','geod-stac-preview:','http://geod-stac-preview.localhost']) {
       const missingDem=structuredClone(config);
       missingDem.app.security[directive]=config.app.security[directive].replace(` ${origin}`,'');
       assert.throws(()=>verifyDesktopCspConfig(missingDem),/COG requests/);
@@ -21,6 +21,21 @@ test('desktop policy permits COG fetch and local decode without remote script ex
     const missingWasm = structuredClone(config);
     missingWasm.app.security[directive] = config.app.security[directive].replace(" 'wasm-unsafe-eval'", '');
     assert.throws(() => verifyDesktopCspConfig(missingWasm), /WebAssembly/);
+  }
+});
+
+test('STAC preview policy accepts only the registered scheme and exact local origin in both profiles', () => {
+  for (const directive of ['csp', 'devCsp']) {
+    for (const [before, after] of [
+      [' geod-stac-preview:', ' geod-unregistered-preview:'],
+      [' http://geod-stac-preview.localhost', ' http://*.localhost'],
+      [' http://geod-stac-preview.localhost', ' http://geod-stac-preview.localhost.evil.example'],
+      ["connect-src 'self'", "connect-src 'self' https://unreviewed.example.com"],
+    ]) {
+      const changed = structuredClone(config);
+      changed.app.security[directive] = config.app.security[directive].replace(before, after);
+      assert.throws(() => verifyDesktopCspConfig(changed), /COG requests/);
+    }
   }
 });
 test('desktop policy rejects broad network and remote script access', () => {

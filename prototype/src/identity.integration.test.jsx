@@ -92,3 +92,9 @@ it('renders Chinese copy and disables native OAuth in the browser preview',async
  expect(screen.getByRole('button',{name:'使用 Google 继续'}).disabled).toBe(true);
  expect(screen.getByRole('button',{name:'暂不登录，继续使用'})).toBeTruthy();expect(invoke).not.toHaveBeenCalled();
 });
+it('the signed-in avatar opens the account page instead of the sign-in screen',async()=>{
+ invoke.mockResolvedValue(account());const onOpen=vi.fn();
+ render(<I18nProvider><IdentityProvider><IdentityEntry onOpen={onOpen}/></IdentityProvider></I18nProvider>);
+ await userEvent.click(await screen.findByRole('button',{name:'Your account'}));
+ expect(onOpen).toHaveBeenCalledWith('Account');
+});

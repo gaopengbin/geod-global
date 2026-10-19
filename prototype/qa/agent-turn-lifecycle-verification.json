@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-09",
+  "scope": "Prevent premature process folding during an active turn and fix the Queens administrative extent rejection",
+  "checks": {
+    "uiTestsPassed": 388,
+    "agentPanelIntegrationTestsPassed": 80,
+    "relatedNodeTestsPassed": 90,
+    "frontendBuild": "passed",
+    "agentRuntimePreparation": "passed",
+    "developmentDesktopBuild": "passed",
+    "developmentDesktopStarted": true,
+    "guiSubsystem": 2,
+    "activeAgentTurnsAtRestart": 0,
+    "activeNativeJobsAtRestart": 0,
+    "existingProfilesRetained": true,
+    "installerCreated": false,
+    "isolationCheck": "passed",
+    "diffWhitespaceCheck": "passed"
+  },
+  "browser": {
+    "scenario": "Clearly labeled isolated UI regression data, with no model call or download",
+    "activeTurnThroughIntermediateCompletedMessage": true,
+    "activeTurnThroughAutomaticCompaction": true,
+    "oneFooterActivityIndicator": true,
+    "manualFoldRetainedDuringUpdates": "integration test",
+    "processCollapsedOnlyAfterTerminalTurn": true,
+    "finalResponseOutsideProcess": true,
+    "manualCompactionDoesNotReopenOldTurn": "integration test",
+    "runningScreenshot": ".verification/agent-turn-lifecycle/running-compaction.png",
+    "completedScreenshot": ".verification/agent-turn-lifecycle/completed.png"
+  },
+  "failureEvidence": {
+    "source": "Read-only inspection of locally persisted native Queens conversation and engine rollout",
+    "administrativePolygonWasResolved": true,
+    "catalogCallBlockedByEarlierCityScope": true,
+    "turnEndedWithLocalStepLimitHttp429": true,
+    "actualSavedNativeReturnsReplay": "passed",
+    "firstFormerlyRejectedCatalogCallPermitted": true,
+    "stateOrUnrelatedAreaSubstitutionStillRefused": true,
+    "stepLimitKeepsExistingBound": 24,
+    "stepLimitNowInvokesPublicFailureCallback": true,
+    "scopeReplayNetworkCalls": 0,
+    "scopeReplayImageDownloads": 0
+  },
+  "limits": [
+    "UI behavior and saved native lookup returns were verified; this is not a fresh end-to-end Queens imagery download.",
+    "Native development build and startup are checked separately; native window pixels are unavailable through this UI automation surface.",
+    "Previously saved generic failure messages remain historical records; future local step-limit failures use the corrected explanation."
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "version": "1.1",
+  "approvedVariant": "global-v6",
+  "sourceSha256": "01d4f478243768226237aedac44290665b48be3920e5b9117df17d7de0a3c7fe",
+  "symbolPreserved": true,
+  "newImageGeneration": true,
+  "liveAssetsReplaced": false,
+  "rasterMark": true,
+  "svgContainerEmbedsPng": true,
+  "backgroundOriginal": {
+    "width": 1672,
+    "height": 941
+  },
+  "imageExports": [
+    {
+      "file": "logos/symbol.png",
+      "width": 1280,
+      "height": 1280,
+      "alpha": true
+    },
+    {
+      "file": "logos/horizontal-on-light.png",
+      "width": 780,
+      "height": 190,
+      "alpha": true
+    },
+    {
+      "file": "logos/stacked-on-light.png",
+      "width": 660,
+      "height": 610,
+      "alpha": true
+    },
+    {
+      "file": "logos/wordmark-on-light.png",
+      "width": 600,
+      "height": 130,
+      "alpha": true
+    },
+    {
+      "file": "logos/wordmark-solid-ink.png",
+      "width": 600,
+      "height": 130,
+      "alpha": true
+    },
+    {
+      "file": "logos/horizontal-on-dark.png",
+      "width": 780,
+      "height": 190,
+      "alpha": true
+    },
+    {
+      "file": "logos/stacked-on-dark.png",
+      "width": 660,
+      "height": 610,
+      "alpha": true
+    },
+    {
+      "file": "logos/wordmark-on-dark.png",
+      "width": 600,
+      "height": 130,
+      "alpha": true
+    },
+    {
+      "file": "logos/wordmark-solid-white.png",
+      "width": 600,
+      "height": 130,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-16.png",
+      "width": 16,
+      "height": 16,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-16.png",
+      "width": 16,
+      "height": 16,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-16.png",
+      "width": 16,
+      "height": 16,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-24.png",
+      "width": 24,
+      "height": 24,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-24.png",
+      "width": 24,
+      "height": 24,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-24.png",
+      "width": 24,
+      "height": 24,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-32.png",
+      "width": 32,
+      "height": 32,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-32.png",
+      "width": 32,
+      "height": 32,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-32.png",
+      "width": 32,
+      "height": 32,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-48.png",
+      "width": 48,
+      "height": 48,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-48.png",
+      "width": 48,
+      "height": 48,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-48.png",
+      "width": 48,
+      "height": 48,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-64.png",
+      "width": 64,
+      "height": 64,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-64.png",
+      "width": 64,
+      "height": 64,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-64.png",
+      "width": 64,
+      "height": 64,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-96.png",
+      "width": 96,
+      "height": 96,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-96.png",
+      "width": 96,
+      "height": 96,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-96.png",
+      "width": 96,
+      "height": 96,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-128.png",
+      "width": 128,
+      "height": 128,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-128.png",
+      "width": 128,
+      "height": 128,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-128.png",
+      "width": 128,
+      "height": 128,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-180.png",
+      "width": 180,
+      "height": 180,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-180.png",
+      "width": 180,
+      "height": 180,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-180.png",
+      "width": 180,
+      "height": 180,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-192.png",
+      "width": 192,
+      "height": 192,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-192.png",
+      "width": 192,
+      "height": 192,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-192.png",
+      "width": 192,
+      "height": 192,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-256.png",
+      "width": 256,
+      "height": 256,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-256.png",
+      "width": 256,
+      "height": 256,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-256.png",
+      "width": 256,
+      "height": 256,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-512.png",
+      "width": 512,
+      "height": 512,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-512.png",
+      "width": 512,
+      "height": 512,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-512.png",
+      "width": 512,
+      "height": 512,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/symbol-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-light-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "icons/png/app-dark-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "social/avatar-light.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "social/avatar-circle-light.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "social/avatar-dark.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "social/avatar-circle-dark.png",
+      "width": 1024,
+      "height": 1024,
+      "alpha": true
+    },
+    {
+      "file": "covers/open-graph-1200x630.png",
+      "width": 1200,
+      "height": 630,
+      "alpha": true
+    },
+    {
+      "file": "covers/github-social-1280x640.png",
+      "width": 1280,
+      "height": 640,
+      "alpha": true
+    },
+    {
+      "file": "covers/readme-header-1600x520.png",
+      "width": 1600,
+      "height": 520,
+      "alpha": true
+    },
+    {
+      "file": "covers/website-hero-1920x1080.png",
+      "width": 1920,
+      "height": 1080,
+      "alpha": true
+    },
+    {
+      "file": "covers/social-landscape-1600x900.png",
+      "width": 1600,
+      "height": 900,
+      "alpha": true
+    },
+    {
+      "file": "backgrounds/desktop-dark-1920x1080.png",
+      "width": 1920,
+      "height": 1080,
+      "alpha": true
+    },
+    {
+      "file": "backgrounds/clean-light-1920x1080.png",
+      "width": 1920,
+      "height": 1080,
+      "alpha": true
+    },
+    {
+      "file": "backgrounds/desktop-light-1920x1080.png",
+      "width": 1920,
+      "height": 1080,
+      "alpha": true
+    }
+  ]
+}

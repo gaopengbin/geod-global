@@ -1,10 +1,40 @@
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+// Both desktop build profiles are GUI apps; keep the test harness as a console executable.
+#![cfg_attr(all(windows, not(test)), windows_subsystem = "windows")]
 
 mod agent;
 mod distribution;
+mod earth_engine;
+mod gebco;
+mod gscloud;
+use gscloud::{
+    gscloud_auth_status, gscloud_detail, gscloud_download_original, gscloud_inspect_original,
+    gscloud_login_begin, gscloud_login_cancel, gscloud_login_finish, gscloud_logout,
+    gscloud_products, gscloud_search,
+};
 mod elevation_preview;
 mod identity;
 mod lifecycle;
+mod local_raster;
+mod official_vectors;
+mod stac_preview;
+use earth_engine::{
+    download_earth_engine_export, export_earth_engine_file, inspect_earth_engine_export,
+    list_earth_engine_exports,
+};
+use gebco::{
+    gebco_create_subset, gebco_export_archive, gebco_export_source, gebco_get, gebco_grids,
+    gebco_inspect, gebco_list, gebco_pixel,
+};
+use local_raster::{
+    export_local_raster, inspect_local_raster, list_local_rasters, open_local_raster,
+    sample_local_raster,
+};
+use official_vectors::{
+    download_official_parquet, download_official_vector_package, list_official_parquet,
+    list_official_vector_packages, parquet_original_metadata, parquet_original_rows,
+    search_official_parquet, search_official_vector_packages,
+};
+mod official_agent;
 
 use agent::{DesktopAgent, ModelRequest};
 use distribution::{
@@ -12,7 +42,8 @@ use distribution::{
     update_cancel, update_check, update_download, update_install,
 };
 use identity::{
-    identity_begin, identity_cancel, identity_logout, identity_snapshot, DesktopIdentity,
+    identity_begin, identity_cancel, identity_logout, identity_snapshot, official_request,
+    DesktopIdentity,
 };
 use lifecycle::DesktopLifecycle;
 
@@ -122,6 +153,7 @@ async fn agent_send(
     session_id: Option<String>,
     text: String,
     context: Option<geod_runtime::agent_actions::MapContext>,
+    scene: Option<serde_json::Value>,
     images: Option<Vec<String>>,
     documents: Option<Vec<String>>,
     decision_answer: Option<serde_json::Value>,
@@ -134,7 +166,7 @@ async fn agent_send(
         .agent()?
         .operation(
             "send",
-            serde_json::json!({"sessionId":session_id,"text":text,"context":context,"images":images.unwrap_or_default(),"documents":documents.unwrap_or_default(),"decisionAnswer":decision_answer}),
+            serde_json::json!({"sessionId":session_id,"text":text,"context":context,"scene":scene,"images":images.unwrap_or_default(),"documents":documents.unwrap_or_default(),"decisionAnswer":decision_answer}),
         )
         .await
 }
@@ -573,34 +605,49 @@ fn allowed_navigation(url: &tauri::Url) -> bool {
     }
 }
 
+const OFFICIAL_SOURCE_HOSTS: &[&str] = &[
+    "earth-search.aws.element84.com",
+    "code.earthengine.google.com",
+    "console.cloud.google.com",
+    "sentinel-cogs.s3.us-west-2.amazonaws.com",
+    "copernicus-dem-30m.s3.eu-central-1.amazonaws.com",
+    "copernicus-dem-90m.s3.eu-central-1.amazonaws.com",
+    "registry.opendata.aws",
+    "planetarycomputer.microsoft.com",
+    "sentinel2l2a01.blob.core.windows.net",
+    "landsateuwest.blob.core.windows.net",
+    "modiseuwest.blob.core.windows.net",
+    "sentinel1euwestrtc.blob.core.windows.net",
+    "lpdaac.usgs.gov",
+    "cmr.earthdata.nasa.gov",
+    "www.earthdata.nasa.gov",
+    "search.earthdata.nasa.gov",
+    "urs.earthdata.nasa.gov",
+    "identity.dataspace.copernicus.eu",
+    "stac.dataspace.copernicus.eu",
+    "dataspace.copernicus.eu",
+    "browser.dataspace.copernicus.eu",
+    "www.openstreetmap.org",
+];
+
 fn allowed_source(url: &tauri::Url) -> bool {
     url.scheme() == "https"
         && url.port_or_known_default() == Some(443)
         && url.username().is_empty()
         && url.password().is_none()
-        && matches!(
-            url.host_str(),
-            Some("earth-search.aws.element84.com")
-                | Some("sentinel-cogs.s3.us-west-2.amazonaws.com")
-                | Some("copernicus-dem-30m.s3.eu-central-1.amazonaws.com")
-                | Some("copernicus-dem-90m.s3.eu-central-1.amazonaws.com")
-                | Some("registry.opendata.aws")
-                | Some("planetarycomputer.microsoft.com")
-                | Some("sentinel2l2a01.blob.core.windows.net")
-                | Some("landsateuwest.blob.core.windows.net")
-                | Some("modiseuwest.blob.core.windows.net")
-                | Some("sentinel1euwestrtc.blob.core.windows.net")
-                | Some("lpdaac.usgs.gov")
-                | Some("cmr.earthdata.nasa.gov")
-                | Some("www.earthdata.nasa.gov")
-                | Some("search.earthdata.nasa.gov")
-                | Some("urs.earthdata.nasa.gov")
-                | Some("identity.dataspace.copernicus.eu")
-                | Some("stac.dataspace.copernicus.eu")
-                | Some("dataspace.copernicus.eu")
-                | Some("browser.dataspace.copernicus.eu")
-                | Some("www.openstreetmap.org")
-        )
+        && (url.as_str() == "https://www.gscloud.cn/accounts/login_user"
+            || url
+                .host_str()
+                .is_some_and(|host| OFFICIAL_SOURCE_HOSTS.contains(&host))
+            || geod_runtime::datasets::list().iter().any(|dataset| {
+                [&dataset.documentation_url, &dataset.license_url]
+                    .into_iter()
+                    .any(|reviewed| {
+                        reviewed
+                            .parse::<tauri::Url>()
+                            .is_ok_and(|known| known == *url)
+                    })
+            }))
 }
 
 fn open_source_url(app: &tauri::AppHandle, url: &tauri::Url) -> Result<(), String> {
@@ -737,6 +784,33 @@ async fn list_stac_connections(
 }
 
 #[tauri::command]
+fn list_public_datasets(
+    lifecycle: State<'_, DesktopLifecycle>,
+) -> Result<Vec<geod_runtime::datasets::Dataset>, String> {
+    let _command = lifecycle.enter()?;
+    Ok(geod_runtime::datasets::list())
+}
+
+#[tauri::command]
+fn resolve_public_dataset(
+    lifecycle: State<'_, DesktopLifecycle>,
+    request: geod_runtime::datasets::ResolveRequest,
+) -> Result<geod_runtime::datasets::DatasetPlan, String> {
+    let _command = lifecycle.enter()?;
+    geod_runtime::datasets::resolve(request)
+}
+
+#[tauri::command]
+async fn connect_public_dataset(
+    lifecycle: State<'_, DesktopLifecycle>,
+    manager: State<'_, JobManager>,
+    request: geod_runtime::datasets::ResolveRequest,
+) -> Result<geod_runtime::datasets::DatasetConnection, String> {
+    let _command = lifecycle.enter()?;
+    manager.connect_dataset(request).await
+}
+
+#[tauri::command]
 async fn connect_stac(
     lifecycle: State<'_, DesktopLifecycle>,
     manager: State<'_, JobManager>,
@@ -781,9 +855,10 @@ async fn inspect_stac_asset(
     lifecycle: State<'_, DesktopLifecycle>,
     manager: State<'_, JobManager>,
     id: String,
+    display_band: Option<u16>,
 ) -> Result<geod_runtime::stac::raster::GenericRasterInspection, String> {
     let _command = lifecycle.enter()?;
-    manager.inspect_stac_asset(&id).await
+    manager.inspect_stac_asset_band(&id, display_band).await
 }
 
 #[tauri::command]
@@ -1360,6 +1435,10 @@ async fn export_vector(
             } else {
                 "pbf"
             }
+        } else if original && asset.format == "geojsonl-gzip" {
+            "gz"
+        } else if original && asset.geo_parquet.is_some() {
+            "parquet"
         } else if original {
             "json"
         } else {
@@ -1711,6 +1790,7 @@ fn main() {
     }
     tauri::Builder::default()
         .register_asynchronous_uri_scheme_protocol("geod-elevation", elevation_preview::handle)
+        .register_asynchronous_uri_scheme_protocol("geod-stac-preview", stac_preview::handle)
         // Claim the application instance before opening its exclusive runtime store.
         .plugin(tauri_plugin_single_instance::init(|app, _, _| {
             restore_window(app);
@@ -1724,7 +1804,12 @@ fn main() {
         )
         .setup(|app| {
             app.manage(DesktopLifecycle::default());
-            app.manage(DesktopIdentity::open().map_err(std::io::Error::other)?);
+            let identity = DesktopIdentity::open().map_err(std::io::Error::other)?;
+            let service_handle = app.handle().clone();
+            identity.on_official_change(move || {
+                let _ = service_handle.emit_to("main", "geod-official-changed", true);
+            });
+            app.manage(identity.clone());
             app.manage(DesktopFrameReady::default());
             let storage_root = app.path().app_local_data_dir()?.join("runtime");
             let manager = tauri::async_runtime::block_on(JobManager::open(storage_root))
@@ -1741,6 +1826,7 @@ fn main() {
                 manager.clone(),
             ));
             if let Ok(agent) = &desktop_agent {
+                agent.use_official_identity(identity);
                 let handle = app.handle().clone();
                 agent.on_change(move |revision| {
                     let _ = handle.emit_to("main", "geod-agent-changed", revision);
@@ -1794,10 +1880,33 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            list_earth_engine_exports,
+            gebco_grids,
+            gscloud_products,
+            gscloud_search,
+            gscloud_detail,
+            gscloud_download_original,
+            gscloud_inspect_original,
+            gscloud_auth_status,
+            gscloud_login_begin,
+            gscloud_login_finish,
+            gscloud_login_cancel,
+            gscloud_logout,
+            gebco_list,
+            gebco_get,
+            gebco_create_subset,
+            gebco_inspect,
+            gebco_pixel,
+            gebco_export_source,
+            gebco_export_archive,
+            download_earth_engine_export,
+            inspect_earth_engine_export,
+            export_earth_engine_file,
             identity_snapshot,
             identity_begin,
             identity_cancel,
             identity_logout,
+            official_request,
             distribution_snapshot,
             distribution_preferences,
             update_check,
@@ -1849,6 +1958,19 @@ fn main() {
             disconnect_provider_account,
             list_jobs,
             list_vectors,
+            list_local_rasters,
+            open_local_raster,
+            inspect_local_raster,
+            sample_local_raster,
+            export_local_raster,
+            list_official_vector_packages,
+            search_official_vector_packages,
+            download_official_vector_package,
+            list_official_parquet,
+            search_official_parquet,
+            download_official_parquet,
+            parquet_original_metadata,
+            parquet_original_rows,
             list_feature_services,
             wcs_description,
             list_wcs_connections,
@@ -1862,6 +1984,9 @@ fn main() {
             save_wcs_project,
             download_wcs_project,
             list_stac_connections,
+            list_public_datasets,
+            resolve_public_dataset,
+            connect_public_dataset,
             connect_stac,
             forget_stac_connection,
             search_stac,
@@ -1972,6 +2097,25 @@ mod tests {
 
     #[test]
     fn source_links_allow_only_official_https_hosts() {
+        for dataset in geod_runtime::datasets::list() {
+            for address in [&dataset.documentation_url, &dataset.license_url] {
+                let reviewed = address.parse::<tauri::Url>().unwrap();
+                assert!(allowed_source(&reviewed));
+                let mut altered = reviewed.clone();
+                altered.set_path("/unreviewed-path");
+                // Reviewed product pages extend only exact URLs. Existing
+                // official source hosts retain their separate browsing policy.
+                assert_eq!(
+                    allowed_source(&altered),
+                    altered
+                        .host_str()
+                        .is_some_and(|host| OFFICIAL_SOURCE_HOSTS.contains(&host))
+                );
+                let mut credentialed = reviewed.clone();
+                credentialed.set_username("unreviewed").unwrap();
+                assert!(!allowed_source(&credentialed));
+            }
+        }
         for address in [
             "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/item",
             "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",

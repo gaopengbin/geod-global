@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "researchUtc": "2026-10-14T11:19:20.565Z",
+  "originalIds": [
+    "dynamic-world",
+    "era5-land",
+    "srtm-num"
+  ],
+  "newCompletedOriginalIds": 0,
+  "additionalExpandedIds": 0,
+  "ledgerChanged": false,
+  "sourceRegistryChanged": false,
+  "implementationChanged": false,
+  "credentialsUsed": false,
+  "credentialsCreated": false,
+  "credentialState": "not inspected; no assumption that user accounts or credentials are absent",
+  "geeOrCdsComputeJobsSubmitted": 0,
+  "paidJobsSubmitted": 0,
+  "largeBatchJobsSubmitted": 0,
+  "cases": [
+    {
+      "id": "dynamic-world",
+      "status": "publisher-original-blocked",
+      "officialUrl": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1?hl=en",
+      "currentOfficialIdentity": "GOOGLE/DYNAMICWORLD/V1",
+      "currentCatalogHttp": 200,
+      "wholeOriginalDownloaded": false,
+      "completeDataSha256": null,
+      "license": "CC BY 4.0 data; Google/NGS/WRI and modified Sentinel attribution; Earth Engine platform authorization separate",
+      "scientificScope": "one observation, label 0..8 and all nine class probabilities plus original cloud/shadow mask; class zero is water, not NoData",
+      "generatedExportCanCloseOriginalId": false,
+      "reason": "Official GEE collection confirmed; no verified anonymous complete publisher original TIFF href obtained. Existing opaque export URL cannot independently prove dataset identity."
+    },
+    {
+      "id": "era5-land",
+      "status": "authorization-and-codec-blocked",
+      "officialUrl": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=analysis_ready_data",
+      "currentCatalogHttp": 200,
+      "currentCdsLicense": "CC-BY-4.0",
+      "currentCdsLicenseRevision": 1,
+      "arcoAnonymousHttp": [
+        {
+          "url": "https://arco.datastores.ecmwf.int/cadl-arco-geo-007/arco/reanalysis_era5_land/sfc-2m-temperature/geoChunked.zarr/zarr.json",
+          "status": 401,
+          "bytes": 128,
+          "sha256": "89d324d8a632f1e95c90d71f5e896529afe95dfd5a5078033e92cc3e72a4d6eb"
+        },
+        {
+          "url": "https://arco.datastores.ecmwf.int/cadl-arco-time-007/arco/reanalysis_era5_land/sfc-2m-temperature/timeChunked.zarr/zarr.json",
+          "status": 401,
+          "bytes": 128,
+          "sha256": "89d324d8a632f1e95c90d71f5e896529afe95dfd5a5078033e92cc3e72a4d6eb"
+        }
+      ],
+      "wholeOriginalDownloaded": false,
+      "completeDataSha256": null,
+      "authentication": "Official notebook requires user CDS personal access token and accepted terms; none used or read",
+      "formatBoundary": "GRIB/NetCDF original requests and provider ARCO Zarr repackaging are distinct; no supported original codec chain in current app",
+      "scientificScope": "candidate single UTC hour 2m temperature in K; preserve delivered grid/valid time/NoData; avoid unresolved accumulation or swapped evaporation semantics",
+      "generatedExportCanCloseOriginalId": false
+    },
+    {
+      "id": "srtm-num",
+      "status": "earthdata-authorization-and-num-decoder-blocked",
+      "collectionConceptId": "C2763266368-LPCLOUD",
+      "granuleConceptId": "G2822570219-LPCLOUD",
+      "granuleTitle": "N36W122.SRTMGL1N.num",
+      "sourceTimeStart": "2000-02-11T00:00:00.000Z",
+      "sourceTimeEnd": "2000-02-21T23:59:59.000Z",
+      "catalogDeclaredGranuleSize": "0.225549",
+      "catalogSizeIsNotCompleteDownloadedBytes": true,
+      "exactOriginalUrl": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/SRTMGL1N.003/N36W122.SRTMGL1N.num/N36W122.SRTMGL1N.num.zip",
+      "historicalAnonymousHttp": 401,
+      "currentAnonymousHttp": 302,
+      "currentRedirect": {
+        "host": "urs.earthdata.nasa.gov",
+        "path": "/oauth/authorize",
+        "queryRetained": false,
+        "followed": false
+      },
+      "wholeOriginalDownloaded": false,
+      "completeDataSha256": null,
+      "scientificScope": "SRTMGL1N.003 one complete N36W122 ZIP and whole UInt8 NUM member; 3601 point samples per axis; source/fill categories and encoded ASTER/SRTM counts, not elevation or a universal confidence score",
+      "replacementForbidden": [
+        "SRTMGL1 HGT",
+        "NASADEM NUM",
+        "AppEEARS export",
+        "other DEM product"
+      ],
+      "noData": "not inferred for 0 or 255 without real original and exact publisher declaration"
+    }
+  ],
+  "geeExistingContract": {
+    "nativeModule": "crates/geod-runtime/src/earth_engine.rs",
+    "requestFields": [
+      "url",
+      "name"
+    ],
+    "persistedScientificRecipe": false,
+    "persistedTemporaryUrl": false,
+    "automaticOAuth": false,
+    "maxDownloadBytes": 33554432,
+    "maxDownloadSeconds": 180,
+    "maxAxis": 10000,
+    "maxBands": 16,
+    "maxDecodedBaseSampleBytes": 134217728,
+    "maxDecodeSeconds": 30,
+    "currentGenerator": "Landsat LC08/09 only, six allowed bands, 30 m generated subset",
+    "usageMeasurement": {
+      "eecuSeconds": null,
+      "usageStatus": "not_measured"
+    },
+    "endpoint": "strict earthengine.googleapis.com/v1/projects/{user-project}/thumbnails/{opaque-token}:getPixels",
+    "datasetIdentityFromOpaqueUrl": false
+  },
+  "platformTerms2026": {
+    "earthEngineNoncommercialQuotaEffective": "2026-04-27",
+    "communityEecuHoursPerMonth": 150,
+    "communityEecuSecondsPerMonth": 540000,
+    "projectLevel": true,
+    "monthlyRollover": false,
+    "freeDataLicenseIsNotPlatformPermission": true,
+    "quotaConsumedByThisResearch": false,
+    "officialUrl": "https://developers.google.com/earth-engine/guides/noncommercial_tiers"
+  },
+  "nextContracts": [
+    {
+      "id": "srtm-num",
+      "rank": 1,
+      "finiteOriginal": "N36W122.SRTMGL1N.003 complete official ZIP + whole raw NUM member",
+      "gate": "real authorized complete original, byte/SHA/CRC and independent raw reference points before implementation",
+      "proposedIndependentFiles": [
+        "crates/geod-runtime/src/providers/srtm_num.rs",
+        "crates/geod-runtime/src/raster/srtm_num.rs"
+      ],
+      "sharedRegistration": "root must coordinate provider/raster/service/catalog registration; preserve current HGT path and all budgets"
+    },
+    {
+      "id": "era5-land",
+      "rank": 2,
+      "finiteOriginal": "single UTC hour 2m temperature, original CDS GRIB or explicitly generated/converted CDS NetCDF with full provenance",
+      "gate": "authorized actual complete source object, source request/response, legal release and bounded native original codec; no authentication or conversion-only shortcut",
+      "proposedIndependentFiles": "defer exact native codec ownership until actual supported original format is known"
+    }
+  ],
+  "sources": [
+    "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1?hl=en",
+    "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY?hl=en",
+    "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=analysis_ready_data",
+    "https://github.com/ecmwf-training/dss-notebooks/blob/main/datasets/reanalysis-era5-land/arco-access.ipynb",
+    "https://cds.climate.copernicus.eu/how-to-api",
+    "https://developers.google.com/earth-engine/guides/noncommercial_tiers",
+    "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=SRTMGL1N&version=003",
+    "https://lpdaac.usgs.gov/documents/179/SRTM_User_Guide_V3.pdf"
+  ],
+  "evidence": [
+    {
+      "privateEvidencePath": "fresh-public-probes.json",
+      "bytes": 4723,
+      "sha256": "9f047047a6edb3d57666bd6091be54090ed25dd5249d675cccbdafe5abfa1abc",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "arco-anonymous-probes.json",
+      "bytes": 945,
+      "sha256": "ce5c15411d7005ea8d7552e4bfc5ac2ba69125b2dad5fad6b510144c9f5f2fe6",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "srtm-num-redirect-summary.json",
+      "bytes": 202,
+      "sha256": "4cfdeb350e654e9d2623d29f2d94fc7361edb77b76fae6b8b9eccc8fd511f7d9",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "gee-contract-review.md",
+      "bytes": 4766,
+      "sha256": "f4921522e651a710313709d194ef23a0597ad310b24f6df3be7c0ce017c5b00a",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "dynamic-world-catalog.raw",
+      "bytes": 125762,
+      "sha256": "1b332e48cc0eff7ed3fbf12c7037f8d3e31ab0b2b82af0df4e0802deb2ad45e4",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "era5-land-catalog.raw",
+      "bytes": 139125,
+      "sha256": "49d33a2aa7a0d5239ff839404a5e6594d74c2e42a0e0cd7490639ac683f76a98",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "cds-era5-land-arco.raw",
+      "bytes": 149657,
+      "sha256": "fa11d7c4a2d7c370d5c244b134297cbb310a80a68f69d535bf9fd1b6a26c5ad7",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "cds-era5-land-arco-notebook.ipynb",
+      "bytes": 248535,
+      "sha256": "f492ac4b4995dbe1d84faed2238fa863a2751ed03707ae448a6dd770b6583ea3",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "srtm-num-collection.json",
+      "bytes": 7707,
+      "sha256": "9db7231a30394aba7780a8ec5a1dfc1614570e7ab8ec3341eba55d42141fc9fa",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "srtm-num-granule.json",
+      "bytes": 3437,
+      "sha256": "19164c2fe0789f8ea98d2b44faa17ac58b32bba005fb9c6bf40f8bd7f7571a6c",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "srtm-num-user-guide.pdf",
+      "bytes": 1071409,
+      "sha256": "422d91fef5195706a596fe5fa759d638ad3b509f5f36d77b0382004b3b0aaac9",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "srtm-num-anonymous-header.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "era5-arco-geo-anonymous.raw",
+      "bytes": 128,
+      "sha256": "89d324d8a632f1e95c90d71f5e896529afe95dfd5a5078033e92cc3e72a4d6eb",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    },
+    {
+      "privateEvidencePath": "era5-arco-time-anonymous.raw",
+      "bytes": 128,
+      "sha256": "89d324d8a632f1e95c90d71f5e896529afe95dfd5a5078033e92cc3e72a4d6eb",
+      "hashRole": "research document or response only; not a complete data-original checksum"
+    }
+  ]
+}

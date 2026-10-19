@@ -1,4 +1,4 @@
-const pages = new Set(['Home', 'Explore', 'Workspace', 'My Data', 'Tasks', 'Settings', 'SignIn']);
+const pages = new Set(['Home', 'Explore', 'Workspace', 'My Data', 'Tasks', 'Settings', 'SignIn', 'Account', 'Imagery monitoring']);
 const validId = value => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value || '');
 
 export function normalizeNavigationHash(hash) {
@@ -6,12 +6,13 @@ export function normalizeNavigationHash(hash) {
   let page;
   try { page = decodeURIComponent(name); } catch { page = 'Home'; }
   if (page === 'Recipes') page = 'My Data';
+  if (page === 'Official services') page = 'Imagery monitoring';
   if (!pages.has(page)) page = 'Home';
   const params = new URLSearchParams(query);
   const saved = new URLSearchParams();
   if (page === 'Tasks' && validId(params.get('job'))) saved.set('job', params.get('job').toLowerCase());
-  if (['Explore', 'My Data', 'Workspace'].includes(page) && validId(params.get('project'))) saved.set('project', params.get('project'));
-  else if (page === 'My Data' && ['files','vectors','maps','tiles'].includes(params.get('view'))) saved.set('view', params.get('view'));
+  if (['Explore', 'My Data', 'Workspace', 'Tasks'].includes(page) && validId(params.get('project'))) saved.set('project', params.get('project').toLowerCase());
+  else if (page === 'My Data' && ['files','vectors','maps','tiles','local-rasters','gebco-regions'].includes(params.get('view'))) saved.set('view', params.get('view'));
   if (page === 'Workspace' && validId(params.get('tiles'))) saved.set('tiles', params.get('tiles'));
   else if (page === 'Workspace' && validId(params.get('map'))) saved.set('map', params.get('map'));
   else if (page === 'Workspace' && validId(params.get('vector'))) saved.set('vector', params.get('vector'));

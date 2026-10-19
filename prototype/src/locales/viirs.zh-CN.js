@@ -1,4 +1,5 @@
 export default {
+  'Official VIIRS identity and composite period, complete HDF5 and SHA-256. Original M5/M4/M3 samples, calibration, NoData and sinusoidal grid are decoded and checked. Other science and QA layers remain in the original file; no QA mask is applied.': '核对官方 VIIRS 身份与合成时段、完整 HDF5 和 SHA-256，并解码校验 M5/M4/M3 原始数值、定标、NoData 及正弦网格。其他科学与 QA 层保留在原件中，不自动应用 QA 掩膜。',
   'An older VIIRS download has no science validation. Download the original product again before preparing bands; the existing file is retained.': '旧版 VIIRS 下载尚未校验科学数据层。请重新下载原始产品后再准备波段；已有文件会保留。',
   '8-day · nominal 1 km · HDF5. Prepare M5/M4/M3 after download for local RGB and project processing.': '8 天 · 标称 1 千米 · HDF5。下载后准备 M5/M4/M3，可查看本地 RGB 并处理工程区域。',
   'Prepare {band}': '准备 {band}',

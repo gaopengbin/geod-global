@@ -1,6 +1,6 @@
 [package]
 name = "geod-runtime"
-version = "0.2.0-rc.4"
+version = "0.2.0-rc.5"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
@@ -19,6 +19,7 @@ hdf5-reader = { version = "=0.9.1", default-features = false }
 jpeg2k = { version = "=0.10.1", default-features = false, features = ["openjp2", "strict-mode", "file-io"] }
 roxmltree = "=0.21.1"
 png = "=0.18.1"
+parquet = { version = "=60.0.0", default-features = false, features = ["zstd", "json"] }
 zune-jpeg = "=0.5.15"
 zune-core = "=0.5.3"
 proj4rs = { version = "=0.2.0", default-features = false }
@@ -30,7 +31,7 @@ rusqlite = { version = "=0.40.2", features = ["bundled", "serialize", "hooks", "
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 sha2 = "0.10"
-tiff = { version = "=0.11.3", default-features = false, features = ["deflate", "lzw", "jpeg"] }
+tiff = { version = "=0.11.3", default-features = false, features = ["deflate", "lzw", "jpeg", "zstd"] }
 tempfile = "=3.27.0"
 tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
 tokio-util = { version = "0.7", features = ["rt"] }

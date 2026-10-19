@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Layers } from 'lucide-react';
 import { runtimeRequest, formatBytes } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
-import { Button, Input, Select, Modal, Spinner, Surface, Disclosure } from './ui/index.jsx';
+import { InfoDetails, Button, Input, Select, Modal, Spinner, Surface } from './ui/index.jsx';
 import { rgbQualityJobs } from './local-rgb.js';
 import './scientific-rgb.css';
 
@@ -86,6 +86,6 @@ export function ScientificRgbDialog({group,jobs=[],projectId,onClose,onQueued}) 
       <div className="processing-plan scientific-rgb-summary"><dl className="runtime-details"><dt>{t('Pixels')}</dt><dd>{number(plan.spec.grid.width)} × {number(plan.spec.grid.height)}</dd><dt>{t('Data type')}</dt><dd>{plan.spec.profile.signed?'Int16':'UInt16'} · RGB · {plan.spec.grid.crs}</dd><dt>{t('Working disk space')}</dt><dd>{formatBytes(plan.requiredDiskBytes,locale)}</dd></dl></div>
       <p>{t(masked ? 'Accepted pixels keep original DN. Rejected pixels become NoData; the rules and source checksums are saved with the result.' : 'Original DN, per-band calibration and NoData are retained. The task continues in the background.')}</p>
       <footer className="runtime-dialog-actions"><Button onClick={onClose}>{t('Cancel')}</Button><Button variant="primary" disabled={busy||!name.trim()||planKey!==requestKey} onClick={run}>{busy?<Spinner size={16}/>:<Layers size={16}/>} {t(busy?'Submitting…':'Create RGB file')}</Button></footer></>}
-    {error && <Surface className="runtime-error" role="alert"><p>{t(error==='Raster inspection is busy; try again shortly'?'Raster reading is taking longer than expected. Try again shortly.':'The RGB file could not be created. Check the three source bands and retry.')}</p><Disclosure summary={t('Technical details')}><p className="runtime-wrap">{t(error)}</p></Disclosure></Surface>}
+    {error && <Surface className="runtime-error bui-info-row" role="alert"><p>{t(error==='Raster inspection is busy; try again shortly'?'Raster reading is taking longer than expected. Try again shortly.':'The RGB file could not be created. Check the three source bands and retry.')}</p><InfoDetails closeLabel={t('Close')} presentation="popover" summary={t('Technical details')}><p className="runtime-wrap">{t(error)}</p></InfoDetails></Surface>}
   </Modal>;
 }

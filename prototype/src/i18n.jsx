@@ -29,7 +29,16 @@ import threeDChinese from './locales/three-d.zh-CN.js';
 import agentChinese from './locales/agent.zh-CN.js';
 import sourceDirectoryChinese from './locales/source-directory.zh-CN.js';
 import distributionChinese from './locales/distribution.zh-CN.js';
+import officialChinese from './locales/official.zh-CN.js';
+import earthEngineChinese from './locales/earth-engine.zh-CN.js';
+import publicDatasetChinese from './locales/public-dataset.zh-CN.js';
+import sourcePickerChinese from './locales/source-picker.zh-CN.js';
+import exploreChinese from './locales/explore.zh-CN.js';
 import { syncDesktopLocale } from './runtime-client.js';
+import gebcoChinese from './locales/gebco.zh-CN.js';
+import sinolcChinese from './locales/sinolc.zh-CN.js';
+import gscloudChinese from './locales/gscloud.zh-CN.js';
+import acquisitionChinese from './locales/acquisition.zh-CN.js';
 
 const chinese = { ...threeDChinese, ...tilesChinese, ...wcsChinese, ...stacChinese, ...wmsChinese, ...featuresChinese, ...vectorChinese, ...radarChinese, ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese, ...projectsChinese, ...proxyChinese, ...accountsChinese, ...elevationChinese, ...aerialChinese, ...localRgbChinese, ...modisChinese, ...viirsChinese, ...landsatQualityChinese, ...vegetationChinese, ...vegetationQualityChinese, ...modisScienceChinese };
 const I18nContext = createContext(null);
@@ -37,6 +46,15 @@ Object.assign(chinese, agentChinese);
 Object.assign(chinese, sourceDirectoryChinese);
 Object.assign(chinese, distributionChinese);
 Object.assign(chinese, identityChinese);
+Object.assign(chinese, officialChinese);
+Object.assign(chinese, earthEngineChinese);
+Object.assign(chinese, publicDatasetChinese);
+Object.assign(chinese, sourcePickerChinese);
+Object.assign(chinese, exploreChinese);
+Object.assign(chinese, gebcoChinese);
+Object.assign(chinese, sinolcChinese);
+Object.assign(chinese, gscloudChinese);
+Object.assign(chinese, acquisitionChinese);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 
 export function I18nProvider({ children }) {

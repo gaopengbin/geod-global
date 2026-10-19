@@ -1,0 +1,66 @@
+{
+  "schema": "geod-commercial-design/v1",
+  "status": "proposed-not-runtime",
+  "asOf": "2026-10-09",
+  "product": "xyz.laogao.geod.global",
+  "scope": "2D",
+  "purchasable": false,
+  "currency": "USD",
+  "priceDecision": "proposed-pending-cost-and-merchant-validation",
+  "taxTreatment": "must-be-confirmed-before-checkout",
+  "plans": [
+    { "id": "free", "priceMinor": 0, "period": null, "proServices": false, "trialCreditsOnce": 100, "trialExpiryDays": 30 },
+    { "id": "pro-monthly", "priceMinor": 1900, "period": "month", "proServices": true, "monthlyGrantCredits": 300, "grantCadence": "subscription-month-anchor", "grantCarryover": false, "purchasable": false },
+    { "id": "pro-yearly", "priceMinor": 14900, "period": "year", "proServices": true, "monthlyGrantCredits": 300, "grantCadence": "subscription-month-anchor", "grantCarryover": false, "grantAnnualUpfront": false, "purchasable": false }
+  ],
+  "creditPacks": [
+    { "id": "credits-1000", "credits": 1000, "priceMinor": 1000, "unlocksPro": false, "purchasable": false },
+    { "id": "credits-3000", "credits": 3000, "priceMinor": 3000, "unlocksPro": false, "purchasable": false }
+  ],
+  "creditPolicy": {
+    "microcreditsPerCredit": 1000000,
+    "catalogValueUsdMinorPerCredit": 1,
+    "cashTransferOrWithdrawal": false,
+    "purchasedCreditsExpiryDays": null,
+    "purchasedCreditsExpiryDecision": "proposed-no-expiry-pending-terms-review",
+    "purchasedCreditsSurviveProExpiry": true,
+    "consumptionOrder": "expiring-grants-first-then-purchased",
+    "refunds": "original-order-policy-not-cash-conversion",
+    "unknownUsage": "reconcile-do-not-assume-zero-or-debit-unproven-usage"
+  },
+  "freeBaseline": {
+    "guestUse": true,
+    "byokBasicAgent": true,
+    "preserveExistingGplLocalCapabilities": true,
+    "chargeDirectToLocalDataBytes": false,
+    "chargeLocalProcessingCount": false,
+    "eraseArtifactsOnDowngrade": false
+  },
+  "officialServices": [
+    { "id": "managed-ai", "requiresPro": false, "meter": "trusted-provider-model-usage", "status": "not-implemented", "purchasable": false },
+    { "id": "advanced-source-automation", "requiresPro": true, "meter": "accepted-priced-service-line", "status": "not-implemented", "purchasable": false },
+    { "id": "managed-cloud-processing", "requiresPro": true, "meter": "versioned-operator-usage", "status": "not-implemented", "purchasable": false },
+    { "id": "official-data-relay", "requiresPro": true, "meter": "actual-official-relay-bytes", "status": "not-implemented", "purchasable": false }
+  ],
+  "aggregationBoundary": { "providerCatalogAggregation": true, "userOwnedProviderEntitlementsOnly": true, "providerTermsReviewRequired": true, "imageryProcurement": false, "imageryResale": false, "collectProviderImageryPayments": false, "placeProviderOrders": false },
+  "entitlementEnforcement": { "authority": "official-service-backend", "clientProFlagTrusted": false, "publicBackendSourceGrantsHostedAccess": false, "localGplPaywallGuaranteed": false, "backendMustExecuteRealServiceValue": true, "retroactiveLicenseChange": false },
+  "admissionOrder": ["capability-released", "operation-license-reviewed", "provider-entitlement-ready", "global-auth-if-required", "pro-if-required", "quote-and-budget-authorized"],
+  "billing": {
+    "quoteDefaultTtlSeconds": 900,
+    "requiresFrozenInputsAndPriceVersion": true,
+    "requiresExplicitCostCeiling": true,
+    "managedConversationRequiresConsentBeforeFirstRequest": true,
+    "conversationAndTaskReservationsShareAccountCeilings": true,
+    "settledPlanningConversationChargedAgainInTask": false,
+    "autoModeRequiresTaskDailyAndTotalLimits": true,
+    "reservationAtomic": true,
+    "clientReportedUsageIsAuthoritative": false,
+    "internalRetriesChargedAgain": false,
+    "reservationCountsAsConsumption": false,
+    "releaseMustRestoreOriginalBuckets": true,
+    "paymentSuccessEqualsBankSettlement": false,
+    "renewalFromPurchasedCreditsAutomatic": false
+  },
+  "checkoutGate": ["real-pro-value-and-delivery-accepted", "actual-costs-reviewed", "merchant-country-and-category-accepted", "final-price-and-tax-disclosure", "payment-and-refund-accepted", "ledger-and-recovery-accepted", "human-end-to-end-acceptance"],
+  "sourcePolicy": "source-entitlements.proposed.json"
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "datasetId": "glad-landcover-2020",
+    "bounds": [31, 25, 32, 26],
+    "year": 2020,
+    "layer": "land-cover",
+    "assetKey": "raster",
+    "assetContains": "/GLCLU2000-2020/v2/2020/30N_030E.tif",
+    "expectedShape": [40000, 40000],
+    "expectedBytes": 44495039,
+    "expectedSha256": "87406f90ee15916222ddceef02f8b7088e32e9b528b808f5a35aed40de68fcd7",
+    "expectedMd5": "6a5c47d302414cffb4c061cc5af0dd13",
+    "publisherNoData": {
+      "value": 255,
+      "sourceUrl": "https://storage.googleapis.com/earthenginepartners-hansen/GLCLU2000-2020/legend.xlsx",
+      "declarationKind": "Author annual-map legend code; physical TIFF has no scalar NoData tag. Auxiliary interpretation does not rewrite the original native mask."
+    },
+    "sampleCoordinates": [[0, 0], [3801, 0], [2159, 0], [10233, 163]],
+    "requireAOIUsable": true,
+    "expectedPixelValues": [
+      {"column": 0, "row": 0, "values": [0], "noData": [false]},
+      {"column": 3801, "row": 0, "values": [244], "noData": [false]},
+      {"column": 2159, "row": 0, "values": [250], "noData": [false]},
+      {"column": 10233, "row": 163, "values": [254], "noData": [false]}
+    ],
+    "originalSampleEvidence": {
+      "privateReceipt": ".verification/next2-landcover-20261012/glad-2020-30N-030E-full-receipt.json",
+      "wholeOriginalPixelsDecoded": 1600000000,
+      "embeddedScalarNoData": null,
+      "raw255PixelCount": 0,
+      "raw255Check": "The author legend defines 255 as missing, but complete independent decoding found no 255 in this selected original. No fabricated 255 coordinate is supplied."
+    }
+  }
+]

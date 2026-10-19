@@ -1,0 +1,1755 @@
+[
+  {
+    "id": "1ecac493-00bf-4014-abe7-ce0049a0cb04",
+    "name": "Microsoft-Andorra-120222210-2026-08-13.csv.gz",
+    "format": "geojsonl-gzip",
+    "storageMode": "managed",
+    "crs": "EPSG:4326",
+    "sourceSha256": "6fd8cabe2689532388ed37dfba9f1c5e4e9c326a8d8d01874dde76faae41c604",
+    "geojsonSha256": "29eb5a9008b081a943b6ba1b04e9c2a56ad130bfeb72ccbf0d9970c3a93fa745",
+    "bytes": 218965,
+    "featureCount": 1932,
+    "coordinateCount": 13416,
+    "geometryCounts": {
+      "Polygon": 1932
+    },
+    "bounds": [
+      1.445849147259901,
+      42.55376347657269,
+      1.7846499664009574,
+      42.64700652013152
+    ],
+    "createdAt": "2026-10-14T07:32:31.157427900+00:00",
+    "attribution": "Microsoft Global ML Building Footprints; retain Microsoft, the selected country, LOD9 quadkey, original URL, pinned 2026-08-13 index and CDLA Permissive 2.0 notice.",
+    "licenseUrl": "https://cdla.dev/permissive-2-0/",
+    "dataTimestamp": null,
+    "officialPackage": {
+      "conversion": 1,
+      "package": {
+        "datasetId": "ms-buildings",
+        "id": "Andorra-120222210",
+        "title": "Microsoft buildings · Andorra · 120222210",
+        "format": "geojsonl-gzip",
+        "url": "https://bfppub.z5.web.core.windows.net/2026-08-13/global-buildings.geojsonl/RegionName=Andorra/quadkey=120222210/part-00061-110f5303-ff85-4c71-a2bf-c6070024fec8.c000.csv.gz",
+        "fileName": "Microsoft-Andorra-120222210-2026-08-13.csv.gz",
+        "release": "2026-08-13",
+        "bounds": [
+          1.40625,
+          42.553080288955805,
+          2.109375,
+          43.06888777416962
+        ],
+        "sourceIndexUrl": "https://bfppub.blob.core.windows.net/%24web/2026-08-13/dataset-links.csv",
+        "sourceIndexSha256": "de61b569b0c23c364d61173632d8c5487ea30bf20912c55b9fa1ab4a89d01148",
+        "publisherSize": "213.8KB",
+        "expectedSha256": null,
+        "documentationUrl": "https://github.com/microsoft/GlobalMLBuildingFootprints",
+        "attribution": "Microsoft Global ML Building Footprints; retain Microsoft, the selected country, LOD9 quadkey, original URL, pinned 2026-08-13 index and CDLA Permissive 2.0 notice.",
+        "licenseUrl": "https://cdla.dev/permissive-2-0/",
+        "dataTimestamp": null,
+        "warnings": [
+          "This is a complete country/LOD9 gzip GeoJSONL partition. The selected area is reference only; no footprint is clipped, simplified, filtered or repaired. A quadkey bounds match does not prove a building exists in the selected area.",
+          "2026-08-13 is the fixed publisher distribution/index version, not the acquisition date of every building. Input imagery dates, coverage and model quality vary; these footprints are not legal cadastral boundaries or proof of current buildings.",
+          "Height is a model estimate in metres above ground; -1 means no height estimate. Confidence describes the footprint and -1 is the publisher's absent/legacy score. Original numbers, including these sentinels, are preserved without converting them to measured height or replacing them with zero.",
+          "Publisher Size is a rounded download estimate. Each full original and decompressed/converted data remain limited to 20 MiB, 50,000 features and 500,000 coordinates; large intersecting partitions can fail without registration or a partial substitute."
+        ]
+      },
+      "requestedBounds": [
+        1.5,
+        42.57,
+        1.53,
+        42.6
+      ],
+      "fetchedAt": "2026-10-14T07:32:31.156995200+00:00",
+      "bytes": 218965,
+      "sha256": "6fd8cabe2689532388ed37dfba9f1c5e4e9c326a8d8d01874dde76faae41c604",
+      "selection": "complete publisher original; area selects a package, not a geometry clip"
+    }
+  },
+  {
+    "id": "79971967-52be-4790-9113-ff6e6a6dca38",
+    "name": "monaco-261011-free.shp.zip",
+    "format": "shapefile",
+    "storageMode": "managed",
+    "crs": "EPSG:4326",
+    "sourceSha256": "33611b0f8fd1fbc6562ce6a2c93b35371d26da9e38f3015a889fb9e527e08ccd",
+    "geojsonSha256": "5132687dcac0d1d80efe4d62ccc4d676178406f2b1b7c65304506d24fa63b26d",
+    "bytes": 746384,
+    "featureCount": 8672,
+    "coordinateCount": 48914,
+    "geometryCounts": {
+      "LineString": 3638,
+      "MultiPolygon": 3,
+      "Point": 2958,
+      "Polygon": 2073
+    },
+    "bounds": [
+      7.4016855,
+      43.5165358,
+      7.5329917,
+      43.7543687
+    ],
+    "createdAt": "2026-10-14T07:32:35.280579900+00:00",
+    "attribution": "© OpenStreetMap contributors; Geofabrik GmbH regional free GIS-format extract. Retain ODbL 1.0, original bundle README, source timestamp and Geofabrik format documentation.",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "dataTimestamp": "2026-10-11T20:21:06Z",
+    "shapefile": {
+      "conversion": 1,
+      "container": "zip",
+      "files": [
+        {
+          "name": "README",
+          "bytes": 653,
+          "sha256": "8ba57ce3f49647ed4178455d8dcc4ed49484c707a5ab834ea7ac179ac213c65d"
+        },
+        {
+          "name": "gis_osm_adminareas_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_adminareas_a_free_1.dbf",
+          "bytes": 1757,
+          "sha256": "9d1691fc1664c5e4c4458345211d443e5bcfb25bf5792fcd22ba727b4cbca7aa"
+        },
+        {
+          "name": "gis_osm_adminareas_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_adminareas_a_free_1.shp",
+          "bytes": 38164,
+          "sha256": "6e34f2744b70aa9c2901e815070b592b2eb6a15936207ed971d733e8b85faa36"
+        },
+        {
+          "name": "gis_osm_adminareas_a_free_1.shx",
+          "bytes": 188,
+          "sha256": "6f933d8a0c21da550e2ead8ee750b317dd2bf687eac64d0c5a25c288b5b4b592"
+        },
+        {
+          "name": "gis_osm_buildings_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_buildings_a_free_1.dbf",
+          "bytes": 268154,
+          "sha256": "12ca26902a0f2672a2c2c26562da817f872065176a23eb3860ad65a66b272795"
+        },
+        {
+          "name": "gis_osm_buildings_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_buildings_a_free_1.shp",
+          "bytes": 341392,
+          "sha256": "0eadc05cf1bbf27634df354093583f5f8fd83a7a821eb1182f3701b02ca5ce71"
+        },
+        {
+          "name": "gis_osm_buildings_a_free_1.shx",
+          "bytes": 13092,
+          "sha256": "f33e4dc19026cca35452df8019074d8cd8006c700fc14a4667019dd3e7568fa5"
+        },
+        {
+          "name": "gis_osm_landuse_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_landuse_a_free_1.dbf",
+          "bytes": 20462,
+          "sha256": "b89e174ddd1bea0185fbd7d5e93b164ac5eba7debc534311ea90420930466493"
+        },
+        {
+          "name": "gis_osm_landuse_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_landuse_a_free_1.shp",
+          "bytes": 49352,
+          "sha256": "1605a146f62ecb62c1a1656f7d70e3b01a26e62a260608a4309ab69c56009490"
+        },
+        {
+          "name": "gis_osm_landuse_a_free_1.shx",
+          "bytes": 1220,
+          "sha256": "7ebfd88c4c68d1e1918f8275701117915f9c019aa43d6337e8faf2635b3ddb61"
+        },
+        {
+          "name": "gis_osm_natural_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_natural_a_free_1.dbf",
+          "bytes": 887,
+          "sha256": "b1a6aaeddced94e0fb9eaefc4b4880200407c7f26edb616beffef03851348c18"
+        },
+        {
+          "name": "gis_osm_natural_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_natural_a_free_1.shp",
+          "bytes": 2508,
+          "sha256": "6c27369c6ca44d8003da502c9b6688367bb9f27689040eaa57de8224299a12c6"
+        },
+        {
+          "name": "gis_osm_natural_a_free_1.shx",
+          "bytes": 140,
+          "sha256": "e1a1d2369b05f836da4118ba29520bae6055dec02aa8118c9bf0dc1d84f2d6d9"
+        },
+        {
+          "name": "gis_osm_natural_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_natural_free_1.dbf",
+          "bytes": 93252,
+          "sha256": "01e1cf436f2bc5c30352c493e05bd0ccdcc9796b9836a29278764a50ef686c8d"
+        },
+        {
+          "name": "gis_osm_natural_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_natural_free_1.shp",
+          "bytes": 18076,
+          "sha256": "8cd9a4186913db28b677faf94b25a61cb1b2b62673a335a0706337a790c9d7e5"
+        },
+        {
+          "name": "gis_osm_natural_free_1.shx",
+          "bytes": 5236,
+          "sha256": "928c4c1740caad6bc55b2eb20811490c2917db182b8de54e944675d5e60524c5"
+        },
+        {
+          "name": "gis_osm_places_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_places_a_free_1.dbf",
+          "bytes": 349,
+          "sha256": "6c214527b4eb48396315fff089a69df2db11030a28678783dfc6ecd9d2584d9b"
+        },
+        {
+          "name": "gis_osm_places_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_places_a_free_1.shp",
+          "bytes": 10224,
+          "sha256": "08981c20dcffe25c425c8d7939e5d8a0c6d0c32d3cfadeb9191010d361a5c956"
+        },
+        {
+          "name": "gis_osm_places_a_free_1.shx",
+          "bytes": 108,
+          "sha256": "e4f20a8a28edf030d0142277be293684c9d51fd0bc589dce34116b0453b2338e"
+        },
+        {
+          "name": "gis_osm_places_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_places_free_1.dbf",
+          "bytes": 1744,
+          "sha256": "9e1e6d15ea9025ed6930bdf8af95b81bb878a8646a7c50b1343ce761ecab9423"
+        },
+        {
+          "name": "gis_osm_places_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_places_free_1.shp",
+          "bytes": 380,
+          "sha256": "bf486e6fc9577a3a71b053a451c3339dbe00577cee28dff4b9323e9d238456a9"
+        },
+        {
+          "name": "gis_osm_places_free_1.shx",
+          "bytes": 180,
+          "sha256": "e3adc3f00506f57ade025b0611cdc988a6aa22637c08e2df96a69c2f02f718ff"
+        },
+        {
+          "name": "gis_osm_pofw_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_pofw_a_free_1.dbf",
+          "bytes": 2192,
+          "sha256": "d6b08b01270301cc06cf3dd20e2300a801d9302bd7a19d8d741178f3040b924e"
+        },
+        {
+          "name": "gis_osm_pofw_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_pofw_a_free_1.shp",
+          "bytes": 5076,
+          "sha256": "7d0866712e365bc80c9968712a87752cb66efe0340d13916e2a0dace44f4f3e9"
+        },
+        {
+          "name": "gis_osm_pofw_a_free_1.shx",
+          "bytes": 212,
+          "sha256": "e8e4ebe8360a50142e37821bd8a4d76e6d21e1411ebb5376a6d71f623a9881f0"
+        },
+        {
+          "name": "gis_osm_pofw_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_pofw_free_1.dbf",
+          "bytes": 307,
+          "sha256": "a1d1f9b90487b17c960f5ce9f2394a3240d777058993d7dc941facf356b7f043"
+        },
+        {
+          "name": "gis_osm_pofw_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_pofw_free_1.shp",
+          "bytes": 128,
+          "sha256": "1296d0fe2e0e02a7987f0080317121c3e73d987bf73b2ae6170a1cef4b4a9720"
+        },
+        {
+          "name": "gis_osm_pofw_free_1.shx",
+          "bytes": 108,
+          "sha256": "4bff6198a5242cd5999ef5bc964fbc7f8c60dc2c2b047d275c059e2aa013ea54"
+        },
+        {
+          "name": "gis_osm_pois_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_pois_a_free_1.dbf",
+          "bytes": 22057,
+          "sha256": "95d689cd2efa364ed8082c8c2bcda1372da72fcd8b1a28c4131a9e485731ae52"
+        },
+        {
+          "name": "gis_osm_pois_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_pois_a_free_1.shp",
+          "bytes": 42748,
+          "sha256": "97c423f9116f1efa80a27d19b3aabe6d0f7749e98ec45b32a7c9dee49b27bc5d"
+        },
+        {
+          "name": "gis_osm_pois_a_free_1.shx",
+          "bytes": 1308,
+          "sha256": "cfc65dd6e5bda16492707619333e28f7d62a5f4fa4093801f03cc53084599225"
+        },
+        {
+          "name": "gis_osm_pois_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_pois_free_1.dbf",
+          "bytes": 202727,
+          "sha256": "620636e29fce91e5e127182c4663480e387967d44fb182f02ead8b6b3c384010"
+        },
+        {
+          "name": "gis_osm_pois_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_pois_free_1.shp",
+          "bytes": 39216,
+          "sha256": "e657eae262964df0b3a7ab58221dd60ba682700333a29e89d58c4027bc55e1b1"
+        },
+        {
+          "name": "gis_osm_pois_free_1.shx",
+          "bytes": 11276,
+          "sha256": "681150a2aa2799e5108f8aab21c3eb910b327ac1a6d4a388efa41dcfec7b1301"
+        },
+        {
+          "name": "gis_osm_protected_areas_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_protected_areas_a_free_1.dbf",
+          "bytes": 130,
+          "sha256": "c8bb2ae850d1ee39ec8b69e95f2fcae9e494c7580b75aab8b761a2efc1f0213f"
+        },
+        {
+          "name": "gis_osm_protected_areas_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_protected_areas_a_free_1.shp",
+          "bytes": 100,
+          "sha256": "afd62dde4d802deedb2c1bb6513f1db785c815f0893003238b342b58b74cd4c4"
+        },
+        {
+          "name": "gis_osm_protected_areas_a_free_1.shx",
+          "bytes": 100,
+          "sha256": "afd62dde4d802deedb2c1bb6513f1db785c815f0893003238b342b58b74cd4c4"
+        },
+        {
+          "name": "gis_osm_railways_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_railways_free_1.dbf",
+          "bytes": 2007,
+          "sha256": "762af66c558c45f814628fb022170710d783ea9943dd52ee05b036072939d2ce"
+        },
+        {
+          "name": "gis_osm_railways_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_railways_free_1.shp",
+          "bytes": 3212,
+          "sha256": "cbd0b29f0ed1a6cb80009a306fe091d7988ba1661a37a08a0d9a0b1dd324453b"
+        },
+        {
+          "name": "gis_osm_railways_free_1.shx",
+          "bytes": 188,
+          "sha256": "070470d091a503373c3a9c8a042fb795834135fbed99fa622e1d4cb8645d4d8c"
+        },
+        {
+          "name": "gis_osm_roads_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_roads_free_1.dbf",
+          "bytes": 663363,
+          "sha256": "e532e3aca3e1078e81f5ef827fb23bd98d57a1e48990df7f069973094cd40581"
+        },
+        {
+          "name": "gis_osm_roads_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_roads_free_1.shp",
+          "bytes": 524716,
+          "sha256": "a14a0d2bfb0299c6981c8065da90f3f2dbcf5fd4f279ee7c78e3b33bdb64ec34"
+        },
+        {
+          "name": "gis_osm_roads_free_1.shx",
+          "bytes": 29084,
+          "sha256": "f7e3d16cc99b7b96455e60d177731513c4581a3b7af514b47929fbcb9226ff00"
+        },
+        {
+          "name": "gis_osm_traffic_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_traffic_a_free_1.dbf",
+          "bytes": 16294,
+          "sha256": "02bedb71d900fd41cbf4764207a78f7b6bba58c593a4363cc6dde8b4178d2748"
+        },
+        {
+          "name": "gis_osm_traffic_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_traffic_a_free_1.shp",
+          "bytes": 25112,
+          "sha256": "c67de5532557f0179b12da9c761277e6921201027fd5687f10707fe9b4d2a608"
+        },
+        {
+          "name": "gis_osm_traffic_a_free_1.shx",
+          "bytes": 836,
+          "sha256": "06eb80bdfbf18c86370501f0a717b64014b5835cdaca94dd6b9bdf2332cb6279"
+        },
+        {
+          "name": "gis_osm_traffic_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_traffic_free_1.dbf",
+          "bytes": 137219,
+          "sha256": "a47b43f676cf30e9912c8713c08de3693f5eb23c061aa69cf940f4e9783aa550"
+        },
+        {
+          "name": "gis_osm_traffic_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_traffic_free_1.shp",
+          "bytes": 22024,
+          "sha256": "58e99f9d905b07815509b227d4838d9771305656051c20f8c6063d4c5b42da13"
+        },
+        {
+          "name": "gis_osm_traffic_free_1.shx",
+          "bytes": 6364,
+          "sha256": "723e23434fb1952710c610d7c377d8d1057a482793fc1a3b51d1ca40c248ccd1"
+        },
+        {
+          "name": "gis_osm_transport_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_transport_a_free_1.dbf",
+          "bytes": 2047,
+          "sha256": "7bcb489b38ff5505657361f0779dd5c0531796391a1f3fc110278cb472377e38"
+        },
+        {
+          "name": "gis_osm_transport_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_transport_a_free_1.shp",
+          "bytes": 3948,
+          "sha256": "c1052c77690b1b63c85fec98811a3d5cddc422606009871b59f4d7fb3b975952"
+        },
+        {
+          "name": "gis_osm_transport_a_free_1.shx",
+          "bytes": 204,
+          "sha256": "937f34b986b2d456abf78c6e254a290e290326051af2eeb21d2b060d51a0c5cd"
+        },
+        {
+          "name": "gis_osm_transport_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_transport_free_1.dbf",
+          "bytes": 18287,
+          "sha256": "405ee2672cddcf494c8b60fb4d4ffe8e60f228dc0463b878ef8acfa8ef9a7e96"
+        },
+        {
+          "name": "gis_osm_transport_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_transport_free_1.shp",
+          "bytes": 3600,
+          "sha256": "9a6bcb676d0f3c28a2fc75edcd60d27238935b5da9e42b80264ca719ba1d35b6"
+        },
+        {
+          "name": "gis_osm_transport_free_1.shx",
+          "bytes": 1100,
+          "sha256": "0184abf05338dfd6cd7ce6d3ef38878492aa31997633298d98009405f0acd7b2"
+        },
+        {
+          "name": "gis_osm_water_a_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_water_a_free_1.dbf",
+          "bytes": 3787,
+          "sha256": "e2575453257eaf81830254063a1a66b041f0eff7fad5e71ee493b0911bcf7826"
+        },
+        {
+          "name": "gis_osm_water_a_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_water_a_free_1.shp",
+          "bytes": 9756,
+          "sha256": "a3d99aec9afbe983d660564f14fac7799dcf7211c315f98bb9bfe16749af5fc5"
+        },
+        {
+          "name": "gis_osm_water_a_free_1.shx",
+          "bytes": 300,
+          "sha256": "c7b59835b4c5f882704287720863bd2e8be8fb9345f065a3dabc40276b4fe815"
+        },
+        {
+          "name": "gis_osm_waterways_free_1.cpg",
+          "bytes": 6,
+          "sha256": "146d6789ffe033a5297c1ad046e6a62ee35319b86b021444f05b6ea2aa8a1f4a"
+        },
+        {
+          "name": "gis_osm_waterways_free_1.dbf",
+          "bytes": 794,
+          "sha256": "f9efc94afc830449d87f3ffe2b6ee5dafa7311f339ace413113eb4e77dcd908e"
+        },
+        {
+          "name": "gis_osm_waterways_free_1.prj",
+          "bytes": 144,
+          "sha256": "ffc9162903c37f0867d1e7f36c20036a165f7aa555dda24c1ae0ee4328d2977f"
+        },
+        {
+          "name": "gis_osm_waterways_free_1.shp",
+          "bytes": 580,
+          "sha256": "28bad8995f593e553946ad91af792c6552e13725d4e3f17b9687cb51db709c08"
+        },
+        {
+          "name": "gis_osm_waterways_free_1.shx",
+          "bytes": 132,
+          "sha256": "5cac4fe25f38eccf324e05079db80e1235f3d62fe69d6dc9b328f71d90f75303"
+        }
+      ],
+      "layers": [
+        {
+          "table": "gis_osm_adminareas_a_free_1",
+          "shapeType": 5,
+          "featureCount": 11,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_buildings_a_free_1",
+          "shapeType": 5,
+          "featureCount": 1624,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "type",
+              "fieldType": "C",
+              "width": 20,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_landuse_a_free_1",
+          "shapeType": 5,
+          "featureCount": 140,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_natural_a_free_1",
+          "shapeType": 5,
+          "featureCount": 5,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_natural_free_1",
+          "shapeType": 1,
+          "featureCount": 642,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_places_a_free_1",
+          "shapeType": 5,
+          "featureCount": 1,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "population",
+              "fieldType": "N",
+              "width": 10,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_places_free_1",
+          "shapeType": 1,
+          "featureCount": 10,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "population",
+              "fieldType": "N",
+              "width": 10,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_pofw_a_free_1",
+          "shapeType": 5,
+          "featureCount": 14,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_pofw_free_1",
+          "shapeType": 1,
+          "featureCount": 1,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_pois_a_free_1",
+          "shapeType": 5,
+          "featureCount": 151,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_pois_free_1",
+          "shapeType": 1,
+          "featureCount": 1397,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_protected_areas_a_free_1",
+          "shapeType": 5,
+          "featureCount": 0,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_railways_free_1",
+          "shapeType": 3,
+          "featureCount": 11,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "layer",
+              "fieldType": "N",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "bridge",
+              "fieldType": "C",
+              "width": 1,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "tunnel",
+              "fieldType": "C",
+              "width": 1,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_roads_free_1",
+          "shapeType": 3,
+          "featureCount": 3623,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "ref",
+              "fieldType": "C",
+              "width": 20,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "oneway",
+              "fieldType": "C",
+              "width": 1,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "maxspeed",
+              "fieldType": "N",
+              "width": 3,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "layer",
+              "fieldType": "N",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "bridge",
+              "fieldType": "C",
+              "width": 1,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "tunnel",
+              "fieldType": "C",
+              "width": 1,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_traffic_a_free_1",
+          "shapeType": 5,
+          "featureCount": 92,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "calming",
+              "fieldType": "C",
+              "width": 30,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_traffic_free_1",
+          "shapeType": 1,
+          "featureCount": 783,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "calming",
+              "fieldType": "C",
+              "width": 30,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_transport_a_free_1",
+          "shapeType": 5,
+          "featureCount": 13,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_transport_free_1",
+          "shapeType": 1,
+          "featureCount": 125,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_water_a_free_1",
+          "shapeType": 5,
+          "featureCount": 25,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        },
+        {
+          "table": "gis_osm_waterways_free_1",
+          "shapeType": 3,
+          "featureCount": 4,
+          "deletedCount": 0,
+          "nullGeometryCount": 0,
+          "fields": [
+            {
+              "name": "osm_id",
+              "fieldType": "C",
+              "width": 12,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "code",
+              "fieldType": "N",
+              "width": 4,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "fclass",
+              "fieldType": "C",
+              "width": 28,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            },
+            {
+              "name": "width",
+              "fieldType": "N",
+              "width": 5,
+              "decimals": 0,
+              "jsonEncoding": "decimal-string"
+            },
+            {
+              "name": "name",
+              "fieldType": "C",
+              "width": 100,
+              "decimals": 0,
+              "jsonEncoding": "string"
+            }
+          ],
+          "encoding": "UTF-8",
+          "encodingSource": "cpg",
+          "languageDriverId": 0,
+          "cpg": "UTF-8",
+          "definition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateDefinition": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]",
+          "coordinateOperation": "Identity",
+          "coordinateOperationId": null,
+          "coordinateOperationDirection": "forward",
+          "coordinateAccuracyMeters": 0.0,
+          "coordinateOperationArea": null,
+          "coordinatesOutsideOperationArea": 0,
+          "coordinatesClampedToBounds": 0
+        }
+      ],
+      "horizontalCrs": "EPSG:4326",
+      "verticalConversion": "source-z-retained; no-vertical-transformation",
+      "measureEncoding": "geodMeasures; source-values; below-minus-1e38-as-null",
+      "numericEncoding": "DBF N/F as exact trimmed decimal strings",
+      "deletedRecords": "retained-with-geodDeleted; excluded-from-map",
+      "polygonRings": "source-XY orientation-and-containment; no-topology-repair"
+    },
+    "officialPackage": {
+      "conversion": 1,
+      "package": {
+        "datasetId": "geofabrik",
+        "id": "monaco-261011-free-shp",
+        "title": "Geofabrik Monaco · complete free GIS Shapefile bundle · 2026-10-11",
+        "format": "shapefile",
+        "url": "https://download.geofabrik.de/europe/monaco-261011-free.shp.zip",
+        "fileName": "monaco-261011-free.shp.zip",
+        "release": "2026-10-11",
+        "bounds": [
+          7.4016855,
+          43.5165358,
+          7.5329917,
+          43.7543687
+        ],
+        "sourceIndexUrl": "https://download.geofabrik.de/europe/monaco.html",
+        "sourceIndexSha256": null,
+        "publisherSize": "746384 bytes",
+        "expectedSha256": "33611b0f8fd1fbc6562ce6a2c93b35371d26da9e38f3015a889fb9e527e08ccd",
+        "documentationUrl": "https://download.geofabrik.de/osm-data-in-gis-formats-free.pdf",
+        "attribution": "© OpenStreetMap contributors; Geofabrik GmbH regional free GIS-format extract. Retain ODbL 1.0, original bundle README, source timestamp and Geofabrik format documentation.",
+        "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+        "dataTimestamp": "2026-10-11T20:21:06Z",
+        "warnings": [
+          "Only the pinned complete Monaco free GIS Shapefile ZIP is connected. Its 20 published thematic layers are retained with original members and DBF properties; this is Geofabrik's derived free GIS bundle, not raw OSM PBF, all OSM tags, extended paid shapefiles or a national download guarantee.",
+          "Original layer geometries can extend beyond Monaco and the selected area. The union bounds are the checked original feature bounds, not a legal country border, and the package is never clipped to the selected map area.",
+          "The complete Monaco raw PBF was tested and rejected at relation/8654's 1,024-member native bound. Existing parser limits remain unchanged; the Shapefile format is an explicit selection rather than a silent PBF fallback."
+        ]
+      },
+      "requestedBounds": [
+        7.41,
+        43.72,
+        7.43,
+        43.74
+      ],
+      "fetchedAt": "2026-10-14T07:32:35.279859700+00:00",
+      "bytes": 746384,
+      "sha256": "33611b0f8fd1fbc6562ce6a2c93b35371d26da9e38f3015a889fb9e527e08ccd",
+      "selection": "complete publisher original; area selects a package, not a geometry clip"
+    }
+  }
+]

@@ -1,0 +1,764 @@
+[
+  {
+    "datasetId": "pc-hrea",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea/items/HREA_Hong_Kong_2019_v1",
+    "collectionUrl": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea",
+    "document": {
+      "id": "HREA_Hong_Kong_2019_v1",
+      "bbox": [
+        113.834587,
+        22.152917,
+        114.44292,
+        22.561251
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/hrea/items/HREA_Hong_Kong_2019_v1"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=hrea&item=HREA_Hong_Kong_2019_v1",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "lightscore": {
+          "href": "https://hreadatasa.blob.core.windows.net/hrea/HREA/HREA_Hong_Kong_2019_v1/Hong_Kong_set_lightscore_sy_2019.tif",
+          "proj:shape": [
+            1469,
+            2183
+          ],
+          "proj:transform": [
+            0.0002777777998167684,
+            0.0,
+            113.8345871,
+            0.0,
+            -0.0002777777998638529,
+            22.56125069,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Probability of electrification"
+        },
+        "light-composite": {
+          "href": "https://hreadatasa.blob.core.windows.net/hrea/HREA/HREA_Hong_Kong_2019_v1/Hong_Kong_rade9lnmu_2019.tif",
+          "proj:shape": [
+            98,
+            146
+          ],
+          "proj:transform": [
+            0.004166666698630195,
+            0.0,
+            113.8345871,
+            0.0,
+            -0.004166666704081653,
+            22.56125069,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Nighttime light annual composite"
+        },
+        "night-proportion": {
+          "href": "https://hreadatasa.blob.core.windows.net/hrea/HREA/HREA_Hong_Kong_2019_v1/Hong_Kong_set_prplit_conf90_sy_2019.tif",
+          "proj:shape": [
+            1469,
+            2183
+          ],
+          "proj:transform": [
+            0.0002777777998167684,
+            0.0,
+            113.8345871,
+            0.0,
+            -0.0002777777998638529,
+            22.56125069,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Proportion of nights a settlement is brighter than uninhabited areas"
+        },
+        "estimated-brightness": {
+          "href": "https://hreadatasa.blob.core.windows.net/hrea/HREA/HREA_Hong_Kong_2019_v1/Hong_Kong_set_zscore_sy_2019.tif",
+          "proj:shape": [
+            1469,
+            2183
+          ],
+          "proj:transform": [
+            0.0002777777998167684,
+            0.0,
+            113.8345871,
+            0.0,
+            -0.0002777777998638529,
+            22.56125069,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Estimated brightness levels"
+        },
+        "tilejson": {
+          "title": "TileJSON with default rendering",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=hrea&item=HREA_Hong_Kong_2019_v1&assets=estimated-brightness&colormap_name=magma&rescale=1,200&format=png",
+          "type": "application/json",
+          "roles": [
+            "tiles"
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=hrea&item=HREA_Hong_Kong_2019_v1&assets=estimated-brightness&colormap_name=magma&rescale=1,200&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.834587,
+              22.152917
+            ],
+            [
+              114.44292,
+              22.152917
+            ],
+            [
+              114.44292,
+              22.561251
+            ],
+            [
+              113.834587,
+              22.561251
+            ],
+            [
+              113.834587,
+              22.152917
+            ]
+          ]
+        ]
+      },
+      "collection": "hrea",
+      "properties": {
+        "datetime": "2019-12-31T00:00:00Z",
+        "proj:epsg": 4326
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  },
+  {
+    "datasetId": "pc-biodiversity",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity/items/bii_2020_41.9239854959007_114.35276577801187_cog",
+    "collectionUrl": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity",
+    "document": {
+      "id": "bii_2020_41.9239854959007_114.35276577801187_cog",
+      "bbox": [
+        114.3527658,
+        34.7446497,
+        121.5321015,
+        41.9239855
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/io-biodiversity/items/bii_2020_41.9239854959007_114.35276577801187_cog"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=io-biodiversity&item=bii_2020_41.9239854959007_114.35276577801187_cog",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "data": {
+          "href": "https://pcdata01euw.blob.core.windows.net/impact/bii-v1/bii_2020/bii_2020_41.9239854959007_114.35276577801187_cog.tif",
+          "version": "v1",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Biodiversity Intactness",
+          "description": "Terrestrial biodiversity intactness at 100m resolution",
+          "raster:bands": [
+            {
+              "sampling": "area",
+              "data_type": "float32",
+              "spatial_resolution": 100
+            }
+          ]
+        },
+        "tilejson": {
+          "title": "TileJSON with default rendering",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=io-biodiversity&item=bii_2020_41.9239854959007_114.35276577801187_cog&assets=data&tile_format=png&colormap_name=io-bii&rescale=0,1&expression=0.97*(data_b1**3.84)&format=png",
+          "type": "application/json",
+          "roles": [
+            "tiles"
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=io-biodiversity&item=bii_2020_41.9239854959007_114.35276577801187_cog&assets=data&tile_format=png&colormap_name=io-bii&rescale=0,1&expression=0.97*(data_b1**3.84)&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.3527658,
+              34.7446497
+            ],
+            [
+              119.4444168,
+              34.7446497
+            ],
+            [
+              119.4812477,
+              34.748243
+            ],
+            [
+              119.4956208,
+              34.7545312
+            ],
+            [
+              119.8935745,
+              35.0078561
+            ],
+            [
+              121.3892694,
+              36.2628026
+            ],
+            [
+              121.5321015,
+              36.7326215
+            ],
+            [
+              121.5321015,
+              41.9239855
+            ],
+            [
+              114.3527658,
+              41.9239855
+            ],
+            [
+              114.3527658,
+              34.7446497
+            ]
+          ]
+        ]
+      },
+      "collection": "io-biodiversity",
+      "properties": {
+        "datetime": null,
+        "proj:epsg": 4326,
+        "proj:shape": [
+          7992,
+          7992
+        ],
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "proj:transform": [
+          0.0008983152841195215,
+          0.0,
+          114.35276577801187,
+          0.0,
+          -0.0008983152841195215,
+          41.9239854959007,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "start_datetime": "2020-01-01T00:00:00Z"
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/version/v1.1.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  },
+  {
+    "datasetId": "noaa-ohc",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content/items/ocean-heat-content-2020-Q4-700m",
+    "collectionUrl": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content",
+    "document": {
+      "id": "ocean-heat-content-2020-Q4-700m",
+      "bbox": [
+        -180.0,
+        -90.0,
+        180.0,
+        90.0
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content/items/ocean-heat-content-2020-Q4-700m"
+        },
+        {
+          "rel": "derived-from",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content-netcdf/items/heat_content_anomaly_0-700_seasonal",
+          "type": "application/geo+json",
+          "title": "Source NetCDF item"
+        },
+        {
+          "rel": "derived-from",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content-netcdf/items/mean_halosteric_sea_level_anomaly_0-700_seasonal",
+          "type": "application/geo+json",
+          "title": "Source NetCDF item"
+        },
+        {
+          "rel": "derived-from",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content-netcdf/items/mean_salinity_anomaly_0-700_seasonal",
+          "type": "application/geo+json",
+          "title": "Source NetCDF item"
+        },
+        {
+          "rel": "derived-from",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content-netcdf/items/mean_temperature_anomaly_0-700_seasonal",
+          "type": "application/geo+json",
+          "title": "Source NetCDF item"
+        },
+        {
+          "rel": "derived-from",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content-netcdf/items/mean_thermosteric_sea_level_anomaly_0-700_seasonal",
+          "type": "application/geo+json",
+          "title": "Source NetCDF item"
+        },
+        {
+          "rel": "derived-from",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-ocean-heat-content-netcdf/items/mean_total_steric_sea_level_anomaly_0-700_seasonal",
+          "type": "application/geo+json",
+          "title": "Source NetCDF item"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=noaa-cdr-ocean-heat-content&item=ocean-heat-content-2020-Q4-700m",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "heat_content": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/ocean-heat-content/heat_content_anomaly_0-700_seasonal_2020-Q4.tif",
+          "title": "Ocean Heat Content anomalies from WOA09 : 0-700m 2020-Q4",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "10^18 joules",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_salinity": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/ocean-heat-content/mean_salinity_anomaly_0-700_seasonal_2020-Q4.tif",
+          "title": "Mean salinity anomalies from WOA09 : 0-700m 2020-Q4",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_temperature": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/ocean-heat-content/mean_temperature_anomaly_0-700_seasonal_2020-Q4.tif",
+          "title": "Mean temperature anomalies from WOA09 : 0-700m 2020-Q4",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "degrees Celsius",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_halosteric_sea_level": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/ocean-heat-content/mean_halosteric_sea_level_anomaly_0-700_seasonal_2020-Q4.tif",
+          "title": "Mean halosteric sea level anomalies from WOA09 : 0-700m 2020-Q4",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "millimeters",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_thermosteric_sea_level": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/ocean-heat-content/mean_thermosteric_sea_level_anomaly_0-700_seasonal_2020-Q4.tif",
+          "title": "Mean thermosteric sea level anomalies from WOA09 : 0-700m 2020-Q4",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "millimeters",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "mean_total_steric_sea_level": {
+          "href": "https://noaacdr.blob.core.windows.net/cogs/ocean-heat-content/mean_total_steric_sea_level_anomaly_0-700_seasonal_2020-Q4.tif",
+          "title": "Mean total steric sea level anomalies from WOA09 : 0-700m 2020-Q4",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "millimeters",
+              "nodata": "nan",
+              "data_type": "float32"
+            }
+          ]
+        },
+        "tilejson": {
+          "title": "TileJSON with default rendering",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=noaa-cdr-ocean-heat-content&item=ocean-heat-content-2020-Q4-700m&assets=heat_content&tile_format=png&colormap_name=rdylbu_r&rescale=-25,25&format=png",
+          "type": "application/json",
+          "roles": [
+            "tiles"
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=noaa-cdr-ocean-heat-content&item=ocean-heat-content-2020-Q4-700m&assets=heat_content&tile_format=png&colormap_name=rdylbu_r&rescale=-25,25&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              180,
+              -90
+            ],
+            [
+              180,
+              90
+            ],
+            [
+              -180,
+              90
+            ],
+            [
+              -180,
+              -90
+            ],
+            [
+              180,
+              -90
+            ]
+          ]
+        ]
+      },
+      "collection": "noaa-cdr-ocean-heat-content",
+      "properties": {
+        "datetime": null,
+        "proj:epsg": 4326,
+        "proj:shape": [
+          180,
+          360
+        ],
+        "end_datetime": "2020-12-31T23:59:59Z",
+        "proj:transform": [
+          1.0,
+          0.0,
+          -180.0,
+          0.0,
+          -1.0,
+          90.0
+        ],
+        "start_datetime": "2020-10-01T00:00:00Z",
+        "noaa_cdr:interval": "seasonal",
+        "noaa_cdr:max_depth": 700
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  },
+  {
+    "datasetId": "noaa-nclimgrid",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly/items/nclimgrid-202209",
+    "collectionUrl": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly",
+    "document": {
+      "id": "nclimgrid-202209",
+      "bbox": [
+        -124.708333,
+        24.541666,
+        -66.999995,
+        49.375001
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-nclimgrid-monthly/items/nclimgrid-202209"
+        },
+        {
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=noaa-nclimgrid-monthly&item=nclimgrid-202209",
+          "title": "Map of item",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "prcp": {
+          "href": "https://nclimgridwesteurope.blob.core.windows.net/nclimgrid-cogs/nclimgrid-monthly/nclimgrid-prcp-202209.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Precipitation (mm)",
+          "raster:bands": [
+            {
+              "unit": "mm",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tavg": {
+          "href": "https://nclimgridwesteurope.blob.core.windows.net/nclimgrid-cogs/nclimgrid-monthly/nclimgrid-tavg-202209.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Average Temperature (degree Celsius)",
+          "raster:bands": [
+            {
+              "unit": "degree Celsius",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tmax": {
+          "href": "https://nclimgridwesteurope.blob.core.windows.net/nclimgrid-cogs/nclimgrid-monthly/nclimgrid-tmax-202209.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Maximmum Temperature (degree Celsius)",
+          "raster:bands": [
+            {
+              "unit": "degree Celsius",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tmin": {
+          "href": "https://nclimgridwesteurope.blob.core.windows.net/nclimgrid-cogs/nclimgrid-monthly/nclimgrid-tmin-202209.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Monthly Minimum Temperature (degree Celsius)",
+          "raster:bands": [
+            {
+              "unit": "degree Celsius",
+              "nodata": "nan",
+              "data_type": "float32",
+              "spatial_resolution": 5000
+            }
+          ]
+        },
+        "tilejson": {
+          "title": "TileJSON with default rendering",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=noaa-nclimgrid-monthly&item=nclimgrid-202209&assets=prcp&assets=tavg&assets=tmin&assets=tmax&tile_format=png&colormap_name=ylgnbu&rescale=0&rescale=250&format=png",
+          "type": "application/json",
+          "roles": [
+            "tiles"
+          ]
+        },
+        "rendered_preview": {
+          "title": "Rendered preview",
+          "rel": "preview",
+          "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=noaa-nclimgrid-monthly&item=nclimgrid-202209&assets=prcp&assets=tavg&assets=tmin&assets=tmax&tile_format=png&colormap_name=ylgnbu&rescale=0&rescale=250&format=png",
+          "roles": [
+            "overview"
+          ],
+          "type": "image/png"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -66.999995,
+              24.541666
+            ],
+            [
+              -66.999995,
+              49.375001
+            ],
+            [
+              -124.708333,
+              49.375001
+            ],
+            [
+              -124.708333,
+              24.541666
+            ],
+            [
+              -66.999995,
+              24.541666
+            ]
+          ]
+        ]
+      },
+      "collection": "noaa-nclimgrid-monthly",
+      "properties": {
+        "created": "2022-10-26T21:35:01.173368Z",
+        "datetime": null,
+        "proj:epsg": 4326,
+        "proj:shape": [
+          596,
+          1385
+        ],
+        "end_datetime": "2022-09-30T23:59:59Z",
+        "proj:transform": [
+          0.04166667,
+          0.0,
+          -124.70833333,
+          0.0,
+          -0.04166667,
+          49.37500127
+        ],
+        "start_datetime": "2022-09-01T00:00:00Z"
+      },
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+      ],
+      "stac_version": "1.0.0"
+    }
+  }
+]

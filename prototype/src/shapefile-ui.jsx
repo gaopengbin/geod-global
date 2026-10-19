@@ -1,5 +1,4 @@
 import React from 'react';
-import {Disclosure} from './ui/index.jsx';
 import {useI18n} from './i18n.jsx';
 export function vectorErrorText(message,t) {
   const reference=/^OSM (node|way|relation)\/(\d+) has missing (node|way|relation)\/(\d+); import a complete extract$/.exec(message);
@@ -18,7 +17,7 @@ export function ShapefileDetails({source}) {
   return <><dt>{t('Original format')}</dt><dd>Shapefile · {t(source.container==='zip'?'Original ZIP retained byte for byte':'Exact companion files in a reproducible ZIP bundle')}</dd>
     <dt>{t('Map and GeoJSON coordinates')}</dt><dd>EPSG:4326 · {t('Source Z and M values are retained; heights are not transformed.')}</dd>
     <dt>{t('Numeric attributes')}</dt><dd>{t('DBF numeric fields export as exact decimal strings.')}</dd>
-    <dt className="geopackage-section-title">{t('Shapefile layers')}</dt><dd className="geopackage-section-content">{source.layers.map(l=><Disclosure key={l.table} summary={`${l.table} · ${t('{count} features',{count:number(l.featureCount)})}`}><dl className="vector-properties geopackage-layer-properties">
+    <dt className="geopackage-section-title">{t('Shapefile layers')}</dt><dd className="geopackage-section-content">{source.layers.map(l=><section className="bui-info-section" key={l.table}><h4>{`${l.table} · ${t('{count} features',{count:number(l.featureCount)})}`}</h4><dl className="vector-properties geopackage-layer-properties">
       <dt>{t('Source layer')}</dt><dd>{l.table}</dd><dt>{t('Text encoding')}</dt><dd>{l.encoding} · {l.encodingSource==='cpg'?`CPG: ${l.cpg}`:l.encodingSource==='ldid'?`LDID: 0x${l.languageDriverId.toString(16).padStart(2,'0')}`:t('ASCII text only; no encoding assumed')}</dd>
       <dt>{t('Record handling')}</dt><dd>{t('{deleted} deleted records retained; {empty} null geometries',{deleted:number(l.deletedCount),empty:number(l.nullGeometryCount)})}</dd>
       <dt>{t('Horizontal datum operation')}</dt><dd>{l.coordinateOperation}</dd>
@@ -26,8 +25,8 @@ export function ShapefileDetails({source}) {
       {l.coordinateOperationArea&&<><dt>{t('Coordinate operation area')}</dt><dd>{l.coordinateOperationArea.join(', ')}</dd></>}
       <dt>{t('Field types and export encoding')}</dt><dd><dl className="vector-properties geopackage-field-properties">{l.fields.map(f=><React.Fragment key={f.name}><dt>{f.name}</dt><dd>{f.fieldType} ({f.width}, {f.decimals}) · {f.jsonEncoding}</dd></React.Fragment>)}</dl></dd>
       <dt>{t('Original coordinate definition')}</dt><dd className="mono">{l.definition}</dd>{l.coordinateDefinition!==l.definition&&<><dt>{t('Coordinate definition used for conversion')}</dt><dd className="mono">{l.coordinateDefinition}</dd></>}
-    </dl></Disclosure>)}</dd>
-    <dt className="geopackage-section-title">{t('Companion file checksums')}</dt><dd className="geopackage-section-content"><Disclosure summary={t('{count} original files',{count:number(source.files.length)})}><dl className="vector-properties geopackage-layer-properties">{source.files.map(f=><React.Fragment key={f.name}><dt>{f.name}</dt><dd className="mono">{f.sha256} · {number(f.bytes)} B</dd></React.Fragment>)}</dl></Disclosure></dd>
+    </dl></section>)}</dd>
+    <dt className="geopackage-section-title">{t('Companion file checksums')}</dt><dd className="geopackage-section-content"><section className="bui-info-section"><h4>{t('{count} original files',{count:number(source.files.length)})}</h4><dl className="vector-properties geopackage-layer-properties">{source.files.map(f=><React.Fragment key={f.name}><dt>{f.name}</dt><dd className="mono">{f.sha256} · {number(f.bytes)} B</dd></React.Fragment>)}</dl></section></dd>
   </>;
 }
 export function ShapefileNotice({source}) {

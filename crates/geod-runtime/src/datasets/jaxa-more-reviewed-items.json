@@ -1,0 +1,970 @@
+[
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/E000.00-E090.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              0.0,
+              90.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        0.0,
+        0.0,
+        90.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T04:07:03Z",
+        "end_datetime": "2026-09-30T11:19:39Z",
+        "created": "2026-10-01T03:13:04.854911Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E000.00-E090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./E000.00-N00.00-E090.00-N90.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5727.0,
+              "max": 36288.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/E000.00-E090.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.0,
+              -90.0
+            ],
+            [
+              90.0,
+              -90.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        0.0,
+        -90.0,
+        90.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T02:47:01Z",
+        "end_datetime": "2026-09-30T09:56:22Z",
+        "created": "2026-10-01T03:13:26.705764Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E000.00-E090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./E000.00-S90.00-E090.00-N00.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5716.0,
+              "max": 35782.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/E090.00-E180.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              0.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              180.0,
+              90.0
+            ],
+            [
+              90.0,
+              90.0
+            ],
+            [
+              90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        90.0,
+        0.0,
+        180.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:25:58Z",
+        "end_datetime": "2026-09-30T11:03:17Z",
+        "created": "2026-10-01T03:13:08.330866Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E090.00-E180.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./E090.00-N00.00-E180.00-N90.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5726.0,
+              "max": 36505.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/E090.00-E180.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              90.0,
+              -90.0
+            ],
+            [
+              180.0,
+              -90.0
+            ],
+            [
+              180.0,
+              0.0
+            ],
+            [
+              90.0,
+              0.0
+            ],
+            [
+              90.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        90.0,
+        -90.0,
+        180.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:49:52Z",
+        "end_datetime": "2026-09-30T04:48:03Z",
+        "created": "2026-10-01T03:13:29.651318Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over E090.00-E180.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./E090.00-S90.00-E180.00-N00.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5850.0,
+              "max": 36145.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/W090.00-E000.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              90.0
+            ],
+            [
+              -90.0,
+              90.0
+            ],
+            [
+              -90.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -90.0,
+        0.0,
+        0.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:19:41Z",
+        "end_datetime": "2026-09-30T11:28:51Z",
+        "created": "2026-10-01T03:13:10.560250Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W090.00-E000.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./W090.00-N00.00-E000.00-N90.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5592.0,
+              "max": 36201.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/W090.00-E000.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -90.0,
+              -90.0
+            ],
+            [
+              0.0,
+              -90.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -90.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -90.0,
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T09:25:16Z",
+        "end_datetime": "2026-09-30T11:48:54Z",
+        "created": "2026-10-01T03:13:25.306407Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W090.00-E000.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./W090.00-S90.00-E000.00-N00.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5782.0,
+              "max": 36109.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/W180.00-W090.00/N00.00-N90.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "N00.00-N90.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -180.0,
+              0.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -90.0,
+              90.0
+            ],
+            [
+              -180.0,
+              90.0
+            ],
+            [
+              -180.0,
+              0.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -180.0,
+        0.0,
+        -90.0,
+        90.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T00:22:30Z",
+        "end_datetime": "2026-09-30T04:18:50Z",
+        "created": "2026-10-01T03:13:08.942523Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W180.00-W090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./W180.00-N00.00-W090.00-N90.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5857.0,
+              "max": 36407.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  },
+  {
+    "datasetId": "jaxa-sgli-sst",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/2026-09/1/W180.00-W090.00/S90.00-N00.00.json",
+    "collectionUrl": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly/collection.json",
+    "document": {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+      ],
+      "id": "S90.00-N00.00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -180.0,
+              -90.0
+            ],
+            [
+              -90.0,
+              -90.0
+            ],
+            [
+              -90.0,
+              0.0
+            ],
+            [
+              -180.0,
+              0.0
+            ],
+            [
+              -180.0,
+              -90.0
+            ]
+          ]
+        ]
+      },
+      "bbox": [
+        -180.0,
+        -90.0,
+        -90.0,
+        0.0
+      ],
+      "properties": {
+        "datetime": null,
+        "start_datetime": "2026-09-01T12:58:34Z",
+        "end_datetime": "2026-09-29T22:20:01Z",
+        "created": "2026-10-01T03:13:25.128526Z",
+        "updated": "null",
+        "license": "proprietary",
+        "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+        "platform": "Global Change Observation Mission - Climate (GCOM-C)",
+        "instrument": [
+          "SGLI"
+        ],
+        "mission": "Global Change Observation Mission",
+        "je:version": "v1",
+        "je:img_level": {
+          "level-0": "raster",
+          "level-1": "overview",
+          "level-2": "overview"
+        },
+        "proj:epsg": 4326
+      },
+      "links": [
+        {
+          "rel": "collection",
+          "href": "../../../collection.json",
+          "type": "application/json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "root",
+          "href": "../../../collection.json",
+          "title": "Sea surface temperature (Daytime/Monthly)"
+        },
+        {
+          "rel": "parent",
+          "href": "./catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG Level-1 files in 2026-09 over W180.00-W090.00"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "assets": {
+        "SST": {
+          "href": "./W180.00-S90.00-W090.00-N00.00-SST.tiff",
+          "type": "image/tiff; application=geotiff",
+          "title": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly",
+          "je:rasters": {
+            "value": {
+              "def_interp": "mode",
+              "unit": "degreeC"
+            },
+            "dn2value": {
+              "slope": 0.0012000000569969416,
+              "offset": -10.0
+            },
+            "dn": {
+              "data_type": "uint16",
+              "min": 5656.0,
+              "max": 35972.0,
+              "nodata": 65535.0,
+              "error": [
+                65535.0
+              ]
+            }
+          },
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "collection": "JAXA.G-Portal_GCOM-C.SGLI_standard.L3-SST.daytime.v3_global_monthly"
+    }
+  }
+]

@@ -6,12 +6,13 @@ import {Style,Fill,Stroke,Circle as CircleStyle} from 'ol/style.js';
 import {asArray} from 'ol/color.js';
 import {createEmpty,extend} from 'ol/extent.js';
 import {FolderOpen,Maximize,Download,FileDown,Shapes} from 'lucide-react';
-import {Button,Spinner,EmptyState,ResizableGroup,ResizablePanel,ResizeHandle,Disclosure,Select} from './ui/index.jsx';
+import { InfoDetails,Button,Spinner,EmptyState,ResizableGroup,ResizablePanel,ResizeHandle,Select} from './ui/index.jsx';
 import {vectorRequest,exportVector} from './vector-client.js';import {useI18n} from './i18n.jsx';
 import {FeatureProvenanceDetails,OsmProvenanceDetails} from './features-ui.jsx';
 import {GeoPackageDetails,GeoPackageAccuracyNotice} from './geopackage-ui.jsx';
 import {ShapefileDetails,ShapefileNotice,vectorErrorText} from './shapefile-ui.jsx';
 import {LocalOsmDetails} from './osm-local-ui.jsx';
+import {vectorLicenseLabel} from './vector-license.js';
 import 'ol/ol.css';import './vector.css';
 function mapStyles(target) {
   const theme=getComputedStyle(target),token=name=>theme.getPropertyValue(name).trim();
@@ -67,15 +68,15 @@ export function VectorWorkspace({id}) {
           {asset.localOsm&&<label className="vector-layer-selector">{t('OSM object type')}<Select aria-label={t('OSM object type')} value={selectedLayer} onChange={e=>setSelectedLayer(e.target.value)}><option value="">{t('All objects')}</option>{Object.entries(asset.localOsm.objectCounts).filter(([,n])=>n>0).map(([kind,n])=><option key={kind} value={kind}>{t(kind==='node'?'Nodes':kind==='way'?'Ways':'Relations')} · {number(n)}</option>)}</Select></label>}
           {asset.geoPackage&&<label className="vector-layer-selector">{t('GeoPackage layer')}<Select aria-label={t('GeoPackage layer')} value={selectedLayer} onChange={e=>setSelectedLayer(e.target.value)}><option value="">{t('All layers')}</option>{asset.geoPackage.layers.map(l=><option value={l.table} key={l.table}>{l.identifier||l.table} · {number(l.featureCount)}</option>)}</Select></label>}
           {asset.shapefile&&<label className="vector-layer-selector">{t('Shapefile layer')}<Select aria-label={t('Shapefile layer')} value={selectedLayer} onChange={e=>setSelectedLayer(e.target.value)}><option value="">{t('All layers')}</option>{asset.shapefile.layers.map(l=><option value={l.table} key={l.table}>{l.table} · {number(l.featureCount)}</option>)}</Select></label>}
-          <div className="vector-map-actions"><Button size="icon" variant="secondary" aria-label={t('Fit vector extent')} tooltip={t('Fit vector extent')} onClick={fit}><Maximize size={16}/></Button><Button size="icon" variant="secondary" aria-label={t('Export GeoJSON')} tooltip={t('Export GeoJSON')} onClick={()=>exportVector(id).catch(e=>setError(e.message))}><Download size={16}/></Button>{(asset.geoPackage||asset.shapefile||asset.localOsm)&&<Button size="icon" variant="secondary" aria-label={t(asset.localOsm?'Export original OSM file':asset.geoPackage?'Export original GeoPackage':'Export original Shapefile bundle')} tooltip={t(asset.localOsm?'Export original OSM file':asset.geoPackage?'Export original GeoPackage':'Export original Shapefile bundle')} onClick={()=>exportVector(id,true).catch(e=>setError(e.message))}><FileDown size={16}/></Button>}</div>
+          <div className="vector-map-actions">          <InfoDetails closeLabel={t('Close')} summary={t('Vector source details')}><dl className="vector-properties">
+            <FeatureProvenanceDetails source={asset.remoteSource} geojsonSha256={asset.geojsonSha256} sourceSha256={asset.sourceSha256} sourceBytes={asset.bytes}/>
+            <OsmProvenanceDetails source={asset.osmSource} geojsonSha256={asset.geojsonSha256}/>
+            <GeoPackageDetails source={asset.geoPackage}/><ShapefileDetails source={asset.shapefile}/><LocalOsmDetails source={asset.localOsm}/>
+          </dl></InfoDetails><Button size="icon" variant="secondary" aria-label={t('Fit vector extent')} tooltip={t('Fit vector extent')} onClick={fit}><Maximize size={16}/></Button><Button size="icon" variant="secondary" aria-label={t('Export GeoJSON')} tooltip={t('Export GeoJSON')} onClick={()=>exportVector(id).catch(e=>setError(e.message))}><Download size={16}/></Button>{(asset.geoPackage||asset.shapefile||asset.localOsm)&&<Button size="icon" variant="secondary" aria-label={t(asset.localOsm?'Export original OSM file':asset.geoPackage?'Export original GeoPackage':'Export original Shapefile bundle')} tooltip={t(asset.localOsm?'Export original OSM file':asset.geoPackage?'Export original GeoPackage':'Export original Shapefile bundle')} onClick={()=>exportVector(id,true).catch(e=>setError(e.message))}><FileDown size={16}/></Button>}</div>
           <h3>{t('Feature attributes')}</h3>
           {selected?<dl className="vector-properties">{selected.sourceLayer&&<><dt>{t(asset.localOsm?'OSM object type':asset.shapefile?'Source layer':'Source table')}</dt><dd>{selected.sourceLayer}</dd></>}{selected.id!==undefined&&<><dt>{t('Feature ID')}</dt><dd>{String(selected.id)}</dd></>}{attributes.map(([key,value],index)=><React.Fragment key={index}><dt>{key}</dt><dd>{value!==null&&typeof value==='object'?JSON.stringify(value):String(value??'')}</dd></React.Fragment>)}{selected.measures!==undefined&&<><dt>{t('Original M values')}</dt><dd>{JSON.stringify(selected.measures)}</dd></>}</dl>:<p className="vector-source-note">{t('No feature selected')}</p>}
-          {asset.attribution&&<p className="vector-attribution">{asset.attribution} · <a href={asset.licenseUrl} target="_blank" rel="noreferrer">ODbL</a></p>}
-          {asset.remoteSource&&<Disclosure className="vector-attribution" summary={t('Query source details')}><dl className="vector-properties"><FeatureProvenanceDetails source={asset.remoteSource} geojsonSha256={asset.geojsonSha256} sourceSha256={asset.sourceSha256} sourceBytes={asset.bytes}/></dl></Disclosure>}
-          {asset.osmSource&&<Disclosure className="vector-attribution" summary={t('Query source details')}><dl className="vector-properties"><OsmProvenanceDetails source={asset.osmSource} geojsonSha256={asset.geojsonSha256}/></dl></Disclosure>}
-          {asset.geoPackage&&<Disclosure className="vector-attribution" summary={t('Vector source details')}><dl className="vector-properties"><GeoPackageDetails source={asset.geoPackage}/></dl></Disclosure>}
-          {asset.shapefile&&<Disclosure className="vector-attribution" summary={t('Vector source details')}><dl className="vector-properties"><ShapefileDetails source={asset.shapefile}/></dl></Disclosure>}
-          {asset.localOsm&&<Disclosure className="vector-attribution" summary={t('Vector source details')}><dl className="vector-properties"><LocalOsmDetails source={asset.localOsm}/></dl></Disclosure>}
+          {asset.attribution&&<p className="vector-attribution">{asset.attribution} · <a href={asset.licenseUrl} target="_blank" rel="noreferrer">{t(vectorLicenseLabel(asset))}</a></p>}
+
         </>}
         {error&&<p className="vector-error" role="alert">{vectorErrorText(error,t)}</p>}
       </aside>

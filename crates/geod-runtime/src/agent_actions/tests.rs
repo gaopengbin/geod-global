@@ -1,5 +1,50 @@
 use super::*;
 
+#[tokio::test]
+async fn workspace_context_reports_displayed_catalog_without_counting_local_jobs() {
+    let directory = tempfile::tempdir().unwrap();
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    let session = Uuid::new_v4().to_string();
+    let raw = json!({"page":"Explore","provider":"earth-search","bounds":[-14,-12,51,37],"start":"2026-10-09","end":"2026-10-10","cloudMin":0,"cloudMax":0,"projectId":null,
+        "catalog":{"state":"ready","totalCount":162,"filteredCount":15,"selectedCount":0,"loadedCount":0,"visibleLoadedCount":0,"complete":true,"pages":2,"retrievedAt":"2026-10-10T12:00:00Z","includesSavedProjectScenes":false,"activeDate":"2026-10-10","textFilter":"","sort":"date","dateCounts":[{"date":"2026-10-10","count":15},{"date":"2026-10-09","count":147}],"dateCountsTruncated":false}});
+    let context: MapContext = serde_json::from_value(raw.clone()).unwrap();
+    let expected = serde_json::to_value(&context).unwrap();
+    let result = call(
+        manager.clone(),
+        &session,
+        "geod_workspace_context",
+        json!({}),
+        Some(context),
+    )
+    .await
+    .unwrap();
+    assert_eq!(result["context"]["catalog"], expected["catalog"]);
+    assert_eq!(result["context"]["cloudMin"].as_f64(), Some(0.0));
+    assert!(result["context"]["catalog"].get("searchId").is_none());
+    for (field, value) in [
+        ("filteredCount", json!(163)),
+        ("visibleLoadedCount", json!(1)),
+        ("textFilter", json!("x".repeat(201))),
+        ("dateCounts", json!([{"date":"2026-10-10","count":163}])),
+    ] {
+        let mut invalid = raw.clone();
+        invalid["catalog"][field] = value;
+        assert!(serde_json::from_value::<MapContext>(invalid)
+            .unwrap()
+            .validate()
+            .is_err());
+    }
+    let mut forged = raw.clone();
+    forged["catalog"]["searchId"] = json!(Uuid::new_v4().to_string());
+    assert!(serde_json::from_value::<MapContext>(forged).is_err());
+    let mut invalid_cloud = raw;
+    invalid_cloud["cloudMin"] = json!(1);
+    assert!(serde_json::from_value::<MapContext>(invalid_cloud)
+        .unwrap()
+        .validate()
+        .is_err());
+}
+
 #[test]
 fn map_context_accepts_date_free_dem_without_weakening_temporal_validation() {
     let project_id = Uuid::new_v4().to_string();
@@ -30,6 +75,205 @@ fn map_context_accepts_date_free_dem_without_weakening_temporal_validation() {
         .unwrap()
         .validate()
         .is_err());
+}
+
+#[test]
+fn map_context_observes_only_known_public_products_without_inventing_dates() {
+    for dataset in crate::datasets::list() {
+        let raw = json!({"page":"Explore","provider":format!("dataset-{}",dataset.id),"bounds":[110.1,40.1,110.2,40.2],"cloudMax":100,"projectId":null});
+        let context: MapContext = serde_json::from_value(raw).unwrap();
+        context.validate().unwrap();
+        assert!(context.dataset.is_none());
+        let value = serde_json::to_value(context).unwrap();
+        assert!(value.get("dataset").is_none());
+        assert!(value.get("start").is_none());
+        assert!(value.get("end").is_none());
+        assert!(value.get("catalog").is_none());
+    }
+    for provider in ["dataset-", "dataset-unknown"] {
+        let raw = json!({"page":"Explore","provider":provider,"bounds":[110.1,40.1,110.2,40.2],"start":"2025-01-01","end":"2025-01-02","cloudMax":100,"projectId":null});
+        assert!(serde_json::from_value::<MapContext>(raw)
+            .unwrap()
+            .validate()
+            .is_err());
+    }
+}
+
+#[test]
+fn map_context_fixed_soil_and_climate_preserves_reference_scope_and_rejects_invented_selectors() {
+    for (id, bounds, layer, country) in [
+        (
+            "worldclim",
+            json!([85., 27., 86., 28.]),
+            "tavg",
+            Some("NPL"),
+        ),
+        (
+            "soilgrids",
+            json!([-67., -24., -53., -21.]),
+            "most-probable",
+            None,
+        ),
+    ] {
+        let mut selection = json!({"datasetId":id,"bounds":bounds,"layer":layer});
+        if let Some(country) = country {
+            selection["country"] = json!(country);
+        }
+        let raw = json!({"page":"Explore","provider":format!("dataset-{id}"),"bounds":bounds,"cloudMax":100,"projectId":null,"dataset":selection});
+        let context: MapContext = serde_json::from_value(raw.clone()).unwrap();
+        context.validate().unwrap();
+        let observed = serde_json::to_value(context).unwrap();
+        assert!(observed.get("start").is_none());
+        assert!(observed.get("end").is_none());
+        for (field, value) in [
+            ("year", json!(2025)),
+            ("month", json!(1)),
+            ("layer", json!("unreviewed-layer")),
+        ] {
+            let mut changed = raw.clone();
+            changed["dataset"][field] = value;
+            assert!(
+                serde_json::from_value::<MapContext>(changed)
+                    .unwrap()
+                    .validate()
+                    .is_err(),
+                "{id}/{field}"
+            );
+        }
+        let mut depth = raw;
+        depth["dataset"]["depth"] = json!("0-5cm");
+        assert!(serde_json::from_value::<MapContext>(depth).is_err());
+    }
+}
+
+#[test]
+fn map_context_complete_public_form_matches_provider_and_exact_area() {
+    let raw = json!({"page":"Explore","provider":"dataset-worldpop","bounds":[-170.0,-19.0,-169.0,-18.0],"cloudMax":100,"projectId":null,
+        "dataset":{"datasetId":"worldpop","bounds":[-170.0,-19.0,-169.0,-18.0],"year":2020,"country":"NIU","layer":"population"}});
+    let context: MapContext = serde_json::from_value(raw.clone()).unwrap();
+    context.validate().unwrap();
+    assert_eq!(
+        serde_json::to_value(context).unwrap()["dataset"],
+        raw["dataset"]
+    );
+    for (field, value) in [
+        ("datasetId", json!("worldcover")),
+        ("bounds", json!([-170.0, -19.0, -169.000000000001, -18.0])),
+        ("year", json!(2021)),
+        ("country", json!("../NIU")),
+        ("layer", json!("visual")),
+    ] {
+        let mut invalid = raw.clone();
+        invalid["dataset"][field] = value;
+        assert!(
+            serde_json::from_value::<MapContext>(invalid)
+                .unwrap()
+                .validate()
+                .is_err(),
+            "{field}"
+        );
+    }
+    let mut incomplete = raw.clone();
+    incomplete["dataset"]
+        .as_object_mut()
+        .unwrap()
+        .remove("country");
+    assert!(serde_json::from_value::<MapContext>(incomplete)
+        .unwrap()
+        .validate()
+        .is_err());
+    let mut wrong_provider = raw;
+    wrong_provider["provider"] = json!("earth-search");
+    wrong_provider["start"] = json!("2025-01-01");
+    wrong_provider["end"] = json!("2025-01-02");
+    assert!(serde_json::from_value::<MapContext>(wrong_provider)
+        .unwrap()
+        .validate()
+        .is_err());
+}
+
+#[test]
+fn map_context_public_product_rejects_stale_imagery_and_transfer_inputs() {
+    let raw = json!({"page":"Explore","provider":"dataset-worldcover","bounds":[15.1,78.1,15.2,78.2],"cloudMax":100,"projectId":null,
+        "dataset":{"datasetId":"worldcover","bounds":[15.1,78.1,15.2,78.2],"year":2021,"layer":"map"}});
+    let mut stale = raw.clone();
+    stale["catalog"] = json!({"state":"ready","totalCount":162,"filteredCount":15,"selectedCount":0,"loadedCount":0,"visibleLoadedCount":0,"complete":true,"pages":2,"retrievedAt":"2026-10-10T12:00:00Z","includesSavedProjectScenes":false,"activeDate":"2026-10-10","textFilter":"","sort":"date","dateCounts":[],"dateCountsTruncated":false});
+    assert!(serde_json::from_value::<MapContext>(stale)
+        .unwrap()
+        .validate()
+        .unwrap_err()
+        .contains("imagery catalog"));
+    for (field, value) in [
+        ("href", json!("https://unreviewed.example/file.tif")),
+        ("headers", json!({"Authorization":"secret"})),
+        ("token", json!("secret")),
+    ] {
+        let mut forged = raw.clone();
+        forged["dataset"][field] = value;
+        assert!(serde_json::from_value::<MapContext>(forged).is_err());
+    }
+    let mut forged = raw;
+    forged["download"] = json!(true);
+    assert!(serde_json::from_value::<MapContext>(forged).is_err());
+}
+
+#[test]
+fn map_context_public_product_keeps_cloud_polygon_and_partial_date_guards() {
+    let raw = json!({"page":"Explore","provider":"dataset-worldcover","bounds":[15.1,78.1,15.2,78.2],"cloudMax":100,"projectId":null});
+    for (field, value) in [
+        ("bounds", json!([15.2, 78.1, 15.1, 78.2])),
+        ("cloudMax", json!(101)),
+        ("cloudMin", json!(101)),
+        ("start", json!("2025-01-01")),
+        ("end", json!("2025-01-02")),
+    ] {
+        let mut invalid = raw.clone();
+        invalid[field] = value;
+        assert!(
+            serde_json::from_value::<MapContext>(invalid)
+                .unwrap()
+                .validate()
+                .is_err(),
+            "{field}"
+        );
+    }
+    let mut polygon = raw.clone();
+    polygon["geometry"] = json!({"type":"Polygon","coordinates":[[[15.11,78.11],[15.19,78.11],[15.19,78.19],[15.11,78.19],[15.11,78.11]]]});
+    serde_json::from_value::<MapContext>(polygon.clone())
+        .unwrap()
+        .validate()
+        .unwrap();
+    polygon["geometry"] = json!({"type":"Polygon","coordinates":[[[110.,40.],[111.,40.],[111.,41.],[110.,41.],[110.,40.]]]});
+    assert!(serde_json::from_value::<MapContext>(polygon)
+        .unwrap()
+        .validate()
+        .unwrap_err()
+        .contains("overlap"));
+}
+
+#[tokio::test]
+async fn map_context_public_workspace_summary_retains_form_without_starting_tasks() {
+    let directory = tempfile::tempdir().unwrap();
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    let raw = json!({"page":"Explore","provider":"dataset-worldcover","bounds":[15.1,78.1,15.2,78.2],"cloudMax":100,"projectId":null,
+        "dataset":{"datasetId":"worldcover","bounds":[15.1,78.1,15.2,78.2],"year":2021,"layer":"map"}});
+    let context: MapContext = serde_json::from_value(raw.clone()).unwrap();
+    let result = call(
+        manager.clone(),
+        &Uuid::new_v4().to_string(),
+        "geod_workspace_context",
+        json!({}),
+        Some(context),
+    )
+    .await
+    .unwrap();
+    assert_eq!(result["context"]["dataset"], raw["dataset"]);
+    assert_eq!(result["context"]["provider"], raw["provider"]);
+    assert!(result["context"].get("catalog").is_none());
+    assert!(result["context"].get("start").is_none());
+    assert!(manager.list().await.is_empty());
+    assert!(manager.list_projects().await.is_empty());
+    assert!(manager.list_stac_connections().await.is_empty());
 }
 
 pub(super) async fn local_source(manager: &JobManager) -> Job {
@@ -97,6 +341,7 @@ pub(super) async fn project_search_fixture(manager: &JobManager, session: &str) 
         c.footprint = Some(footprint::rectangle(query.bounds));
     }
     let receipt = SearchReceipt {
+        selection_scope: None,
         id: Uuid::new_v4().to_string(),
         session_id: session.into(),
         candidates,
@@ -520,6 +765,7 @@ fn normalized_plan_hash_ignores_time_and_ids_but_tracks_scope_and_policy() {
         created_at: now(),
         expires_at: now(),
         action: Action::Download {
+            originals_only: false,
             acquisition: None,
             query,
             metadata_sha256: "abc".into(),
@@ -657,7 +903,10 @@ fn public_catalog_adapters_preserve_native_identity_calibration_and_static_dates
             assert!(normalize_catalog(&value, &static_query).is_ok());
         }
     }
-    assert_eq!(catalog::sources()["sources"].as_array().unwrap().len(), 15);
+    assert_eq!(
+        catalog::sources()["sources"].as_array().unwrap().len(),
+        catalog::IDS.len()
+    );
     assert!(catalog::source("copernicus").is_ok());
     assert!(catalog::source("unreviewed-provider").is_err());
     assert!(catalog::source("http://127.0.0.1").is_err());

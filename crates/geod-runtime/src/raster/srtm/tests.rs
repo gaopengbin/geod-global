@@ -4,6 +4,125 @@ use std::io::Write;
 use zip::{write::SimpleFileOptions, CompressionMethod, ZipWriter};
 
 const ID: &str = "N37W123.SRTMGL1.hgt";
+#[tokio::test]
+async fn num_is_a_distinct_byte_grid_and_never_a_height_grid() {
+    let directory = tempfile::tempdir().unwrap();
+    let num_id = "N39E116.SRTMGL1N.num";
+    let mut raw = vec![1; srtm::NUM_BYTES as usize];
+    raw[0] = 0;
+    raw[3600] = 255;
+    raw[3601 * 1800 + 1800] = 206;
+    let archive = fixture("N39E116.num", &raw);
+    assert_eq!(
+        srtm::read_grid(
+            Cursor::new(&archive),
+            num_id,
+            true,
+            Instant::now() + Duration::from_secs(30),
+            None
+        )
+        .unwrap(),
+        raw
+    );
+    assert!(srtm::read_grid(
+        Cursor::new(&archive),
+        num_id,
+        false,
+        Instant::now() + Duration::from_secs(30),
+        None
+    )
+    .is_err());
+    for (name, data) in [
+        ("N39E117.num", raw.as_slice()),
+        ("../N39E116.num", raw.as_slice()),
+        ("N39E116.hgt", raw.as_slice()),
+        ("N39E116.num", &raw[..raw.len() - 1]),
+    ] {
+        assert!(srtm::read_grid(
+            Cursor::new(fixture(name, data)),
+            num_id,
+            true,
+            Instant::now() + Duration::from_secs(30),
+            None
+        )
+        .is_err());
+    }
+    let mut corrupt = archive.clone();
+    let offset = corrupt.windows(4).position(|x| x == b"PK\x01\x02").unwrap();
+    corrupt[offset + 16] ^= 0xff;
+    assert!(srtm::read_grid(
+        Cursor::new(corrupt),
+        num_id,
+        true,
+        Instant::now() + Duration::from_secs(30),
+        None
+    )
+    .is_err());
+    let mut job = record(directory.path(), &archive);
+    job.item_id = num_id.into();
+    job.asset_key = "srtm_num".into();
+    job.href = format!(
+        "https://{}{}{num_id}/{num_id}.zip",
+        providers::nasa::HOST,
+        srtm::NUM_PREFIX
+    );
+    assert!(crate::validate_request(
+        &CreateJobRequest {
+            item_id: job.item_id.clone(),
+            asset_key: job.asset_key.clone(),
+            href: job.href.clone(),
+            media_type: "application/zip".into(),
+            title: None
+        },
+        None
+    )
+    .is_ok());
+    assert!(providers::matches_item(
+        &providers::asset_url(&job.href).unwrap(),
+        num_id,
+        "srtm_num"
+    ));
+    assert!(!providers::matches_item(
+        &providers::asset_url(&job.href).unwrap(),
+        num_id,
+        "srtm"
+    ));
+    let metadata = super::super::srtm_num::inspect(directory.path(), &job, 32).unwrap();
+    assert_eq!(metadata.data_type, "UInt8");
+    assert!(metadata.elevation.is_none());
+    assert_eq!(metadata.nodata, None);
+    assert_eq!(
+        metadata.classes.iter().map(|c| c.count).sum::<u64>(),
+        srtm::NUM_BYTES
+    );
+    assert!(inspect(directory.path(), &job, 32).is_err());
+    for (col, row, code) in [(0, 0, 0), (3600, 0, 255), (1800, 1800, 206)] {
+        let pixel = super::super::srtm_num::sample(
+            directory.path(),
+            &job,
+            116.0 + f64::from(col) * SPACING,
+            40.0 - f64::from(row) * SPACING,
+        )
+        .unwrap();
+        assert_eq!(pixel.pixel, [col, row]);
+        assert_eq!(pixel.value, f64::from(code));
+        assert!(!pixel.is_no_data);
+    }
+    let manager = JobManager::open(directory.path()).await.unwrap();
+    {
+        let mut store = manager.inner.store.lock().await;
+        store.jobs.insert(job.id.clone(), job.clone());
+        manager.persist(&store.jobs).await.unwrap();
+    }
+    let thumbnail = manager.file_thumbnail(&job.id).await.unwrap();
+    assert_eq!(thumbnail.width, 160);
+    drop(manager);
+    let reopened = JobManager::open(directory.path()).await.unwrap();
+    assert_eq!(
+        reopened.file_thumbnail(&job.id).await.unwrap().data_url,
+        thumbnail.data_url
+    );
+}
 fn fixture(name: &str, bytes: &[u8]) -> Vec<u8> {
     let mut writer = ZipWriter::new(Cursor::new(Vec::new()));
     writer

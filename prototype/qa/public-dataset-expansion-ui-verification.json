@@ -1,0 +1,48 @@
+{
+  "schema": "geod-public-dataset-expansion-ui/v1",
+  "checkedDate": "2026-10-12",
+  "status": "passed",
+  "previewUrl": "http://127.0.0.1:4317/#Explore",
+  "nativeAcceptance": "../../docs/public-dataset-expansion-20261012.json",
+  "nativeAcceptanceBinarySha256": "aae7ad3eaab3c87ac17a83600abb79edd5a41cf5d885d4246fa5895b6a4fdd1c",
+  "newProducts": ["chirps", "nasadem", "srtm-gl1", "alos-aw3d30", "hydrosheds"],
+  "curatedProducts": 11,
+  "curatedLayers": 22,
+  "sourcePickerOptions": 26,
+  "directory": {"entries": 90, "ready": 43, "auth": 6, "planned": 41, "groups": 16, "countMeaning": "Includes product, protocol and local-file entries; not a count of downloaded platforms."},
+  "browser": {
+    "sourcePicker": "All five new products visibly present in the original dropdown; 11 curated products plus 15 existing providers.",
+    "monthlyParameters": "CHIRPS 2024-01 resolved to the January original; changing to month 2 removed the old review and resolved only the February original. Switching to NASADEM removed month/year selectors and previous CHIRPS references.",
+    "fullFlow": {
+      "datasetId": "nasadem",
+      "bounds": [6.65, 0.2, 6.7, 0.3],
+      "projectId": "6153d798-fcd4-461d-8406-16aa7b6e528e",
+      "jobId": "acfb8c3b-0be5-4ce8-b813-e11dcfa64923",
+      "bytesDownloaded": 1528533,
+      "sha256": "a89f4dff4974ccb8166c07c6093408636cd5b88079f7c87abbfb69608c18b630",
+      "actions": ["select source", "resolve current area", "check actual file", "select original", "save project", "explicitly download", "open project", "inspect georeferenced original", "read raw pixel"],
+      "width": 3601,
+      "height": 3601,
+      "crs": "EPSG:4326",
+      "pixel": {"column": 2340, "row": 2520, "value": 583},
+      "interpretation": "Raw Int16 sample; metres/EGM96 remain the publisher declaration, not a vertical transformation."
+    },
+    "reviewLayout": "Product definition, usage conditions, file notes and source details use shared collapsible controls; selected layer interpretation and complete-file guidance remain visible.",
+    "narrowViewport": {"width": 768, "height": 800, "documentWidth": 768, "productPanelWidth": 384, "visuallyInspected": true, "overrideReset": true},
+    "screenshots": ["../../.verification/public-datasets-ui-20261012/nasadem-result-20261012.jpg", "../../.verification/public-datasets-ui-20261012/expanded-source-picker-20261012.jpg"],
+    "finalState": "Explore with CHIRPS selected, original source dropdown open, temporary test area cleared; preview remains available."
+  },
+  "automated": {
+    "repositoryVerify": {"passed": true, "frontendNodeTests": 360, "agentTests": 149, "uiTests": 419},
+    "finalTargetedUi": {"files": 3, "tests": 39, "passed": true},
+    "runtimeTests": {"passed": 646, "ignoredOptIn": 15},
+    "desktopTests": {"passed": 56, "ignoredOptIn": 27},
+    "clippy": "workspace/all targets/custom protocol; warnings denied; passed",
+    "format": "passed",
+    "finalIsolationCheck": "passed",
+    "finalProductionBuild": "passed; existing chunk-size warning only",
+    "agentBundlePrepared": true,
+    "oldProductCompatibility": "Six prior real catalog/plan/connection cases and 22 metadata probes accepted by the production frontend validators; old product recipe declarations remain unchanged."
+  },
+  "scope": {"realModelRequests": 0, "nativeWindowClicksTested": false, "earthEngineComputeRequests": 0, "credentialsCreated": false, "published": false, "committed": false}
+}

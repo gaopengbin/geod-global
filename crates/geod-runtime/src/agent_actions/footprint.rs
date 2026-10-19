@@ -159,6 +159,10 @@ pub(super) fn project_scope(request: &crate::projects::CreateProjectRequest) -> 
 pub(super) fn action_scope(action: &Action) -> Option<Scope> {
     match action {
         Action::Download {
+            originals_only: true,
+            ..
+        } => None,
+        Action::Download {
             acquisition,
             query,
             files,

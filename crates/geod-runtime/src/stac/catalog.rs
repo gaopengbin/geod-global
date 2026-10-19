@@ -431,6 +431,8 @@ where
             retrieved_at: now(),
             metadata_documents: target.receipts,
             search: Some(cursor.request.clone()),
+            reviewed_dataset: None,
+            asset_transports: Vec::new(),
         };
         let snapshot = item(
             &r,

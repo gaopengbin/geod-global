@@ -1,0 +1,624 @@
+{
+  "schema": "geod-nightlights-public-connection-diagnostic/v1",
+  "status": "planned: HTTP 406 route correction verified, formal-route complete native original transfer still failed; source-pinned resume remains unimplemented",
+  "checkedAt": "2026-10-12T13:17:00.570232+00:00",
+  "datasetId": "openlandmap-nightlights",
+  "scope": "Read-only public HEAD, exact first/last-byte ranges and bounded ordinary GET prefixes; generic metadata connect in a new private store. No new whole file, native download job, science conversion, model call, account or 4318 mutation by this diagnostic.",
+  "endpoints": {
+    "publisherApiContent": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+    "compatibleOfficialRecordFile": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+    "difference": "The same Zenodo record ID and exact original filename use two official routes. Keep original publisher links.content/API record unchanged; change only the finite reviewed client recipe to the human no-query file route.",
+    "redirectPolicy": "All public probes use allow_redirects=false; both routes return directly, no Location or 3xx observed.",
+    "notMirrorExportOrAuthBypass": true
+  },
+  "originalPublisherFileEntry": {
+    "created": "2025-10-08T12:27:58.302630+00:00",
+    "updated": "2025-10-08T12:27:58.327087+00:00",
+    "mimetype": "image/tiff",
+    "version_id": "ba709fc9-78dc-4adf-af01-3d1f1c7a71fd",
+    "file_id": "47cc2812-ab8e-4c22-add7-ca4b34c6c12d",
+    "bucket_id": "ff92eed3-5c69-4dd4-9207-2bcb2a8410ad",
+    "metadata": {
+      "width": 86400,
+      "height": 35849
+    },
+    "access": {
+      "hidden": false
+    },
+    "links": {
+      "self": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "content": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "iiif_canvas": "https://zenodo.org/api/iiif/record:17294744/canvas/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "iiif_base": "https://zenodo.org/api/iiif/record:17294744:nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "iiif_info": "https://zenodo.org/api/iiif/record:17294744:nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/info.json",
+      "iiif_api": "https://zenodo.org/api/iiif/record:17294744:nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/full/full/0/default.png"
+    },
+    "key": "nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+    "size": 63713625,
+    "transfer": {
+      "type": "L"
+    },
+    "status": "completed",
+    "checksum": "md5:0b976892d40c2d0d99177c727289eaf2",
+    "storage_class": "L"
+  },
+  "failureSequence": [
+    {
+      "stage": "prior independent full-transfer research",
+      "observed": "Official routes produced transient 502/503/504, timeout and premature EOF; reference required official byte-range recovery.",
+      "singleWholeGETPassed": false
+    },
+    {
+      "stage": "initial final-binary metadata connect",
+      "observedAt": "2026-10-12T13:01:44.268893+00:00",
+      "error": "Cannot inspect the public raster URL",
+      "requestStage": "response.send().await error before response status, Range, TIFF signature or provenance validation",
+      "underlyingCause": "Unavailable: native code maps reqwest error to generic text, stderr contains startup lines only. Do not claim a particular timeout/TLS/proxy cause.",
+      "connectRequestOverallTimeoutSeconds": 30,
+      "tcpConnectTimeoutSeconds": 20,
+      "outerConnectOperationTimeoutSeconds": 60,
+      "jobCreated": false,
+      "originalFailureReceipt": {
+        "path": ".verification/public-datasets-next2-nightlights-native-20261012/verification-before-1791810927993478400.json",
+        "bytes": 155306,
+        "sha256": "1caac7052db7449a4bbf0c91fa61b052fb69e25d1e03f4b93df496137652c27c"
+      }
+    },
+    {
+      "stage": "current isolated generic metadata connect",
+      "binarySha256": "2e0152dc759a530f72b26c0a7021e3f5fdd0bba67199485801e7797105399ca8",
+      "port": 4683,
+      "results": [
+        {
+          "endpoint": "api-content",
+          "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+          "result": {
+            "httpStatus": 200,
+            "seconds": 1.703,
+            "response": {
+              "id": "991b4193-8811-4e9f-b9a2-dd6e7b284021",
+              "name": "Read-only Zenodo endpoint diagnostic",
+              "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+              "kind": "raster",
+              "connectedAt": "2026-10-12T13:14:45.134015+00:00",
+              "collections": [],
+              "capabilities": {
+                "searchGet": false,
+                "searchPost": false
+              },
+              "snapshotIds": [
+                "7b6bd3c1c5ae2c7f0f2b7ed2fe28e9849904b941bdcc5b197119f375b6148987"
+              ],
+              "searchUrl": null,
+              "searchMethod": "GET",
+              "metadataSha256": [
+                "03db71546d833ad8d072d65a7a6a59173793120ee024a6ff870cc699a94e6481"
+              ],
+              "metadataDocuments": []
+            }
+          }
+        },
+        {
+          "endpoint": "record-file",
+          "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+          "result": {
+            "httpStatus": 200,
+            "seconds": 1.719,
+            "response": {
+              "id": "b97dc20d-01ef-496b-96bf-2a05650b2529",
+              "name": "Read-only Zenodo endpoint diagnostic",
+              "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+              "kind": "raster",
+              "connectedAt": "2026-10-12T13:14:46.840072100+00:00",
+              "collections": [],
+              "capabilities": {
+                "searchGet": false,
+                "searchPost": false
+              },
+              "snapshotIds": [
+                "80b5f7866f2bcdebad6f6fd6a114804f54a7df56fcc22dd4a8df5daa5965fa96"
+              ],
+              "searchUrl": null,
+              "searchMethod": "GET",
+              "metadataSha256": [
+                "515b12a38e48d94fa747efbfd597d233076dc5a13bdfe116c7ace6ff4433bfd4"
+              ],
+              "metadataDocuments": []
+            }
+          }
+        }
+      ],
+      "sourceProofInjected": false,
+      "jobsCreated": 0
+    },
+    {
+      "stage": "parent native API metadata success then original transfer HTTP 406",
+      "observedAt": "2026-10-12T13:15:28.100214+00:00",
+      "metadataConnectComplete": true,
+      "job": {
+        "id": "05f34fb2-92d3-424b-a217-4b7705b3b008",
+        "kind": "download",
+        "parentId": null,
+        "recipe": null,
+        "crop": null,
+        "mosaic": null,
+        "mosaicOutput": null,
+        "manifestPath": null,
+        "safe": null,
+        "safeOutput": null,
+        "stacSource": {
+          "snapshotId": "0f8d8b747608677af61e5d1a471022f849a156211a6f0601b399efc463581934",
+          "assetKey": "raster"
+        },
+        "itemId": "7cb9c1da5408dfad1a6f4de68e0fdc32d71db940cf82fa0328e541f3b97dd636",
+        "assetKey": "stac_asset",
+        "href": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+        "mediaType": "image/tiff; application=geotiff",
+        "title": "Hengl / OpenGeoHub annual nighttime-light DN · 2024 · v0.4 · Hengl / OpenGeoHub annual nighttime-light DN · 2024 · v0.4",
+        "status": "failed",
+        "bytesDownloaded": 0,
+        "totalBytes": null,
+        "sha256": null,
+        "outputPath": null,
+        "error": "Asset server returned HTTP 406 Not Acceptable; redirects are not followed",
+        "createdAt": "2026-10-12T13:15:31.005481400+00:00",
+        "updatedAt": "2026-10-12T13:15:32.514803+00:00",
+        "source": "Hengl / OpenGeoHub annual nighttime-light DN · 2024 · v0.4",
+        "validation": "Pending file signature, byte count and SHA-256 checks",
+        "attempts": 1,
+        "settled": true
+      },
+      "error": "RuntimeError: Native original transfer failed: Asset server returned HTTP 406 Not Acceptable; redirects are not followed",
+      "cause": "The download/HEAD client sends Accept image/tiff, application/octet-stream. Zenodo API content negotiation rejects that header with HTTP 406. Connect probe does not send that Accept and can succeed.",
+      "frozenActualReceipt": {
+        "path": ".verification/public-datasets-next2-nightlights-native-20261012/connection-diagnostic/native-after-connect-406.json",
+        "bytes": 204416,
+        "sha256": "a432a9c92cc91cd2b59dd779d8a9c5eb661ab4e3bcda4247143db597c4ddaecf"
+      }
+    },
+    {
+      "stage": "parent fresh native formal human-route body-transfer failure",
+      "observedAt": "2026-10-12T13:25:42.931651+00:00",
+      "runStartedAt": "2026-10-12T13:19:32.962813+00:00",
+      "binarySha256": "fced1da090676dd3984afde32586cc4fbe10e0f556535459cb7fe84752ec3fef",
+      "metadataConnectComplete": true,
+      "job": {
+        "id": "a9693121-91a9-4ff6-bf8e-f46267abb589",
+        "kind": "download",
+        "parentId": null,
+        "recipe": null,
+        "crop": null,
+        "mosaic": null,
+        "mosaicOutput": null,
+        "manifestPath": null,
+        "safe": null,
+        "safeOutput": null,
+        "stacSource": {
+          "snapshotId": "c270abe93ed4d94e758ece2999a33bf2704d0051fcea4cb7e45b45e2941fcb98",
+          "assetKey": "raster"
+        },
+        "itemId": "cbab7e22b1225a35c3a0daf31a5b4ece29d37b0d00ae3ad081556ca6687f0a52",
+        "assetKey": "stac_asset",
+        "href": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+        "mediaType": "image/tiff; application=geotiff",
+        "title": "Hengl / OpenGeoHub annual nighttime-light DN · 2024 · v0.4 · Hengl / OpenGeoHub annual nighttime-light DN · 2024 · v0.4",
+        "status": "failed",
+        "bytesDownloaded": 17648832,
+        "totalBytes": 63713625,
+        "sha256": null,
+        "outputPath": null,
+        "error": "error decoding response body",
+        "createdAt": "2026-10-12T13:19:35.523241+00:00",
+        "updatedAt": "2026-10-12T13:25:42.931651+00:00",
+        "source": "Hengl / OpenGeoHub annual nighttime-light DN · 2024 · v0.4",
+        "validation": "Pending file signature, byte count and SHA-256 checks",
+        "attempts": 1,
+        "transfer": {
+          "mode": "fresh",
+          "resumedBytes": 0
+        },
+        "settled": true
+      },
+      "error": "RuntimeError: Native original transfer failed: error decoding response body",
+      "nativeOriginalPassed": false,
+      "localRasterPreviewPixelReopenPassed": false,
+      "sourceReceipt": {
+        "path": "docs/next2-nightlights-native-acceptance-20261012.json",
+        "bytes": 204104,
+        "sha256": "49ebdb0c5c55060510ca1c03a3b42382b56e6f90e512c95a7a18ea8a8bfe7a76"
+      },
+      "causeBoundary": "Incomplete HTTP response-body transfer before successful complete original/size/hash verification; generic body error does not establish a TIFF numerical decoder cause."
+    }
+  ],
+  "nativeRequestContract": {
+    "connectProbe": "GET with Range bytes=0-15, no explicit Accept",
+    "assetHeadAndOriginalGet": "Accept: image/tiff, application/octet-stream",
+    "exactApiError": {
+      "status": 406,
+      "message": "Invalid 'Accept' header. Expected one of: application/json"
+    },
+    "sourceCode": [
+      "crates/geod-runtime/src/stac.rs::connect_stac",
+      "crates/geod-runtime/src/stac.rs::asset_head",
+      "crates/geod-runtime/src/stac.rs::asset_response",
+      "crates/geod-runtime/src/features.rs::client_with_timeout"
+    ],
+    "guardChange": false
+  },
+  "actualHeadRangeAndBoundedGetProbes": [
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "HEAD",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff",
+        "content-length": "63713625",
+        "last-modified": "Wed, 03 Jun 2026 05:34:08 GMT"
+      },
+      "responseHeadersSeconds": 2.594,
+      "seconds": 2.594
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "HEAD",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff",
+        "content-length": "63713625",
+        "last-modified": "Wed, 03 Jun 2026 05:34:08 GMT"
+      },
+      "responseHeadersSeconds": 1.828,
+      "seconds": 1.828
+    },
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "range": "0-15",
+      "status": 206,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "16",
+        "content-range": "bytes 0-15/63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 1.61,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "sampleHex": "49492a00c00000004744414c5f535452",
+      "matchesReferenceBytesAtDeclaredOffset": true,
+      "bodyClosedAfterBoundedSample": true,
+      "seconds": 1.61
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "range": "0-15",
+      "status": 206,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "16",
+        "content-range": "bytes 0-15/63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 1.875,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "sampleHex": "49492a00c00000004744414c5f535452",
+      "matchesReferenceBytesAtDeclaredOffset": true,
+      "bodyClosedAfterBoundedSample": true,
+      "seconds": 1.875
+    },
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "range": "63713609-63713624",
+      "status": 206,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "16",
+        "content-range": "bytes 63713609-63713624/63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.61,
+      "sampleBytes": 16,
+      "sampleSha256": "86508ff176069e0b992bb5a3dc20065ca94343ebcdfba026740fcd7968baf041",
+      "sampleHex": "0000000000007c030078000100780001",
+      "matchesReferenceBytesAtDeclaredOffset": true,
+      "bodyClosedAfterBoundedSample": true,
+      "seconds": 2.61
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "range": "63713609-63713624",
+      "status": 206,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "16",
+        "content-range": "bytes 63713609-63713624/63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 1.719,
+      "sampleBytes": 16,
+      "sampleSha256": "86508ff176069e0b992bb5a3dc20065ca94343ebcdfba026740fcd7968baf041",
+      "sampleHex": "0000000000007c030078000100780001",
+      "matchesReferenceBytesAtDeclaredOffset": true,
+      "bodyClosedAfterBoundedSample": true,
+      "seconds": 1.75
+    },
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.938,
+      "sampleBytes": 65536,
+      "sampleSha256": "1c8737ab91ad7857e7c12e775f23464b2c069eebf043a9ab7d23b8c7f73779a6",
+      "sampleHex": "49492a00c00000004744414c5f535452",
+      "matchesReferenceBytesAtDeclaredOffset": true,
+      "bodyClosedAfterBoundedSample": true,
+      "seconds": 3.328
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.062,
+      "sampleBytes": 65536,
+      "sampleSha256": "1c8737ab91ad7857e7c12e775f23464b2c069eebf043a9ab7d23b8c7f73779a6",
+      "sampleHex": "49492a00c00000004744414c5f535452",
+      "matchesReferenceBytesAtDeclaredOffset": true,
+      "bodyClosedAfterBoundedSample": true,
+      "seconds": 2.437
+    }
+  ],
+  "actualAcceptNegotiationProbes": [
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "accept": "image/tiff, application/octet-stream",
+      "range": null,
+      "status": 406,
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "content-length": "88"
+      },
+      "responseHeadersSeconds": 1.797,
+      "sampleBytes": 88,
+      "sampleSha256": "c4da04682d12a4b6af79d185fb2dea312becefa30547f59d3ae4ab1aee810877",
+      "errorBody": "{\"status\": 406, \"message\": \"Invalid 'Accept' header. Expected one of: application/json\"}",
+      "seconds": 1.797
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "accept": "image/tiff, application/octet-stream",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.953,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "tiffHeader": "49492a00c00000004744414c5f535452",
+      "matchesOriginalPrefix": true,
+      "seconds": 3.062
+    },
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "accept": "image/tiff",
+      "range": null,
+      "status": 406,
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "content-length": "88"
+      },
+      "responseHeadersSeconds": 1.359,
+      "sampleBytes": 88,
+      "sampleSha256": "c4da04682d12a4b6af79d185fb2dea312becefa30547f59d3ae4ab1aee810877",
+      "errorBody": "{\"status\": 406, \"message\": \"Invalid 'Accept' header. Expected one of: application/json\"}",
+      "seconds": 1.359
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "accept": "image/tiff",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.657,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "tiffHeader": "49492a00c00000004744414c5f535452",
+      "matchesOriginalPrefix": true,
+      "seconds": 2.657
+    },
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "accept": "application/octet-stream",
+      "range": null,
+      "status": 406,
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "content-length": "88"
+      },
+      "responseHeadersSeconds": 1.297,
+      "sampleBytes": 88,
+      "sampleSha256": "c4da04682d12a4b6af79d185fb2dea312becefa30547f59d3ae4ab1aee810877",
+      "errorBody": "{\"status\": 406, \"message\": \"Invalid 'Accept' header. Expected one of: application/json\"}",
+      "seconds": 1.297
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "accept": "application/octet-stream",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.047,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "tiffHeader": "49492a00c00000004744414c5f535452",
+      "matchesOriginalPrefix": true,
+      "seconds": 2.187
+    },
+    {
+      "endpoint": "api-content",
+      "url": "https://zenodo.org/api/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif/content",
+      "method": "GET",
+      "accept": "*/*",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 2.828,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "tiffHeader": "49492a00c00000004744414c5f535452",
+      "matchesOriginalPrefix": true,
+      "seconds": 2.828
+    },
+    {
+      "endpoint": "record-file",
+      "url": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+      "method": "GET",
+      "accept": "*/*",
+      "range": null,
+      "status": 200,
+      "headers": {
+        "server": "nginx",
+        "content-type": "image/tiff, image/tiff",
+        "content-length": "63713625",
+        "accept-ranges": "bytes"
+      },
+      "responseHeadersSeconds": 1.375,
+      "sampleBytes": 16,
+      "sampleSha256": "30da10c412761210a011aef010c24779aaa52417a510beedfff892abc7352bea",
+      "tiffHeader": "49492a00c00000004744414c5f535452",
+      "matchesOriginalPrefix": true,
+      "seconds": 1.485
+    }
+  ],
+  "fullReferenceIntegrityRechecked": {
+    "file": ".verification/next2-nightlights-20261012/zenodo-2024-range-complete-reference.tif",
+    "bytes": 63713625,
+    "sha256": "e6edde68952052f8c53050e2ce7082bab08ddd0e15a696f999215e2d57194c53",
+    "md5": "0b976892d40c2d0d99177c727289eaf2",
+    "publisherMD5": "md5:0b976892d40c2d0d99177c727289eaf2",
+    "publisherMD5Match": true,
+    "singleWholeGET": false,
+    "method": "Previously documented original prefix plus exact official Range recovery segments; complete-byte checksum verified again without a new full GET",
+    "sameRecordFilenameAndDeclaredSizeForBothRoutes": true,
+    "bothRoutesPrefixAndTailMatchReference": true,
+    "newHumanWholeFileHashVerifiedByThisDiagnostic": false,
+    "nativeOriginalPassedByThisDiagnostic": false,
+    "referenceReceipt": {
+      "path": ".verification/next2-nightlights-20261012/zenodo-2024-reference-final-receipt.json",
+      "bytes": 1673,
+      "sha256": "4bb879fd7c6da1146e42c96392b8e8265c0dd8cf622802e5d4a11f20f76df699"
+    }
+  },
+  "recommendation": {
+    "finiteClientUrl": "https://zenodo.org/records/17294744/files/nightlights.average_viirs.v21_m_500m_s_20240101_20241231_go_epsg4326_v20250904.tif",
+    "preserve": "Exact author record, original API links.content, declared size/MD5, scientific scale/calibration conflict, NoData, license, unchanged native Accept/redirect/range/MIME/signature/provenance guards.",
+    "finalAcceptancePending": "Nightlights remains planned and is excluded from this batch of three ready products (GHSL/GLAD/Maui). Implement and verify conditional source-pinned Range recovery before a new actual complete original/hash/grid/preview/pixel/reopen acceptance; do not substitute the existing reference."
+  },
+  "privateServiceStopped": true,
+  "port4683FreeVerified": true,
+  "diagnosticJobs": 0,
+  "evidenceReceipts": [
+    {
+      "path": ".verification/public-datasets-next2-nightlights-native-20261012/connection-diagnostic/report.json",
+      "bytes": 9375,
+      "sha256": "524ef23c00b3b38f8e59e8879d52931a869e9fde083dac43ae538ea7b668746c"
+    },
+    {
+      "path": ".verification/public-datasets-next2-nightlights-native-20261012/connection-diagnostic/accept-report.json",
+      "bytes": 6228,
+      "sha256": "54eed6d535f35dc4d6b304e45a581c026e10ba8aaa4db044f059323652b55720"
+    },
+    {
+      "path": ".verification/public-datasets-next2-nightlights-native-20261012/connection-diagnostic/native-after-connect-406.json",
+      "bytes": 204416,
+      "sha256": "a432a9c92cc91cd2b59dd779d8a9c5eb661ab4e3bcda4247143db597c4ddaecf"
+    }
+  ],
+  "lastEvidenceAt": "2026-10-12T13:25:42.931651+00:00",
+  "remainingWork": {
+    "implementedNativeResumeForThisJobKind": false,
+    "currentCodeBoundary": "lib.rs::supports_partial_transfer requires stac_source.is_none(), so a STAC/direct-raster source-pinned job cannot use existing native checkpoint recovery; Retry starts a whole GET.",
+    "separateImplementationRequired": [
+      "Conditional Range tied to a strong ETag and exact total size",
+      "If-Range handling with changed-validator, 200 replacement, invalid/incorrect 206, 412/416 behavior verified",
+      "Original SourcePin, immutable request/provenance and exact file identity retained across retry",
+      "Complete publisher MD5 and local SHA checked over full original bytes",
+      "Real interruption, saved checkpoint, restart, retry and complete raster inspection acceptance"
+    ],
+    "guardsRemain": [
+      "public URL and redirect policy",
+      "MIME/TIFF signature",
+      "exact range and length",
+      "source proof and metadata immutability",
+      "size caps and complete hash verification"
+    ],
+    "currentReferenceIsNotNativeResume": true
+  }
+}

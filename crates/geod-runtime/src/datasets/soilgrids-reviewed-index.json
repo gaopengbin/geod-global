@@ -1,0 +1,548 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "soilgrids",
+  "release": "SoilGrids250m WRB 2017 corrected distribution; reviewed 2026-10-14",
+  "readmeUrl": "https://files.isric.org/soilgrids/latest/data/wrb/00_README",
+  "legendUrl": "https://files.isric.org/soilgrids/latest/data/wrb/MostProbable.rat.json",
+  "licenseEvidenceUrl": "https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_2017.html#how-much-does-it-cost",
+  "classLegend": [
+    {
+      "code": 0,
+      "name": "Acrisols"
+    },
+    {
+      "code": 1,
+      "name": "Albeluvisols"
+    },
+    {
+      "code": 2,
+      "name": "Alisols"
+    },
+    {
+      "code": 3,
+      "name": "Andosols"
+    },
+    {
+      "code": 4,
+      "name": "Arenosols"
+    },
+    {
+      "code": 5,
+      "name": "Calcisols"
+    },
+    {
+      "code": 6,
+      "name": "Cambisols"
+    },
+    {
+      "code": 7,
+      "name": "Chernozems"
+    },
+    {
+      "code": 8,
+      "name": "Cryosols"
+    },
+    {
+      "code": 9,
+      "name": "Durisols"
+    },
+    {
+      "code": 10,
+      "name": "Ferralsols"
+    },
+    {
+      "code": 11,
+      "name": "Fluvisols"
+    },
+    {
+      "code": 12,
+      "name": "Gleysols"
+    },
+    {
+      "code": 13,
+      "name": "Gypsisols"
+    },
+    {
+      "code": 14,
+      "name": "Histosols"
+    },
+    {
+      "code": 15,
+      "name": "Kastanozems"
+    },
+    {
+      "code": 16,
+      "name": "Leptosols"
+    },
+    {
+      "code": 17,
+      "name": "Lixisols"
+    },
+    {
+      "code": 18,
+      "name": "Luvisols"
+    },
+    {
+      "code": 19,
+      "name": "Nitisols"
+    },
+    {
+      "code": 20,
+      "name": "Phaeozems"
+    },
+    {
+      "code": 21,
+      "name": "Planosols"
+    },
+    {
+      "code": 22,
+      "name": "Plinthosols"
+    },
+    {
+      "code": 23,
+      "name": "Podzols"
+    },
+    {
+      "code": 24,
+      "name": "Regosols"
+    },
+    {
+      "code": 25,
+      "name": "Solonchaks"
+    },
+    {
+      "code": 26,
+      "name": "Solonetz"
+    },
+    {
+      "code": 27,
+      "name": "Stagnosols"
+    },
+    {
+      "code": 28,
+      "name": "Umbrisols"
+    },
+    {
+      "code": 29,
+      "name": "Vertisols"
+    }
+  ],
+  "originals": [
+    {
+      "id": "wrb-acrisols-score-530",
+      "layer": "acrisols-score",
+      "publisherLayer": "Acrisols",
+      "tile": "530",
+      "url": "https://files.isric.org/soilgrids/latest/data/wrb/Acrisols/530.tif",
+      "bytes": 4917543,
+      "sha256": "34a45bc93fceecbdec0e38c0a54d4bec6022c353e8b75b994e517c1af5b227b0",
+      "bounds": [
+        -69.06668441595198,
+        -26.934148378048008,
+        -60.53335244794829,
+        -18.400816410044314
+      ],
+      "width": 4096,
+      "height": 4096,
+      "bands": 1,
+      "dataType": "UInt8",
+      "nodata": 255,
+      "crs": "EPSG:4326",
+      "pixelInterpretation": "area",
+      "pixelScale": [
+        0.0020833330000009018,
+        0.0020833330000009018,
+        0.0
+      ],
+      "tiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        -69.06668441595198,
+        -18.400816410044314,
+        0.0
+      ],
+      "storageLayout": "strip",
+      "compression": 8,
+      "rowsPerStrip": 2,
+      "minimum": 0,
+      "maximum": 37,
+      "validZeroCount": 5778490,
+      "noDataCount": 151939,
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2048,
+          "row": 2048,
+          "values": [
+            17
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 4095,
+          "row": 4095,
+          "values": [
+            5
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2388,
+          "row": 322,
+          "values": [
+            37
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1,
+          "row": 0,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrb-acrisols-score-531",
+      "layer": "acrisols-score",
+      "publisherLayer": "Acrisols",
+      "tile": "531",
+      "url": "https://files.isric.org/soilgrids/latest/data/wrb/Acrisols/531.tif",
+      "bytes": 8042970,
+      "sha256": "46fe919ae7045e1442c18077796147fe26612969d842b4e86e156b810b09b571",
+      "bounds": [
+        -60.53335244794829,
+        -26.934148378048008,
+        -52.000020479944595,
+        -18.400816410044314
+      ],
+      "width": 4096,
+      "height": 4096,
+      "bands": 1,
+      "dataType": "UInt8",
+      "nodata": 255,
+      "crs": "EPSG:4326",
+      "pixelInterpretation": "area",
+      "pixelScale": [
+        0.0020833330000009018,
+        0.0020833330000009018,
+        0.0
+      ],
+      "tiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        -60.53335244794829,
+        -18.400816410044314,
+        0.0
+      ],
+      "storageLayout": "strip",
+      "compression": 8,
+      "rowsPerStrip": 2,
+      "minimum": 0,
+      "maximum": 70,
+      "validZeroCount": 250315,
+      "noDataCount": 140726,
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            5
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2048,
+          "row": 2048,
+          "values": [
+            7
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 4095,
+          "row": 4095,
+          "values": [
+            9
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2081,
+          "row": 1472,
+          "values": [
+            70
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1515,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1420,
+          "row": 0,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrb-most-probable-530",
+      "layer": "most-probable",
+      "publisherLayer": "MostProbable",
+      "tile": "530",
+      "url": "https://files.isric.org/soilgrids/latest/data/wrb/MostProbable/530.tif",
+      "bytes": 2583826,
+      "sha256": "a559810afbd14ceb1e7b5cdbfca645797ac71c30f36a6a0a0d4487faee58e840",
+      "bounds": [
+        -69.06668441595305,
+        -26.934148378046945,
+        -60.53335244794944,
+        -18.400816410043333
+      ],
+      "width": 4096,
+      "height": 4096,
+      "bands": 1,
+      "dataType": "UInt8",
+      "nodata": 255,
+      "crs": "EPSG:4326",
+      "pixelInterpretation": "area",
+      "pixelScale": [
+        0.002083333000000882,
+        0.002083333000000882,
+        0.0
+      ],
+      "tiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        -69.06668441595305,
+        -18.400816410043333,
+        0.0
+      ],
+      "storageLayout": "strip",
+      "compression": 8,
+      "rowsPerStrip": 2,
+      "minimum": 0,
+      "maximum": 29,
+      "validZeroCount": 736811,
+      "noDataCount": 151939,
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            16
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2048,
+          "row": 2048,
+          "values": [
+            6
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 4095,
+          "row": 4095,
+          "values": [
+            12
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 955,
+          "row": 0,
+          "values": [
+            29
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1820,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1,
+          "row": 0,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrb-most-probable-531",
+      "layer": "most-probable",
+      "publisherLayer": "MostProbable",
+      "tile": "531",
+      "url": "https://files.isric.org/soilgrids/latest/data/wrb/MostProbable/531.tif",
+      "bytes": 2430344,
+      "sha256": "5455e644c75cfe06fa9dcca03e7f0d2216d65d984d4fe8cde437b019d892df50",
+      "bounds": [
+        -60.533352447949426,
+        -26.934148378046945,
+        -52.00002047994582,
+        -18.400816410043333
+      ],
+      "width": 4096,
+      "height": 4096,
+      "bands": 1,
+      "dataType": "UInt8",
+      "nodata": 255,
+      "crs": "EPSG:4326",
+      "pixelInterpretation": "area",
+      "pixelScale": [
+        0.002083333000000882,
+        0.002083333000000882,
+        0.0
+      ],
+      "tiepoint": [
+        0.0,
+        0.0,
+        0.0,
+        -60.533352447949426,
+        -18.400816410043333,
+        0.0
+      ],
+      "storageLayout": "strip",
+      "compression": 8,
+      "rowsPerStrip": 2,
+      "minimum": 0,
+      "maximum": 29,
+      "validZeroCount": 661112,
+      "noDataCount": 140726,
+      "samples": [
+        {
+          "column": 0,
+          "row": 0,
+          "values": [
+            10
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 2048,
+          "row": 2048,
+          "values": [
+            17
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 4095,
+          "row": 4095,
+          "values": [
+            19
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1416,
+          "row": 0,
+          "values": [
+            29
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 757,
+          "row": 0,
+          "values": [
+            0
+          ],
+          "noData": [
+            false
+          ]
+        },
+        {
+          "column": 1420,
+          "row": 0,
+          "values": [
+            255
+          ],
+          "noData": [
+            true
+          ]
+        }
+      ]
+    }
+  ]
+}

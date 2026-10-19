@@ -1,7 +1,7 @@
 /* GeoD Agent composer composition and sizes, mapped to Global's UI tokens. */
 .bui-prompt-input { position:relative; width:100%; min-width:0; container-type:inline-size; padding:12px; border:1px solid var(--line); border-radius:24px; background:var(--surface); color:var(--ink); transition:border-color var(--motion-fast),box-shadow var(--motion-fast); }
 .bui-prompt-input:focus-within { border-color:var(--line-strong); box-shadow:0 2px 12px var(--shadow-color,#0000000d); }
-.bui-prompt-input .bui-prompt-textarea, .bui-prompt-measurement { font-family:inherit; font-size:15px; font-weight:400; line-height:24px; letter-spacing:inherit; padding:2px 4px; overflow-wrap:break-word; white-space:pre-wrap; box-sizing:border-box; }
+.bui-prompt-input .bui-prompt-textarea, .bui-prompt-measurement { font-family:inherit; font-size:var(--text-conversation); font-weight:var(--weight-regular); line-height:var(--leading-conversation); letter-spacing:inherit; padding:2px 4px; overflow-wrap:break-word; white-space:pre-wrap; box-sizing:border-box; }
 .bui-prompt-input .bui-prompt-textarea { display:block; width:100%; height:48px; min-width:0; min-height:0; max-height:none; margin:0; border:0; border-radius:0; resize:none; overflow-y:auto; scrollbar-width:none; background:transparent; color:var(--ink); box-shadow:none; outline:none; }
 .bui-prompt-textarea::-webkit-scrollbar { display:none; }
 .bui-prompt-input .bui-prompt-textarea::placeholder { color:var(--ink-3); }
@@ -18,6 +18,6 @@
 .prompt-input-actions { width:224px; padding:6px; border-radius:12px; }
 .prompt-input-actions .prompt-input-action { display:flex; align-items:flex-start; gap:10px; width:100%; padding:9px 10px; border-radius:8px; background:transparent; text-align:left; }
 .prompt-input-action-icon { display:grid; place-items:center; width:20px; height:20px; flex:none; color:var(--ink-2); }
-.prompt-input-action-copy { display:grid; min-width:0; gap:3px; font-size:14px; line-height:20px; }
-.prompt-input-action-copy small { font-size:12px; line-height:17px; font-weight:400; color:var(--ink-2); }
+.prompt-input-action-copy { display:grid; min-width:0; gap:3px; font-size:var(--text-body); line-height:var(--leading-body); }
+.prompt-input-action-copy small { font-size:var(--text-caption); line-height:var(--leading-caption); font-weight:var(--weight-regular); color:var(--ink-2); }
 @container (max-width:410px) { .prompt-input-toolbar > .bui-button { width:28px; height:28px; } }

@@ -1,0 +1,1706 @@
+[
+  {
+    "datasetId": "jaxa-gsmap-rainfall",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_GSMaP_standard.Gauge.00Z-23Z.v6_monthly/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "collection",
+      "stac_version": "1.0.0",
+      "description": "GSMaP has multi-satellite global precipitation map under the Global Precipitation Measurement (GPM) Mission, by using Dual-frequency Precipitation Radar (DPR) onboard GPM core satellites, other GPM constellation satellites, and Geostationary satellites.",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "Precipitation Rate (Monthly)"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2000-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2001-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2002-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2003-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2004-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2005-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2006-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2007-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2008-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2009-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2010-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2011-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2012-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2013-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2014-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2015-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2016-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2017-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2018-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2019-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2020-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2021-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2022-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2023-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2024-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-10/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-11/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2025-12/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-01/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-02/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-03/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-04/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-05/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-06/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-07/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-08/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./2026-09/catalog.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/en/data/policy/",
+          "type": "text/html"
+        }
+      ],
+      "title": "Precipitation Rate (Monthly)",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -60,
+              180,
+              60
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2000-03-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "Precipitation ",
+        "GSMaP",
+        "GPM",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "Japan Aerospace Exploration Agency (JAXA)",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "GSMaP Project",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://sharaku.eorc.jaxa.jp/GSMaP/index.html, https://doi.org/10.1007/978-3-030-24568-9_20"
+        },
+        {
+          "name": "JAXA Earth Observation Research Center (EORC)",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/en/"
+        }
+      ],
+      "summaries": {
+        "je:stac_version": [
+          "v1"
+        ],
+        "je:stac_date_format": [
+          "YYYY-MM"
+        ],
+        "je:cog_level_max": [
+          1
+        ],
+        "je:ppu_max": [
+          10
+        ],
+        "je:sources": [
+          {
+            "doi": "10.57746/EO.01gs73bktym5xwr10j34rwqgj8",
+            "citation": "Japan Aerospace Exploration Agency. 1998. GSMaP(Monthly).",
+            "version": "6"
+          }
+        ],
+        "je:epsg": [
+          4326
+        ]
+      },
+      "assets": {
+        "PRECIP": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff",
+          "title": "Precipitation Rate (Monthly)",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  }
+]

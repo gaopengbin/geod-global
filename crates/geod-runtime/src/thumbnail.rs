@@ -59,6 +59,7 @@ impl JobManager {
                     | "elevation"
                     | "aerial"
                     | "srtm"
+                    | "srtm_num"
                     | "vv"
                     | "vh"
                     | "hh"
@@ -102,6 +103,9 @@ impl JobManager {
         }
         if job.asset_key == "srtm" {
             crate::raster::srtm::validate_job(&job)?;
+        }
+        if job.asset_key == "srtm_num" {
+            crate::raster::srtm_num::validate_job(&job)?;
         }
         if job.asset_key == "aerial" {
             crate::raster::aerial::validate_job(&job)?;
@@ -180,8 +184,12 @@ fn thumbnail(root: &Path, job: &Job) -> Result<FileThumbnail> {
             data_url: raster.preview_data_url,
         });
     }
-    if job.asset_key == "srtm" {
-        let raster = crate::raster::srtm::inspect(root, job, EDGE)?;
+    if matches!(job.asset_key.as_str(), "srtm" | "srtm_num") {
+        let raster = if job.asset_key == "srtm_num" {
+            crate::raster::srtm_num::inspect(root, job, EDGE)?
+        } else {
+            crate::raster::srtm::inspect(root, job, EDGE)?
+        };
         return Ok(FileThumbnail {
             job_id: job.id.clone(),
             sha256: raster.sha256,

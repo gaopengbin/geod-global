@@ -1,0 +1,54 @@
+{
+  "schema": "geod-public-dataset-curated-ui/v1",
+  "checkedDate": "2026-10-12",
+  "status": "passed",
+  "previewUrl": "http://127.0.0.1:4317/#Explore",
+  "nativeAcceptance": "../../docs/public-dataset-curated-20261012.json",
+  "binarySha256": "df0c681841690af165bc8956058b1bca00d349d10b2374e5fbb932193b45ec63",
+  "curatedProducts": 14,
+  "curatedLayers": 28,
+  "sourcePicker": {"options": 29, "publicProductOptions": 14, "publicImageryProviderOptions": 9, "catalogOnlyProviderOptions": 6, "originalDropdownRetained": true},
+  "directory": {"entries": 93, "ready": 46, "auth": 6, "planned": 41, "groups": 16, "meaning": "Includes product, protocol and local-file entries, not satellite platforms or exhaustive original-file acceptance."},
+  "browser": {
+    "flows": [
+      {
+        "datasetId": "cbers-sr", "layer": "cbers4a-mux", "year": 2026, "month": 9,
+        "bounds": [-43.6, -21.55, -43.5, -21.45],
+        "projectId": "ccec8406-3f4a-45e7-971b-a461066cf746",
+        "jobId": "160df34b-3481-4fc6-8c6d-85fb84005b1a",
+        "bytes": 32374526, "sha256": "d24255698a18e8d751e91e9f7f02423ce685fde85785e2f34504911e6693bc59",
+        "width": 7339, "height": 7551, "crs": "EPSG:32723",
+        "pixel": {"column": 3669, "row": 3775, "value": 5531},
+        "actions": ["original dropdown", "review query", "real catalog search", "select BAND5", "save project", "explicit fresh download", "open project", "local georeferenced preview", "raw pixel read"],
+        "publisherChecksumMatched": true, "settled": true,
+        "interpretation": "Original raw Int16 blue-band value; no RGB conversion, reflectance calibration or valid-pixel coverage claim."
+      },
+      {
+        "datasetId": "io-lulc", "layer": "land-cover", "year": 2024,
+        "bounds": [-8.75, 70.9, -8.65, 70.98],
+        "projectId": "2747718f-8f46-4233-830e-fa67871f137e",
+        "jobId": "4aa240dc-e231-4aef-a86c-14609d6d76dc",
+        "bytes": 12593521, "sha256": "ed2f9bebdd374a1f725821db3981c4b8b4e0ec07a2200bbfc0cfba588d297ac9",
+        "width": 29338, "height": 89448, "crs": "EPSG:32629",
+        "pixel": {"column": 15578, "row": 11630, "value": 1},
+        "actions": ["original dropdown", "review annual query", "real catalog search", "select supercell", "save project", "explicit fresh download", "open project", "local georeferenced preview", "raw class-code read"],
+        "settled": true,
+        "interpretation": "Original UInt8 palette index/class code; embedded NoData retained. The raw grayscale display does not apply the classification palette."
+      }
+    ],
+    "pagination": {"datasetId": "cbers-sr", "layer": "cbers4-wfi", "year": 2026, "month": 9, "bounds": [-74, -34, -34, 6], "initialItems": 20, "afterLoadMore": 40, "stillPartial": true, "selectedFiles": 0, "newDownloadJobIds": []},
+    "scopeChanges": {"month": "Changing CBERS September to August removed all 40 previous items and the old review; resolve showed only the August query.", "product": "Switching to HILDA retained the map bounds but removed CBERS month and catalog records.", "year": "HILDA 2019 resolve used only the 2019 original URL; changing to 2018 removed the old review and resolved only the 2018 URL. This was recipe verification, not another full 2018 download."},
+    "narrowViewport": {"width": 768, "height": 800, "documentWidth": 768, "mainWidth": 425.875, "visuallyInspected": true, "overrideReset": true},
+    "screenshots": ["../../.verification/public-datasets-ui-20261012/cbers-result-20261012.jpg", "../../.verification/public-datasets-ui-20261012/io-classification-result-20261012.jpg", "../../.verification/public-datasets-ui-20261012/hilda-narrow-20261012.jpg", "../../.verification/public-datasets-ui-20261012/curated-source-picker-20261012.jpg"],
+    "finalState": "Explore with CBERS selected, original source dropdown open, temporary area cleared. Two downloaded test projects remain in the private preview store; all five preview jobs are succeeded."
+  },
+  "automated": {
+    "nodeTests": {"passed": 364}, "agentTests": {"passed": 149}, "uiTests": {"filesPassed": 47, "testsPassed": 437},
+    "runtimeTests": {"passed": 658, "ignoredOptIn": 15}, "desktopTests": {"passed": 56, "ignoredOptIn": 27},
+    "sourcePicker": {"testsPassed": 17, "independentProductCases": 14},
+    "clippy": "workspace/all targets/custom protocol with warnings denied; passed", "format": "passed", "productionBuild": "passed; existing chunk-size warning only",
+    "testExecution": "The initial concurrent full UI run timed out on two 5-second interaction tests. Product selection was split into independent cases without raising global timeouts; the final full UI run after native checks finished passed all 437 tests.",
+    "compatibility": "Production validators accepted the prior six-channel records and 22 metadata probes, the prior five expansion cases, and the final corrected six-channel records and real pagination. Wrong unreleased HILDA ordinal-code proofs are rejected, with private backups retained as documented in native acceptance."
+  },
+  "scope": {"realModelRequests": 0, "nativeWindowClicksTested": false, "earthEngineComputeRequests": 0, "credentialsCreated": false, "published": false, "committed": false}
+}

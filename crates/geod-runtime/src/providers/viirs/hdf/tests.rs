@@ -1,6 +1,58 @@
 use super::*;
 use std::io::Write;
 
+#[test]
+#[ignore = "requires complete authenticated NASA originals and independent GDAL references"]
+fn actual_nasa_hdf_eos5_root_metadata_and_all_rgb_samples_match_independent_gdal() {
+    let root = std::path::PathBuf::from(
+        std::env::var_os("GEOD_VIIRS_REAL_DIR").expect("private original directory"),
+    );
+    let reference: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(root.join("viirs-gdal-reference.json")).unwrap())
+            .unwrap();
+    let mut results = Vec::new();
+    for r in reference.as_array().unwrap() {
+        let path = root.join(r["filename"].as_str().unwrap());
+        let summary = verify(
+            &path,
+            r["itemId"].as_str().unwrap(),
+            r["bytes"].as_u64().unwrap(),
+            r["sha256"].as_str().unwrap(),
+            &CancellationToken::new(),
+        )
+        .unwrap();
+        for (b, e) in summary.bands.iter().zip(r["bands"].as_array().unwrap()) {
+            assert_eq!(b.band, e["band"].as_str().unwrap());
+            assert_eq!(b.samples_sha256, e["samplesSha256"].as_str().unwrap());
+            assert_eq!(
+                u64::from(b.no_data_count),
+                e["noDataCount"].as_u64().unwrap()
+            );
+            assert_eq!(
+                u64::from(b.outside_valid_range_count),
+                e["outsideValidRangeCount"].as_u64().unwrap()
+            );
+            assert_eq!(
+                i64::from(b.minimum.unwrap()),
+                e["minimum"].as_i64().unwrap()
+            );
+            assert_eq!(
+                i64::from(b.maximum.unwrap()),
+                e["maximum"].as_i64().unwrap()
+            );
+        }
+        results.push(summary);
+    }
+    assert_eq!(results.len(), 3);
+    let output = root.join("viirs-native-hdf-verified.json");
+    let bytes = serde_json::to_vec_pretty(&results).unwrap();
+    if output.exists() {
+        assert_eq!(std::fs::read(output).unwrap(), bytes);
+    } else {
+        std::fs::write(output, bytes).unwrap();
+    }
+}
+
 const FIXTURES: [&[u8]; 3] = [
     include_bytes!("../../../../fixtures/viirs/synthetic-vnp09a1.h5.gz"),
     include_bytes!("../../../../fixtures/viirs/synthetic-vj109a1.h5.gz"),

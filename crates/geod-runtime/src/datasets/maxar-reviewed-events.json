@@ -1,0 +1,96 @@
+[
+  {
+    "datasetId": "maxar-open-legacy",
+    "url": "https://maxar-opendata.s3.amazonaws.com/events/Maui-Hawaii-fires-Aug-23/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "Maui-Hawaii-fires-Aug-23",
+      "stac_version": "1.0.0",
+      "links": [
+        {
+          "rel": "root",
+          "href": "../collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./ard/acquisition_collections/10300100EB15FF00_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./ard/acquisition_collections/10300100EB592000_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./ard/acquisition_collections/10300100EC8B7900_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./ard/acquisition_collections/105001003590C300_collection.json",
+          "type": "application/json"
+        },
+        {
+          "rel": "child",
+          "href": "./ard/acquisition_collections/10503F0006FE4B00_collection.json",
+          "type": "application/json"
+        }
+      ],
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -156.7541149008616,
+              20.61864421171153,
+              -156.23880228630824,
+              21.03020549865336
+            ],
+            [
+              -156.70182,
+              20.832582,
+              -156.579726,
+              20.972368
+            ],
+            [
+              -156.7541149008616,
+              20.757639748035427,
+              -156.5381923522763,
+              21.03020549865336
+            ],
+            [
+              -156.465609,
+              20.721929506765317,
+              -156.38479198457856,
+              20.854251
+            ],
+            [
+              -156.41933292283687,
+              20.720147,
+              -156.267548,
+              20.851747706489288
+            ],
+            [
+              -156.46637616667806,
+              20.61864421171153,
+              -156.23880228630824,
+              20.96407871197022
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2023-08-09 21:10:34Z",
+              "2023-08-12 21:18:20Z"
+            ]
+          ]
+        }
+      },
+      "title": "Maui Fires",
+      "description": "A series of grassland wildfires driven by high winds broke out on the Hawaiian island of Hawaii on August 8, 2023. The fires spread to the town of Lahaina, killing at least 97 people and leaving at least 31 others missing.",
+      "license": "CC-BY-NC-4.0"
+    }
+  }
+]

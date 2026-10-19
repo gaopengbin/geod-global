@@ -1,0 +1,9 @@
+{
+  "variant": "global-v6",
+  "baseVariant": "global-v5",
+  "baseSourceSha256": "332e6d0dca7f968f72686e26477812ae61fd82b411f57a0079824c20809eb733",
+  "tool": "image_gen",
+  "edit": "Removed the small globe and orbit for small-size icon legibility",
+  "prompt": "Edit the attached GeoD Global transparent logo. Remove only the little globe and its surrounding orbit ring above the right-hand horizontal bar of the G. Replace the removed globe and entire ring with true transparency. Keep the original main G ribbon shape, opening, blue-cyan-green gradient, folded dimensional shading, highlights, and placement unchanged. Single clean G, no replacement object, no star, no dot, no badge, no extra ring. Square transparent PNG composition, no text or background.",
+  "sourceSha256": "01d4f478243768226237aedac44290665b48be3920e5b9117df17d7de0a3c7fe"
+}

@@ -27,7 +27,7 @@ it('aerial download defaults to one four-band original without requiring an acco
  await userEvent.click(screen.getByRole('button',{name:'Create project and download'}));
  expect(screen.getByRole('combobox',{name:'Download content'}).textContent).toContain('four-band');
  expect(screen.queryByText('Manage authorization')).toBeNull();
- await userEvent.click(screen.getByRole('button',{name:'Create project and start download'}));
+ await userEvent.click(screen.getByRole('button',{name:'Confirm and download'}));
  await screen.findByRole('button',{name:'Open project'});
  expect(runtimeRequest.mock.calls.map(([op])=>op)).toEqual(['createProject','downloadProject']);
  expect(runtimeRequest.mock.calls[1][1].assetKey).toBe('aerial');

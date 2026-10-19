@@ -136,7 +136,10 @@ pub(super) fn grid(text: &str, h: u32, v: u32) -> Result<Grid> {
         || !name.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'_')
         || value(grid, "XDim")? != "1200"
         || value(grid, "YDim")? != "1200"
-        || value(grid, "Projection")? != "GCTP_SNSOID"
+        || !matches!(
+            value(grid, "Projection")?,
+            "GCTP_SNSOID" | "HE5_GCTP_SNSOID"
+        )
         || grid
             .values
             .get("GridOrigin")
@@ -192,7 +195,10 @@ pub(super) fn grid(text: &str, h: u32, v: u32) -> Result<Grid> {
             .collect();
         if matches.len() != 1
             || matches[0].0 != "OBJECT"
-            || value(&matches[0].2, "DataType")? != "DFNT_INT16"
+            || !matches!(
+                value(&matches[0].2, "DataType")?,
+                "DFNT_INT16" | "H5T_NATIVE_SHORT"
+            )
             || value(&matches[0].2, "DimList")?.replace(' ', "") != "(\"YDim\",\"XDim\")"
         {
             return Err(format!(

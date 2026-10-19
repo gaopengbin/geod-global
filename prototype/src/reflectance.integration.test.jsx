@@ -30,7 +30,7 @@ it('downloads all original channels into one named project without offering an 8
   expect(screen.getAllByRole('option')).toHaveLength(4);
   expect(screen.queryByRole('option',{name:/True-color|SCL/})).toBeNull();
   await user.keyboard('{Escape}');
-  await user.click(screen.getByRole('button',{name:'Create project and start download'}));
+  await user.click(screen.getByRole('button',{name:'Confirm and download'}));
   await screen.findByRole('button',{name:'Open project'});
   expect(runtimeRequest.mock.calls.map(([operation])=>operation)).toEqual(['createProject','downloadProject','downloadProject','downloadProject']);
   expect(runtimeRequest.mock.calls.slice(1).map(([,payload])=>payload.assetKey)).toEqual(['red','green','blue']);

@@ -36,6 +36,7 @@ struct HumanRequest {
     id: String,
     retry: bool,
     cancel: bool,
+    originals_only: bool,
     consumed: BTreeSet<String>,
 }
 pub struct ExecutionPolicy {
@@ -142,6 +143,13 @@ impl ExecutionPolicy {
         let negated = ["不要", "别", "不需要", "do not", "don't", "never"]
             .iter()
             .any(|word| text.contains(word));
+        let mut requests = self.requests.lock().await;
+        let brief = ["继续", "重试", "再试试", "再试一次", "continue", "retry"]
+            .contains(&text.trim().trim_end_matches(['。', '.', '!', '！']));
+        let previous_originals = brief
+            && requests
+                .get(session)
+                .is_some_and(|r| r.binding == binding && r.originals_only);
         let request = HumanRequest {
             binding: binding.into(),
             id: id.clone(),
@@ -160,10 +168,22 @@ impl ExecutionPolicy {
                 && ["取消", "停止下载", "停止任务", "停止处理", "cancel"]
                     .iter()
                     .any(|word| text.contains(word)),
+            originals_only: previous_originals || explicit_originals(&text),
             consumed: BTreeSet::new(),
         };
-        self.requests.lock().await.insert(session.into(), request);
+        requests.insert(session.into(), request);
         id
+    }
+    pub async fn can_review_originals(
+        &self,
+        session: &str,
+        binding: &str,
+        scope: TurnScope<'_>,
+    ) -> bool {
+        !scope.read_only
+            && self.requests.lock().await.get(session).is_some_and(|r| {
+                r.binding == binding && Some(r.id.as_str()) == scope.request_id && r.originals_only
+            })
     }
     pub async fn call(
         &self,
@@ -261,6 +281,77 @@ impl ExecutionPolicy {
         }
         Err("Unknown Agent execution tool.".into())
     }
+}
+
+fn explicit_originals(text: &str) -> bool {
+    let text = text.to_lowercase();
+    if [
+        "不要下载",
+        "别下载",
+        "不下载",
+        "do not download",
+        "don't download",
+    ]
+    .iter()
+    .any(|s| text.contains(s))
+    {
+        return false;
+    }
+    if !["下载", "获取", "download", "fetch"]
+        .iter()
+        .any(|s| text.contains(s))
+    {
+        return false;
+    }
+    if ![
+        "不裁剪",
+        "不裁切",
+        "不掩膜",
+        "原件",
+        "原文件",
+        "原始文件",
+        "originals only",
+        "original only",
+        "no crop",
+        "without cropping",
+    ]
+    .iter()
+    .any(|s| text.contains(s))
+    {
+        return false;
+    }
+    let operations = [
+        "不裁剪",
+        "不裁切",
+        "不掩膜",
+        "不拼接",
+        "不镶嵌",
+        "不重投影",
+        "不重采样",
+        "no crop",
+        "without cropping",
+        "no mosaic",
+        "without mosaicking",
+    ]
+    .iter()
+    .fold(text, |text, phrase| text.replace(phrase, ""));
+    ![
+        "裁剪",
+        "裁切",
+        "掩膜",
+        "拼接",
+        "镶嵌",
+        "重投影",
+        "重采样",
+        "crop",
+        "clip",
+        "mask",
+        "mosaic",
+        "resampl",
+        "reproject",
+    ]
+    .iter()
+    .any(|s| operations.contains(s))
 }
 pub fn definitions() -> Vec<Value> {
     vec![

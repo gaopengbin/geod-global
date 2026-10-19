@@ -1,0 +1,106 @@
+{
+  "schema": "geod-worldcereal-native-resolve-boundaries/v1",
+  "checkedAt": "2026-10-12T06:26:41.938320+00:00",
+  "status": "passed",
+  "scope": "Pure resolve boundaries in independent acceptance store; no catalog connection or raster transfers created",
+  "cases": [
+    {
+      "label": "outside-reviewed-region",
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          116,
+          39,
+          117,
+          40
+        ],
+        "year": 2021,
+        "layer": "temporarycrops",
+        "season": "tc-annual",
+        "region": "9026"
+      },
+      "status": 400,
+      "response": "{\"error\":\"The map area does not intersect a reviewed WorldCereal 2021 regional item for this theme/season. Current supported distribution is Mauritius/Réunion (AEZ 9026); no alternate region or season is substituted\"}",
+      "transfersStarted": 0
+    },
+    {
+      "label": "wrong-region",
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          57.61593284149066,
+          -20.059293161668283,
+          57.623932841490664,
+          -20.051293161668283
+        ],
+        "year": 2021,
+        "layer": "temporarycrops",
+        "season": "tc-annual",
+        "region": "9029"
+      },
+      "status": 400,
+      "response": "{\"error\":\"Choose a reviewed published region listed by this dataset preset\"}",
+      "transfersStarted": 0
+    },
+    {
+      "label": "wrong-year",
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          57.61593284149066,
+          -20.059293161668283,
+          57.623932841490664,
+          -20.051293161668283
+        ],
+        "year": 2020,
+        "layer": "temporarycrops",
+        "season": "tc-annual",
+        "region": "9026"
+      },
+      "status": 400,
+      "response": "{\"error\":\"Choose a published year listed by this dataset preset\"}",
+      "transfersStarted": 0
+    },
+    {
+      "label": "wrong-theme-season",
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          57.61593284149066,
+          -20.059293161668283,
+          57.623932841490664,
+          -20.051293161668283
+        ],
+        "year": 2021,
+        "layer": "temporarycrops",
+        "season": "tc-wintercereals",
+        "region": "9026"
+      },
+      "status": 400,
+      "response": "{\"error\":\"Choose a published season supported by the selected thematic layer\"}",
+      "transfersStarted": 0
+    },
+    {
+      "label": "month-not-season",
+      "request": {
+        "datasetId": "worldcereal",
+        "bounds": [
+          57.61593284149066,
+          -20.059293161668283,
+          57.623932841490664,
+          -20.051293161668283
+        ],
+        "year": 2021,
+        "layer": "temporarycrops",
+        "season": "tc-annual",
+        "region": "9026",
+        "month": 9
+      },
+      "status": 400,
+      "response": "{\"error\":\"Choose a published month listed by this dataset preset\"}",
+      "transfersStarted": 0
+    }
+  ],
+  "existingJobsUnchanged": true,
+  "credentialsRead": false
+}

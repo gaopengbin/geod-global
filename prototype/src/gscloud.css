@@ -1,0 +1,7 @@
+.gscloud-dates{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}
+.gscloud-dates .stac-field{min-width:0}
+.gscloud-dates input{width:100%;min-width:0;font-size:var(--text-caption);line-height:var(--leading-caption)}
+.gscloud-controls a{display:inline-flex;align-items:center;gap:4px;font-size:var(--text-caption);line-height:var(--leading-caption)}
+.gscloud-result .bui-disclosure-body{font-size:var(--text-caption);overflow-wrap:anywhere;line-height:var(--leading-caption)}
+.gscloud-result .bui-disclosure-body p{margin:3px 0}
+.gscloud-account-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-top:16px}

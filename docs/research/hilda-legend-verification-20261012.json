@@ -1,0 +1,60 @@
+{
+  "schema": "geod-public-distribution-legend-verification/v1",
+  "checkedAt": "2026-10-12",
+  "dataset": "HILDA+ 2019 OpenLandMap v1.0 EPSG:4326 distribution",
+  "originalFileSha256": "0c375f36c6de18012dd9c05df0bc99d85972e1c96662d7ed95489c079507181d",
+  "fullDecode": true,
+  "embeddedTiffNoData": null,
+  "observedRawValueCounts": {
+    "0": 552881364,
+    "11": 2347228,
+    "22": 23405661,
+    "33": 44067471,
+    "44": 66725116,
+    "55": 33463877,
+    "66": 46552091,
+    "77": 4440554,
+    "99": 390238
+  },
+  "authorLegend": {
+    "url": "https://landchange.imk-ifu.kit.edu/hilda",
+    "documentSha256": "e32e9dbf6f9887c7749f4b083d4b7ed7bb73c8bf1b16b213de80aa8218660d9a",
+    "interpretation": {
+      "0": "海洋类别",
+      "11": "城市",
+      "22": "耕地",
+      "33": "牧场或放牧地",
+      "44": "森林",
+      "55": "非管理草地或灌木地",
+      "66": "稀疏植被或无植被",
+      "77": "水域",
+      "99": "作者声明的缺失值"
+    },
+    "versionScope": "Author page describes the HILDA+ family and also links a newer version. This verified 2019 v1.0 distribution contains only the nine observed codes; no newer tree-crop, agroforestry or forest-subtype code is assumed."
+  },
+  "publisherMetadataConflicts": [
+    {
+      "url": "https://doi.pangaea.de/10.1594/PANGAEA.921846",
+      "note": "The abstract enumerates six conceptual land-use categories as 1–6. These are not the observed raw UInt8 file codes."
+    },
+    {
+      "url": "https://s3.openlandmap.org/arco/land.use.land.cover_hilda.plus.sld",
+      "documentSha256": "7e8942447fad65ab073a1afe27ed5ae61912144fe694436da064f1104f32e68c",
+      "note": "The original style correctly lists 11,22,33,44,55, but labels 77 as sparse/no vegetation and omits 66 and 99. Preserve the original style as conflicting evidence; do not rewrite it as publisher metadata."
+    },
+    {
+      "url": "https://s3.openlandmap.org/arco/land.use.land.cover_hilda.plus.qml",
+      "documentSha256": "19eb7cc4c76e3c58bda02506a7cf416046173a75c427dfb18abad98c20bff6b8",
+      "note": "Same original style conflict as SLD; the generic software preview does not apply this style."
+    }
+  ],
+  "declarationBasedStatistics": {
+    "kind": "auxiliary interpretation of already decoded raw value counts; no file or native mask modified",
+    "declaredMissingValue": 99,
+    "declaredMissingPixels": 390238,
+    "remainingPixelsIncludingOceanAndWater": 773883362,
+    "landClassPixels11Through66": 216561444,
+    "notAOICoverageVerification": true
+  },
+  "softwareBoundary": "Native raw pixel inspection preserves TIFF NoData=None, including code 99 as a raw number. Auxiliary author-based statistics are not an implemented scientific mask or land-use analysis."
+}

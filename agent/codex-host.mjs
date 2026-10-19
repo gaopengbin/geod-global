@@ -1,6 +1,8 @@
 import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { modelContextPolicy } from './model-context.mjs';
+import { toolArgumentGuidance } from './tool-arguments.mjs';
 
 // The pinned server may echo user image data in thread history events. Model
 // output and private native IPC remain bounded separately.
@@ -8,9 +10,21 @@ const FRAME_LIMIT = 32_000_000;
 export const CODEX_VERSION = '0.159.2';
 
 export function safeToolFailure(error) {
+  const argumentsGuidance = toolArgumentGuidance(error);
+  if (argumentsGuidance) return argumentsGuidance;
   // Only known native validation messages become guidance. Never forward a
   // provider body, path, URL, secret, or arbitrary source text to the model.
   switch (error?.message) {
+    case 'Invalid Agent tool arguments.':
+    case 'Invalid GeoD tool arguments':
+    case 'Invalid dataset connector arguments.':
+      return 'The arguments do not match this tool schema. Read its declared parameters, remove undeclared fields and supply required fields, then correct the call once. Keep required bounds when the tool declares them. This is not a source outage or permission failure.';
+    case 'Invalid coverage selection.':
+      return 'The arguments do not match this tool schema. Read its declared parameters, remove undeclared fields and supply required fields, then correct the call once. Coverage uses the saved search extent, not an extra bounds parameter. This is not a source outage or permission failure.';
+    case 'Enter an ISO 3166-1 alpha-3 country code':
+      return 'This product requires country in ISO alpha-3 form, separately from bounds. Read the selected dataset detail and use the actual country requested by the human; do not change the area or ask for authorization again.';
+    case 'Agent result exceeds 32 KiB.':
+      return 'The native result exceeds its bounded response size. Use this tool’s supported filters or pagination to request fewer records or the selected product detail. Do not repeat the same unbounded call or treat this as a source outage.';
     case 'Answer the pending decision card before preparing or executing dependent plans.':
     case 'Answer the pending decision card before confirming the download task.':
       return 'A pending human decision card blocks dependent planning or execution. This is not a missing tool, permission failure or exhausted budget. Read the current geod_execution_policy decision state. If it is an old missing-polygon fallback, read the same requested native boundary; verified matching geometry can supersede that obsolete card without inventing a human answer. Otherwise stop dependent calls and wait for the human to answer the actual card. Final task confirmation remains separate.';
@@ -104,10 +118,15 @@ export function safeToolFailure(error) {
   }
 }
 
-export async function launchCodex({ executable, home, cwd, bridgeUrl, token, model, onEvent, callTool }) {
+export function codexContextConfig(modelConfig = {}) {
+  const { contextWindow, autoCompactTokenLimit } = modelContextPolicy(modelConfig);
+  return `model_context_window = ${contextWindow}\nmodel_auto_compact_token_limit = ${autoCompactTokenLimit}\nmodel_auto_compact_token_limit_scope = "total"\n`;
+}
+
+export async function launchCodex({ executable, home, cwd, bridgeUrl, token, model, modelConfig, onEvent, callTool }) {
   await mkdir(home, { recursive: true }); await mkdir(cwd, { recursive: true });
   const quoted = value => JSON.stringify(value);
-  await writeFile(join(home, 'config.toml'), `model = ${quoted(model)}\nmodel_provider = "geod"\nmodel_context_window = 32768\nmodel_auto_compact_token_limit = 26000\nmodel_auto_compact_token_limit_scope = "body_after_prefix"\nweb_search = "disabled"\napproval_policy = "never"\nsandbox_mode = "read-only"\nproject_doc_max_bytes = 0\n[model_providers.geod]\nname = "GeoD AI SDK text connection"\nbase_url = ${quoted(bridgeUrl)}\nwire_api = "responses"\nenv_key = "GEOD_BRIDGE_TOKEN"\nsupports_websockets = false\nrequest_max_retries = 0\nstream_max_retries = 0\n[features]\nmulti_agent = false\nshell_tool = false\nshell_snapshot = false\ncode_mode_host = false\nplugins = false\nremote_plugin = false\nplugin_sharing = false\napps = false\nview_image = false\nimage_generation = false\n[windows]\nsandbox = "unelevated"\n`, { mode: 0o600 });
+  await writeFile(join(home, 'config.toml'), `model = ${quoted(model)}\nmodel_provider = "geod"\n${codexContextConfig(modelConfig)}web_search = "disabled"\napproval_policy = "never"\nsandbox_mode = "read-only"\nproject_doc_max_bytes = 0\n[model_providers.geod]\nname = "GeoD AI SDK text connection"\nbase_url = ${quoted(bridgeUrl)}\nwire_api = "responses"\nenv_key = "GEOD_BRIDGE_TOKEN"\nsupports_websockets = false\nrequest_max_retries = 0\nstream_max_retries = 0\n[features]\nmulti_agent = false\nshell_tool = false\nshell_snapshot = false\ncode_mode_host = false\nplugins = false\nremote_plugin = false\nplugin_sharing = false\napps = false\nview_image = false\nimage_generation = false\n[windows]\nsandbox = "unelevated"\n`, { mode: 0o600 });
   // No inherited Codex settings, cloud credentials or user model tokens. The
   // only credential seen by Codex is this process-local loopback bridge token.
   const env = { CODEX_HOME: home, HOME: home, GEOD_BRIDGE_TOKEN: token };

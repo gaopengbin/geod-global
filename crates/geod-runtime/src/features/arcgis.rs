@@ -274,6 +274,7 @@ fn parse_layer(
         items_url: query_url(root, &id)?.to_string(),
         license_links: vec![],
         arcgis: Some(layer),
+        geoboundaries: None,
         wfs: None,
     })
 }
@@ -345,6 +346,7 @@ pub(super) async fn discover(
         collections,
         connected_at: now(),
         overpass: None,
+        geoboundaries: None,
         wfs: None,
         arcgis: Some(Service {
             current_version: version,
@@ -637,6 +639,7 @@ pub(super) async fn query(
         number_matched: Some(ids.len()),
         feature_count: features.len(),
         selection: "bbox-full-features".into(),
+        geoboundaries: None,
         wfs: None,
         arcgis: Some(Snapshot {
             layer,

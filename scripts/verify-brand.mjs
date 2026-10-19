@@ -5,9 +5,10 @@ import path from 'node:path';
 
 export async function verifyBrand(root) {
   const files = [
-    ['prototype/public/brand/geod-symbol.png', 'ad28ec7751fc8d6ae9abae81038ad0ad408a642439bc34d26528189b95958000'],
-    ['src-tauri/icons/icon.png', 'e424e2fea2b024fb631552f2893dad64849b977d41d78f13239475e10d9f08cc'],
-    ['src-tauri/icons/icon.ico', 'c7419b5b911bf88708ae87c5f38f591ae4c1140e6737adeb6c2b0a900f73b09b'],
+    ['prototype/public/brand/geod-symbol.png', '0207e0d9e9ca020de08b98aed0d0ce7013255927f8ed7c88aca404e2d4bd1960'],
+    ['src-tauri/icons/icon.png', '0207e0d9e9ca020de08b98aed0d0ce7013255927f8ed7c88aca404e2d4bd1960'],
+    ['src-tauri/icons/icon.ico', '72dcbe0b23c6b9fcda90221f027752a460bf6329ee50fa71a06a6de9b58354b7'],
+    ['prototype/public/brand/global-space-v1.webp', '44bf22dac960380d1e75cfb10b90c3f464467fb52b9470bec2171d94fd02e8f6'],
     ['prototype/public/brand/LICENSE', 'f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191'],
   ];
   for (const [file, hash] of files) {
@@ -27,6 +28,8 @@ export async function verifyBrand(root) {
   }
   const index = await readFile(path.join(root, 'prototype/index.html'), 'utf8');
   assert(index.includes('brand/geod-symbol.png'), 'Favicon must use the approved GeoD mark');
+  const identityCss = await readFile(path.join(root, 'prototype/src/identity.css'), 'utf8');
+  assert(identityCss.includes('/brand/global-space-v1.webp'), 'Sign-in must use the Global kit background');
   const config = JSON.parse(await readFile(path.join(root, 'src-tauri/tauri.conf.json'), 'utf8'));
   assert.deepEqual(config.bundle.icon, ['icons/icon.ico', 'icons/icon.png']);
   return { verifiedGeoDBrand: { assets: files.length, windowsIconSizes: [16, 24, 32, 48, 64, 256] } };

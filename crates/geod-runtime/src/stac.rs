@@ -14,7 +14,10 @@ use std::{
 use url::Url;
 use uuid::Uuid;
 
+pub(crate) mod archive_original;
 mod catalog;
+mod planetary_access;
+pub mod preview;
 pub mod raster;
 mod search;
 pub use catalog::CatalogNode;
@@ -25,6 +28,8 @@ const MAX_SEARCH_BYTES: usize = 20 * 1024 * 1024;
 const MAX_ITEMS: usize = 1000;
 const MAX_PAGES: usize = 20;
 const MAX_REGISTRY: usize = 4 * 1024 * 1024;
+const MAX_CONNECTIONS: usize = 128;
+const MAX_CATALOG_CONNECTIONS: usize = 24;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -126,6 +131,18 @@ pub struct Asset {
     pub eligible: bool,
     pub reason: Option<String>,
     pub metadata: Value,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub original_href: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub transport_adapter: Option<String>,
+}
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct AssetTransport {
+    pub asset_key: String,
+    pub original_href: String,
+    pub href: String,
+    pub adapter: String,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -159,6 +176,10 @@ pub struct Provenance {
     pub collection: Option<Value>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub search_mode: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reviewed_dataset: Option<crate::datasets::SourceProvenance>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub asset_transports: Vec<AssetTransport>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -175,6 +196,10 @@ struct Record {
     retrieved_at: String,
     metadata_documents: Vec<DocumentReceipt>,
     search: Option<SearchRequest>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    reviewed_dataset: Option<crate::datasets::SourceProvenance>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    asset_transports: Vec<AssetTransport>,
 }
 #[derive(Debug, Clone)]
 struct Cursor {
@@ -402,10 +427,16 @@ async fn metadata_bytes(response: reqwest::Response) -> Result<Vec<u8>> {
         .split(';')
         .next()
         .unwrap_or("")
-        .trim();
+        .trim()
+        .to_string();
     if !matches!(
-        media,
-        "application/json" | "application/geo+json" | "text/plain" | "application/octet-stream"
+        media.as_str(),
+        "application/json"
+            | "application/geo+json"
+            | "text/plain"
+            | "application/octet-stream"
+            | "binary/octet-stream"
+            | ""
     ) {
         return Err("STAC metadata must contain JSON or GeoJSON".into());
     }
@@ -427,7 +458,43 @@ async fn metadata_bytes(response: reqwest::Response) -> Result<Vec<u8>> {
     if bytes.is_empty() {
         return Err("STAC returned empty metadata".into());
     }
+    // Object storage sometimes serves JSON with a generic or absent media
+    // type. This is not an HTML fallback: the complete bounded document still
+    // must be UTF-8 JSON and a structurally identifiable STAC document.
+    if matches!(
+        media.as_str(),
+        "" | "application/octet-stream" | "binary/octet-stream"
+    ) {
+        validate_generic_metadata(&bytes)?;
+    }
     Ok(bytes)
+}
+
+fn validate_generic_metadata(bytes: &[u8]) -> Result<()> {
+    std::str::from_utf8(bytes).map_err(|_| "STAC metadata must be valid UTF-8 JSON")?;
+    let value = json_document(bytes)?;
+    match value["type"].as_str() {
+        Some("Feature") if value["id"].is_string() && value["properties"].is_object() && value["assets"].is_object() => version(&value)?,
+        Some("Catalog" | "Collection") if value["id"].is_string() && value["links"].is_array() => version(&value)?,
+        Some("FeatureCollection") if value["features"].is_array() && value["links"].is_array() => {
+            for item in value["features"].as_array().unwrap() {
+                version(item)?;
+                if item["type"] != "Feature" || !item["properties"].is_object() || !item["assets"].is_object() {
+                    return Err("Generic metadata body is not a STAC item page".into());
+                }
+            }
+        }
+        None if value["collections"].is_array() && value["links"].is_array() => {
+            for collection in value["collections"].as_array().unwrap() {
+                version(collection)?;
+                if collection["type"] != "Collection" || !collection["id"].is_string() {
+                    return Err("Generic metadata body is not a STAC collection page".into());
+                }
+            }
+        }
+        _ => return Err("Generic metadata body must be a structured STAC JSON document, not HTML or an arbitrary JSON response".into()),
+    }
+    Ok(())
 }
 fn links<'a>(value: &'a Value, rel: &str) -> Result<Vec<&'a Value>> {
     let array = value["links"]
@@ -515,13 +582,192 @@ fn timestamp(value: Option<&Value>) -> Result<Option<String>> {
         _ => Err("STAC datetime must be RFC3339 or null".into()),
     }
 }
+
+fn raw_original_policy(
+    proof: Option<&crate::datasets::SourceProvenance>,
+    href: &str,
+) -> Result<Option<crate::datasets::clcd::OriginalPolicy>> {
+    proof
+        .filter(|p| p.dataset.id == "clcd")
+        .map(|p| crate::datasets::clcd::original_policy(p, href))
+        .transpose()
+}
+
+fn direct_original_size(raw: &Value) -> Result<Option<u64>> {
+    if raw["probeStatus"] == 206 {
+        let range = raw["contentRange"]
+            .as_str()
+            .ok_or("Direct raster probe lost its Content-Range")?;
+        let total = range
+            .strip_prefix("bytes 0-15/")
+            .and_then(|s| s.parse::<u64>().ok())
+            .filter(|n| *n >= 16)
+            .ok_or("Direct raster probe has an invalid complete byte length")?;
+        if raw["contentLength"].as_u64().is_some_and(|n| n != 16) {
+            return Err("Direct raster probe length differs from its selected header range".into());
+        }
+        Ok(Some(total))
+    } else {
+        Ok(raw["contentLength"].as_u64())
+    }
+}
+
+fn validate_raw_original_receipt(
+    proof: Option<&crate::datasets::SourceProvenance>,
+    href: &str,
+    raw: &Value,
+) -> Result<Option<crate::datasets::clcd::OriginalPolicy>> {
+    let policy = raw_original_policy(proof, href)?;
+    if let Some(p) = &policy {
+        if raw["kind"] != "direct-raster"
+            || raw.get("reviewedArchive").is_some()
+            || raw["reviewedOriginal"] != json!({"bytes":p.bytes,"sha256":p.sha256})
+            || file_size_declaration(raw)? != Some(p.bytes)
+            || checksum_declaration(raw)?.as_deref() != Some(p.sha256.as_str())
+            || direct_original_size(raw)? != Some(p.bytes)
+        {
+            return Err(
+                "CLCD raw original receipt differs from its complete reviewed native source".into(),
+            );
+        }
+    } else if raw.get("reviewedOriginal").is_some() {
+        return Err("A raw original allowance requires its exact compiled CLCD provenance".into());
+    }
+    Ok(policy)
+}
+
 fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
+    if let Some(proof) = &record.reviewed_dataset {
+        if record.kind != "item" || record.item_index.is_some() || record.search.is_some() {
+            return Err("Reviewed regional item provenance cannot be attached to another connector or search page".into());
+        }
+        let expected = crate::datasets::reviewed_item_transports(proof, &record.document_url, raw)?;
+        if expected != record.asset_transports {
+            return Err("Reviewed regional asset transport receipt changed".into());
+        }
+    } else if !record.asset_transports.is_empty() {
+        return Err(
+            "Asset transport mapping requires a native reviewed regional item proof".into(),
+        );
+    }
     if record.kind == "raster" {
         let href = public_url(&record.document_url)?.to_string();
-        if raw["href"] != href || raw["kind"] != "direct-raster" {
+        if raw["href"] != href
+            || !matches!(
+                raw["kind"].as_str(),
+                Some("direct-raster" | "reviewed-raster-archive")
+            )
+        {
             return Err("Direct raster metadata changed".into());
         }
-        return Ok(ItemSnapshot{id:id.into(),connection_id:record.connection_id.clone(),collection_id:None,item_id:record.document_sha256.clone(),title:record.service_name.clone(),datetime:None,start_datetime:None,end_datetime:None,bbox:None,geometry:Value::Null,properties:json!({}),assets:vec![Asset{key:"raster".into(),title:record.service_name.clone(),href,media_type:Some("image/tiff; application=geotiff".into()),roles:vec!["data".into()],eligible:true,reason:None,metadata:raw.clone()}],retrieved_at:record.retrieved_at.clone(),document_sha256:record.document_sha256.clone(),temporal_status:"missing".into(),warnings:vec!["Direct raster source has no declared acquisition time; COG layout is not validated.".into()],provenance:Provenance{document_url:record.document_url.clone(),document_request:None,metadata_documents:record.metadata_documents.clone(),search:None,collection:None,search_mode:None}});
+        let (bbox, properties, mut warnings, raw_policy) = if let Some(value) =
+            raw.get("datasetPreset")
+        {
+            let proof: crate::datasets::SourceProvenance =
+                serde_json::from_value(value.clone()).map_err(io_error)?;
+            crate::datasets::validate_provenance(&proof, &href)?;
+            let raw_policy = validate_raw_original_receipt(Some(&proof), &href, raw)?;
+            let archive = archive_original::validate_receipt(&proof, &href, raw)?;
+            if (raw["kind"] == "reviewed-raster-archive") != archive.is_some() {
+                return Err(
+                    "Direct original source kind conflicts with its reviewed ZIP/member provenance"
+                        .into(),
+                );
+            }
+            let mut warnings = proof.dataset.warnings.clone();
+            warnings.push("Dataset preset metadata is a client declaration based on publisher documentation. It does not prove scientific validity, native-file metadata or valid-data coverage. The release/model epoch is not a scene acquisition time.".into());
+            (
+                proof.source_bounds,
+                json!({"datasetPreset":value}),
+                warnings,
+                raw_policy,
+            )
+        } else {
+            if raw["kind"] != "direct-raster" || raw.get("reviewedArchive").is_some() {
+                return Err(
+                    "Publisher ZIP access requires a native reviewed numerical member recipe"
+                        .into(),
+                );
+            }
+            validate_raw_original_receipt(None, &href, raw)?;
+            (None, json!({}), Vec::new(), None)
+        };
+        let declared_size = file_size_declaration(raw)?;
+        let probe_size = direct_original_size(raw)?;
+        if declared_size
+            .zip(probe_size)
+            .is_some_and(|(declared, probed)| declared != probed)
+        {
+            return Err(
+                "Direct raster declared size conflicts with its original header probe".into(),
+            );
+        }
+        checksum_declaration(raw)?;
+        let file_limit = raw_policy
+            .as_ref()
+            .map_or(crate::MAX_ASSET_BYTES, |p| p.bytes);
+        let reason = declared_size
+            .or(probe_size)
+            .filter(|size| *size > file_limit)
+            .map(|_| {
+                if file_limit == crate::MAX_ASSET_BYTES {
+                    "The declared original exceeds the ordinary 512 MiB native download file limit."
+                        .to_string()
+                } else {
+                    "The declared original exceeds its bounded native download file limit."
+                        .to_string()
+                }
+            });
+        warnings.push(
+            "Direct raster source has no declared acquisition time; COG layout is not validated."
+                .into(),
+        );
+        return Ok(ItemSnapshot {
+            id: id.into(),
+            connection_id: record.connection_id.clone(),
+            collection_id: None,
+            item_id: record.document_sha256.clone(),
+            title: record.service_name.clone(),
+            datetime: None,
+            start_datetime: None,
+            end_datetime: None,
+            bbox,
+            geometry: Value::Null,
+            properties,
+            assets: vec![Asset {
+                key: "raster".into(),
+                title: record.service_name.clone(),
+                href,
+                media_type: Some(
+                    if raw["kind"] == "reviewed-raster-archive" {
+                        "application/zip"
+                    } else {
+                        "image/tiff; application=geotiff"
+                    }
+                    .into(),
+                ),
+                roles: vec!["data".into()],
+                eligible: reason.is_none(),
+                reason,
+                metadata: raw.clone(),
+                original_href: None,
+                transport_adapter: None,
+            }],
+            retrieved_at: record.retrieved_at.clone(),
+            document_sha256: record.document_sha256.clone(),
+            temporal_status: "missing".into(),
+            warnings,
+            provenance: Provenance {
+                document_url: record.document_url.clone(),
+                document_request: None,
+                metadata_documents: record.metadata_documents.clone(),
+                search: None,
+                collection: None,
+                search_mode: None,
+                reviewed_dataset: None,
+                asset_transports: Vec::new(),
+            },
+        });
     }
     let value = if let Some(index) = record.item_index {
         raw["features"]
@@ -544,8 +790,22 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
         .as_object()
         .ok_or("STAC item has no properties object")?;
     let datetime = timestamp(properties.get("datetime"))?;
-    let start_datetime = timestamp(properties.get("start_datetime"))?;
-    let end_datetime = timestamp(properties.get("end_datetime"))?;
+    let annual_dtr = record.reviewed_dataset.as_ref().is_some_and(|proof| {
+        matches!(
+            proof.dataset.id.as_str(),
+            "deafrica-fractional-cover" | "deafrica-wofs-annual"
+        )
+    });
+    let start_datetime = timestamp(properties.get("start_datetime").or_else(|| {
+        annual_dtr
+            .then(|| properties.get("dtr:start_datetime"))
+            .flatten()
+    }))?;
+    let end_datetime = timestamp(properties.get("end_datetime").or_else(|| {
+        annual_dtr
+            .then(|| properties.get("dtr:end_datetime"))
+            .flatten()
+    }))?;
     if start_datetime.is_some() != end_datetime.is_some() {
         return Err("STAC item has an incomplete temporal interval".into());
     }
@@ -608,7 +868,11 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
             .filter(|s| text(s, 4096))
             .ok_or("STAC asset has no valid href")?;
         let resolved = base.join(raw_href).map_err(io_error)?;
-        let href = resolved.to_string();
+        let transport = record
+            .asset_transports
+            .iter()
+            .find(|value| value.asset_key == *key);
+        let href = transport.map_or_else(|| resolved.to_string(), |value| value.href.clone());
         let media_type = source
             .get("type")
             .map(|v| {
@@ -633,7 +897,44 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
                 })
                 .collect::<Result<Vec<_>>>()?,
         };
-        let reason=public_url(&href).err().or_else(||(!media_supported(media_type.as_deref())).then(||"Original download and local inspection currently support GeoTIFF/COG assets only".into())).or_else(|| checksum_declaration(source).err());
+        // item() has already validated this exact reviewed proof and original
+        // document above. Keep every publisher asset declaration, while the
+        // finite Maui client selection authorizes only its selected analytic
+        // key. Ordinary manually connected Maxar items retain generic behavior.
+        let reviewed_layer_reason = record.reviewed_dataset.as_ref()
+            .filter(|proof| proof.dataset.id == "maxar-open-legacy" || (crate::datasets::next_planetary::is_product(&proof.dataset.id) || crate::datasets::additional_pc::is_product(&proof.dataset.id)))
+            .filter(|proof| proof.request.layer.as_deref() != Some(key.as_str()))
+            .map(|proof| {
+                if proof.dataset.id == "maxar-open-legacy" && key == "visual" {
+                    "The reviewed Maui recipe does not support the visual asset: its JPEG/YCbCr layout is not decoded by the current raw-sample reader. Original publisher metadata is retained.".to_string()
+                } else if proof.dataset.id == "maxar-open-legacy" {
+                    format!("This reviewed Maui source authorizes only its selected {} analytic asset. Choose another supported analytic layer through a new reviewed source selection; original publisher metadata is retained.", proof.layer.id)
+                } else {
+                    format!("This reviewed source authorizes only its selected {} numerical asset. Choose another supported layer through a new source selection; original publisher metadata is retained.", proof.layer.id)
+                }
+            });
+        let reviewed_visual_reason = record
+            .reviewed_dataset
+            .as_ref()
+            .filter(|p| p.dataset.id == "vantor-open")
+            .and_then(|p| {
+                crate::datasets::vantor_open::visual_asset(p, &record.document_url, key, source)
+                    .err()
+            });
+        let reason = reviewed_visual_reason.or(reviewed_layer_reason)
+            .or_else(|| public_url(&href).err())
+            .or_else(|| (!media_supported(media_type.as_deref())).then(|| "Original download and local inspection currently support GeoTIFF/COG assets only".into()))
+            .or_else(|| checksum_declaration(source).err())
+            .or_else(|| match raw_original_policy(record.reviewed_dataset.as_ref(), &href) {
+                Err(reason) => Some(reason),
+                Ok(policy) => file_size_declaration(source).ok().flatten()
+                    .filter(|size| *size > policy.as_ref().map_or(crate::MAX_ASSET_BYTES, |p| p.bytes))
+                    .map(|_| if policy.is_none() {
+                        "The declared original exceeds the ordinary 512 MiB native download file limit.".into()
+                    } else {
+                        "The declared original exceeds its bounded native download file limit.".into()
+                    }),
+            });
         assets.push(Asset {
             key: key.clone(),
             title: source["title"]
@@ -647,6 +948,8 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
             eligible: reason.is_none(),
             reason,
             metadata: source.clone(),
+            original_href: transport.map(|value| value.original_href.clone()),
+            transport_adapter: transport.map(|value| value.adapter.clone()),
         });
     }
     let temporal_status = if datetime.is_some() {
@@ -656,11 +959,25 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
     } else {
         "missing"
     };
-    let warnings = if temporal_status == "missing" {
+    let mut warnings = if temporal_status == "missing" {
         vec!["Source item has no acquisition time or interval; its temporal fields do not conform to STAC requirements.".into()]
     } else {
         vec![]
     };
+    if record
+        .reviewed_dataset
+        .as_ref()
+        .is_some_and(|proof| proof.dataset.id == "worldcereal")
+    {
+        warnings.extend([
+            "The archived publisher item and original S3 asset metadata are unchanged. A separate native receipt maps only the reviewed public WorldCereal assets to the fixed DE Africa regional HTTPS endpoint.".into(),
+            "This standalone publisher item has no collection link. Collection metadata/license was not retrieved; documented preset declarations are separate client provenance, not publisher properties.".into(),
+            "Seasonal category 254 is valid no-crop data, not NoData. Classification and confidence assets retain their independent original grid declarations.".into(),
+        ]);
+    } else if let Some(proof) = &record.reviewed_dataset {
+        warnings.extend(proof.dataset.warnings.clone());
+        warnings.push("Publisher item properties and original asset declarations remain unchanged. The reviewed client product recipe and any exact public transport mapping are separate provenance. Missing collection metadata or license declarations are not fabricated.".into());
+    }
     Ok(ItemSnapshot {
         id: id.into(),
         connection_id: record.connection_id.clone(),
@@ -690,28 +1007,47 @@ fn item(record: &Record, id: &str, raw: &Value) -> Result<ItemSnapshot> {
             search: record.search.clone(),
             collection: None,
             search_mode: (record.kind == "catalog").then(|| "catalog".into()),
+            reviewed_dataset: record.reviewed_dataset.clone(),
+            asset_transports: record.asset_transports.clone(),
         },
     })
 }
 
-fn checksum_declaration(asset: &Value) -> Result<Option<String>> {
-    if asset
-        .get("file:size")
-        .is_some_and(|v| v.as_u64().is_none_or(|n| n == 0))
-    {
-        return Err("STAC declared file size is invalid".into());
+fn file_size_declaration(asset: &Value) -> Result<Option<u64>> {
+    let mut declared = None;
+    for key in ["file:size", "bdc:size"] {
+        if let Some(value) = asset.get(key) {
+            let size = value
+                .as_u64()
+                .filter(|size| *size > 0)
+                .ok_or("STAC declared file size is invalid")?;
+            if declared.is_some_and(|previous| previous != size) {
+                return Err("STAC file:size and bdc:size declarations conflict".into());
+            }
+            declared = Some(size);
+        }
     }
-    let Some(checksum) = asset.get("file:checksum") else {
-        return Ok(None);
-    };
-    let value = checksum
-        .as_str()
-        .ok_or("STAC checksum declaration must be a string")?;
-    let sha = value
-        .strip_prefix("1220")
-        .filter(|s| digest(s))
-        .ok_or("Only SHA-256 multihash file:checksum declarations are supported")?;
-    Ok(Some(sha.into()))
+    Ok(declared)
+}
+
+fn checksum_declaration(asset: &Value) -> Result<Option<String>> {
+    file_size_declaration(asset)?;
+    let mut declared: Option<String> = None;
+    for key in ["file:checksum", "checksum:multihash"] {
+        if let Some(checksum) = asset.get(key) {
+            let value = checksum
+                .as_str()
+                .ok_or("STAC checksum declaration must be a string")?;
+            let sha = value.strip_prefix("1220").filter(|sha| digest(sha)).ok_or("Only hexadecimal SHA-256 multihash declarations (1220 plus 64 lowercase hex digits) are supported")?;
+            if declared.as_deref().is_some_and(|previous| previous != sha) {
+                return Err(
+                    "STAC file:checksum and checksum:multihash declarations conflict".into(),
+                );
+            }
+            declared = Some(sha.into());
+        }
+    }
+    Ok(declared)
 }
 fn record(root: &Path, id: &str) -> Result<(Record, ItemSnapshot)> {
     if !digest(id) {
@@ -761,6 +1097,8 @@ fn record(root: &Path, id: &str) -> Result<(Record, ItemSnapshot)> {
         }
     }
     let value = json_document(&document(root, &record.document_sha256)?)?;
+    validate_catalog_raster_receipt(root, &record, &value)?;
+    validate_reviewed_collection_receipt(root, &record, &value)?;
     let mut snapshot = item(&record, id, &value)?;
     attach_collection(root, &mut snapshot)?;
     if record.kind == "catalog" {
@@ -769,6 +1107,8 @@ fn record(root: &Path, id: &str) -> Result<(Record, ItemSnapshot)> {
     Ok((record, snapshot))
 }
 fn save_snapshot(root: &Path, record: Record, raw: &Value) -> Result<ItemSnapshot> {
+    validate_catalog_raster_receipt(root, &record, raw)?;
+    validate_reviewed_collection_receipt(root, &record, raw)?;
     let bytes = serde_json::to_vec(&record).map_err(io_error)?;
     if bytes.len() > 65536 {
         return Err("STAC snapshot receipt exceeds 64 KiB".into());
@@ -776,11 +1116,154 @@ fn save_snapshot(root: &Path, record: Record, raw: &Value) -> Result<ItemSnapsho
     let id = hash(&bytes);
     let mut snapshot = item(&record, &id, raw)?;
     attach_collection(root, &mut snapshot)?;
+    if record.kind == "api" {
+        validate_search_item(
+            &snapshot,
+            record
+                .search
+                .as_ref()
+                .ok_or("STAC API item is missing its reviewed search query")?,
+        )?;
+    }
     if record.kind == "catalog" {
         catalog::validate_record(root, &record, &snapshot)?;
     }
     immutable(root, "snapshot", &bytes)?;
     Ok(snapshot)
+}
+fn validate_catalog_raster_receipt(root: &Path, record: &Record, raw: &Value) -> Result<()> {
+    let Some(value) = raw.get("datasetPreset") else {
+        return Ok(());
+    };
+    let proof: crate::datasets::SourceProvenance =
+        serde_json::from_value(value.clone()).map_err(io_error)?;
+    let Some(catalog) = proof.catalog_raster.as_ref() else {
+        return Ok(());
+    };
+    if record.kind != "raster"
+        || !matches!(proof.dataset.id.as_str(), "usgs-3dep" | "usgs-3dep-1m")
+        || record.metadata_documents
+            != vec![DocumentReceipt {
+                url: catalog.catalog_url.clone(),
+                sha256: catalog.catalog_sha256.clone(),
+            }]
+        || raw["file:size"] != catalog.record["sizeInBytes"]
+    {
+        return Err(
+            "Direct raster catalog receipt conflicts with its archived publisher record".into(),
+        );
+    }
+    let document = json_document(&document(root, &catalog.catalog_sha256)?)?;
+    match proof.dataset.id.as_str() {
+        "usgs-3dep" => crate::datasets::usgs_3dep::validate_catalog(&proof, &document),
+        "usgs-3dep-1m" => crate::datasets::usgs_3dep_1m::validate_catalog(&proof, &document),
+        _ => Err("Unsupported direct raster publisher catalog".into()),
+    }
+}
+fn validate_planetary_collection(
+    proof: &crate::datasets::SourceProvenance,
+    url: &str,
+    raw: &Value,
+) -> Result<()> {
+    if crate::datasets::additional_pc::is_product(&proof.dataset.id) {
+        crate::datasets::additional_pc::validate_collection(proof, url, raw)
+    } else {
+        crate::datasets::next_planetary::validate_collection(proof, url, raw)
+    }
+}
+fn validate_reviewed_collection_receipt(root: &Path, record: &Record, raw: &Value) -> Result<()> {
+    if let Some(proof) = record
+        .reviewed_dataset
+        .as_ref()
+        .filter(|p| p.dataset.id == "vantor-open")
+    {
+        let base = public_url(&record.document_url)?;
+        let url = link(raw, "collection", &base)?
+            .ok_or("Reviewed Vantor item lost its event collection link")?;
+        if record.kind != "item"
+            || record.metadata_documents.len() != 2
+            || record.metadata_documents[0]
+                != (DocumentReceipt {
+                    url: record.document_url.clone(),
+                    sha256: record.document_sha256.clone(),
+                })
+            || record.metadata_documents[1].url != url.as_str()
+        {
+            return Err("Reviewed Vantor item and event collection receipts conflict".into());
+        }
+        let collection = json_document(&document(root, &record.metadata_documents[1].sha256)?)?;
+        return crate::datasets::vantor_open::validate_collection(proof, url.as_str(), &collection);
+    }
+    if let Some(proof) = record.reviewed_dataset.as_ref().filter(|p| {
+        crate::datasets::next_planetary::is_product(&p.dataset.id)
+            || crate::datasets::additional_pc::is_product(&p.dataset.id)
+    }) {
+        let base = public_url(&record.document_url)?;
+        let url = link(raw, "collection", &base)?
+            .ok_or("Reviewed Planetary item lost its Collection link")?;
+        if record.kind != "item"
+            || record.metadata_documents.len() != 2
+            || record.metadata_documents[0]
+                != (DocumentReceipt {
+                    url: record.document_url.clone(),
+                    sha256: record.document_sha256.clone(),
+                })
+            || record.metadata_documents[1].url != url.as_str()
+        {
+            return Err("Reviewed Planetary item and Collection receipts conflict".into());
+        }
+        let collection = json_document(&document(root, &record.metadata_documents[1].sha256)?)?;
+        return validate_planetary_collection(proof, url.as_str(), &collection);
+    }
+    if let Some(proof) = record
+        .reviewed_dataset
+        .as_ref()
+        .filter(|proof| proof.dataset.id == "maxar-open-legacy")
+    {
+        let base = public_url(&record.document_url)?;
+        let url = link(raw, "collection", &base)?
+            .ok_or("Reviewed Maui item lost its acquisition collection link")?;
+        let event_url = crate::datasets::maxar::event_url(proof)?;
+        if record.kind != "item"
+            || record.metadata_documents.len() != 3
+            || record.metadata_documents[0]
+                != (DocumentReceipt {
+                    url: record.document_url.clone(),
+                    sha256: record.document_sha256.clone(),
+                })
+            || record.metadata_documents[1].url != url.as_str()
+            || record.metadata_documents[2].url != event_url
+        {
+            return Err("Reviewed Maui item, acquisition and event receipts conflict".into());
+        }
+        let collection = json_document(&document(root, &record.metadata_documents[1].sha256)?)?;
+        crate::datasets::maxar::validate_collection(proof, url.as_str(), &collection)?;
+        let event = json_document(&document(root, &record.metadata_documents[2].sha256)?)?;
+        return crate::datasets::maxar::validate_event(proof, &event_url, &event);
+    }
+    let Some(proof) = record
+        .reviewed_dataset
+        .as_ref()
+        .filter(|proof| crate::datasets::is_reviewed_jaxa(&proof.dataset.id))
+    else {
+        return Ok(());
+    };
+    let base = public_url(&record.document_url)?;
+    let url = link(raw, "collection", &base)?
+        .ok_or("Reviewed JAXA item lost its original collection link")?;
+    if record.kind != "item"
+        || record.metadata_documents.len() != 2
+        || record.metadata_documents[0]
+            != (DocumentReceipt {
+                url: record.document_url.clone(),
+                sha256: record.document_sha256.clone(),
+            })
+        || record.metadata_documents[1].url != url.as_str()
+    {
+        return Err("Reviewed JAXA collection receipts conflict with the original item".into());
+    }
+    let metadata = json_document(&document(root, &record.metadata_documents[1].sha256)?)?;
+    crate::datasets::validate_jaxa_collection(proof, url.as_str(), &metadata)
 }
 fn attach_collection(root: &Path, snapshot: &mut ItemSnapshot) -> Result<()> {
     let Some(id) = snapshot.collection_id.as_deref() else {
@@ -898,10 +1381,79 @@ pub fn validate_job(root: &Path, job: &Job) -> Result<ProjectItem> {
     }
     Ok(asset)
 }
+
+/// Reconstruct the finite raw-original allowance from an immutable native
+/// selection. A job URL, metadata digest or caller checksum cannot activate it.
+pub(crate) fn reviewed_raw_original(
+    root: &Path,
+    job: &Job,
+) -> Result<Option<crate::datasets::clcd::OriginalPolicy>> {
+    let Some(pin) = &job.stac_source else {
+        return Ok(None);
+    };
+    validate_job(root, job)?;
+    let (_, snapshot) = record(root, &pin.snapshot_id)?;
+    let asset = snapshot
+        .assets
+        .iter()
+        .find(|a| a.key == pin.asset_key)
+        .ok_or("Reviewed original source asset is absent")?;
+    let proof = asset
+        .metadata
+        .get("datasetPreset")
+        .map(|raw| {
+            serde_json::from_value::<crate::datasets::SourceProvenance>(raw.clone())
+                .map_err(io_error)
+        })
+        .transpose()?;
+    validate_raw_original_receipt(proof.as_ref(), &job.href, &asset.metadata)
+}
+
+pub(crate) struct ReviewedWholeOriginal {
+    pub(crate) bytes: u64,
+    pub(crate) sha256: String,
+}
+
+/// Shared checkpoint identity, independent of whether the publisher supplied
+/// a ZIP or a direct TIFF. Archive-member handling retains its separate policy.
+pub(crate) fn reviewed_whole_original(
+    root: &Path,
+    job: &Job,
+) -> Result<Option<ReviewedWholeOriginal>> {
+    if let Some(p) = reviewed_raw_original(root, job)? {
+        return Ok(Some(ReviewedWholeOriginal {
+            bytes: p.bytes,
+            sha256: p.sha256,
+        }));
+    }
+    Ok(
+        archive_original::reviewed_original(root, job)?.map(|p| ReviewedWholeOriginal {
+            bytes: p.archive_bytes,
+            sha256: p.archive_sha256,
+        }),
+    )
+}
+
 pub fn verify_transfer(root: &Path, job: &Job, bytes: u64, sha256: &str) -> Result<()> {
     validate_job(root, job)?;
     let pin = job.stac_source.as_ref().unwrap();
-    let (_, snapshot) = record(root, &pin.snapshot_id)?;
+    let (source_record, snapshot) = record(root, &pin.snapshot_id)?;
+    if let Some(proof) = source_record
+        .reviewed_dataset
+        .as_ref()
+        .filter(|p| p.dataset.id == "vantor-open")
+    {
+        crate::datasets::vantor_open::validate_original(proof, &job.href, bytes, sha256)?;
+    }
+    if let Some(proof) = source_record
+        .reviewed_dataset
+        .as_ref()
+        .filter(|p| crate::datasets::additional_pc::is_product(&p.dataset.id))
+    {
+        // Bind whole-original evidence to the selected scientific asset, even
+        // when the unchanged publisher Item declares neither size nor checksum.
+        crate::datasets::additional_pc::validate_original(proof, &job.href, bytes, sha256)?;
+    }
     let asset = snapshot
         .assets
         .iter()
@@ -919,11 +1471,7 @@ pub fn verify_transfer(root: &Path, job: &Job, bytes: u64, sha256: &str) -> Resu
     } else {
         None
     };
-    if asset
-        .metadata
-        .get("file:size")
-        .and_then(Value::as_u64)
-        .is_some_and(|n| n != bytes)
+    if file_size_declaration(&asset.metadata)?.is_some_and(|n| n != bytes)
         || checksum_declaration(&asset.metadata)?.is_some_and(|s| s != sha256)
         || direct_size.is_some_and(|n| n != bytes)
     {
@@ -932,9 +1480,87 @@ pub fn verify_transfer(root: &Path, job: &Job, bytes: u64, sha256: &str) -> Resu
                 .into(),
         );
     }
+    if let Some(value) = asset.metadata.get("datasetPreset") {
+        let proof: crate::datasets::SourceProvenance =
+            serde_json::from_value(value.clone()).map_err(io_error)?;
+        if proof.dataset.id == "clcd" {
+            validate_raw_original_receipt(Some(&proof), &job.href, &asset.metadata)?;
+            crate::datasets::clcd::validate_original(&proof, &job.href, bytes, sha256)?;
+        }
+        if proof.dataset.id == "worldclim" {
+            crate::datasets::worldclim::validate_original(&proof, &job.href, bytes, sha256)?;
+        }
+        if proof.dataset.id == "merit-hydro" {
+            crate::datasets::merit_ihu::validate_original(&proof, &job.href, bytes, sha256)?;
+        }
+        if proof.dataset.id == "soilgrids" {
+            crate::datasets::soilgrids::validate_original(&proof, &job.href, bytes, sha256)?;
+        }
+        if let Some(selection) =
+            archive_original::validate_receipt(&proof, &job.href, &asset.metadata)?
+        {
+            if bytes != selection.archive_bytes || sha256 != selection.archive_sha256 {
+                return Err(
+                    "Complete publisher ZIP differs from its reviewed original length or SHA-256"
+                        .into(),
+                );
+            }
+        }
+    }
+    Ok(())
+}
+
+/// The recorded query identifies the caller's request, not proof that the
+/// publisher honored it. Check actual item declarations before archiving a
+/// new API selection; never manufacture dates or a footprint from the query.
+fn validate_search_item(snapshot: &ItemSnapshot, request: &SearchRequest) -> Result<()> {
+    features::bounds(request.bounds)?;
+    if snapshot.connection_id != request.connection_id
+        || snapshot.collection_id.as_deref() != Some(&request.collection_id)
+    {
+        return Err("STAC search returned an item from a different source or collection".into());
+    }
+    let bounds = snapshot.bbox.ok_or("STAC search item has no declared bounding box; its intersection with the requested area cannot be verified")?;
+    if bounds[2] < request.bounds[0]
+        || bounds[0] > request.bounds[2]
+        || bounds[3] < request.bounds[1]
+        || bounds[1] > request.bounds[3]
+    {
+        return Err("STAC search item does not intersect the requested area".into());
+    }
+    if let Some(datetime) = &request.datetime {
+        validate_datetime(datetime)?;
+        let parse = |value: &str| chrono::DateTime::parse_from_rfc3339(value).map_err(io_error);
+        let parts = datetime.split('/').collect::<Vec<_>>();
+        let wanted_start = (parts[0] != "..").then(|| parse(parts[0])).transpose()?;
+        let wanted_end = (parts[parts.len() - 1] != "..")
+            .then(|| parse(parts[parts.len() - 1]))
+            .transpose()?;
+        let (actual_start, actual_end) = if let Some(instant) = &snapshot.datetime {
+            let instant = parse(instant)?;
+            (instant, instant)
+        } else if let (Some(start), Some(end)) = (&snapshot.start_datetime, &snapshot.end_datetime)
+        {
+            (parse(start)?, parse(end)?)
+        } else {
+            return Err("STAC search item has no declared observation time or interval; its intersection with the requested period cannot be verified".into());
+        };
+        if wanted_start.is_some_and(|start| actual_end < start)
+            || wanted_end.is_some_and(|end| actual_start > end)
+        {
+            return Err(
+                "STAC search item does not intersect the requested observation period".into(),
+            );
+        }
+    }
     Ok(())
 }
 fn revalidation_request(saved: &Record, original_item: &Value) -> Result<MetadataRequest> {
+    if let Some(proof) = &saved.reviewed_dataset {
+        let url =
+            crate::datasets::reviewed_item_self_url(proof, &saved.document_url, original_item)?;
+        return Ok(MetadataRequest::get(&public_url(&url)?));
+    }
     let base = public_url(&saved.document_url)?;
     if let Some(url) = link(original_item, "self", &base)? {
         Ok(MetadataRequest::get(&url))
@@ -954,9 +1580,12 @@ pub(crate) async fn asset_head(
 ) -> Result<reqwest::Response> {
     let asset = resolve(root, selection)?;
     let url = public_url(&asset.href)?;
+    let delivery = planetary_access::delivery_url(settings, root, selection)
+        .await?
+        .unwrap_or_else(|| url.clone());
     features::client_with_timeout(&url, settings, Duration::from_secs(12))
         .await?
-        .head(url)
+        .head(delivery)
         .header("Accept", "image/tiff, application/octet-stream")
         .send()
         .await
@@ -967,6 +1596,134 @@ pub(crate) async fn asset_response(
     settings: &ProxySettings,
     job: &Job,
     root: &Path,
+    checkpoint: Option<&crate::transfer::Checkpoint>,
+) -> Result<reqwest::Response> {
+    asset_response_inner(
+        settings,
+        job,
+        root,
+        checkpoint,
+        &AssetResponseTransport::default(),
+    )
+    .await
+}
+
+/// Independent closed-range transport for the compiled whole-original policy.
+/// It does not change legacy GET/If-Range behavior or obtain a replacement URL.
+pub(crate) async fn finite_asset_response(
+    settings: &ProxySettings,
+    job: &Job,
+    root: &Path,
+    requested: crate::transfer::FiniteRange,
+) -> Result<reqwest::Response> {
+    let asset = validate_job(root, job)?;
+    if asset.href != job.href
+        || job
+            .agent_approval
+            .as_ref()
+            .and_then(|a| a.remote.as_ref())
+            .is_some()
+    {
+        return Err(
+            "Reviewed finite transfer differs from its original source or approval path".into(),
+        );
+    }
+    let url = public_url(&asset.href)?;
+    let raw = reviewed_raw_original(root, job)?;
+    if let Some(policy) = &raw {
+        if requested.total != policy.bytes
+            || requested.start > requested.end
+            || requested.end >= policy.bytes
+            || requested.length() > crate::transfer::CLCD_RANGE_BYTES as usize
+        {
+            return Err("CLCD finite range differs from its exact reviewed whole original".into());
+        }
+    }
+    let response = features::client_with_timeout(&url, settings, Duration::from_secs(300))
+        .await?
+        .get(url)
+        .header(reqwest::header::ACCEPT_ENCODING, "identity")
+        .header(
+            reqwest::header::ACCEPT,
+            if raw.is_some() {
+                // Zenodo's API content route negotiates the API endpoint
+                // before streaming its TIFF and rejects an image-only Accept
+                // with 406. The scoped response still must pass exact 206,
+                // length/range, original TIFF media/signature and whole SHA.
+                "*/*"
+            } else {
+                "application/zip, application/octet-stream"
+            },
+        )
+        .header(reqwest::header::RANGE, requested.header())
+        .send()
+        .await
+        .map_err(|error| error.without_url().to_string())?;
+    Ok(response)
+}
+
+// The production transport has no alternative URL or client. A test-only
+// loopback transport exercises the same provenance and response state machine
+// without relaxing public HTTPS/DNS policy in the shipped application.
+#[derive(Default)]
+struct AssetResponseTransport {
+    #[cfg(test)]
+    fixture_origin: Option<String>,
+}
+
+impl AssetResponseTransport {
+    async fn fetch(&self, settings: &ProxySettings, request: &MetadataRequest) -> Result<Vec<u8>> {
+        #[cfg(test)]
+        if let Some(origin) = &self.fixture_origin {
+            return transfer_tests::fetch_fixture(settings, request, origin).await;
+        }
+        search::fetch(settings, request).await
+    }
+
+    async fn request(
+        &self,
+        settings: &ProxySettings,
+        url: &Url,
+        delivery: &Url,
+    ) -> Result<reqwest::RequestBuilder> {
+        #[cfg(test)]
+        if let Some(origin) = &self.fixture_origin {
+            return transfer_tests::fixture_request(settings, url, origin);
+        }
+        Ok(
+            features::client_with_timeout(url, settings, Duration::from_secs(30 * 60))
+                .await?
+                .get(delivery.clone()),
+        )
+    }
+}
+
+#[cfg(test)]
+pub(crate) async fn fixture_asset_response(
+    settings: &ProxySettings,
+    job: &Job,
+    root: &Path,
+    checkpoint: Option<&crate::transfer::Checkpoint>,
+    origin: &str,
+) -> Result<reqwest::Response> {
+    asset_response_inner(
+        settings,
+        job,
+        root,
+        checkpoint,
+        &AssetResponseTransport {
+            fixture_origin: Some(origin.into()),
+        },
+    )
+    .await
+}
+
+async fn asset_response_inner(
+    settings: &ProxySettings,
+    job: &Job,
+    root: &Path,
+    checkpoint: Option<&crate::transfer::Checkpoint>,
+    transport: &AssetResponseTransport,
 ) -> Result<reqwest::Response> {
     let asset = validate_job(root, job)?;
     let pin = job.stac_source.as_ref().unwrap();
@@ -980,7 +1737,7 @@ pub(crate) async fn asset_response(
         };
         let page_request = revalidation_request(&saved, original_item)?;
         let item_url = page_request.validate()?;
-        let fresh = json_document(&search::fetch(settings, &page_request).await?)?;
+        let fresh = json_document(&transport.fetch(settings, &page_request).await?)?;
         let index = if fresh["type"] == "FeatureCollection" {
             let features = fresh["features"]
                 .as_array()
@@ -1024,14 +1781,21 @@ pub(crate) async fn asset_response(
         }
     }
     let url = public_url(&asset.href)?;
-    let mut request = features::client_with_timeout(&url, settings, Duration::from_secs(30 * 60))
+    let delivery = planetary_access::delivery_url(settings, root, pin)
         .await?
-        .get(url)
-        .header("Accept", "image/tiff, application/octet-stream");
+        .unwrap_or_else(|| url.clone());
+    let mut request = transport.request(settings, &url, &delivery).await?.header(
+        "Accept",
+        if crate::extension(&job.media_type) == Ok("zip") {
+            "application/zip, application/octet-stream"
+        } else {
+            "image/tiff, application/octet-stream"
+        },
+    );
     if let Some(pin) = job.agent_approval.as_ref().and_then(|a| a.remote.as_ref()) {
         request = request.header(reqwest::header::IF_MATCH, &pin.etag);
     }
-    request
+    crate::transfer::request(request, checkpoint)
         .send()
         .await
         .map_err(|_| "Cannot reach the public original raster asset".into())
@@ -1048,9 +1812,7 @@ pub(crate) async fn load(root: &Path) -> Result<Registry> {
     } else {
         Registry::default()
     };
-    if registry.connections.len() > 24 {
-        return Err("STAC registry exceeds 24 connections".into());
-    }
+    validate_registry_capacity(&registry)?;
     for (id, connection) in &registry.connections {
         if !uuid(id)
             || id != &connection.id
@@ -1082,6 +1844,44 @@ pub(crate) async fn load(root: &Path) -> Result<Registry> {
     }
     Ok(registry)
 }
+fn capacity(total: usize, catalogs: usize) -> Result<()> {
+    if total > MAX_CONNECTIONS {
+        return Err(format!(
+            "STAC connection limit is {MAX_CONNECTIONS}, including direct raster files"
+        ));
+    }
+    if catalogs > MAX_CATALOG_CONNECTIONS {
+        return Err(format!(
+            "STAC API, item and catalog connection limit is {MAX_CATALOG_CONNECTIONS}; direct raster files share the total limit of {MAX_CONNECTIONS}"
+        ));
+    }
+    Ok(())
+}
+fn validate_registry_capacity(registry: &Registry) -> Result<()> {
+    capacity(
+        registry.connections.len(),
+        registry
+            .connections
+            .values()
+            .filter(|c| c.kind != "raster")
+            .count(),
+    )
+}
+fn admit_connection(registry: &Registry, candidate: &Connection) -> Result<()> {
+    // Reconnecting a selected source replaces only its registry entry. It never
+    // evicts archived metadata, snapshots, project selections or downloaded files.
+    let replacing = registry.connections.contains_key(&candidate.id);
+    let catalogs = registry
+        .connections
+        .values()
+        .filter(|c| c.id != candidate.id && c.kind != "raster")
+        .count()
+        + usize::from(candidate.kind != "raster");
+    capacity(
+        registry.connections.len() + usize::from(!replacing),
+        catalogs,
+    )
+}
 fn validate_connection_documents(root: &Path, c: &Connection) -> Result<()> {
     if c.kind == "catalog" {
         return catalog::validate_connection(root, c);
@@ -1105,8 +1905,25 @@ fn validate_connection_documents(root: &Path, c: &Connection) -> Result<()> {
             return Err("Direct raster connection has conflicting STAC metadata".into());
         }
         let raw = json_document(&document(root, &c.metadata_sha256[0])?)?;
-        if raw["href"] != c.url || raw["kind"] != "direct-raster" {
+        if raw["href"] != c.url
+            || !matches!(
+                raw["kind"].as_str(),
+                Some("direct-raster" | "reviewed-raster-archive")
+            )
+        {
             return Err("Direct raster connection differs from its receipt".into());
+        }
+        let (saved, _) = record(root, &c.snapshot_ids[0])?;
+        if saved.kind != "raster"
+            || saved.connection_id != c.id
+            || saved.document_url != c.url
+            || saved.document_sha256 != c.metadata_sha256[0]
+            || saved.metadata_documents != c.metadata_documents
+        {
+            return Err(
+                "Direct raster connection differs from its archived source and catalog receipts"
+                    .into(),
+            );
         }
         return Ok(());
     }
@@ -1175,17 +1992,66 @@ fn validate_connection_documents(root: &Path, c: &Connection) -> Result<()> {
             return Err("Standalone STAC item has conflicting search metadata".into());
         }
         let collection_url = link(&landing, "collection", &root_url)?;
-        if receipts.len() != if collection_url.is_some() { 2 } else { 1 } {
+        let (saved, _) = record(root, &c.snapshot_ids[0])?;
+        if saved.kind != "item"
+            || saved.connection_id != c.id
+            || saved.document_url != c.url
+            || saved.document_sha256 != receipts[0].sha256
+            || saved.metadata_documents != c.metadata_documents
+        {
+            return Err(
+                "Standalone STAC connection differs from its archived item receipts".into(),
+            );
+        }
+        let jaxa = saved
+            .reviewed_dataset
+            .as_ref()
+            .filter(|proof| crate::datasets::is_reviewed_jaxa(&proof.dataset.id));
+        let maxar = saved
+            .reviewed_dataset
+            .as_ref()
+            .filter(|proof| proof.dataset.id == "maxar-open-legacy");
+        if receipts.len()
+            != if collection_url.is_some() {
+                2 + usize::from(maxar.is_some())
+            } else {
+                1
+            }
+        {
             return Err("Standalone STAC collection receipt is missing".into());
         }
         if let Some(url) = collection_url {
             if receipts[1].url != url.as_str() {
                 return Err("Standalone STAC collection source changed".into());
             }
-            collections.push(collection(&json_document(&document(
-                root,
-                &receipts[1].sha256,
-            )?)?)?);
+            let metadata = json_document(&document(root, &receipts[1].sha256)?)?;
+            let value = collection(&metadata)?;
+            if let Some(proof) = jaxa {
+                crate::datasets::validate_jaxa_collection(proof, url.as_str(), &metadata)?;
+            }
+            if let Some(proof) = maxar {
+                crate::datasets::maxar::validate_collection(proof, url.as_str(), &metadata)?;
+            }
+            if let Some(proof) = saved
+                .reviewed_dataset
+                .as_ref()
+                .filter(|p| p.dataset.id == "vantor-open")
+            {
+                crate::datasets::vantor_open::validate_collection(proof, url.as_str(), &metadata)?;
+            }
+            if let Some(proof) = saved.reviewed_dataset.as_ref().filter(|p| {
+                crate::datasets::next_planetary::is_product(&p.dataset.id)
+                    || crate::datasets::additional_pc::is_product(&p.dataset.id)
+            }) {
+                validate_planetary_collection(proof, url.as_str(), &metadata)?;
+            }
+            let mismatch = landing.get("collection").is_some_and(|id| *id != value.id);
+            if mismatch && jaxa.is_none() {
+                return Err("STAC item's collection link has a different identity".into());
+            }
+            if !mismatch {
+                collections.push(value);
+            }
         }
     }
     if collections != c.collections {
@@ -1195,6 +2061,27 @@ fn validate_connection_documents(root: &Path, c: &Connection) -> Result<()> {
 }
 
 impl JobManager {
+    pub(crate) async fn archive_dataset_catalog(
+        &self,
+        href: &str,
+    ) -> Result<(Value, DocumentReceipt)> {
+        // The product-specific query recipe is validated before reading this
+        // bounded public JSON. Preserve the response bytes, not a fake STAC.
+        let url = public_url(href)?;
+        let settings = self.proxy_settings().await;
+        let bytes = tokio::time::timeout(Duration::from_secs(60), fetch(&settings, &url))
+            .await
+            .map_err(|_| "Publisher catalog request timed out")??;
+        let value = json_document(&bytes)?;
+        let sha256 = immutable(&self.inner.root, "document", &bytes)?;
+        Ok((
+            value,
+            DocumentReceipt {
+                url: href.into(),
+                sha256,
+            },
+        ))
+    }
     pub async fn list_stac_connections(&self) -> Vec<Connection> {
         self.inner
             .stac
@@ -1231,6 +2118,42 @@ impl JobManager {
         Ok(())
     }
     pub async fn connect_stac(&self, request: ConnectRequest) -> Result<Connection> {
+        self.connect_stac_inner(request, None, None).await
+    }
+    pub(crate) async fn connect_dataset_raster(
+        &self,
+        request: ConnectRequest,
+        provenance: crate::datasets::SourceProvenance,
+    ) -> Result<Connection> {
+        if request.kind != "raster" {
+            return Err(
+                "Public dataset presets require the original direct raster connector".into(),
+            );
+        }
+        crate::datasets::validate_provenance(&provenance, &request.url)?;
+        self.connect_stac_inner(request, Some(provenance), None)
+            .await
+    }
+    pub(crate) async fn connect_dataset_item(
+        &self,
+        request: ConnectRequest,
+        provenance: crate::datasets::SourceProvenance,
+    ) -> Result<Connection> {
+        if request.kind != "item" {
+            return Err(
+                "Reviewed regional discoveries require actual standalone STAC items".into(),
+            );
+        }
+        crate::datasets::validate_reviewed_item(&provenance, &request.url, None)?;
+        self.connect_stac_inner(request, None, Some(provenance))
+            .await
+    }
+    async fn connect_stac_inner(
+        &self,
+        request: ConnectRequest,
+        preset: Option<crate::datasets::SourceProvenance>,
+        reviewed_item: Option<crate::datasets::SourceProvenance>,
+    ) -> Result<Connection> {
         self.inner.store.lock().await.accepting_jobs()?;
         if !text(request.name.trim(), 80)
             || !matches!(request.kind.as_str(), "api" | "item" | "raster" | "catalog")
@@ -1270,22 +2193,88 @@ impl JobManager {
         tokio::time::timeout(Duration::from_secs(if request.kind == "catalog" { 180 } else { 60 }),async {
             if request.kind == "catalog" { return catalog::discover(&root, &settings, &mut connection).await; }
             if request.kind=="raster" {
+                let archive = preset.as_ref().map(|proof| archive_original::from_proof(proof, url.as_str())).transpose()?.flatten();
+                let raw_original = raw_original_policy(preset.as_ref(),url.as_str())?;
                 let client=features::client(&url,&settings).await?;
-                let response=client.get(url.clone()).header("Range","bytes=0-15").send().await.map_err(|_|"Cannot inspect the public raster URL")?;
+                let mut probe=client.get(url.clone()).header("Range","bytes=0-15");
+                if raw_original.is_some() { probe=probe.header(reqwest::header::ACCEPT_ENCODING,"identity"); }
+                let response=probe.send().await.map_err(|_|"Cannot inspect the public raster URL")?;
                 if !matches!(response.status(),reqwest::StatusCode::OK|reqwest::StatusCode::PARTIAL_CONTENT){return Err(format!("Raster source returned HTTP {}; redirects are not followed",response.status()));}
                 let status=response.status().as_u16();let length=response.content_length();let content_range=response.headers().get("content-range").and_then(|v|v.to_str().ok()).map(str::to_owned);
+                if let Some(p) = &raw_original {
+                    let headers = response.headers();
+                    if headers.get_all(reqwest::header::CONTENT_LENGTH).iter().count() != 1
+                        || headers.contains_key(reqwest::header::TRANSFER_ENCODING)
+                        || headers.get_all(reqwest::header::CONTENT_ENCODING).iter().count() > 1
+                        || headers.get(reqwest::header::CONTENT_ENCODING).is_some_and(|v| v != "identity")
+                        || (status == 206 && (headers.get_all(reqwest::header::CONTENT_RANGE).iter().count() != 1 || content_range.as_deref() != Some(format!("bytes 0-15/{}",p.bytes).as_str()) || length != Some(16)))
+                        || (status == 200 && (headers.contains_key(reqwest::header::CONTENT_RANGE) || length != Some(p.bytes)))
+                    { return Err("CLCD original probe differs from its exact complete representation".into()); }
+                }
                 if status==206&&!content_range.as_ref().is_some_and(|s|s.starts_with("bytes 0-15/")){return Err("Raster probe returned a different byte range".into());}
                 let mut header=Vec::new();let mut stream=response.bytes_stream();while header.len()<16{let chunk=stream.next().await.ok_or("Raster header was truncated")?.map_err(|_|"Raster header was interrupted")?;header.extend(chunk.iter().take(16-header.len()));}
-                if !matches!(header.get(..4),Some(b"II*\0"|b"MM\0*"|b"II+\0"|b"MM\0+")){return Err("The public URL did not return a TIFF/BigTIFF header".into());}
-                let direct=json!({"kind":"direct-raster","href":url.as_str(),"probeStatus":status,"contentLength":length,"contentRange":content_range,"headerHex":header.iter().map(|b|format!("{b:02x}")).collect::<String>(),"cogLayout":"not-validated"});
+                if archive.is_some() {
+                    if !header.starts_with(b"PK\x03\x04") { return Err("The reviewed publisher archive URL did not return an original ZIP signature".into()); }
+                } else if !matches!(header.get(..4),Some(b"II*\0"|b"MM\0*"|b"II+\0"|b"MM\0+")){return Err("The public URL did not return a TIFF/BigTIFF header".into());}
+                let mut direct=json!({"kind":"direct-raster","href":url.as_str(),"probeStatus":status,"contentLength":length,"contentRange":content_range,"headerHex":header.iter().map(|b|format!("{b:02x}")).collect::<String>(),"cogLayout":"not-validated"});
+                if let Some(provenance) = &preset { direct["datasetPreset"] = serde_json::to_value(provenance).map_err(io_error)?; }
+                if let Some(p) = &raw_original {
+                    direct["reviewedOriginal"] = json!({"bytes":p.bytes,"sha256":p.sha256});
+                    direct["file:size"] = json!(p.bytes);
+                    direct["file:checksum"] = json!(format!("1220{}",p.sha256));
+                }
+                if let Some(archive) = &archive {
+                    let actual_size = if status == 206 { content_range.as_ref().and_then(|s|s.rsplit_once('/')).and_then(|(_,n)|n.parse::<u64>().ok()) } else { length };
+                    if actual_size.is_some_and(|bytes| bytes != archive.archive_bytes) { return Err("Publisher ZIP current byte length differs from its reviewed complete original".into()); }
+                    direct["kind"] = json!("reviewed-raster-archive");
+                    direct["reviewedArchive"] = serde_json::to_value(archive).map_err(io_error)?;
+                    direct["file:size"] = json!(archive.archive_bytes);
+                    direct["file:checksum"] = json!(format!("1220{}",archive.archive_sha256));
+                    direct["cogLayout"] = json!("original ZIP; selected whole TIFF remains separately checksummed");
+                }
+                let catalog_receipts = if let Some(catalog) = preset.as_ref().and_then(|p| p.catalog_raster.as_ref()) {
+                    direct["file:size"] = catalog.record["sizeInBytes"].clone();
+                    let actual_size = if status == 206 { content_range.as_ref().and_then(|s|s.rsplit_once('/')).and_then(|(_,n)|n.parse::<u64>().ok()) } else { length };
+                    if actual_size.is_some_and(|size| Some(size) != catalog.record["sizeInBytes"].as_u64()) { return Err("Publisher catalog size disagrees with the current original file".into()); }
+                    vec![DocumentReceipt { url: catalog.catalog_url.clone(), sha256: catalog.catalog_sha256.clone() }]
+                } else { vec![] };
                 let bytes=serde_json::to_vec(&direct).map_err(io_error)?;let digest=immutable(&root,"document",&bytes)?;connection.metadata_sha256.push(digest.clone());
-                let snapshot=save_snapshot(&root,Record{version:1,connection_id:connection.id.clone(),service_name:connection.name.clone(),kind:"raster".into(),document_url:url.to_string(),document_request:None,document_sha256:digest,item_index:None,retrieved_at:connection.connected_at.clone(),metadata_documents:vec![],search:None},&direct)?;connection.snapshot_ids.push(snapshot.id);return Ok(());
+                connection.metadata_documents = catalog_receipts.clone();
+                let snapshot=save_snapshot(&root,Record{version:1,connection_id:connection.id.clone(),service_name:connection.name.clone(),kind:"raster".into(),document_url:url.to_string(),document_request:None,document_sha256:digest,item_index:None,retrieved_at:connection.connected_at.clone(),metadata_documents:catalog_receipts,search:None,reviewed_dataset:None,asset_transports:Vec::new()},&direct)?;connection.snapshot_ids.push(snapshot.id);return Ok(());
             }
             let bytes=fetch(&settings,&url).await?;let value=json_document(&bytes)?;version(&value)?;let digest=immutable(&root,"document",&bytes)?;connection.metadata_sha256.push(digest.clone());connection.metadata_documents.push(DocumentReceipt{url:url.to_string(),sha256:digest.clone()});
             if request.kind=="item" {
+                let transports = reviewed_item.as_ref().map(|proof|crate::datasets::reviewed_item_transports(proof,url.as_str(),&value)).transpose()?.unwrap_or_default();
                 let mut receipts=connection.metadata_documents.clone();
-                if let Some(collection_url)=link(&value,"collection",&url)?{let bytes=fetch(&settings,&collection_url).await?;let metadata=json_document(&bytes)?;let c=collection(&metadata)?;if value.get("collection").is_some_and(|id|*id!=c.id){return Err("STAC item's collection link has a different identity".into());}let sha=immutable(&root,"document",&bytes)?;receipts.push(DocumentReceipt{url:collection_url.to_string(),sha256:sha.clone()});connection.metadata_sha256.push(sha);connection.collections.push(c);}
-                connection.metadata_documents=receipts.clone();let snapshot=save_snapshot(&root,Record{version:1,connection_id:connection.id.clone(),service_name:connection.name.clone(),kind:"item".into(),document_url:url.to_string(),document_request:None,document_sha256:digest,item_index:None,retrieved_at:connection.connected_at.clone(),metadata_documents:receipts,search:None},&value)?;connection.snapshot_ids.push(snapshot.id);return Ok(());
+                if let Some(collection_url) = link(&value, "collection", &url)? {
+                    let bytes = fetch(&settings, &collection_url).await?;
+                    let metadata = json_document(&bytes)?;
+                    let c = collection(&metadata)?;
+                    let jaxa = reviewed_item.as_ref().filter(|proof| crate::datasets::is_reviewed_jaxa(&proof.dataset.id));
+                    if let Some(proof) = jaxa { crate::datasets::validate_jaxa_collection(proof, collection_url.as_str(), &metadata)?; }
+                    if let Some(proof) = reviewed_item.as_ref().filter(|proof| proof.dataset.id == "maxar-open-legacy") { crate::datasets::maxar::validate_collection(proof, collection_url.as_str(), &metadata)?; }
+                    if let Some(proof) = reviewed_item.as_ref().filter(|proof| proof.dataset.id == "vantor-open") { crate::datasets::vantor_open::validate_collection(proof, collection_url.as_str(), &metadata)?; }
+                    if let Some(proof) = reviewed_item.as_ref().filter(|p| crate::datasets::next_planetary::is_product(&p.dataset.id) || crate::datasets::additional_pc::is_product(&p.dataset.id)) { validate_planetary_collection(proof, collection_url.as_str(), &metadata)?; }
+                    let mismatch = value.get("collection").is_some_and(|id| *id != c.id);
+                    if mismatch && jaxa.is_none() { return Err("STAC item's collection link has a different identity".into()); }
+                    // The scoped JAXA adapter preserves both original IDs and
+                    // the complete collection document. A generic "collection"
+                    // is not aliased to the item's product or marked verified.
+                    let sha = immutable(&root, "document", &bytes)?;
+                    receipts.push(DocumentReceipt { url: collection_url.to_string(), sha256: sha.clone() });
+                    connection.metadata_sha256.push(sha);
+                    if !mismatch { connection.collections.push(c); }
+                }
+                if let Some(proof) = reviewed_item.as_ref().filter(|proof| proof.dataset.id == "maxar-open-legacy") {
+                    let event_url = public_url(&crate::datasets::maxar::event_url(proof)?)?;
+                    let bytes = fetch(&settings, &event_url).await?;
+                    let event = json_document(&bytes)?;
+                    crate::datasets::maxar::validate_event(proof, event_url.as_str(), &event)?;
+                    let sha = immutable(&root, "document", &bytes)?;
+                    receipts.push(DocumentReceipt { url: event_url.to_string(), sha256: sha.clone() });
+                    connection.metadata_sha256.push(sha);
+                }
+                connection.metadata_documents=receipts.clone();let snapshot=save_snapshot(&root,Record{version:1,connection_id:connection.id.clone(),service_name:connection.name.clone(),kind:"item".into(),document_url:url.to_string(),document_request:None,document_sha256:digest,item_index:None,retrieved_at:connection.connected_at.clone(),metadata_documents:receipts,search:None,reviewed_dataset:reviewed_item.clone(),asset_transports:transports},&value)?;connection.snapshot_ids.push(snapshot.id);return Ok(());
             }
             if !matches!(value["type"].as_str(),Some("Catalog"|"Collection")){return Err("The STAC API landing page must be a Catalog or Collection".into());}
             let conforms=value["conformsTo"].as_array().ok_or("STAC API must advertise Item Search conformance; choose Static STAC catalog for directory traversal")?;
@@ -1305,9 +2294,7 @@ impl JobManager {
             }Ok(())
         }).await.map_err(|_|"STAC connection discovery timed out")??;
         let mut registry = self.inner.stac.lock().await;
-        if !registry.connections.contains_key(&connection.id) && registry.connections.len() >= 24 {
-            return Err("STAC connection limit is 24".into());
-        }
+        admit_connection(&registry, &connection)?;
         let old = registry
             .connections
             .insert(connection.id.clone(), connection.clone());
@@ -1445,6 +2432,8 @@ impl JobManager {
                     retrieved_at: retrieved.clone(),
                     metadata_documents: connection.metadata_documents.clone(),
                     search: Some(cursor.request.clone()),
+                    reviewed_dataset: None,
+                    asset_transports: Vec::new(),
                 },
                 &value,
             )?;
@@ -1540,6 +2529,75 @@ fn validate_datetime(value: &str) -> Result<()> {
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+mod clcd_original_policy_tests {
+    use super::*;
+
+    #[test]
+    fn arbitrary_direct_sources_cannot_attach_a_raw_original_allowance() {
+        let raw = json!({"kind":"direct-raster","href":"https://example.com/original.tif",
+            "probeStatus":206,"contentLength":16,"contentRange":"bytes 0-15/791887020",
+            "file:size":791887020,"file:checksum":format!("1220{}","a".repeat(64)),
+            "reviewedOriginal":{"bytes":791887020,"sha256":"a".repeat(64)}});
+        assert!(
+            validate_raw_original_receipt(None, "https://example.com/original.tif", &raw).is_err()
+        );
+        assert!(validate_raw_original_receipt(None, crate::datasets::clcd::URL, &raw).is_err());
+    }
+
+    #[test]
+    fn direct_probe_keeps_complete_length_separate_from_header_bytes() {
+        let mut raw =
+            json!({"probeStatus":206,"contentLength":16,"contentRange":"bytes 0-15/791887020"});
+        assert_eq!(direct_original_size(&raw).unwrap(), Some(791887020));
+        raw["contentLength"] = json!(15);
+        assert!(direct_original_size(&raw).is_err());
+        raw["contentLength"] = json!(16);
+        for range in [
+            "bytes 1-16/791887020",
+            "bytes 0-15/*",
+            "bytes 0-15/0",
+            "bytes 0-15/791887020, bytes 0-15/791887020",
+        ] {
+            raw["contentRange"] = json!(range);
+            assert!(direct_original_size(&raw).is_err());
+        }
+    }
+
+    #[test]
+    fn ordinary_direct_large_files_are_ineligible_without_the_exact_native_proof() {
+        let href = "https://example.com/large.tif";
+        let record = Record {
+            version: 1,
+            connection_id: Uuid::from_u128(1).to_string(),
+            service_name: "Unreviewed TIFF".into(),
+            kind: "raster".into(),
+            document_url: href.into(),
+            document_request: None,
+            document_sha256: "b".repeat(64),
+            item_index: None,
+            retrieved_at: "2026-10-14T00:00:00Z".into(),
+            metadata_documents: vec![],
+            search: None,
+            reviewed_dataset: None,
+            asset_transports: vec![],
+        };
+        let raw = json!({"kind":"direct-raster","href":href,"probeStatus":206,"contentLength":16,
+            "contentRange":"bytes 0-15/791887020","headerHex":"49492a00"});
+        let snapshot = item(&record, &"c".repeat(64), &raw).unwrap();
+        assert!(!snapshot.assets[0].eligible);
+        assert!(snapshot.assets[0]
+            .reason
+            .as_deref()
+            .unwrap()
+            .contains("limit"));
+    }
+}
+#[cfg(test)]
+mod transfer_tests;
+#[cfg(test)]
+mod vantor_tests;
 #[cfg(test)]
 pub(crate) fn fixture_snapshot(root: &Path, asset_href: &str) -> SourcePin {
     tests::fixture(root, asset_href)

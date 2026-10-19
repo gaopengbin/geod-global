@@ -1,0 +1,4 @@
+{
+  "available": false,
+  "reason": "CDP observation started after initial preview requests and older events were evicted. Use native-original-range-receipts.json for separately verified HTTP ranges."
+}

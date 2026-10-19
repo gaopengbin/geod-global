@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-12T15:43:56.204Z",
+  "url": "http://127.0.0.1:4317/#Explore",
+  "clientWidth": 1037,
+  "documentWidth": 1037,
+  "itemIds": [],
+  "panes": [
+    {
+      "class": "discovery",
+      "rect": [
+        222,
+        48,
+        300,
+        1196
+      ]
+    }
+  ],
+  "viewport": [
+    1037,
+    1244
+  ],
+  "actualChecks": [
+    "JAXA temperature source selected without AOI: map present, choose area prompt, search disabled",
+    "Beijing administrative polygon confirmed: automatic JAXA temperature metadata search, one file",
+    "File checkbox selected: Save became enabled, no download clicked",
+    "Same source reselected: automatic new snapshot, previous selection cleared",
+    "JAXA soil source selected with Beijing AOI: automatic metadata search, one SMC file, same AOI",
+    "Desktop hide/show list: same soil snapshot id remained, no re-query",
+    "720 by 900 responsive viewport: stacked filters/map, document width equals client width",
+    "Temporary viewport override reset; returned to temperature source and automatic search"
+  ],
+  "scope": "Live native connector metadata discovery only. No new project saves or original download jobs this turn. Map shows AOI and published file footprints, no scientific raster pixel preview."
+}

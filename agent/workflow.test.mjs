@@ -47,3 +47,11 @@ test('history validation rejects forged receipts, unbounded plans and private me
   for(const change of [{pendingPlans:[...good.pendingPlans,...good.pendingPlans]},{continuations:9},{receipts:[{planId:r.plan.planId,status:'settled',jobs:[]}]},{context:{password:'private'}},{secret:'private'}])assert(!validWorkflow({...good,...change}));
   assert(validWorkflow(good));
 });
+
+test('workflow history preserves the optional catalog summary and cloud lower bound across restore',async t=>{
+  const r=rig();t.after(()=>r.monitor.close());
+  const context={page:'Explore',provider:'earth-search',bounds:[-14,-12,51,37],start:'2026-10-09',end:'2026-10-10',cloudMin:0,cloudMax:0,projectId:null,geometry:null,catalog:{totalCount:162,filteredCount:15,complete:true}};
+  await r.monitor.register(r.session,r.plan,context);
+  const restored=JSON.parse(JSON.stringify(r.session.workflow));
+  assert(validWorkflow(restored));assert.deepEqual(restored.context,context);
+});

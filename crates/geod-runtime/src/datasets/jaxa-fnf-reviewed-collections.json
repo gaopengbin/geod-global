@@ -1,0 +1,146 @@
+[
+  {
+    "datasetId": "jaxa-palsar-fnf",
+    "url": "https://s3.ap-northeast-1.wasabisys.com/je-pds/cog/v1/JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly/collection.json",
+    "document": {
+      "type": "Collection",
+      "id": "JAXA.EORC_ALOS-2.PALSAR-2_FNF.v2.1.0_global_yearly",
+      "stac_version": "1.0.0",
+      "description": "The global 25-meter resolution PALSAR-2 Forest/Non-forest map (FNF) is based on data acquired by the L-band Synthetic Aperture Radar (PALSAR-2) onboard the Advanced Land Observing Satellite-2 (ALOS-2). The PALSAR-2 Forest/Non-forest map (FNF) is a data set that shows the global forest distribution. The L-band SAR backscatter coefficient is sensitive to vegetation, especially in forests. Large values indicate forested areas, while small values indicate non-forested areas and water bodies. The Earth Observation Research Center of the Japan Aerospace Exploration Agency (JAXA) has been working to create a global forest distribution map by classifying images based on these characteristics. The purpose of this dataset is to make the results available to the public and to use them to understand forest distribution and its time-series changes.",
+      "links": [
+        {
+          "rel": "root",
+          "href": "./collection.json",
+          "type": "application/json",
+          "title": "Forest Non Forest map"
+        },
+        {
+          "rel": "license",
+          "href": "https://earth.jaxa.jp/policy/",
+          "type": "text/html"
+        },
+        {
+          "rel": "child",
+          "href": "./2017/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2017"
+        },
+        {
+          "rel": "child",
+          "href": "./2018/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2018"
+        },
+        {
+          "rel": "child",
+          "href": "./2019/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2019"
+        },
+        {
+          "rel": "child",
+          "href": "./2020/catalog.json",
+          "type": "application/json",
+          "title": "Catalog of COG files in 2020"
+        }
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+      ],
+      "sci:publications": [
+        {
+          "doi": null,
+          "citation": "Masanobu Shimada, Takuya Itoh, Takeshi Motooka, Manabu Watanabe, Shiraishi Tomohiro, Rajesh Thapa, and Richard Lucas, 'New Global Forest/Non-forest Maps from ALOS PALSAR Data (2007-2010)', Remote Sensing of Environment, 155, pp. 13-31, December 2014. DOI=10.1016/j.rse.2014.04.014."
+        },
+        {
+          "doi": null,
+          "citation": "Masanobu Shimada and Takahiro Ohtaki, 'Generating Large-Scale High-Quality SAR Mosaic Datasets: Application to PALSAR Data for Global Monitoring', IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing 3(4):637 - 656, January 2011. DOI: 10.1109/JSTARS.2010.2077619"
+        }
+      ],
+      "title": "Forest Non Forest map",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2017-01-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "Forest",
+        "ALOS",
+        "JAXA"
+      ],
+      "providers": [
+        {
+          "name": "JAXA",
+          "roles": [
+            "licensor"
+          ],
+          "url": "https://global.jaxa.jp/"
+        },
+        {
+          "name": "JAXA EORC",
+          "roles": [
+            "processor",
+            "host"
+          ],
+          "url": "https://earth.jaxa.jp/"
+        },
+        {
+          "name": "JAXA EORC ALOS Group",
+          "roles": [
+            "producer"
+          ],
+          "url": "https://www.eorc.jaxa.jp/ALOS/en/dataset/fnf_e.htm"
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "ALOS-2"
+        ],
+        "instrument": [
+          "PALSAR-2"
+        ],
+        "je:epsg": [
+          4326
+        ],
+        "je:stac_date_format": [
+          "YYYY"
+        ],
+        "je:cog_level_max": [
+          3
+        ],
+        "je:ppu_max": [
+          3600
+        ],
+        "je:stac_version": [
+          "v1.2"
+        ]
+      },
+      "assets": {
+        "FNF": {
+          "href": "N/A",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Forest Non Forest map",
+          "roles": [
+            "data"
+          ]
+        }
+      }
+    }
+  }
+]

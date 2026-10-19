@@ -456,3 +456,544 @@ async fn crash_staging_cleanup_only_removes_canonical_managed_temporary_files() 
     assert!(!staged.exists() && !receipt.exists());
     assert!(unrelated.exists() && partial.exists());
 }
+
+// Offline native preset receipts here exercise eligibility and checkpoint
+// security. They do not assert an HTTP download or validate fixture pixels.
+fn reviewed_archive_job(root: &Path) -> (Job, crate::stac::archive_original::ArchiveSelection) {
+    use serde_json::json;
+    std::fs::create_dir_all(root.join("assets")).unwrap();
+    std::fs::create_dir_all(root.join("stac")).unwrap();
+    let plan = crate::datasets::resolve(crate::datasets::ResolveRequest {
+        dataset_id: "glc-fcs10".into(),
+        bounds: [-174.5, 54.5, -174.4, 54.6],
+        year: Some(2023),
+        month: None,
+        country: None,
+        layer: Some("classes".into()),
+        region: None,
+        season: None,
+    })
+    .unwrap();
+    let source = &plan.sources[0];
+    let href = source.stac.as_ref().unwrap().url.clone();
+    let proof = crate::datasets::SourceProvenance {
+        schema_version: 2,
+        dataset: plan.dataset.clone(),
+        request: plan.request.clone(),
+        layer: plan.dataset.layers[0].clone(),
+        source_id: source.id.clone(),
+        source_title: source.title.clone(),
+        source_bounds: source.bounds,
+        declaration_kind:
+            "reviewed-client-preset; publisher file bytes and embedded metadata verified separately"
+                .into(),
+        catalog_raster: None,
+    };
+    let original = crate::stac::archive_original::from_proof(&proof, &href)
+        .unwrap()
+        .unwrap();
+    let raw = json!({"kind":"reviewed-raster-archive","href":href,"probeStatus":206,
+        "contentRange":format!("bytes 0-15/{}",original.archive_bytes),"contentLength":16,
+        "headerHex":"504b0304","reviewedArchive":original,"datasetPreset":proof,
+        "file:size":original.archive_bytes,"file:checksum":format!("1220{}",original.archive_sha256)});
+    let bytes = serde_json::to_vec(&raw).unwrap();
+    let document_sha = format!("{:x}", Sha256::digest(&bytes));
+    std::fs::write(
+        root.join("stac")
+            .join(format!("document-{document_sha}.json")),
+        bytes,
+    )
+    .unwrap();
+    let record = json!({"version":1,"connectionId":Uuid::new_v4().to_string(),
+        "serviceName":source.title,"kind":"raster","documentUrl":href,
+        "documentSha256":document_sha,"itemIndex":null,"retrievedAt":crate::now(),
+        "metadataDocuments":[],"search":null});
+    let bytes = serde_json::to_vec(&record).unwrap();
+    let snapshot = format!("{:x}", Sha256::digest(&bytes));
+    std::fs::write(
+        root.join("stac").join(format!("snapshot-{snapshot}.json")),
+        bytes,
+    )
+    .unwrap();
+    let pin = crate::stac::SourcePin {
+        snapshot_id: snapshot,
+        asset_key: "raster".into(),
+    };
+    let item = crate::stac::resolve(root, &pin).unwrap();
+    let mut job = crate::new_download_job(CreateJobRequest {
+        item_id: item.item_id,
+        asset_key: "stac_asset".into(),
+        href: item.href,
+        media_type: item.media_type,
+        title: Some(item.title),
+    });
+    job.source = item.service_name;
+    job.stac_source = Some(pin);
+    assert_eq!(
+        crate::stac::archive_original::reviewed_original(root, &job).unwrap(),
+        Some(original.clone())
+    );
+    (job, original)
+}
+
+async fn hash_checkpoint(
+    root: &Path,
+    job: &Job,
+    original: &crate::stac::archive_original::ArchiveSelection,
+    prefix: &[u8],
+) {
+    let (part, _) = paths(root, &job.id).unwrap();
+    let mut file = tokio::fs::File::create(&part).await.unwrap();
+    file.write_all(prefix).await.unwrap();
+    let mut hasher = Sha256::new();
+    hasher.update(prefix);
+    let pin = Validator::ReviewedOriginal {
+        expected_original_sha256: original.archive_sha256.clone(),
+        total: original.archive_bytes,
+    };
+    checkpoint(
+        root,
+        job,
+        &file,
+        Some(&pin),
+        prefix.len() as u64,
+        &hasher,
+        &prefix[..prefix.len().min(16)],
+    )
+    .await
+    .unwrap();
+}
+
+#[tokio::test]
+async fn compiled_original_checkpoint_is_bound_to_native_source_and_full_identity() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path().canonicalize().unwrap();
+    let (job, original) = reviewed_archive_job(&root);
+    let prefix = b"PK\x03\x04offline-security-prefix-fixture";
+    hash_checkpoint(&root, &job, &original, prefix).await;
+    assert!(candidate(&root, &job, crate::MAX_ASSET_BYTES));
+    let (_, receipt) = paths(&root, &job.id).unwrap();
+    let value: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&receipt).unwrap()).unwrap();
+    assert_eq!(value["schema"], "geod-partial-transfer/v2");
+    assert_eq!(value["kind"], ORIGINAL_KIND);
+    assert_eq!(value["etag"], "");
+    assert_eq!(value["expectedOriginalSha256"], original.archive_sha256);
+    assert!(!String::from_utf8(serde_json::to_vec(&value).unwrap())
+        .unwrap()
+        .contains(&job.href));
+    for n in 0..8 {
+        let mut forged = value.clone();
+        match n {
+            0 => forged["expectedOriginalSha256"] = "0".repeat(64).into(),
+            1 => forged["total"] = (original.archive_bytes + 1).into(),
+            2 => forged["schema"] = "geod-partial-transfer/v1".into(),
+            3 => forged["etag"] = "\"not-a-sha-etag\"".into(),
+            4 => forged["kind"] = "client-sha256".into(),
+            5 => forged["bytes"] = 0.into(),
+            6 => forged["binding"] = "0".repeat(64).into(),
+            _ => forged["unexpectedOverride"] = true.into(),
+        };
+        std::fs::write(&receipt, serde_json::to_vec(&forged).unwrap()).unwrap();
+        assert!(
+            !candidate(&root, &job, crate::MAX_ASSET_BYTES),
+            "Forged checkpoint {n}"
+        );
+    }
+    std::fs::write(&receipt, serde_json::to_vec(&value).unwrap()).unwrap();
+    let mut forged = job.clone();
+    forged.href.push_str("?alternate=1");
+    assert!(!candidate(&root, &forged, crate::MAX_ASSET_BYTES));
+    forged = job.clone();
+    forged.stac_source = None;
+    assert!(!candidate(&root, &forged, crate::MAX_ASSET_BYTES));
+    assert!(!candidate(&root, &job, original.archive_bytes - 1));
+    let unreviewed = Validator::ReviewedOriginal {
+        expected_original_sha256: "0".repeat(64),
+        total: original.archive_bytes,
+    };
+    let file = tokio::fs::OpenOptions::new()
+        .write(true)
+        .open(paths(&root, &job.id).unwrap().0)
+        .await
+        .unwrap();
+    assert!(checkpoint(
+        &root,
+        &job,
+        &file,
+        Some(&unreviewed),
+        1,
+        &Sha256::new(),
+        prefix
+    )
+    .await
+    .is_err());
+}
+
+#[tokio::test]
+async fn original_prefix_is_rehashed_and_copied_and_tampering_forces_fresh_recovery() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path().canonicalize().unwrap();
+    let (job, original) = reviewed_archive_job(&root);
+    let prefix = b"PK\x03\x04offline-security-prefix-fixture";
+    hash_checkpoint(&root, &job, &original, prefix).await;
+    let (part, _) = paths(&root, &job.id).unwrap();
+    let outside = tempfile::tempdir().unwrap();
+    let linked = outside.path().join("original-part");
+    std::fs::hard_link(&part, &linked).unwrap();
+    let mut tail = std::fs::OpenOptions::new()
+        .append(true)
+        .open(&part)
+        .unwrap();
+    tail.write_all(b"crash-tail").unwrap();
+    drop(tail);
+    let prepared = prepare(
+        &root,
+        &job,
+        crate::MAX_ASSET_BYTES,
+        &CancellationToken::new(),
+    )
+    .await
+    .unwrap();
+    assert_eq!(prepared.bytes, prefix.len() as u64);
+    assert!(prepared.checkpoint.is_some());
+    assert_eq!(
+        format!("{:x}", prepared.hasher.clone().finalize()),
+        format!("{:x}", Sha256::digest(prefix))
+    );
+    assert_eq!(std::fs::read(&part).unwrap(), prefix);
+    assert_eq!(
+        std::fs::read(&linked).unwrap(),
+        [prefix.as_slice(), b"crash-tail"].concat()
+    );
+    drop(prepared);
+    let mut tampered = prefix.to_vec();
+    tampered[6] ^= 1;
+    std::fs::write(&part, tampered).unwrap();
+    let prepared = prepare(
+        &root,
+        &job,
+        crate::MAX_ASSET_BYTES,
+        &CancellationToken::new(),
+    )
+    .await
+    .unwrap();
+    assert_eq!(prepared.bytes, 0);
+    assert!(prepared.checkpoint.is_none() && prepared.restarted);
+    assert!(!part.exists());
+    assert!(!candidate(&root, &job, crate::MAX_ASSET_BYTES));
+}
+
+#[tokio::test]
+async fn cancelling_prefix_verification_preserves_candidate_without_publishing_it() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path().canonicalize().unwrap();
+    let (job, original) = reviewed_archive_job(&root);
+    hash_checkpoint(
+        &root,
+        &job,
+        &original,
+        b"PK\x03\x04offline-security-prefix-fixture",
+    )
+    .await;
+    let token = CancellationToken::new();
+    token.cancel();
+    assert!(prepare(&root, &job, crate::MAX_ASSET_BYTES, &token)
+        .await
+        .is_err());
+    assert!(candidate(&root, &job, crate::MAX_ASSET_BYTES));
+    let files = std::fs::read_dir(root.join("assets"))
+        .unwrap()
+        .map(|v| v.unwrap().file_name().to_string_lossy().into_owned())
+        .collect::<Vec<_>>();
+    assert!(!files.iter().any(|v| v.ends_with("resume-write.part")));
+    assert!(job.output_path.is_none() && job.sha256.is_none());
+}
+
+fn hash_response(status: u16, headers: &[(&str, &str)]) -> Response {
+    let mut builder = axum::http::Response::builder().status(status);
+    for (name, value) in headers {
+        builder = builder.header(*name, *value);
+    }
+    Response::from(builder.body(vec![0u8; 5]).unwrap())
+}
+
+#[test]
+fn original_recovery_requires_explicit_exact_range_and_has_no_if_range_or_etag_requirement() {
+    let cp = Checkpoint {
+        schema: "geod-partial-transfer/v2".into(),
+        binding: "0".repeat(64),
+        etag: String::new(),
+        bytes: 16,
+        total: 21,
+        sha256: "0".repeat(64),
+        kind: Some(ORIGINAL_KIND.into()),
+        expected_original_sha256: Some("1".repeat(64)),
+    };
+    let good = [
+        ("Content-Range", "bytes 16-20/21"),
+        ("Content-Length", "5"),
+        ("ETag", "W/\"weak\""),
+    ];
+    assert!(accepts(&hash_response(206, &good), &cp));
+    assert!(accepts(&hash_response(206, &good[..2]), &cp));
+    for n in 0..9 {
+        let mut headers = good.to_vec();
+        let mut status = 206;
+        match n {
+            0 => status = 200,
+            1 => headers[0].1 = "bytes 17-20/21",
+            2 => headers[0].1 = "bytes 16-19/21",
+            3 => headers[0].1 = "bytes 16-20/22",
+            4 => headers[1].1 = "6",
+            5 => {
+                headers.remove(1);
+            }
+            6 => headers.push(("Content-Range", "bytes 16-20/21")),
+            7 => headers.push(("Content-Encoding", "gzip")),
+            _ => headers.push(("Content-Type", "multipart/byteranges")),
+        };
+        assert!(
+            !accepts(&hash_response(status, &headers), &cp),
+            "Malformed original response {n}"
+        );
+    }
+    let built = request(
+        reqwest::Client::new().get("https://example.com/fixture"),
+        Some(&cp),
+    )
+    .build()
+    .unwrap();
+    assert_eq!(built.headers()[header::RANGE], "bytes=16-");
+    assert!(!built.headers().contains_key(header::IF_RANGE));
+    let legacy = Checkpoint {
+        schema: "geod-partial-transfer/v1".into(),
+        binding: "0".repeat(64),
+        etag: "\"v1\"".into(),
+        bytes: 16,
+        total: 21,
+        sha256: "0".repeat(64),
+        kind: None,
+        expected_original_sha256: None,
+    };
+    let json = serde_json::to_value(&legacy).unwrap();
+    assert_eq!(json.as_object().unwrap().len(), 6);
+    assert!(
+        !json.as_object().unwrap().contains_key("kind")
+            && !json
+                .as_object()
+                .unwrap()
+                .contains_key("expectedOriginalSha256")
+    );
+    assert!(matches!(
+        serde_json::from_value::<Checkpoint>(json)
+            .unwrap()
+            .validator(),
+        Validator::StrongEtag { .. }
+    ));
+}
+
+#[tokio::test]
+async fn full_original_identity_failure_is_not_a_resumable_checkpoint() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path().canonicalize().unwrap();
+    let (job, original) = reviewed_archive_job(&root);
+    hash_checkpoint(
+        &root,
+        &job,
+        &original,
+        b"PK\x03\x04offline-security-prefix-fixture",
+    )
+    .await;
+    // This is the existing completion order in JobManager::download: remove
+    // recovery state before whole-file source/ZIP/member validation.
+    discard_checkpoint(&root, &job.id).await.unwrap();
+    assert!(
+        crate::stac::verify_transfer(&root, &job, original.archive_bytes, &"0".repeat(64)).is_err()
+    );
+    assert!(crate::stac::verify_transfer(
+        &root,
+        &job,
+        original.archive_bytes - 1,
+        &original.archive_sha256
+    )
+    .is_err());
+    assert!(!candidate(&root, &job, crate::MAX_ASSET_BYTES));
+}
+
+#[tokio::test]
+#[ignore = "requires GEOD_REVIEWED_TRANSFER_ORIGINAL, real official HTTP and optional GEOD_TRANSFER_PROXY / GEOD_REVIEWED_TRANSFER_REPORT"]
+async fn real_compiled_glc_original_range_recovery_retains_checkpoint_and_verifies_whole_source() {
+    use futures_util::StreamExt;
+    let original_path = PathBuf::from(std::env::var("GEOD_REVIEWED_TRANSFER_ORIGINAL").unwrap());
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path().canonicalize().unwrap();
+    let (job, original) = reviewed_archive_job(&root);
+    // Seed only from an independently downloaded COMPLETE original, whose
+    // whole hash is checked before creating a simulated interrupted prefix.
+    // The actual HTTP operation below downloads the exact remaining bytes.
+    let mut reference = std::fs::File::open(&original_path).unwrap();
+    assert_eq!(reference.metadata().unwrap().len(), original.archive_bytes);
+    let mut reference_hash = Sha256::new();
+    let mut buffer = vec![0u8; 1024 * 1024];
+    loop {
+        let n = reference.read(&mut buffer).unwrap();
+        if n == 0 {
+            break;
+        }
+        reference_hash.update(&buffer[..n]);
+    }
+    assert_eq!(
+        format!("{:x}", reference_hash.finalize()),
+        original.archive_sha256
+    );
+    let prefix_bytes = original.archive_bytes - 8 * 1024 * 1024;
+    let (part, _) = paths(&root, &job.id).unwrap();
+    let mut source = std::fs::File::open(&original_path).unwrap();
+    let mut prefix = std::fs::File::create(&part).unwrap();
+    let mut left = prefix_bytes;
+    let mut hasher = Sha256::new();
+    let mut initial_header = Vec::new();
+    while left > 0 {
+        let n = buffer.len().min(left as usize);
+        source.read_exact(&mut buffer[..n]).unwrap();
+        prefix.write_all(&buffer[..n]).unwrap();
+        hasher.update(&buffer[..n]);
+        initial_header.extend(
+            buffer[..n]
+                .iter()
+                .take(16usize.saturating_sub(initial_header.len())),
+        );
+        left -= n as u64;
+    }
+    prefix.sync_all().unwrap();
+    drop(prefix);
+    let validator = Validator::ReviewedOriginal {
+        expected_original_sha256: original.archive_sha256.clone(),
+        total: original.archive_bytes,
+    };
+    let file = tokio::fs::OpenOptions::new()
+        .write(true)
+        .open(&part)
+        .await
+        .unwrap();
+    checkpoint(
+        &root,
+        &job,
+        &file,
+        Some(&validator),
+        prefix_bytes,
+        &hasher,
+        &initial_header,
+    )
+    .await
+    .unwrap();
+    drop(file);
+    assert!(candidate(&root, &job, crate::MAX_ASSET_BYTES));
+    let proxy = std::env::var("GEOD_TRANSFER_PROXY").ok();
+    let settings = ProxySettings {
+        mode: if proxy.is_some() {
+            crate::proxy::ProxyMode::Custom
+        } else {
+            crate::proxy::ProxyMode::Direct
+        },
+        url: proxy,
+    };
+    let client = crate::proxy::download_client(&settings).unwrap();
+    let mut attempts = Vec::new();
+    let mut completed = None;
+    for attempt in 0..3 {
+        let mut prepared = prepare(
+            &root,
+            &job,
+            crate::MAX_ASSET_BYTES,
+            &CancellationToken::new(),
+        )
+        .await
+        .unwrap();
+        let cp = prepared.checkpoint.as_ref().unwrap();
+        let built = request(client.get(&job.href), Some(cp)).build().unwrap();
+        let sent_range = built.headers()[header::RANGE].to_str().unwrap().to_string();
+        assert!(!built.headers().contains_key(header::IF_RANGE));
+        let response = client.execute(built).await.unwrap();
+        let accepted = accepts(&response, cp);
+        attempts.push(serde_json::json!({"attempt":attempt+1,"range":sent_range,"ifRangeSent":false,
+            "status":response.status().as_u16(),"contentRange":response.headers().get(header::CONTENT_RANGE).and_then(|v|v.to_str().ok()),
+            "contentLength":response.headers().get(header::CONTENT_LENGTH).and_then(|v|v.to_str().ok()),"accepted":accepted,
+            "verifiedPrefixBytes":prepared.bytes}));
+        assert!(
+            accepted,
+            "Official source did not return the exact bounded byte range: {:?}",
+            attempts
+        );
+        let mut stream = response.bytes_stream();
+        let mut file = prepared.file.take().unwrap();
+        let mut bytes = prepared.bytes;
+        let mut hasher = prepared.hasher;
+        let mut failed = false;
+        while let Some(chunk) = stream.next().await {
+            match chunk {
+                Ok(chunk) => {
+                    bytes += chunk.len() as u64;
+                    if bytes > original.archive_bytes {
+                        discard_checkpoint(&root, &job.id).await.unwrap();
+                        panic!("Range body exceeded complete original");
+                    }
+                    file.write_all(&chunk).await.unwrap();
+                    hasher.update(&chunk);
+                }
+                Err(_) => {
+                    failed = true;
+                    break;
+                }
+            }
+        }
+        if failed || bytes != original.archive_bytes {
+            checkpoint(
+                &root,
+                &job,
+                &file,
+                Some(&validator),
+                bytes,
+                &hasher,
+                &initial_header,
+            )
+            .await
+            .unwrap();
+            drop(file);
+            assert!(candidate(&root, &job, crate::MAX_ASSET_BYTES));
+            continue;
+        }
+        discard_checkpoint(&root, &job.id).await.unwrap();
+        file.sync_all().await.unwrap();
+        drop(file);
+        let sha = format!("{:x}", hasher.finalize());
+        assert_eq!(sha, original.archive_sha256);
+        crate::stac::verify_transfer(&root, &job, bytes, &sha).unwrap();
+        assert!(crate::stac::archive_original::prepare_download(
+            &root,
+            &job,
+            &part,
+            &CancellationToken::new()
+        )
+        .await
+        .unwrap());
+        assert!(!candidate(&root, &job, crate::MAX_ASSET_BYTES));
+        completed = Some(
+            serde_json::json!({"datasetId":"glc-fcs10","originalUrl":job.href,
+            "originalBytes":bytes,"originalSha256":sha,"wholeOriginalVerified":true,
+            "recoveredPrefixBytes":prefix_bytes,"initialPrefixOrigin":"independent complete original, whole SHA verified before seeding interrupted checkpoint",
+            "actualRemainingHttpBytes":bytes-prefix_bytes,"nativeRangeAttempts":attempts,
+            "noIfRange":true,"nativeMemberVerified":true,"selectedMember":original.member,
+            "memberBytes":original.member_bytes,"memberSha256":original.member_sha256,
+            "checkpointRemovedAfterWholeValidation":true,"newServerListener":false}),
+        );
+        break;
+    }
+    let report =
+        completed.expect("Official range transfer did not complete after three bounded retries");
+    if let Ok(path) = std::env::var("GEOD_REVIEWED_TRANSFER_REPORT") {
+        std::fs::write(path, serde_json::to_vec_pretty(&report).unwrap()).unwrap();
+    }
+    println!("{}", serde_json::to_string_pretty(&report).unwrap());
+}

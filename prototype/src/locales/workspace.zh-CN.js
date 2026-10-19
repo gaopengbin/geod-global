@@ -1,4 +1,29 @@
 export default {
+  'Display and source details': '显示与来源说明',
+"source tiles":"来源分幅",
+"Choose an area to find SRTM NUM source tiles.":"选择区域，检索 SRTM NUM 来源码分幅。",
+"No SRTM NUM source tiles cover this area.":"该区域没有已发布的 SRTM NUM 来源码分幅。",
+"NASA SRTMGL1N v003 · {source} · Natural Earth overview":"NASA SRTMGL1N v003 · {source} · Natural Earth 概览",
+"SRTM NUM · February 2000 · original source codes":"SRTM NUM · 2000 年 2 月 · 原始来源码",
+"1 arc-second Point grid":"1 角秒点采样网格",
+"Observation period":"观测周期",
+
+  'Downloads require your own connected source account.':'下载需要连接你自己的数据源账号。',
+"Local SRTM NUM \u00b7 original source codes":"本地 SRTM NUM · 原始来源码",
+
+  "SRTM NUM · Source codes":"SRTM NUM · 来源码",
+  "1 arc-second Point grid · raw UInt8 source codes":"1 角秒点采样网格 · 原始 UInt8 来源码",
+  "SRTMGL1N v003 · original UInt8 NUM ZIP":"SRTMGL1N v003 · 原始 UInt8 NUM 压缩包",
+
+  "NASA Earthdata · SRTM NUM":"NASA Earthdata · SRTM 来源码",
+  "NASA SRTMGL1N v003 source codes":"NASA SRTMGL1N v003 来源码",
+  "SRTM NUM source codes":"SRTM NUM 来源码",
+  "SRTM NUM source code":"SRTM NUM 来源码",
+  "Original SRTM NUM source codes and Point grid":"原始 SRTM NUM 来源码与点采样网格",
+  "Verified original SRTM NUM source-code preview":"已核对的 SRTM NUM 原始来源码预览",
+  "SRTM NUM retains original source codes on the 1 arc-second Point grid. Codes are not elevations or accuracy scores. No scalar NoData or quality mask is inferred.":"保留 1 角秒点采样网格上的原始来源码。编码不是高程或精度评分；不推断标量无数据值，也不应用质量掩膜。",
+  "SRTM NUM metadata does not match its original source grid.":"SRTM NUM 元数据与原始来源网格不匹配。",
+
   'Layer details': '图层详情',
   'Data attribution': '数据署名',
   'Source link': '来源链接',

@@ -12,6 +12,7 @@ import { scienceMatchesJob, validSciencePixel } from './modis-science.js';
 
 import { MODIS_CRS, MODIS_PROJECTION } from './modis.js';
 import { VIIRS_CRS } from './viirs.js';
+import {numMatchesJob,validNumPixel} from './srtm-num.js';
 
 export const MAX_MAP_LAYERS = 4;
 export const validBounds = bounds => Array.isArray(bounds) && bounds.length === 4 && bounds.every(Number.isFinite)
@@ -31,6 +32,7 @@ export function verifiedMapMetadata(job, metadata) {
   const reflectance = LANDSAT_BANDS.includes(job?.assetKey);
   const elevation = isElevationKey(job?.assetKey);
   const aerial = job?.assetKey === 'aerial';
+  if(job?.assetKey==='srtm_num' && !numMatchesJob(job,metadata))throw new Error('SRTM NUM metadata does not match its original source grid.');
   if (job?.status !== 'succeeded' || !localRasterKeys.includes(job?.assetKey) || !job.sha256
     || metadata?.sha256?.toLowerCase() !== job.sha256.toLowerCase()
     || metadata?.bandCount !== (aerial ? 4 : job.assetKey === 'visual' ? 3 : 1)
@@ -86,6 +88,7 @@ export function previewPixelWindow(bounds, metadata) {
 }
 
 export function mapClipRecipe(job, metadata, bounds, name) {
+  if(job.assetKey==='srtm_num')throw new Error('SRTM NUM original clipping is not available.');
   if (job.assetKey !== 'scl') throw new Error('Use the project to clip or mosaic true-color imagery.');
   verifiedMapMetadata(job, metadata);
   if (!previewPixelWindow(bounds, metadata)) throw new Error('The rectangle must overlap the active raster.');
@@ -104,7 +107,8 @@ export function verifyPixelResult(result, job, metadata, coordinate) {
     || (MODIS_SCIENCE[job.assetKey] ? !validSciencePixel(result,metadata) : VEGETATION_KEYS.includes(job.assetKey) ? !validVegetationPixel(result,metadata) : QUALITY_KEYS.includes(job.assetKey) ? !validQualityPixel(result,metadata) : RADAR_KEYS.includes(job.assetKey) ? !validRadarPixel(result,metadata) : job.assetKey === 'aerial' ? !validAerialPixel(result, metadata) : isElevationKey(job.assetKey) ? !validElevationPixel(result, metadata) : LANDSAT_BANDS.includes(job.assetKey) ? !validReflectancePixel(result, metadata) : job.assetKey === 'visual' ? !Array.isArray(result.values) || result.values.length !== 3
       || result.values.some(value => !Number.isInteger(value) || value < 0 || value > 255)
       || result.color?.toLowerCase() !== '#' + result.values.map(value => value.toString(16).padStart(2, '0')).join('')
-      : !Number.isInteger(result.value) || result.value < 0 || result.value > 11)
+      : job.assetKey==='srtm_num' ? !validNumPixel(result) : !Number.isInteger(result.value) || result.value < 0 || result.value > 11)
+    || job.assetKey==='srtm_num' && !validNumPixel(result)
     || typeof result.label !== 'string' || !/^#[a-f\d]{6}$/i.test(result.color) || typeof result.isNoData !== 'boolean')
     throw new Error('The pixel response does not match the active raster and coordinate.');
   return result;

@@ -1,14 +1,14 @@
-.proxy-settings { min-width: 0; padding: 16px; border: 1px solid var(--line); box-shadow: none; }
-.proxy-heading { display: grid; gap: 6px; }
+.proxy-settings { min-width: 0; padding: var(--panel-padding); border: 1px solid var(--line); box-shadow: none; }
+.proxy-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .proxy-title { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.proxy-heading h2 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
-.proxy-heading p, .proxy-note { margin: 0; color: var(--ink-2); font-size: 12px; line-height: 1.55; }
-.proxy-fields { display: grid; gap: 12px; margin-top: 14px; max-width: 360px; }
-.proxy-fields label { display: grid; gap: 8px; font-size: 13px; font-weight: 600; }
-.proxy-fields small { color: var(--ink-2); font-size: 12px; font-weight: 400; }
+.proxy-heading h2 { margin: 0; font-size: var(--text-section); line-height: var(--leading-section); font-weight: var(--weight-semibold); }
+.proxy-heading p, .proxy-note { margin: 0; color: var(--ink-2); font-size: var(--text-caption); line-height: var(--leading-caption); }
+.proxy-fields { display: grid; gap: var(--control-gap); margin-top: var(--control-gap); max-width: 360px; }
+.proxy-fields label { display: grid; gap: 8px; font-size: var(--text-ui); font-weight: var(--weight-semibold); line-height: var(--leading-ui); }
+.proxy-fields small { color: var(--ink-2); font-size: var(--text-caption); font-weight: var(--weight-regular); line-height: var(--leading-caption); }
 .proxy-fields [data-slot="select-wrapper"], .proxy-fields [data-slot="select-trigger"] { width: 100%; }
-.proxy-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-.proxy-message { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font-size: 12px; overflow-wrap: anywhere; }
+.proxy-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--control-gap); }
+.proxy-message { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font-size: var(--text-caption); overflow-wrap: anywhere; line-height: var(--leading-caption); }
 .proxy-message-success { color: var(--accent-ink); }
 .proxy-message-error { color: var(--red); }
 .proxy-settings > .proxy-note:last-child { margin-top: 12px; }

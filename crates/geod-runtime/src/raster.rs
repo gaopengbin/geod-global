@@ -183,6 +183,9 @@ impl JobManager {
             if job.asset_key == "srtm" {
                 return srtm::sample(&root, &job, x, y);
             }
+            if job.asset_key == "srtm_num" {
+                return srtm_num::sample(&root, &job, x, y);
+            }
             let raster = load_verified_raster(&root, &job, None)?;
             sample_pixel(raster, &job.id, x, y)
         })
@@ -256,6 +259,9 @@ impl JobManager {
             if job.asset_key == "srtm" {
                 return srtm::inspect(&root, &job, PREVIEW_EDGE);
             }
+            if job.asset_key == "srtm_num" {
+                return srtm_num::inspect(&root, &job, PREVIEW_EDGE);
+            }
             inspect_download(&root, &job)
         })
         .await
@@ -308,6 +314,7 @@ pub(crate) mod reflectance;
 pub(crate) mod rgb;
 pub(crate) mod science;
 pub(crate) mod srtm;
+pub(crate) mod srtm_num;
 
 fn serialize_pixel_value<S: serde::Serializer>(
     value: &f64,

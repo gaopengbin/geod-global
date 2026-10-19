@@ -1,0 +1,230 @@
+{
+  "checkedAt": "2026-10-11",
+  "scope": "Discovery and user experience evidence; date-null means date not verified; historical reports do not establish current throughput",
+  "sources": [
+    {
+      "id": "C01",
+      "platform": "CSDN",
+      "date": "2023-12-12",
+      "title": "正射校正实验数据下载",
+      "url": "https://blog.csdn.net/m0_56808314/article/details/134957523",
+      "evidence": "Author comparison: GSCloud Landsat download succeeded; GF1 corrupt archive succeeded after link reapplication; USGS/AIR obstacles. Historical user experience, not a current speed test."
+    },
+    {
+      "id": "C02",
+      "platform": "华为云开发者社区 / CSDN",
+      "date": "2022-03-14",
+      "title": "AI Earth 地球科学云平台简介",
+      "url": "https://huaweicloud.csdn.net/67123bba0636ea24a0c18769.html",
+      "evidence": "Discovery lead for domestic AIE imagery and exports; historic quotas not current."
+    },
+    {
+      "id": "C03",
+      "platform": "阿里云开发者社区",
+      "date": "2024-01",
+      "title": "AI Earth 用户问答",
+      "url": "https://developer.aliyun.com/group/rsimganalys/?pageNum=11",
+      "evidence": "Band merge/export/georeferencing, Landsat ST_B10 and archive coverage questions."
+    },
+    {
+      "id": "C04",
+      "platform": "阿里云开发者社区",
+      "date": "2023-07-14",
+      "title": "PIE Engine 数据下载器实现",
+      "url": "https://developer.aliyun.com/article/1273990",
+      "evidence": "AOI/date/source/cloud filters and Export.imageToCloud; script/export route."
+    },
+    {
+      "id": "C05",
+      "platform": "博客园",
+      "date": "2022-06",
+      "title": "PIE Engine 数据上传、调用及下载",
+      "url": "https://www.cnblogs.com/GISer-Liu/p/16340688.html",
+      "evidence": "Cloud drive export and quotas, derived subset workflow; not a full-product mirror."
+    },
+    {
+      "id": "C06",
+      "platform": "博客园",
+      "date": "2023-05-25",
+      "title": "深圳 Sentinel-1 SLC 沉降实操",
+      "url": "https://www.cnblogs.com/Vicrooor/p/17396546.html",
+      "evidence": "ASF download/network issues and ESA fallback; old offline archive waits."
+    },
+    {
+      "id": "C07",
+      "platform": "GIS 知乎 / GeoScene",
+      "date": "2016-05-29",
+      "title": "如何获取一景完整的哨兵数据",
+      "url": "https://zhihu.geoscene.cn/m/article/1831",
+      "evidence": "6 GB transfer interrupted near 5 GB; resume need, obsolete browser workaround."
+    },
+    {
+      "id": "C08",
+      "platform": "GISer 博客",
+      "date": "2017-04-15",
+      "title": "MODIS Web Service 下载",
+      "url": "https://gisersqdai.top/2017/04/15/MODIS%E6%95%B0%E6%8D%AE%E7%9A%84%E7%AE%80%E4%BB%8B%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94MODIS%E6%95%B0%E6%8D%AE%E4%B8%8B%E8%BD%BD%E6%96%B9%E5%BC%8F%EF%BC%88%E5%9F%BA%E4%BA%8EMODIS%20Web%20Service%EF%BC%89/",
+      "evidence": "ORNL numeric subsets instead of whole HDF downloads."
+    },
+    {
+      "id": "C09",
+      "platform": "气象家园",
+      "date": "2017-06-19",
+      "title": "常用遥感卫星下载网站",
+      "url": "https://bbs.06climate.com/forum.php?mod=viewthread&tid=53920",
+      "evidence": "Domestic mirrors, DEM, meteorological channels; stale entry list to refresh."
+    },
+    {
+      "id": "C10",
+      "platform": "公众号 RGB 3S 作者博客",
+      "date": "2016-11-27",
+      "title": "国内外 Landsat 下载指南",
+      "url": "https://www.ixxin.cn/2016/11/27/landsat8freedata/",
+      "evidence": "GSCloud and USGS routes; comments with mail signup failures and interrupted downloads."
+    },
+    {
+      "id": "C11",
+      "platform": "腾讯云开发者社区 / 公众号转载",
+      "date": "2025-05-21",
+      "title": "各类遥感影像数据下载网站",
+      "url": "https://developer.cloud.tencent.com/article/2523270",
+      "evidence": "疯狂学习GIS repost: GSCloud, ASF, LAADS, NSOAS, night lights; some labels use retired names."
+    },
+    {
+      "id": "C12",
+      "platform": "腾讯云开发者社区 / 公众号转载",
+      "date": "2025-02 update in article",
+      "title": "高分卫星、环境卫星、资源卫星等遥感影像下载",
+      "url": "https://cloud.tencent.com/developer/article/2514795",
+      "evidence": "CRESDA and entitlement workflow; registration does not ensure download permission."
+    },
+    {
+      "id": "C13",
+      "platform": "微信公众号",
+      "date": null,
+      "title": "免费下载高清卫星影像！",
+      "url": "https://mp.weixin.qq.com/s/bd8wmr3bHidLdUrbGIsutA",
+      "evidence": "Search-indexed 水经注GIS lead: offline basemap packages. Dates/redistribution license not verified; not scientific original imagery."
+    },
+    {
+      "id": "C14",
+      "platform": "微信公众号",
+      "date": null,
+      "title": "百度网盘可免费下载全国高清卫星影像啦！",
+      "url": "https://mp.weixin.qq.com/s/i8o1Zt6Wx_B6A1wos2zVsg",
+      "evidence": "Search-indexed offline map packages; native pixels and licensing unverified."
+    },
+    {
+      "id": "C15",
+      "platform": "微信公众号",
+      "date": null,
+      "title": "全国33.7GB谷歌地球高程DEM数据免费送",
+      "url": "https://mp.weixin.qq.com/s/nuLXGnNRnLKDG_Ue8J6ARg",
+      "evidence": "Search-indexed terrain offline package; not confirmed original DEM source or redistribution rights."
+    },
+    {
+      "id": "C16",
+      "platform": "Reddit r/remotesensing",
+      "date": "2024-05-13",
+      "title": "Request for Alternative Landsat Data Download Sites",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1cqw2yj",
+      "evidence": "USGS outage, users suggest AWS/GEE/Esri/STAC. Suggestions not comparative measurements."
+    },
+    {
+      "id": "C17",
+      "platform": "Reddit r/remotesensing",
+      "date": "2024-07-10",
+      "title": "Automated Download of Landsat 8 Level 1 Images",
+      "url": "https://www.reddit.com/r/remotesensing/comments/1dzxs0p",
+      "evidence": "Small AOI but whole-scene transfer; discussion of pre-download subsetting."
+    },
+    {
+      "id": "C18",
+      "platform": "ESA STEP",
+      "date": "2018-06-25",
+      "title": "Parallel download limit for large volumes",
+      "url": "https://forum.step.esa.int/t/parallel-download-limit-for-large-volumes/10606",
+      "evidence": "Bandwidth/concurrency complaints and regional mirror/ASF/AWS recommendations; historical."
+    },
+    {
+      "id": "C19",
+      "platform": "ESA STEP",
+      "date": "2019-03; replies extend to 2025-12",
+      "title": "SNAP Product Library download experiences",
+      "url": "https://forum.step.esa.int/t/do-you-download-sentinel-data-via-the-product-library-in-snap/13864?page=2",
+      "evidence": "US user faster ASF anecdote, later search-success/download-failure reports."
+    },
+    {
+      "id": "C20",
+      "platform": "GitHub maintainer README",
+      "date": "current README checked 2026-10-11",
+      "title": "peps_download retired / use GEODES",
+      "url": "https://github.com/olivierhagolle/peps_download",
+      "evidence": "Provider migration, EODAG client recommended; old PEPS not an active fallback."
+    },
+    {
+      "id": "C21",
+      "platform": "NASA Earthdata Forum",
+      "date": "2025-03-10",
+      "title": "AWS availability of VIIRS products",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=6535",
+      "evidence": "LAADS latency inquiry and support confirmation of specific LPCLOUD VIIRS v2 products."
+    },
+    {
+      "id": "C22",
+      "platform": "NASA Earthdata Forum",
+      "date": "2025-08-19",
+      "title": "HLS data access and spatial subsetting",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=7149",
+      "evidence": "CMR/Harmony/AppEEARS/direct S3 comparison; product-dependent subset capability and two-hour orders."
+    },
+    {
+      "id": "C23",
+      "platform": "NASA Earthdata Forum",
+      "date": "2023-12-27",
+      "title": "Sentinel-1 RTC via ASF / OPERA",
+      "url": "https://forum.earthdata.nasa.gov/viewtopic.php?t=4943",
+      "evidence": "Precomputed RTC vs HyP3 processing, waits/quota; historical backfill statements have changed."
+    },
+    {
+      "id": "C24",
+      "platform": "Copernicus Data Space Forum",
+      "date": "2024-12-16 to 2024-12-22",
+      "title": "openEO takes much more time than SentinelHub",
+      "url": "https://forum.dataspace.copernicus.eu/t/openeo-takes-much-more-time-than-sentinelhub/2975",
+      "evidence": "Specific task 7m40s batch vs 30s processing API; synchronous/batch queue distinction, not general benchmark."
+    },
+    {
+      "id": "C25",
+      "platform": "GIS StackExchange",
+      "date": "2015 original question; later AWS answer",
+      "title": "Where to download 4-band NAIP imagery for California",
+      "url": "https://gis.stackexchange.com/questions/142209/where-to-download-4-band-naip-imagery-for-california",
+      "evidence": "Three-band visualization cannot replace four-band scientific source."
+    },
+    {
+      "id": "C26",
+      "platform": "CSDN",
+      "date": "2025-09-16",
+      "title": "QGIS OpenTopography DEM Downloader",
+      "url": "https://blog.csdn.net/weixin_43416590/article/details/151763843",
+      "evidence": "Plugin/API key workflow; current commercial integration policy must be checked separately."
+    },
+    {
+      "id": "C27",
+      "platform": "GeoPython Tutorials",
+      "date": null,
+      "title": "Static STAC / OpenLandMap practical notebook",
+      "url": "https://www.geopythontutorials.com/notebooks/stac_static_catalog.html",
+      "evidence": "Independent COG night-light and environmental product access."
+    },
+    {
+      "id": "C28",
+      "platform": "GitHub",
+      "date": "current repository checked 2026-10-11",
+      "title": "Earth Extractor multi-provider routing",
+      "url": "https://github.com/eceo-epfl/earth-extractor",
+      "evidence": "CDSE search + ASF download, CMR + LAADS, learn provider separation; tool not extra mirror."
+    }
+  ]
+}

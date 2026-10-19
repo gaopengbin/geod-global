@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "accepted": true,
+  "observedUtc": "2026-10-15T04:55:20.479006+00:00",
+  "sourceId": "gebco",
+  "directoryIdsAdded": 0,
+  "originalPlannedIdsClosed": 0,
+  "parentStatus": "planned",
+  "product": "GEBCO 2026 TID",
+  "sourceUrl": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/type_identifier_grid/geotiff/gebco_2026_tid_geotiff.zip?download=1",
+  "wholeArchiveSha256": "90720c74c0702fd8763d8eb8a23b1c0c6c024c38fef93742bbccafddba2f307d",
+  "softwareArchiveBytes": 769207808,
+  "originalTiles": 8,
+  "originalTileBytes": 3733598792,
+  "rawPositionsMatched": 56,
+  "wholePreviewRgbaCompared": 8,
+  "jobs": 44,
+  "projects": 30,
+  "normalReopenUnchanged": true,
+  "results": [
+    {
+      "jobId": "f6ab49de-a6ea-4b86-98fb-f98e016dea90",
+      "name": "gebco_2026_tid_n90.0_s0.0_w90.0_e180.0_geotiff.tif",
+      "originalSha256": "2ce5e703da9d6ad4681627fef67fab786dc4ea4c9707234b166c2aab58e1257a",
+      "originalBytes": 466699844,
+      "samplesMatched": 7,
+      "previewSha256": "f101b5a93e0eabfbdd930cd26decfc3a275f1ef4b59d5106c321e5bf1300a197",
+      "zeroValid": true
+    },
+    {
+      "jobId": "2e29572a-5dbc-4790-98ae-bf4baef471c6",
+      "name": "gebco_2026_tid_n90.0_s0.0_w-90.0_e0.0_geotiff.tif",
+      "originalSha256": "2a482bb65b9949aba0bf28ff551dbb61e9ddf5242d175ab6a7395d2ccc3379ca",
+      "originalBytes": 466699830,
+      "samplesMatched": 7,
+      "previewSha256": "ff07777eabddbf9792a5ece36d7601e3eb3f6391b751de9ef23d3c44271582b7",
+      "zeroValid": false
+    },
+    {
+      "jobId": "2054d1de-c507-4e3f-81d4-ff0119ace455",
+      "name": "gebco_2026_tid_n90.0_s0.0_w-180.0_e-90.0_geotiff.tif",
+      "originalSha256": "b6e747a89a6bcc7187616050c7e821fc7640712cda657cc66022f7b552c4e2b2",
+      "originalBytes": 466699834,
+      "samplesMatched": 7,
+      "previewSha256": "b34f100f8b7042b53f0ab6e03426d09a7801dc3d4420f64c8a85b9cfbd5629f6",
+      "zeroValid": true
+    },
+    {
+      "jobId": "c3ad8cc9-a531-4815-bac9-ade32aae5458",
+      "name": "gebco_2026_tid_n90.0_s0.0_w0.0_e90.0_geotiff.tif",
+      "originalSha256": "417cb2476f7c7583e2636dd82ae9b9dbfb673f0523774618c637b0a99fae6a6b",
+      "originalBytes": 466699848,
+      "samplesMatched": 7,
+      "previewSha256": "5a46094034529c761c8d9b98f226e986f34ca6d95c811e19d73b86eb9fb4edc6",
+      "zeroValid": true
+    },
+    {
+      "jobId": "8d487aac-c1e4-4467-af51-138cbdd89652",
+      "name": "gebco_2026_tid_n0.0_s-90.0_w90.0_e180.0_geotiff.tif",
+      "originalSha256": "f004ae3cc0106db9bd64d5206de73a547b0aaf4fc2bc3ec7c833b5f3f9ac3900",
+      "originalBytes": 466699864,
+      "samplesMatched": 7,
+      "previewSha256": "2c9887c8b9de10b5fe505963d5a2187f01d1e9fc21c042cb329d56c286dbf2e8",
+      "zeroValid": true
+    },
+    {
+      "jobId": "6e612bfb-7c85-4aeb-9820-d76fe044db2e",
+      "name": "gebco_2026_tid_n0.0_s-90.0_w-90.0_e0.0_geotiff.tif",
+      "originalSha256": "983a1980bfaf0edf57c585962968c8aaa232c0efa8755b0cbbadf4feb68ae005",
+      "originalBytes": 466699850,
+      "samplesMatched": 7,
+      "previewSha256": "4c339768ed05f3b3f1873e238d905da53f3c36c41bec8499f8e73569c692f25c",
+      "zeroValid": false
+    },
+    {
+      "jobId": "cc62b064-cc7e-4c88-b571-9b493f5ccb4e",
+      "name": "gebco_2026_tid_n0.0_s-90.0_w-180.0_e-90.0_geotiff.tif",
+      "originalSha256": "aa0243b106c59c747baef34a359af602d3412afc07da051edf59e118f49626cf",
+      "originalBytes": 466699854,
+      "samplesMatched": 7,
+      "previewSha256": "bc46686eb678d41318058876e2920c873630e54615bdbfe2ecf791f15a8fda5a",
+      "zeroValid": false
+    },
+    {
+      "jobId": "4ce2ba3e-0280-4804-9080-5afa5bc6b489",
+      "name": "gebco_2026_tid_n0.0_s-90.0_w0.0_e90.0_geotiff.tif",
+      "originalSha256": "1f14eb181b3b69ae88233d436380c90f42634312d2aa330b7d49494a3a6d92f2",
+      "originalBytes": 466699868,
+      "samplesMatched": 7,
+      "previewSha256": "50d5426c3a487337753fa71635bf0072b5b7e7551422810d3e630cc41e40965c",
+      "zeroValid": false
+    }
+  ]
+}

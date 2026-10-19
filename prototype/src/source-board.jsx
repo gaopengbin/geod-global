@@ -29,20 +29,21 @@ export function SourceBoard({ onChoose, onOpenEntry }) {
   const renderCard = source => {
     const provider = PROVIDERS.find(provider => provider.id === source.providerId);
     const identity = provider ? sourceIdentity[provider.id] : source;
-    const pending = source.status === 'planned';
+    const pending = source.status === 'planned' && !source.partialAction;
     const released = source.status === 'ready';
     const local = source.action?.kind === 'library';
+    const dataset = source.action?.kind === 'dataset';
     const [accessibleName] = provider ? sourcePresentation[provider.id] || [provider.name] : [source.name];
     const preview = provider && (catalogPreviewKind(provider) ? 'Online preview' : canDisplayImagery(provider) ? 'Load to preview' : 'Footprints only');
     const content = <>
       <span className="source-board-card-heading"><SourceSeriesMark mark={identity.mark}/><span className="source-board-platform" title={t(identity.platform)}>{t(identity.platform)}</span>{!pending && <ArrowUpRight size={15} className="source-board-arrow" aria-hidden="true"/>}</span>
       <span className="source-board-copy"><strong>{t(identity.name)}</strong><span className="source-board-detail">{t(identity.detail)}</span></span>
       <span className="source-board-capabilities">
-        <Badge tone={pending?'neutral':released?'accent':'neutral'}>{pending && <Clock3 size={11} aria-hidden="true"/>}{t(pending?'Pending integration':provider?released?'Downloadable':'Catalog only':local?'Local import':'Connection available')}</Badge>
+        <Badge tone={pending?'neutral':released?'accent':'neutral'}>{pending && <Clock3 size={11} aria-hidden="true"/>}{t(source.partialAction?(source.id==='gebco'?'Regional elevation and global TID · whole elevation pending':'Limited workflow · family pending'):pending?'Pending integration':provider?released?'Downloadable':'Catalog only':local?'Local import':dataset?'Product connector':'Connection available')}</Badge>
         {preview && <span>{t(preview)}</span>}
         {source.access && <span>{t(accessLabels[source.access])}</span>}
         {provider && !released && <span>{t('Authorization required · originals pending verification')}</span>}
-        {!provider && !pending && <span>{t(local?'Open in My Data':source.action.kind==='map'?'Rendered map imagery':source.action.kind==='vector'?'Public feature service':source.action.kind==='tiles'?'Public vector tile archives':'Public raster source')}</span>}
+        {!provider && !pending && <span>{t(local?'Open in My Data':dataset?'Published files · verify after download':source.action.kind==='gebco'?'Official generated numerical region':source.action.kind==='earth-engine'?'Your GEE project quota':source.action.kind==='map'?'Rendered map imagery':source.action.kind==='vector'?'Public feature service':source.action.kind==='tiles'?'Public vector tile archives':'Public raster source')}</span>}
       </span>
     </>;
     return pending ? <Surface as="article" key={source.id} data-source-id={source.id} className="source-board-card source-board-card-pending" aria-label={t(source.name)}>{content}</Surface>

@@ -1,0 +1,45 @@
+{
+  "repository": "https://github.com/gaopengbin/geod-agent",
+  "version": "0.2.5",
+  "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf",
+  "license": "MIT",
+  "sources": [
+    {
+      "path": "apps/geod-agent-desktop/src/chat-ui.tsx",
+      "sha256": "fb4b074dba9c1bdce3244e296f24952e7198d52a4bbed62b06eed9ed9c852148",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    },
+    {
+      "path": "apps/geod-agent-desktop/src/chat-work.ts",
+      "sha256": "b46ef8954e1329bed687851db5ccb01dbaba1b6b8ed33fca987f9be0b532a2ea",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    },
+    {
+      "path": "apps/geod-agent-desktop/src/codex-work.css",
+      "sha256": "f08290503602612e20cfa2712be8d1ac6b92bb301b7fd45cfe5abf4fe7bc4a09",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    },
+    {
+      "path": "apps/geod-agent-desktop/src/components/agents/message.tsx",
+      "sha256": "4a630c568164f2ac8d31e95d89e80071715d039af6f7c9158e5c911687ebcdf5",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    },
+    {
+      "path": "apps/geod-agent-desktop/src/components/agents/message-scroller.tsx",
+      "sha256": "2a9339fe2ab37fde8d330c1e40b164aa81a27d535b0a02022f09ba61f164dfe5",
+      "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf"
+    }
+  ],
+  "adaptations": [
+    "Adjacent native queries project into upstream exploration/tool groups in chronological order",
+    "Active work follows authoritative native/background state; explicit inspection survives completion",
+    "One live indicator inside the transcript, with separate final answer and Global native action cards",
+    "Source-only local port using Global shared controls; no sibling runtime dependency"
+  ],
+  "revisionKind": "committed source, verified against the reference checkout",
+  "localChanges": [],
+  "unchangedAdaptations": [
+    "Global retains its reader-owned message/scroller adaptation; current primitive sources are captured for comparison. The optional upstream navigation rail is not added.",
+    "Global request lifecycle, approvals, native results, attachments and scene isolation retain their domain contracts."
+  ]
+}

@@ -1,0 +1,31 @@
+[
+  {
+    "datasetId": "chirps",
+    "bounds": [116, 39, 117, 40],
+    "year": 2024,
+    "month": 1,
+    "layer": "monthly-precipitation",
+    "assetContains": "chirps-v3.0.2024.01.tif"
+  },
+  {
+    "datasetId": "nasadem",
+    "bounds": [6.65, 0.2, 6.7, 0.3],
+    "layer": "elevation"
+  },
+  {
+    "datasetId": "alos-aw3d30",
+    "bounds": [6.65, 0.2, 6.7, 0.3],
+    "layer": "surface"
+  },
+  {
+    "datasetId": "srtm-gl1",
+    "bounds": [6.65, 0.2, 6.7, 0.3],
+    "layer": "elevation"
+  },
+  {
+    "datasetId": "hydrosheds",
+    "bounds": [-49.95, 0.05, -49.9, 0.1],
+    "layer": "flow-direction",
+    "assetContains": "n00w050_DIR_1s_v2r0.tif"
+  }
+]

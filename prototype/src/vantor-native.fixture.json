@@ -1,0 +1,1655 @@
+{
+  "connection": {
+    "plan": {
+      "dataset": {
+        "id": "vantor-open",
+        "title": "Vantor Open Data · Nepal September 2026 visual original",
+        "category": "imagery",
+        "description": "Finite integration of one actual current Vantor Open Data disaster archive visual: Nepal-Flooding-Aug-2026, original item B120001101250A10 observed on 2026-09-07. The complete publisher JPEG-compressed GeoTIFF is preserved. This does not provide commercial imagery ordering, global coverage or support for every event asset.",
+        "version": "Nepal-Flooding-Aug-2026 · B120001101250A10 · 2026-09-07 visual original",
+        "license": "CC-BY-NC-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+        "attribution": "Vantor Open Data Program, Nepal-Flooding-Aug-2026, Legion LG02, item B120001101250A10; acquisition 2026-09-07T05:07:53.249593Z. Preserve original item and event Collection, source time, CC BY-NC 4.0 attribution and noncommercial restrictions.",
+        "documentationUrl": "https://vantor.com/open-data/",
+        "nominalResolution": "Original EPSG:4326 36389 × 41157 canvas, spacing 0.000005190520394450596° × 0.0000045967538055144995°. Publisher sensor pan/multispectral GSD remains separate.",
+        "unit": "JPEG display Y/Cb/Cr components",
+        "valueInterpretation": "TIFF stores lossy JPEG YCbCr with 2×2 chroma subsampling, not scientific red/green/blue samples. Native inspection reports JPEG-decoded UInt8 Y, Cb, Cr components on the original pixel grid; chroma is upsampled with the codec's triangular fancy interpolation. These are not the original subsampled chroma planes, calibrated reflectance or a conversion to RGB. Publisher eo:bands logical red/green/blue declarations remain unchanged and separate. Preview stretches only Y luminance in grayscale.",
+        "years": [
+          2026
+        ],
+        "defaultYear": 2026,
+        "months": [
+          9
+        ],
+        "defaultMonth": 9,
+        "requiresCountry": false,
+        "layers": [
+          {
+            "id": "visual",
+            "title": "Visual original · JPEG Y/Cb/Cr",
+            "unit": "display component",
+            "valueInterpretation": "Complete original visual TIFF; raw pixel arrays report Y, Cb, Cr after JPEG chroma upsampling. Luminance-only grayscale display. No scientific RGB calibration, analytic-band replacement or damage assessment."
+          }
+        ],
+        "defaultLayer": "visual",
+        "discovery": "stac-items",
+        "warnings": [
+          "Only exact item B120001101250A10 and the independently hashed complete 29,534,465-byte TIFF are supported. Other current events and visual profiles remain unverified; unsupported requests return no replacement.",
+          "The event name contains August, but this item's actual observation instant is 2026-09-07T05:07:53.249593Z. Event date, publication and ingestion dates do not replace acquisition time.",
+          "Publisher cloud cover is 93 percent. Footprint intersection and the visual preview do not establish usable AOI coverage, cloud-free imagery or flood damage. The TIFF declares no scalar NoData: noData=false and black canvas pixels do not prove usable observations.",
+          "The original lossy JPEG components are display values. Full-resolution chroma values include codec spatial upsampling and decoder-dependent rounding; they are not lossless sensor samples or scientifically calibrated RGB bands.",
+          "The event Collection declares CC-BY-NC-4.0. Anonymous access or a GeoD subscription does not grant commercial reuse or imagery procurement rights. Preserve original publisher metadata, attribution and noncommercial restrictions.",
+          "The source's eo:bands RGB labels are retained as publisher display declarations. Actual TIFF sampleEncoding is reported separately as Y/Cb/Cr; no publisher metadata or original bytes are rewritten."
+        ],
+        "limits": [
+          "One exact reviewed current Vantor item and visual asset only, year 2026/month 9. Existing 512 MiB transfer/preview, TIFF axis/grid/chunk budgets and deadlines are unchanged. Embedded reduced JPEG images are used only after matching sample/codec declarations; COG conformance is not certified."
+        ]
+      },
+      "request": {
+        "datasetId": "vantor-open",
+        "bounds": [
+          85.44,
+          28.2,
+          85.47,
+          28.24
+        ],
+        "year": 2026,
+        "month": 9,
+        "layer": "visual"
+      },
+      "sources": [
+        {
+          "id": "B120001101250A10",
+          "title": "Nepal · LG02 · 2026-09-07 · B120001101250A10",
+          "bounds": [
+            85.37344389401046,
+            28.14318026453769,
+            85.56232174064412,
+            28.332368860911252
+          ],
+          "stac": {
+            "name": "Nepal · LG02 · 2026-09-07 · B120001101250A10",
+            "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+            "kind": "item"
+          },
+          "startDatetime": "2026-09-07T05:07:53.249593Z",
+          "endDatetime": "2026-09-07T05:07:53.249593Z"
+        }
+      ],
+      "warnings": [
+        "Only exact item B120001101250A10 and the independently hashed complete 29,534,465-byte TIFF are supported. Other current events and visual profiles remain unverified; unsupported requests return no replacement.",
+        "The event name contains August, but this item's actual observation instant is 2026-09-07T05:07:53.249593Z. Event date, publication and ingestion dates do not replace acquisition time.",
+        "Publisher cloud cover is 93 percent. Footprint intersection and the visual preview do not establish usable AOI coverage, cloud-free imagery or flood damage. The TIFF declares no scalar NoData: noData=false and black canvas pixels do not prove usable observations.",
+        "The original lossy JPEG components are display values. Full-resolution chroma values include codec spatial upsampling and decoder-dependent rounding; they are not lossless sensor samples or scientifically calibrated RGB bands.",
+        "The event Collection declares CC-BY-NC-4.0. Anonymous access or a GeoD subscription does not grant commercial reuse or imagery procurement rights. Preserve original publisher metadata, attribution and noncommercial restrictions.",
+        "The source's eo:bands RGB labels are retained as publisher display declarations. Actual TIFF sampleEncoding is reported separately as Y/Cb/Cr; no publisher metadata or original bytes are rewritten.",
+        "One exact reviewed current Vantor item and visual asset only, year 2026/month 9. Existing 512 MiB transfer/preview, TIFF axis/grid/chunk budgets and deadlines are unchanged. Embedded reduced JPEG images are used only after matching sample/codec declarations; COG conformance is not certified.",
+        "This product selects actual standalone publisher items using a fixed release index or a versioned projected-grid filename recipe. Connecting confirms fresh metadata and preserves its actual reference interval; a candidate address or bounding-box match is not proof of file availability, valid-area coverage or scientific accuracy. No original-file job or paid computation is started."
+      ]
+    },
+    "stacConnections": [
+      {
+        "id": "e51a3d16-1ba4-4f17-86f3-4f041ede16eb",
+        "name": "Nepal · LG02 · 2026-09-07 · B120001101250A10",
+        "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+        "kind": "item",
+        "connectedAt": "2026-10-14T08:55:24.647774200+00:00",
+        "collections": [
+          {
+            "id": "Nepal-Flooding-Aug-2026",
+            "title": "Nepal-Flooding-Aug-2026",
+            "description": "On August 26, 2026, a major flash flood caused by a glacier collapse struck Rasuwa District in northern Nepal after a sudden and intense surge of water entered the Bhote Koshi River from the Tibet (China) side at approximately 9:15 AM local time. The event rapidly affected the border areas of Timure and Rasuwagadhi before moving downstream towards Syabrubesi and the Trishuli River corridor.",
+            "license": "CC-BY-NC-4.0"
+          }
+        ],
+        "capabilities": {
+          "searchGet": false,
+          "searchPost": false
+        },
+        "snapshotIds": [
+          "a69750e1370603f5e90346e333b5ab238ef9feeeb80878f24f88b1ec0ba2e42e"
+        ],
+        "searchUrl": null,
+        "searchMethod": "GET",
+        "metadataSha256": [
+          "e97d73e69372a546ee4d9bf1a348f5d9d944b06dfccb7c2a4724ff8bf5356291",
+          "8b91d943a5e31a2fcdbb7bfb391b198782cab363c734b4c427076f7bc0a2d08a"
+        ],
+        "metadataDocuments": [
+          {
+            "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+            "sha256": "e97d73e69372a546ee4d9bf1a348f5d9d944b06dfccb7c2a4724ff8bf5356291"
+          },
+          {
+            "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json",
+            "sha256": "8b91d943a5e31a2fcdbb7bfb391b198782cab363c734b4c427076f7bc0a2d08a"
+          }
+        ]
+      }
+    ],
+    "wcsConnections": [],
+    "failures": [],
+    "complete": true
+  },
+  "snapshot": {
+    "id": "a69750e1370603f5e90346e333b5ab238ef9feeeb80878f24f88b1ec0ba2e42e",
+    "connectionId": "e51a3d16-1ba4-4f17-86f3-4f041ede16eb",
+    "collectionId": "Nepal-Flooding-Aug-2026",
+    "itemId": "B120001101250A10",
+    "title": "[POST] Vantor LG02 Image B120001101250A10",
+    "datetime": "2026-09-07T05:07:53.249593Z",
+    "startDatetime": null,
+    "endDatetime": null,
+    "bbox": [
+      85.37344389401046,
+      28.14318026453769,
+      85.56232174064412,
+      28.332368860911252
+    ],
+    "geometry": {
+      "coordinates": [
+        [
+          [
+            85.55265030905096,
+            28.306142858634942
+          ],
+          [
+            85.55293265187686,
+            28.305374409715267
+          ],
+          [
+            85.5537705326943,
+            28.299189021332904
+          ],
+          [
+            85.55396480892105,
+            28.297228049387307
+          ],
+          [
+            85.55400339321096,
+            28.297033925817445
+          ],
+          [
+            85.55406621541634,
+            28.296210302932053
+          ],
+          [
+            85.55418034615448,
+            28.295615986690525
+          ],
+          [
+            85.55421064016342,
+            28.295234169640647
+          ],
+          [
+            85.55585185277556,
+            28.286769289911465
+          ],
+          [
+            85.55663516978083,
+            28.28260733654299
+          ],
+          [
+            85.5566548891027,
+            28.28257685415769
+          ],
+          [
+            85.55667206536037,
+            28.28248467309067
+          ],
+          [
+            85.55699195175696,
+            28.281995571265373
+          ],
+          [
+            85.55704418152612,
+            28.281732709295888
+          ],
+          [
+            85.55744705744695,
+            28.281225345042976
+          ],
+          [
+            85.55750234119698,
+            28.281064933434788
+          ],
+          [
+            85.55797074972341,
+            28.280487281806174
+          ],
+          [
+            85.55799723044285,
+            28.280432855036427
+          ],
+          [
+            85.55809243777723,
+            28.280312901767292
+          ],
+          [
+            85.55971556997818,
+            28.277830975606562
+          ],
+          [
+            85.56023845260196,
+            28.276708776044423
+          ],
+          [
+            85.56069961885964,
+            28.275439723659336
+          ],
+          [
+            85.56127523001328,
+            28.271292035364695
+          ],
+          [
+            85.5616629754479,
+            28.265519128503463
+          ],
+          [
+            85.56167108406368,
+            28.26548831206837
+          ],
+          [
+            85.56171395402997,
+            28.264451475852198
+          ],
+          [
+            85.56230990710957,
+            28.262603806896717
+          ],
+          [
+            85.55254176344665,
+            28.24837753896889
+          ],
+          [
+            85.55229612734918,
+            28.247184750571584
+          ],
+          [
+            85.55190242863932,
+            28.246626311443794
+          ],
+          [
+            85.55176948347713,
+            28.245411751139173
+          ],
+          [
+            85.55168063055183,
+            28.245287208800672
+          ],
+          [
+            85.55159970981569,
+            28.24396489041292
+          ],
+          [
+            85.55150861386983,
+            28.243838223115844
+          ],
+          [
+            85.55150422695316,
+            28.24333918444683
+          ],
+          [
+            85.5513425117172,
+            28.24255384453428
+          ],
+          [
+            85.55137121598749,
+            28.241773128258348
+          ],
+          [
+            85.55133294080983,
+            28.24142343097387
+          ],
+          [
+            85.55140630855018,
+            28.240804455491002
+          ],
+          [
+            85.55137835480171,
+            28.240347644301853
+          ],
+          [
+            85.55144641311232,
+            28.239727782011073
+          ],
+          [
+            85.55150718081588,
+            28.238074819006016
+          ],
+          [
+            85.55172100723125,
+            28.236582449057295
+          ],
+          [
+            85.55254256849074,
+            28.228242450246412
+          ],
+          [
+            85.55250694680963,
+            28.22555234108073
+          ],
+          [
+            85.55241699293202,
+            28.223169400629477
+          ],
+          [
+            85.55214747057715,
+            28.221835210302622
+          ],
+          [
+            85.55070770304273,
+            28.21773686806435
+          ],
+          [
+            85.54859804962675,
+            28.213085305760977
+          ],
+          [
+            85.54857392665781,
+            28.212960306259482
+          ],
+          [
+            85.548520531445,
+            28.212844234681548
+          ],
+          [
+            85.54849920206799,
+            28.21272413544671
+          ],
+          [
+            85.5476347783989,
+            28.211007056768466
+          ],
+          [
+            85.54762013993088,
+            28.209925287856283
+          ],
+          [
+            85.54757347824568,
+            28.20982279582496
+          ],
+          [
+            85.54761027926774,
+            28.209196603267642
+          ],
+          [
+            85.54760637093074,
+            28.208907786481603
+          ],
+          [
+            85.54751181850396,
+            28.208638585831114
+          ],
+          [
+            85.54756273702073,
+            28.208397102743145
+          ],
+          [
+            85.54759635881884,
+            28.208167920521888
+          ],
+          [
+            85.54759238063315,
+            28.207873946255813
+          ],
+          [
+            85.54748785960882,
+            28.207332294073858
+          ],
+          [
+            85.54752086488796,
+            28.207215160967372
+          ],
+          [
+            85.54751776385335,
+            28.207197698380604
+          ],
+          [
+            85.54758011790729,
+            28.206967780387977
+          ],
+          [
+            85.54757097025487,
+            28.20629181320851
+          ],
+          [
+            85.54789025174249,
+            28.20522755582826
+          ],
+          [
+            85.54910893809326,
+            28.20106359227826
+          ],
+          [
+            85.54925166555542,
+            28.20038658947774
+          ],
+          [
+            85.53129707193011,
+            28.19763555361226
+          ],
+          [
+            85.52486923307812,
+            28.195035157142524
+          ],
+          [
+            85.51985153485985,
+            28.193832202603446
+          ],
+          [
+            85.5113587625405,
+            28.192952543406193
+          ],
+          [
+            85.49410626715122,
+            28.187211052446656
+          ],
+          [
+            85.4842654096548,
+            28.185029705848034
+          ],
+          [
+            85.472456639779,
+            28.180935966973703
+          ],
+          [
+            85.4673428165031,
+            28.179666786456462
+          ],
+          [
+            85.46121297576634,
+            28.177410577090903
+          ],
+          [
+            85.45277877094271,
+            28.17291716341891
+          ],
+          [
+            85.44163961461473,
+            28.16580446200693
+          ],
+          [
+            85.42166044152758,
+            28.15757923117607
+          ],
+          [
+            85.41654008872187,
+            28.156339037019332
+          ],
+          [
+            85.40472049509664,
+            28.15234205852927
+          ],
+          [
+            85.37683378379913,
+            28.144814211184368
+          ],
+          [
+            85.3765002589541,
+            28.145197555933688
+          ],
+          [
+            85.37395521627718,
+            28.148989652835276
+          ],
+          [
+            85.37380147273203,
+            28.149338291982016
+          ],
+          [
+            85.37357465040085,
+            28.14993832591724
+          ],
+          [
+            85.37345714879103,
+            28.15047854199587
+          ],
+          [
+            85.37377545008005,
+            28.152058637197552
+          ],
+          [
+            85.37386477616938,
+            28.152334102761678
+          ],
+          [
+            85.37609131031914,
+            28.157177483210265
+          ],
+          [
+            85.37796805053425,
+            28.16046100361548
+          ],
+          [
+            85.37925609362789,
+            28.1626745926432
+          ],
+          [
+            85.37972020099909,
+            28.16366826556924
+          ],
+          [
+            85.37982250324714,
+            28.1638309125453
+          ],
+          [
+            85.38066647961352,
+            28.165153503822104
+          ],
+          [
+            85.38101773595056,
+            28.166032915471934
+          ],
+          [
+            85.38168626647077,
+            28.167089090343357
+          ],
+          [
+            85.38175162107545,
+            28.167269344491235
+          ],
+          [
+            85.38183070294656,
+            28.16739558414375
+          ],
+          [
+            85.38221660361948,
+            28.16844377859162
+          ],
+          [
+            85.3822183304781,
+            28.168446630397575
+          ],
+          [
+            85.38224800913814,
+            28.168529082276862
+          ],
+          [
+            85.38320563093541,
+            28.171130111265988
+          ],
+          [
+            85.38320576457764,
+            28.171130397355974
+          ],
+          [
+            85.38320589088002,
+            28.17113081729357
+          ],
+          [
+            85.38448757865768,
+            28.174611859441168
+          ],
+          [
+            85.38454696674223,
+            28.174915563991632
+          ],
+          [
+            85.38478454757819,
+            28.175575518913544
+          ],
+          [
+            85.38485396556409,
+            28.176087338809324
+          ],
+          [
+            85.38485477467468,
+            28.176089672906677
+          ],
+          [
+            85.38485670019153,
+            28.176107501178628
+          ],
+          [
+            85.38498310990121,
+            28.177039511414584
+          ],
+          [
+            85.38517898391146,
+            28.17769069313523
+          ],
+          [
+            85.38518137788277,
+            28.178053059253077
+          ],
+          [
+            85.38547456900105,
+            28.179100753899384
+          ],
+          [
+            85.38543746840988,
+            28.17941850694245
+          ],
+          [
+            85.38560958991644,
+            28.1801885768363
+          ],
+          [
+            85.38559267118927,
+            28.18026294026364
+          ],
+          [
+            85.38561135381276,
+            28.180358472556545
+          ],
+          [
+            85.38549998106463,
+            28.18085022991518
+          ],
+          [
+            85.38551269119581,
+            28.180943934682293
+          ],
+          [
+            85.38520846158251,
+            28.182153119543795
+          ],
+          [
+            85.3852100453812,
+            28.182392911372023
+          ],
+          [
+            85.3850344834661,
+            28.182905540939164
+          ],
+          [
+            85.38502586272274,
+            28.182943603245846
+          ],
+          [
+            85.38498371984915,
+            28.18330450939232
+          ],
+          [
+            85.38489739774084,
+            28.183510798173135
+          ],
+          [
+            85.3847412688133,
+            28.184200124904937
+          ],
+          [
+            85.38461845520301,
+            28.184498058351295
+          ],
+          [
+            85.38456479386436,
+            28.18471132576241
+          ],
+          [
+            85.37992417974965,
+            28.197157841004586
+          ],
+          [
+            85.37967900967624,
+            28.198045214644754
+          ],
+          [
+            85.37938358705833,
+            28.19926731507086
+          ],
+          [
+            85.37964218761043,
+            28.20122373769454
+          ],
+          [
+            85.38162704244029,
+            28.20683388434966
+          ],
+          [
+            85.38162953857078,
+            28.206876340943047
+          ],
+          [
+            85.38169763831507,
+            28.207065722813216
+          ],
+          [
+            85.38173794885674,
+            28.207988707341705
+          ],
+          [
+            85.38178374544275,
+            28.20810752325903
+          ],
+          [
+            85.38178180748011,
+            28.2081508962789
+          ],
+          [
+            85.38185729235677,
+            28.208343959530907
+          ],
+          [
+            85.38180957018153,
+            28.20905545050825
+          ],
+          [
+            85.38194712691701,
+            28.209387026500995
+          ],
+          [
+            85.38193921610942,
+            28.20943149224853
+          ],
+          [
+            85.38202034292982,
+            28.209624684350228
+          ],
+          [
+            85.38195582679754,
+            28.20993766449067
+          ],
+          [
+            85.38215210688969,
+            28.21042867655103
+          ],
+          [
+            85.38208910584146,
+            28.210590034677356
+          ],
+          [
+            85.38219317189913,
+            28.210913985957745
+          ],
+          [
+            85.38190539530476,
+            28.211568262198824
+          ],
+          [
+            85.3819176716695,
+            28.21177705994024
+          ],
+          [
+            85.38190478733158,
+            28.211808714931045
+          ],
+          [
+            85.38191029182298,
+            28.211934746326
+          ],
+          [
+            85.38052738903527,
+            28.215288016403658
+          ],
+          [
+            85.38037868332647,
+            28.215547619176522
+          ],
+          [
+            85.38016060719684,
+            28.216066212459793
+          ],
+          [
+            85.3798268117148,
+            28.2166063806809
+          ],
+          [
+            85.37974190306302,
+            28.216794601153644
+          ],
+          [
+            85.37953537104049,
+            28.217130186961445
+          ],
+          [
+            85.37949339007892,
+            28.217237693206435
+          ],
+          [
+            85.37804730341306,
+            28.219617426100648
+          ],
+          [
+            85.37616275436655,
+            28.222906946761466
+          ],
+          [
+            85.37583984362831,
+            28.223761863441094
+          ],
+          [
+            85.37559365606104,
+            28.224725148734972
+          ],
+          [
+            85.37533896019748,
+            28.226050380483457
+          ],
+          [
+            85.37570411388361,
+            28.228178444824433
+          ],
+          [
+            85.37650992851998,
+            28.230853212670304
+          ],
+          [
+            85.37775774156653,
+            28.23425367453518
+          ],
+          [
+            85.3778003273783,
+            28.234453178106317
+          ],
+          [
+            85.37797769722897,
+            28.23490766925053
+          ],
+          [
+            85.37800347057872,
+            28.23505841011673
+          ],
+          [
+            85.37897932850974,
+            28.237143162790208
+          ],
+          [
+            85.37895556648608,
+            28.23774220527573
+          ],
+          [
+            85.3791890815533,
+            28.238300015455838
+          ],
+          [
+            85.3791764941787,
+            28.238406925343625
+          ],
+          [
+            85.37920737740434,
+            28.238483714185193
+          ],
+          [
+            85.37905516415279,
+            28.239945840056247
+          ],
+          [
+            85.37901418078951,
+            28.241458141008714
+          ],
+          [
+            85.37901484548354,
+            28.241552156852595
+          ],
+          [
+            85.37925813891408,
+            28.246154572004155
+          ],
+          [
+            85.37932229085098,
+            28.246788786942542
+          ],
+          [
+            85.37907934723759,
+            28.247649802578565
+          ],
+          [
+            85.37908165995557,
+            28.24768608314607
+          ],
+          [
+            85.3770205933212,
+            28.255060944127017
+          ],
+          [
+            85.37676785447543,
+            28.25550432811337
+          ],
+          [
+            85.37666549552968,
+            28.255850191961695
+          ],
+          [
+            85.37639152840808,
+            28.256251270941657
+          ],
+          [
+            85.37638676838814,
+            28.25626547493557
+          ],
+          [
+            85.37606331536014,
+            28.25674028975353
+          ],
+          [
+            85.37454037608664,
+            28.259411841341933
+          ],
+          [
+            85.3737633400918,
+            28.262656139875155
+          ],
+          [
+            85.3737592152878,
+            28.263731007220354
+          ],
+          [
+            85.37878650906403,
+            28.265177489260328
+          ],
+          [
+            85.39131523852217,
+            28.27336343018981
+          ],
+          [
+            85.4021863024687,
+            28.276387943333003
+          ],
+          [
+            85.40652995131634,
+            28.27687226079418
+          ],
+          [
+            85.41266168889679,
+            28.27905039861238
+          ],
+          [
+            85.41923610925448,
+            28.28165282154503
+          ],
+          [
+            85.4296205915795,
+            28.287876260815867
+          ],
+          [
+            85.44042250559946,
+            28.290885499069965
+          ],
+          [
+            85.44925735780417,
+            28.292032244031688
+          ],
+          [
+            85.45462073658825,
+            28.29350992446751
+          ],
+          [
+            85.464980867137,
+            28.299764832734926
+          ],
+          [
+            85.47106382703569,
+            28.30194256391367
+          ],
+          [
+            85.47613208136794,
+            28.30315337059872
+          ],
+          [
+            85.48352980860261,
+            28.302953609339305
+          ],
+          [
+            85.48890825334946,
+            28.304466972717595
+          ],
+          [
+            85.49781927451218,
+            28.305725252181468
+          ],
+          [
+            85.50320994594524,
+            28.307258043192057
+          ],
+          [
+            85.51447373567707,
+            28.314464750174704
+          ],
+          [
+            85.53707310921553,
+            28.31799985350983
+          ],
+          [
+            85.54291473251685,
+            28.31999621401828
+          ],
+          [
+            85.55685529593978,
+            28.32933049345949
+          ],
+          [
+            85.55682975142938,
+            28.329234138918256
+          ],
+          [
+            85.55603751809001,
+            28.32723963958379
+          ],
+          [
+            85.55457874322782,
+            28.324340117248433
+          ],
+          [
+            85.54973679556159,
+            28.31623124558349
+          ],
+          [
+            85.54974840426426,
+            28.316092897878114
+          ],
+          [
+            85.54972962824745,
+            28.316061281488306
+          ],
+          [
+            85.54978535812191,
+            28.315552118757783
+          ],
+          [
+            85.5492898306876,
+            28.314678505410804
+          ],
+          [
+            85.54932957765358,
+            28.31458340724024
+          ],
+          [
+            85.54929524586461,
+            28.314522458061912
+          ],
+          [
+            85.54945296622105,
+            28.314150594975438
+          ],
+          [
+            85.54902791038354,
+            28.31330553557967
+          ],
+          [
+            85.54969658039656,
+            28.312366565692113
+          ],
+          [
+            85.55177344673677,
+            28.30845885485717
+          ],
+          [
+            85.55265030905096,
+            28.306142858634942
+          ]
+        ]
+      ],
+      "type": "Polygon"
+    },
+    "properties": {
+      "constellation": "maxar",
+      "datetime": "2026-09-07T05:07:53.249593Z",
+      "eo:bands": [
+        {
+          "common_name": "red",
+          "description": "Red",
+          "name": "b1"
+        },
+        {
+          "common_name": "green",
+          "description": "Green",
+          "name": "b2"
+        },
+        {
+          "common_name": "blue",
+          "description": "Blue",
+          "name": "b3"
+        }
+      ],
+      "eo:cloud_cover": 93,
+      "ingestion_datetime": "2026-09-07T06:12:41.054679922Z",
+      "multispectral_gsd": 2.15,
+      "pan_gsd": 0.54,
+      "phase": "post",
+      "published": "2026-09-07T07:06:29.855694",
+      "scan_direction": "Reverse",
+      "title": "[POST] Vantor LG02 Image B120001101250A10",
+      "vehicle_name": "LG02",
+      "view:azimuth": 42.52,
+      "view:off_nadir": 39.36,
+      "view:sun_azimuth": 140.69,
+      "view:sun_elevation": 62.54
+    },
+    "assets": [
+      {
+        "key": "thumbnail",
+        "title": "Thumbnail",
+        "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.jpg",
+        "mediaType": "image/jpeg",
+        "roles": [
+          "thumbnail"
+        ],
+        "eligible": false,
+        "reason": "Only the exact reviewed visual asset is eligible for this Vantor recipe",
+        "metadata": {
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.jpg",
+          "roles": [
+            "thumbnail"
+          ],
+          "title": "Thumbnail",
+          "type": "image/jpeg"
+        }
+      },
+      {
+        "key": "visual",
+        "title": "Visual COG",
+        "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif",
+        "mediaType": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "roles": [
+          "visual"
+        ],
+        "eligible": true,
+        "reason": null,
+        "metadata": {
+          "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.tif",
+          "roles": [
+            "visual"
+          ],
+          "title": "Visual COG",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+      }
+    ],
+    "retrievedAt": "2026-10-14T08:55:24.647774200+00:00",
+    "documentSha256": "e97d73e69372a546ee4d9bf1a348f5d9d944b06dfccb7c2a4724ff8bf5356291",
+    "temporalStatus": "instant",
+    "warnings": [
+      "Only exact item B120001101250A10 and the independently hashed complete 29,534,465-byte TIFF are supported. Other current events and visual profiles remain unverified; unsupported requests return no replacement.",
+      "The event name contains August, but this item's actual observation instant is 2026-09-07T05:07:53.249593Z. Event date, publication and ingestion dates do not replace acquisition time.",
+      "Publisher cloud cover is 93 percent. Footprint intersection and the visual preview do not establish usable AOI coverage, cloud-free imagery or flood damage. The TIFF declares no scalar NoData: noData=false and black canvas pixels do not prove usable observations.",
+      "The original lossy JPEG components are display values. Full-resolution chroma values include codec spatial upsampling and decoder-dependent rounding; they are not lossless sensor samples or scientifically calibrated RGB bands.",
+      "The event Collection declares CC-BY-NC-4.0. Anonymous access or a GeoD subscription does not grant commercial reuse or imagery procurement rights. Preserve original publisher metadata, attribution and noncommercial restrictions.",
+      "The source's eo:bands RGB labels are retained as publisher display declarations. Actual TIFF sampleEncoding is reported separately as Y/Cb/Cr; no publisher metadata or original bytes are rewritten.",
+      "Publisher item properties and original asset declarations remain unchanged. The reviewed client product recipe and any exact public transport mapping are separate provenance. Missing collection metadata or license declarations are not fabricated."
+    ],
+    "provenance": {
+      "documentUrl": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+      "metadataDocuments": [
+        {
+          "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+          "sha256": "e97d73e69372a546ee4d9bf1a348f5d9d944b06dfccb7c2a4724ff8bf5356291"
+        },
+        {
+          "url": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json",
+          "sha256": "8b91d943a5e31a2fcdbb7bfb391b198782cab363c734b4c427076f7bc0a2d08a"
+        }
+      ],
+      "search": null,
+      "collection": {
+        "description": "On August 26, 2026, a major flash flood caused by a glacier collapse struck Rasuwa District in northern Nepal after a sudden and intense surge of water entered the Bhote Koshi River from the Tibet (China) side at approximately 9:15 AM local time. The event rapidly affected the border areas of Timure and Rasuwagadhi before moving downstream towards Syabrubesi and the Trishuli River corridor.",
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [
+                84.35541227950617,
+                26.924453383659284,
+                85.82023439067271,
+                29.03598409372348
+              ],
+              [
+                85.13175930998167,
+                27.930997697280908,
+                85.3889584236428,
+                29.03598409372348
+              ],
+              [
+                85.14282072906423,
+                26.924453383659284,
+                85.34813200103783,
+                28.058653956741477
+              ],
+              [
+                84.35541227950617,
+                28.108356458952176,
+                85.82023439067271,
+                28.260531694886254
+              ],
+              [
+                85.2809355740028,
+                28.14405021362965,
+                85.4694328656009,
+                28.330057502414107
+              ],
+              [
+                85.0484947219356,
+                27.841419637558616,
+                85.22605337669233,
+                27.99821110467005
+              ],
+              [
+                85.26753834772008,
+                28.108669765925608,
+                85.45198808049302,
+                28.355945382765384
+              ],
+              [
+                85.27036854144649,
+                28.11599546216905,
+                85.44848052241615,
+                28.341867381090612
+              ],
+              [
+                84.87831392739777,
+                27.64267536329921,
+                85.09814075101193,
+                27.90380659568061
+              ],
+              [
+                85.0664429826338,
+                27.673828336334395,
+                85.2999856584296,
+                27.969345302774155
+              ],
+              [
+                85.05844147961405,
+                27.823160826297165,
+                85.22906334611511,
+                27.969639602567945
+              ],
+              [
+                85.25020350659528,
+                28.06338943464055,
+                85.42848490521264,
+                28.229541008545425
+              ],
+              [
+                85.28915546816656,
+                28.11104018377955,
+                85.43780800156115,
+                28.3693817926079
+              ],
+              [
+                85.29508927001986,
+                28.120836047800015,
+                85.43125858768677,
+                28.355674469398842
+              ],
+              [
+                85.26240337590588,
+                28.076254631225197,
+                85.41437451005355,
+                28.255034496377093
+              ],
+              [
+                85.26636068176573,
+                27.946995056909795,
+                85.41252634634832,
+                29.03545898945956
+              ],
+              [
+                85.2595702861167,
+                28.05807585261935,
+                85.41681880165126,
+                28.239780417762322
+              ],
+              [
+                85.33323242863142,
+                28.081645527011585,
+                85.61481249416524,
+                28.471232954970215
+              ],
+              [
+                85.31860373688943,
+                27.546103259468413,
+                85.44246220165438,
+                28.533788084306014
+              ],
+              [
+                85.2147786388598,
+                28.066938847813052,
+                85.47130347353834,
+                28.37916537256645
+              ],
+              [
+                85.37344389401046,
+                28.14318026453769,
+                85.56232174064412,
+                28.332368860911252
+              ],
+              [
+                85.27958915009889,
+                28.095024851939925,
+                85.40106677153999,
+                28.22503576009279
+              ],
+              [
+                85.28048438233624,
+                28.126140325399753,
+                85.47401944761076,
+                28.45804386981939
+              ],
+              [
+                85.30957915008264,
+                28.115939629380026,
+                85.41714075387453,
+                28.34835696415604
+              ],
+              [
+                85.29992213203535,
+                28.119852246821573,
+                85.42946989138778,
+                28.34610368663147
+              ],
+              [
+                85.27401416032951,
+                28.085369090440253,
+                85.39722718842837,
+                28.30457260596361
+              ],
+              [
+                85.30166204389316,
+                28.109262103034347,
+                85.42536457863578,
+                28.356516832346088
+              ],
+              [
+                85.2633692577256,
+                28.06107599865415,
+                85.41627524030021,
+                28.282096800965277
+              ],
+              [
+                84.98335288045924,
+                27.73078046298728,
+                85.12440199104226,
+                27.897990410137602
+              ],
+              [
+                85.30167150729915,
+                28.146996409832553,
+                85.44698558614739,
+                28.41582781646698
+              ],
+              [
+                85.06423071861984,
+                27.81584875719588,
+                85.17489402201844,
+                28.037158465848805
+              ],
+              [
+                85.08200314033671,
+                27.839167258321066,
+                85.20312898633632,
+                27.989258026919096
+              ],
+              [
+                85.4689682585345,
+                28.095422658758203,
+                85.57647434149675,
+                28.32178522857615
+              ],
+              [
+                85.46055519929953,
+                28.096424916246146,
+                85.58373059250019,
+                28.320879547944386
+              ]
+            ]
+          },
+          "temporal": {
+            "interval": [
+              [
+                "2021-10-16T05:22:48.18818Z",
+                "2026-09-18T01:21:57.49959Z"
+              ]
+            ]
+          }
+        },
+        "id": "Nepal-Flooding-Aug-2026",
+        "license": "CC-BY-NC-4.0",
+        "links": [
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/catalog.json",
+            "rel": "root",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/collection.json",
+            "rel": "self",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/10300100C86CED00.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/10300100FCB83600.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/10500100364E8400.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100CF1110.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100CF1210.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100CF1310.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100CF1610.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100EF5110.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100EF5210.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100EF5510.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B030001100EF5910.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B040001100881410.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B040001100881610.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B040001100881710.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B040001100882F10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B0400011009ECD10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B0500011006DC010.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B110001101165110.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101226410.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B120001101250A10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B1200011012B2A10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B130001101153A10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B1300011011E5610.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B1300011011E5810.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B1300011011F4F10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B1400011010A2910.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B1400011010A2E10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B14000110114DC10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B14000110116A310.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B160001100CDB210.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B160001101DA4B10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B160001101ECBC10.json",
+            "rel": "item",
+            "type": "application/json"
+          },
+          {
+            "href": "https://vantor-opendata.s3.amazonaws.com/events/Nepal-Flooding-Aug-2026/B160001101ECBD10.json",
+            "rel": "item",
+            "type": "application/json"
+          }
+        ],
+        "odp:event_date": "2026-08-26T03:30:00Z",
+        "stac_version": "1.0.0",
+        "title": "Nepal-Flooding-Aug-2026",
+        "type": "Collection"
+      },
+      "reviewedDataset": {
+        "schemaVersion": 2,
+        "dataset": {
+          "id": "vantor-open",
+          "title": "Vantor Open Data · Nepal September 2026 visual original",
+          "category": "imagery",
+          "description": "Finite integration of one actual current Vantor Open Data disaster archive visual: Nepal-Flooding-Aug-2026, original item B120001101250A10 observed on 2026-09-07. The complete publisher JPEG-compressed GeoTIFF is preserved. This does not provide commercial imagery ordering, global coverage or support for every event asset.",
+          "version": "Nepal-Flooding-Aug-2026 · B120001101250A10 · 2026-09-07 visual original",
+          "license": "CC-BY-NC-4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+          "attribution": "Vantor Open Data Program, Nepal-Flooding-Aug-2026, Legion LG02, item B120001101250A10; acquisition 2026-09-07T05:07:53.249593Z. Preserve original item and event Collection, source time, CC BY-NC 4.0 attribution and noncommercial restrictions.",
+          "documentationUrl": "https://vantor.com/open-data/",
+          "nominalResolution": "Original EPSG:4326 36389 × 41157 canvas, spacing 0.000005190520394450596° × 0.0000045967538055144995°. Publisher sensor pan/multispectral GSD remains separate.",
+          "unit": "JPEG display Y/Cb/Cr components",
+          "valueInterpretation": "TIFF stores lossy JPEG YCbCr with 2×2 chroma subsampling, not scientific red/green/blue samples. Native inspection reports JPEG-decoded UInt8 Y, Cb, Cr components on the original pixel grid; chroma is upsampled with the codec's triangular fancy interpolation. These are not the original subsampled chroma planes, calibrated reflectance or a conversion to RGB. Publisher eo:bands logical red/green/blue declarations remain unchanged and separate. Preview stretches only Y luminance in grayscale.",
+          "years": [
+            2026
+          ],
+          "defaultYear": 2026,
+          "months": [
+            9
+          ],
+          "defaultMonth": 9,
+          "requiresCountry": false,
+          "layers": [
+            {
+              "id": "visual",
+              "title": "Visual original · JPEG Y/Cb/Cr",
+              "unit": "display component",
+              "valueInterpretation": "Complete original visual TIFF; raw pixel arrays report Y, Cb, Cr after JPEG chroma upsampling. Luminance-only grayscale display. No scientific RGB calibration, analytic-band replacement or damage assessment."
+            }
+          ],
+          "defaultLayer": "visual",
+          "discovery": "stac-items",
+          "warnings": [
+            "Only exact item B120001101250A10 and the independently hashed complete 29,534,465-byte TIFF are supported. Other current events and visual profiles remain unverified; unsupported requests return no replacement.",
+            "The event name contains August, but this item's actual observation instant is 2026-09-07T05:07:53.249593Z. Event date, publication and ingestion dates do not replace acquisition time.",
+            "Publisher cloud cover is 93 percent. Footprint intersection and the visual preview do not establish usable AOI coverage, cloud-free imagery or flood damage. The TIFF declares no scalar NoData: noData=false and black canvas pixels do not prove usable observations.",
+            "The original lossy JPEG components are display values. Full-resolution chroma values include codec spatial upsampling and decoder-dependent rounding; they are not lossless sensor samples or scientifically calibrated RGB bands.",
+            "The event Collection declares CC-BY-NC-4.0. Anonymous access or a GeoD subscription does not grant commercial reuse or imagery procurement rights. Preserve original publisher metadata, attribution and noncommercial restrictions.",
+            "The source's eo:bands RGB labels are retained as publisher display declarations. Actual TIFF sampleEncoding is reported separately as Y/Cb/Cr; no publisher metadata or original bytes are rewritten."
+          ],
+          "limits": [
+            "One exact reviewed current Vantor item and visual asset only, year 2026/month 9. Existing 512 MiB transfer/preview, TIFF axis/grid/chunk budgets and deadlines are unchanged. Embedded reduced JPEG images are used only after matching sample/codec declarations; COG conformance is not certified."
+          ]
+        },
+        "request": {
+          "datasetId": "vantor-open",
+          "bounds": [
+            85.44,
+            28.2,
+            85.47,
+            28.24
+          ],
+          "year": 2026,
+          "month": 9,
+          "layer": "visual"
+        },
+        "layer": {
+          "id": "visual",
+          "title": "Visual original · JPEG Y/Cb/Cr",
+          "unit": "display component",
+          "valueInterpretation": "Complete original visual TIFF; raw pixel arrays report Y, Cb, Cr after JPEG chroma upsampling. Luminance-only grayscale display. No scientific RGB calibration, analytic-band replacement or damage assessment."
+        },
+        "sourceId": "B120001101250A10",
+        "sourceTitle": "Nepal · LG02 · 2026-09-07 · B120001101250A10",
+        "sourceBounds": [
+          85.37344389401046,
+          28.14318026453769,
+          85.56232174064412,
+          28.332368860911252
+        ],
+        "declarationKind": "reviewed-client-preset; publisher file bytes and embedded metadata verified separately"
+      }
+    }
+  }
+}

@@ -1,0 +1,107 @@
+Browser tab: 1, Title: "GeoD Global · 本地工作空间", URL: "http://127.0.0.1:4317/#Explore".
+1 AXWebArea GeoD Global · 本地工作空间, URL: 127.0.0.1:4317/#Explore
+	2 container 选择数据源, ID: radix-_r_2g_
+		3 container
+			4 heading 选择数据源, Value: 2, ID: radix-_r_2h_
+				5 text 选择数据源
+			6 button 关闭
+		7 search text field (settable) 搜索数据源
+		8 数据源接入状态
+			9 radio button 已接入 · 65, Value: 1
+			10 radio button 全部 · 106, Value: 0
+			11 radio button 待接入 · 41, Value: 0
+		12 container 产品分类
+			13 button 全部分类 65
+				14 text 全部分类
+				15 text 65
+			16 button 光学与航空影像 12
+				17 text 光学与航空影像
+				18 text 12
+			19 button SAR 雷达影像 1
+				20 text SAR 雷达影像
+				21 text 1
+			22 button 高程与水深 8
+				23 text 高程与水深
+				24 text 8
+			25 button 土地覆盖产品 7
+				26 text 土地覆盖产品
+				27 text 7
+			28 button 植被与森林产品 4
+				29 text 植被与森林产品
+				30 text 4
+			31 button 水体与水文产品 3
+				32 text 水体与水文产品
+				33 text 3
+			34 button 人口与聚居地产品 3
+				35 text 人口与聚居地产品
+				36 text 3
+			37 button 土壤产品 1
+				38 text 土壤产品
+				39 text 1
+			40 button 气候与降水产品 3
+				41 text 气候与降水产品
+				42 text 3
+			43 button 夜间灯光产品 0
+				44 text 夜间灯光产品
+				45 text 0
+			46 button 矢量数据与服务 4
+				47 text 矢量数据与服务
+				48 text 4
+			49 button 地图影像与历史版本 6
+				50 text 地图影像与历史版本
+				51 text 6
+			52 button 离线瓦片包 1
+				53 text 离线瓦片包
+				54 text 1
+			55 button 栅格目录与覆盖服务 6
+				56 text 栅格目录与覆盖服务
+				57 text 6
+			58 button 本地二维文件 6
+				59 text 本地二维文件
+				60 text 6
+			61 button 开放数据门户 0
+				62 text 开放数据门户
+				63 text 0
+		64 container 数据源
+			65 text 7 个数据源
+			194 container 土地覆盖产品
+				195 heading 土地覆盖产品 7, Value: 3
+					196 text 土地覆盖产品 7
+				197 checkbox Description: 选择 ESA WorldCover · 年度合成产品, Value: 0
+					198 text ESA / VITO
+					199 text ESA WorldCover · 年度合成产品
+					200 text 年度 RGB / 近红外、短波红外、NDVI 与雷达合成产品
+					201 text 产品接入
+				202 checkbox Description: 选择 Esri / Impact Observatory · 年度土地覆盖, Value: 0
+					203 text Impact Observatory / Microsoft / Esri
+					204 text Esri / Impact Observatory · 年度土地覆盖
+					205 text 10 米年度土地覆盖数值分类 · 官方 AWS 归档
+					206 text 产品接入
+				207 checkbox Description: 选择 HILDA+ · 历史土地利用 / 覆盖, Value: 0
+					208 text OpenLandMap / HILDA+
+					209 text HILDA+ · 历史土地利用 / 覆盖
+					210 text 1 公里模型分类 · 1960–2019 年 · OpenLandMap 原件
+					211 text 产品接入
+				212 checkbox Description: 选择 ESA WorldCereal · 毛里求斯 / 留尼汪, Value: 0
+					213 text ESA / VITO / Digital Earth Africa
+					214 text ESA WorldCereal · 毛里求斯 / 留尼汪
+					215 text 农业生态区 9026 · 2021 年 · 七类年度 / 季节作物主题
+					216 text 产品接入
+				217 checkbox Description: 选择 Copernicus 土地覆盖 · 永久水体比例, Value: 0
+					218 text Copernicus / Digital Earth Africa
+					219 text Copernicus 土地覆盖 · 永久水体比例
+					220 text 仅 2015–2019 年永久水体比例层 · DE Africa 大陆完整原件
+					221 text 产品接入
+				222 checkbox Description: 选择 GLAD · 2020 年土地覆盖与利用, Value: 0
+					223 text 马里兰大学 GLAD / Google 公开存储
+					224 text GLAD · 2020 年土地覆盖与利用
+					225 text 约 30 米年度组合分类 · 280 份已发布 10° 原件
+					226 text 产品接入
+				227 checkbox Description: 选择 ESA WorldCover 全球土地覆盖, Value: 0
+					228 text ESA / VITO
+					229 text ESA WorldCover 全球土地覆盖
+					230 text 10 米土地覆盖分类 · 2020 / 2021 版
+					231 text 产品接入
+		448 text 选择后进入对应工作区。仅支持目录检索的来源尚未完成原件下载验收。
+
+The focused UI element is 25 button 土地覆盖产品 7

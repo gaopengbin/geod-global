@@ -156,8 +156,8 @@ try {
       })(); receipts.push(receipt);
     });
     await page.goto(origin + '/#Explore');
-    await page.locator('.catalog-source-panel').getByRole('combobox').click();
-    await page.getByRole('option', { name: 'MODIS NDVI / EVI · Planetary Computer', exact: true }).click();
+    await page.getByRole('button', { name: 'Choose a data source', exact: true }).click();
+    await page.getByRole('button', { name: 'Choose MODIS NDVI / EVI', exact: true }).click();
     const ndvi = await visibleIndex('ndvi'); await capture('ndvi-' + suffix);
     await page.getByRole('radio', { name: 'EVI', exact: true }).click();
     const evi = await visibleIndex('evi'); await capture('evi-' + suffix);
@@ -186,8 +186,8 @@ try {
     await page.getByRole('radio', { name: 'EVI', exact: true }).click();
     await page.getByRole('radio', { name: 'NDVI', exact: true }).click();
     await visibleIndex('ndvi'); rapid = false; report.cases.push({ name: 'rapid-index-switch-' + suffix, passed: true });
-    await page.locator('.catalog-source-panel').getByRole('combobox').click();
-    await page.getByRole('option', { name: 'Earth Search', exact: true }).click();
+    await page.getByRole('button', { name: 'Choose a data source', exact: true }).click();
+    await page.getByRole('button', { name: 'Choose Sentinel-2 · Earth Search', exact: true }).click();
     await page.waitForFunction(() => !document.querySelector('.vegetation-preview-controls') && !document.querySelector('.explore-index-layer'));
     report.cases.push({ name: 'source-switch-cleans-index-layer-' + suffix, passed: true });
     report.cspErrors.push(...await page.evaluate(() => window.__CSP_ERRORS));

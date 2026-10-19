@@ -1,0 +1,2917 @@
+{
+  "checkedAt": "2026-10-11",
+  "scope": "Limited real anonymous file and numerical subset validation. Not desktop app integration, whole-region workflow acceptance, or long-term speed benchmark.",
+  "productSetCount": 11,
+  "verifiedFileOrCompleteResponseCount": 19,
+  "totalScientificDataBytes": 46495465,
+  "families": [
+    "CHIRPS monthly precipitation",
+    "ECMWF IFS",
+    "ESA WorldCover",
+    "GOES-19 ABI L1b",
+    "NASA POWER",
+    "NOAA GFS",
+    "NOAA OISST",
+    "Sentinel-1 OPERA RTC sample",
+    "Sentinel-2 L2A",
+    "SoilGrids pH",
+    "WorldPop Global1"
+  ],
+  "modes": {
+    "complete-grib-message": 5,
+    "complete-json-timeseries": 1,
+    "complete-service-subset": 3,
+    "full-published-file": 10
+  },
+  "credentialsRead": false,
+  "newAccountsOrPersistentCredentialsCreated": false,
+  "proxyChanged": false,
+  "geeComputeCalled": false,
+  "fileReceipts": [
+    {
+      "family": "Sentinel-2 L2A",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-earthsearch-b01.tif",
+      "bytes": 6242926,
+      "seconds": 1.940675700083375,
+      "sha256": "df077434701c0579479be8a4ef4da48de979f4c15543ac00d7ee3ad4aca9362f",
+      "mode": "full-published-file",
+      "sourceWorkstream": "optical-radar",
+      "detail": {
+        "productFamily": "Sentinel-2",
+        "productLevel": "L2A",
+        "sceneId": "S2A_50TMK_20250116_0_L2A",
+        "productUri": "S2A_MSIL2A_20250116T031051_N0511_R075_T50TMK_20250116T064100.SAFE",
+        "observationTime": "2025-01-16T03:16:42.811000Z",
+        "cloudCoverPercent": 0.759809,
+        "processingBaseline": "05.11",
+        "provider": "Earth Search / Element84 Sentinel COGs",
+        "band": "B01",
+        "bandRole": "coastal aerosol reflectance, 60m",
+        "processing": "published COG conversion, not a full SAFE package",
+        "url": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/50/T/MK/2025/1/S2A_50TMK_20250116_0_L2A/B01.tif",
+        "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-earthsearch-b01.tif",
+        "mode": "full_published_file",
+        "httpStatus": 200,
+        "bytes": 6242926,
+        "downloadSeconds": 1.940675700083375,
+        "MiBPerSecond": 3.0678583676649436,
+        "sha256": "df077434701c0579479be8a4ef4da48de979f4c15543ac00d7ee3ad4aca9362f",
+        "md5": "4212135df33b4597f354b77194ed764f",
+        "contentLengthMatches": true,
+        "providerMd5": null,
+        "providerMd5Matches": null,
+        "etag": "\"4212135df33b4597f354b77194ed764f\"",
+        "acceptRanges": "bytes",
+        "independentDiskSha256Matches": true,
+        "raster": {
+          "driver": "GTiff",
+          "width": 1830,
+          "height": 1830,
+          "count": 1,
+          "dtypes": [
+            "uint16"
+          ],
+          "crs": "EPSG:32650",
+          "epsg": 32650,
+          "boundsNative": [
+            399960.0,
+            4390200.0,
+            509760.0,
+            4500000.0
+          ],
+          "boundsWgs84": [
+            115.81682739340117,
+            39.65575257223608,
+            117.1154430676193,
+            40.650856485765416
+          ],
+          "resolution": [
+            60.0,
+            60.0
+          ],
+          "transform": [
+            60.0,
+            0.0,
+            399960.0,
+            0.0,
+            -60.0,
+            4500000.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "nodata": 0.0,
+          "nonNoDataPixelsBand1": 3348900,
+          "finitePixelsBand1": 3348900,
+          "validFractionBand1": 1.0,
+          "totalDecodedPixels": 3348900,
+          "minimum": 1.0,
+          "maximum": 10426.0,
+          "mean": 407.5351978261519,
+          "percentiles2And98": [
+            1.0,
+            1198.0
+          ],
+          "overviews": [
+            2,
+            4,
+            8
+          ],
+          "compression": "Compression.deflate",
+          "layout": null,
+          "blockShapes": [
+            [
+              256,
+              256
+            ]
+          ]
+        },
+        "preview": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-earthsearch-b01-preview.png",
+        "status": "full_download_full_decode_checksum_passed"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "Sentinel-2 L2A",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-earthsearch-scl.tif",
+      "bytes": 2483546,
+      "seconds": 0.7288589000236243,
+      "sha256": "4539c60af9f8dbc0a71bb6a31be8858299fcb015a3e762e4471737040be8b4b3",
+      "mode": "full-published-file",
+      "sourceWorkstream": "optical-radar",
+      "detail": {
+        "productFamily": "Sentinel-2",
+        "productLevel": "L2A",
+        "sceneId": "S2A_50TMK_20250116_0_L2A",
+        "productUri": "S2A_MSIL2A_20250116T031051_N0511_R075_T50TMK_20250116T064100.SAFE",
+        "observationTime": "2025-01-16T03:16:42.811000Z",
+        "cloudCoverPercent": 0.759809,
+        "processingBaseline": "05.11",
+        "provider": "Earth Search / Element84 Sentinel COGs",
+        "band": "SCL",
+        "bandRole": "20m scene classification quality mask",
+        "processing": "published COG conversion, not a full SAFE package",
+        "url": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/50/T/MK/2025/1/S2A_50TMK_20250116_0_L2A/SCL.tif",
+        "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-earthsearch-scl.tif",
+        "mode": "full_published_file",
+        "httpStatus": 200,
+        "bytes": 2483546,
+        "downloadSeconds": 0.7288589000236243,
+        "MiBPerSecond": 3.2495919769062396,
+        "sha256": "4539c60af9f8dbc0a71bb6a31be8858299fcb015a3e762e4471737040be8b4b3",
+        "md5": "6d6d5070ca63232f013d18f09a924017",
+        "contentLengthMatches": true,
+        "providerMd5": null,
+        "providerMd5Matches": null,
+        "etag": "\"6d6d5070ca63232f013d18f09a924017\"",
+        "acceptRanges": "bytes",
+        "independentDiskSha256Matches": true,
+        "raster": {
+          "driver": "GTiff",
+          "width": 5490,
+          "height": 5490,
+          "count": 1,
+          "dtypes": [
+            "uint8"
+          ],
+          "crs": "EPSG:32650",
+          "epsg": 32650,
+          "boundsNative": [
+            399960.0,
+            4390200.0,
+            509760.0,
+            4500000.0
+          ],
+          "boundsWgs84": [
+            115.81682739340117,
+            39.65575257223608,
+            117.1154430676193,
+            40.650856485765416
+          ],
+          "resolution": [
+            20.0,
+            20.0
+          ],
+          "transform": [
+            20.0,
+            0.0,
+            399960.0,
+            0.0,
+            -20.0,
+            4500000.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "nodata": 0.0,
+          "nonNoDataPixelsBand1": 30140089,
+          "finitePixelsBand1": 30140089,
+          "validFractionBand1": 0.9999996350377073,
+          "totalDecodedPixels": 30140100,
+          "minimum": 2.0,
+          "maximum": 11.0,
+          "mean": 4.59964567456984,
+          "percentiles2And98": [
+            2.0,
+            6.0
+          ],
+          "overviews": [
+            2,
+            4,
+            8,
+            16
+          ],
+          "compression": "Compression.deflate",
+          "layout": null,
+          "blockShapes": [
+            [
+              512,
+              512
+            ]
+          ]
+        },
+        "preview": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-earthsearch-scl-preview.png",
+        "status": "full_download_full_decode_checksum_passed"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "Sentinel-2 L2A",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-gcs-b01.jp2",
+      "bytes": 3765907,
+      "seconds": 2.6783044000621885,
+      "sha256": "105576673047d27393f4e6a46660a21888ff53ecbe82ded16770362e15354fad",
+      "mode": "full-published-file",
+      "sourceWorkstream": "optical-radar",
+      "detail": {
+        "productFamily": "Sentinel-2",
+        "productLevel": "L2A",
+        "sceneId": "S2A_50TMK_20250116_0_L2A",
+        "productUri": "S2A_MSIL2A_20250116T031051_N0511_R075_T50TMK_20250116T064100.SAFE",
+        "observationTime": "2025-01-16T03:16:42.811000Z",
+        "cloudCoverPercent": 0.759809,
+        "processingBaseline": "05.11",
+        "provider": "Google Cloud public Sentinel-2 SAFE mirror",
+        "band": "B01",
+        "bandRole": "coastal aerosol reflectance, 60m",
+        "processing": "published native L2A JP2 band from SAFE product",
+        "url": "https://storage.googleapis.com/gcp-public-data-sentinel-2/L2/tiles/50/T/MK/S2A_MSIL2A_20250116T031051_N0511_R075_T50TMK_20250116T064100.SAFE/GRANULE/L2A_T50TMK_A049979_20250116T031436/IMG_DATA/R60m/T50TMK_20250116T031051_B01_60m.jp2",
+        "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-gcs-b01.jp2",
+        "mode": "full_published_file",
+        "httpStatus": 200,
+        "bytes": 3765907,
+        "downloadSeconds": 2.6783044000621885,
+        "MiBPerSecond": 1.3409412252733934,
+        "sha256": "105576673047d27393f4e6a46660a21888ff53ecbe82ded16770362e15354fad",
+        "md5": "fa15db917aaf09f58b8de7ecc8b25223",
+        "contentLengthMatches": true,
+        "providerMd5": "fa15db917aaf09f58b8de7ecc8b25223",
+        "providerMd5Matches": true,
+        "etag": "\"fa15db917aaf09f58b8de7ecc8b25223\"",
+        "acceptRanges": "bytes",
+        "independentDiskSha256Matches": true,
+        "raster": {
+          "driver": "JP2OpenJPEG",
+          "width": 1830,
+          "height": 1830,
+          "count": 1,
+          "dtypes": [
+            "uint16"
+          ],
+          "crs": "EPSG:32650",
+          "epsg": 32650,
+          "boundsNative": [
+            399960.0,
+            4390200.0,
+            509760.0,
+            4500000.0
+          ],
+          "boundsWgs84": [
+            115.81682739340117,
+            39.65575257223608,
+            117.1154430676193,
+            40.650856485765416
+          ],
+          "resolution": [
+            60.0,
+            60.0
+          ],
+          "transform": [
+            60.0,
+            0.0,
+            399960.0,
+            0.0,
+            -60.0,
+            4500000.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "nodata": null,
+          "nonNoDataPixelsBand1": 3348900,
+          "finitePixelsBand1": 3348900,
+          "validFractionBand1": 1.0,
+          "totalDecodedPixels": 3348900,
+          "minimum": 617.0,
+          "maximum": 11426.0,
+          "mean": 1405.7635041356864,
+          "percentiles2And98": [
+            984.0,
+            2198.0
+          ],
+          "overviews": [
+            2,
+            4,
+            8,
+            16
+          ],
+          "compression": "None",
+          "layout": null,
+          "blockShapes": [
+            [
+              192,
+              192
+            ]
+          ]
+        },
+        "preview": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s2-gcs-b01-preview.png",
+        "status": "full_download_full_decode_checksum_passed"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "Sentinel-1 OPERA RTC sample",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s1-opera-rtc-vv.tif",
+      "bytes": 6168401,
+      "seconds": 1.6547111000400037,
+      "sha256": "1db2bd0eea1b0757db22ad4db6bd85f45a823f9d3d1182d4e505c3378972bed2",
+      "mode": "full-published-file",
+      "sourceWorkstream": "optical-radar",
+      "detail": {
+        "productFamily": "Sentinel-1",
+        "productLevel": "OPERA L2 RTC-S1 v1.0",
+        "sceneId": "OPERA_L2_RTC-S1_T001-000288-IW3_20240110T181405Z_20240410T013737Z_S1A_30_v1.0",
+        "observationTime": "2024-01-10T18:14:05+00:00",
+        "provider": "OPERA public application/sample S3 bucket",
+        "processing": "30m radiometric terrain corrected gamma0 burst from Sentinel-1 SLC; not raw GRD and not full SLC",
+        "availabilityCaveat": "Public application/sample bucket availability demonstrated only for this archived sample. Current ASF production OPERA bucket is controlled access and requires Earthdata credentials.",
+        "band": "VV",
+        "url": "https://opera-pst-rs-pop1.s3.us-west-2.amazonaws.com/products/RTC_S1/OPERA_L2_RTC-S1_T001-000288-IW3_20240110T181405Z_20240410T013737Z_S1A_30_v1.0/OPERA_L2_RTC-S1_T001-000288-IW3_20240110T181405Z_20240410T013737Z_S1A_30_v1.0_VV.tif",
+        "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s1-opera-rtc-vv.tif",
+        "mode": "full_published_file",
+        "httpStatus": 200,
+        "bytes": 6168401,
+        "downloadSeconds": 1.6547111000400037,
+        "MiBPerSecond": 3.5550892278733204,
+        "sha256": "1db2bd0eea1b0757db22ad4db6bd85f45a823f9d3d1182d4e505c3378972bed2",
+        "md5": "f635843d25090993e2c13b8870d4f837",
+        "contentLengthMatches": true,
+        "providerMd5": "f635843d25090993e2c13b8870d4f837",
+        "providerMd5Matches": true,
+        "etag": "\"f635843d25090993e2c13b8870d4f837\"",
+        "acceptRanges": "bytes",
+        "independentDiskSha256Matches": true,
+        "raster": {
+          "driver": "GTiff",
+          "width": 3085,
+          "height": 1442,
+          "count": 1,
+          "dtypes": [
+            "float32"
+          ],
+          "crs": "EPSG:32630",
+          "epsg": 32630,
+          "boundsNative": [
+            335220.0,
+            5412000.0,
+            427770.0,
+            5455260.0
+          ],
+          "boundsWgs84": [
+            -5.263293210939316,
+            48.839087967281,
+            -3.984709806116747,
+            49.245847913907525
+          ],
+          "resolution": [
+            30.0,
+            30.0
+          ],
+          "transform": [
+            30.0,
+            0.0,
+            335220.0,
+            0.0,
+            -30.0,
+            5455260.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "nodata": "nan",
+          "nonNoDataPixelsBand1": 1790319,
+          "finitePixelsBand1": 1790319,
+          "validFractionBand1": 0.40244820245607016,
+          "totalDecodedPixels": 4448570,
+          "minimum": 0.004988000728189945,
+          "maximum": 76.04942321777344,
+          "mean": 0.0643046423792839,
+          "percentiles2And98": [
+            0.023505254089832305,
+            0.13975666880607596
+          ],
+          "overviews": [
+            4,
+            16,
+            63,
+            123
+          ],
+          "compression": "Compression.deflate",
+          "layout": "COG",
+          "blockShapes": [
+            [
+              512,
+              512
+            ]
+          ]
+        },
+        "preview": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s1-opera-rtc-vv-preview.png",
+        "status": "full_download_full_decode_checksum_passed"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "Sentinel-1 OPERA RTC sample",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s1-opera-rtc-mask.tif",
+      "bytes": 43901,
+      "seconds": 0.3510187000501901,
+      "sha256": "05c8a51c4c4a78854e35bcd00a44dc0fb8db0b38873a0db47e845063bd5c41ca",
+      "mode": "full-published-file",
+      "sourceWorkstream": "optical-radar",
+      "detail": {
+        "productFamily": "Sentinel-1",
+        "productLevel": "OPERA L2 RTC-S1 v1.0",
+        "sceneId": "OPERA_L2_RTC-S1_T001-000288-IW3_20240110T181405Z_20240410T013737Z_S1A_30_v1.0",
+        "observationTime": "2024-01-10T18:14:05+00:00",
+        "provider": "OPERA public application/sample S3 bucket",
+        "processing": "30m radiometric terrain corrected gamma0 burst from Sentinel-1 SLC; not raw GRD and not full SLC",
+        "availabilityCaveat": "Public application/sample bucket availability demonstrated only for this archived sample. Current ASF production OPERA bucket is controlled access and requires Earthdata credentials.",
+        "band": "quality-mask",
+        "url": "https://opera-pst-rs-pop1.s3.us-west-2.amazonaws.com/products/RTC_S1/OPERA_L2_RTC-S1_T001-000288-IW3_20240110T181405Z_20240410T013737Z_S1A_30_v1.0/OPERA_L2_RTC-S1_T001-000288-IW3_20240110T181405Z_20240410T013737Z_S1A_30_v1.0_mask.tif",
+        "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s1-opera-rtc-mask.tif",
+        "mode": "full_published_file",
+        "httpStatus": 200,
+        "bytes": 43901,
+        "downloadSeconds": 0.3510187000501901,
+        "MiBPerSecond": 0.11927357761442461,
+        "sha256": "05c8a51c4c4a78854e35bcd00a44dc0fb8db0b38873a0db47e845063bd5c41ca",
+        "md5": "378f67e458d82fc604fe1b04e96aa0f5",
+        "contentLengthMatches": true,
+        "providerMd5": "378f67e458d82fc604fe1b04e96aa0f5",
+        "providerMd5Matches": true,
+        "etag": "\"378f67e458d82fc604fe1b04e96aa0f5\"",
+        "acceptRanges": "bytes",
+        "independentDiskSha256Matches": true,
+        "raster": {
+          "driver": "GTiff",
+          "width": 3085,
+          "height": 1442,
+          "count": 1,
+          "dtypes": [
+            "uint8"
+          ],
+          "crs": "EPSG:32630",
+          "epsg": 32630,
+          "boundsNative": [
+            335220.0,
+            5412000.0,
+            427770.0,
+            5455260.0
+          ],
+          "boundsWgs84": [
+            -5.263293210939316,
+            48.839087967281,
+            -3.984709806116747,
+            49.245847913907525
+          ],
+          "resolution": [
+            30.0,
+            30.0
+          ],
+          "transform": [
+            30.0,
+            0.0,
+            335220.0,
+            0.0,
+            -30.0,
+            5455260.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "nodata": 255.0,
+          "nonNoDataPixelsBand1": 1790319,
+          "finitePixelsBand1": 1790319,
+          "validFractionBand1": 0.40244820245607016,
+          "totalDecodedPixels": 4448570,
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "percentiles2And98": [
+            0.0,
+            0.0
+          ],
+          "overviews": [
+            4,
+            16,
+            63,
+            123
+          ],
+          "compression": "Compression.deflate",
+          "layout": "COG",
+          "blockShapes": [
+            [
+              512,
+              512
+            ]
+          ]
+        },
+        "preview": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\optical-radar\\s1-opera-rtc-mask-preview.png",
+        "status": "full_download_full_decode_checksum_passed"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "ESA WorldCover",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\land-products\\worldcover.tif",
+      "bytes": 20245485,
+      "seconds": 4.938,
+      "sha256": "022f5679c7945975c4b5989e884e82da03893d49e24a1aaa78163ea710a04275",
+      "mode": "full-published-file",
+      "sourceWorkstream": "land-products",
+      "detail": {
+        "id": "worldcover",
+        "product": "ESA WorldCover 10m 2021 v200",
+        "time_coverage": "2021 annual classification",
+        "region": "Svalbard N78E015 3-degree tile, not Beijing",
+        "kind": "complete original distribution tile, categorical numeric classes",
+        "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N78E015_Map.tif",
+        "expected_bytes": 20245485,
+        "source": "https://esa-worldcover.org/en/data-access",
+        "license": "CC BY 4.0",
+        "authentication": "anonymous",
+        "started_at": "2026-10-11T15:03:33.266364+00:00",
+        "range_request": false,
+        "http_status": 200,
+        "headers": {
+          "content-type": "binary/octet-stream",
+          "content-length": "20245485",
+          "content-encoding": null,
+          "etag": "\"9bc55c66e96039fb593de2f06d4cbe6c-3\""
+        },
+        "bytes": 20245485,
+        "download_seconds": 4.938,
+        "sha256": "022f5679c7945975c4b5989e884e82da03893d49e24a1aaa78163ea710a04275",
+        "full_download": true,
+        "raster": {
+          "driver": "GTiff",
+          "crs": "EPSG:4326",
+          "width": 36000,
+          "height": 36000,
+          "bands": 1,
+          "dtype": [
+            "uint8"
+          ],
+          "bounds": [
+            15.0,
+            78.0,
+            18.0,
+            81.0
+          ],
+          "pixel_resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "nodata": 0.0,
+          "valid_pixels": 972244397,
+          "total_pixels": 1296000000,
+          "valid_fraction": 0.7501885779320988,
+          "minimum": 10.0,
+          "maximum": 100.0,
+          "mean": 73.30999496621425,
+          "full_decode": true,
+          "decode_seconds": 11.375,
+          "class_counts": {
+            "10": 19433,
+            "20": 67,
+            "30": 19184496,
+            "50": 33722,
+            "60": 220318445,
+            "70": 329412758,
+            "80": 292765384,
+            "90": 5242448,
+            "100": 105267644
+          }
+        },
+        "status": "complete_numeric_raster_download_and_full_decode_passed",
+        "interpretation_note": "Classification mean is a code statistic without physical meaning; use class histogram. NoData0 excludes unmapped areas.",
+        "preview_visually_checked": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "WorldPop Global1",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\land-products\\worldpop.tif",
+      "bytes": 156803,
+      "seconds": 2.625,
+      "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+      "mode": "full-published-file",
+      "sourceWorkstream": "land-products",
+      "detail": {
+        "id": "worldpop",
+        "product": "WorldPop Global1 2020 Niue unconstrained population count",
+        "time_coverage": "2020 estimated population; historical Global1 archive, not current Global2",
+        "region": "Niue, not Beijing",
+        "kind": "complete country numeric population raster, persons per cell",
+        "url": "https://data.worldpop.org/GIS/Population/Global_2000_2020/2020/NIU/niu_ppp_2020.tif",
+        "expected_bytes": 156803,
+        "source": "https://hub.worldpop.org/project/categories?id=3",
+        "license": "CC BY 4.0 verified from tested-product metadata license link",
+        "authentication": "anonymous",
+        "started_at": "2026-10-11T15:03:33.266868+00:00",
+        "range_request": false,
+        "http_status": 200,
+        "headers": {
+          "content-type": "image/tiff",
+          "content-length": "156803",
+          "content-encoding": null,
+          "etag": "\"26483-57b44c662bc97\""
+        },
+        "bytes": 156803,
+        "download_seconds": 2.625,
+        "sha256": "6cf1f3e45799a10d8803a5cf94defd9903d3adabc877daef5b0b157d9214d7cc",
+        "full_download": true,
+        "raster": {
+          "driver": "GTiff",
+          "crs": "EPSG:4326",
+          "width": 214,
+          "height": 245,
+          "bands": 1,
+          "dtype": [
+            "float32"
+          ],
+          "bounds": [
+            -169.951249305,
+            -19.156249722,
+            -169.772915972,
+            -18.952083056
+          ],
+          "pixel_resolution": [
+            0.0008333333317757564,
+            0.0008333333306122408
+          ],
+          "nodata": -99999.0,
+          "valid_pixels": 33446,
+          "total_pixels": 52430,
+          "valid_fraction": 0.6379172229639519,
+          "minimum": 0.003988407552242279,
+          "maximum": 4.240276336669922,
+          "mean": 0.0415674577524394,
+          "full_decode": true,
+          "decode_seconds": 0.047
+        },
+        "status": "complete_numeric_raster_download_and_full_decode_passed",
+        "license_source": "https://hub.worldpop.org/data/licence.txt",
+        "metadata_source": "https://hub.worldpop.org/geodata/summary?id=6464",
+        "metadata_published": "2018-11-01",
+        "doi": "10.5258/SOTON/WP00645",
+        "units": "estimated persons per pixel",
+        "preview_visually_checked": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "SoilGrids pH",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\land-products\\soilgrids.tif",
+      "bytes": 1263,
+      "seconds": 2.703,
+      "sha256": "9d3d9246640e23a6613746d68f0ff5e7411152d05fab1e72ff35ae1c29f9f3aa",
+      "mode": "complete-service-subset",
+      "sourceWorkstream": "land-products",
+      "detail": {
+        "id": "soilgrids",
+        "product": "SoilGrids 2.0 soil pH in water mean, 0-5cm depth",
+        "time_coverage": "prediction model; not an acquisition-date imagery product",
+        "region": "Beijing bbox116.3,39.85,116.5,40.05",
+        "kind": "WCS numerical subset, output reprojected to EPSG4326; original model resolution250m",
+        "url": "https://maps.isric.org/mapserv",
+        "params": {
+          "map": "/map/phh2o.map",
+          "SERVICE": "WCS",
+          "VERSION": "1.0.0",
+          "REQUEST": "GetCoverage",
+          "COVERAGE": "phh2o_0-5cm_mean",
+          "CRS": "EPSG:4326",
+          "RESPONSE_CRS": "EPSG:4326",
+          "BBOX": "116.3,39.85,116.5,40.05",
+          "WIDTH": "80",
+          "HEIGHT": "80",
+          "FORMAT": "GEOTIFF_INT16"
+        },
+        "source": "https://docs.isric.org/globaldata/soilgrids/wcs.html",
+        "license": "CC BY 4.0",
+        "units": "stored pH x10; divide numeric values by10 for pH",
+        "authentication": "anonymous",
+        "started_at": "2026-10-11T15:03:33.266868+00:00",
+        "range_request": false,
+        "http_status": 200,
+        "headers": {
+          "content-type": "image/tiff",
+          "content-length": null,
+          "content-encoding": null,
+          "etag": null
+        },
+        "bytes": 1263,
+        "download_seconds": 2.703,
+        "sha256": "9d3d9246640e23a6613746d68f0ff5e7411152d05fab1e72ff35ae1c29f9f3aa",
+        "full_download": true,
+        "raster": {
+          "driver": "GTiff",
+          "crs": "EPSG:4326",
+          "width": 80,
+          "height": 80,
+          "bands": 1,
+          "dtype": [
+            "int16"
+          ],
+          "bounds": [
+            116.3,
+            39.85000000000001,
+            116.5,
+            40.050000000000004
+          ],
+          "pixel_resolution": [
+            0.0025000000000000647,
+            0.002499999999999975
+          ],
+          "nodata": -32768.0,
+          "valid_pixels": 140,
+          "total_pixels": 6400,
+          "valid_fraction": 0.021875,
+          "minimum": 74.0,
+          "maximum": 81.0,
+          "mean": 79.26428571428572,
+          "full_decode": true,
+          "decode_seconds": 0.0
+        },
+        "status": "complete_numeric_raster_download_and_full_decode_passed",
+        "interpretation_note": "Full service-produced numeric subset, not complete global original raster. City sample low valid fraction retained as negative coverage evidence.",
+        "preview_visually_checked": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "SoilGrids pH",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\land-products\\soilgrids-rural.tif",
+      "bytes": 4329,
+      "seconds": 1.265,
+      "sha256": "cdf3bf213969ee2811df4c2e0147304f32e4b757008992d0f4cd551ebc55a4d1",
+      "mode": "complete-service-subset",
+      "sourceWorkstream": "land-products",
+      "detail": {
+        "id": "soilgrids-rural",
+        "product": "SoilGrids 2.0 soil pH in water mean, 0-5cm depth",
+        "time_coverage": "prediction model; not an acquisition-date imagery product",
+        "region": "Beijing northern rural/mountain bbox116.2,40.4,116.4,40.6",
+        "kind": "WCS numerical subset, output reprojected to EPSG4326; original model resolution250m",
+        "url": "https://maps.isric.org/mapserv",
+        "params": {
+          "map": "/map/phh2o.map",
+          "SERVICE": "WCS",
+          "VERSION": "1.0.0",
+          "REQUEST": "GetCoverage",
+          "COVERAGE": "phh2o_0-5cm_mean",
+          "CRS": "EPSG:4326",
+          "RESPONSE_CRS": "EPSG:4326",
+          "BBOX": "116.2,40.4,116.4,40.6",
+          "WIDTH": "80",
+          "HEIGHT": "80",
+          "FORMAT": "GEOTIFF_INT16"
+        },
+        "source": "https://docs.isric.org/globaldata/soilgrids/wcs.html",
+        "license": "CC BY 4.0",
+        "units": "stored pH x10; divide numeric values by10 for pH",
+        "authentication": "anonymous",
+        "started_at": "2026-10-11T15:05:07.202136+00:00",
+        "range_request": false,
+        "http_status": 200,
+        "headers": {
+          "content-type": "image/tiff",
+          "content-length": null,
+          "content-encoding": null,
+          "etag": null
+        },
+        "bytes": 4329,
+        "download_seconds": 1.265,
+        "sha256": "cdf3bf213969ee2811df4c2e0147304f32e4b757008992d0f4cd551ebc55a4d1",
+        "full_download": true,
+        "raster": {
+          "driver": "GTiff",
+          "crs": "EPSG:4326",
+          "width": 80,
+          "height": 80,
+          "bands": 1,
+          "dtype": [
+            "int16"
+          ],
+          "bounds": [
+            116.2,
+            40.4,
+            116.4,
+            40.6
+          ],
+          "pixel_resolution": [
+            0.0025000000000000647,
+            0.0025000000000000647
+          ],
+          "nodata": -32768.0,
+          "valid_pixels": 6373,
+          "total_pixels": 6400,
+          "valid_fraction": 0.99578125,
+          "minimum": 64.0,
+          "maximum": 77.0,
+          "mean": 70.21261572257963,
+          "full_decode": true,
+          "decode_seconds": 0.016
+        },
+        "status": "complete_numeric_raster_download_and_full_decode_passed",
+        "interpretation_note": "Full service-produced numeric subset, not complete global original raster. City sample low valid fraction retained as negative coverage evidence.",
+        "preview_visually_checked": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "NASA POWER",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\nasa-power-beijing.json",
+      "bytes": 838,
+      "seconds": 1.0299,
+      "sha256": "1cc769444760b9b0c4d29c4e59f00a8252407800a40db440db6e79c824ef9fc2",
+      "mode": "complete-json-timeseries",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "product": "NASA POWER daily Beijing air temperature and surface solar radiation",
+        "productKind": "MERRA-2 / CERES derived daily numerical time series, not optical scene",
+        "testedPeriod": [
+          "2025-09-01",
+          "2025-09-07"
+        ],
+        "passed": true,
+        "download": {
+          "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CALLSKY_SFC_SW_DWN&community=RE&longitude=116.4&latitude=39.9&start=20250901&end=20250907&format=JSON&time-standard=UTC",
+          "httpStatus": 200,
+          "headers": {
+            "Content-Type": "application/json",
+            "Content-Length": "838"
+          },
+          "bytes": 838,
+          "seconds": 1.0299,
+          "sha256": "1cc769444760b9b0c4d29c4e59f00a8252407800a40db440db6e79c824ef9fc2",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\nasa-power-beijing.json"
+        },
+        "parameters": {
+          "T2M": {
+            "records": 7,
+            "min": 19.4,
+            "max": 24.98,
+            "unit": "C"
+          },
+          "ALLSKY_SFC_SW_DWN": {
+            "records": 7,
+            "min": 1.4311,
+            "max": 6.4349,
+            "unit": "kW-hr/m^2/day"
+          }
+        },
+        "coordinate": [
+          116.4,
+          39.9,
+          221.57
+        ],
+        "header": {
+          "title": "NASA/POWER Source Native Resolution Daily Data",
+          "api": {
+            "version": "v2.10.0",
+            "name": "POWER Daily API"
+          },
+          "sources": [
+            "MERRA2",
+            "SYN1DEG"
+          ],
+          "fill_value": -999.0,
+          "time_standard": "UTC",
+          "start": "20250901",
+          "end": "20250907"
+        },
+        "completeApiResponse": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "NOAA OISST",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\oisst-20250915.nc",
+      "bytes": 1529599,
+      "seconds": 2.8207,
+      "sha256": "2f0b056be2f98d6361d0f1868d7b7f73d54af03859a7f0a929b38e41565f8a2a",
+      "mode": "full-published-file",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "route": "NCEI complete daily NetCDF published file",
+        "download": {
+          "url": "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/202509/oisst-avhrr-v02r01.20250915.nc",
+          "httpStatus": 200,
+          "headers": {
+            "Last-Modified": "Fri, 21 Nov 2025 17:15:46 GMT",
+            "ETag": "\"1756ff-6441df6d29480\"",
+            "Content-Length": "1529599",
+            "Content-Type": "application/x-netcdf"
+          },
+          "bytes": 1529599,
+          "seconds": 2.8207,
+          "sha256": "2f0b056be2f98d6361d0f1868d7b7f73d54af03859a7f0a929b38e41565f8a2a",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\oisst-20250915.nc"
+        },
+        "metadata": {
+          "NC_GLOBAL#cdm_data_type": "Grid",
+          "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+          "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+          "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+          "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+          "NC_GLOBAL#date_created": "2025-09-30T13:43:00Z",
+          "NC_GLOBAL#date_modified": "2025-09-30T13:43:00Z",
+          "NC_GLOBAL#geospatial_lat_max": "90",
+          "NC_GLOBAL#geospatial_lat_min": "-90",
+          "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+          "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+          "NC_GLOBAL#geospatial_lon_max": "360",
+          "NC_GLOBAL#geospatial_lon_min": "0",
+          "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+          "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+          "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+          "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250915.nc",
+          "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+          "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+          "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+          "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+          "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+          "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+          "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+          "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+          "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+          "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+          "NC_GLOBAL#processing_level": "NOAA Level 4",
+          "NC_GLOBAL#product_version": "Version v02r01",
+          "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+          "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+          "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+          "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+          "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+          "NC_GLOBAL#time_coverage_end": "2025-09-15T23:59:59Z",
+          "NC_GLOBAL#time_coverage_start": "2025-09-15T00:00:00Z",
+          "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final"
+        },
+        "variables": [
+          {
+            "variable": "sst",
+            "raster": {
+              "driver": "netCDF",
+              "width": 1440,
+              "height": 720,
+              "count": 1,
+              "crs": "None",
+              "bounds": [
+                0.0,
+                -90.0,
+                360.0,
+                90.0
+              ],
+              "transform": [
+                0.25,
+                0.0,
+                0.0,
+                0.0,
+                -0.25,
+                90.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "dtype": [
+                "int16"
+              ],
+              "nodata": -999.0,
+              "decodedValues": 1036800,
+              "validValues": 691150,
+              "min": -180.0,
+              "max": 3412.0,
+              "tags": {
+                "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+                "lat#long_name": "Latitude",
+                "lat#units": "degrees_north",
+                "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+                "lon#long_name": "Longitude",
+                "lon#units": "degrees_east",
+                "NC_GLOBAL#cdm_data_type": "Grid",
+                "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+                "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+                "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+                "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+                "NC_GLOBAL#date_created": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#date_modified": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#geospatial_lat_max": "90",
+                "NC_GLOBAL#geospatial_lat_min": "-90",
+                "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+                "NC_GLOBAL#geospatial_lon_max": "360",
+                "NC_GLOBAL#geospatial_lon_min": "0",
+                "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+                "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+                "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250915.nc",
+                "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+                "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+                "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+                "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+                "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+                "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+                "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+                "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+                "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+                "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+                "NC_GLOBAL#processing_level": "NOAA Level 4",
+                "NC_GLOBAL#product_version": "Version v02r01",
+                "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+                "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+                "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+                "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+                "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+                "NC_GLOBAL#time_coverage_end": "2025-09-15T23:59:59Z",
+                "NC_GLOBAL#time_coverage_start": "2025-09-15T00:00:00Z",
+                "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+                "NETCDF_DIM_EXTRA": "{time,zlev}",
+                "NETCDF_DIM_time_DEF": "{1,5}",
+                "NETCDF_DIM_time_VALUES": "17424",
+                "NETCDF_DIM_zlev_DEF": "{1,5}",
+                "NETCDF_DIM_zlev_VALUES": "0",
+                "sst#add_offset": "0",
+                "sst#long_name": "Daily sea surface temperature",
+                "sst#scale_factor": "0.0099999998",
+                "sst#units": "Celsius",
+                "sst#valid_max": "4500",
+                "sst#valid_min": "-300",
+                "sst#_FillValue": "-999",
+                "time#long_name": "Center time of the day",
+                "time#units": "days since 1978-01-01 12:00:00",
+                "zlev#actual_range": "0, 0",
+                "zlev#long_name": "Sea surface height",
+                "zlev#positive": "down",
+                "zlev#units": "meters"
+              },
+              "bandTags": [
+                {
+                  "add_offset": "0",
+                  "long_name": "Daily sea surface temperature",
+                  "NETCDF_DIM_time": "17424",
+                  "NETCDF_DIM_zlev": "0",
+                  "NETCDF_VARNAME": "sst",
+                  "scale_factor": "0.0099999998",
+                  "units": "Celsius",
+                  "valid_max": "4500",
+                  "valid_min": "-300",
+                  "_FillValue": "-999"
+                }
+              ],
+              "scales": [
+                0.009999999776482582
+              ],
+              "offsets": [
+                0.0
+              ]
+            }
+          },
+          {
+            "variable": "anom",
+            "raster": {
+              "driver": "netCDF",
+              "width": 1440,
+              "height": 720,
+              "count": 1,
+              "crs": "None",
+              "bounds": [
+                0.0,
+                -90.0,
+                360.0,
+                90.0
+              ],
+              "transform": [
+                0.25,
+                0.0,
+                0.0,
+                0.0,
+                -0.25,
+                90.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "dtype": [
+                "int16"
+              ],
+              "nodata": -999.0,
+              "decodedValues": 1036800,
+              "validValues": 691134,
+              "min": -976.0,
+              "max": 1200.0,
+              "tags": {
+                "anom#add_offset": "0",
+                "anom#long_name": "Daily sea surface temperature anomalies",
+                "anom#scale_factor": "0.0099999998",
+                "anom#units": "Celsius",
+                "anom#valid_max": "1200",
+                "anom#valid_min": "-1200",
+                "anom#_FillValue": "-999",
+                "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+                "lat#long_name": "Latitude",
+                "lat#units": "degrees_north",
+                "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+                "lon#long_name": "Longitude",
+                "lon#units": "degrees_east",
+                "NC_GLOBAL#cdm_data_type": "Grid",
+                "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+                "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+                "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+                "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+                "NC_GLOBAL#date_created": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#date_modified": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#geospatial_lat_max": "90",
+                "NC_GLOBAL#geospatial_lat_min": "-90",
+                "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+                "NC_GLOBAL#geospatial_lon_max": "360",
+                "NC_GLOBAL#geospatial_lon_min": "0",
+                "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+                "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+                "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250915.nc",
+                "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+                "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+                "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+                "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+                "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+                "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+                "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+                "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+                "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+                "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+                "NC_GLOBAL#processing_level": "NOAA Level 4",
+                "NC_GLOBAL#product_version": "Version v02r01",
+                "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+                "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+                "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+                "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+                "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+                "NC_GLOBAL#time_coverage_end": "2025-09-15T23:59:59Z",
+                "NC_GLOBAL#time_coverage_start": "2025-09-15T00:00:00Z",
+                "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+                "NETCDF_DIM_EXTRA": "{time,zlev}",
+                "NETCDF_DIM_time_DEF": "{1,5}",
+                "NETCDF_DIM_time_VALUES": "17424",
+                "NETCDF_DIM_zlev_DEF": "{1,5}",
+                "NETCDF_DIM_zlev_VALUES": "0",
+                "time#long_name": "Center time of the day",
+                "time#units": "days since 1978-01-01 12:00:00",
+                "zlev#actual_range": "0, 0",
+                "zlev#long_name": "Sea surface height",
+                "zlev#positive": "down",
+                "zlev#units": "meters"
+              },
+              "bandTags": [
+                {
+                  "add_offset": "0",
+                  "long_name": "Daily sea surface temperature anomalies",
+                  "NETCDF_DIM_time": "17424",
+                  "NETCDF_DIM_zlev": "0",
+                  "NETCDF_VARNAME": "anom",
+                  "scale_factor": "0.0099999998",
+                  "units": "Celsius",
+                  "valid_max": "1200",
+                  "valid_min": "-1200",
+                  "_FillValue": "-999"
+                }
+              ],
+              "scales": [
+                0.009999999776482582
+              ],
+              "offsets": [
+                0.0
+              ]
+            }
+          },
+          {
+            "variable": "err",
+            "raster": {
+              "driver": "netCDF",
+              "width": 1440,
+              "height": 720,
+              "count": 1,
+              "crs": "None",
+              "bounds": [
+                0.0,
+                -90.0,
+                360.0,
+                90.0
+              ],
+              "transform": [
+                0.25,
+                0.0,
+                0.0,
+                0.0,
+                -0.25,
+                90.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "dtype": [
+                "int16"
+              ],
+              "nodata": -999.0,
+              "decodedValues": 1036800,
+              "validValues": 691150,
+              "min": 11.0,
+              "max": 68.0,
+              "tags": {
+                "err#add_offset": "0",
+                "err#long_name": "Estimated error standard deviation of analysed_sst",
+                "err#scale_factor": "0.0099999998",
+                "err#units": "Celsius",
+                "err#valid_max": "1000",
+                "err#valid_min": "0",
+                "err#_FillValue": "-999",
+                "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+                "lat#long_name": "Latitude",
+                "lat#units": "degrees_north",
+                "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+                "lon#long_name": "Longitude",
+                "lon#units": "degrees_east",
+                "NC_GLOBAL#cdm_data_type": "Grid",
+                "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+                "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+                "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+                "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+                "NC_GLOBAL#date_created": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#date_modified": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#geospatial_lat_max": "90",
+                "NC_GLOBAL#geospatial_lat_min": "-90",
+                "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+                "NC_GLOBAL#geospatial_lon_max": "360",
+                "NC_GLOBAL#geospatial_lon_min": "0",
+                "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+                "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+                "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250915.nc",
+                "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+                "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+                "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+                "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+                "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+                "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+                "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+                "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+                "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+                "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+                "NC_GLOBAL#processing_level": "NOAA Level 4",
+                "NC_GLOBAL#product_version": "Version v02r01",
+                "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+                "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+                "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+                "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+                "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+                "NC_GLOBAL#time_coverage_end": "2025-09-15T23:59:59Z",
+                "NC_GLOBAL#time_coverage_start": "2025-09-15T00:00:00Z",
+                "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+                "NETCDF_DIM_EXTRA": "{time,zlev}",
+                "NETCDF_DIM_time_DEF": "{1,5}",
+                "NETCDF_DIM_time_VALUES": "17424",
+                "NETCDF_DIM_zlev_DEF": "{1,5}",
+                "NETCDF_DIM_zlev_VALUES": "0",
+                "time#long_name": "Center time of the day",
+                "time#units": "days since 1978-01-01 12:00:00",
+                "zlev#actual_range": "0, 0",
+                "zlev#long_name": "Sea surface height",
+                "zlev#positive": "down",
+                "zlev#units": "meters"
+              },
+              "bandTags": [
+                {
+                  "add_offset": "0",
+                  "long_name": "Estimated error standard deviation of analysed_sst",
+                  "NETCDF_DIM_time": "17424",
+                  "NETCDF_DIM_zlev": "0",
+                  "NETCDF_VARNAME": "err",
+                  "scale_factor": "0.0099999998",
+                  "units": "Celsius",
+                  "valid_max": "1000",
+                  "valid_min": "0",
+                  "_FillValue": "-999"
+                }
+              ],
+              "scales": [
+                0.009999999776482582
+              ],
+              "offsets": [
+                0.0
+              ]
+            }
+          },
+          {
+            "variable": "ice",
+            "raster": {
+              "driver": "netCDF",
+              "width": 1440,
+              "height": 720,
+              "count": 1,
+              "crs": "None",
+              "bounds": [
+                0.0,
+                -90.0,
+                360.0,
+                90.0
+              ],
+              "transform": [
+                0.25,
+                0.0,
+                0.0,
+                0.0,
+                -0.25,
+                90.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "dtype": [
+                "int16"
+              ],
+              "nodata": -999.0,
+              "decodedValues": 1036800,
+              "validValues": 122314,
+              "min": 15.0,
+              "max": 100.0,
+              "tags": {
+                "ice#add_offset": "0",
+                "ice#long_name": "Sea ice concentration",
+                "ice#scale_factor": "0.0099999998",
+                "ice#units": "%",
+                "ice#valid_max": "100",
+                "ice#valid_min": "0",
+                "ice#_FillValue": "-999",
+                "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+                "lat#long_name": "Latitude",
+                "lat#units": "degrees_north",
+                "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+                "lon#long_name": "Longitude",
+                "lon#units": "degrees_east",
+                "NC_GLOBAL#cdm_data_type": "Grid",
+                "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+                "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+                "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+                "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+                "NC_GLOBAL#date_created": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#date_modified": "2025-09-30T13:43:00Z",
+                "NC_GLOBAL#geospatial_lat_max": "90",
+                "NC_GLOBAL#geospatial_lat_min": "-90",
+                "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+                "NC_GLOBAL#geospatial_lon_max": "360",
+                "NC_GLOBAL#geospatial_lon_min": "0",
+                "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+                "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+                "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+                "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250915.nc",
+                "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+                "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+                "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+                "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+                "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+                "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+                "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+                "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+                "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+                "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+                "NC_GLOBAL#processing_level": "NOAA Level 4",
+                "NC_GLOBAL#product_version": "Version v02r01",
+                "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+                "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+                "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+                "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+                "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+                "NC_GLOBAL#time_coverage_end": "2025-09-15T23:59:59Z",
+                "NC_GLOBAL#time_coverage_start": "2025-09-15T00:00:00Z",
+                "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+                "NETCDF_DIM_EXTRA": "{time,zlev}",
+                "NETCDF_DIM_time_DEF": "{1,5}",
+                "NETCDF_DIM_time_VALUES": "17424",
+                "NETCDF_DIM_zlev_DEF": "{1,5}",
+                "NETCDF_DIM_zlev_VALUES": "0",
+                "time#long_name": "Center time of the day",
+                "time#units": "days since 1978-01-01 12:00:00",
+                "zlev#actual_range": "0, 0",
+                "zlev#long_name": "Sea surface height",
+                "zlev#positive": "down",
+                "zlev#units": "meters"
+              },
+              "bandTags": [
+                {
+                  "add_offset": "0",
+                  "long_name": "Sea ice concentration",
+                  "NETCDF_DIM_time": "17424",
+                  "NETCDF_DIM_zlev": "0",
+                  "NETCDF_VARNAME": "ice",
+                  "scale_factor": "0.0099999998",
+                  "units": "%",
+                  "valid_max": "100",
+                  "valid_min": "0",
+                  "_FillValue": "-999"
+                }
+              ],
+              "scales": [
+                0.009999999776482582
+              ],
+              "offsets": [
+                0.0
+              ]
+            }
+          }
+        ],
+        "passed": true,
+        "completePublishedFile": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "NOAA GFS",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\aws-gfs-2m-temperature.grib2",
+      "bytes": 875050,
+      "seconds": 1.8693,
+      "sha256": "f441e4528289255ee85ccf7220bc7afc486f611b56d447ee4c7f4440aaede171",
+      "mode": "complete-grib-message",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "mirror": "aws",
+        "index": {
+          "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261011/00/atmos/gfs.t00z.pgrb2.0p25.f000.idx",
+          "httpStatus": 200,
+          "headers": {
+            "Last-Modified": "Sun, 11 Oct 2026 03:36:07 GMT",
+            "ETag": "\"adc8875959ed713c832af31035a2ba5c\"",
+            "Content-Type": "binary/octet-stream",
+            "Content-Length": "31817"
+          },
+          "bytes": 31817,
+          "seconds": 1.3475,
+          "sha256": "68b59e0e35ad908cfcd93dff5787e1d6e46a3e1875b90a7eea1bdb629ddc38dd",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\aws-gfs.idx"
+        },
+        "indexRecord": "580:406507583:d=2026101100:TMP:2 m above ground:anl:",
+        "range": [
+          406507583,
+          407382632
+        ],
+        "download": {
+          "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261011/00/atmos/gfs.t00z.pgrb2.0p25.f000",
+          "httpStatus": 206,
+          "headers": {
+            "Content-Length": "875050",
+            "Content-Range": "bytes 406507583-407382632/493540856",
+            "Last-Modified": "Sun, 11 Oct 2026 03:35:56 GMT",
+            "ETag": "\"378892a856b2df86194d9acca2abda67\"",
+            "Content-Type": "binary/octet-stream"
+          },
+          "bytes": 875050,
+          "seconds": 1.8693,
+          "sha256": "f441e4528289255ee85ccf7220bc7afc486f611b56d447ee4c7f4440aaede171",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\aws-gfs-2m-temperature.grib2"
+        },
+        "completeGribMessage": true,
+        "raster": {
+          "driver": "GRIB",
+          "width": 1440,
+          "height": 721,
+          "count": 1,
+          "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+          "bounds": [
+            -180.125,
+            -90.125,
+            179.875,
+            90.125
+          ],
+          "transform": [
+            0.25,
+            0.0,
+            -180.125,
+            0.0,
+            -0.25,
+            90.125,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "dtype": [
+            "float64"
+          ],
+          "nodata": null,
+          "decodedValues": 1038240,
+          "validValues": 1038240,
+          "min": -62.72055664062498,
+          "max": 36.51943359375002,
+          "tags": {},
+          "bandTags": [
+            {
+              "GRIB_COMMENT": "Temperature [C]",
+              "GRIB_DISCIPLINE": "0(Meteorological)",
+              "GRIB_ELEMENT": "TMP",
+              "GRIB_FORECAST_SECONDS": "0",
+              "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-10-11T00:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+              "GRIB_PDS_PDTN": "0",
+              "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 81 0 0 1 0 103 0 2 255 0 0",
+              "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 81 0 0 0 1 0 0 0 0 103 0 0 0 0 2 255 0 0 0 0 0",
+              "GRIB_REF_TIME": "1791676800",
+              "GRIB_SHORT_NAME": "2-HTGL",
+              "GRIB_UNIT": "[C]",
+              "GRIB_VALID_TIME": "1791676800"
+            }
+          ],
+          "scales": [
+            1.0
+          ],
+          "offsets": [
+            0.0
+          ]
+        },
+        "passed": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "NOAA GFS",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\gcs-gfs-2m-temperature.grib2",
+      "bytes": 875050,
+      "seconds": 2.2436,
+      "sha256": "f441e4528289255ee85ccf7220bc7afc486f611b56d447ee4c7f4440aaede171",
+      "mode": "complete-grib-message",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "mirror": "gcs",
+        "index": {
+          "url": "https://storage.googleapis.com/global-forecast-system/gfs.20261011/00/atmos/gfs.t00z.pgrb2.0p25.f000.idx",
+          "httpStatus": 200,
+          "headers": {
+            "Content-Type": "binary/octet-stream",
+            "Last-Modified": "Sun, 11 Oct 2026 03:35:59 GMT",
+            "ETag": "\"1dc49899e6b1103c61d65fae3ee6f347\"",
+            "Content-Length": "31840"
+          },
+          "bytes": 31840,
+          "seconds": 0.9136,
+          "sha256": "b4d8a29d7b6d1b7f6ec0823b90fe15428f7e1c92538602d054d99c768ff6e9dd",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\gcs-gfs.idx"
+        },
+        "indexRecord": "580:406507583:d=2026101100:TMP:2 m above ground:anl:",
+        "range": [
+          406507583,
+          407382632
+        ],
+        "download": {
+          "url": "https://storage.googleapis.com/global-forecast-system/gfs.20261011/00/atmos/gfs.t00z.pgrb2.0p25.f000",
+          "httpStatus": 206,
+          "headers": {
+            "Content-Type": "application/octet-stream",
+            "Last-Modified": "Sun, 11 Oct 2026 03:45:58 GMT",
+            "ETag": "\"378892a856b2df86194d9acca2abda67\"",
+            "Content-Range": "bytes 406507583-407382632/493540856",
+            "Content-Length": "875050"
+          },
+          "bytes": 875050,
+          "seconds": 2.2436,
+          "sha256": "f441e4528289255ee85ccf7220bc7afc486f611b56d447ee4c7f4440aaede171",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\gcs-gfs-2m-temperature.grib2"
+        },
+        "completeGribMessage": true,
+        "raster": {
+          "driver": "GRIB",
+          "width": 1440,
+          "height": 721,
+          "count": 1,
+          "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+          "bounds": [
+            -180.125,
+            -90.125,
+            179.875,
+            90.125
+          ],
+          "transform": [
+            0.25,
+            0.0,
+            -180.125,
+            0.0,
+            -0.25,
+            90.125,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "dtype": [
+            "float64"
+          ],
+          "nodata": null,
+          "decodedValues": 1038240,
+          "validValues": 1038240,
+          "min": -62.72055664062498,
+          "max": 36.51943359375002,
+          "tags": {},
+          "bandTags": [
+            {
+              "GRIB_COMMENT": "Temperature [C]",
+              "GRIB_DISCIPLINE": "0(Meteorological)",
+              "GRIB_ELEMENT": "TMP",
+              "GRIB_FORECAST_SECONDS": "0",
+              "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-10-11T00:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+              "GRIB_PDS_PDTN": "0",
+              "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 81 0 0 1 0 103 0 2 255 0 0",
+              "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 81 0 0 0 1 0 0 0 0 103 0 0 0 0 2 255 0 0 0 0 0",
+              "GRIB_REF_TIME": "1791676800",
+              "GRIB_SHORT_NAME": "2-HTGL",
+              "GRIB_UNIT": "[C]",
+              "GRIB_VALID_TIME": "1791676800"
+            }
+          ],
+          "scales": [
+            1.0
+          ],
+          "offsets": [
+            0.0
+          ]
+        },
+        "passed": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "NOAA GFS",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\azure-gfs-2m-temperature.grib2",
+      "bytes": 875050,
+      "seconds": 19.5945,
+      "sha256": "f441e4528289255ee85ccf7220bc7afc486f611b56d447ee4c7f4440aaede171",
+      "mode": "complete-grib-message",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "mirror": "azure",
+        "index": {
+          "url": "https://noaagfs.blob.core.windows.net/gfs/gfs.20261011/00/atmos/gfs.t00z.pgrb2.0p25.f000.idx",
+          "httpStatus": 200,
+          "headers": {
+            "Content-Length": "31817",
+            "Content-Type": "binary/octet-stream",
+            "Last-Modified": "Sun, 11 Oct 2026 03:36:23 GMT",
+            "ETag": "0x8DF2748D27E77B0"
+          },
+          "bytes": 31817,
+          "seconds": 2.4027,
+          "sha256": "68b59e0e35ad908cfcd93dff5787e1d6e46a3e1875b90a7eea1bdb629ddc38dd",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\azure-gfs.idx"
+        },
+        "indexRecord": "580:406507583:d=2026101100:TMP:2 m above ground:anl:",
+        "range": [
+          406507583,
+          407382632
+        ],
+        "download": {
+          "url": "https://noaagfs.blob.core.windows.net/gfs/gfs.20261011/00/atmos/gfs.t00z.pgrb2.0p25.f000",
+          "httpStatus": 206,
+          "headers": {
+            "Content-Length": "875050",
+            "Content-Type": "binary/octet-stream",
+            "Content-Range": "bytes 406507583-407382632/493540856",
+            "Last-Modified": "Sun, 11 Oct 2026 03:36:11 GMT",
+            "ETag": "0x8DF2748CB395CF4"
+          },
+          "bytes": 875050,
+          "seconds": 19.5945,
+          "sha256": "f441e4528289255ee85ccf7220bc7afc486f611b56d447ee4c7f4440aaede171",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\azure-gfs-2m-temperature.grib2"
+        },
+        "completeGribMessage": true,
+        "raster": {
+          "driver": "GRIB",
+          "width": 1440,
+          "height": 721,
+          "count": 1,
+          "crs": "GEOGCS[\"Coordinate System imported from GRIB file\",DATUM[\"unnamed\",SPHEROID[\"Sphere\",6371229,0]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST]]",
+          "bounds": [
+            -180.125,
+            -90.125,
+            179.875,
+            90.125
+          ],
+          "transform": [
+            0.25,
+            0.0,
+            -180.125,
+            0.0,
+            -0.25,
+            90.125,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "dtype": [
+            "float64"
+          ],
+          "nodata": null,
+          "decodedValues": 1038240,
+          "validValues": 1038240,
+          "min": -62.72055664062498,
+          "max": 36.51943359375002,
+          "tags": {},
+          "bandTags": [
+            {
+              "GRIB_COMMENT": "Temperature [C]",
+              "GRIB_DISCIPLINE": "0(Meteorological)",
+              "GRIB_ELEMENT": "TMP",
+              "GRIB_FORECAST_SECONDS": "0",
+              "GRIB_IDS": "CENTER=7(US-NCEP) SUBCENTER=0 MASTER_TABLE=2 LOCAL_TABLE=1 SIGNF_REF_TIME=1(Start_of_Forecast) REF_TIME=2026-10-11T00:00:00Z PROD_STATUS=0(Operational) TYPE=1(Forecast)",
+              "GRIB_PDS_PDTN": "0",
+              "GRIB_PDS_TEMPLATE_ASSEMBLED_VALUES": "0 0 2 0 81 0 0 1 0 103 0 2 255 0 0",
+              "GRIB_PDS_TEMPLATE_NUMBERS": "0 0 2 0 81 0 0 0 1 0 0 0 0 103 0 0 0 0 2 255 0 0 0 0 0",
+              "GRIB_REF_TIME": "1791676800",
+              "GRIB_SHORT_NAME": "2-HTGL",
+              "GRIB_UNIT": "[C]",
+              "GRIB_VALID_TIME": "1791676800"
+            }
+          ],
+          "scales": [
+            1.0
+          ],
+          "offsets": [
+            0.0
+          ]
+        },
+        "passed": true
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "ECMWF IFS",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\aws-ifs-2m-temperature.grib2",
+      "bytes": 653552,
+      "seconds": 2.4721,
+      "sha256": "85b5ee4e32cce6930d4bd35314d65ae8e699dd99cca0d2ff013fdbfde573bf0e",
+      "mode": "complete-grib-message",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "mirror": "aws",
+        "index": {
+          "url": "https://ecmwf-forecasts.s3.eu-central-1.amazonaws.com/20261011/00z/ifs/0p25/oper/20261011000000-0h-oper-fc.index",
+          "httpStatus": 200,
+          "headers": {
+            "Content-Length": "40577",
+            "Last-Modified": "Sun, 11 Oct 2026 07:34:01 GMT",
+            "ETag": "\"c3daf99e61a6d3317da422b3acd6f087\"",
+            "Content-Type": "application/octet-stream"
+          },
+          "bytes": 40577,
+          "seconds": 1.564,
+          "sha256": "fb03152e363d6e7af84077f7eb96be207f0c20d3ae95a2c3899637f0b33b3440",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\aws-ifs.index"
+        },
+        "indexRecord": {
+          "domain": "g",
+          "date": "20261011",
+          "time": "0000",
+          "expver": "0001",
+          "class": "od",
+          "type": "fc",
+          "stream": "oper",
+          "step": "0",
+          "levtype": "sfc",
+          "param": "2t",
+          "_offset": 32341474,
+          "_length": 653552
+        },
+        "download": {
+          "url": "https://ecmwf-forecasts.s3.eu-central-1.amazonaws.com/20261011/00z/ifs/0p25/oper/20261011000000-0h-oper-fc.grib2",
+          "httpStatus": 206,
+          "headers": {
+            "Content-Length": "653552",
+            "Content-Range": "bytes 32341474-32995025/136644684",
+            "Last-Modified": "Sun, 11 Oct 2026 07:34:01 GMT",
+            "ETag": "\"e089de8b1cd19ffe7a66ba2563a86289\"",
+            "Content-Type": "application/octet-stream"
+          },
+          "bytes": 653552,
+          "seconds": 2.4721,
+          "sha256": "85b5ee4e32cce6930d4bd35314d65ae8e699dd99cca0d2ff013fdbfde573bf0e",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\aws-ifs-2m-temperature.grib2"
+        },
+        "completeGribMessage": true,
+        "passed": true,
+        "decoderCompatibility": {
+          "existingGDAL": "3.6.4 cannot decode CCSDS template 5.42",
+          "independentDecoder": "ecCodes 2.49.0",
+          "isolatedDependencies": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\decoder-deps"
+        },
+        "numerical": {
+          "metadata": {
+            "shortName": "2t",
+            "name": "2 metre temperature",
+            "units": "K",
+            "edition": 2,
+            "dataDate": 20261011,
+            "dataTime": 0,
+            "stepRange": "0",
+            "typeOfLevel": "heightAboveGround",
+            "Ni": 1440,
+            "Nj": 721,
+            "latitudeOfFirstGridPointInDegrees": 90.0,
+            "longitudeOfFirstGridPointInDegrees": 180.0,
+            "latitudeOfLastGridPointInDegrees": -90.0,
+            "longitudeOfLastGridPointInDegrees": 179.75,
+            "iDirectionIncrementInDegrees": 0.25,
+            "jDirectionIncrementInDegrees": 0.25,
+            "packingType": "grid_ccsds",
+            "numberOfValues": 1038240,
+            "numberOfMissing": 0
+          },
+          "decodedValues": 1038240,
+          "minKelvin": 215.81277465820312,
+          "maxKelvin": 308.8127746582031,
+          "meanKelvin": 279.3777998149588,
+          "decodeSeconds": 0.2742
+        },
+        "initialDecoderError": "RasterioIOError('G:/code/geod-global/.verification/multisource-expansion-20261011/weather-ocean/aws-ifs-2m-temperature.grib2 is a grib file, but no raster dataset was successfully identified.')"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "ECMWF IFS",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\gcs-ifs-2m-temperature.grib2",
+      "bytes": 653552,
+      "seconds": 1.3393,
+      "sha256": "85b5ee4e32cce6930d4bd35314d65ae8e699dd99cca0d2ff013fdbfde573bf0e",
+      "mode": "complete-grib-message",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "mirror": "gcs",
+        "index": {
+          "url": "https://storage.googleapis.com/ecmwf-open-data/20261011/00z/ifs/0p25/oper/20261011000000-0h-oper-fc.index",
+          "httpStatus": 200,
+          "headers": {
+            "Content-Type": "application/octet-stream",
+            "Last-Modified": "Sun, 11 Oct 2026 07:34:00 GMT",
+            "ETag": "\"c3daf99e61a6d3317da422b3acd6f087\"",
+            "Content-Length": "40577"
+          },
+          "bytes": 40577,
+          "seconds": 0.7106,
+          "sha256": "fb03152e363d6e7af84077f7eb96be207f0c20d3ae95a2c3899637f0b33b3440",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\gcs-ifs.index"
+        },
+        "indexRecord": {
+          "domain": "g",
+          "date": "20261011",
+          "time": "0000",
+          "expver": "0001",
+          "class": "od",
+          "type": "fc",
+          "stream": "oper",
+          "step": "0",
+          "levtype": "sfc",
+          "param": "2t",
+          "_offset": 32341474,
+          "_length": 653552
+        },
+        "download": {
+          "url": "https://storage.googleapis.com/ecmwf-open-data/20261011/00z/ifs/0p25/oper/20261011000000-0h-oper-fc.grib2",
+          "httpStatus": 206,
+          "headers": {
+            "Content-Type": "application/octet-stream",
+            "Last-Modified": "Sun, 11 Oct 2026 07:34:05 GMT",
+            "ETag": "\"e089de8b1cd19ffe7a66ba2563a86289\"",
+            "Content-Range": "bytes 32341474-32995025/136644684",
+            "Content-Length": "653552"
+          },
+          "bytes": 653552,
+          "seconds": 1.3393,
+          "sha256": "85b5ee4e32cce6930d4bd35314d65ae8e699dd99cca0d2ff013fdbfde573bf0e",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\gcs-ifs-2m-temperature.grib2"
+        },
+        "completeGribMessage": true,
+        "passed": true,
+        "decoderCompatibility": {
+          "existingGDAL": "3.6.4 cannot decode CCSDS template 5.42",
+          "independentDecoder": "ecCodes 2.49.0",
+          "isolatedDependencies": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\decoder-deps"
+        },
+        "numerical": {
+          "metadata": {
+            "shortName": "2t",
+            "name": "2 metre temperature",
+            "units": "K",
+            "edition": 2,
+            "dataDate": 20261011,
+            "dataTime": 0,
+            "stepRange": "0",
+            "typeOfLevel": "heightAboveGround",
+            "Ni": 1440,
+            "Nj": 721,
+            "latitudeOfFirstGridPointInDegrees": 90.0,
+            "longitudeOfFirstGridPointInDegrees": 180.0,
+            "latitudeOfLastGridPointInDegrees": -90.0,
+            "longitudeOfLastGridPointInDegrees": 179.75,
+            "iDirectionIncrementInDegrees": 0.25,
+            "jDirectionIncrementInDegrees": 0.25,
+            "packingType": "grid_ccsds",
+            "numberOfValues": 1038240,
+            "numberOfMissing": 0
+          },
+          "decodedValues": 1038240,
+          "minKelvin": 215.81277465820312,
+          "maxKelvin": 308.8127746582031,
+          "meanKelvin": 279.3777998149588,
+          "decodeSeconds": 0.0121
+        },
+        "initialDecoderError": "RasterioIOError('G:/code/geod-global/.verification/multisource-expansion-20261011/weather-ocean/gcs-ifs-2m-temperature.grib2 is a grib file, but no raster dataset was successfully identified.')"
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "GOES-19 ABI L1b",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\goes19-abi-c13.nc",
+      "bytes": 359051,
+      "seconds": 1.7362,
+      "sha256": "dcd2737520f9c6749e84324a4a2c906729a50916f137067466a352d91f56547f",
+      "mode": "full-published-file",
+      "sourceWorkstream": "weather-ocean",
+      "detail": {
+        "passed": true,
+        "completePublishedFile": true,
+        "download": {
+          "url": "https://noaa-goes19.s3.amazonaws.com/ABI-L1b-RadM/2026/284/00/OR_ABI-L1b-RadM1-M6C13_G19_s20262840000289_e20262840000358_c20262840000389.nc",
+          "httpStatus": 200,
+          "headers": {
+            "Last-Modified": "Sun, 11 Oct 2026 00:00:45 GMT",
+            "ETag": "\"35b936dc432734bb215e2dcfdb066768\"",
+            "Content-Type": "binary/octet-stream",
+            "Content-Length": "359051"
+          },
+          "bytes": 359051,
+          "seconds": 1.7362,
+          "sha256": "dcd2737520f9c6749e84324a4a2c906729a50916f137067466a352d91f56547f",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\goes19-abi-c13.nc"
+        },
+        "key": "ABI-L1b-RadM/2026/284/00/OR_ABI-L1b-RadM1-M6C13_G19_s20262840000289_e20262840000358_c20262840000389.nc",
+        "sizeAndProviderMD5Passed": true,
+        "metadata": {
+          "NC_GLOBAL#cdm_data_type": "Image",
+          "NC_GLOBAL#Conventions": "CF-1.7",
+          "NC_GLOBAL#dataset_name": "OR_ABI-L1b-RadM1-M6C13_G19_s20262840000289_e20262840000358_c20262840000389.nc",
+          "NC_GLOBAL#date_created": "2026-10-11T00:00:38.9Z",
+          "NC_GLOBAL#id": "eab7fa94-9fc8-422c-a9c1-365a8208d8fc",
+          "NC_GLOBAL#institution": "DOC/NOAA/NESDIS > U.S. Department of Commerce, National Oceanic and Atmospheric Administration, National Environmental Satellite, Data, and Information Services",
+          "NC_GLOBAL#instrument_ID": "FM4",
+          "NC_GLOBAL#instrument_type": "GOES-R Series Advanced Baseline Imager (ABI)",
+          "NC_GLOBAL#iso_series_metadata_id": "a70be540-c38b-11e0-962b-0800200c9a66",
+          "NC_GLOBAL#keywords": "SPECTRAL/ENGINEERING > INFRARED WAVELENGTHS > INFRARED RADIANCE",
+          "NC_GLOBAL#keywords_vocabulary": "NASA Global Change Master Directory (GCMD) Earth Science Keywords, Version 7.0.0.0.0",
+          "NC_GLOBAL#license": "Unclassified data.  Access is restricted to approved users only.",
+          "NC_GLOBAL#LUT_Filenames": "SpaceLookParams(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 QTableBand13(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 CalTargetTimeIntervals(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 BandSaturationLimits(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 SolarSpaceLookParams(FM4A_PR_15_01_02)-806049900.0.h5 DeadRowListParams(FM4A_ADR1511_DO_16_00_00)-806386133.0.h5 Mirror_Record(FM4A_CDRL79RevL_DO_16_00_00)-806386133.0.h5 KalmanAstroConsts(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanFilterControls(FM4A_ADR1546v2_DO_16_00_00)-806386133.0.xml KalmanMeasMaxSensibles(FMAA_INT_ONLY_DO_09_01_00)-631775400.0.xml KalmanPreprocessorControls(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanReferenceData(FM4E_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanStarCatalogs(FM4A_CDRL79RevA-DO_14_00_00)-768524084.0.xml ABI_NavigationRDP_Band13(FM4A_CDRL79RevL_DO_16_00_00)-806386133.0.xml ABI_NavigationParameters_Band13(FM4A_CDRL79RevJ_DO_16_00_00)-806386133.0.xml ABI_ResamplingImplementation_Band13(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml ABI_ResamplingParameters_Band13(FM4A_CDRL79RevA-DO_14_00_00)-768524084.0.xml StarLookParams(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 StarDetectionParams(FM4A_PR_15_01_05)-818660400.0.xml ResamplingScaledConversion(FMAA_INT_ONLY_DO_08_00_00)-1111.0.xml BlockReleaseRegions(FMAA_INT_ONLY_DO_08_00_00)-2222.0.csv IR_RetrievalParameters(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 RadianceLUT_Band13(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 ICT_Record(FM4A_CDRL79RevA_DO_16_00_00)-806386133.0.h5 ICM_ConversionConsts(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 ICM_SensorCoefficients(FM4A_ABI_18_533_DO_16_00_00)-806386133.0.h5 ABI_HarmonizationCoefficients(FM4A_ADR1560_PR_15_01_01)-804045400.0.xml",
+          "NC_GLOBAL#Metadata_Conventions": "Unidata Dataset Discovery v1.0",
+          "NC_GLOBAL#naming_authority": "gov.nesdis.noaa",
+          "NC_GLOBAL#orbital_slot": "GOES-East",
+          "NC_GLOBAL#platform_ID": "G19",
+          "NC_GLOBAL#processing_level": "National Aeronautics and Space Administration (NASA) L1b",
+          "NC_GLOBAL#production_cluster": "L1 Green",
+          "NC_GLOBAL#production_data_source": "Realtime",
+          "NC_GLOBAL#production_environment": "OE",
+          "NC_GLOBAL#production_site": "GCCS",
+          "NC_GLOBAL#project": "GOES",
+          "NC_GLOBAL#scene_id": "Mesoscale",
+          "NC_GLOBAL#spatial_resolution": "2km at nadir",
+          "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v35, 20 July 2016)",
+          "NC_GLOBAL#summary": "Single emissive band ABI L1b Radiance Products are digital maps of outgoing radiance values at the top of the atmosphere for IR bands.",
+          "NC_GLOBAL#timeline_id": "ABI Mode 6",
+          "NC_GLOBAL#time_coverage_end": "2026-10-11T00:00:35.8Z",
+          "NC_GLOBAL#time_coverage_start": "2026-10-11T00:00:28.9Z",
+          "NC_GLOBAL#title": "ABI L1b Radiances"
+        },
+        "variables": [
+          {
+            "variable": "Rad",
+            "raster": {
+              "driver": "netCDF",
+              "width": 500,
+              "height": 500,
+              "count": 1,
+              "crs": "PROJCS[\"unnamed\",GEOGCS[\"unknown\",DATUM[\"unnamed\",SPHEROID[\"Spheroid\",6378137,298.2572221]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Geostationary_Satellite\"],PARAMETER[\"central_meridian\",-75],PARAMETER[\"satellite_height\",35786023],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],EXTENSION[\"PROJ4\",\"+proj=geos +lon_0=-75 +h=35786023 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs +sweep=x\"]]",
+              "bounds": [
+                -4248516.764749674,
+                2224459.1066014487,
+                -3246508.107005904,
+                3226467.764345219
+              ],
+              "transform": [
+                2004.0173154875406,
+                0.0,
+                -4248516.764749674,
+                0.0,
+                -2004.0173154875406,
+                3226467.764345219,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "dtype": [
+                "uint16"
+              ],
+              "nodata": 4095.0,
+              "decodedValues": 250000,
+              "validValues": 250000,
+              "min": 288.0,
+              "max": 2431.0,
+              "tags": {
+                "goes_imager_projection#grid_mapping_name": "geostationary",
+                "goes_imager_projection#inverse_flattening": "298.2572221",
+                "goes_imager_projection#latitude_of_projection_origin": "0",
+                "goes_imager_projection#longitude_of_projection_origin": "-75",
+                "goes_imager_projection#long_name": "GOES-R ABI fixed grid projection",
+                "goes_imager_projection#perspective_point_height": "35786023",
+                "goes_imager_projection#semi_major_axis": "6378137",
+                "goes_imager_projection#semi_minor_axis": "6356752.31414",
+                "goes_imager_projection#sweep_angle_axis": "x",
+                "NC_GLOBAL#cdm_data_type": "Image",
+                "NC_GLOBAL#Conventions": "CF-1.7",
+                "NC_GLOBAL#dataset_name": "OR_ABI-L1b-RadM1-M6C13_G19_s20262840000289_e20262840000358_c20262840000389.nc",
+                "NC_GLOBAL#date_created": "2026-10-11T00:00:38.9Z",
+                "NC_GLOBAL#id": "eab7fa94-9fc8-422c-a9c1-365a8208d8fc",
+                "NC_GLOBAL#institution": "DOC/NOAA/NESDIS > U.S. Department of Commerce, National Oceanic and Atmospheric Administration, National Environmental Satellite, Data, and Information Services",
+                "NC_GLOBAL#instrument_ID": "FM4",
+                "NC_GLOBAL#instrument_type": "GOES-R Series Advanced Baseline Imager (ABI)",
+                "NC_GLOBAL#iso_series_metadata_id": "a70be540-c38b-11e0-962b-0800200c9a66",
+                "NC_GLOBAL#keywords": "SPECTRAL/ENGINEERING > INFRARED WAVELENGTHS > INFRARED RADIANCE",
+                "NC_GLOBAL#keywords_vocabulary": "NASA Global Change Master Directory (GCMD) Earth Science Keywords, Version 7.0.0.0.0",
+                "NC_GLOBAL#license": "Unclassified data.  Access is restricted to approved users only.",
+                "NC_GLOBAL#LUT_Filenames": "SpaceLookParams(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 QTableBand13(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 CalTargetTimeIntervals(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 BandSaturationLimits(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 SolarSpaceLookParams(FM4A_PR_15_01_02)-806049900.0.h5 DeadRowListParams(FM4A_ADR1511_DO_16_00_00)-806386133.0.h5 Mirror_Record(FM4A_CDRL79RevL_DO_16_00_00)-806386133.0.h5 KalmanAstroConsts(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanFilterControls(FM4A_ADR1546v2_DO_16_00_00)-806386133.0.xml KalmanMeasMaxSensibles(FMAA_INT_ONLY_DO_09_01_00)-631775400.0.xml KalmanPreprocessorControls(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanReferenceData(FM4E_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanStarCatalogs(FM4A_CDRL79RevA-DO_14_00_00)-768524084.0.xml ABI_NavigationRDP_Band13(FM4A_CDRL79RevL_DO_16_00_00)-806386133.0.xml ABI_NavigationParameters_Band13(FM4A_CDRL79RevJ_DO_16_00_00)-806386133.0.xml ABI_ResamplingImplementation_Band13(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml ABI_ResamplingParameters_Band13(FM4A_CDRL79RevA-DO_14_00_00)-768524084.0.xml StarLookParams(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 StarDetectionParams(FM4A_PR_15_01_05)-818660400.0.xml ResamplingScaledConversion(FMAA_INT_ONLY_DO_08_00_00)-1111.0.xml BlockReleaseRegions(FMAA_INT_ONLY_DO_08_00_00)-2222.0.csv IR_RetrievalParameters(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 RadianceLUT_Band13(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 ICT_Record(FM4A_CDRL79RevA_DO_16_00_00)-806386133.0.h5 ICM_ConversionConsts(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 ICM_SensorCoefficients(FM4A_ABI_18_533_DO_16_00_00)-806386133.0.h5 ABI_HarmonizationCoefficients(FM4A_ADR1560_PR_15_01_01)-804045400.0.xml",
+                "NC_GLOBAL#Metadata_Conventions": "Unidata Dataset Discovery v1.0",
+                "NC_GLOBAL#naming_authority": "gov.nesdis.noaa",
+                "NC_GLOBAL#orbital_slot": "GOES-East",
+                "NC_GLOBAL#platform_ID": "G19",
+                "NC_GLOBAL#processing_level": "National Aeronautics and Space Administration (NASA) L1b",
+                "NC_GLOBAL#production_cluster": "L1 Green",
+                "NC_GLOBAL#production_data_source": "Realtime",
+                "NC_GLOBAL#production_environment": "OE",
+                "NC_GLOBAL#production_site": "GCCS",
+                "NC_GLOBAL#project": "GOES",
+                "NC_GLOBAL#scene_id": "Mesoscale",
+                "NC_GLOBAL#spatial_resolution": "2km at nadir",
+                "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v35, 20 July 2016)",
+                "NC_GLOBAL#summary": "Single emissive band ABI L1b Radiance Products are digital maps of outgoing radiance values at the top of the atmosphere for IR bands.",
+                "NC_GLOBAL#timeline_id": "ABI Mode 6",
+                "NC_GLOBAL#time_coverage_end": "2026-10-11T00:00:35.8Z",
+                "NC_GLOBAL#time_coverage_start": "2026-10-11T00:00:28.9Z",
+                "NC_GLOBAL#title": "ABI L1b Radiances",
+                "Rad#add_offset": "-1.6443",
+                "Rad#ancillary_variables": "DQF",
+                "Rad#cell_methods": "t: point area: point",
+                "Rad#coordinates": "band_id band_wavelength t y x",
+                "Rad#grid_mapping": "goes_imager_projection",
+                "Rad#long_name": "ABI L1b Radiances",
+                "Rad#resolution": "y: 0.000056 rad x: 0.000056 rad",
+                "Rad#scale_factor": "0.045728918",
+                "Rad#sensor_band_bit_depth": "12",
+                "Rad#standard_name": "toa_outgoing_radiance_per_unit_wavenumber",
+                "Rad#units": "mW m-2 sr-1 (cm-1)-1",
+                "Rad#valid_range": "{0,4094}",
+                "Rad#_FillValue": "4095",
+                "Rad#_Unsigned": "true",
+                "x#add_offset": "-0.118692",
+                "x#axis": "X",
+                "x#long_name": "GOES fixed grid projection x-coordinate",
+                "x#scale_factor": "5.6000001e-05",
+                "x#standard_name": "projection_x_coordinate",
+                "x#units": "rad",
+                "y#add_offset": "0.090131998",
+                "y#axis": "Y",
+                "y#long_name": "GOES fixed grid projection y-coordinate",
+                "y#scale_factor": "-5.6000001e-05",
+                "y#standard_name": "projection_y_coordinate",
+                "y#units": "rad"
+              },
+              "bandTags": [
+                {
+                  "add_offset": "-1.6443",
+                  "ancillary_variables": "DQF",
+                  "cell_methods": "t: point area: point",
+                  "coordinates": "band_id band_wavelength t y x",
+                  "grid_mapping": "goes_imager_projection",
+                  "long_name": "ABI L1b Radiances",
+                  "NETCDF_VARNAME": "Rad",
+                  "resolution": "y: 0.000056 rad x: 0.000056 rad",
+                  "scale_factor": "0.045728918",
+                  "sensor_band_bit_depth": "12",
+                  "standard_name": "toa_outgoing_radiance_per_unit_wavenumber",
+                  "units": "mW m-2 sr-1 (cm-1)-1",
+                  "valid_range": "{0,4094}",
+                  "_FillValue": "4095",
+                  "_Unsigned": "true"
+                }
+              ],
+              "scales": [
+                0.04572891816496849
+              ],
+              "offsets": [
+                -1.6442999839782715
+              ]
+            }
+          },
+          {
+            "variable": "DQF",
+            "raster": {
+              "driver": "netCDF",
+              "width": 500,
+              "height": 500,
+              "count": 1,
+              "crs": "PROJCS[\"unnamed\",GEOGCS[\"unknown\",DATUM[\"unnamed\",SPHEROID[\"Spheroid\",6378137,298.2572221]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Geostationary_Satellite\"],PARAMETER[\"central_meridian\",-75],PARAMETER[\"satellite_height\",35786023],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],EXTENSION[\"PROJ4\",\"+proj=geos +lon_0=-75 +h=35786023 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs +sweep=x\"]]",
+              "bounds": [
+                -4248516.764749674,
+                2224459.1066014487,
+                -3246508.107005904,
+                3226467.764345219
+              ],
+              "transform": [
+                2004.0173154875406,
+                0.0,
+                -4248516.764749674,
+                0.0,
+                -2004.0173154875406,
+                3226467.764345219,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "dtype": [
+                "int8"
+              ],
+              "nodata": -1.0,
+              "decodedValues": 250000,
+              "validValues": 250000,
+              "min": 0.0,
+              "max": 0.0,
+              "tags": {
+                "DQF#cell_methods": "t: point area: point",
+                "DQF#coordinates": "band_id band_wavelength t y x",
+                "DQF#flag_meanings": "good_pixel_qf conditionally_usable_pixel_qf out_of_range_pixel_qf no_value_pixel_qf focal_plane_temperature_threshold_exceeded_qf",
+                "DQF#flag_values": "{0,1,2,3,4}",
+                "DQF#grid_mapping": "goes_imager_projection",
+                "DQF#long_name": "ABI L1b Radiances data quality flags",
+                "DQF#number_of_qf_values": "5",
+                "DQF#percent_conditionally_usable_pixel_qf": "0",
+                "DQF#percent_focal_plane_temperature_threshold_exceeded_qf": "0",
+                "DQF#percent_good_pixel_qf": "1",
+                "DQF#percent_no_value_pixel_qf": "0",
+                "DQF#percent_out_of_range_pixel_qf": "0",
+                "DQF#standard_name": "status_flag",
+                "DQF#units": "1",
+                "DQF#valid_range": "{0,4}",
+                "DQF#_FillValue": "-1",
+                "DQF#_Unsigned": "true",
+                "goes_imager_projection#grid_mapping_name": "geostationary",
+                "goes_imager_projection#inverse_flattening": "298.2572221",
+                "goes_imager_projection#latitude_of_projection_origin": "0",
+                "goes_imager_projection#longitude_of_projection_origin": "-75",
+                "goes_imager_projection#long_name": "GOES-R ABI fixed grid projection",
+                "goes_imager_projection#perspective_point_height": "35786023",
+                "goes_imager_projection#semi_major_axis": "6378137",
+                "goes_imager_projection#semi_minor_axis": "6356752.31414",
+                "goes_imager_projection#sweep_angle_axis": "x",
+                "NC_GLOBAL#cdm_data_type": "Image",
+                "NC_GLOBAL#Conventions": "CF-1.7",
+                "NC_GLOBAL#dataset_name": "OR_ABI-L1b-RadM1-M6C13_G19_s20262840000289_e20262840000358_c20262840000389.nc",
+                "NC_GLOBAL#date_created": "2026-10-11T00:00:38.9Z",
+                "NC_GLOBAL#id": "eab7fa94-9fc8-422c-a9c1-365a8208d8fc",
+                "NC_GLOBAL#institution": "DOC/NOAA/NESDIS > U.S. Department of Commerce, National Oceanic and Atmospheric Administration, National Environmental Satellite, Data, and Information Services",
+                "NC_GLOBAL#instrument_ID": "FM4",
+                "NC_GLOBAL#instrument_type": "GOES-R Series Advanced Baseline Imager (ABI)",
+                "NC_GLOBAL#iso_series_metadata_id": "a70be540-c38b-11e0-962b-0800200c9a66",
+                "NC_GLOBAL#keywords": "SPECTRAL/ENGINEERING > INFRARED WAVELENGTHS > INFRARED RADIANCE",
+                "NC_GLOBAL#keywords_vocabulary": "NASA Global Change Master Directory (GCMD) Earth Science Keywords, Version 7.0.0.0.0",
+                "NC_GLOBAL#license": "Unclassified data.  Access is restricted to approved users only.",
+                "NC_GLOBAL#LUT_Filenames": "SpaceLookParams(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 QTableBand13(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 CalTargetTimeIntervals(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 BandSaturationLimits(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 SolarSpaceLookParams(FM4A_PR_15_01_02)-806049900.0.h5 DeadRowListParams(FM4A_ADR1511_DO_16_00_00)-806386133.0.h5 Mirror_Record(FM4A_CDRL79RevL_DO_16_00_00)-806386133.0.h5 KalmanAstroConsts(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanFilterControls(FM4A_ADR1546v2_DO_16_00_00)-806386133.0.xml KalmanMeasMaxSensibles(FMAA_INT_ONLY_DO_09_01_00)-631775400.0.xml KalmanPreprocessorControls(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanReferenceData(FM4E_CDRL79Rev-_DO_10_00_00)-637909408.0.xml KalmanStarCatalogs(FM4A_CDRL79RevA-DO_14_00_00)-768524084.0.xml ABI_NavigationRDP_Band13(FM4A_CDRL79RevL_DO_16_00_00)-806386133.0.xml ABI_NavigationParameters_Band13(FM4A_CDRL79RevJ_DO_16_00_00)-806386133.0.xml ABI_ResamplingImplementation_Band13(FM4A_CDRL79Rev-_DO_10_00_00)-637909408.0.xml ABI_ResamplingParameters_Band13(FM4A_CDRL79RevA-DO_14_00_00)-768524084.0.xml StarLookParams(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 StarDetectionParams(FM4A_PR_15_01_05)-818660400.0.xml ResamplingScaledConversion(FMAA_INT_ONLY_DO_08_00_00)-1111.0.xml BlockReleaseRegions(FMAA_INT_ONLY_DO_08_00_00)-2222.0.csv IR_RetrievalParameters(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 RadianceLUT_Band13(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 ICT_Record(FM4A_CDRL79RevA_DO_16_00_00)-806386133.0.h5 ICM_ConversionConsts(FM4A_CDRL79RevA_DO_14_00_00)-768524084.0.h5 ICM_SensorCoefficients(FM4A_ABI_18_533_DO_16_00_00)-806386133.0.h5 ABI_HarmonizationCoefficients(FM4A_ADR1560_PR_15_01_01)-804045400.0.xml",
+                "NC_GLOBAL#Metadata_Conventions": "Unidata Dataset Discovery v1.0",
+                "NC_GLOBAL#naming_authority": "gov.nesdis.noaa",
+                "NC_GLOBAL#orbital_slot": "GOES-East",
+                "NC_GLOBAL#platform_ID": "G19",
+                "NC_GLOBAL#processing_level": "National Aeronautics and Space Administration (NASA) L1b",
+                "NC_GLOBAL#production_cluster": "L1 Green",
+                "NC_GLOBAL#production_data_source": "Realtime",
+                "NC_GLOBAL#production_environment": "OE",
+                "NC_GLOBAL#production_site": "GCCS",
+                "NC_GLOBAL#project": "GOES",
+                "NC_GLOBAL#scene_id": "Mesoscale",
+                "NC_GLOBAL#spatial_resolution": "2km at nadir",
+                "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v35, 20 July 2016)",
+                "NC_GLOBAL#summary": "Single emissive band ABI L1b Radiance Products are digital maps of outgoing radiance values at the top of the atmosphere for IR bands.",
+                "NC_GLOBAL#timeline_id": "ABI Mode 6",
+                "NC_GLOBAL#time_coverage_end": "2026-10-11T00:00:35.8Z",
+                "NC_GLOBAL#time_coverage_start": "2026-10-11T00:00:28.9Z",
+                "NC_GLOBAL#title": "ABI L1b Radiances",
+                "x#add_offset": "-0.118692",
+                "x#axis": "X",
+                "x#long_name": "GOES fixed grid projection x-coordinate",
+                "x#scale_factor": "5.6000001e-05",
+                "x#standard_name": "projection_x_coordinate",
+                "x#units": "rad",
+                "y#add_offset": "0.090131998",
+                "y#axis": "Y",
+                "y#long_name": "GOES fixed grid projection y-coordinate",
+                "y#scale_factor": "-5.6000001e-05",
+                "y#standard_name": "projection_y_coordinate",
+                "y#units": "rad"
+              },
+              "bandTags": [
+                {
+                  "cell_methods": "t: point area: point",
+                  "coordinates": "band_id band_wavelength t y x",
+                  "flag_meanings": "good_pixel_qf conditionally_usable_pixel_qf out_of_range_pixel_qf no_value_pixel_qf focal_plane_temperature_threshold_exceeded_qf",
+                  "flag_values": "{0,1,2,3,4}",
+                  "grid_mapping": "goes_imager_projection",
+                  "long_name": "ABI L1b Radiances data quality flags",
+                  "NETCDF_VARNAME": "DQF",
+                  "number_of_qf_values": "5",
+                  "percent_conditionally_usable_pixel_qf": "0",
+                  "percent_focal_plane_temperature_threshold_exceeded_qf": "0",
+                  "percent_good_pixel_qf": "1",
+                  "percent_no_value_pixel_qf": "0",
+                  "percent_out_of_range_pixel_qf": "0",
+                  "standard_name": "status_flag",
+                  "units": "1",
+                  "valid_range": "{0,4}",
+                  "_FillValue": "-1",
+                  "_Unsigned": "true"
+                }
+              ],
+              "scales": [
+                1.0
+              ],
+              "offsets": [
+                0.0
+              ]
+            }
+          }
+        ],
+        "nominalNadirResolution": "2 km thermal C13; actual footprint varies with view angle",
+        "georeferencing": "Native geostationary projection; geographic region in dataset metadata, not global coverage",
+        "listing": {
+          "url": "https://noaa-goes19.s3.amazonaws.com/?list-type=2&prefix=ABI-L1b-RadM%2F2026%2F284%2F00%2FOR_ABI-L1b-RadM1-M6C13&max-keys=2",
+          "httpStatus": 200,
+          "headers": {
+            "Content-Type": "application/xml"
+          },
+          "bytes": 1273,
+          "seconds": 0.9958,
+          "sha256": "399b2638d4c7a51ff70c5a4e16c1efbcf1428f031107bb68642bf548cea32362",
+          "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\goes19-c13-list.xml"
+        },
+        "metadataLicenseConflict": {
+          "conflict": "Embedded GOES metadata says approved users only, while current NOAA-managed NODD registry explicitly permits public use. Anonymous full-file access passed. Preserve both statements; do not classify the public route as authentication failure.",
+          "embeddedField": "NC_GLOBAL#license",
+          "releasePolicy": "https://registry.opendata.aws/noaa-goes/"
+        }
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "CHIRPS monthly precipitation",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\chinese-research\\chirps_beijing_202401.nc",
+      "bytes": 8076,
+      "seconds": 1.938,
+      "sha256": "30a5f712e18336445d556019c9536dde29e83b506f95434d28b29eab8748677d",
+      "mode": "complete-service-subset",
+      "sourceWorkstream": "chinese-research",
+      "detail": {
+        "id": "chirps_noaa_erddap_subset",
+        "url": "https://coastwatch.pfeg.noaa.gov/erddap/griddap/chirps20GlobalMonthlyP05.nc?precip[(2024-01-01T00:00:00Z)][(39.0):(40.0)][(116.0):(117.0)]",
+        "filename": "chirps_beijing_202401.nc",
+        "kind": "scientific_product_subset",
+        "source_metadata": "https://coastwatch.pfeg.noaa.gov/erddap/info/chirps20GlobalMonthlyP05/index.html",
+        "authentication": "anonymous",
+        "checked_at_utc": "2026-10-11T15:06:23.926208+00:00",
+        "status_code": 200,
+        "content_type": "application/x-netcdf",
+        "content_length": null,
+        "final_url": "https://coastwatch.pfeg.noaa.gov/erddap/griddap/chirps20GlobalMonthlyP05.nc?precip%5B(2024-01-01T00:00:00Z)%5D%5B(39.0):(40.0)%5D%5B(116.0):(117.0)%5D",
+        "bytes": 8076,
+        "download_seconds": 1.938,
+        "sha256": "30a5f712e18336445d556019c9536dde29e83b506f95434d28b29eab8748677d",
+        "file_path": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\chinese-research\\chirps_beijing_202401.nc",
+        "status": "complete_download_and_full_decode",
+        "decoded_rasters": [
+          {
+            "variable": "precip",
+            "shape": [
+              1,
+              21,
+              21
+            ],
+            "dtype": "float32",
+            "valid_values": 441,
+            "crs": "None",
+            "bounds": [
+              115.99999389648437,
+              38.999993896484376,
+              117.04999389648437,
+              40.049993896484374
+            ],
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "units": [
+              "mm/month"
+            ],
+            "tags": {
+              "latitude#actual_range": "{39.024994,40.024994}",
+              "latitude#axis": "Y",
+              "latitude#ioos_category": "Location",
+              "latitude#long_name": "Latitude",
+              "latitude#standard_name": "latitude",
+              "latitude#units": "degrees_north",
+              "latitude#_CoordinateAxisType": "Lat",
+              "longitude#actual_range": "{116.02499,117.02499}",
+              "longitude#axis": "X",
+              "longitude#ioos_category": "Location",
+              "longitude#long_name": "Longitude",
+              "longitude#standard_name": "longitude",
+              "longitude#units": "degrees_east",
+              "longitude#_CoordinateAxisType": "Lon",
+              "NC_GLOBAL#acknowledgements": "The Climate Hazards Group InfraRed Precipitation with Stations development process was carried out through U.S. Geological Survey (USGS) cooperative agreement #G09AC000001 \"Monitoring and Forecasting Climate, Water and Land Use for Food Production in the Developing World\" with funding from: U.S. Agency for International Development Office of Food for Peace, award #AID-FFP-P-10-00002 for \"Famine Early Warning Systems Network Support,\" the National Aeronautics and Space Administration Applied Sciences Program, Decisions award #NN10AN26I for \"A Land Data Assimilation System for Famine Early Warning,\" SERVIR award #NNH12AU22I for \"A Long Time-Series Indicator of Agricultural Drought for the Greater Horn of Africa,\" The National Oceanic and Atmospheric Administration award NA11OAR4310151 for \"A Global Standardized Precipitation Index supporting the US Drought Portal and the Famine Early Warning System Network,\" and the USGS Land Change Science Program.",
+              "NC_GLOBAL#cdm_data_type": "Grid",
+              "NC_GLOBAL#Conventions": "CF-1.6, COARDS, ACDD-1.3",
+              "NC_GLOBAL#creator_email": "pete@geog.ucsb.edu",
+              "NC_GLOBAL#creator_name": "Pete Peterson",
+              "NC_GLOBAL#creator_type": "person",
+              "NC_GLOBAL#documentation": "https://pubs.usgs.gov/ds/832/",
+              "NC_GLOBAL#Easternmost_Easting": "117.02499",
+              "NC_GLOBAL#faq": "https://wiki.chc.ucsb.edu/CHIRPS_FAQ",
+              "NC_GLOBAL#geospatial_lat_max": "40.024994",
+              "NC_GLOBAL#geospatial_lat_min": "39.024994",
+              "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+              "NC_GLOBAL#geospatial_lon_max": "117.02499",
+              "NC_GLOBAL#geospatial_lon_min": "116.02499",
+              "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+              "NC_GLOBAL#history": "Created by Climate Hazards Group, University of California at Santa Barbara\nerd.data@noaa.gov periodically downloads the latest data files from https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/netcdf/ to NOAA NMFS SWFSC ERD\n2026-10-11T15:06:24Z (local files)\n2026-10-11T15:06:24Z https://coastwatch.pfeg.noaa.gov/erddap/griddap/chirps20GlobalMonthlyP05.nc?precip%5B(2024-01-01T00:00:00Z)%5D%5B(39.0):(40.0)%5D%5B(116.0):(117.0)%5D",
+              "NC_GLOBAL#infoUrl": "https://www.chc.ucsb.edu/data/chirps",
+              "NC_GLOBAL#institution": "UCSB Climate Hazards Group",
+              "NC_GLOBAL#keywords": "barbara, california, chirps, climate, convective, convective precipitation rate, data, group, hazards, infrared, latitude, longitude, meteorology, monthly, precipitation, rain, rainfall, rate, santa, stations, time, university, version, with",
+              "NC_GLOBAL#license": "To the extent possible under the law, Pete Peterson has waived all copyright and related or neighboring rights to CHIRPS. CHIRPS data is in the public domain as registered with Creative Commons. \n\nThe data may be used and redistributed for free but is not intended\nfor legal use, since it may contain inaccuracies. Neither the data\nContributor, ERD, NOAA, nor the United States Government, nor any\nof their employees or contractors, makes any warranty, express or\nimplied, including warranties of merchantability and fitness for a\nparticular purpose, or assumes any legal liability for the accuracy,\ncompleteness, or usefulness, of this information.",
+              "NC_GLOBAL#Northernmost_Northing": "40.024994",
+              "NC_GLOBAL#references": "Funk, C.C., Peterson, P.J., Landsfeld, M.F., Pedreros, D.H., Verdin, J.P., Rowland, J.D., Romero, B.E., Husak, G.J., Michaelsen, J.C., and Verdin, A.P., 2014, A quasi-global precipitation time series for drought monitoring: U.S. Geological Survey Data Series 832, 4 p., https://dx.doi.org/110.3133/ds832.  Available at https://pubs.usgs.gov/ds/832/",
+              "NC_GLOBAL#sourceUrl": "(local files)",
+              "NC_GLOBAL#Southernmost_Northing": "39.024994",
+              "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table v70",
+              "NC_GLOBAL#summary": "This dataset has monthly averages of the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS), which is quasi-global rainfall data set. Spanning 50°;S-50°;N (and all longitudes) and ranging from 1981 to near-present, CHIRPS incorporates our in-house climatology, CHPclim, 0.05°; resolution satellite imagery, and in-situ station data to create a gridded rainfall time series for trend analysis and seasonal drought monitoring. Since 1999, USGS and CHC scientists (supported by funding from USAID, NASA, and NOAA) have developed techniques for producing rainfall maps, especially in areas where surface data is sparse. Estimating rainfall variations in space and time is a key aspect of drought early warning and environmental monitoring. See https://www.nature.com/articles/sdata201566 . See the FAQ at https://wiki.chc.ucsb.edu/CHIRPS_FAQ .",
+              "NC_GLOBAL#time_coverage_end": "2024-01-01T00:00:00Z",
+              "NC_GLOBAL#time_coverage_start": "2024-01-01T00:00:00Z",
+              "NC_GLOBAL#title": "CHIRPS Version 2.0, Precipitation, Global, 0.05°;, Monthly, 1981-present",
+              "NC_GLOBAL#version": "2.0",
+              "NC_GLOBAL#Westernmost_Easting": "116.02499",
+              "NETCDF_DIM_EXTRA": "{time}",
+              "NETCDF_DIM_time_DEF": "{1,6}",
+              "NETCDF_DIM_time_VALUES": "1704067200",
+              "precip#colorBarMaximum": "400",
+              "precip#colorBarMinimum": "0",
+              "precip#ioos_category": "Meteorology",
+              "precip#long_name": "Precipitation",
+              "precip#missing_value": "-9999",
+              "precip#standard_name": "lwe_precipitation_rate",
+              "precip#time_step": "month",
+              "precip#units": "mm/month",
+              "precip#_FillValue": "-9999",
+              "time#actual_range": "{1704067200,1704067200}",
+              "time#axis": "T",
+              "time#calendar": "gregorian",
+              "time#ioos_category": "Time",
+              "time#long_name": "Time",
+              "time#standard_name": "time",
+              "time#time_origin": "01-JAN-1970 00:00:00",
+              "time#units": "seconds since 1970-01-01T00:00:00Z",
+              "time#_CoordinateAxisType": "Time"
+            },
+            "raw_min": 2.1561427116394043,
+            "raw_max": 6.621692180633545,
+            "physical_min": 2.1561427116394043,
+            "physical_max": 6.621692180633545
+          }
+        ],
+        "full_decode": true,
+        "total_seconds": 1.947
+      },
+      "parentIndependentSizeHashVerified": true
+    },
+    {
+      "family": "NOAA OISST",
+      "file": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\chinese-research\\oisst_20250101.nc",
+      "bytes": 1553086,
+      "seconds": 2.933,
+      "sha256": "aec833d9936474a54c55d4550be78ffacfdebc4de7552f7ff30ccf1d73bbde2e",
+      "mode": "full-published-file",
+      "sourceWorkstream": "chinese-research",
+      "detail": {
+        "id": "oisst_ncei_daily_global",
+        "url": "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/202501/oisst-avhrr-v02r01.20250101.nc",
+        "filename": "oisst_20250101.nc",
+        "kind": "scientific_product_full_daily_file",
+        "source_metadata": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
+        "authentication": "anonymous",
+        "checked_at_utc": "2026-10-11T15:06:23.926208+00:00",
+        "status_code": 200,
+        "content_type": "application/x-netcdf",
+        "content_length": "1553086",
+        "final_url": "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/202501/oisst-avhrr-v02r01.20250101.nc",
+        "bytes": 1553086,
+        "download_seconds": 2.933,
+        "sha256": "aec833d9936474a54c55d4550be78ffacfdebc4de7552f7ff30ccf1d73bbde2e",
+        "file_path": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\chinese-research\\oisst_20250101.nc",
+        "status": "complete_download_and_full_decode",
+        "decoded_rasters": [
+          {
+            "variable": "sst",
+            "shape": [
+              1,
+              720,
+              1440
+            ],
+            "dtype": "int16",
+            "valid_values": 691150,
+            "crs": "None",
+            "bounds": [
+              0.0,
+              -90.0,
+              360.0,
+              90.0
+            ],
+            "scales": [
+              0.009999999776482582
+            ],
+            "offsets": [
+              0.0
+            ],
+            "units": [
+              "Celsius"
+            ],
+            "tags": {
+              "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+              "lat#long_name": "Latitude",
+              "lat#units": "degrees_north",
+              "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+              "lon#long_name": "Longitude",
+              "lon#units": "degrees_east",
+              "NC_GLOBAL#cdm_data_type": "Grid",
+              "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+              "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+              "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+              "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+              "NC_GLOBAL#date_created": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#date_modified": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#geospatial_lat_max": "90",
+              "NC_GLOBAL#geospatial_lat_min": "-90",
+              "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+              "NC_GLOBAL#geospatial_lon_max": "360",
+              "NC_GLOBAL#geospatial_lon_min": "0",
+              "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+              "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+              "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250101.nc",
+              "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+              "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+              "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+              "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+              "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+              "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+              "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+              "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+              "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+              "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+              "NC_GLOBAL#processing_level": "NOAA Level 4",
+              "NC_GLOBAL#product_version": "Version v02r01",
+              "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+              "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+              "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+              "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+              "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+              "NC_GLOBAL#time_coverage_end": "2025-01-01T23:59:59Z",
+              "NC_GLOBAL#time_coverage_start": "2025-01-01T00:00:00Z",
+              "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+              "NETCDF_DIM_EXTRA": "{time,zlev}",
+              "NETCDF_DIM_time_DEF": "{1,5}",
+              "NETCDF_DIM_time_VALUES": "17167",
+              "NETCDF_DIM_zlev_DEF": "{1,5}",
+              "NETCDF_DIM_zlev_VALUES": "0",
+              "sst#add_offset": "0",
+              "sst#long_name": "Daily sea surface temperature",
+              "sst#scale_factor": "0.0099999998",
+              "sst#units": "Celsius",
+              "sst#valid_max": "4500",
+              "sst#valid_min": "-300",
+              "sst#_FillValue": "-999",
+              "time#long_name": "Center time of the day",
+              "time#units": "days since 1978-01-01 12:00:00",
+              "zlev#actual_range": "0, 0",
+              "zlev#long_name": "Sea surface height",
+              "zlev#positive": "down",
+              "zlev#units": "meters"
+            },
+            "raw_min": -180.0,
+            "raw_max": 3272.0,
+            "physical_min": -1.7999999597668648,
+            "physical_max": 32.71999926865101
+          },
+          {
+            "variable": "anom",
+            "shape": [
+              1,
+              720,
+              1440
+            ],
+            "dtype": "int16",
+            "valid_values": 691150,
+            "crs": "None",
+            "bounds": [
+              0.0,
+              -90.0,
+              360.0,
+              90.0
+            ],
+            "scales": [
+              0.009999999776482582
+            ],
+            "offsets": [
+              0.0
+            ],
+            "units": [
+              "Celsius"
+            ],
+            "tags": {
+              "anom#add_offset": "0",
+              "anom#long_name": "Daily sea surface temperature anomalies",
+              "anom#scale_factor": "0.0099999998",
+              "anom#units": "Celsius",
+              "anom#valid_max": "1200",
+              "anom#valid_min": "-1200",
+              "anom#_FillValue": "-999",
+              "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+              "lat#long_name": "Latitude",
+              "lat#units": "degrees_north",
+              "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+              "lon#long_name": "Longitude",
+              "lon#units": "degrees_east",
+              "NC_GLOBAL#cdm_data_type": "Grid",
+              "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+              "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+              "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+              "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+              "NC_GLOBAL#date_created": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#date_modified": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#geospatial_lat_max": "90",
+              "NC_GLOBAL#geospatial_lat_min": "-90",
+              "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+              "NC_GLOBAL#geospatial_lon_max": "360",
+              "NC_GLOBAL#geospatial_lon_min": "0",
+              "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+              "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+              "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250101.nc",
+              "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+              "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+              "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+              "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+              "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+              "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+              "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+              "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+              "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+              "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+              "NC_GLOBAL#processing_level": "NOAA Level 4",
+              "NC_GLOBAL#product_version": "Version v02r01",
+              "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+              "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+              "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+              "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+              "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+              "NC_GLOBAL#time_coverage_end": "2025-01-01T23:59:59Z",
+              "NC_GLOBAL#time_coverage_start": "2025-01-01T00:00:00Z",
+              "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+              "NETCDF_DIM_EXTRA": "{time,zlev}",
+              "NETCDF_DIM_time_DEF": "{1,5}",
+              "NETCDF_DIM_time_VALUES": "17167",
+              "NETCDF_DIM_zlev_DEF": "{1,5}",
+              "NETCDF_DIM_zlev_VALUES": "0",
+              "time#long_name": "Center time of the day",
+              "time#units": "days since 1978-01-01 12:00:00",
+              "zlev#actual_range": "0, 0",
+              "zlev#long_name": "Sea surface height",
+              "zlev#positive": "down",
+              "zlev#units": "meters"
+            },
+            "raw_min": -943.0,
+            "raw_max": 916.0,
+            "physical_min": -9.429999789223075,
+            "physical_max": 9.159999795258045
+          },
+          {
+            "variable": "err",
+            "shape": [
+              1,
+              720,
+              1440
+            ],
+            "dtype": "int16",
+            "valid_values": 691150,
+            "crs": "None",
+            "bounds": [
+              0.0,
+              -90.0,
+              360.0,
+              90.0
+            ],
+            "scales": [
+              0.009999999776482582
+            ],
+            "offsets": [
+              0.0
+            ],
+            "units": [
+              "Celsius"
+            ],
+            "tags": {
+              "err#add_offset": "0",
+              "err#long_name": "Estimated error standard deviation of analysed_sst",
+              "err#scale_factor": "0.0099999998",
+              "err#units": "Celsius",
+              "err#valid_max": "1000",
+              "err#valid_min": "0",
+              "err#_FillValue": "-999",
+              "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+              "lat#long_name": "Latitude",
+              "lat#units": "degrees_north",
+              "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+              "lon#long_name": "Longitude",
+              "lon#units": "degrees_east",
+              "NC_GLOBAL#cdm_data_type": "Grid",
+              "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+              "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+              "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+              "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+              "NC_GLOBAL#date_created": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#date_modified": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#geospatial_lat_max": "90",
+              "NC_GLOBAL#geospatial_lat_min": "-90",
+              "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+              "NC_GLOBAL#geospatial_lon_max": "360",
+              "NC_GLOBAL#geospatial_lon_min": "0",
+              "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+              "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+              "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250101.nc",
+              "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+              "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+              "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+              "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+              "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+              "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+              "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+              "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+              "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+              "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+              "NC_GLOBAL#processing_level": "NOAA Level 4",
+              "NC_GLOBAL#product_version": "Version v02r01",
+              "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+              "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+              "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+              "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+              "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+              "NC_GLOBAL#time_coverage_end": "2025-01-01T23:59:59Z",
+              "NC_GLOBAL#time_coverage_start": "2025-01-01T00:00:00Z",
+              "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+              "NETCDF_DIM_EXTRA": "{time,zlev}",
+              "NETCDF_DIM_time_DEF": "{1,5}",
+              "NETCDF_DIM_time_VALUES": "17167",
+              "NETCDF_DIM_zlev_DEF": "{1,5}",
+              "NETCDF_DIM_zlev_VALUES": "0",
+              "time#long_name": "Center time of the day",
+              "time#units": "days since 1978-01-01 12:00:00",
+              "zlev#actual_range": "0, 0",
+              "zlev#long_name": "Sea surface height",
+              "zlev#positive": "down",
+              "zlev#units": "meters"
+            },
+            "raw_min": 11.0,
+            "raw_max": 68.0,
+            "physical_min": 0.1099999975413084,
+            "physical_max": 0.6799999848008156
+          },
+          {
+            "variable": "ice",
+            "shape": [
+              1,
+              720,
+              1440
+            ],
+            "dtype": "int16",
+            "valid_values": 132328,
+            "crs": "None",
+            "bounds": [
+              0.0,
+              -90.0,
+              360.0,
+              90.0
+            ],
+            "scales": [
+              0.009999999776482582
+            ],
+            "offsets": [
+              0.0
+            ],
+            "units": [
+              "%"
+            ],
+            "tags": {
+              "ice#add_offset": "0",
+              "ice#long_name": "Sea ice concentration",
+              "ice#scale_factor": "0.0099999998",
+              "ice#units": "%",
+              "ice#valid_max": "100",
+              "ice#valid_min": "0",
+              "ice#_FillValue": "-999",
+              "lat#grids": "Uniform grid from -89.875 to 89.875 by 0.25",
+              "lat#long_name": "Latitude",
+              "lat#units": "degrees_north",
+              "lon#grids": "Uniform grid from 0.125 to 359.875 by 0.25",
+              "lon#long_name": "Longitude",
+              "lon#units": "degrees_east",
+              "NC_GLOBAL#cdm_data_type": "Grid",
+              "NC_GLOBAL#comment": "Data was converted from NetCDF-3 to NetCDF-4 format with metadata updates in November 2017.",
+              "NC_GLOBAL#Conventions": "CF-1.6, ACDD-1.3",
+              "NC_GLOBAL#creator_email": "oisst-help@noaa.gov",
+              "NC_GLOBAL#creator_url": "https://www.ncei.noaa.gov/",
+              "NC_GLOBAL#date_created": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#date_modified": "2025-01-16T14:43:00Z",
+              "NC_GLOBAL#geospatial_lat_max": "90",
+              "NC_GLOBAL#geospatial_lat_min": "-90",
+              "NC_GLOBAL#geospatial_lat_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lat_units": "degrees_north",
+              "NC_GLOBAL#geospatial_lon_max": "360",
+              "NC_GLOBAL#geospatial_lon_min": "0",
+              "NC_GLOBAL#geospatial_lon_resolution": "0.25",
+              "NC_GLOBAL#geospatial_lon_units": "degrees_east",
+              "NC_GLOBAL#history": "Final file created using preliminary as first guess, and 3 days of AVHRR data. Preliminary uses only 1 day of AVHRR data.",
+              "NC_GLOBAL#id": "oisst-avhrr-v02r01.20250101.nc",
+              "NC_GLOBAL#institution": "NOAA/National Centers for Environmental Information",
+              "NC_GLOBAL#instrument": "Earth Remote Sensing Instruments > Passive Remote Sensing > Spectrometers/Radiometers > Imaging Spectrometers/Radiometers > AVHRR > Advanced Very High Resolution Radiometer",
+              "NC_GLOBAL#instrument_vocabulary": "Global Change Master Directory (GCMD) Instrument Keywords",
+              "NC_GLOBAL#keywords": "Earth Science > Oceans > Ocean Temperature > Sea Surface Temperature",
+              "NC_GLOBAL#keywords_vocabulary": "Global Change Master Directory (GCMD) Earth Science Keywords",
+              "NC_GLOBAL#metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+              "NC_GLOBAL#naming_authority": "gov.noaa.ncei",
+              "NC_GLOBAL#ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+              "NC_GLOBAL#platform": "Ships, buoys, Argo floats, MetOp-A, MetOp-B",
+              "NC_GLOBAL#platform_vocabulary": "Global Change Master Directory (GCMD) Platform Keywords",
+              "NC_GLOBAL#processing_level": "NOAA Level 4",
+              "NC_GLOBAL#product_version": "Version v02r01",
+              "NC_GLOBAL#references": "Reynolds, et al.(2007) Daily High-Resolution-Blended Analyses for Sea Surface Temperature (available at https://doi.org/10.1175/2007JCLI1824.1). Banzon, et al.(2016) A long-term record of blended satellite and in situ sea-surface temperature for climate monitoring, modeling and environmental studies (available at https://doi.org/10.5194/essd-8-165-2016). Huang et al. (2020) Improvements of the Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version v02r01, submitted.Climatology is based on 1971-2000 OI.v2 SST. Satellite data: Pathfinder AVHRR SST, Navy AVHRR SST, and NOAA ACSPO SST. Ice data: NCEP Ice and GSFC Ice.",
+              "NC_GLOBAL#sensor": "Thermometer, AVHRR",
+              "NC_GLOBAL#source": "ICOADS, NCEP_GTS, GSFC_ICE, NCEP_ICE, Pathfinder_AVHRR, Navy_AVHRR, NOAA_ACSP",
+              "NC_GLOBAL#standard_name_vocabulary": "CF Standard Name Table (v40, 25 January 2017)",
+              "NC_GLOBAL#summary": "NOAAs 1/4-degree Daily Optimum Interpolation Sea Surface Temperature (OISST) (sometimes referred to as Reynolds SST, which however also refers to earlier products at different resolution), currently available as version v02r01, is created by interpolating and extrapolating SST observations from different sources, resulting in a smoothed complete field. The sources of data are satellite (AVHRR) and in situ platforms (i.e., ships and buoys), and the specific datasets employed may change over time. At the marginal ice zone, sea ice concentrations are used to generate proxy SSTs.  A preliminary version of this file is produced in near-real time (1-day latency), and then replaced with a final version after 2 weeks. Note that this is the AVHRR-ONLY DOISST, available from Oct 1981, but there is a companion DOISST product that includes microwave satellite data, available from June 2002",
+              "NC_GLOBAL#time_coverage_end": "2025-01-01T23:59:59Z",
+              "NC_GLOBAL#time_coverage_start": "2025-01-01T00:00:00Z",
+              "NC_GLOBAL#title": "NOAA/NCEI 1/4 Degree Daily Optimum Interpolation Sea Surface Temperature (OISST) Analysis, Version 2.1 - Final",
+              "NETCDF_DIM_EXTRA": "{time,zlev}",
+              "NETCDF_DIM_time_DEF": "{1,5}",
+              "NETCDF_DIM_time_VALUES": "17167",
+              "NETCDF_DIM_zlev_DEF": "{1,5}",
+              "NETCDF_DIM_zlev_VALUES": "0",
+              "time#long_name": "Center time of the day",
+              "time#units": "days since 1978-01-01 12:00:00",
+              "zlev#actual_range": "0, 0",
+              "zlev#long_name": "Sea surface height",
+              "zlev#positive": "down",
+              "zlev#units": "meters"
+            },
+            "raw_min": 15.0,
+            "raw_max": 100.0,
+            "physical_min": 0.14999999664723873,
+            "physical_max": 0.9999999776482582
+          }
+        ],
+        "full_decode": true,
+        "total_seconds": 3.006
+      },
+      "parentIndependentSizeHashVerified": true
+    }
+  ],
+  "sentinel2Radiometry": {
+    "comparedNonNoDataPixels": 3348900,
+    "sameProductUri": true,
+    "sameGrid": true,
+    "processingBaseline": "05.11",
+    "earthsearchBoaOffsetApplied": true,
+    "earthsearchAssetRasterBands": [
+      {
+        "nodata": 0,
+        "data_type": "uint16",
+        "bits_per_sample": 15,
+        "spatial_resolution": 60,
+        "scale": 0.0001,
+        "offset": -0.1
+      }
+    ],
+    "gcsProductCalibration": {
+      "metadataUrl": "https://storage.googleapis.com/gcp-public-data-sentinel-2/L2/tiles/50/T/MK/S2A_MSIL2A_20250116T031051_N0511_R075_T50TMK_20250116T064100.SAFE/MTD_MSIL2A.xml",
+      "BOA_ADD_OFFSET": [
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000",
+        "-1000"
+      ],
+      "BOA_QUANTIFICATION_VALUE": [
+        "10000"
+      ],
+      "PROCESSING_BASELINE": [
+        "05.11"
+      ]
+    },
+    "rawDnEqualityFraction": 0.0,
+    "gcsMinus1000MatchesCogCount": 3264850,
+    "gcsMinus1000MatchesCogFraction": 0.9749022066947356,
+    "cogPlus1000MatchesGcsFraction": 0.9749022066947356,
+    "gcsMinus1000ClampedTo1MatchesCogCount": 3348900,
+    "gcsMinus1000ClampedTo1MatchesCogFraction": 1.0,
+    "lowDnClampedCount": 84050,
+    "lowDnClampedFraction": 0.025097793305264415,
+    "gcsLowDnMinimum": 617,
+    "gcsLowDnMaximum": 1000,
+    "cogLowDnUniqueValues": [
+      1
+    ],
+    "physicalReflectanceRmseIncludingClampedPixels": 0.0015132895018161088,
+    "physicalReflectanceMaxAbsoluteDifference": 0.038400000000000004,
+    "physicalReflectanceMaxAbsoluteDifferenceExcludingClampedPixels": 0.0,
+    "formulaObserved": "COG DN = max(GCS raw DN - 1000, 1) for every compared valid pixel",
+    "finding": "Distinct hosting of same observation does not imply byte or raw-DN identity; published COG harmonization discarded low negative reflectance information through clamping.",
+    "metadataCaveat": "Item marks BOA offset already applied but B01 raster:bands still advertises offset -0.1. Applying that metadata offset again would double-subtract. Do not resolve silently solely from processing baseline; retain raw source and calibrated metadata and flag provider inconsistency.",
+    "substitutionRequirement": "Preserve provider/product/processing provenance, normalize radiometry once, respect original QA and NoData, disclose clamping; use native JP2 if negative reflectance preservation matters."
+  },
+  "failedOrIncomplete": [
+    {
+      "route": "NOAA CoastWatch ERDDAP numerical subset",
+      "passed": false,
+      "error": "Error {\n    code=503;\n    message=\"Service Unavailable: There was a (temporary?) problem.  Wait a minute, then try again.  (In a browser, click the Reload button.)\";\n}",
+      "failedDataFile": "G:\\code\\geod-global\\.verification\\multisource-expansion-20261011\\weather-ocean\\oisst-nw-pacific-subset.nc",
+      "note": "A saved HTTP error text is not a successful NetCDF sample"
+    }
+  ],
+  "compatibilityIssues": [
+    {
+      "dataset": "ECMWF IFS",
+      "currentDecoder": "GDAL3.6.4",
+      "compression": "CCSDS GRIB2 template5.42",
+      "independentDecoderPassed": "ecCodes2.49.0",
+      "appCompatibilityVerified": false
+    }
+  ],
+  "researchCatalog": "multisource-channel-research-20261011.json"
+}

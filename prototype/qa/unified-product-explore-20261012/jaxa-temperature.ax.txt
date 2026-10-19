@@ -1,0 +1,89 @@
+Browser tab: 1, Title: "GeoD Global · 本地工作空间", URL: "http://127.0.0.1:4317/#Explore".
+1 AXWebArea GeoD Global · 本地工作空间, URL: 127.0.0.1:4317/#Explore
+	2 container root
+		3 container
+			4 button (expanded) Description: 收起导航栏, Secondary Actions: Collapse
+			5 link Description: GeoD 首页, Value: 127.0.0.1:4317/#Home
+			6 text JAXA SGLI · 月度地表温度 工作空间 探索
+			7 button 通知 · 0 条未读
+			8 button (collapsed) Description: 打开 Agent, Secondary Actions: Expand
+			9 button 切换明暗主题
+		10 container
+			11 container Description: GeoD 首页, ID: primary-navigation
+				12 container GeoD 首页
+					13 link Description: 首页, Value: 127.0.0.1:4317/#Home
+					14 link Description: 探索, Value: 127.0.0.1:4317/#Explore
+					15 link Description: 工作空间, Value: 127.0.0.1:4317/#Workspace
+					16 link Description: 我的数据, Value: 127.0.0.1:4317/#My%20Data
+					17 link Description: 任务, Value: 127.0.0.1:4317/#Tasks
+					18 link Description: 影像监测, Value: 127.0.0.1:4317/#Imagery%20monitoring
+				19 link Description: 设置, Value: 127.0.0.1:4317/#Settings
+				20 button 帮助
+				21 button 登录
+			22 splitter Description: 调整导航栏宽度, Help: 拖动调整宽度 · 双击恢复默认 · 方向键微调, Value: 20.951000213623047
+			23 container
+				24 container explore-discovery
+					25 heading 数据源, Value: 1
+						26 text 数据源
+					27 button (expanded) Description: 收起影像列表, Secondary Actions: Collapse
+					28 container 数据源
+						29 text 数据源
+						30 text 公开数据产品
+						31 pop up button (collapsed) Description: 添加数据源, Secondary Actions: Expand
+						32 pop up button (collapsed) Description: 选择数据源, Secondary Actions: Expand
+						33 container
+							34 text 原始文件可下载  ·  GCOM-C / SGLI 第 3 版白天月度地表温度，由 JAXA Earth 发行完整数值 COG 分幅。这是地表观测温度，不是 2 米气温、气候平均场，也不是任务原始 HDF 文件。
+						35 text 可下载已发布的原始文件，请先核对所选文件再下载。
+					36 button 北京市
+						37 text 北京市
+					38 container 产品筛选与检索结果
+						39 button (collapsed) 产品信息与许可, Secondary Actions: Expand
+						40 container
+							41 text 产品图层
+							42 combo box (collapsed) Description: 产品图层, Value: 白天月度地表温度 · 原始 DN, Secondary Actions: Expand
+								64 text 白天月度地表温度 · 原始 DN
+						43 container
+							44 text 观测年份
+							45 combo box (collapsed) Description: 观测年份, Value: 2025, Secondary Actions: Expand
+								65 text 2025
+						46 container
+							47 text 观测月份
+							48 combo box (collapsed) Description: 观测月份, Value: 12, Secondary Actions: Expand
+								66 text 12
+						49 button (collapsed) 数值含义, Secondary Actions: Expand
+						50 button 开始检索
+						67 text 找到 1 个产品文件
+						68 container public-dataset-item-dd0eecf426979dd6e04606d69721bf2775424f1571134acfac986f142355164c
+							69 checkbox Description: 定位产品 N00.00-N90.00, Value: 0
+							70 container
+								71 text N00.00-N90.00  ·  2025-11-30  – 2026-01-01
+							72 container
+								73 text 发布条目的原始范围 :  90, 0, 180, 90
+							74 button (collapsed) 来源文件说明, Secondary Actions: Expand
+							75 container
+								76 checkbox Description: 选择文件 · N00.00-N90.00 · LST, Value: 0
+								77 text 白天月度地表温度 · 原始 DN LST ·  image/tiff; application=geotiff
+							78 button (collapsed) 数值含义, Secondary Actions: Expand
+							79 button (collapsed) 文件来源详情, Secondary Actions: Expand
+						80 button (collapsed) 检索来源详情, Secondary Actions: Expand
+						81 container
+							82 text 保存到项目
+							83 combo box (collapsed) Description: 保存到项目, Value: 新建项目, Secondary Actions: Expand
+								84 text 新建项目
+							85 text 工程名称
+							86 text field (settable) Description: 数据产品工程名称, Value: JAXA SGLI · Monthly land-surface temperature
+							87 button (disabled) 保存文件选择
+				52 splitter Description: 调整影像列表宽度, Help: 拖动调整宽度 · 双击恢复默认 · 方向键微调, Value: 37.08300018310547
+				53 container 数据产品探索
+					54 container 产品范围地图
+						55 container 影像范围地图
+						56 button 选择搜索区域
+						57 container 地图控件
+							58 button 放大
+							59 button 缩小
+							60 button 定位已发布文件范围
+							61 button 定位搜索区域
+						62 container
+							63 text Natural Earth 概览 · 已发布文件边界 目录边界不代表有效像素覆盖。
+
+The focused UI element is 32 pop up button (collapsed) Description: 选择数据源, Secondary Actions: Expand

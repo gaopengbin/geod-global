@@ -1,0 +1,33 @@
+{
+  "brandKit": "GeoD Global 1.1",
+  "variant": "global-v6",
+  "restoredFromRejectedVariant": "global-v7",
+  "sourceSha256": "01d4f478243768226237aedac44290665b48be3920e5b9117df17d7de0a3c7fe",
+  "tool": "image_gen",
+  "assets": [
+    {
+      "file": "prototype/public/brand/geod-symbol.png",
+      "kitFile": "icons/png/symbol-256.png",
+      "sha256": "0207e0d9e9ca020de08b98aed0d0ce7013255927f8ed7c88aca404e2d4bd1960",
+      "bytes": 54860
+    },
+    {
+      "file": "src-tauri/icons/icon.png",
+      "kitFile": "icons/png/symbol-256.png",
+      "sha256": "0207e0d9e9ca020de08b98aed0d0ce7013255927f8ed7c88aca404e2d4bd1960",
+      "bytes": 54860
+    },
+    {
+      "file": "src-tauri/icons/icon.ico",
+      "kitFile": "icons/windows/geod-global-symbol.ico",
+      "sha256": "72dcbe0b23c6b9fcda90221f027752a460bf6329ee50fa71a06a6de9b58354b7",
+      "bytes": 83082
+    },
+    {
+      "file": "prototype/public/brand/global-space-v1.webp",
+      "kitFile": "backgrounds/clean-space-original.webp",
+      "sha256": "44bf22dac960380d1e75cfb10b90c3f464467fb52b9470bec2171d94fd02e8f6",
+      "bytes": 204686
+    }
+  ]
+}

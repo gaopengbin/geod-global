@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-15",
+  "scope": "Synchronize current GeoD Agent activity groups, completion disclosure, inline status and reply presentation into Global",
+  "upstream": {
+    "version": "0.2.5",
+    "revision": "693d6a5e2ee38b537543f173efa63e2914b1a0cf",
+    "sourceFilesVerified": 5,
+    "referenceCheckoutModified": false,
+    "inventory": "third-party/geod-agent-chat/UPSTREAM.json",
+    "siblingRuntimeDependency": false
+  },
+  "checks": {
+    "agentPanelAndMapPreviewIntegrationTestsPassed": 90,
+    "chatWorkSceneAndDeliveryTestsPassed": 18,
+    "frontendBuild": "passed",
+    "desktopDebugBuild": "passed",
+    "isolationCheck": "passed",
+    "scopedDiffWhitespaceCheck": "passed",
+    "installerCreated": false,
+    "desktopBinaryLaunchedThisRun": false
+  },
+  "browser": {
+    "method": "Explicit isolated component replay through the browser UI, using the actual AgentPanel and production styles",
+    "width": 1280,
+    "height": 720,
+    "sidebarWidth": 420,
+    "sidebarTranscriptWidth": 378,
+    "sidebarTranscriptScrollWidth": 378,
+    "activeStatusCount": 1,
+    "composerStatusCount": 0,
+    "completedProcessAutoFold": "passed",
+    "inspectedGroupAndToolRemainOpenAfterCompletion": "passed",
+    "userAndFinalOutsideProcess": "passed",
+    "interruptedRequestNotLabeledComplete": "passed",
+    "screenshots": [
+      ".verification/agent-port-20261015/running.png",
+      ".verification/agent-port-20261015/completed.png",
+      ".verification/agent-port-20261015/sidebar.png"
+    ]
+  },
+  "desktopBinary": {
+    "path": "target/debug/geod-global-desktop.exe",
+    "bytes": 158744576,
+    "sha256": "8bdb0f85e2b95e971a179eea5fd008d8c7aa6df729dd6a27f916d5b854e7d0cb"
+  },
+  "boundaries": {
+    "liveModelCalled": false,
+    "newImageryDownloadRun": false,
+    "nativeApprovalAndRequestLifecycleReplaced": false,
+    "optionalUpstreamNavigationRailAdded": false,
+    "deployed": false
+  }
+}

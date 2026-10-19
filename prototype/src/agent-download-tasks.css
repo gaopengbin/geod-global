@@ -1,0 +1,20 @@
+.agent-download-tasks { padding:10px 12px; margin:8px 0; border:1px solid var(--line); border-radius:var(--radius-card); min-width:0; font-size:var(--text-caption); line-height:var(--leading-caption); }
+.agent-download-heading { display:flex; align-items:center; gap:7px; min-width:0; }
+.agent-download-heading > svg { color:var(--accent); flex:none; }
+.agent-download-heading > strong { font-size:var(--text-caption); font-weight:var(--weight-semibold); line-height:var(--leading-caption); }
+.agent-download-heading > .bui-badge { margin-left:auto; flex:none; font-size:var(--text-caption); line-height:var(--leading-caption); }
+.agent-download-heading > .bui-button { width:26px; height:26px; flex:none; }
+.agent-download-totals { display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; margin:7px 0; color:var(--ink-2); font-size:var(--text-caption); font-variant-numeric:tabular-nums; line-height:var(--leading-caption); }
+.agent-download-tasks > .bui-progress { height:3px; margin:0 0 5px; }
+.agent-download-tasks .bui-disclosure-trigger { padding:5px 0; min-width:0; font-size:var(--text-caption); line-height:var(--leading-caption); }
+.agent-download-details > .bui-disclosure-trigger { color:var(--ink-2); font-size:var(--text-caption); line-height:var(--leading-caption); }
+.agent-download-list { border-top:1px solid var(--line); padding-top:4px; margin-top:4px; }
+.agent-download-item + .agent-download-item { border-top:1px solid var(--line); }
+.agent-download-item > .bui-disclosure-trigger { width:100%; text-align:left; }
+.agent-download-item > .bui-disclosure-trigger > span { flex:1; min-width:0; }
+.agent-download-item-summary { display:grid; gap:3px; padding-block:3px; }
+.agent-download-item-summary > span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.agent-download-item-summary > small { font-size:var(--text-caption); color:var(--ink-2); font-weight:var(--weight-regular); line-height:var(--leading-caption); }
+.agent-download-item .agent-plan { margin:4px 0 8px; padding:10px; border-color:var(--line); }
+.agent-download-attention { display:flex; align-items:center; gap:6px; flex-wrap:wrap; color:var(--orange); font-size:var(--text-caption); margin-top:6px; line-height:var(--leading-caption); }
+.agent-download-attention .bui-button { margin-left:auto; font-size:var(--text-caption); line-height:var(--leading-caption); }

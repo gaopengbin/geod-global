@@ -1,0 +1,495 @@
+[
+  {
+    "datasetId": "planetary-more",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation",
+    "document": {
+      "id": "noaa-cdr-sea-surface-temperature-optimum-interpolation",
+      "type": "Collection",
+      "links": [
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation"
+        },
+        {
+          "rel": "license",
+          "href": "https://www.ncei.noaa.gov/pub/data/sds/cdr/CDRs/Sea_Surface_Temperature_Optimum_Interpolation/UseAgreement_01B-09.pdf",
+          "type": "application/pdf",
+          "title": "NOAA CDR Sea Surface Temperature - Optimum Interpolation Use Agreement"
+        },
+        {
+          "rel": "about",
+          "href": "https://www.ncei.noaa.gov/products/climate-data-records/sea-surface-temperature-optimum-interpolation",
+          "type": "text/html",
+          "title": "Sea Surface Temperature - Optimum Interpolation CDR"
+        },
+        {
+          "rel": "cite-as",
+          "href": "https://doi.org/10.25921/RE9P-PT57"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/noaa-cdr-sea-surface-temperature-optimum-interpolation",
+          "type": "text/html",
+          "title": "Human readable dataset overview and reference"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/schema+json",
+          "title": "Queryables",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/noaa-cdr-sea-surface-temperature-optimum-interpolation/queryables"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/noaa-cdr-sea-surface-temperature-optimum-interpolation",
+          "title": "Human readable dataset overview and reference",
+          "type": "text/html"
+        }
+      ],
+      "title": "Sea Surface Temperature - Optimum Interpolation CDR",
+      "assets": {
+        "thumbnail": {
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/noaa-cdr-sea-surface-temperature-optimum-interpolation-thumb.png",
+          "type": "image/png",
+          "roles": [
+            "thumbnail"
+          ],
+          "title": "Sea Surface Temperature - Optimum Interpolation CDR thumbnail"
+        },
+        "geoparquet-items": {
+          "href": "abfs://items/noaa-cdr-sea-surface-temperature-optimum-interpolation.parquet",
+          "type": "application/x-parquet",
+          "roles": [
+            "stac-items"
+          ],
+          "title": "GeoParquet STAC items",
+          "description": "Snapshot of the collection's STAC items exported to GeoParquet format",
+          "msft:partition_info": {
+            "is_partitioned": false
+          },
+          "table:storage_options": {
+            "account_name": "pcstacitems"
+          }
+        }
+      },
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "1981-09-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "sci:doi": "10.25921/RE9P-PT57",
+      "keywords": [
+        "Global",
+        "Climate",
+        "NOAA",
+        "Temperature",
+        "Ocean"
+      ],
+      "providers": [
+        {
+          "url": "https://www.ncei.noaa.gov/",
+          "name": "National Centers for Environmental Information",
+          "roles": [
+            "producer",
+            "processor",
+            "licensor"
+          ],
+          "description": "NCEI is the Nation's leading authority for environmental data, and manage one of the largest archives of atmospheric, coastal, geophysical, and oceanic research in the world. NCEI contributes to the NESDIS mission by developing new products and services that span the science disciplines and enable better data discovery."
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com",
+          "name": "Microsoft",
+          "roles": [
+            "processor",
+            "host"
+          ]
+        }
+      ],
+      "description": "The NOAA 1/4° daily Optimum Interpolation Sea Surface Temperature (or daily OISST) Climate Data Record (CDR) provides complete ocean temperature fields constructed by combining bias-adjusted observations from different platforms (satellites, ships, buoys) on a regular global grid, with gaps filled in by interpolation. The main input source is satellite data from the Advanced Very High Resolution Radiometer (AVHRR), which provides high temporal-spatial coverage from late 1981-present. This input must be adjusted to the buoys due to erroneous cold SST data following the Mt Pinatubo and El Chichon eruptions. Applications include climate modeling, resource management, ecological studies on annual to daily scales.\n\nThese Cloud Optimized GeoTIFFs (COGs) were created from NetCDF files which are delivered to Azure as part of the [NOAA Open Data Dissemination (NODD) Program](https://www.noaa.gov/information-technology/open-data-dissemination).\nFor the NetCDF files, see collection `noaa-cdr-sea-surface-temperature-optimum-interpolation-netcdf`.\n",
+      "item_assets": {
+        "err": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "Celsius",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "ice": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "%",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "sst": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "Celsius",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "anom": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "raster:bands": [
+            {
+              "unit": "Celsius",
+              "scale": 0.009999999776482582,
+              "nodata": -999,
+              "data_type": "int16"
+            }
+          ]
+        },
+        "netcdf": {
+          "type": "application/x-netcdf",
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "msft:region": "eastus",
+      "sci:citation": "Huang, Boyin; Liu, Chunying; Banzon, Viva F.; Freeman, Eric; Graham, Garrett; Hankins, Bill; Smith, Thomas M.; Zhang, Huai-Min. (2020): NOAA 0.25-degree Daily Optimum Interpolation Sea Surface Temperature (OISST), Version 2.1. NOAA National Centers for Environmental Information. https://doi.org/10.25921/RE9P-PT57.",
+      "stac_version": "1.0.0",
+      "msft:group_id": "noaa-cdr",
+      "msft:container": "sea-surface-temperature-optimum-interpolation",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "storage:schemes": {
+        "azure": {
+          "type": "ms-azure",
+          "region": "eastus",
+          "account": "noaacdr",
+          "platform": "https://{account}.blob.core.windows.net",
+          "container": "sea-surface-temperature-optimum-interpolation"
+        }
+      },
+      "msft:storage_account": "noaacdr",
+      "msft:short_description": "The NOAA 1/4° daily Optimum Interpolation Sea Surface Temperature (or daily OISST) Climate Data Record (CDR) provides complete ocean temperature fields constructed by combining bias-adjusted observations from different platforms (satellites, ships, buoys) on a regular global grid, with gaps filled in by interpolation."
+    }
+  },
+  {
+    "datasetId": "modis-more",
+    "url": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061",
+    "document": {
+      "id": "modis-64A1-061",
+      "type": "Collection",
+      "links": [
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061"
+        },
+        {
+          "rel": "help",
+          "href": "https://lpdaac.usgs.gov/documents/1006/MCD64_User_Guide_V61.pdf",
+          "title": "MCD64 User Guide"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/61/MCD64A1",
+          "title": "MCD64A1 file specification"
+        },
+        {
+          "rel": "cite-as",
+          "href": "https://doi.org/10.5067/MODIS/MCD64A1.061",
+          "title": "LP DAAC - MCD64A1"
+        },
+        {
+          "rel": "license",
+          "href": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+          "title": "LP DAAC - Data Citation and Policies"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/modis-64A1-061",
+          "type": "text/html",
+          "title": "Human readable dataset overview and reference"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/schema+json",
+          "title": "Queryables",
+          "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/modis-64A1-061/queryables"
+        },
+        {
+          "rel": "describedby",
+          "href": "https://planetarycomputer.microsoft.com/dataset/modis-64A1-061",
+          "title": "Human readable dataset overview and reference",
+          "type": "text/html"
+        }
+      ],
+      "title": "MODIS Burned Area Monthly",
+      "assets": {
+        "thumbnail": {
+          "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/modis-64A1-061.png",
+          "type": "image/png",
+          "roles": [
+            "thumbnail"
+          ],
+          "title": "MODIS Burned Area Monthly thumbnail"
+        },
+        "geoparquet-items": {
+          "href": "abfs://items/modis-64A1-061.parquet",
+          "type": "application/x-parquet",
+          "roles": [
+            "stac-items"
+          ],
+          "title": "GeoParquet STAC items",
+          "description": "Snapshot of the collection's STAC items exported to GeoParquet format.",
+          "msft:partition_info": {
+            "is_partitioned": true,
+            "partition_frequency": "MS"
+          },
+          "table:storage_options": {
+            "account_name": "pcstacitems"
+          }
+        }
+      },
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -180,
+              -90,
+              180,
+              90
+            ]
+          ]
+        },
+        "temporal": {
+          "interval": [
+            [
+              "2000-11-01T00:00:00Z",
+              null
+            ]
+          ]
+        }
+      },
+      "license": "proprietary",
+      "keywords": [
+        "NASA",
+        "MODIS",
+        "Satellite",
+        "Imagery",
+        "Global",
+        "Fire",
+        "MCD64A1"
+      ],
+      "providers": [
+        {
+          "url": "https://lpdaac.usgs.gov/",
+          "name": "NASA LP DAAC at the USGS EROS Center",
+          "roles": [
+            "producer",
+            "licensor",
+            "processor"
+          ]
+        },
+        {
+          "url": "https://planetarycomputer.microsoft.com",
+          "name": "Microsoft",
+          "roles": [
+            "host",
+            "processor"
+          ]
+        }
+      ],
+      "summaries": {
+        "platform": [
+          "aqua",
+          "terra"
+        ],
+        "instruments": [
+          "modis"
+        ]
+      },
+      "description": "The Terra and Aqua combined MCD64A1 Version 6.1 Burned Area data product is a monthly, global gridded 500 meter (m) product containing per-pixel burned-area and quality information. The MCD64A1 burned-area mapping approach employs 500 m Moderate Resolution Imaging Spectroradiometer (MODIS) Surface Reflectance imagery coupled with 1 kilometer (km) MODIS active fire observations. The algorithm uses a burn sensitive Vegetation Index (VI) to create dynamic thresholds that are applied to the composite data. The VI is derived from MODIS shortwave infrared atmospherically corrected surface reflectance bands 5 and 7 with a measure of temporal texture. The algorithm identifies the date of burn for the 500 m grid cells within each individual MODIS tile. The date is encoded in a single data layer as the ordinal day of the calendar year on which the burn occurred with values assigned to unburned land pixels and additional special values reserved for missing data and water grid cells. The data layers provided in the MCD64A1 product include Burn Date, Burn Data Uncertainty, Quality Assurance, along with First Day and Last Day of reliable change detection of the year.",
+      "item_assets": {
+        "QA": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Quality Assurance Indicators",
+          "raster:bands": [
+            {
+              "data_type": "uint8",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "hdf": {
+          "type": "application/x-hdf",
+          "roles": [
+            "data"
+          ],
+          "title": "Source data containing all bands"
+        },
+        "Last_Day": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Last day of the year of reliable change detection",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "int16",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "metadata": {
+          "type": "application/xml",
+          "roles": [
+            "metadata"
+          ],
+          "title": "Federal Geographic Data Committee (FGDC) Metadata"
+        },
+        "Burn_Date": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Burn day of year",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "int16",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "First_Day": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "First day of the year of reliable change detection",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "int16",
+              "spatial_resolution": 500
+            }
+          ]
+        },
+        "Burn_Date_Uncertainty": {
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "roles": [
+            "data"
+          ],
+          "title": "Estimated uncertainty in burn day",
+          "raster:bands": [
+            {
+              "unit": "Day",
+              "data_type": "uint8",
+              "spatial_resolution": 500
+            }
+          ]
+        }
+      },
+      "msft:region": "westeurope",
+      "stac_version": "1.0.0",
+      "msft:group_id": "modis",
+      "msft:container": "modis-061",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/storage/v2.0.0/schema.json"
+      ],
+      "storage:schemes": {
+        "azure": {
+          "type": "ms-azure",
+          "region": "westeurope",
+          "account": "modiseuwest",
+          "platform": "https://{account}.blob.core.windows.net",
+          "container": "modis-061"
+        }
+      },
+      "sci:publications": [
+        {
+          "doi": "10.5067/MODIS/MCD64A1.061",
+          "citation": "Giglio, L., Justice, C., Boschetti, L., &amp; Roy, D. (2021). <i>MODIS/Terra+Aqua Burned Area Monthly L3 Global 500m SIN Grid V061</i> [Data set]. NASA EOSDIS Land Processes DAAC. https://doi.org/10.5067/MODIS/MCD64A1.061"
+        }
+      ],
+      "msft:storage_account": "modiseuwest",
+      "msft:short_description": "MODIS Burned Area Monthly"
+    }
+  }
+]

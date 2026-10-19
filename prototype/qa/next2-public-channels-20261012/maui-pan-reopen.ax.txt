@@ -1,0 +1,29 @@
+Browser tab: 1, Title: "GeoD Global · 本地工作空间", URL: "http://127.0.0.1:4317/#My%20Data?project=7926a0df-d56d-4d43-855c-aa6317ecdec2".
+1 AXWebArea GeoD Global · 本地工作空间, URL: 127.0.0.1:4317/#My%20Data?project=7926a0df-d56d-4d43-855c-aa6317ecdec2
+	2 container 检查原始栅格, ID: radix-_r_1u_
+		3 container
+			4 heading 检查原始栅格, Value: 2, ID: radix-_r_1v_
+				5 text 检查原始栅格
+			6 button 关闭
+		7 container
+			8 text 4/122000312222/10300100EB15FF00 · Panchromatic Image  · pan_analytic 原件保留独立有效性掩膜。预览和 NoData 标记仅依据 TIFF 单一缺失值声明，零值或未标为缺失的像元不证明有效影像覆盖。
+			9 container 已定位的原始栅格
+			10 container
+				11 button 定位原始栅格
+				12 button 放大
+				13 button 缩小
+			14 text 点击栅格读取原始像素。地图使用文件中的空间网格和第一波段显示预览。
+			15 text 10,332  ×  10,332  ·  波段数 :  1  ·  EPSG:32604
+			16 container
+				17 text 列号（从 0 开始）
+				18 text field (settable) Description: 像素列号, Value: 5799
+			19 container
+				20 text 行号（从 0 开始）
+				21 text field (settable) Description: 像素行号, Value: 9809
+			22 button 读取原始像素
+			23 text 波段 1 : 
+			24 text 470
+			25 button (collapsed) 文件元数据与显示, Secondary Actions: Expand
+			26 button (collapsed) 原始条目元数据, Secondary Actions: Expand
+
+The focused UI element is 1 AXWebArea GeoD Global · 本地工作空间, URL: 127.0.0.1:4317/#My%20Data?project=7926a0df-d56d-4d43-855c-aa6317ecdec2

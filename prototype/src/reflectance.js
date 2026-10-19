@@ -5,7 +5,7 @@ import { VIIRS_CRS, VIIRS_PIXEL, VIIRS_HOST, viirsAssetIdentity, viirsPreparatio
 
 import { MODIS_SCIENCE_KEYS } from './modis-science-layers.js';
 
-export const localRasterKeys = ['reflectance_rgb', 'scl', 'visual', ...LANDSAT_BANDS, 'ndvi', 'evi', ...MODIS_SCIENCE_KEYS, 'modis_qc', 'modis_state', 'qa_pixel', 'qa_radsat', 'elevation', 'aerial', 'srtm', 'vv', 'vh', 'hh', 'hv'];
+export const localRasterKeys = ['reflectance_rgb', 'scl', 'visual', ...LANDSAT_BANDS, 'ndvi', 'evi', ...MODIS_SCIENCE_KEYS, 'modis_qc', 'modis_state', 'qa_pixel', 'qa_radsat', 'elevation', 'aerial', 'srtm', 'srtm_num', 'vv', 'vh', 'hh', 'hv'];
 const profiles = {
   'viirs-09a1-v002': { dataType: 'Int16', nodata: -28672, scale: 0.0001, offset: 0, min: -32768, max: 32767 },
   'modis-09a1-v061': { dataType: 'Int16', nodata: -28672, scale: 0.0001, offset: 0, min: -32768, max: 32767 },

@@ -1,0 +1,14 @@
+export default {
+  'Data product':'数据产品','Data channel':'获取渠道','Product directory':'产品目录','Recent products':'最近使用','Favorite products':'我的收藏','All products':'全部产品',
+  'Favorite {source}':'收藏 {source}','Unfavorite {source}':'取消收藏 {source}','No favorite products yet.':'还没有收藏，点击产品旁的星标即可添加。','No recent products yet.':'选择过的产品会显示在这里。',
+  '10 m true color · 20 m scene classification':'10 米真彩色 · 20 米场景分类','{count} products':'{count} 个产品','{count} channels':'{count} 个渠道',
+  'Select a product, then choose its delivery channel.':'按用途查找产品，获取渠道可在探索页切换。','Product and channel details':'产品与渠道信息',
+  '{count} selected':'已选 {count} 项','Download and results':'下载与成果','Selected downloads':'所选下载','Some files ready · needs attention':'部分文件就绪 · 需处理',
+  'Waiting for task status':'等待读取任务状态','Selection saved · download not started':'选集已保存 · 尚未下载','{count} need attention':'{count} 项需处理',
+  'View download tasks':'查看下载任务','View results':'查看成果','Background tasks · {count}':'后台任务 · {count}',
+  'All projects':'全部项目','Filter tasks by project':'按项目筛选任务','Other downloads':'其他下载','Locate scene {id}':'定位场景 {id}',
+  'Confirm and download':'确认并下载','Confirm download':'确认下载','Download selection':'下载清单','Files and area':'文件与范围','Estimated size':'预计体积','Size checked during download':'下载时核对体积',
+  'Preview selected':'预览所选','Product file details':'产品文件信息','Results saved locally':'成果已保存到本地','Open saved results':'打开已保存成果',
+  'Preview {name}':'预览 {name}','Not available':'暂不可用','No download tasks were returned. The selection is saved; retry the download.':'没有返回下载任务。选集已保存，请重试下载。',
+  'Download originals before previewing.':'请先下载原件，再预览像素。','Download contents':'下载内容说明',
+};

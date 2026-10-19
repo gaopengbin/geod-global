@@ -33,6 +33,9 @@ mod execution;
 mod image_acceptance;
 #[path = "agent_images.rs"]
 mod images;
+#[cfg(all(test, windows))]
+#[path = "agent_scene_acceptance.rs"]
+mod scene_acceptance;
 pub use execution::ExecutionMode;
 #[path = "agent_registry.rs"]
 mod registry;
@@ -45,6 +48,7 @@ fn definitions() -> Vec<Value> {
     result.extend(agent_actions::definitions());
     result.extend(execution::definitions());
     result.push(workspace::definition());
+    result.extend(crate::official_agent::definitions());
     result
 }
 
@@ -59,9 +63,17 @@ pub struct ModelSettings {
     pub protocol: String,
     pub base_url: String,
     pub model: String,
+    #[serde(default)]
+    pub context_window: Option<u32>,
 }
 
 fn validate_settings(value: &ModelSettings) -> Result<(), String> {
+    if value
+        .context_window
+        .is_some_and(|size| !(8_192..=4_194_304).contains(&size))
+    {
+        return Err("Invalid Agent context window size.".into());
+    }
     if ![
         "openai-compatible",
         "openai-responses",
@@ -109,6 +121,7 @@ struct AgentInner {
     vault: Arc<dyn registry::Vault>,
     state: Mutex<AgentState>,
     notifier: std::sync::RwLock<Option<ChangeNotifier>>,
+    official_identity: std::sync::RwLock<Option<crate::identity::DesktopIdentity>>,
 }
 type ChangeNotifier = Arc<dyn Fn(u64) + Send + Sync>;
 struct AgentState {
@@ -140,6 +153,7 @@ impl DesktopAgent {
             manager,
             vault,
             notifier: std::sync::RwLock::new(None),
+            official_identity: std::sync::RwLock::new(None),
             state: Mutex::new(AgentState {
                 registry,
                 connection: None,
@@ -149,6 +163,11 @@ impl DesktopAgent {
     pub fn on_change(&self, callback: impl Fn(u64) + Send + Sync + 'static) {
         if let Ok(mut notifier) = self.0.notifier.write() {
             *notifier = Some(Arc::new(callback));
+        }
+    }
+    pub fn use_official_identity(&self, identity: crate::identity::DesktopIdentity) {
+        if let Ok(mut value) = self.0.official_identity.write() {
+            *value = Some(identity);
         }
     }
     async fn connection(&self, state: &mut AgentState) -> Result<Arc<Connection>, String> {
@@ -166,12 +185,19 @@ impl DesktopAgent {
             .map(|entry| entry.id.clone())
             .unwrap_or_else(registry::new_id);
         let notifier = self.0.notifier.read().ok().and_then(|value| value.clone());
+        let official = self
+            .0
+            .official_identity
+            .read()
+            .ok()
+            .and_then(|value| value.clone());
         let connection = Connection::spawn_notifying(
             &self.0.runtime,
             &self.0.home,
             self.0.manager.clone(),
             binding,
             notifier,
+            official,
         )
         .await?;
         if let Some(entry) = state.registry.selected() {
@@ -722,7 +748,7 @@ impl DesktopAgent {
         let checked: ConnectionTestResult = serde_json::from_value(result)
             .map_err(|_| "Agent returned invalid connection test data.")?;
         if checked.version != 1
-            || checked.latency_ms > 30_000
+            || checked.latency_ms > 90_000
             || checked.checked_at.len() != 24
             || !checked
                 .checked_at
@@ -903,7 +929,7 @@ impl Connection {
         home: &std::path::Path,
         manager: JobManager,
     ) -> Result<Arc<Self>, String> {
-        Self::spawn_notifying(runtime, home, manager, registry::new_id(), None).await
+        Self::spawn_notifying(runtime, home, manager, registry::new_id(), None, None).await
     }
     async fn spawn_notifying(
         runtime: &std::path::Path,
@@ -911,6 +937,7 @@ impl Connection {
         manager: JobManager,
         binding: String,
         notifier: Option<ChangeNotifier>,
+        official: Option<crate::identity::DesktopIdentity>,
     ) -> Result<Arc<Self>, String> {
         // Node's entry-point resolver rejects Windows canonical \\?\ drive
         // paths (EISDIR on G:). Keep native verification canonical, but pass
@@ -1050,6 +1077,7 @@ impl Connection {
                         let manager = manager.clone();
                         let policy = policy.clone();
                         let binding = binding.clone();
+                        let official = official.clone();
                         let permit = permits.clone().try_acquire_owned();
                         tokio::spawn(async move {
                             let response = match (
@@ -1090,6 +1118,51 @@ impl Connection {
                                                         },
                                                     )
                                                     .await
+                                            } else if name.starts_with("geod_monitor_")
+                                                || name == "geod_official_services"
+                                            {
+                                                crate::official_agent::call(
+                                                    official,
+                                                    manager,
+                                                    session,
+                                                    name,
+                                                    args.clone(),
+                                                    context,
+                                                    value["params"]["readOnly"] == true,
+                                                )
+                                                .await
+                                            } else if name == "geod_download_plan"
+                                                && context.is_none()
+                                                && args["originalsOnly"] == true
+                                                && policy
+                                                    .can_review_originals(
+                                                        session,
+                                                        &binding,
+                                                        execution::TurnScope {
+                                                            request_id: value["params"]
+                                                                ["requestId"]
+                                                                .as_str(),
+                                                            read_only: value["params"]["readOnly"]
+                                                                == true,
+                                                        },
+                                                    )
+                                                    .await
+                                            {
+                                                #[derive(Deserialize)]
+                                                #[serde(
+                                                    rename_all = "camelCase",
+                                                    deny_unknown_fields
+                                                )]
+                                                struct OriginalsReview {
+                                                    search_id: String,
+                                                    item_ids: Vec<String>,
+                                                    asset_key: String,
+                                                    originals_only: bool,
+                                                }
+                                                match serde_json::from_value::<OriginalsReview>(args.clone()) {
+                                                    Ok(a) if a.originals_only=>manager.agent_explicit_originals_review(session,&a.search_id,a.item_ids,&a.asset_key).await,
+                                                    _=>Err("Invalid original download review arguments.".into()),
+                                                }
                                             } else if name == "geod_workspace_open" {
                                                 workspace::open(manager, session, args.clone())
                                                     .await
@@ -1168,7 +1241,9 @@ impl Connection {
             self.pending.lock().await.remove(&id);
             return Err("Agent runtime stopped.".into());
         }
-        let response = tokio::time::timeout(Duration::from_secs(30), receiver).await;
+        // Two bounded model probes may take longer than a local control RPC.
+        let timeout = if method == "testModel" { 90 } else { 30 };
+        let response = tokio::time::timeout(Duration::from_secs(timeout), receiver).await;
         self.pending.lock().await.remove(&id);
         response
             .map_err(|_| "Agent runtime request timed out.")?
@@ -1280,6 +1355,7 @@ mod tests {
             protocol: "openai-compatible".into(),
             base_url: "https://api.example.com/v1".into(),
             model: "test-model".into(),
+            context_window: None,
         };
         assert!(validate_settings(&value).is_ok());
         for invalid in [
@@ -1414,7 +1490,21 @@ mod tests {
         )
         .await
         .unwrap();
-        assert_eq!(result["sources"].as_array().unwrap().len(), 15);
+        let sources = result["sources"].as_array().unwrap();
+        let ids: std::collections::BTreeSet<_> = sources
+            .iter()
+            .map(|source| source["id"].as_str().unwrap())
+            .collect();
+        assert_eq!(ids.len(), sources.len());
+        for id in [
+            "earth-search",
+            "nasa-earthdata",
+            "nasa-srtm",
+            "srtm-num",
+            "copernicus",
+        ] {
+            assert!(ids.contains(id), "Missing reviewed source: {id}");
+        }
         for account in result["accountSources"].as_array().unwrap() {
             assert_eq!(account["authorization"]["status"], "not-connected");
             assert_eq!(account["agentDownload"], true);

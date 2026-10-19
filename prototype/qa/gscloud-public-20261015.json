@@ -1,0 +1,588 @@
+{
+  "sourceId": "gscloud",
+  "scope": "Five newly verified original ZIP products; six including SRTMDEM90m. Not the whole catalogue.",
+  "publicProductOriginals": [
+    {
+      "productId": "307",
+      "archiveBytes": 64979078,
+      "archiveSha256": "8ea00aa8a0e0b63bf6c5148c0ed9e31891dedf32fd96d110d013fc90828bc49d",
+      "members": [
+        {
+          "name": "slope_60_04.img",
+          "bytes": 122659716,
+          "crc32": "af2805e0",
+          "sha256": "372f49078f1ae5edc5490384ca6d10b6c72ea82e053803a76539266fa3b393f5",
+          "raster": {
+            "width": 4827,
+            "height": 6324,
+            "bands": 1,
+            "dtypes": [
+              "float32"
+            ],
+            "bounds": [
+              329067.0511467756,
+              4418508.10056836,
+              763497.0511467756,
+              4987668.10056836
+            ],
+            "crs": "EPSG:32650",
+            "transform": [
+              90.0,
+              0.0,
+              329067.0511467756,
+              0.0,
+              -90.0,
+              4987668.10056836
+            ],
+            "noData": -3.4028234663852886e+38,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 30525948,
+            "allBlockOrderSamplesSha256": "e3ce1545b51837f064c2301a9005cfb0bac22dd35da3801bd4ebcd338b99d72b",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": -3.4028234663852886e+38
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": -3.4028234663852886e+38
+              },
+              {
+                "column": 2413,
+                "row": 3162,
+                "value": 19.472332000732422
+              },
+              {
+                "column": 4826,
+                "row": 6323,
+                "value": -3.4028234663852886e+38
+              }
+            ]
+          }
+        }
+      ],
+      "independentInspectionOnly": true,
+      "nativeArchiveRasterPreviewAvailable": false
+    },
+    {
+      "productId": "308",
+      "archiveBytes": 6746786,
+      "archiveSha256": "47457cabbbe6de10f5b66c3025e445128af12ce440293cbeeca7813ccdf20424",
+      "members": [
+        {
+          "name": "tpi_60_04.img",
+          "bytes": 15259766,
+          "crc32": "678ed652",
+          "sha256": "9018b6301d572b95d0f282641d2adfc64588e06e31d7631aaad36af54362d860",
+          "raster": {
+            "width": 4827,
+            "height": 6324,
+            "bands": 1,
+            "dtypes": [
+              "uint8"
+            ],
+            "bounds": [
+              329067.0511467756,
+              4418508.10056836,
+              763497.0511467756,
+              4987668.10056836
+            ],
+            "crs": "EPSG:32650",
+            "transform": [
+              90.0,
+              0.0,
+              329067.0511467756,
+              0.0,
+              -90.0,
+              4987668.10056836
+            ],
+            "noData": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 30525948,
+            "allBlockOrderSamplesSha256": "44ecafb3bd99ec0b5e5994573f88652c954cd440bae9e210320edda58121b533",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": 0
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": 0
+              },
+              {
+                "column": 2413,
+                "row": 3162,
+                "value": 5
+              },
+              {
+                "column": 4826,
+                "row": 6323,
+                "value": 0
+              }
+            ]
+          }
+        }
+      ],
+      "independentInspectionOnly": true,
+      "nativeArchiveRasterPreviewAvailable": false
+    },
+    {
+      "productId": "310",
+      "archiveBytes": 8991446,
+      "archiveSha256": "7baf1eff1ba3b60fd7291e7db75058b3f491c5a1e982220d2d99ae5e4d832335",
+      "members": [
+        {
+          "name": "ASTGTM_N40E116N.img",
+          "bytes": 17516607,
+          "crc32": "845ce32d",
+          "sha256": "7d126be7fb5943636d41f634f4b708995d66d7bad0c50c66f54e922d74cf1529",
+          "raster": {
+            "width": 2847,
+            "height": 3718,
+            "bands": 1,
+            "dtypes": [
+              "int16"
+            ],
+            "bounds": [
+              414627.5093390045,
+              4427714.141466039,
+              500037.5093390045,
+              4539254.141466039
+            ],
+            "crs": "EPSG:32650",
+            "transform": [
+              30.0,
+              0.0,
+              414627.5093390045,
+              0.0,
+              -30.0,
+              4539254.141466039
+            ],
+            "noData": 32767.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 10585146,
+            "allBlockOrderSamplesSha256": "06a14067cb50d94fa3579050270a18cfda6388b67298dc0d5d8276d86276bb35",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": 32767
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": 1209
+              },
+              {
+                "column": 1423,
+                "row": 1859,
+                "value": 1105
+              },
+              {
+                "column": 2846,
+                "row": 3717,
+                "value": 32767
+              }
+            ]
+          }
+        }
+      ],
+      "independentInspectionOnly": true,
+      "nativeArchiveRasterPreviewAvailable": false
+    },
+    {
+      "productId": "421",
+      "archiveBytes": 17773361,
+      "archiveSha256": "4cd6a954023925a3334ccf0bbfdd8c2d8f63a7511316d672c081130c2887fc93",
+      "members": [
+        {
+          "name": "ASTGTM2_N40E116_dem.tif",
+          "bytes": 25963722,
+          "crc32": "7e6916f3",
+          "sha256": "3cca1a93514cb901e6a052e88f5ada953881a96da8bf2582c4213719cc0ebb01",
+          "raster": {
+            "width": 3601,
+            "height": 3601,
+            "bands": 1,
+            "dtypes": [
+              "int16"
+            ],
+            "bounds": [
+              115.99986111111112,
+              39.999861111111116,
+              117.0001388888889,
+              41.00013888888889
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.0002777777777777778,
+              0.0,
+              115.99986111111112,
+              0.0,
+              -0.0002777777777777778,
+              41.00013888888889
+            ],
+            "noData": null,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 12967201,
+            "allBlockOrderSamplesSha256": "466cdfe2c8192086376d81089308c144ced1e1bfee95c3e31dd2dcc3cb0db89d",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": 1203
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": 1013
+              },
+              {
+                "column": 1800,
+                "row": 1800,
+                "value": 1257
+              },
+              {
+                "column": 3600,
+                "row": 3600,
+                "value": 15
+              }
+            ]
+          }
+        },
+        {
+          "name": "ASTGTM2_N40E116_num.tif",
+          "bytes": 25963722,
+          "crc32": "9c684520",
+          "sha256": "ab0ddfc829f40deaf60ea7017c2292275631068a6b0b94d7b2bb58ea5b05468d",
+          "raster": {
+            "width": 3601,
+            "height": 3601,
+            "bands": 1,
+            "dtypes": [
+              "int16"
+            ],
+            "bounds": [
+              115.99986111111112,
+              39.999861111111116,
+              117.0001388888889,
+              41.00013888888889
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.0002777777777777778,
+              0.0,
+              115.99986111111112,
+              0.0,
+              -0.0002777777777777778,
+              41.00013888888889
+            ],
+            "noData": null,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 12967201,
+            "allBlockOrderSamplesSha256": "407348f0c76fa893fb6ef0b5b06b2f9a30d73a0c322df7694b8bc0fecdbf443b",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": 6
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": 6
+              },
+              {
+                "column": 1800,
+                "row": 1800,
+                "value": 13
+              },
+              {
+                "column": 3600,
+                "row": 3600,
+                "value": 12
+              }
+            ]
+          }
+        },
+        {
+          "name": "README.pdf",
+          "bytes": 272463,
+          "crc32": "1c3af8c0",
+          "sha256": "9753cbab8d693d82182bf5a700499379ab094b0ba9f45c05b4b79152599dd972"
+        }
+      ],
+      "independentInspectionOnly": true,
+      "nativeArchiveRasterPreviewAvailable": false
+    },
+    {
+      "productId": "aeab8000652a45b38afbb7ff023ddabb",
+      "archiveBytes": 27670512,
+      "archiveSha256": "82bbeb0a18bb51ebbe2c6273ee5cd72ca438f651db05326004792a6642c8db00",
+      "members": [
+        {
+          "name": "ASTGTMV003_N40E116_dem.tif",
+          "bytes": 23149989,
+          "crc32": "50b39790",
+          "sha256": "ea4dae2589fff7f3668baabe137d007ec8c8de250624be9b95e7c5f68bd5bdf2",
+          "raster": {
+            "width": 3601,
+            "height": 3601,
+            "bands": 1,
+            "dtypes": [
+              "int16"
+            ],
+            "bounds": [
+              115.999861111111,
+              39.99986111111112,
+              117.00013888888878,
+              41.0001388888889
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.000277777777777778,
+              0.0,
+              115.999861111111,
+              0.0,
+              -0.000277777777777778,
+              41.0001388888889
+            ],
+            "noData": null,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 12967201,
+            "allBlockOrderSamplesSha256": "e1629677db44e2317f087d08169d6bfda8fdd05a23d6dde55b0ab7dffa0e24f5",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": 1200
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": 1011
+              },
+              {
+                "column": 1800,
+                "row": 1800,
+                "value": 1258
+              },
+              {
+                "column": 3600,
+                "row": 3600,
+                "value": 16
+              }
+            ]
+          }
+        },
+        {
+          "name": "ASTGTMV003_N40E116_num.tif",
+          "bytes": 4838689,
+          "crc32": "9968e54b",
+          "sha256": "b7f1abf46586bbacda8dc2b7814f1f8dee760bd99a76685fb2ac72209f138c5e",
+          "raster": {
+            "width": 3601,
+            "height": 3601,
+            "bands": 1,
+            "dtypes": [
+              "uint8"
+            ],
+            "bounds": [
+              115.999861111111,
+              39.99986111111112,
+              117.00013888888878,
+              41.0001388888889
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.000277777777777778,
+              0.0,
+              115.999861111111,
+              0.0,
+              -0.000277777777777778,
+              41.0001388888889
+            ],
+            "noData": null,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "decodedSamples": 12967201,
+            "allBlockOrderSamplesSha256": "a3eabc53b7e4108f1e9c8fc7af6b61b348f9afa653f1bae0a8d4ae7a4626337d",
+            "samples": [
+              {
+                "column": 0,
+                "row": 0,
+                "value": 7
+              },
+              {
+                "column": 100,
+                "row": 100,
+                "value": 7
+              },
+              {
+                "column": 1800,
+                "row": 1800,
+                "value": 15
+              },
+              {
+                "column": 3600,
+                "row": 3600,
+                "value": 17
+              }
+            ]
+          }
+        }
+      ],
+      "independentInspectionOnly": true,
+      "nativeArchiveRasterPreviewAvailable": false
+    }
+  ],
+  "nativeQueue": [
+    {
+      "id": "de0024d4-38a6-483e-aca4-e6a0933e36dd",
+      "itemId": "slope_60_04",
+      "assetKey": "gscloud_slope90",
+      "href": "https://bjdl.gscloud.cn/sources/download/307/slope_60_04",
+      "status": "succeeded",
+      "bytes": 64979078,
+      "sha256": "8ea00aa8a0e0b63bf6c5148c0ed9e31891dedf32fd96d110d013fc90828bc49d",
+      "attempts": 1,
+      "createdAt": "2026-10-15T09:44:14.923431+00:00",
+      "updatedAt": "2026-10-15T09:45:36.891957600+00:00"
+    },
+    {
+      "id": "e71af897-3883-434c-9c6c-2e90e3ba7a49",
+      "itemId": "tpi_60_04",
+      "assetKey": "gscloud_tpi90",
+      "href": "https://bjdl.gscloud.cn/sources/download/308/tpi_60_04",
+      "status": "succeeded",
+      "bytes": 6746786,
+      "sha256": "47457cabbbe6de10f5b66c3025e445128af12ce440293cbeeca7813ccdf20424",
+      "attempts": 2,
+      "createdAt": "2026-10-15T09:44:15.066602500+00:00",
+      "updatedAt": "2026-10-15T09:45:48.608050+00:00"
+    },
+    {
+      "id": "0330d651-a7b9-45c2-a601-a9d0cd676b68",
+      "itemId": "ASTGTM_N40E116",
+      "assetKey": "gscloud_aster30v1",
+      "href": "https://bjdl.gscloud.cn/sources/download/310/ASTGTM_N40E116",
+      "status": "succeeded",
+      "bytes": 8991446,
+      "sha256": "7baf1eff1ba3b60fd7291e7db75058b3f491c5a1e982220d2d99ae5e4d832335",
+      "attempts": 2,
+      "createdAt": "2026-10-15T09:44:15.237732100+00:00",
+      "updatedAt": "2026-10-15T09:46:03.115151400+00:00"
+    },
+    {
+      "id": "e342712b-e0f1-4497-afc6-13574f0db1d7",
+      "itemId": "ASTGTM2_N40E116",
+      "assetKey": "gscloud_aster30v2",
+      "href": "https://bjdl.gscloud.cn/sources/download/421/ASTGTM2_N40E116",
+      "status": "succeeded",
+      "bytes": 17773361,
+      "sha256": "4cd6a954023925a3334ccf0bbfdd8c2d8f63a7511316d672c081130c2887fc93",
+      "attempts": 1,
+      "createdAt": "2026-10-15T09:44:15.403482800+00:00",
+      "updatedAt": "2026-10-15T09:44:38.029710900+00:00"
+    },
+    {
+      "id": "4352efe6-8add-40e2-bbd2-28a431257e65",
+      "itemId": "ASTGTMV003_N40E116",
+      "assetKey": "gscloud_aster30v3",
+      "href": "https://bjdl.gscloud.cn/sources/download/aeab8000652a45b38afbb7ff023ddabb/ASTGTMV003_N40E116",
+      "status": "succeeded",
+      "bytes": 27670512,
+      "sha256": "82bbeb0a18bb51ebbe2c6273ee5cd72ca438f651db05326004792a6642c8db00",
+      "attempts": 2,
+      "createdAt": "2026-10-15T09:44:15.589425100+00:00",
+      "updatedAt": "2026-10-15T09:46:40.872767600+00:00"
+    }
+  ],
+  "nativeWholeFilesMatchIndependentDownloads": true,
+  "nativeReopenVerified": true,
+  "nativeArchiveRasterPreviewAvailable": false,
+  "credentialsPersistedInJobsOrReceipt": false,
+  "pending": [
+    {
+      "productId": "309",
+      "itemId": "asp_60_04",
+      "status": "not-integrated",
+      "evidence": "initial response declared 75940939 bytes but no complete file; subsequent GET requests repeatedly returned 404"
+    },
+    {
+      "scope": "other products, reservations, archive-to-project import and Agent download",
+      "status": "pending"
+    }
+  ],
+  "checks": {
+    "targetedRuntimePassed": 10,
+    "uiPassed": 11,
+    "clientPassed": 6,
+    "sourcePickerPassed": 61,
+    "genericDownloadRegressionPassed": 1,
+    "liveQueueProductsPassed": 5,
+    "repositoryIsolationAndAclPassed": true,
+    "desktopAclCommandCount": 165,
+    "frontendBuildPassed": true,
+    "desktopBuildPassed": true
+  },
+  "desktopBinarySha256": "b2edd3c8194dd150a2788411a87a192abbc001ce5106e3fb34143de96c2ba097",
+  "desktopExecutableBytes": 159315456,
+  "existingRecordsAfterReopen": {
+    "jobs": 110,
+    "succeeded": 90,
+    "failed": 14,
+    "interrupted": 6,
+    "agentSessions": 13
+  },
+  "browserReview": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "publicSearchProduct": "421",
+    "realItem": "ASTGTM2_N40E116",
+    "selectedFootprintLoaded": true,
+    "browserDownloadDisabledAsExpected": true,
+    "latestPickerShowsPartialOriginals": true,
+    "nativeTaskWidgetVisualReview": false
+  }
+}
