@@ -7,7 +7,7 @@
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
-**[下载 0.2.0](https://github.com/gaopengbin/geod-global/releases/tag/v0.2.0)** · **[官网](https://geod-global.laogao.xyz)** · **[问题反馈](https://github.com/gaopengbin/geod-global/issues)**
+**[下载 0.2.0 · CDN 加速](https://geod-global.laogao.xyz/zh/index.html#download)** · **[官网](https://geod-global.laogao.xyz)** · **[问题反馈](https://github.com/gaopengbin/geod-global/issues)**
 
 [English](README.md) · 简体中文
 </div>
@@ -18,6 +18,14 @@
 **17 个分类 · 110 个可用入口 · 2 个需授权入口**
 
 Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA 公开产品 · INPE / Brazil Data Cube · OpenTopography · 地理空间数据云
+
+## 一分钟看功能
+
+[![GeoD Global 0.2.0 功能演示](docs/images/release-0.2.0-video.jpg)](https://geod-global.laogao.xyz/zh/index.html#demo)
+
+**[观看 62 秒功能演示](https://geod-global.laogao.xyz/zh/index.html#demo)** · [仓库内 MP4](docs/media/geod-global-0.2.0-features.mp4)
+
+介绍多类型数据渠道、区域检索、多选与地图预览、下载和本地成果管理。实际 Windows 0.2.0 安装版录屏，中文配音与字幕。
 
 ## 可以找哪些数据
 
@@ -62,7 +70,7 @@ Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA �
 
 ## 开始使用
 
-1. 在 [Releases](https://github.com/gaopengbin/geod-global/releases/latest) 下载 **Windows x64 安装 EXE**，或完整解压免安装 ZIP。
+1. 在[官网加速下载](https://geod-global.laogao.xyz/zh/index.html#download)获取 **Windows x64 安装 EXE**，或完整解压免安装 ZIP。
 2. 设备需要 Microsoft Edge WebView2 Evergreen；无需另装 Node、Rust、Python 或系统 GDAL。
 3. 进入“探索”选择来源和区域，检索、多选并确认下载。需要 Agent 时，在设置中连接自己的模型。
 

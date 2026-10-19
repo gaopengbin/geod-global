@@ -7,7 +7,7 @@
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
-**[Download 0.2.0](https://github.com/gaopengbin/geod-global/releases/tag/v0.2.0)** · **[Website](https://geod-global.laogao.xyz)** · **[Feedback](https://github.com/gaopengbin/geod-global/issues)**
+**[Download 0.2.0 · CDN](https://geod-global.laogao.xyz/index.html#download)** · **[Website](https://geod-global.laogao.xyz)** · **[Feedback](https://github.com/gaopengbin/geod-global/issues)**
 
 English · [简体中文](README.zh-CN.md)
 </div>
@@ -19,6 +19,14 @@ Explore manually or connect your own model to prepare searches and download task
 **17 categories · 110 available entries · 2 authorization entries**
 
 Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA public products · INPE / Brazil Data Cube · OpenTopography · Geospatial Data Cloud
+
+## Watch the features
+
+[![GeoD Global 0.2.0 feature video](docs/images/release-0.2.0-video.jpg)](https://geod-global.laogao.xyz/index.html#demo)
+
+**[Watch the 62-second feature video](https://geod-global.laogao.xyz/index.html#demo)** · [MP4 in this repository](docs/media/geod-global-0.2.0-features.mp4)
+
+Data types and channels, area search, multiple selection and map preview, downloads and local results. Recorded in the installed Windows 0.2.0 app, with Chinese narration and subtitles.
 
 ## Find the data you need
 
@@ -63,7 +71,7 @@ Products have version, region and file boundaries. See the [full data catalog](d
 
 ## Get started
 
-1. Download the **Windows x64 setup EXE** or complete portable ZIP from [Releases](https://github.com/gaopengbin/geod-global/releases/latest).
+1. Download the **Windows x64 setup EXE** or complete portable ZIP from the [website CDN downloads](https://geod-global.laogao.xyz/index.html#download); [GitHub is also available](https://github.com/gaopengbin/geod-global/releases/latest).
 2. Microsoft Edge WebView2 Evergreen is required. No separate Node, Rust, Python or system GDAL is needed.
 3. Choose a source and area in Explore, search, select results and review the download. Connect your own model in Settings for Agent mode.
 

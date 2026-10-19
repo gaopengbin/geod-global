@@ -42,7 +42,7 @@ Visible attribution is retained: Copernicus Sentinel data (2026), Earth Search a
 
 ## agent-demo-20261009.jpg
 
-Poster frame from the October 9, 2026 Recordly recording of the real Windows development app. The [3:10 video](https://geod-global.laogao.xyz/index.html#demo) follows one Manhattan / New York County administrative-polygon task from live Earth Search Sentinel-2 L2A search through user approvals, original download, polygon crop and inspection of the newly generated GeoTIFF. Source scene: `S2A_18TWL_20261008_1_L2A`; local output: 1211 × 2253 pixels, 10 m, EPSG:32618. Footprint coverage is distinct from cloud-free coverage.
+Poster frame from the October 9, 2026 Recordly recording of the real Windows development app. The [archived 3:10 video](https://geod-global.laogao.xyz/assets/geod-global-demo-20261009.mp4) follows one Manhattan / New York County administrative-polygon task from live Earth Search Sentinel-2 L2A search through user approvals, original download, polygon crop and inspection of the newly generated GeoTIFF. Source scene: `S2A_18TWL_20261008_1_L2A`; local output: 1211 × 2253 pixels, 10 m, EPSG:32618. Footprint coverage is distinct from cloud-free coverage.
 
 Recordly captured and edited the actual UI; local Qwen3-TTS provided the Chinese narration. Waiting periods are shortened and marked. Wide background framing, transparent subtitles and delivery labels are editorial decoration. The recording contains real development behavior, including recovery, and is not a mock workflow or a new installer announcement. Copernicus Sentinel data (2026), via Earth Search / Element 84. The MP4 is hosted by the official website rather than duplicated into Git history.
 
@@ -62,3 +62,9 @@ overview attribution remains visible. This preview is separate from the two SCL
 originals subsequently downloaded and opened during acceptance. The source
 picker screenshot shows the real product and access-state directory, not a
 claim that every entry was tested. No interface content was reconstructed.
+
+## release-0.2.0-video.jpg / ../media/geod-global-0.2.0-features.mp4
+
+Current 62-second feature video, replacing the October 9 homepage demo on October 20, 2026. Real installed Windows 0.2.0 footage presents source types, area search, multiple-selection map preview, download confirmation and local results. Waiting periods are shortened. Chinese Microsoft Yunxi narration and burned subtitles are editorial additions. The final Agent card describes supported features; it is not a newly recorded live model run. Copernicus Sentinel data (2026), via Earth Search; existing third-party and brand notices apply.
+
+The poster is an unchanged frame from this video. MP4: 1920 × 1080, H.264/AAC, 61.944 seconds, 3,678,417 bytes; SHA-256 `538b72506fc7bd5c766b5f05f63a200c7456be54175b049b8b4e23d7723ed2ab`. The recording retains the source-picker's own 111 available product grouping; the full directory separately counts 133 entries (110 Ready, 2 Auth, 21 Planned), including protocols and local formats.
