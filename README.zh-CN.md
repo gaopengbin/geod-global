@@ -16,9 +16,9 @@
 可以手动探索，也可以连接自己的模型，让 Agent 准备待确认的任务。
 **本地使用和自接模型无需注册 Global 账号。**
 
-<img src="docs/images/sentinel2-desktop.jpg" width="100%" alt="GeoD Global 真实桌面地图">
+<img src="docs/images/release-0.2.0-explore.png" width="100%" alt="GeoD Global 0.2.0 安装版：多选结果与 Sentinel-2 真实地图预览">
 
-<sub>2026 年 9 月 30 日原生桌面历史截图，影像由 Earth Search 提供。画面是远程预览，不代表下载完成。[图片来源](docs/images/README.md)。</sub>
+<sub>2026 年 10 月 19 日，实际安装的 0.2.0 版本。Copernicus Sentinel 影像由 Earth Search 提供；远程预览与已下载原件分别展示。[图片来源](docs/images/README.md) · [版本验收](docs/releases/0.2.0-acceptance.md)。</sub>
 
 ## 从选数据到看成果，一条流程
 

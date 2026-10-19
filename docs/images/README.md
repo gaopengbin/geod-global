@@ -50,3 +50,15 @@ Recordly captured and edited the actual UI; local Qwen3-TTS provided the Chinese
 ## release-0.2.0-cover.jpg
 
 Editorial cover generated on 2026-10-19 with the built-in image-generation tool, using the existing blue-green GeoD G mark as a reference. The contour landscape and mosaic are decorative artwork, not UI or dataset evidence. Original output: 1916 by 821; distributed as a compressed 1440 by 617 JPEG. Prompt requested the exact GeoD Global / 0.2.0 text, the simple G, blue-green contours and no fake interface.
+
+## release-0.2.0-explore.png and release-0.2.0-sources.png
+
+Captured October 19, 2026 from the actual installed Windows 0.2.0 application.
+Read-only WebView2 frame capture excludes unrelated desktop overlays; all app
+input used normal native UI controls. The Explore screenshot shows a live Earth
+Search query, two selected scenes and a remote Sentinel-2 true-color preview.
+Copernicus Sentinel data (2026), via Earth Search / Element 84; Natural Earth
+overview attribution remains visible. This preview is separate from the two SCL
+originals subsequently downloaded and opened during acceptance. The source
+picker screenshot shows the real product and access-state directory, not a
+claim that every entry was tested. No interface content was reconstructed.

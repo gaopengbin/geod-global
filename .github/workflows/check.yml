@@ -43,6 +43,9 @@ jobs:
         with:
           node-version: '24.20.0'
           cache: npm
+      # Match the package manager used to generate and validate this lockfile.
+      # Do not let a newer Node patch silently change npm's lock resolution.
+      - run: npm install --global npm@11.6.2 --no-fund
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'

@@ -16,9 +16,9 @@ A Windows workspace for finding, previewing, downloading and inspecting geospati
 Explore yourself, or connect your own model and let the Agent prepare a reviewed task.
 **Local use and your own model require no Global account.**
 
-<img src="docs/images/sentinel2-desktop.jpg" width="100%" alt="Real native GeoD Global map workspace">
+<img src="docs/images/release-0.2.0-explore.png" width="100%" alt="GeoD Global 0.2.0 installed Windows app: multi-selection and a real Sentinel-2 preview">
 
-<sub>Historical native capture, September 30, 2026. Copernicus Sentinel imagery via Earth Search; remote preview, not a completed download. [Image provenance](docs/images/README.md).</sub>
+<sub>Installed 0.2.0, October 19, 2026. Copernicus Sentinel imagery via Earth Search; remote preview, separate from downloaded originals. [Image provenance](docs/images/README.md) · [Release acceptance](docs/releases/0.2.0-acceptance.md).</sub>
 
 ## One path from source to result
 
