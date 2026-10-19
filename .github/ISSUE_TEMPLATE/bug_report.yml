@@ -1,0 +1,38 @@
+name: Bug report / 问题反馈
+description: Report a reproducible desktop, data or Agent problem.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Please omit passwords, API keys, signed URLs and private project data. 请勿提交密码、密钥、带签名的网址或客户私有数据。"
+  - type: input
+    id: version
+    attributes:
+      label: GeoD Global version / 软件版本
+      placeholder: "0.2.0, Windows 11 x64"
+    validations:
+      required: true
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Workflow / 使用场景
+      options: [Manual Explore, Agent Home, Agent Explore sidebar, Download or results, Installation or startup, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction / 复现步骤
+      description: Include the public source/product, approximate area and period when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual result / 期望与实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Safe evidence / 已脱敏截图或错误参考号

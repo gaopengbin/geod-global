@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="prototype/public/brand/geod-symbol.png" width="80" alt="GeoD Global">
+<img src="docs/images/release-0.2.0-cover.jpg" width="100%" alt="GeoD Global 0.2.0 品牌插画">
 
 # GeoD Global
 **找到地理数据，确认完整任务，把成果留在本地。**

@@ -1,0 +1,27 @@
+name: Data source request / 图源建议
+description: Suggest a public product or access channel with its scope and license.
+title: "[Source] "
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Product and official entry / 产品与官方入口
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Coverage, dates, resolution and output / 覆盖、时段、分辨率与成果
+    validations:
+      required: true
+  - type: textarea
+    id: access
+    attributes:
+      label: License and access requirements / 许可及访问条件
+      description: Describe account or approval requirements, but do not provide credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Intended workflow / 想完成的任务

@@ -45,3 +45,8 @@ Visible attribution is retained: Copernicus Sentinel data (2026), Earth Search a
 Poster frame from the October 9, 2026 Recordly recording of the real Windows development app. The [3:10 video](https://geod-global.laogao.xyz/index.html#demo) follows one Manhattan / New York County administrative-polygon task from live Earth Search Sentinel-2 L2A search through user approvals, original download, polygon crop and inspection of the newly generated GeoTIFF. Source scene: `S2A_18TWL_20261008_1_L2A`; local output: 1211 × 2253 pixels, 10 m, EPSG:32618. Footprint coverage is distinct from cloud-free coverage.
 
 Recordly captured and edited the actual UI; local Qwen3-TTS provided the Chinese narration. Waiting periods are shortened and marked. Wide background framing, transparent subtitles and delivery labels are editorial decoration. The recording contains real development behavior, including recovery, and is not a mock workflow or a new installer announcement. Copernicus Sentinel data (2026), via Earth Search / Element 84. The MP4 is hosted by the official website rather than duplicated into Git history.
+
+
+## release-0.2.0-cover.jpg
+
+Editorial cover generated on 2026-10-19 with the built-in image-generation tool, using the existing blue-green GeoD G mark as a reference. The contour landscape and mosaic are decorative artwork, not UI or dataset evidence. Original output: 1916 by 821; distributed as a compressed 1440 by 617 JPEG. Prompt requested the exact GeoD Global / 0.2.0 text, the simple G, blue-green contours and no fake interface.

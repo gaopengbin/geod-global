@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="prototype/public/brand/geod-symbol.png" width="80" alt="GeoD Global">
+<img src="docs/images/release-0.2.0-cover.jpg" width="100%" alt="GeoD Global 0.2.0 — editorial brand illustration">
 
 # GeoD Global
 **Find geospatial data. Review the task. Keep the result.**
