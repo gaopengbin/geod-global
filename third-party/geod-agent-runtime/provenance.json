@@ -1,0 +1,31 @@
+{
+  "repository": "https://github.com/gaopengbin/geod-agent",
+  "commit": "693d6a5e2ee38b537543f173efa63e2914b1a0cf",
+  "license": "MIT",
+  "metadataSha256": "650152c8cfb2010ad76b6563c088d897fc14fafb5134425efcba81967622b434",
+  "files": [
+    {
+      "path": "model-input-context.mjs",
+      "upstreamPath": "apps/geod-agent-desktop/src-tauri/model-input-context.mjs",
+      "sha256": "1dcb34460eb1f242a5e3eecc0a0b2c0f8ce7f9365165522d8631d5f8377ca8f3",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src-tauri/model-input-context.mjs"
+    },
+    {
+      "path": "turn-token-usage.ts",
+      "upstreamPath": "apps/geod-agent-desktop/src/turn-token-usage.ts",
+      "sha256": "fa31780f1c5ce9bc930dcef6ec0efcb3efdc34c7420abfc601ff495c07810b38",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/turn-token-usage.ts"
+    },
+    {
+      "path": "turn-token-usage-footer.tsx",
+      "upstreamPath": "apps/geod-agent-desktop/src/turn-token-usage-footer.tsx",
+      "sha256": "58d7d77f43da15477fe1c8c78367ea2dbc31ff936091ee893a5bc8ebc68e3270",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/turn-token-usage-footer.tsx"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/LICENSE"
+    }
+  ]
+}

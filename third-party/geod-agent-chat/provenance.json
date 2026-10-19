@@ -1,0 +1,43 @@
+{
+  "repository": "https://github.com/gaopengbin/geod-agent",
+  "commit": "693d6a5e2ee38b537543f173efa63e2914b1a0cf",
+  "license": "MIT",
+  "metadataSha256": "84e424199438cef0e55e7e5d069939af991156004b19a947e68da14e7dad9c37",
+  "files": [
+    {
+      "path": "chat-ui.tsx",
+      "upstreamPath": "apps/geod-agent-desktop/src/chat-ui.tsx",
+      "sha256": "fb4b074dba9c1bdce3244e296f24952e7198d52a4bbed62b06eed9ed9c852148",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/chat-ui.tsx"
+    },
+    {
+      "path": "chat-work.ts",
+      "upstreamPath": "apps/geod-agent-desktop/src/chat-work.ts",
+      "sha256": "b46ef8954e1329bed687851db5ccb01dbaba1b6b8ed33fca987f9be0b532a2ea",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/chat-work.ts"
+    },
+    {
+      "path": "codex-work.css",
+      "upstreamPath": "apps/geod-agent-desktop/src/codex-work.css",
+      "sha256": "f08290503602612e20cfa2712be8d1ac6b92bb301b7fd45cfe5abf4fe7bc4a09",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/codex-work.css"
+    },
+    {
+      "path": "components-agents-message.tsx",
+      "upstreamPath": "apps/geod-agent-desktop/src/components/agents/message.tsx",
+      "sha256": "4a630c568164f2ac8d31e95d89e80071715d039af6f7c9158e5c911687ebcdf5",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/components/agents/message.tsx"
+    },
+    {
+      "path": "components-agents-message-scroller.tsx",
+      "upstreamPath": "apps/geod-agent-desktop/src/components/agents/message-scroller.tsx",
+      "sha256": "2a9339fe2ab37fde8d330c1e40b164aa81a27d535b0a02022f09ba61f164dfe5",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/apps/geod-agent-desktop/src/components/agents/message-scroller.tsx"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191",
+      "url": "https://raw.githubusercontent.com/gaopengbin/geod-agent/693d6a5e2ee38b537543f173efa63e2914b1a0cf/LICENSE"
+    }
+  ]
+}

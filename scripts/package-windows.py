@@ -29,6 +29,12 @@ LICENSE_DOWNLOAD_ATTEMPTS = 3
 VENDORED_UI = {
     'beautiful-ui': {'repository': 'https://github.com/slev12397/beautiful-ui', 'licenseFile': 'LICENSE'},
     'shadcn-ui': {'repository': 'https://github.com/shadcn-ui/ui', 'licenseFile': 'LICENSE.md'},
+    'geod-agent-chat': {'repository': 'https://github.com/gaopengbin/geod-agent', 'licenseFile': 'LICENSE',
+                        'commit': '693d6a5e2ee38b537543f173efa63e2914b1a0cf', 'metadataFile': 'UPSTREAM.json',
+                        'licenseSha256': 'f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191'},
+    'geod-agent-runtime': {'repository': 'https://github.com/gaopengbin/geod-agent', 'licenseFile': 'LICENSE',
+                           'commit': '693d6a5e2ee38b537543f173efa63e2914b1a0cf', 'metadataFile': 'UPSTREAM.json',
+                           'licenseSha256': 'f608de0cfd6e3b735bd87eed58df98edabac405242770b02330f87a2c6c77191'},
 }
 # The published npm tarballs omit license files. Use reviewed, immutable upstream
 # texts only for these exact package versions; reject a changed response or cache.
@@ -479,8 +485,12 @@ def collect_vendored_notices(payload):
         commit = provenance.get('commit', '')
         if provenance.get('repository') != expected['repository'] or not re.fullmatch(r'[0-9a-f]{40}', commit):
             raise RuntimeError(f'Vendored UI repository or commit is unreviewed: {name}')
+        if expected.get('commit') and commit != expected['commit']:
+            raise RuntimeError(f'Vendored UI commit is unreviewed: {name}')
         if provenance.get('license') != 'MIT':
             raise RuntimeError(f'Vendored UI license is unreviewed: {name}')
+        if expected.get('licenseSha256') and digest(source / expected['licenseFile']) != expected['licenseSha256']:
+            raise RuntimeError(f'Vendored UI license checksum mismatch: {name}')
         upstream = provenance.get('files')
         if not isinstance(upstream, list) or not upstream:
             raise RuntimeError(f'Vendored UI source inventory is missing: {name}')
@@ -495,11 +505,21 @@ def collect_vendored_notices(payload):
             path = source / filename
             if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(source.resolve()):
                 raise RuntimeError(f'Vendored UI source file is missing or outside its directory: {name}/{filename}')
-            if record.get('url') != f'{raw_base}/{commit}/{filename}' or record.get('sha256') != digest(path):
+            upstream_path = record.get('upstreamPath', filename)
+            if not isinstance(upstream_path, str) or not upstream_path or '\\' in upstream_path or ':' in upstream_path or PurePosixPath(upstream_path).is_absolute() or any(part in ('', '.', '..') for part in upstream_path.split('/')):
+                raise RuntimeError(f'Vendored UI upstream path is invalid: {name}/{filename}')
+            if record.get('url') != f'{raw_base}/{commit}/{upstream_path}' or record.get('sha256') != digest(path):
                 raise RuntimeError(f'Vendored UI provenance or checksum mismatch: {name}/{filename}')
         if expected['licenseFile'] not in seen:
             raise RuntimeError(f'Vendored UI license is missing from provenance: {name}')
         known = seen | {'SOURCE.md', 'provenance.json'}
+        if expected.get('metadataFile'):
+            filename = expected['metadataFile']
+            metadata = source / filename
+            if not metadata.is_file() or metadata.is_symlink() or provenance.get('metadataSha256') != digest(metadata):
+                raise RuntimeError(f'Vendored UI metadata checksum mismatch: {name}/{filename}')
+            required.append(filename)
+            known.add(filename)
         unrecorded = {relative(path, source) for path in source.rglob('*') if path.is_file()} - known
         if unrecorded:
             raise RuntimeError(f'Unrecorded vendored UI source files: {name}: {sorted(unrecorded)}')

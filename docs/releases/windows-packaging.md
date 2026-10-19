@@ -37,6 +37,12 @@ The source contains the tracked build scripts and locked dependency manifests;
 generated local output and application data are excluded. Third-party dependency
 notices and applicable source archives remain separate in THIRD-PARTY/.
 
+Reviewed GeoD Agent chat and token/context reference snapshots are pinned to
+their upstream commit, original paths and SHA-256 hashes. Packaging retains
+their MIT license, origin records and Global adaptation notes. Relocated local
+filenames do not change the recorded upstream URLs. Unknown snapshots, changed
+licenses or metadata, and source path traversal stop packaging.
+
 Output goes into a new `.verification/packages/GeoD-Global_...` directory. Each
 name includes version, target, profile, Git revision, dirty status and UTC time.
 Existing output directories are never erased or reused. Source files are hashed

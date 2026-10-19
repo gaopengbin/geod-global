@@ -113,14 +113,22 @@ class PackagingTests(unittest.TestCase):
         for name, expected in packaging.VENDORED_UI.items():
             source = root / 'third-party' / name
             source.mkdir(parents=True)
-            (source / expected['licenseFile']).write_text('MIT license test fixture\n', encoding='utf-8')
+            if expected.get('licenseSha256'):
+                original = Path(__file__).resolve().parents[1] / 'third-party' / name / expected['licenseFile']
+                (source / expected['licenseFile']).write_bytes(original.read_bytes())
+            else:
+                (source / expected['licenseFile']).write_text('MIT license test fixture\n', encoding='utf-8')
             (source / 'component.jsx').write_text('// Original source test fixture\n', encoding='utf-8')
             (source / 'SOURCE.md').write_text(f"Source: {expected['repository']} at {'a' * 40}\n", encoding='utf-8')
             raw_base = expected['repository'].replace('https://github.com/', 'https://raw.githubusercontent.com/')
-            provenance = {'repository': expected['repository'], 'commit': 'a' * 40, 'license': 'MIT', 'files': [
-                {'path': filename, 'url': f"{raw_base}/{'a' * 40}/{filename}", 'sha256': packaging.digest(source / filename)}
+            commit = expected.get('commit', 'a' * 40)
+            provenance = {'repository': expected['repository'], 'commit': commit, 'license': 'MIT', 'files': [
+                {'path': filename, 'url': f"{raw_base}/{commit}/{filename}", 'sha256': packaging.digest(source / filename)}
                 for filename in [expected['licenseFile'], 'component.jsx']
             ]}
+            if expected.get('metadataFile'):
+                packaging.write_json(source / expected['metadataFile'], {'syntheticFixture': True})
+                provenance['metadataSha256'] = packaging.digest(source / expected['metadataFile'])
             packaging.write_json(source / 'provenance.json', provenance)
 
     def test_vendored_license_and_source_records_are_in_delivery(self):
@@ -133,10 +141,36 @@ class PackagingTests(unittest.TestCase):
             for record in records:
                 source = root / 'third-party' / record['name']
                 directory = payload / record['directory']
-                self.assertEqual({path.name for path in directory.iterdir()}, {packaging.VENDORED_UI[record['name']]['licenseFile'], 'SOURCE.md', 'provenance.json'})
+                expected = packaging.VENDORED_UI[record['name']]
+                filenames = {expected['licenseFile'], 'SOURCE.md', 'provenance.json'}
+                if expected.get('metadataFile'):
+                    filenames.add(expected['metadataFile'])
+                self.assertEqual({path.name for path in directory.iterdir()}, filenames)
                 for copied in record['texts'] + record['sourceRecords']:
                     self.assertEqual((directory / copied['file']).read_bytes(), (source / copied['file']).read_bytes())
                     self.assertEqual(packaging.digest(directory / copied['file']), copied['sha256'])
+
+    def test_geod_reference_relocation_keeps_pinned_origin_license_and_metadata(self):
+        for change in ['relocated', 'changed-origin', 'traversal', 'changed-commit', 'changed-metadata', 'changed-license']:
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as folder, mock.patch.object(packaging, 'ROOT', Path(folder)):
+                root=Path(folder);self.vendored_sources(root)
+                source=root/'third-party/geod-agent-chat'
+                path=source/'provenance.json';provenance=json.loads(path.read_text(encoding='utf-8'))
+                entry=next(entry for entry in provenance['files'] if entry['path']=='component.jsx')
+                entry['upstreamPath']='apps/desktop/component.jsx'
+                entry['url']=f"https://raw.githubusercontent.com/gaopengbin/geod-agent/{provenance['commit']}/{entry['upstreamPath']}"
+                if change=='changed-origin':entry['url']=entry['url'].replace('gaopengbin/geod-agent','unreviewed/source')
+                elif change=='traversal':entry['upstreamPath']='apps/../component.jsx'
+                elif change=='changed-commit':provenance['commit']='b'*40
+                elif change=='changed-metadata':packaging.write_json(source/'UPSTREAM.json',{'changed':True})
+                elif change=='changed-license':(source/'LICENSE').write_text('Altered license',encoding='utf-8')
+                packaging.write_json(path,provenance)
+                if change=='relocated':
+                    records=packaging.collect_vendored_notices(root/'payload')
+                    self.assertTrue(any(record['name']=='geod-agent-chat' for record in records))
+                else:
+                    with self.assertRaisesRegex(RuntimeError,'unreviewed|checksum mismatch|upstream path is invalid'):
+                        packaging.collect_vendored_notices(root/'payload')
 
     def test_vendored_missing_or_empty_required_notices_stop_packaging(self):
         for filename in ['LICENSE', 'SOURCE.md', 'provenance.json']:
