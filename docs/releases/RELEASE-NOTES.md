@@ -1,66 +1,56 @@
-# GeoD Global 0.2.0-rc.5 — Windows Beta candidate
+# GeoD Global 0.2.0 — Windows desktop
 
-This local Windows 10/11 x64 candidate consolidates data selection, exploration,
-download review and saved results. It is prepared for local acceptance before a
-first public Beta. It is not a stable release or a public-release announcement.
+GeoD Global brings source selection, map exploration, reviewed downloads and
+local results into one Windows workspace. Local use and your own model
+connection require no Global sign-in.
 
-## Included workflows
+## What's included
 
-- One classified product picker, with channels grouped only when they deliver
-  the same product. The directory contains **133 entries in 17 groups**:
-  **110 Ready, 2 Auth and 21 Planned**. There are **132 picker products** because
-  the two Sentinel-2 L2A COG channels share a product. Entries also include
-  service protocols, data portals and local formats; these are not satellite or
-  individually verified collection counts. The reproducible list is in
-  `source-scope.json` in the source archive.
-- Compact result rows and explicit selection. Product information, licenses,
-  numerical interpretation and technical details use information windows.
-- Shared selection actions, a final download review and task/result receipts.
-  Online previews do not silently start full original downloads. A source that
-  produces rendered maps, feature queries or subsets retains that delivery type;
-  its output is not relabeled as an original satellite band.
-- Agent task cards use the same review and delivery concepts. Home conversations
-  and the Explore sidebar have separate selection contexts. Submitted tasks keep
-  their reviewed source and area when manual exploration changes.
-- Local downloads, task history, file inspection, source-pixel reading and
-  compatible-grid processing retain their documented source and grid limits.
-  Completed jobs must settle and verify before they appear as ready results.
+- A classified picker with **133 directory entries across 17 groups**. These
+  include products, protocols and local formats: **110 Ready, 2 Auth, 21 Planned**.
+  Connector status is not a claim that every collection or file was tested.
+- Compact result lists, multiple selection, map preview and a shared final
+  download review. Source information and technical details use information
+  windows. Downloads, validation and saved results retain their actual status.
+- Catalog searches load the latest **100** results first. Additional pages load
+  on demand; NAIP prefers the most recent acquisition year. Changing the area
+  does not automatically enumerate the full historical catalog.
+- A conversational Agent with your own model connection, task confirmation,
+  persistent jobs and result inspection. Home conversations and Explore sidebar
+  tasks retain their originating scene when manual exploration changes.
+- Source-resolution-aware map zoom limits and compact download progress in chat.
+- Anonymous usage statistics **on by default**, without account sign-in. Settings
+  provides off controls and preserves saved opt-outs. Statistics exclude messages,
+  credentials, exact locations, scene IDs, file paths and account identities.
+  Development and production observations are separate. See
+  [the data boundary](../usage-analytics.md).
 
-## Evidence and limits
+## Download and install
 
-The October 18 development acceptance used a real configured model, renderer and
-native engine to search, confirm and download fresh Sentinel-2 SCL files for San
-Francisco and Paris. Both files passed local size/hash and native grid inspection.
-Changing the manual Explore source and area did not replace the submitted tasks;
-the Home run had no inherited Explore selection. A local hash proves local file
-identity, not a publisher-supplied checksum. This acceptance does not prove every
-source, full-size true-color downloads, or a fresh Windows installation.
+Use the **Windows x64 setup EXE**, or extract the complete **portable ZIP**.
+Microsoft Edge WebView2 Evergreen is required. Separate Node, Rust, Python or
+system GDAL installations are unnecessary. Closing the window keeps the tray
+process running; quit from the tray before upgrading.
 
-NASA HLS, SRTM and reviewed VIIRS paths have real-account acceptance records;
-users still need their own valid provider access. GSCloud uses its official login
-window and session verification. Access can depend on each account and product.
-Copernicus protected delivery and broad Planned families remain bounded by the
-current provider documentation. A partial action under a Planned family does
-not make that entire family complete. GEE exports use the user's own project;
-quota consumption and eligibility remain the project owner's responsibility.
+The release includes exact first-party source and dependency notices. Verify
+`SHA256SUMS.txt` and `artifacts.json`. Executables are **unsigned**; checksums do
+not establish a Windows publisher signature. Automatic signed updates are not
+enabled, so upgrades use a new downloaded installer.
 
-Data-provider access and model connections are separate from the Global account.
-Users supply their own model connection. Official paid service, email delivery,
-third-party identity consent and restore are not certified by local protocol
-tests. Guest local workflows remain available. Cloud sync is not provided.
+## Supported scope
 
-## Installation and support
+NASA, GSCloud and other protected sources retain their own account and product
+requirements. Google Earth Engine uses your own project and may consume its
+quota. Planned entries are not complete integrations. Source-specific limits,
+licenses and numerical meanings stay visible in the product and documentation.
+Previewed imagery, rendered service exports and original scientific bands remain
+distinct delivery types.
 
-The candidate includes a standalone desktop, CLI, reviewed Agent runtime,
-documentation, exact first-party source archive and third-party notices. It
-requires Microsoft Edge WebView2 Evergreen. No separate Node, Rust, Python or
-GDAL installation is required. Files are **unsigned**; checksums do not replace a
-publisher signature. Signed automatic updates are not enabled. Quit via the tray
-before a manual upgrade. Uninstall is designed to retain user data and unknown
-files, and still requires installation/upgrade/uninstall acceptance for this
-candidate before a public Beta decision.
+Local data and supported processing remain on your computer. Data requests
+contact their providers; model requests contact your configured model provider.
+Hosted models, live paid services, cloud synchronization and general cross-grid
+processing are not included in this release. Windows ARM64, macOS and Linux
+installers are not provided.
 
-Source and build gates, real network tests, installer execution, native UI review
-and user acceptance are separate checks. A successful archive verification alone
-does not satisfy the latter checks. Report the version, reproduction steps and
-safe diagnostic reference when reporting a failure; do not include credentials.
+First-party code is GPL-3.0-only. Dataset and component licenses remain separate.
+Please report reproducible issues without keys, private project data or passwords.

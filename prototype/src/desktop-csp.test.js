@@ -49,3 +49,14 @@ test('desktop policy rejects broad network and remote script access', () => {
     assert.throws(() => verifyDesktopCspConfig(broadened));
   }
 });
+
+test('usage collection permits only its reviewed product origin and development-only loopback receiver',()=>{
+  for(const directive of ['csp','devCsp']){
+    assert.ok(config.app.security[directive].includes('https://geod-global.laogao.xyz'));
+    const changed=structuredClone(config);
+    changed.app.security[directive]=changed.app.security[directive].replace('https://geod-global.laogao.xyz','https://unrelated-analytics.example');
+    assert.throws(()=>verifyDesktopCspConfig(changed));
+  }
+  assert.ok(!config.app.security.csp.includes('http://127.0.0.1:4392'));
+  assert.ok(config.app.security.devCsp.includes('http://127.0.0.1:4392'));
+});

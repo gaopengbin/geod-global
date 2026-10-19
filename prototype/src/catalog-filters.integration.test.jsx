@@ -70,3 +70,18 @@ it('passes the unsaved filter dates into map area selection without submitting a
   expect(onApply).not.toHaveBeenCalled();
   expect(onArea.mock.calls[0][0].start).toBe('2026-09-03');
 });
+
+it('NAIP offers the latest acquisition year and preserves explicit custom dates when switching back',async()=>{
+  const user=userEvent.setup(),onApply=vi.fn();
+  render(<I18nProvider><CatalogFilters initialValues={{...values,provider:'planetary-naip',dateMode:'latest-year'}} onApply={onApply}/></I18nProvider>);
+  expect(screen.queryByRole('button',{name:'Search start date'})).toBeNull();
+  await user.click(screen.getByRole('combobox',{name:'Acquisition period'}));
+  await user.click(screen.getByRole('option',{name:'Custom date range'}));
+  expect(screen.getByRole('button',{name:'Search start date'})).toBeTruthy();
+  await user.click(screen.getByRole('button',{name:'Search catalog'}));
+  expect(onApply.mock.calls.at(-1)[0]).toMatchObject({dateMode:'range',start:values.start,end:values.end});
+  await user.click(screen.getByRole('combobox',{name:'Acquisition period'}));
+  await user.click(screen.getByRole('option',{name:'Latest acquisition year'}));
+  await user.click(screen.getByRole('button',{name:'Search catalog'}));
+  expect(onApply.mock.calls.at(-1)[0].dateMode).toBe('latest-year');
+});

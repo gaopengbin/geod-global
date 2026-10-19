@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validQueryBounds,validServiceUrl} from './features-client.js';
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
@@ -66,6 +67,9 @@ export function validateTilePackage(p) {
 }
 const commands={sources:'list_tile_sources',connect:'connect_tiles',forget:'forget_tile_source',list:'list_tile_packages',extract:'extract_tiles',inspect:'inspect_tile_package',tile:'read_tile'};
 export async function tileRequest(operation,payload={},signal) {
+  return usageRequest('tiles', operation, payload, () => performTileRequest(operation, payload, signal));
+}
+async function performTileRequest(operation,payload={},signal) {
   if(!commands[operation])throw new Error('Unknown tile operation');
   if(['forget','inspect','tile'].includes(operation)&&!uuid.test(payload.id))throw new Error('Invalid tile package identifier');
   if(operation==='extract'){if(!uuid.test(payload.sourceId))throw new Error('Invalid tile source identifier');tileSelection(payload.bounds,payload.minZoom,payload.maxZoom);}

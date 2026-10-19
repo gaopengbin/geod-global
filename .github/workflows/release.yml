@@ -13,6 +13,9 @@ concurrency:
 
 jobs:
   version:
+    # Stable releases use locally accepted, checksum-verified installers.
+    # Never replace those bytes with a new unattended build after acceptance.
+    if: contains(github.ref_name, '-')
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

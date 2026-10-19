@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import { desktopAvailable } from './runtime-client.js';
 import { validQueryBounds } from './features-client.js';
 import { isNextPlanetaryProduct, validNextPlanetarySnapshot } from './next-public-products.js';
@@ -233,6 +234,9 @@ async function validateSavedProject(value, request, signal) {
 }
 
 export async function stacRequest(operation, payload = {}, signal) {
+  return usageRequest('stac', operation, payload, () => performStacRequest(operation, payload, signal));
+}
+async function performStacRequest(operation, payload = {}, signal) {
   const commands = { list: 'list_stac_connections', connect: 'connect_stac', forget: 'forget_stac_connection', search: 'search_stac', snapshot: 'stac_snapshot', inspect: 'inspect_stac_asset', pixel: 'sample_stac_asset', project: 'save_stac_project', downloads: 'download_stac_project' };
   if (!commands[operation]) fail('Unknown raster source operation.');
   if (['forget', 'inspect', 'pixel'].includes(operation) && !uuid.test(payload.id) || operation === 'snapshot' && !hash.test(payload.id)) fail('Invalid saved raster identifier.');

@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validQueryBounds,validServiceUrl} from './features-client.js';
 import {validateWmtsService,validateWmtsImage} from './wmts-client.js';
@@ -30,6 +31,9 @@ export function validateMapImage(a) {
   if(actual.origin!==u.origin||actual.pathname!==u.pathname||actual.hash||actual.username||actual.password||pairs.length!==expected.length||new Set(pairs.map(([k])=>k)).size!==pairs.length||pairs.some(([k,v])=>!q.has(k)||!sameValue(k,v)))throw new Error('Map request does not match the saved image grid.');return a;
 }
 export async function mapRequest(operation,payload={},signal) {
+  return usageRequest('wms', operation, payload, () => performMapRequest(operation, payload, signal));
+}
+async function performMapRequest(operation,payload={},signal) {
   const commands={services:'list_map_services',connect:'connect_map_service',forget:'forget_map_service',list:'list_map_images',get:'get_map_image',inspect:'inspect_map_image'};
   if(!commands[operation])throw new Error('Unknown map service operation.');
   if(['forget','inspect'].includes(operation)&&!uuid.test(payload.id))throw new Error('Invalid map identifier.');
@@ -45,6 +49,9 @@ export async function mapRequest(operation,payload={},signal) {
   if(operation==='inspect'){validateMapImage(value?.asset);if(typeof value.imageUrl!=='string'||!value.imageUrl.startsWith('data:image/png;base64,')||value.imageUrl.length>23*1024*1024)throw new Error('Invalid local map image pixels.');}return value;
 }
 export async function exportMapImage(id) {
+  return usageRequest('wms','export',{},()=>performExportMapImage(id));
+}
+async function performExportMapImage(id) {
   if(!uuid.test(id))throw new Error('Invalid map identifier.');
   if(desktopAvailable()){try{return await window.__TAURI__.core.invoke('export_map_image',{id});}catch(e){throw e instanceof Error?e:new Error(String(e));}}
   const response=await fetch(`http://127.0.0.1:4318/map-images/${id}/export`);if(!response.ok){const value=await response.json();throw new Error(value.error||'Map export failed.');}

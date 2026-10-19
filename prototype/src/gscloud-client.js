@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validQueryBounds} from './features-client.js';
 
@@ -40,6 +41,9 @@ export function validateGSCloudResponse(operation,value,payload) {
   return value;
 }
 export async function gscloudRequest(operation,payload={},signal) {
+  return usageRequest('gscloud', operation, payload, () => performGscloudRequest(operation, payload, signal));
+}
+async function performGscloudRequest(operation,payload={},signal) {
   const commands={products:'gscloud_products',search:'gscloud_search',detail:'gscloud_detail'};
   if(!commands[operation])fail('Unknown GSCloud operation.');
   if(operation==='search')validateGSCloudSearch(payload);
@@ -99,6 +103,9 @@ export function validateGSCloudOriginalJob(job) {
   return job;
 }
 export async function downloadGSCloudOriginal(request) {
+  return usageRequest('gscloud','download',request,()=>performDownloadGSCloudOriginal(request));
+}
+async function performDownloadGSCloudOriginal(request) {
   if(!desktopAvailable())fail('Connect GSCloud accounts in the desktop app. Public search remains available here.');
   if(!request||Object.keys(request).some(k=>!['productId','itemId'].includes(k))||!originalTile(request.productId,request.itemId))fail('Select an available original from a supported GSCloud product.');
   try{return validateGSCloudOriginalJob(await window.__TAURI__.core.invoke('gscloud_download_original',{request}));}

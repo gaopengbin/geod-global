@@ -39,6 +39,7 @@ import gebcoChinese from './locales/gebco.zh-CN.js';
 import sinolcChinese from './locales/sinolc.zh-CN.js';
 import gscloudChinese from './locales/gscloud.zh-CN.js';
 import acquisitionChinese from './locales/acquisition.zh-CN.js';
+import usageChinese from './locales/usage.zh-CN.js';
 
 const chinese = { ...threeDChinese, ...tilesChinese, ...wcsChinese, ...stacChinese, ...wmsChinese, ...featuresChinese, ...vectorChinese, ...radarChinese, ...mainChinese, ...runtimeChinese, ...processingChinese, ...artifactChinese, ...workspaceChinese, ...projectsChinese, ...proxyChinese, ...accountsChinese, ...elevationChinese, ...aerialChinese, ...localRgbChinese, ...modisChinese, ...viirsChinese, ...landsatQualityChinese, ...vegetationChinese, ...vegetationQualityChinese, ...modisScienceChinese };
 const I18nContext = createContext(null);
@@ -55,6 +56,7 @@ Object.assign(chinese, gebcoChinese);
 Object.assign(chinese, sinolcChinese);
 Object.assign(chinese, gscloudChinese);
 Object.assign(chinese, acquisitionChinese);
+Object.assign(chinese, usageChinese);
 const browserStorage = () => { try { return window.localStorage; } catch { return null; } };
 
 export function I18nProvider({ children }) {

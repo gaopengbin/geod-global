@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import { runtimeRequest } from './runtime-client.js';
 
 export const RECIPE_SCHEMA = 'geod-raster-recipe/v1';
@@ -101,6 +102,9 @@ export function validatePlanResponse(response, requestedRecipe) {
 }
 
 export async function processingRequest(operation, recipe, signal) {
+  return usageRequest('processing', operation, recipe, () => performProcessingRequest(operation, recipe, signal));
+}
+async function performProcessingRequest(operation, recipe, signal) {
   if (operation === 'list') return runtimeRequest('recipes', undefined, signal);
   const value = validateRecipe(recipe);
   const operations = { plan: 'planRecipe', save: 'saveRecipe', run: 'runRecipe' };

@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import { isSupportedAsset, SOURCE_ASSET_KEYS } from './providers.js';
 import { validRadarMetadata } from './radar.js';
 import { validQualityMetadata } from './quality.js';
@@ -109,6 +110,9 @@ function rasterResponse(data, payload) {
 }
 
 export async function runtimeRequest(operation, payload, signal) {
+  return usageRequest('runtime', operation, payload, () => performRuntimeRequest(operation, payload, signal));
+}
+async function performRuntimeRequest(operation, payload, signal) {
   if (operation === 'raster' && payload?.aerialView !== undefined && !AERIAL_VIEWS.includes(payload.aerialView)) throw new Error('Unsupported NAIP display selection.');
   const commands = { resolveProducts: 'resolve_copernicus_products', accounts: 'list_provider_accounts', connectAccount: 'connect_provider_account', verifyAccount: 'verify_provider_account', disconnectAccount: 'disconnect_provider_account', health: 'health', diagnostics: 'diagnostics', proxy: 'get_proxy_settings', saveProxy: 'save_proxy_settings', testProxy: 'test_proxy_settings', list: 'list_jobs', create: 'create_job', cancel: 'cancel_job', retry: 'retry_job', reveal: 'reveal_job', planRgb: 'plan_scientific_rgb', runRgb: 'run_scientific_rgb', rgb: 'inspect_scientific_rgb', rgbPixel: 'sample_scientific_rgb', composite: 'inspect_composite', compositePixel: 'sample_composite', raster: 'inspect_raster', thumbnail: 'file_thumbnail', pixel: 'sample_raster', package: 'prepare_artifact', revealPackage: 'reveal_artifact', recipes: 'list_recipes', planRecipe: 'plan_recipe', saveRecipe: 'save_recipe', runRecipe: 'run_recipe', projects: 'list_projects', createProject: 'create_project', renameProject: 'rename_project', addProjectScenes: 'add_project_scenes', downloadProject: 'download_project', mosaicProject: 'mosaic_project', prepareProject: 'prepare_project' };
   if (!commands[operation]) throw new Error('Unknown task service operation.');

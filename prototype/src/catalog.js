@@ -8,6 +8,7 @@ import { RADAR_KEYS, radarAssetIdentity } from './radar.js';
 import { LANDSAT_QUALITY_KEYS, landsatQualityIdentity } from './landsat-quality.js';
 
 export const EARTH_SEARCH = "https://earth-search.aws.element84.com/v1/search";
+export const CATALOG_PAGE_SIZE = 100;
 export const SAMPLE_BBOX = [-122.55, 37.68, -122.32, 37.84];
 export const INITIAL_SEARCH = { bbox: SAMPLE_BBOX.join(", "), start: "2025-06-01", end: "2025-06-30", cloudMin: 0, cloud: 60, limit: 20 };
 
@@ -40,7 +41,7 @@ export function validateSearch(input) {
     if (!['all','ascending','descending'].includes(orbit) || !['all',...RADAR_KEYS].includes(polarization)) throw new Error('Choose a supported orbit and polarization.');
     return { bbox, start: input.start, end: input.end, limit, provider: provider.id, orbit, polarization };
   }
-  if (['aerial', 'composite'].includes(provider.domain)) return { bbox, start: input.start, end: input.end, limit, provider: provider.id };
+  if (['aerial', 'composite'].includes(provider.domain)) return { bbox, start: input.start, end: input.end, limit, provider: provider.id, ...(provider.domain === 'aerial' && input.dateMode === 'latest-year' ? {dateMode:'latest-year'} : {}) };
   const cloudMin = Number(input.cloudMin ?? 0), cloud = Number(input.cloud);
   if (!Number.isFinite(cloudMin) || !Number.isFinite(cloud) || cloudMin < 0 || cloud > 100 || cloudMin > cloud) throw new Error("Choose a cloud cover range from 0 to 100 percent, with minimum no greater than maximum.");
   if (!Number.isInteger(limit) || limit < 1 || limit > 100) throw new Error("Page size must be between 1 and 100 scenes.");
@@ -282,9 +283,67 @@ export async function fetchCatalogPage(url, { signal, fetcher = fetch } = {}) {
 
 // Abort the old HTTP request and also reject its result when a transport ignores abort.
 export function createSearchRunner() {
-  let generation = 0, controller;
+  let generation = 0, controller, browsing = null;
+  const commitPage = (state, page, url) => {
+    const visited = new Set([...state.visited, url]);
+    if (page.next && visited.has(page.next)) throw new Error('The catalog repeated a pagination link.');
+    const scenes = new Map(state.result?.scenes.map(scene => [scene.id, scene]) || []);
+    for (const scene of page.scenes) scenes.set(scene.id, scene);
+    const result = {...page, scenes:[...scenes.values()], pages:(state.result?.pages || 0) + 1, complete:!page.next,
+      ...(state.dateRange ? {dateRange:state.dateRange} : {})};
+    state.visited = visited; state.result = result;
+    return result;
+  };
   return {
-    cancel() { generation += 1; controller?.abort(); },
+    cancel() { generation += 1; controller?.abort(); if (browsing) browsing.loading = false; },
+    // Interactive exploration fetches one page per user action. The separate
+    // runAll utility is reserved for callers that explicitly need exhaustion.
+    async start(url, {onPage, latestYear = false, now = new Date(), ...options} = {}) {
+      controller?.abort(); controller = new AbortController();
+      const current = ++generation, signal = controller.signal;
+      const state = {visited:new Set(), result:null, loading:current, dateRange:null};
+      browsing = state;
+      try {
+        let requestURL = new URL(url);
+        requestURL.searchParams.set('limit', String(CATALOG_PAGE_SIZE));
+        if (latestYear && providerForSearch(url).id === 'planetary-naip') {
+          const today = now.toISOString().slice(0,10), probeURL = new URL(requestURL);
+          probeURL.searchParams.set('limit','1');
+          probeURL.searchParams.set('datetime',`../${today}T23:59:59.999Z`);
+          const newest = await fetchCatalogPage(probeURL.href, {...options,signal});
+          if (current !== generation) return null;
+          if (!newest.scenes.length) {
+            const result = commitPage(state,{...newest,next:null},probeURL.href);
+            onPage?.(result); return result;
+          }
+          const year = newest.scenes[0].date.slice(0,4);
+          state.dateRange = {start:`${year}-01-01`,end:today < `${year}-12-31` ? today : `${year}-12-31`,latestYear:year};
+          requestURL.searchParams.set('datetime',`${state.dateRange.start}T00:00:00Z/${state.dateRange.end}T23:59:59.999Z`);
+        }
+        const page = await fetchCatalogPage(requestURL.href,{...options,signal});
+        if (current !== generation) return null;
+        const result = commitPage(state,page,requestURL.href);
+        onPage?.(result); return result;
+      } catch (error) {
+        if (current !== generation) return null;
+        throw error;
+      } finally { if (state.loading === current) state.loading = false; }
+    },
+    async loadMore({onPage, ...options} = {}) {
+      const state = browsing, url = state?.result?.next;
+      if (!url || state.loading) return null;
+      controller?.abort(); controller = new AbortController();
+      const current = ++generation; state.loading = current;
+      try {
+        const page = await fetchCatalogPage(url,{...options,signal:controller.signal});
+        if (current !== generation) return null;
+        const result = commitPage(state,page,url);
+        onPage?.(result); return result;
+      } catch (error) {
+        if (current !== generation) return null;
+        throw error;
+      } finally { if (state.loading === current) state.loading = false; }
+    },
     async run(url, options = {}) {
       controller?.abort();
       controller = new AbortController();

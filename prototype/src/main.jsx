@@ -46,7 +46,7 @@ import { Button, Badge, Input, Textarea, Select, Modal, EmptyState,
 import "./styles.css";
 import "./catalog.css";
 import { compositePeriodLabel } from './composite-period.js';
-import { defaultLiveSearch, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
+import { CATALOG_PAGE_SIZE, defaultLiveSearch, searchURL, validateSearch, compatibleScenes, createSearchRunner } from "./catalog.js";
 import { RuntimeProvider, DownloadAssetButton, RuntimeTasks } from "./runtime-ui.jsx";
 import { SaveProjectButton } from "./projects-ui.jsx";
 import { LibraryPage } from "./library-page.jsx";
@@ -83,9 +83,12 @@ import { elevationPreview } from './elevation-preview.js';
 import { providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel, demTileLabel, copDemLabel } from './providers.js';
 import { imageryHrefs } from './explore-imagery.js';
 import { RELEASE_VERSION, originalsReleased } from './release-policy.js';
+import { UsageLifecycle } from './usage-ui.jsx';
+import { usage,countBucket } from './usage-client.js';
+import { beginUsage,usageContext,usageSource } from './usage-events.js';
 import { AgentPanel } from './agent-panel.jsx';
 const AgentArchiveResult=React.lazy(()=>import('./agent-archive-result.jsx'));
-import {IdentityProvider, IdentityEntry, SignInPage} from './identity-ui.jsx';
+import {IdentityProvider, IdentityEntry} from './identity-ui.jsx';
 import {OfficialServicesProvider, ImageryMonitoringPage} from './official-ui.jsx';
 import {AccountPage} from './account-ui.jsx';
 import { agentMapContext, gscloudMapContext, agentScene, selectedSearchBounds } from './startup.js';
@@ -111,7 +114,7 @@ const pageFromHash = () => {
   catch { return "Home"; }
   if (requested === "Recipes") return "My Data";
   if (requested === "Official services") return "Imagery monitoring";
-  return [...nav.map(([name]) => name), "Settings", "SignIn", "Account", "Imagery monitoring"].includes(requested) ? requested : "Home";
+  return [...nav.map(([name]) => name), "Settings", "Account", "Imagery monitoring"].includes(requested) ? requested : "Home";
 };
 const projectFromHash = () => {
   if (!['My Data', 'Explore'].includes(pageFromHash())) return null;
@@ -163,7 +166,7 @@ function ConnectedSourceExplorer({ entry, ...props }) {
 }
 
 export function App() {
-  return <IdentityProvider><OfficialServicesProvider><DistributionProvider><AppContent/></DistributionProvider></OfficialServicesProvider></IdentityProvider>;
+  return <UsageLifecycle><IdentityProvider><OfficialServicesProvider><DistributionProvider><AppContent/></DistributionProvider></OfficialServicesProvider></IdentityProvider></UsageLifecycle>;
 }
 function AppContent() {
   const { t, date, number, locale } = useI18n();
@@ -200,6 +203,7 @@ function AppContent() {
   const [appliedSearch, setAppliedSearch] = useState(null);
   const [areaPolygon, setAreaPolygon] = useState(null);
   const searchRunner = useRef(null);
+  const restoredCatalogScenes = useRef([]);
   const searchSequence = useRef(0);
   if (!searchRunner.current) searchRunner.current = createSearchRunner();
   const catalog = liveCatalog;
@@ -234,6 +238,7 @@ function AppContent() {
   const [boxSelect, setBoxSelect] = useState(false);
   useEffect(() => { setMapMatches([]); }, [query]);
   const exploreMap = useRef(null);
+  const [sceneFocus,setSceneFocus] = useState(null);
   const timelineTrack = useRef(null);
   const sceneListRef = useRef(null);
   const attributionRef = useRef(null);
@@ -261,11 +266,12 @@ function AppContent() {
   const [modal, setModal] = useState(null),
     [theme, setTheme] = useState(stored("theme", "light"));
   const runSearch = async (submittedInput = searchInput, restoredProject = null) => {
+    const observation=beginUsage('search',{...usageContext({page:'Explore'}),source:usageSource(submittedInput.provider)});
     let submitted, url;
     try {
-      submitted = validateSearch({ ...submittedInput, limit: 100 });
+      submitted = validateSearch({ ...submittedInput, limit: CATALOG_PAGE_SIZE });
       url = searchURL(submitted);
-    } catch (error) { setLiveError(error.message); return; }
+    } catch (error) { observation.finish(null,error);setLiveError(error.message); return; }
     setLiveError("");
     imagerySequence.current += 1;
     const mapSequence = imagerySequence.current;
@@ -274,7 +280,8 @@ function AppContent() {
     setFiltersOpen(false);
     let savedScenes;
     try { savedScenes = restoredProject ? projectCatalogScenes(restoredProject) : []; }
-    catch(error) { setLiveError(error.message);setLiveState('error');return; }
+    catch(error) { observation.finish(null,error);setLiveError(error.message);setLiveState('error');return; }
+    restoredCatalogScenes.current = savedScenes;
     setLiveState("loading");
     setLiveCatalog(savedScenes.length ? mergeProjectCatalog({ complete: false, pages: 0 }, savedScenes) : null);
     setSelected(savedScenes[0] || null);
@@ -284,13 +291,19 @@ function AppContent() {
     setVisibleLoadedIds([]);
     setActiveDay(null);
     setMapMatches([]);
+    setSceneFocus(null);
     setCompare(false);
     setAppliedSearch(submitted);
     setQuery("");
     let previewRestored = false;
     try {
-      const result = await searchRunner.current.runAll(url, { onPage: page => {
+      const result = await searchRunner.current.start(url, { latestYear:submitted.dateMode === 'latest-year', onPage: page => {
         if (searchGeneration !== searchSequence.current) return;
+        if (page.dateRange) {
+          const {start,end} = page.dateRange;
+          setAppliedSearch({...submitted,start,end});
+          setSearchInput(current => ({...current,start,end}));
+        }
         const merged = savedScenes.length ? mergeProjectCatalog(page, savedScenes) : page;
         setLiveCatalog(merged);
         if (!savedScenes.length && catalogPreviewKind(submitted.provider)) {
@@ -313,12 +326,32 @@ function AppContent() {
           }
         }
       } });
+      observation.finish(result,!result?new DOMException('Search cancelled','AbortError'):null);
       if (!result || searchGeneration !== searchSequence.current) return;
       setLiveState("ready");
     } catch (error) {
+      observation.finish(null,error);
       if (searchGeneration !== searchSequence.current) return;
       setLiveError(error.name === "AbortError" ? "Search cancelled." : error.name === "TimeoutError" ? "The data source did not respond within 30 seconds. Try again." : error.message);
       setLiveState("error");
+    }
+  };
+  const loadMoreScenes = async () => {
+    if (!liveCatalog?.next || ['loading','loading-more'].includes(liveState)) return;
+    const observation=beginUsage('search_more',{...usageContext({page:'Explore'}),source:usageSource(sourceProvider.id)});
+    const searchGeneration = searchSequence.current;
+    setLiveState('loading-more'); setLiveError('');
+    try {
+      const result = await searchRunner.current.loadMore();
+      observation.finish(result,!result?new DOMException('Search cancelled','AbortError'):null);
+      if (!result || searchGeneration !== searchSequence.current) return;
+      setLiveCatalog(mergeProjectCatalog(result,restoredCatalogScenes.current));
+      setLiveState('ready');
+    } catch (error) {
+      observation.finish(null,error);
+      if (searchGeneration !== searchSequence.current) return;
+      setLiveError(error.name === 'TimeoutError' ? 'The data source did not respond within 30 seconds. Try again.' : error.message);
+      setLiveState('error');
     }
   };
   // Catalog searches begin only after an explicit area/filter/source action,
@@ -371,7 +404,7 @@ function AppContent() {
     return () => window.removeEventListener("hashchange", change);
   }, []);
   useEffect(() => {
-    const appearance = page === 'SignIn' ? 'dark' : theme;
+    const appearance = theme;
     document.documentElement.dataset.theme = appearance;
     document.documentElement.classList.toggle("dark", appearance === "dark");
     localStorage.setItem("geod-design-theme", JSON.stringify(theme));
@@ -421,6 +454,7 @@ function AppContent() {
     const datasetId = provider.startsWith('dataset-') ? provider.slice('dataset-'.length) : null;
     if (datasetId && !SOURCE_DIRECTORY.some(source => ['dataset','gebco'].includes(source.action?.kind) && source.action.datasetId === datasetId)) return;
     if (!datasetId) providerById(provider);
+    usage.record('source_selected',{...usageContext(),source:usageSource(provider)});
     const product=productForSource(provider);
     if(product?.channels.length>1){const preferences=readProductPreferences();writeProductPreferences({...preferences,preferred:{...preferences.preferred,[product.id]:provider}});}
     setExploreEntry(null);
@@ -442,9 +476,9 @@ function AppContent() {
     const next = { ...searchInput, provider };
     if (next.provider === 'planetary-naip' && sourceProvider.id !== next.provider) {
       beforeAerialDates.current = {start:searchInput.start,end:searchInput.end};
-      next.start = '2010-01-01'; next.end = new Date().toISOString().slice(0,10);
+      next.dateMode = 'latest-year';
     } else if (sourceProvider.id === 'planetary-naip' && next.provider !== sourceProvider.id && beforeAerialDates.current) {
-      Object.assign(next,beforeAerialDates.current); beforeAerialDates.current = null;
+      Object.assign(next,beforeAerialDates.current); beforeAerialDates.current = null; delete next.dateMode;
     }
     setSearchInput(next);
     if (selectedSearchBounds(next)) runSearch(next);
@@ -461,6 +495,7 @@ function AppContent() {
     if (!action) return;
     if (action.kind === 'provider') return exploreSource(action.providerId);
     if (action.kind === 'dataset') return exploreSource(`dataset-${action.datasetId}`);
+    usage.record('source_selected',{...usageContext(),source:usageSource(source.id)});
     if (action.kind === 'library') {
       location.hash = `My%20Data?view=${action.view}`;
       return;
@@ -508,6 +543,7 @@ function AppContent() {
     return () => observer.disconnect();
   }, [filtered.length, visibleListCount]);
   const sceneById = useMemo(() => new Map(scenes.map(scene => [scene.id, scene])), [scenes]);
+  const focusedSceneIds = useMemo(()=>mapMatches.length?mapMatches:sceneFocus?[sceneFocus.id]:[],[mapMatches,sceneFocus]);
   const awaitingSelectedGrid = liveState === 'loading' && selectedIds.some(id => !sceneById.has(id) || canLoadMap && !imageryHrefs(sceneById.get(id)).length || previewKind === 'elevation' && !sceneById.get(id)?.grid?.shape);
   const loadedScenes = useMemo(() => loadedIds.map(id => sceneById.get(id)).filter(Boolean), [loadedIds, sceneById]);
   const downloadScenes = useMemo(() => scenesForDownload({ scenes, selectedIds, loadedIds, currentScene: selected }), [scenes, selectedIds, loadedIds, selected]);
@@ -531,6 +567,7 @@ function AppContent() {
     return counts;
   }, new Map()), [scenes]);
   const updateSelection = value => {
+    usage.record('selection_changed',{...usageContext({page:'Explore'}),source:usageSource(sourceProvider.id),count:countBucket((typeof value==='function'?value(selectedIds):value).length)});
     imagerySequence.current += 1;
     setPreparingImagery(false);
     setSelectedIds(value);
@@ -538,6 +575,12 @@ function AppContent() {
   const toggleScene = id => {
     updateSelection(current => current.includes(id) ? current.filter(value => value !== id) : [...current, id]);
     if (!canLoadMap) setSelected(sceneById.get(id) || null);
+  };
+  const focusScene = scene => {
+    usage.record('scene_located',{...usageContext({page:'Explore'}),source:usageSource(scene.provider)});
+    setSelected(scene);
+    setMapMatches([]);
+    setSceneFocus(current=>({id:scene.id,revision:(current?.revision||0)+1}));
   };
   const loadSelected = async requested => {
     if (awaitingSelectedGrid) return;
@@ -572,7 +615,7 @@ function AppContent() {
   const other = comparisons.find((s) => s.id === compareId) || comparisons[0];
   const comparing = compare && !!other;
   const home = page === "Home";
-  const agentVisible = !['SignIn','Account'].includes(page) && (home || agentOpen);
+  const agentVisible = page !== 'Account' && (home || agentOpen);
   const previewing=Boolean(mapPreview&&agentVisible);
   const workAreaVisible=!home&&!previewing;
   const workspace = page === "Explore" || page === "Workspace";
@@ -581,10 +624,6 @@ function AppContent() {
     ? 240 + (discoveryCollapsed ? 0 : 346) + (hasInspector ? 226 : 0)
     : 360;
   const resizeHint = t('Drag to resize · Double-click to reset · Arrow keys to adjust');
-  if (page === 'SignIn') return <div className="app app-sign-in">
-    <AppHeader theme="dark" minimal/>
-    <main className="identity-standalone"><SignInPage onContinue={()=>go('Home')}/></main>
-  </div>;
   return (
     <div className={`app ${home ? 'app-home' : ''}`}>
       <AppHeader theme={theme} collapsed={navCollapsed} onToggleNavigation={() => {
@@ -599,12 +638,12 @@ function AppContent() {
         leading={page === "Explore" && discoveryCollapsed && <Button variant="secondary" size="sm" icon={PanelLeftOpen} className="discovery-toggle" aria-label={t("Show scene list")} aria-controls="explore-discovery" aria-expanded={false} onClick={() => setDiscoveryCollapsed(false)}>{t("Imagery scenes")}</Button>}
         context={<div className="breadcrumb">
           <strong>{home ? t('AI workspace') : currentProject?.name || t("{source} workspace", { source: page === 'Explore' ? t(exploreEntry?.name || activeDataset?.title || (exploreDatasetId ? SOURCE_DIRECTORY.find(source => source.action?.datasetId === exploreDatasetId)?.name || 'Data product' : sourceProvider.name)) : 'GeoD Global' })}</strong>
-          <ChevronRight size={14} aria-hidden="true" /><span>{t(page==='SignIn'?'Sign in':page)}</span>
+          <ChevronRight size={14} aria-hidden="true" /><span>{t(page)}</span>
         </div>}
         actions={<>
           <BackgroundWorkLink/>
           <NotificationCenter/>
-          {!home && page !=='SignIn' && <Button size="icon" variant="quiet" icon={MessageSquare} aria-label={t(agentOpen ? 'Close Agent' : 'Open Agent')} tooltip={t(agentOpen ? 'Close Agent' : 'Open Agent')}
+          {!home && <Button size="icon" variant="quiet" icon={MessageSquare} aria-label={t(agentOpen ? 'Close Agent' : 'Open Agent')} tooltip={t(agentOpen ? 'Close Agent' : 'Open Agent')}
             aria-controls="geod-agent-panel" aria-expanded={agentOpen} onClick={() => {
               if (agentOpen) { agentClose.current?.(); return; }
               setInspector(false);
@@ -673,7 +712,7 @@ function AppContent() {
                 <ChevronDown size={16} />
               </Button>
               {(exploreDatasetId || exploreEntry) && <div className="public-dataset-sidebar-host" ref={setDatasetSidebar}/>}
-              {!exploreDatasetId && !exploreEntry && appliedSearch && !isElevation && <div className="catalog-active-filters">{date(appliedSearch.start)} – {date(appliedSearch.end)}{!isAerial && !isComposite && !isRadar && <> · {t("clouds {minimum}–{maximum}", { minimum: number(appliedSearch.cloudMin / 100, { style: "percent" }), maximum: number(appliedSearch.cloud / 100, { style: "percent" }) })}</>}</div>}
+              {!exploreDatasetId && !exploreEntry && appliedSearch && !isElevation && <div className="catalog-active-filters">{isAerial && appliedSearch.dateMode === 'latest-year' ? t(catalog?.dateRange ? 'Latest acquisition year · {year}' : 'Latest acquisition year',{year:catalog?.dateRange?.latestYear}) : <>{date(appliedSearch.start)} – {date(appliedSearch.end)}</>}{!isAerial && !isComposite && !isRadar && <> · {t("clouds {minimum}–{maximum}", { minimum: number(appliedSearch.cloudMin / 100, { style: "percent" }), maximum: number(appliedSearch.cloud / 100, { style: "percent" }) })}</>}</div>}
               {!exploreDatasetId && !exploreEntry && <>
                   <label className="search-input scene-search">
                     <Search size={16} />
@@ -681,9 +720,9 @@ function AppContent() {
                   </label>
                   {liveError && <p className="catalog-error" role="alert">{catalogError(liveError)}</p>}
                   <div className="catalog-fetch-status" role="status">
-                    {liveState === "loading" ? <><Spinner />{t("Fetching all catalog pages… {count} scenes from {pages} pages", { count: scenes.length, pages: catalog?.pages || 0 })}<Button variant="quiet" size="xs" onClick={cancelSearch}>{t("Stop catalog search")}</Button></>
+                    {['loading','loading-more'].includes(liveState) ? <><Spinner />{t(liveState === 'loading-more' ? 'Loading more results…' : 'Loading latest results…')}<Button variant="quiet" size="xs" onClick={cancelSearch}>{t("Stop catalog search")}</Button></>
                       : catalog?.complete ? t("Catalog complete · {count} scenes", { count: scenes.length })
-                        : catalog ? t("Catalog partial · {count} scenes", { count: scenes.length }) : null}
+                        : catalog ? t("Loaded {count} scenes · more available", { count: scenes.length }) : null}
                   </div>
                   <div className="results-heading">
                     <span className="results-count">
@@ -701,7 +740,7 @@ function AppContent() {
                     {liveState === "loading" && !catalog ? <div className="loading-state" role="status"><Spinner />{t("Searching {source}…", { source: sourceProvider.name })}</div> : !catalog ? <EmptyState icon={Search} title={t(liveState === "error" ? "Catalog request failed" : "Search the live catalog")}>{t(isNum ? "Choose an area to find SRTM NUM source tiles." : isNum ? "Choose an area to find SRTM NUM source tiles." : isElevation ? "Choose a search area to find public elevation tiles." : "Set your area and dates, choose a data source, then search for imagery.")}</EmptyState> : !filtered.length ? (
                       <EmptyState
                         icon={Search}
-                        title={t("No matching scenes")}
+                        title={t(catalog.next ? 'No matches in loaded results' : "No matching scenes")}
                         action={
                           <Button
                             onClick={() => {
@@ -713,12 +752,12 @@ function AppContent() {
                             }}
                           >{t("Reset filters")}</Button>
                         }
-                      >{t(query ? "No scene ID or date matches this text." : isRadar ? "Try a wider date range, another orbit or polarization." : isComposite ? "Try a wider composite period or a different area." : isAerial ? "No NAIP imagery covers this area and date range. Coverage is limited to published US aerial acquisitions." : isNum ? "No SRTM NUM source tiles cover this area." : isSrtm ? "No SRTMGL1 tiles cover this area. Published land coverage extends from 56° S to 60° N." : isElevation ? "No published elevation tiles cover this area. Coverage depends on the selected product; ocean tiles are absent." : "Try a wider date range or allow more cloud cover.")}</EmptyState>
+                      >{t(catalog.next ? 'Load more results or change the filters.' : query ? "No scene ID or date matches this text." : isRadar ? "Try a wider date range, another orbit or polarization." : isComposite ? "Try a wider composite period or a different area." : isAerial ? "No NAIP imagery covers this area and date range. Coverage is limited to published US aerial acquisitions." : isNum ? "No SRTM NUM source tiles cover this area." : isSrtm ? "No SRTMGL1 tiles cover this area. Published land coverage extends from 56° S to 60° N." : isElevation ? "No published elevation tiles cover this area. Coverage depends on the selected product; ocean tiles are absent." : "Try a wider date range or allow more cloud cover.")}</EmptyState>
                     ) : (
                       filtered.slice(0, visibleListCount).map((s) => (
-                        <ExploreResultRow key={s.id} selected={selectedIds.includes(s.id)} onSelect={()=>toggleScene(s.id)}
+                        <ExploreResultRow key={s.id} selected={selectedIds.includes(s.id)} focused={focusedSceneIds.includes(s.id)} onSelect={()=>toggleScene(s.id)}
                           selectionLabel={t("Select scene {date} {id}", { date: isElevation ? demTileLabel(s.id) : compositePeriodLabel(s, date), id: s.id })}
-                          onFocus={()=>setSelected(s)} focusLabel={t('Locate scene {id}',{id:s.id})}
+                          onFocus={()=>focusScene(s)} focusLabel={t('Locate scene {id}',{id:s.id})}
                           title={isElevation?demTileLabel(s.id):`${compositePeriodLabel(s,date,locale)} · ${s.properties['grid:code']||s.id}`}
                           thumbnail={previewKind === 'elevation' ? <span className="catalog-elevation-tile" aria-label={t('Elevation tile, {id}',{id:demTileLabel(s.id)})}><Mountain size={20} aria-hidden="true"/></span> : <SceneThumbnail
                             src={catalogBrowsePreview(s)}
@@ -730,6 +769,7 @@ function AppContent() {
                     )}
                     {filtered.length > visibleListCount && <div ref={listEndRef} className="catalog-list-progress" role="status">{t("Showing {shown} of {total} scenes · scroll for more", { shown: visibleListCount, total: filtered.length })}</div>}
                   </div>
+                  {catalog?.next && <div className="catalog-next"><Button variant="secondary" disabled={['loading','loading-more'].includes(liveState)} onClick={loadMoreScenes}>{liveState === 'loading-more' ? <><Spinner/>{t('Loading more results…')}</> : t('Load more · up to {count}',{count:CATALOG_PAGE_SIZE})}</Button></div>}
                   {catalog && <SelectionActions count={selectedIds.length} onClear={()=>updateSelection([])}
                     preview={canLoadSelectedMap&&<Button variant="secondary" icon={Layers} onClick={loadSelected} disabled={awaitingSelectedGrid||preparingImagery||!selectedIds.length||selectedIds.length>16}>{preparingImagery||awaitingSelectedGrid?<Spinner/>:t('Preview selected')}</Button>}
                     download={sourceProvider.download&&(selectedIds.length?(!exploringProjectId&&canLoadMap&&!originalsReleased(sourceProvider)?<SaveProjectButton scenes={selectedIds.map(id=>sceneById.get(id)).filter(Boolean)} bounds={bbox} geometry={areaPolygon?.geometry} areaName={areaName} onSaved={project=>openProject(project.id)}/>:(!exploringProjectId||currentProject)&&<DownloadAssetButton key={[exploringProjectId,...downloadScenes.map(scene=>scene.id)].join('|')} scene={downloadScenes.find(scene=>scene.id===selected?.id)||downloadScenes[0]} scenes={downloadScenes} areaBounds={bbox} areaPolygon={areaPolygon?.geometry} areaName={areaName} project={currentProject||undefined} onProjectUpdated={setActiveProject} onOpenProject={openProject} triggerVariant="primary" triggerLabel={t('Save and download')}/>):<Button variant="primary" icon={Download} disabled>{t('Save and download')}</Button>)}>
@@ -781,7 +821,7 @@ function AppContent() {
               </div>
               <div className="imagery-canvas">
                 <React.Suspense fallback={<div className="explore-map-loading" role="status">{t("Loading georeferenced imagery…")}</div>}>
-                  <ExploreMap ref={exploreMap} scene={mapScene || scenes[0]} scenes={filtered} {...(previewKind ? {previewScenes:visibleLoadedScenes} : {loadedScenes:visibleLoadedScenes})} selectedIds={selectedIds} focusedIds={mapMatches} activeSceneId={mapScene?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} previewChannel={previewChannel} onFootprintsPick={ids => { setMapMatches(ids); if (ids.length) setInspector(true); }} onFootprintsChange={setFootprintCount} />
+                  <ExploreMap ref={exploreMap} scene={mapScene || scenes[0]} scenes={filtered} focusRequest={sceneFocus} {...(previewKind ? {previewScenes:visibleLoadedScenes} : {loadedScenes:visibleLoadedScenes})} selectedIds={selectedIds} focusedIds={focusedSceneIds} activeSceneId={mapScene?.id} activeDay={activeDay} reference={comparing ? other : null} split={split} area={bbox} areaGeometry={areaPolygon?.geometry} showArea={showArea} boxSelect={boxSelect} previewChannel={previewChannel} onFootprintsPick={ids => { setSceneFocus(null);setMapMatches(ids); if (ids.length) setInspector(true); }} onFootprintsChange={setFootprintCount} />
                 </React.Suspense>
                 {comparing && (
                   <div className="compare-line" style={{ left: `calc(${split}% - 22px)` }} role="slider" tabIndex={0}
@@ -826,8 +866,8 @@ function AppContent() {
               {!isElevation && <div className="timeline">
                 <div className="timeline-track" ref={timelineTrack} aria-label={t("Observation timeline")}>
                   <div className="timeline-items">
-                    <Button variant="quiet" aria-pressed={!activeDay} className={!activeDay ? "selected" : ""} onClick={() => showDay(null)} aria-label={t("Show all dates and {count} scenes", { count: scenes.length })}>
-                      <span className="observation-dot" aria-hidden="true" /><span className="timeline-date">{t("All dates")}</span><span className="timeline-cloud">{t("{count} scenes", { count: scenes.length })}</span>
+                    <Button variant="quiet" aria-pressed={!activeDay} className={!activeDay ? "selected" : ""} onClick={() => showDay(null)} aria-label={t(catalog?.complete ? "Show all dates and {count} scenes" : 'Show loaded dates and {count} scenes', { count: scenes.length })}>
+                      <span className="observation-dot" aria-hidden="true" /><span className="timeline-date">{t(catalog?.complete ? "All dates" : 'Loaded dates')}</span><span className="timeline-cloud">{t("{count} scenes", { count: scenes.length })}</span>
                     </Button>
                     {days.map(day => <Button variant="quiet" key={day} aria-pressed={activeDay === day} className={activeDay === day ? "selected" : ""} onClick={() => showDay(day)} aria-label={t("Show {date} and {count} scenes", { date: date(day), count: dayCounts.get(day) })}>
                       <span className="observation-dot" aria-hidden="true" /><span className="timeline-date">{date(day, { year: undefined, month: "2-digit", day: "2-digit" })}</span><span className="timeline-cloud">{t("{count} scenes", { count: dayCounts.get(day) })}</span>
@@ -1000,7 +1040,7 @@ function AppContent() {
                 <dd>{t("Full scene, not AOI-specific")}</dd></>}
               </dl>
               <p>
-                {t(isNum ? NUM_NOTICE : isRadar ? "RTC is a provider-derived radar product. Its calibration and terrain correction come from the provider; this application does not claim to process raw GRD or SLC." : isViirs ? "VIIRS pixels are selected within an 8-day composite period. Browse images do not prove cloud-free coverage or original-data access." : isVegetation ? "Different pixels in a 16-day composite may represent different observation dates. No QA mask is applied here; the index layers do not prove cloud-free coverage." : isComposite ? "NASA MODIS uses per-pixel observations selected within an 8-day period. No scene-cloud filter or automatic quality masking is applied." : isAerial ? "USDA NAIP is aerial imagery with red, green, blue and near-infrared channels. Dates vary by state; cloud filtering does not apply." : isSrtm ? "SRTMGL1 v003 is a void-filled surface elevation product. It uses EGM96 and shared boundary samples; it is not interchangeable with Copernicus DEM." : isElevation ? "This public DSM includes buildings and vegetation. Coverage is limited to published land tiles; missing tiles are not filled with invented heights." : "Catalog pages load automatically for the submitted area, dates and cloud limit. Footprints locate scenes. A thumbnail is a preview; loading COGs and downloading original files are separate actions.")}
+                {t(isNum ? NUM_NOTICE : isRadar ? "RTC is a provider-derived radar product. Its calibration and terrain correction come from the provider; this application does not claim to process raw GRD or SLC." : isViirs ? "VIIRS pixels are selected within an 8-day composite period. Browse images do not prove cloud-free coverage or original-data access." : isVegetation ? "Different pixels in a 16-day composite may represent different observation dates. No QA mask is applied here; the index layers do not prove cloud-free coverage." : isComposite ? "NASA MODIS uses per-pixel observations selected within an 8-day period. No scene-cloud filter or automatic quality masking is applied." : isAerial ? "USDA NAIP is aerial imagery with red, green, blue and near-infrared channels. Dates vary by state; cloud filtering does not apply." : isSrtm ? "SRTMGL1 v003 is a void-filled surface elevation product. It uses EGM96 and shared boundary samples; it is not interchangeable with Copernicus DEM." : isElevation ? "This public DSM includes buildings and vegetation. Coverage is limited to published land tiles; missing tiles are not filled with invented heights." : "The latest 100 catalog records load first. Load more only when needed. Footprints locate scenes; previews and original-file downloads are separate actions.")}
               </p>
               {selected.sha256 && <p className="mono hash">{t("Cached preview SHA-256:")} {selected.sha256}</p>}
               <div className="link-stack">
@@ -1045,7 +1085,7 @@ function AppContent() {
                 <li>{t('NASA and Copernicus account setup is included; protected original downloads are deferred until real-account verification.')}</li>
               </ul>
               <p className="muted">{t('Release candidate. Check the included release notes for supported products and limits. Software updates and notifications are in Settings.')}</p>
-              <p className="muted">{t("Inter is bundled locally. Catalog searches, imagery previews and asset downloads contact their source providers. This workspace sends no analytics.")}</p>
+              <p className="muted">{t("Inter is bundled locally. Catalog searches, imagery previews and asset downloads contact their source providers. Optional usage statistics are controlled in Settings.")}</p>
             </div>
           )}
         </Modal>

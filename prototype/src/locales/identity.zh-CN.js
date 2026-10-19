@@ -1,4 +1,8 @@
 export default {
+ 'Connect your own model. No GeoD Global account is required.':'连接自己的模型，无需登录 GeoD Global 账号。',
+ 'Hosted models':'托管模型','Not available yet':'暂未开放',
+ 'Hosted models are not available in this version. When enabled, they will require a GeoD Global account.':'当前版本暂未开放托管模型，开放后仅在使用托管模型时需要登录 GeoD Global 账号。',
+ 'Your own model connections and local data tools work without signing in.':'自接模型和本地数据功能均可免登录使用。',
  'Sign in':'登录','Your account':'你的账号','GeoD Global account':'GeoD Global 账号','Many sources. One Agent.':'丰富数据源，一个 Agent。',
  'Start with a place. Leave with useful data.':'从地点出发，获取所需数据',
  'Find imagery, preview your area, review the plan and keep the result locally.':'检索影像、预览范围、审阅方案，将成果保存在本地。',

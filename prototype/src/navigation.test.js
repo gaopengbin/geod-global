@@ -19,7 +19,7 @@ test('navigation preserves direct project, file and library links through canoni
   assert.equal(normalizeNavigationHash('#%invalid'), '#Home');
 });
 test('fresh and invalid startup links open the AI homepage, while explicit exploration remains available', () => {
-  for (const hash of ['', '#', '#Home', '#unknown', '#Home?bounds=sample&token=private']) assert.equal(normalizeNavigationHash(hash), '#Home');
+  for (const hash of ['', '#', '#Home', '#unknown', '#Home?bounds=sample&token=private', '#SignIn', '#SignIn?returnTo=Explore']) assert.equal(normalizeNavigationHash(hash), '#Home');
   assert.equal(normalizeNavigationHash('#Explore'), '#Explore');
 });
 test('retired 3D library links fall back to My Data without reopening a 3D screen', () => {

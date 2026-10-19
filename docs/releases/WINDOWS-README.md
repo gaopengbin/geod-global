@@ -1,7 +1,6 @@
 # GeoD Global for Windows
 
-Windows 10 / 11 x64 桌面版。此包为 **0.2.0-rc.5 Beta 候选**，供本地验收和反馈，
-尚非稳定正式版。文件未签名，Windows 可能显示未知发布者提示。
+Windows 10 / 11 x64 桌面版。此包为 **0.2.0 正式版**。文件未签名，Windows 可能显示未知发布者提示。
 本包的功能范围和限制见 [RELEASE-NOTES.md](RELEASE-NOTES.md)。
 
 ## 安装与启动
@@ -30,7 +29,9 @@ GSCloud 请通过软件中的官网登录窗口连接并验证。Copernicus 及�
 以各自的实际支持范围为准。GEE 导出使用用户自己的项目，并可能消耗其配额。
 完整范围见 [数据源状态](docs/provider-integration-status.md)；渲染影像不等同于原始科学数据。
 
-Global 邮箱、Google、GitHub 登录通过系统浏览器完成，游客仍可使用本地功能。Global 账号不替代模型连接或 NASA / Copernicus 数据授权，也不提供云同步。
+本地使用和自接模型无需 Global 账号。托管模型尚未开放；数据源自己的授权要求仍然适用，也不提供云同步。
+
+匿名使用统计默认开启并自动上传，可在“设置 → 使用统计”中关闭；已有关闭选择会保留。统计不包含对话、密钥、精确位置、文件路径或账号信息，详情见 [使用统计](docs/usage-analytics.md)。
 
 ## 文件与备份
 
@@ -54,12 +55,12 @@ Global 邮箱、Google、GitHub 登录通过系统浏览器完成，游客仍可
 `SHA256SUMS.txt` 校验安装程序和 ZIP；`release-manifest.json` 记录版本、源码提交、
 构建参数及包内每个文件的校验值。校验值不能替代数字签名。
 `THIRD-PARTY/` 保留依赖许可和适用的源码档案；第一方权利说明见 `FIRST-PARTY-NOTICE.txt`。
-本候选包含更新和通知界面，但正式签名更新与公告渠道尚未启用，仍需手动下载升级。出现问题时，可从“设置 → 本地诊断”生成不含敏感数据的报告，
+本版本包含更新和通知界面，但正式签名更新与公告渠道尚未启用，仍需手动下载升级。出现问题时，可从“设置 → 本地诊断”生成不含敏感数据的报告，
 附上版本、复现步骤及错误参考号向发布者反馈；诊断不会自动上传。
 
 ## English quick start
 
-This is an unsigned Windows x64 release candidate for evaluation and feedback.
+GeoD Global 0.2.0 is a Windows x64 release. Its executable files are unsigned.
 Install the WebView2 Evergreen Runtime, then use the per-user installer or extract
 the entire portable ZIP. Run `geod-global-desktop.exe`; development tools and a
 companion server are unnecessary. Closing the window keeps tasks running in the

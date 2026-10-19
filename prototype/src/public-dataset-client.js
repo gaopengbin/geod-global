@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import { desktopAvailable } from './runtime-client.js';
 import { validQueryBounds } from './features-client.js';
 import { validStacUrl, validateStacConnection, validateStacSearchPage, validateStacSnapshot } from './stac-client.js';
@@ -379,6 +380,9 @@ export function publicDatasetPreviewPolicy(dataset, asset, item) {
 }
 
 export async function publicDatasetRequest(operation, payload = {}, signal) {
+  return usageRequest('public-dataset', operation, payload, () => performPublicDatasetRequest(operation, payload, signal));
+}
+async function performPublicDatasetRequest(operation, payload = {}, signal) {
   const commands = { list: 'list_public_datasets', resolve: 'resolve_public_dataset', connect: 'connect_public_dataset' };
   if (!commands[operation]) fail('Unknown public dataset operation.');
   if (operation !== 'list') validateDatasetRequest(payload);

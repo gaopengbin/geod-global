@@ -1,4 +1,6 @@
-import React,{useContext} from 'react';
+import React,{useContext,useEffect} from 'react';
+import {usage,countBucket} from './usage-client.js';
+import {usageContext} from './usage-events.js';
 import {CheckCircle2,FolderOpen,ListTodo,LoaderCircle,AlertCircle} from 'lucide-react';
 import {Badge,Button,Input,Modal,Spinner} from './ui/index.jsx';
 import {useI18n} from './i18n.jsx';
@@ -6,8 +8,12 @@ import {RuntimeContext} from './runtime-context.js';
 import {deliveryState,taskHref} from './acquisition-flow.js';
 import './acquisition.css';
 
-export function ExploreResultRow({title,meta,selected,onSelect,selectionLabel,onFocus,focusLabel,thumbnail,actions,disabled,className='',children}) {
-  return <article className={`explore-result-row ${className}`} data-selected={selected||undefined}>
+export function ExploreResultRow({title,meta,selected,focused,onSelect,selectionLabel,onFocus,focusLabel,thumbnail,actions,disabled,className='',children}) {
+  const focusRow = event => {
+    if (!onFocus || event.defaultPrevented || event.target.closest('button,a,input,select,textarea,[role="checkbox"],[role="button"]')) return;
+    onFocus();
+  };
+  return <article className={`explore-result-row ${className}`} data-selected={selected||undefined} data-focused={focused||undefined} data-can-focus={Boolean(onFocus)||undefined} onClick={focusRow}>
     {onSelect&&<Input type="checkbox" checked={Boolean(selected)} disabled={disabled} aria-label={selectionLabel} onChange={onSelect}/>}
     {thumbnail&&<span className="explore-result-thumbnail">{thumbnail}</span>}
     <div className="explore-result-copy"><Button variant="quiet" size="row" className="explore-result-focus" disabled={!onFocus} aria-label={focusLabel} onClick={onFocus} title={typeof title==='string'?title:undefined}>{title}</Button>{meta&&<div className="explore-result-meta">{meta}</div>}</div>
@@ -25,8 +31,10 @@ export function SelectionActions({count,onClear,preview,download,details,childre
 // supplies the actual delivery kind; a map rendering is never called an original.
 export function DownloadReview({count,onClose,onConfirm,busy=false,confirmDisabled=false,error,children,receipt}) {
   const {t,number}=useI18n();
+  useEffect(()=>{usage.record('download_review_opened',{...usageContext(),count:countBucket(count)});},[]);
+  const confirm=()=>{usage.record('download_confirmed',{...usageContext(),count:countBucket(count)});return onConfirm?.();};
   return <Modal title={t('Confirm download')} closeLabel={t('Close')} onClose={onClose} closeDisabled={busy}
-    footer={<><Button disabled={busy} onClick={onClose}>{t('Close')}</Button>{!receipt&&<Button variant="primary" disabled={busy||!count||confirmDisabled} onClick={onConfirm}>{busy&&<Spinner size={14}/>} {t('Confirm and download')}</Button>}</>}>
+    footer={<><Button disabled={busy} onClick={onClose}>{t('Close')}</Button>{!receipt&&<Button variant="primary" disabled={busy||!count||confirmDisabled} onClick={confirm}>{busy&&<Spinner size={14}/>} {t('Confirm and download')}</Button>}</>}>
     <div className="download-review"><strong>{t('{count} selected',{count:number(count)})}</strong>{children}{error&&<p role="alert" className="stac-error">{t(error)}</p>}{receipt}</div>
   </Modal>;
 }
@@ -35,10 +43,10 @@ export function SavedResultsReceipt({entries=[],hrefFor,onOpen}) {
   if(!entries.length)return null;
   return <section className="delivery-receipt delivery-receipt-compact" aria-label={t('Download and results')} data-status="ready">
     <div className="delivery-receipt-heading"><CheckCircle2 size={16}/><strong>{t('Results saved locally')}</strong><Badge>{number(entries.length)}</Badge></div>
-    <div className="delivery-receipt-actions">{entries.map(entry=>hrefFor?<Button asChild size="sm" variant="secondary" key={entry.key||entry.id}><a href={hrefFor(entry)} title={entry.title}><FolderOpen size={14}/>{entries.length===1?t('View results'):entry.title}</a></Button>:<Button size="sm" variant="secondary" key={entry.key||entry.id} onClick={()=>onOpen?.(entry)}><FolderOpen size={14}/>{entries.length===1?t('View results'):entry.title}</Button>)}</div>
+    <div className="delivery-receipt-actions">{entries.map(entry=>hrefFor?<Button asChild size="sm" variant="secondary" key={entry.key||entry.id}><a href={hrefFor(entry)} title={entry.title} onClick={()=>usage.record('results_opened',usageContext())}><FolderOpen size={14}/>{entries.length===1?t('View results'):entry.title}</a></Button>:<Button size="sm" variant="secondary" key={entry.key||entry.id} onClick={()=>{usage.record('results_opened',usageContext());onOpen?.(entry);}}><FolderOpen size={14}/>{entries.length===1?t('View results'):entry.title}</Button>)}</div>
   </section>;
 }
-export function DeliveryReceipt({project,jobIds,jobs:providedJobs,submitted=false,onOpenProject,compact=false}) {
+export function DeliveryReceipt({project,jobIds,jobs:providedJobs,submitted=false,onOpenProject,compact=false,trackResults=true}) {
   const {t,number}=useI18n(),runtime=useContext(RuntimeContext);
   const jobs=providedJobs||runtime?.jobs||[];
   const state=deliveryState(jobs,jobIds);
@@ -47,7 +55,7 @@ export function DeliveryReceipt({project,jobIds,jobs:providedJobs,submitted=fals
   return <section className={`delivery-receipt${compact?' delivery-receipt-compact':''}`} aria-label={t('Download and results')} data-status={state.status}>
     <div className="delivery-receipt-heading"><Icon size={16}/><strong title={project?.name}>{project?.name||t('Selected downloads')}</strong><Badge tone={state.status==='ready'?'accent':'neutral'}>{t(labels[state.status])}</Badge></div>
     {state.total>0&&<p role="status">{t('{done} of {total} files downloaded',{done:number(state.done),total:number(state.total)})}{state.attention>0&&<> · {t('{count} need attention',{count:number(state.attention)})}</>}</p>}
-    <div className="delivery-receipt-actions">{(submitted||state.total>0)&&<Button asChild variant="secondary" size="sm"><a href={taskHref({projectId:project?.id,jobId:!project&&state.rows[0]?.id})}><ListTodo size={14}/>{t('View download tasks')}</a></Button>}{project?.id&&<Button asChild variant={state.done>0?'primary':'secondary'} size="sm"><a href={`#My%20Data?project=${encodeURIComponent(project.id)}`} onClick={event=>{if(onOpenProject){event.preventDefault();onOpenProject(project.id);}}}><FolderOpen size={14}/>{t(state.done>0?'View results':'Open project')}</a></Button>}</div>
+    <div className="delivery-receipt-actions">{(submitted||state.total>0)&&<Button asChild variant="secondary" size="sm"><a href={taskHref({projectId:project?.id,jobId:!project&&state.rows[0]?.id})}><ListTodo size={14}/>{t('View download tasks')}</a></Button>}{project?.id&&<Button asChild variant={state.done>0?'primary':'secondary'} size="sm"><a href={`#My%20Data?project=${encodeURIComponent(project.id)}`} onClick={event=>{if(trackResults&&state.done>0)usage.record('results_opened',usageContext());if(onOpenProject){event.preventDefault();onOpenProject(project.id);}}}><FolderOpen size={14}/>{t(state.done>0?'View results':'Open project')}</a></Button>}</div>
   </section>;
 }
 // Global navigation is intentionally labelled as background work. It never

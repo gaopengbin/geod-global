@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 const validQueryBounds=b=>Array.isArray(b)&&b.length===4&&b.every(Number.isFinite)&&b[0]>=-180&&b[2]<=180&&b[1]>=-90&&b[3]<=90&&b[0]<b[2]&&b[1]<b[3];
 
@@ -55,6 +56,9 @@ function validateRequest(operation,payload) {
   if(['metadata','rows'].includes(operation)&&(!uuid.test(payload.id)||operation==='rows'&&(!integer(payload.offset??0,0,OVERTURE_ORIGINAL_ROWS)||!integer(payload.limit??5,1,20))))throw new Error('Invalid original Overture row request.');
 }
 export async function overtureRequest(operation,payload={},signal) {
+  return usageRequest('overture', operation, payload, () => performOvertureRequest(operation, payload, signal));
+}
+async function performOvertureRequest(operation,payload={},signal) {
   const commands={providers:'list_official_parquet',search:'search_official_parquet',download:'download_official_parquet',metadata:'parquet_original_metadata',rows:'parquet_original_rows'};
   if(!commands[operation])throw new Error('Unknown Overture operation.');
   validateRequest(operation,payload);if(signal?.aborted)throw new DOMException('Overture request aborted','AbortError');

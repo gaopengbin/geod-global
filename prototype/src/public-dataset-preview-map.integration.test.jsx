@@ -2,6 +2,7 @@ import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { ExploreMap } from './explore-map.jsx';
+import {usage} from './usage-client.js';
 
 const { createPreview, maps, rasterLayers } = vi.hoisted(() => ({ createPreview: vi.fn(), maps: [], rasterLayers: [] }));
 vi.mock('./public-dataset-preview-source.js', async importOriginal => ({ ...await importOriginal(), createProductRasterPreviewSource: createPreview }));
@@ -67,6 +68,43 @@ it('hiding, opacity and raising a product layer retain its original source and g
   expect(firstLayer.zIndex).toBeGreaterThan(secondLayer.zIndex);
   expect(view.container.firstChild.getAttribute('data-product-raster-layers')).toBe('2');
   expect(view.container.firstChild.getAttribute('data-product-raster-visible')).toBe('1');
+});
+
+it('adapts the zoom limit to original product metadata and keeps sources while changing visibility', async () => {
+  createPreview.mockImplementation(()=>{
+    const value=preview();
+    value.getMetadata=()=>({...metadata,crs:'EPSG:3857',bounds:[0,0,300,300],width:1000,height:1000});
+    return value;
+  });
+  const layer=entry('raster'), callback=vi.fn(), view=render(renderMap([layer],callback));
+  const source=previews()[0]; await act(async()=>source.resolve());
+  const mapView=maps[0].getView();
+  expect(mapView.getMinResolution()).toBeGreaterThanOrEqual(0.075);
+  expect(mapView.getMinResolution()).toBeLessThan(0.15);
+  view.rerender(renderMap([{...layer,visible:false}],callback));
+  expect(mapView.getMinResolution()).toBeGreaterThanOrEqual(2.5);
+  view.rerender(renderMap([layer],callback));
+  expect(mapView.getMinResolution()).toBeLessThan(0.15);
+  expect(createPreview).toHaveBeenCalledOnce();
+  expect(source.dispose).not.toHaveBeenCalled();
+});
+
+it('records real preview readiness only after decoded pixels and excludes item, area and asset identities',async()=>{
+  usage.setPreferences({enabled:true});
+  try{
+    const layer={...entry('raster'),title:'private project title'},view=render(renderMap([layer],vi.fn()));
+    const source=previews()[0];
+    expect(usage.report().counts.preview_requested).toBe(1);
+    expect(usage.report().counts.preview_ready).toBe(0);
+    await act(async()=>source.resolve());
+    expect(usage.report().counts.preview_ready).toBe(0);
+    await act(async()=>source.emit('tileloadend',pixels));
+    expect(usage.report().counts.preview_ready).toBe(1);
+    view.rerender(renderMap([{...layer,opacity:0.5}],vi.fn()));
+    expect(usage.report().counts.preview_requested).toBe(1);
+    const report=JSON.stringify(usage.report().events);
+    expect(report).not.toContain('private project title');expect(report).not.toContain(pin);expect(report).not.toContain('115,39,117,41');
+  }finally{usage.setPreferences({enabled:false});}
 });
 
 it('one error and its targeted retry do not rebuild or mislabel a separate ready layer', async () => {

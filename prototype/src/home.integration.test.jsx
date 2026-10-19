@@ -46,7 +46,7 @@ const mount=()=>render(<I18nProvider><RuntimeProvider><App/></RuntimeProvider></
 
 it('keeps real NUM source-code search distinct from heights and never claims account-free protected downloads',async()=>{
   const user=userEvent.setup(),scene=normalizeScene(structuredClone(numFixture),'srtm-num');
-  createSearchRunner.mockReturnValue({cancel:vi.fn(),runAll:vi.fn(async(_url,{onPage})=>{const result={scenes:[scene],complete:true,pages:1};onPage(result);return result;})});
+  createSearchRunner.mockReturnValue({cancel:vi.fn(),start:vi.fn(async(_url,{onPage})=>{const result={scenes:[scene],complete:true,pages:1};onPage(result);return result;})});
   mount();await chooseHomeSource('srtm-num');
   await user.click(screen.getByRole('button',{name:'Filters',exact:true}));
   fireEvent.change(screen.getByRole('textbox',{name:'Search bounding box'}),{target:{value:'116.3,39.8,116.5,40'}});
@@ -64,13 +64,13 @@ it('keeps real NUM source-code search distinct from heights and never claims acc
 
 it('selects public products directly in Explore, preserves the current area, ignores late satellite pages and sends only the current product form',async()=>{
   const user=userEvent.setup();let onPage,settle;
-  const cancel=vi.fn(),runAll=vi.fn((url,options)=>{onPage=options.onPage;return new Promise(resolve=>{settle=resolve;});});
-  createSearchRunner.mockReturnValue({cancel,runAll});
+  const cancel=vi.fn(),start=vi.fn((url,options)=>{onPage=options.onPage;return new Promise(resolve=>{settle=resolve;});});
+  createSearchRunner.mockReturnValue({cancel,start});
   mount();await chooseHomeSource('earth-search');
   await user.click(screen.getByRole('button',{name:'Filters',exact:true}));
   fireEvent.change(screen.getByRole('textbox',{name:'Search bounding box'}),{target:{value:'-169.96,-19.17,-169.77,-18.94'}});
   await user.click(screen.getByRole('button',{name:'Search catalog'}));
-  expect(runAll).toHaveBeenCalledOnce();
+  expect(start).toHaveBeenCalledOnce();
   await user.click(screen.getByRole('button',{name:'Choose a data source'}));
   await user.click(within(screen.getByRole('dialog',{name:'Choose a data source'})).getByRole('button',{name:/Choose WorldPop/}));
   await screen.findByRole('textbox',{name:'Dataset country code'});
@@ -80,7 +80,7 @@ it('selects public products directly in Explore, preserves the current area, ign
   expect(screen.getByLabelText('Task map adapter test').textContent).toContain('-169.96,-19.17,-169.77,-18.94');
   const old={scenes:[{...normalizeScene(sentinelFixture.features[0]),id:'late-old-scene'}],complete:true,pages:1};
   await act(async()=>{onPage(old);settle(old);});
-  expect(screen.queryByText('late-old-scene')).toBeNull();expect(cancel).toHaveBeenCalled();expect(runAll).toHaveBeenCalledOnce();
+  expect(screen.queryByText('late-old-scene')).toBeNull();expect(cancel).toHaveBeenCalled();expect(start).toHaveBeenCalledOnce();
   await user.type(screen.getByRole('textbox',{name:'Dataset country code'}),'NIU');
   await userEvent.click(screen.getByRole('button',{name:'Open Agent'}));
   const input=screen.getByRole('textbox',{name:'Message GeoD Agent'});
@@ -91,20 +91,28 @@ it('selects public products directly in Explore, preserves the current area, ign
   expect(sent.context.start).toBe('');expect(sent.context.end).toBe('');
 });
 
-it('continues catalog pagination after selecting a first-page scene',async()=>{
-  const user=userEvent.setup();let onPage,settle;
-  createSearchRunner.mockReturnValue({cancel:vi.fn(),runAll:vi.fn((url,options)=>{onPage=options.onPage;return new Promise(resolve=>{settle=resolve;});})});
+it('loads another catalog page only on a click and retains the first-page selection',async()=>{
+  const user=userEvent.setup();let settle;
+  const first={...normalizeScene(sentinelFixture.features[0]),id:'first-page-scene'};
+  const start=vi.fn(async(url,{onPage})=>{const result={scenes:[first],complete:false,pages:1,next:url+'&page=2'};onPage(result);return result;});
+  const loadMore=vi.fn(()=>new Promise(resolve=>{settle=resolve;}));
+  createSearchRunner.mockReturnValue({cancel:vi.fn(),start,loadMore});
   mount();await chooseHomeSource('earth-search');
   await user.click(screen.getByRole('button',{name:'Filters',exact:true}));
   fireEvent.change(screen.getByRole('textbox',{name:'Search bounding box'}),{target:{value:'10,20,11,21'}});
   await user.click(screen.getByRole('button',{name:'Search catalog'}));
-  const first={...normalizeScene(sentinelFixture.features[0]),id:'first-page-scene'};
-  await act(async()=>onPage({scenes:[first],complete:false,pages:1}));
+  await screen.findByText('Loaded 1 scenes · more available');
   await user.click(screen.getByRole('checkbox',{name:/Select scene .*first-page-scene/}));
-  const final={scenes:[first,{...first,id:'second-page-scene'}],complete:true,pages:2};
-  await act(async()=>{onPage(final);settle(final);});
+  expect(loadMore).not.toHaveBeenCalled();
+  const button=screen.getByRole('button',{name:'Load more · up to 100'});await user.dblClick(button);
+  expect(loadMore).toHaveBeenCalledOnce();expect(button.disabled).toBe(true);
+  const final={scenes:[first,{...first,id:'second-page-scene'}],complete:true,pages:2,next:null};
+  await act(async()=>settle(final));
   expect(await screen.findByText('Catalog complete · 2 scenes')).toBeTruthy();
+  expect(screen.getByRole('checkbox',{name:/Select scene .*first-page-scene/}).getAttribute('aria-checked')).toBe('true');
   expect(screen.getByRole('checkbox',{name:/Select scene .*second-page-scene/})).toBeTruthy();
+  expect(screen.queryByRole('button',{name:'Load more · up to 100'})).toBeNull();
+  expect(start).toHaveBeenCalledOnce();
 });
 
 it('a late project restoration cannot replace a public product explicitly selected in the classified picker',async()=>{
@@ -159,11 +167,11 @@ it('sends the displayed Explore catalog and updated list filters with the real A
   onTestFinished(()=>{if(scroll)Element.prototype.scrollTo=scroll;else delete Element.prototype.scrollTo;});
   // Catalog transport is mocked; App state, list filtering and Agent send run normally.
   const scenes=Array.from({length:4},(_,i)=>({...normalizeScene(sentinelFixture.features[0]),id:`context-scene-${i}`,date:i===3?'2026-10-10T12:00:00Z':'2026-10-09T12:00:00Z'}));
-  const runAll=vi.fn(async(url,{onPage})=>{
+  const start=vi.fn(async(url,{onPage})=>{
     const catalog={scenes,complete:true,pages:1,retrievedAt:'2026-10-10T12:00:00Z'};
     onPage(catalog);return catalog;
   });
-  createSearchRunner.mockReturnValue({cancel:vi.fn(),runAll});
+  createSearchRunner.mockReturnValue({cancel:vi.fn(),start});
   mount();await screen.findByRole('heading',{name:'What geographic data do you need?'});
   await chooseHomeSource('earth-search');
   await userEvent.click(screen.getByRole('button',{name:'Filters',exact:true}));
@@ -184,19 +192,17 @@ it('sends the displayed Explore catalog and updated list filters with the real A
   await userEvent.click(screen.getByRole('button',{name:'Send message'}));
   request=agentRequest.mock.calls.filter(([op])=>op==='send').at(-1)[1];
   expect(request.context.catalog).toMatchObject({totalCount:4,filteredCount:1,textFilter:'context-scene-3'});
-  expect(runAll).toHaveBeenCalledOnce();
+  expect(start).toHaveBeenCalledOnce();
 });
-it('opens a dedicated account page from Home and returns to the local Agent as a guest',async()=>{
+it('keeps startup and retired sign-in links on the local Agent without checking the account service',async()=>{
   mount();await screen.findByRole('heading',{name:'What geographic data do you need?'});
-  await userEvent.click(screen.getByRole('button',{name:'Sign in',exact:true}));
-  await screen.findByRole('heading',{name:'Welcome to GeoD Global'});
-  expect(location.hash).toBe('#SignIn');expect(screen.queryByRole('button',{name:'Close Agent'})).toBeNull();expect(screen.queryByRole('textbox',{name:'Agent message'})).toBeNull();
-  expect(document.querySelector('.app-header')).toBeNull();expect(document.getElementById('primary-navigation')).toBeNull();
-  expect(document.documentElement.dataset.theme).toBe('dark');expect(JSON.parse(localStorage.getItem('geod-design-theme'))).toBe('light');
-  await userEvent.click(screen.getByRole('button',{name:'Continue without an account'}));
-  await screen.findByRole('heading',{name:'What geographic data do you need?'});expect(location.hash).toBe('#Home');
+  expect(screen.queryByRole('button',{name:'Sign in',exact:true})).toBeNull();
+  await act(async()=>{location.hash='#SignIn';window.dispatchEvent(new HashChangeEvent('hashchange'));});
+  await waitFor(()=>expect(location.hash).toBe('#Home'));
+  expect(screen.queryByRole('heading',{name:'Welcome to GeoD Global'})).toBeNull();
   expect(document.querySelector('.app-header')).toBeTruthy();expect(document.getElementById('primary-navigation')).toBeTruthy();
   expect(document.documentElement.dataset.theme).toBe('light');expect(JSON.parse(localStorage.getItem('geod-design-theme'))).toBe('light');
+  expect(window.__TAURI__.core.invoke.mock.calls.some(([command])=>command.startsWith('identity_'))).toBe(false);
   expect(agentRequest.mock.calls.some(([operation])=>operation==='send')).toBe(false);expect(search).not.toHaveBeenCalled();
 });
 it('opens a right map panel while keeping the same conversation, review and editable draft on the left',async()=>{

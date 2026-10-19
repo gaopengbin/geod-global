@@ -71,7 +71,7 @@ const themeCases = [
   { name: 'DEM', provider: 'copernicus-dem', channel: 'height', scenes: [demFixture.features[0], neighbouringDem].map(item => normalizeScene(item, 'copernicus-dem')) },
 ];
 const originalScrollTo = Element.prototype.scrollTo;
-let catalogScenes, runAll;
+let catalogScenes, start;
 beforeEach(() => {
   Element.prototype.scrollTo = vi.fn();
   window.history.replaceState(null, '', '/');
@@ -88,12 +88,12 @@ beforeEach(() => {
   agentRequest.mockImplementation(async () => structuredClone(backend));
   publicDatasetRequest.mockImplementation(async () => [publicDataset]);
   catalogScenes = [];
-  runAll = vi.fn(async (url, { onPage }) => {
+  start = vi.fn(async (url, { onPage }) => {
     const result = { scenes: structuredClone(catalogScenes), complete: true, pages: 1, retrievedAt: '2026-10-13T00:00:00Z' };
     onPage(result);
     return result;
   });
-  createSearchRunner.mockReturnValue({ cancel: vi.fn(), runAll });
+  createSearchRunner.mockReturnValue({ cancel: vi.fn(), start });
 });
 afterEach(() => {
   cleanup();
@@ -187,7 +187,7 @@ it.each(themeCases)('$name multi-selection uses the thematic preview path and ke
   await user.click(loadButton());
   await waitFor(() => expect(ids(map.current.previewScenes)).toEqual(ids(scenes)));
   await switchToRgb(user, scenes);
-  expect(runAll).toHaveBeenCalledTimes(2);
+  expect(start).toHaveBeenCalledTimes(2);
   expectNoJobsOrModelTurn();
 });
 
@@ -228,5 +228,25 @@ it('RGB multi-selection still uses the true-color COG path and clearing previews
   expect(map.current.selectedIds.slice().sort()).toEqual(ids(rgbScenes));
   expect(selectedDownloadIds()).toEqual(ids(rgbScenes));
   for (const scene of rgbScenes) expect(selectButton(scene).getAttribute('aria-checked')).toBe('true');
+  expectNoJobsOrModelTurn();
+});
+
+it('row title, thumbnail and metadata locate their grid repeatedly while checkboxes and preview actions stay separate',async()=>{
+  const user=userEvent.setup();await explore(user,'earth-search',rgbScenes);
+  const locate=screen.getByRole('button',{name:`Locate scene ${rgbScenes[1].id}`}),row=locate.closest('.explore-result-row');
+  await user.click(locate);
+  expect(map.current.focusRequest.id).toBe(rgbScenes[1].id);
+  expect(map.current.focusedIds).toEqual([rgbScenes[1].id]);
+  expect(map.current.selectedIds).toEqual([]);expect(map.current.loadedScenes).toEqual([]);
+  const revision=map.current.focusRequest.revision;
+  await user.click(row.querySelector('.explore-result-thumbnail'));
+  await user.click(row.querySelector('.explore-result-meta'));
+  expect(map.current.focusRequest.revision).toBe(revision+2);
+  const request=map.current.focusRequest;
+  await user.click(selectButton(rgbScenes[0]));
+  expect(map.current.focusRequest).toBe(request);expect(map.current.selectedIds).toEqual([rgbScenes[0].id]);
+  await user.click(within(row).getByRole('button',{name:`Preview ${rgbScenes[1].id}`}));
+  await waitFor(()=>expect(ids(map.current.loadedScenes)).toEqual([rgbScenes[1].id]));
+  expect(map.current.focusRequest).toBe(request);expect(map.current.selectedIds).toEqual([rgbScenes[0].id]);
   expectNoJobsOrModelTurn();
 });

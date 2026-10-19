@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validateGeoPackage} from './geopackage-client.js';
 import {validateShapefile} from './shapefile-client.js';
@@ -277,6 +278,9 @@ export function validateVectorInspection(data,id) {
   return data;
 }
 export async function vectorRequest(operation,payload={},signal) {
+  return usageRequest('vector', operation, payload, () => performVectorRequest(operation, payload, signal));
+}
+async function performVectorRequest(operation,payload={},signal) {
   const checkAbort=()=>{if(signal?.aborted)throw new DOMException('Vector request aborted','AbortError');};
   checkAbort();
   const commands={list:'list_vectors',import:'import_vector',open:'open_vector',inspect:'inspect_vector',forget:'forget_vector',export:'export_vector'};

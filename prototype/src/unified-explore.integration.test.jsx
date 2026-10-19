@@ -60,7 +60,7 @@ const scenes = sentinelFixture.features.slice(0, 2).map(item => normalizeScene(i
 const polygon = { type: 'Polygon', coordinates: [[[116.25, 39.8], [116.5, 39.8], [116.4, 40], [116.25, 39.8]]] };
 const bounds = [116.25, 39.8, 116.5, 40];
 const originalScrollTo = Element.prototype.scrollTo;
-let runAll;
+let start;
 beforeEach(() => {
   Element.prototype.scrollTo = vi.fn();
   window.history.replaceState(null, '', '/');
@@ -76,11 +76,11 @@ beforeEach(() => {
   const backend = { version: 1, revision: 1, runtimeAvailable: true, configured: true, busy: false, mode: 'review-first', model: { label: 'Owned QA', model: 'test-model', protocol: 'openai-compatible' }, selected: null, sessions: [], plans: [] };
   agentRequest.mockImplementation(async () => structuredClone(backend));
   publicDatasetRequest.mockImplementation(async () => [publicDataset]);
-  runAll = vi.fn(async (url, { onPage }) => {
+  start = vi.fn(async (url, { onPage }) => {
     const result = { scenes: structuredClone(scenes), complete: true, pages: 1, retrievedAt: '2026-10-13T00:00:00Z' };
     onPage(result); return result;
   });
-  createSearchRunner.mockReturnValue({ cancel: vi.fn(), runAll });
+  createSearchRunner.mockReturnValue({ cancel: vi.fn(), start });
 });
 afterEach(() => {
   cleanup(); delete window.__TAURI__; vi.unstubAllGlobals();
@@ -145,7 +145,7 @@ it('all connected source families share the Explore sidebar and canvas, retainin
   await applyArea(user);
   await waitFor(() => expect(probe.catalog?.area).toEqual(bounds));
   expect(probe.catalog.areaGeometry).toEqual(polygon);
-  expect(runAll).toHaveBeenCalledOnce();
+  expect(start).toHaveBeenCalledOnce();
 
   for (const [id, kind] of [
     ['cgls-landcover', 'dataset'], ['jaxa-modis-ndvi', 'dataset'], ['custom-stac-api', 'stac'], ['wcs-service', 'wcs'],
@@ -156,7 +156,7 @@ it('all connected source families share the Explore sidebar and canvas, retainin
     expect(probe.sources[kind].areaGeometry || probe.sources[kind].areaPolygon?.geometry).toEqual(polygon);
     expect(screen.getByRole('button', { name: 'Choose a data source' }).textContent).toContain(byId(id).name);
     expect(screen.queryByRole('textbox', { name: 'Search scenes' })).toBeNull();
-    expect(runAll).toHaveBeenCalledOnce();
+    expect(start).toHaveBeenCalledOnce();
     expectNoMutation();
   }
 
@@ -168,7 +168,7 @@ it('all connected source families share the Explore sidebar and canvas, retainin
   expect(probe.catalog.loadedScenes).toEqual([]);
   expect(probe.catalog.previewScenes).toEqual([]);
   expect(screen.queryByRole('main', { name: 'Data source exploration' })).toBeNull();
-  expect(runAll).toHaveBeenCalledTimes(2);
+  expect(start).toHaveBeenCalledTimes(2);
   expectNoMutation();
 }, 20000);
 
@@ -189,7 +189,7 @@ it.each([
   expect(probe.sources[kind].listHidden).toBe(false);
   expect(probe.sources[kind].initialKind || probe.sources[kind].initialProtocol).toBe(sourceGeneration);
   expect(probe.sources[kind].areaBounds).toEqual(bounds);
-  expect(runAll).toHaveBeenCalledOnce(); expectNoMutation();
+  expect(start).toHaveBeenCalledOnce(); expectNoMutation();
 });
 
 it.each([
@@ -207,7 +207,7 @@ it.each([
   await chooseHome(user,id);
   await expectInline(kind);
   expect(probe.sources[kind]).toMatchObject(properties);
-  expect(runAll).not.toHaveBeenCalled();
+  expect(start).not.toHaveBeenCalled();
   expectNoMutation();
 });
 
@@ -222,14 +222,14 @@ it('the new monthly vegetation and complete administrative sources retain the sh
   expect(probe.sources.vector.initialProtocol).toBe('geoBoundaries');expect(probe.sources.vector.areaBounds).toEqual(bounds);expect(probe.sources.vector.areaGeometry).toEqual(polygon);
   await choose(user,'jaxa-modis-ndvi');await expectInline('dataset');
   expect(probe.sources.dataset.datasetId).toBe('jaxa-modis-ndvi');expect(probe.sources.dataset.areaBounds).toEqual(bounds);expect(probe.sources.dataset.areaGeometry).toEqual(polygon);
-  expect(runAll).toHaveBeenCalledOnce();expectNoMutation();
+  expect(start).toHaveBeenCalledOnce();expectNoMutation();
 });
 
 it('a late satellite catalog page cannot reappear after changing to a service source', async () => {
   const user = userEvent.setup(); let page, resolve;
-  runAll.mockImplementation((url, options) => { page = options.onPage; return new Promise(done => { resolve = done; }); });
+  start.mockImplementation((url, options) => { page = options.onPage; return new Promise(done => { resolve = done; }); });
   mount(); await chooseHome(user,'earth-search');
-  await applyArea(user); expect(runAll).toHaveBeenCalledOnce();
+  await applyArea(user); expect(start).toHaveBeenCalledOnce();
   await choose(user, 'custom-stac-api'); await expectInline('stac');
   const late = { scenes: [{ ...scenes[0], id: 'old-satellite-response' }], complete: true, pages: 1 };
   await act(async () => { page(late); resolve(late); });
@@ -253,5 +253,5 @@ it('restoring an imagery project replaces the previously selected service adapte
   expect(screen.queryByRole('main',{name:'Data source exploration'})).toBeNull();
   expect(screen.queryByRole('region',{name:'stac canvas boundary'})).toBeNull();
   expect(screen.getByRole('button',{name:'Choose a data source'}).textContent).toContain('Sentinel-2');
-  expect(runAll).toHaveBeenCalledOnce();expectNoMutation();
+  expect(start).toHaveBeenCalledOnce();expectNoMutation();
 });

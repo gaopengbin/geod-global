@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {GSCloudOriginalProducts,originalTile} from './gscloud-client.js';
 import { validUsageLedger } from './agent-usage.js';
 import { desktopAvailable } from './runtime-client.js';
@@ -325,6 +326,9 @@ export function validateConnectionTest(value) {
   return value;
 }
 export async function agentRequest(operation, args = {}) {
+  return usageRequest('agent', operation, args, () => performAgentRequest(operation, args));
+}
+async function performAgentRequest(operation, args = {}) {
   if (!desktopAvailable()) throw new Error('Agent is available in the desktop app.');
   const methods = { snapshot: 'agent_snapshot', saveModel: 'agent_save_model', testModel:'agent_test_model', send: 'agent_send', select: 'agent_select', interrupt: 'agent_interrupt', approvePlan: 'agent_approve_plan', revisionDraft:'agent_approve_plan', revisePlan:'agent_approve_plan', attachImage:'agent_attach_image', imagePreview:'agent_image_preview', imageStorage:'agent_image_storage', attachDocument:'agent_attach_document', documentPreview:'agent_document_preview', attachmentStorage:'agent_attachment_storage', compact:'agent_compact' };
   methods.executionMode='agent_execution_mode';

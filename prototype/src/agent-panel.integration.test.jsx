@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nProvider } from './i18n.jsx';
+import { IdentityEntry, IdentityProvider } from './identity-ui.jsx';
 import { AgentPanel } from './agent-panel.jsx';
 import { agentRequest, subscribeAgentUpdates } from './agent-client.js';
 import { runtimeRequest } from './runtime-client.js';
@@ -1051,14 +1052,30 @@ describe('Agent sidebar',()=>{
     expect(screen.queryByRole('button',{name:'Prepare delivery package'})).toBeNull();
     expect(runtimeRequest).not.toHaveBeenCalled();
   });
-  it('requires an explicit model connection and clears the temporary key after save',async()=>{
-    backend.configured=false;backend.model=null;mount();await userEvent.click(await screen.findByRole('button',{name:'Connect model'}));
+  it('saves and uses a user-owned model without activating Global login or hosted models',async()=>{
+    const previous=window.__TAURI__,invoke=vi.fn().mockRejectedValue(Error('Account service unavailable'));
+    window.__TAURI__={core:{invoke}};
+    try {
+    backend.configured=false;backend.model=null;
+    render(<I18nProvider><IdentityProvider><IdentityEntry onOpen={vi.fn()}/><AgentPanel {...props()}/></IdentityProvider></I18nProvider>);
+    await userEvent.click(await screen.findByRole('button',{name:'Connect model'}));
     await userEvent.type(screen.getByLabelText('Connection name'),'My connection');await userEvent.type(screen.getByLabelText('Model ID'),'test-model');
+    await userEvent.click(screen.getByRole('button',{name:'Hosted models'}));
+    const hosted=screen.getByRole('dialog',{name:'Hosted models'});
+    expect(within(hosted).queryByRole('button',{name:/Sign in/})).toBeNull();
+    await userEvent.click(within(hosted).getByRole('button',{name:'Close',exact:true}));
+    expect(screen.getByLabelText('Connection name').value).toBe('My connection');
     await userEvent.type(screen.getByLabelText('API key'),'synthetic-unit-key');backend.configured=true;backend.model=base().model;
     await userEvent.click(screen.getByRole('button',{name:'Save connection'}));
     await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
     expect(agentRequest).toHaveBeenCalledWith('saveModel',{request:expect.objectContaining({apiKey:'synthetic-unit-key',model:'test-model'})});
     expect(document.body.textContent).not.toContain('synthetic-unit-key');
+    const input=screen.getByRole('textbox',{name:'Message GeoD Agent'});
+    await userEvent.type(input,'Show saved projects');await userEvent.click(screen.getByRole('button',{name:'Send message'}));
+    await waitFor(()=>expect(agentRequest.mock.calls.some(([operation])=>operation==='send')).toBe(true));
+    expect(invoke.mock.calls.some(([command])=>command.startsWith('identity_')||command==='official_request')).toBe(false);
+    expect(screen.queryByRole('button',{name:'Sign in'})).toBeNull();
+    } finally {window.__TAURI__=previous;}
   });
   it('Enter submits while IME composition and Shift+Enter do not',async()=>{
     mount();const input=await screen.findByRole('textbox',{name:'Message GeoD Agent'});await waitFor(()=>expect(input.disabled).toBe(false));

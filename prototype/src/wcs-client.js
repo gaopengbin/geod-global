@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import { desktopAvailable } from './runtime-client.js';
 import { validQueryBounds } from './features-client.js';
 import { validStacUrl, validateStacInspection as validateFileInspection, validateStacPixel as validateFilePixel } from './stac-client.js';
@@ -50,6 +51,9 @@ export function validateWcsPlan(value) {
 }
 function selections(value) { return Array.isArray(value) && value.length > 0 && value.length <= 32 && value.every(item => object(item) && hash.test(item.planId)) && new Set(value.map(item => item.planId)).size === value.length; }
 export async function wcsRequest(operation, payload = {}, signal) {
+  return usageRequest('wcs', operation, payload, () => performWcsRequest(operation, payload, signal));
+}
+async function performWcsRequest(operation, payload = {}, signal) {
   const commands = { list: 'list_wcs_connections', connect: 'connect_wcs', forget: 'forget_wcs_connection', describe: 'describe_wcs', plan: 'plan_wcs', savedPlan: 'wcs_plan', project: 'save_wcs_project', downloads: 'download_wcs_project', inspect: 'inspect_wcs_asset', pixel: 'sample_wcs_asset' };
   if (!commands[operation]) fail('Unknown coverage service operation.');
   if (operation === 'connect' && (!payload.name?.trim() || !validStacUrl(payload.url))) fail('Enter a coverage service name and public HTTPS URL.');

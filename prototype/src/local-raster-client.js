@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validateStacInspection,validateStacPixel} from './stac-client.js';
 export const LOCAL_RASTER_MAX_BYTES=32*1024*1024;
@@ -17,6 +18,9 @@ export function validateLocalRasterInspection(data,asset) {
 }
 const check=signal=>{if(signal?.aborted)throw new DOMException('Request aborted','AbortError');};
 export async function localRasterRequest(operation,payload={},signal) {
+  return usageRequest('local', operation, payload, () => performLocalRasterRequest(operation, payload, signal));
+}
+async function performLocalRasterRequest(operation,payload={},signal) {
   const commands={list:'list_local_rasters',open:'open_local_raster',inspect:'inspect_local_raster',pixel:'sample_local_raster',export:'export_local_raster'};
   if(!commands[operation])fail('Unknown local raster operation.');
   if(['inspect','pixel','export'].includes(operation)&&!uuid.test(payload.id))fail('Invalid local raster identifier.');

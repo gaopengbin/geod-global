@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';import {validQueryBounds} from './features-client.js';
 import ms from '../../crates/geod-runtime/src/vector/official_packages/ms-buildings-reviewed-index.json' with {type:'json'};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),hash=/^[a-f0-9]{64}$/;
@@ -33,6 +34,9 @@ export function validateOfficialVectorProvenance(receipt,asset) {
   return receipt;
 }
 export async function officialVectorRequest(operation,payload={},signal) {
+  return usageRequest('official-vector', operation, payload, () => performOfficialVectorRequest(operation, payload, signal));
+}
+async function performOfficialVectorRequest(operation,payload={},signal) {
   const commands={list:'list_official_vector_packages',search:'search_official_vector_packages',download:'download_official_vector_package'};
   if(!commands[operation])fail('Unknown official vector operation.');
   if(operation!=='list'&&(!['ms-buildings','geofabrik'].includes(payload.datasetId)||!validQueryBounds(payload.bounds)))fail('Choose a valid area for the official vector source.');

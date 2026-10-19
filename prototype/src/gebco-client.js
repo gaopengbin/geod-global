@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validQueryBounds} from './features-client.js';
 import {validateStacInspection,validateStacPixel} from './stac-client.js';
@@ -36,6 +37,9 @@ function inspection(value,id,sha) {
   return value;
 }
 export async function gebcoRequest(operation,payload={},signal) {
+  return usageRequest('gebco', operation, payload, () => performGebcoRequest(operation, payload, signal));
+}
+async function performGebcoRequest(operation,payload={},signal) {
   const commands={grids:'gebco_grids',list:'gebco_list',get:'gebco_get',create:'gebco_create_subset',inspect:'gebco_inspect',pixel:'gebco_pixel'};
   if(!commands[operation])fail('Unknown GEBCO operation.');
   if(operation==='create')validateGebcoRequest(payload);

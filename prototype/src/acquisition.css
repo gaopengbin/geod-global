@@ -1,5 +1,8 @@
 .explore-result-row{display:flex;align-items:center;gap:8px;min-width:0;padding:7px 4px;border-bottom:1px solid var(--line);border-radius:0;background:transparent;}
 .explore-result-row[data-selected=true]{background:var(--accent-tint);}
+.explore-result-row[data-can-focus=true]{cursor:pointer;}
+.explore-result-row[data-can-focus=true]:not([data-selected=true]):hover{background:var(--hover);}
+.explore-result-row[data-focused=true]{box-shadow:inset 2px 0 var(--accent);}
 .explore-result-row>[data-slot=checkbox]{flex:none;margin-inline:3px;}
 .explore-result-thumbnail{flex:none;width:36px;height:36px;overflow:hidden;border-radius:5px;}
 .explore-result-thumbnail :is(img,.catalog-thumbnail,.catalog-elevation-tile){width:36px!important;height:36px!important;border-radius:5px;}

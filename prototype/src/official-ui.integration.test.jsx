@@ -5,7 +5,7 @@ import {I18nProvider} from './i18n.jsx';
 import {ConversationMonitorReviews,ImageryMonitoringPage,MembershipPanel,OfficialServicesProvider} from './official-ui.jsx';
 import {AccountPage} from './account-ui.jsx';
 const identity=vi.hoisted(()=>({snapshot:{user:{id:'a'.repeat(32)}}}));
-vi.mock('./identity-ui.jsx',()=>({useIdentity:()=>identity,AccountAvatar:()=> <span/>}));
+vi.mock('./identity-ui.jsx',()=>({useIdentity:()=>identity,useActiveIdentity:()=>identity,AccountAvatar:()=> <span/>}));
 const geometry={type:'Polygon',coordinates:[[[116,40],[116.1,40],[116.1,40.1],[116,40.1],[116,40]]]};
 let account,monitors,quotes,notifications,orders,caps,invoke;
 const envelope=value=>({product:'xyz.laogao.geod.global',version:1,...value});

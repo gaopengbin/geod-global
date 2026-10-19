@@ -17,6 +17,9 @@ import { register } from 'ol/proj/proj4.js';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import proj4 from 'proj4';
 import { focusRasterExtent, intersectBounds, utmDefinition } from './workspace-map-geometry.js';
+import { setRasterZoomLimit } from './raster-view-resolution.js';
+import {usage,durationBucket} from './usage-client.js';
+import {usageContext,usageSource,usageError} from './usage-events.js';
 import { Button, Progress, Spinner, Surface } from './ui/index.jsx';
 import { useI18n } from './i18n.jsx';
 import { prepareAssetAccess } from './providers.js';
@@ -89,7 +92,7 @@ export function sceneExtent(scene) {
 
 function fitExtent(map, extent) {
   const size = map.getSize();
-  if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: 16, duration: 250 });
+  if (size?.[0] && size?.[1]) map.getView().fit(extent, { size, padding: [90, 90, 125, 90], maxZoom: map.getView().getMaxZoom(), duration: 250 });
 }
 
 function disposeProductEntry(entry) {
@@ -100,7 +103,7 @@ function disposeProductEntry(entry) {
   entry.preview.dispose();
 }
 
-export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loadedScenes = EMPTY_SCENES, previewScenes = EMPTY_SCENES, productRasterLayers = EMPTY_SCENES, onProductRasterStatus, selectedIds = [], focusedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, previewChannel, vegetationIndex, onFootprintsPick, onFootprintsChange }, ref) {
+export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusRequest, usageChannel = 'manual', loadedScenes = EMPTY_SCENES, previewScenes = EMPTY_SCENES, productRasterLayers = EMPTY_SCENES, onProductRasterStatus, selectedIds = [], focusedIds = [], activeSceneId, activeDay, reference, split, area, areaGeometry, showArea, boxSelect = false, previewChannel, vegetationIndex, onFootprintsPick, onFootprintsChange }, ref) {
   const { t } = useI18n();
   const target = useRef(null);
   const map = useRef(null);
@@ -117,6 +120,13 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
   const productExtentRef = useRef(null);
   const productRegistry = useRef(new Map());
   const onProductRasterStatusRef = useRef(onProductRasterStatus);
+  const requestedFocus = useRef(null);
+  requestedFocus.current = {request:focusRequest,scenes};
+  const requestedExtent = () => {
+    const current = requestedFocus.current;
+    const item = current?.request && current.scenes.find(item=>item.id===current.request.id);
+    return item ? sceneFootprint(item)?.getGeometry()?.getExtent() : null;
+  };
   const [productStates, setProductStates] = useState({});
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
@@ -168,6 +178,10 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     let fitted = false;
     let loadingClock;
     const startedAt = Date.now();
+    const usageGeneration=usage.generation(),usageId=shouldRender&&usage.enabled()?crypto.randomUUID():null;
+    const usageFields={...usageContext({agent:usageChannel==='agent'}),source:usageSource(scene?.provider)};
+    let previewObserved=false;
+    if(usageId)usage.record('preview_requested',usageFields,usageId);
     let lastActivityAt = startedAt;
     const publishLoading = () => {
       if (cancelled || failed) return;
@@ -178,6 +192,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     const fail = message => {
       if (cancelled || failed) return;
       failed = true;
+      if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(new Error(message)),duration:durationBucket(Date.now()-startedAt)},usageId);
       clearInterval(loadingClock);
       setError(message);
     };
@@ -216,8 +231,13 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       const previous = savedViewRef.current?.areaKey === areaKey ? savedViewRef.current : null;
       const view = new View({ projection: OVERVIEW_PROJECTION,
         center: previous?.center || [(initialExtent[0] + initialExtent[2]) / 2, (initialExtent[1] + initialExtent[3]) / 2],
-        resolution: previous?.resolution || 100, minResolution: 2.5, maxResolution: 156543.03392804097, enableRotation: false });
+        resolution: previous?.resolution || 100, maxZoom: 28, maxResolution: 156543.03392804097, enableRotation: false });
       instance = new OLMap({ target: target.current, controls: [], layers: [land, ...(base ? [base] : []), countries, footprintLayer, overlays], view });
+      instance.on('rendercomplete',()=>{
+        if(usageId&&initialReady&&metadataReady&&!cancelled&&!failed&&!previewObserved&&usageGeneration===usage.generation()){
+          previewObserved=true;usage.record('preview_ready',{...usageFields,duration:durationBucket(Date.now()-startedAt)},usageId);
+        }
+      });
       map.current = instance; areaLayer.current = overlays; footprintSource.current = footprints; sceneExtentRef.current = mapExtent;
       resize = new ResizeObserver(() => { instance.updateSize(); });
       resize.observe(target.current);
@@ -247,7 +267,9 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       requestAnimationFrame(() => {
         if (cancelled) return;
         const size = instance.getSize();
-        if (!previous) fitExtent(instance, onlinePreview ? focusExtentRef.current : !shouldLoad ? footprintUnionRef.current || projected : fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
+        const requested = requestedExtent();
+        if (requested) { instance.getView().cancelAnimations(); fitExtent(instance,requested); }
+        else if (!previous) fitExtent(instance, onlinePreview ? focusExtentRef.current : !shouldLoad ? footprintUnionRef.current || projected : fitAllInitially(footprintUnionRef.current, mapExtent) ? footprintUnionRef.current : focusExtentRef.current);
         else if (size?.[0] && size?.[1] && !extentsIntersect(instance.getView().calculateExtent(size), mapExtent)) fitExtent(instance, focusExtentRef.current);
         fitted = true;
       });
@@ -269,7 +291,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       sceneExtentRef.current = null; areaExtentRef.current = null; focusExtentRef.current = null;
       productExtentRef.current = null;
     };
-  }, [scene?.id, areaKey, retry, shouldLoad, channel, onlinePreview]);
+  }, [scene?.id, areaKey, retry, shouldLoad, channel, onlinePreview, usageChannel]);
 
   useEffect(() => {
     const source = footprintSource.current;
@@ -311,6 +333,22 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
     footprintUnionRef.current = union;
     onFootprintsChange?.(count);
   }, [scenes, selectedIds, focusedIds, loadedScenes, previewScenes, activeSceneId, scene?.id, shouldLoad, areaKey, retry, channel, onlinePreview, rasterBackdrop, onFootprintsChange]);
+
+  useEffect(() => {
+    const rasters = [scene, reference, ...loadedScenes, ...previewScenes]
+      .filter(item => item && (!activeDay || item.date?.slice(0, 10) === activeDay));
+    const products = Object.values(productStates).filter(item => item.visible && item.status !== 'error').map(item => item.metadata);
+    setRasterZoomLimit(map.current?.getView(), [...rasters, ...products]);
+  }, [scene, reference, loadedScenes, previewScenes, productStates, activeDay, areaKey, retry, shouldLoad, channel, onlinePreview]);
+
+  // A row click is a navigation request, even when that row is already active.
+  // Use its catalog footprint; locating never needs a raster metadata request.
+  useEffect(() => {
+    const instance = map.current, extent = requestedExtent();
+    if (!instance || !focusRequest || !extent) return;
+    instance.getView().cancelAnimations();
+    fitExtent(instance,extent);
+  }, [focusRequest,scene?.id,areaKey,retry,shouldLoad,channel,onlinePreview]);
 
   useEffect(() => {
     const instance = map.current;
@@ -407,6 +445,9 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
       try {
         if (descriptor.id !== JSON.stringify([descriptor.snapshotId, descriptor.assetKey])) throw new Error('Choose a saved original raster asset to preview.');
         const preview = createProductRasterPreviewSource(descriptor);
+        const usageId=usage.enabled()?crypto.randomUUID():null,usageGeneration=usage.generation(),usageStarted=Date.now();
+        const usageFields={...usageContext({agent:usageChannel==='agent'}),source:usageSource(descriptor.datasetId,'public-dataset')};
+        if(usageId)usage.record('preview_requested',usageFields,usageId);
         const layer = new WebGLTileLayer({ source: preview.source, style: preview.style, cacheSize: 32, className: 'explore-product-raster-layer',
           zIndex: 8 + index * 0.25, visible, opacity });
         entry = { id: descriptor.id, snapshotId: descriptor.snapshotId, assetKey: descriptor.assetKey,
@@ -426,6 +467,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
         const fail = error => {
           if (!current() || entry.status === 'error') return;
           clearInterval(entry.clock);
+          if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(new Error(error||'')),duration:durationBucket(Date.now()-usageStarted)},usageId);
           publish('error', error || 'The original raster preview could not be read. Retry this layer or download the original.');
           // Stop the failed source's outstanding ranges. Retrying creates only
           // this descriptor's new source; other product layers remain intact.
@@ -433,6 +475,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, loaded
         };
         const maybeReady = () => {
           if (current() && entry.status !== 'error' && entry.metadata && entry.pixels && entry.status !== 'ready') {
+            if(usageId&&usageGeneration===usage.generation())usage.record('preview_ready',{...usageFields,duration:durationBucket(Date.now()-usageStarted)},usageId);
             clearInterval(entry.clock); publish('ready');
           }
         };

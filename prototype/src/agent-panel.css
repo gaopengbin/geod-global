@@ -249,6 +249,8 @@
 .agent-context-help p { margin:0; }
 .agent-model-form .agent-key-field, .agent-model-form .agent-endpoint-field, .agent-model-form .agent-connection-field, .agent-model-help, .agent-model-actions, .agent-model-form > .agent-error { grid-column:1/-1; }
 .agent-model-help { font-size:var(--text-caption); line-height:var(--leading-caption); color:var(--ink-2); margin:0; }
+.agent-model-info { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; font-size:var(--text-caption); line-height:var(--leading-caption); color:var(--ink-2); }
+.agent-model-info > span { display:inline-flex; align-items:center; gap:6px; }
 .agent-model-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
 .agent-model-footer { display:grid; gap:16px; width:100%; }
 .agent-model-test { display:flex; align-items:center; gap:12px; padding-bottom:16px; border-bottom:1px solid var(--line); }

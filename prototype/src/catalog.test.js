@@ -119,3 +119,70 @@ test("automatic pagination keeps the first page visible when a later page fails"
   assert.equal(seen[0].complete, false);
   assert.ok(seen[0].scenes.length);
 });
+
+// Controlled publisher-metadata playback, not live catalog or file-transfer evidence.
+function catalogBatch(offset, size = 100, next = null) {
+  return {...fixture, features:Array.from({length:size},(_,index)=>({...structuredClone(fixture.features[0]),id:`scene-${offset+index}`})),links:next?[{rel:'next',href:next}]:[]};
+}
+test('interactive searches stop at 100 and append one page only on demand, deduplicating overlapping records', async()=>{
+  const runner=createSearchRunner(),url=searchURL({...INITIAL_SEARCH,limit:100}),next=`${url}&page=2`,last=`${url}&page=3`,calls=[];
+  const fetcher=async url=>{calls.push(url);return {ok:true,json:async()=>url===next?catalogBatch(99,100,last):catalogBatch(0,100,next)};};
+  const first=await runner.start(url,{fetcher});
+  assert.equal(first.scenes.length,100);assert.equal(first.complete,false);assert.equal(first.next,next);
+  await new Promise(resolve=>setImmediate(resolve));assert.equal(calls.length,1);
+  const more=await runner.loadMore({fetcher});
+  assert.equal(more.scenes.length,199);assert.equal(more.pages,2);assert.equal(more.next,last);assert.equal(calls.length,2);
+  assert.equal(first.scenes.length,100);
+});
+test('a changed area invalidates pending pagination and repeated clicks do not duplicate its HTTP request',async()=>{
+  const runner=createSearchRunner(),url=searchURL({...INITIAL_SEARCH,limit:100}),next=`${url}&page=2`;
+  await runner.start(url,{fetcher:async()=>({ok:true,json:async()=>catalogBatch(0,100,next)})});
+  let resolve,requests=0;
+  const old=runner.loadMore({fetcher:()=>{requests++;return new Promise(done=>resolve=done);}});
+  assert.equal(await runner.loadMore({fetcher:()=>{throw Error('Must not issue a duplicate');}}),null);assert.equal(requests,1);
+  const region=await runner.start(searchURL({...INITIAL_SEARCH,bbox:'10,20,11,21'}),{fetcher:async()=>({ok:true,json:async()=>catalogBatch(1000,3)})});
+  resolve({ok:true,json:async()=>catalogBatch(100,100)});
+  assert.equal(await old,null);assert.deepEqual(region.scenes.map(s=>s.id),['scene-1000','scene-1001','scene-1002']);
+  assert.equal(region.complete,true);assert.equal(await runner.loadMore(),null);
+});
+test('a failed or stopped next page can be retried without losing the first 100 results',async()=>{
+  const runner=createSearchRunner(),url=searchURL({...INITIAL_SEARCH,limit:100}),next=`${url}&page=2`;
+  await runner.start(url,{fetcher:async()=>({ok:true,json:async()=>catalogBatch(0,100,next)})});
+  await assert.rejects(runner.loadMore({fetcher:async()=>({ok:false,status:503})}),/HTTP 503/);
+  let resolve;const stopped=runner.loadMore({fetcher:()=>new Promise(done=>resolve=done)});runner.cancel();
+  resolve({ok:true,json:async()=>catalogBatch(100,100)});assert.equal(await stopped,null);
+  const retried=await runner.loadMore({fetcher:async url=>{assert.equal(url,next);return {ok:true,json:async()=>catalogBatch(100,2)};}});
+  assert.equal(retried.scenes.length,102);assert.equal(retried.pages,2);assert.equal(retried.complete,true);
+});
+test('NAIP latest-year mode probes only one scene, fetches one year-limited page and resolves each area independently',async()=>{
+  const naip=JSON.parse(readFileSync(new URL('../public/samples/naip-response.json',import.meta.url))),calls=[];
+  const runner=createSearchRunner(),now=new Date('2026-10-19T12:00:00Z');
+  const fetcher=async request=>{const url=new URL(request);calls.push(url);const response=structuredClone(naip);
+    response.features=response.features.slice(0,1);response.features[0].properties.datetime=url.searchParams.get('bbox').startsWith('-79')?'2023-09-26T12:00:00Z':'2021-07-01T12:00:00Z';
+    response.links=[{rel:'next',href:request+'&page=2'}];return {ok:true,json:async()=>response};};
+  const first=await runner.start(searchURL({...INITIAL_SEARCH,provider:'planetary-naip',bbox:'-79,40,-72,45'}),{latestYear:true,now,fetcher});
+  assert.equal(calls.length,2);assert.equal(calls[0].searchParams.get('limit'),'1');assert.equal(calls[0].searchParams.get('datetime'),'../2026-10-19T23:59:59.999Z');
+  assert.equal(calls[1].searchParams.get('limit'),'100');assert.equal(calls[1].searchParams.get('datetime'),'2023-01-01T00:00:00Z/2023-12-31T23:59:59.999Z');
+  assert.deepEqual(first.dateRange,{start:'2023-01-01',end:'2023-12-31',latestYear:'2023'});assert.equal(first.pages,1);assert.equal(first.complete,false);
+  const second=await runner.start(searchURL({...INITIAL_SEARCH,provider:'planetary-naip',bbox:'-123,37,-122,38'}),{latestYear:true,now,fetcher});
+  assert.equal(calls.length,4);assert.equal(second.dateRange.latestYear,'2021');assert.equal(calls[3].searchParams.get('datetime'),'2021-01-01T00:00:00Z/2021-12-31T23:59:59.999Z');
+  calls.length=0;
+  await runner.start(searchURL({...INITIAL_SEARCH,provider:'planetary-naip'}),{fetcher});
+  assert.equal(calls.length,1);assert.equal(calls[0].searchParams.get('datetime'),'2025-06-01T00:00:00Z/2025-06-30T23:59:59.999Z');
+});
+test('NAIP without published acquisitions does not scan older pages or make a second request',async()=>{
+  const runner=createSearchRunner();let requests=0;
+  const result=await runner.start(searchURL({...INITIAL_SEARCH,provider:'planetary-naip'}),{latestYear:true,fetcher:async()=>{requests++;return {ok:true,json:async()=>({type:'FeatureCollection',features:[],links:[]})};}});
+  assert.equal(requests,1);assert.equal(result.scenes.length,0);assert.equal(result.complete,true);assert.equal(await runner.loadMore(),null);
+});
+test('cancelled transports cannot unlock or overwrite an immediately retried next page',async()=>{
+  const runner=createSearchRunner(),url=searchURL(INITIAL_SEARCH),next=`${url}&page=2`;
+  await runner.start(url,{fetcher:async request=>{assert.equal(new URL(request).searchParams.get('limit'),'100');return {ok:true,json:async()=>catalogBatch(0,100,next)};}});
+  let oldResolve,newResolve;
+  const old=runner.loadMore({fetcher:()=>new Promise(done=>oldResolve=done)});runner.cancel();
+  const retry=runner.loadMore({fetcher:()=>new Promise(done=>newResolve=done)});
+  oldResolve({ok:true,json:async()=>catalogBatch(100,100)});assert.equal(await old,null);
+  assert.equal(await runner.loadMore({fetcher:()=>{throw Error('Retry is already running');}}),null);
+  newResolve({ok:true,json:async()=>catalogBatch(100,3)});
+  assert.equal((await retry).scenes.length,103);
+});

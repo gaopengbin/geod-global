@@ -10,6 +10,7 @@ import './settings-page.css';
 import { StacSourcesPanel } from './stac-ui.jsx';
 import { WcsSourcesPanel } from './wcs-ui.jsx';
 import { UpdatesPanel } from './distribution-ui.jsx';
+import { UsageSettings } from './usage-ui.jsx';
 
 export function SettingsPage({ theme, onThemeChange, onOpenRasterSources, onOpenCoverageSources, areaBounds }) {
   const { t, locale, setLocale } = useI18n();
@@ -29,6 +30,7 @@ export function SettingsPage({ theme, onThemeChange, onOpenRasterSources, onOpen
         </div>
       </Surface>
       <ProxySettingsPanel/>
+      <UsageSettings/>
     </div>
     <UpdatesPanel/>
     <ProviderAccountsPanel/>

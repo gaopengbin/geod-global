@@ -1,4 +1,4 @@
-import React,{createContext,useContext,useEffect,useRef,useState} from 'react';
+import React,{createContext,useCallback,useContext,useEffect,useRef,useState} from 'react';
 import {ArrowRight,ArrowUpRight,Check,FolderCheck,LogOut,Map,MessageSquare,RefreshCw,ShieldCheck,UserRound,X} from 'lucide-react';
 import {Badge,Button,Input,Spinner,Surface} from './ui/index.jsx';
 import {useI18n} from './i18n.jsx';
@@ -22,29 +22,37 @@ const messages={
 export function IdentityProvider({children}){
  const [snapshot,setSnapshot]=useState(signedOutIdentity),[loading,setLoading]=useState(false),[failure,setFailure]=useState('');
  const alive=useRef(true),inFlight=useRef(false),revision=useRef(0);
- const run=async(operation,payload)=>{
+ const run=useCallback(async(operation,payload)=>{
   if(inFlight.current&&operation!=='cancel')return;
   const current=++revision.current;
   inFlight.current=true;setLoading(true);setFailure('');
   try{const next=await identityRequest(operation,payload);if(alive.current&&revision.current===current)setSnapshot(next);return next;}
   catch(error){if(alive.current&&revision.current===current)setFailure(error.message);}
   finally{if(revision.current===current){inFlight.current=false;if(alive.current)setLoading(false);}}
- };
- useEffect(()=>{alive.current=true;if(desktopAvailable())run('snapshot');return()=>{alive.current=false;};},[]);
+ },[]);
+ // Local tools and user-owned models never contact the Global account service.
+ // Account state is restored only when an account surface is explicitly opened.
+ useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
  useEffect(()=>{if(!snapshot.busy)return;const id=setInterval(()=>{if(!inFlight.current)run('snapshot');},700);return()=>clearInterval(id);},[snapshot.busy]);
  return <IdentityContext.Provider value={{snapshot,loading,error:failure||messages[snapshot.error]||'',run}}>{children}</IdentityContext.Provider>;
 }
 export function useIdentity(){return useContext(IdentityContext)||{snapshot:signedOutIdentity(),loading:false,error:'',run:async()=>{}};}
+export function useActiveIdentity(){
+ const identity=useIdentity(),activate=useRef(identity.run);
+ useEffect(()=>{if(desktopAvailable())void activate.current('snapshot');},[]);
+ return identity;
+}
 export function AccountAvatar({user}){
  const [failed,setFailed]=useState(false);useEffect(()=>setFailed(false),[user?.avatar]);
  return <span className="identity-avatar">{user?.avatar&&!failed?<img src={user.avatar} alt="" onError={()=>setFailed(true)}/>:user?<span>{(user.name||user.email||'G').slice(0,1).toUpperCase()}</span>:<UserRound size={18} aria-hidden="true"/>}</span>;
 }
 export function IdentityEntry({onOpen}){
  const {t}=useI18n(),{snapshot}=useIdentity();
- return <Button variant="quiet" className="identity-entry" onClick={()=>onOpen(snapshot.user?'Account':'SignIn')} aria-label={t(snapshot.user?'Your account':'Sign in')} tooltip={t(snapshot.user?'Your account':'Sign in')}><AccountAvatar user={snapshot.user}/><span className="identity-entry-label">{snapshot.user?.name||t('Sign in')}</span></Button>;
+ if(!snapshot.user)return null;
+ return <Button variant="quiet" className="identity-entry" onClick={()=>onOpen('Account')} aria-label={t('Your account')} tooltip={t('Your account')}><AccountAvatar user={snapshot.user}/><span className="identity-entry-label">{snapshot.user.name}</span></Button>;
 }
 export function SignInPage({onContinue}){
- const {t,locale}=useI18n(),{snapshot,loading,error,run}=useIdentity(),[remember,setRemember]=useState(true);
+ const {t,locale}=useI18n(),{snapshot,loading,error,run}=useActiveIdentity(),[remember,setRemember]=useState(true);
  const previous=useRef(snapshot.status);
  useEffect(()=>{if(previous.current==='waiting'&&snapshot.status==='signed-in')onContinue();previous.current=snapshot.status;},[snapshot.status,onContinue]);
  const native=desktopAvailable(),waiting=snapshot.busy;

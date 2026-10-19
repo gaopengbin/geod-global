@@ -9,6 +9,8 @@ import { Compass, MoreHorizontal } from 'lucide-react';
 import { SourcePickerDialog } from './source-picker.jsx';
 import { agentRequest, subscribeAgentUpdates } from './agent-client.js';
 import { transcriptTokenUsage } from './agent-usage.js';
+import {usage} from './usage-client.js';
+import {usageContext} from './usage-events.js';
 import { TurnTokenUsage } from './ui/agent-token-usage.jsx';
 import { AgentDecisionCard } from './agent-decision-card.jsx';
 import { AgentGoalCard } from './agent-goal-card.jsx';
@@ -89,7 +91,7 @@ function ModelDialog({ model, registry, onSaved, onClose }) {
   const submit = async event => {
     event.preventDefault(); if (!formRef.current?.reportValidity()) return; await saved({...requestForm(),action:'save',...(editing !== 'new' ? {id:editing} : {})});
   };
-  return <Modal title={t('Agent model connection')} description={t('Connect a model that supports text and tool calls.')} closeLabel={t('Close')} onClose={onClose} closeDisabled={busy} className="agent-model-dialog" footer={<div className="agent-model-footer">
+  return <Modal title={t('Agent model connection')} description={t('Connect your own model. No GeoD Global account is required.')} closeLabel={t('Close')} onClose={onClose} closeDisabled={busy} className="agent-model-dialog" footer={<div className="agent-model-footer">
       <div className="agent-model-test"><Button icon={operation==='test'?undefined:PlugZap} disabled={busy || removing} onClick={test}>{operation==='test' && <Spinner size={15}/>} {t(operation==='test'?'Testing…':'Test connection')}</Button>
         <div className="agent-model-test-copy" data-status={testResult?.status} role={testResult?.status==='failed'?'alert':'status'}>
           {testResult ? <><strong>{testResult.status==='passed'?<CheckCircle2 size={15}/>:<CircleAlert size={15}/>} {t(testResult.status==='passed'?'Connection test passed':testResult.text?'Text connected; tool test incomplete':'Connection test failed')}</strong><small>{testResult.status==='passed' ? t('Text and tool calls · {time} ms',{time:testResult.latencyMs}) : t(testResult.message)}</small></> : <small>{t(operation==='test'?'Checking model response and tool calls…':'Sends two fixed test requests. No chat or map data; model fees may apply.')}</small>}
@@ -115,7 +117,8 @@ function ModelDialog({ model, registry, onSaved, onClose }) {
       </div>
       <label className="agent-key-field">{t('API key')}<Input type="password" value={form.apiKey} disabled={busy} onChange={event => update('apiKey', event.target.value)} maxLength={4096} required={editing === 'new'} autoComplete="new-password" placeholder={t(editing !== 'new' ? 'Leave blank to keep the saved key' : 'Stored in Windows Credential Manager')}/></label>
       <p className="agent-model-help">{t('Each connection keeps its own key. Enter a new key when changing the endpoint or provider. Removing a connection keeps its conversation history.')}</p>
-      <InfoDetails closeLabel={t('Close')} className="agent-model-help" summary={t('Connection details')}><p>{t('Your questions and requested tool results are sent to this model connection. Source URLs, local paths and account credentials are excluded from tool results.')}</p><p>{t(form.protocol==='openai-responses' ? 'OpenAI Responses keeps encrypted reasoning in private recovery records with server-side response storage disabled. Images and tools still depend on your model. Existing Chat Completions connections keep their protocol and history.' : 'Adapter capabilities: text, selected images, function tools, plaintext reasoning and native context organization. Provider signatures are saved for recovery. OpenAI encrypted reasoning is not supported. Image and tool support depend on your selected model.')}</p><p>{t('The connection test checks text and a harmless tool call. It does not verify file reading or geographic workflows, and does not save changes.')}</p></InfoDetails>
+      <div className="agent-model-info"><span>{t('Connection details')}<InfoDetails closeLabel={t('Close')} summary={t('Connection details')}><p>{t('Your questions and requested tool results are sent to this model connection. Source URLs, local paths and account credentials are excluded from tool results.')}</p><p>{t(form.protocol==='openai-responses' ? 'OpenAI Responses keeps encrypted reasoning in private recovery records with server-side response storage disabled. Images and tools still depend on your model. Existing Chat Completions connections keep their protocol and history.' : 'Adapter capabilities: text, selected images, function tools, plaintext reasoning and native context organization. Provider signatures are saved for recovery. OpenAI encrypted reasoning is not supported. Image and tool support depend on your selected model.')}</p><p>{t('The connection test checks text and a harmless tool call. It does not verify file reading or geographic workflows, and does not save changes.')}</p></InfoDetails></span>
+      <span>{t('Hosted models')}<Badge>{t('Not available yet')}</Badge><InfoDetails closeLabel={t('Close')} summary={t('Hosted models')}><p>{t('Hosted models are not available in this version. When enabled, they will require a GeoD Global account.')}</p><p>{t('Your own model connections and local data tools work without signing in.')}</p></InfoDetails></span></div>
       {error && <p role="alert" className="agent-error">{t(error)}</p>}
       {removing && <p className="agent-model-help">{t('Remove this connection and its saved key? Conversation history is kept.')}</p>}
     </form>
@@ -255,7 +258,7 @@ function PlanCard({ plan, disabled, confirming, onConfirm, onEdit, onPreview, on
     {plan.status==='pending' && reviewIssue && <p className="agent-plan-note" role="status">{t(reviewIssue)}</p>}
     <div className="agent-plan-actions">{['download','project'].includes(plan.kind)&&!coverage&&!plan.archive&&!plan.files[0].originalAssetKey&&plan.status!=='superseded'&&<Button size="icon" variant="secondary" icon={MapIcon} aria-label={t('Map preview')} tooltip={t('Map preview')} disabled={disabled||!onPreview} onClick={()=>onPreview(plan)}/>}
     {['pending','expired'].includes(plan.status)&&<>{!plan.archive&&<Button size="icon" variant="secondary" icon={Settings2} tooltip={t('Edit review parameters')} aria-label={t('Edit review parameters')} disabled={disabled} onClick={()=>onEdit(plan)}/>} {plan.status === 'pending' && <Button primary icon={confirming ? undefined : Check} disabled={disabled || confirming || Boolean(authorizationRequired) || Boolean(reviewIssue) || Boolean(areaBlocked)} onClick={() => onConfirm(plan)}>{confirming && <Spinner size={14}/>} {t(confirming ? 'Submitting…' : confirmation)}</Button>}</>}</div>
-    {!suppressOutputs&&plan.status==='submitted'&&(plan.kind==='project'||plan.kind==='download')&&<DeliveryReceipt compact project={plan.project} jobs={plan.jobs} jobIds={plan.jobs.map(job=>job.id)} submitted={plan.kind==='download'} onOpenProject={onOpenProject}/>}
+    {!suppressOutputs&&plan.status==='submitted'&&(plan.kind==='project'||plan.kind==='download')&&<DeliveryReceipt compact trackResults={false} project={plan.project} jobs={plan.jobs} jobIds={plan.jobs.map(job=>job.id)} submitted={plan.kind==='download'} onOpenProject={onOpenProject}/>}
     {plan.status === 'expired' && <p className="agent-plan-note">{t('Edit the parameters to create a fresh review.')}</p>}
     {plan.jobs.length > 0 && <><div className="agent-plan-job-summary" role="status"><strong>{t('Task progress')}</strong><span>{t('{completed}/{total} tasks complete',{completed:number(plan.jobs.filter(job=>job.status==='succeeded'&&job.settled).length),total:number(plan.jobs.length)})}</span></div><div className="agent-plan-jobs" tabIndex={0} role="region" aria-label={t('Task progress list')}>{plan.jobs.map(job => {
       const ready = job.status === 'succeeded' && job.settled;
@@ -533,6 +536,7 @@ export function AgentPanel({ onClose, onOpenProject, onOpenTasks, onOpenResult, 
     if(!session)return;
     previewReference.current={sessionId:session.id,kind:view.kind,id:view.id};
     if(view.kind==='archive'){setResultsPreference(false);hideGoal(false);}
+    usage.record('results_opened',usageContext({agent:true,scene}));
     onOpenResult(view);
   }:undefined;
   const executionMode=(fresh?data?.execution?.defaultMode:data?.execution?.mode)??'confirm-each';
@@ -771,7 +775,7 @@ export function AgentPanel({ onClose, onOpenProject, onOpenTasks, onOpenResult, 
   const liveWork=activeWorkId(rows,scene?responseBusy:Boolean(data?.busy),executionActivity);
   const usageByRow=transcriptTokenUsage(rows,session?.usage,responseBusy||liveWork?session?.entries.findLast(entry=>entry.type==='user')?.id:undefined);
   const writing=responseBusy&&liveEntry?.type==='assistant'&&liveEntry.status==='running';
-  const openTaskProject=id=>onOpenProject?.(id,...(scene?[session?.id]:[])),openTaskJobs=id=>onOpenTasks?.(id,...(scene?[session?.id]:[]));
+  const openTaskProject=id=>{usage.record('results_opened',usageContext({agent:true,scene}));return onOpenProject?.(id,...(scene?[session?.id]:[]));},openTaskJobs=id=>onOpenTasks?.(id,...(scene?[session?.id]:[]));
   const nativeProps={plans:data?.plans,suppressOutputs:resultsOpen,disabled:busy||!compatible||Boolean(answering)||Boolean(confirming),decisionEntries:session?.entries,decisionPending:session?.entries.some(entry=>entry.decision?.status==='pending'),confirming,onConfirm:confirm,onEdit:editPlan,onPreview:previewTask,onOpenProject:openTaskProject,onOpenTasks:openTaskJobs,answering,onDecisionAnswer:answerDecision};
   const nativeEntryActive=entry=>Boolean(data?.busy&&(executionActivity===undefined||executionActivity?.kind==='turn'&&entry.turnId===executionActivity.turnId));
   const renderWork=row=>{

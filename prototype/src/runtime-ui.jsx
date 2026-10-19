@@ -26,6 +26,8 @@ import { aerialMatchesJob, aerialTitle } from './aerial.js';
 import { StacRasterInspection } from './stac-ui.jsx';
 import { WcsRasterInspection } from './wcs-ui.jsx';
 import { originalsReleased, PROTECTED_ORIGINAL_NOTICE } from './release-policy.js';
+import {usage,countBucket} from './usage-client.js';
+import {usageContext,usageSource} from './usage-events.js';
 
 import { modisIdentity, MODIS_QUALITY_KEYS } from './modis.js';
 import { LANDSAT_QUALITY_KEYS } from './landsat-quality.js';
@@ -224,6 +226,7 @@ export function OriginalDownloadWorkflow({ scene, scenes = [scene], areaBounds, 
   const close = () => { if (!busy) { setOpen(false); setError(''); } };
   const show = () => {
     if (created) { setOpen(true); return; }
+    usage.record('download_review_opened',{...usageContext(),source:usageSource(scene?.provider),count:countBucket(scenes.length)});
     setScope('all');
     setChoice(defaultChoice(scenes));
     setName(project?.name || `${t(areaName)} · ${srtm ? 'SRTMGL1 v003' : elevation ? copDemLabel(scenes) : scenes.length > 1 ? t('{count} scenes', { count: number(scenes.length) }) : compositePeriodLabel(scene, date)}`);
@@ -232,6 +235,7 @@ export function OriginalDownloadWorkflow({ scene, scenes = [scene], areaBounds, 
   const start = async event => {
     event?.preventDefault();
     if (preparingProducts || productError || !authorized || !options.length || !name.trim() || totalScenes > MAX_PROJECT_SCENES || !keys.every(key => available.has(key))) return;
+    usage.record('download_confirmed',{...usageContext(),source:usageSource(scene?.provider),count:countBucket(targets.length*keys.length)});
     setBusy(true); setError('');
     try {
       const result = created?.project

@@ -17,7 +17,8 @@ export function verifyDesktopCspConfig(config) {
       'geod-stac-preview:', 'http://geod-stac-preview.localhost', catalog, imagery,
       'https://planetarycomputer.microsoft.com', 'https://stac.dataspace.copernicus.eu', 'https://sentinel2l2a01.blob.core.windows.net', 'https://landsateuwest.blob.core.windows.net', 'https://sentinel1euwestrtc.blob.core.windows.net', 'https://naipeuwest.blob.core.windows.net', 'https://cmr.earthdata.nasa.gov',
       'https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com', 'https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com',
-      ...(development ? ['http://127.0.0.1:4317', 'ws://127.0.0.1:4317'] : [])];
+      'https://geod-global.laogao.xyz',
+      ...(development ? ['http://127.0.0.1:4317', 'http://127.0.0.1:4392', 'ws://127.0.0.1:4317'] : [])];
     assert.deepEqual([...(directives.get('connect-src') || [])].sort(), expected.sort(), `${name}: catalog and COG requests need the exact reviewed origins`);
     assert.ok(directives.get('img-src')?.includes('https://data.lpdaac.earthdatacloud.nasa.gov'), `${name}: NASA public browse imagery needs its reviewed origin`);
     assert.ok(directives.get('img-src')?.includes('https://d1nklfio7vscoe.cloudfront.net'), `${name}: NASA public browse redirects need their exact reviewed CDN origin`);

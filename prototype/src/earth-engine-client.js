@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import { desktopAvailable } from './runtime-client.js';
 import { validateStacInspection } from './stac-client.js';
 import { validQueryBounds } from './features-client.js';
@@ -37,6 +38,9 @@ function validateRecord(value) {
   return value;
 }
 export async function earthEngineRequest(operation, payload = {}) {
+  return usageRequest('earth-engine', operation, payload, () => performEarthEngineRequest(operation, payload));
+}
+async function performEarthEngineRequest(operation, payload = {}) {
   const commands = { list:'list_earth_engine_exports', download:'download_earth_engine_export', inspect:'inspect_earth_engine_export' };
   if (!commands[operation]) throw new Error('Unknown GEE operation.');
   if (operation === 'download' && (!earthEngineProject(payload.url) || !payload.name?.trim())) throw new Error('Enter a name and a valid GEE export link.');

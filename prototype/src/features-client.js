@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validateVectorAsset,validateArcgisLayer,arcgisServiceRoot,validArcgisLayerId,validPublicFeatureUrl,validOverpassBounds,validOverpassEndpoint,validOsmCopyright,validateWfsLayer,validWfsQName,validWfsText,OVERPASS_PRESETS,OVERPASS_DESCRIPTION,OSM_LICENSE_URL} from './vector-client.js';
 import {validateGeoBoundariesService,GEOBOUNDARIES_SELECTION} from './geoboundaries-client.js';
@@ -68,6 +69,9 @@ export function validateFeatureService(service) {
   return service;
 }
 export async function featureRequest(operation,payload={},signal) {
+  return usageRequest('features', operation, payload, () => performFeatureRequest(operation, payload, signal));
+}
+async function performFeatureRequest(operation,payload={},signal) {
   const commands={list:'list_feature_services',connect:'connect_feature_service',forget:'forget_feature_service',query:'query_features'};
   if(!commands[operation])throw new Error('Unknown data service operation.');
   if(operation==='forget'&&!uuid.test(payload.id))throw new Error('Invalid data service identifier.');

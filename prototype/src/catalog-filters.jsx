@@ -36,10 +36,11 @@ export function CatalogFilters({ initialValues, onApply, onArea, onClose }) {
       </fieldset>
       {!elevation && <fieldset className="catalog-filter-section">
         <legend>{t('Date range')}</legend>
-        <div className="catalog-dates">
+        {aerial && <label>{t('Acquisition period')}<Select name="dateMode" aria-label={t('Acquisition period')} value={draft.dateMode || 'range'} onChange={update}><option value="latest-year">{t('Latest acquisition year')}</option><option value="range">{t('Custom date range')}</option></Select></label>}
+        {(!aerial || draft.dateMode !== 'latest-year') && <div className="catalog-dates">
           <label>{t('From (UTC)')}<DatePicker name="start" aria-label={t('Search start date')} value={draft.start} onChange={update} locale={locale} /></label>
           <label>{t('Through (UTC)')}<DatePicker name="end" aria-label={t('Search end date')} value={draft.end} onChange={update} locale={locale} /></label>
-        </div>
+        </div>}
       </fieldset>}
       {!elevation && !aerial && !composite && !radar && <fieldset className="catalog-filter-section">
         <legend>{t('Cloud cover range')}</legend>

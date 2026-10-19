@@ -37,6 +37,7 @@ import { useI18n } from './i18n.jsx';
 import { RecipeEditorDialog } from './processing-ui.jsx';
 import { InfoDetails, Badge, Button, Disclosure, EmptyState, Input, Modal, Select, Spinner, Surface, ResizableGroup, ResizablePanel, ResizeHandle } from './ui/index.jsx';
 import { MAX_MAP_LAYERS, coordinateToPixel, mapClipRecipe, previewPixelWindow, rasterProjectionDefinition, validBounds, verifiedMapMetadata, verifyPixelResult } from './workspace-map-geometry.js';
+import { setRasterZoomLimit } from './raster-view-resolution.js';
 import 'ol/ol.css';
 import './workspace-map.css';
 
@@ -296,7 +297,7 @@ export function WorkspaceMap({fileId,compact=false}={}) {
     const geographic = crs === 'EPSG:4326';
     const instance = new OLMap({ target: mapTarget.current, controls: [], layers: [overlay],
       view: new View({ projection: crs, center: initialCenter, resolution: geographic ? 0.01 : 1000,
-        minResolution: geographic ? Math.min(...entries[0].metadata.pixelSize) / 4 : 0.25,
+        maxZoom: 28,
         maxResolution: geographic ? 360 / 256 : 100000, enableRotation: false }) });
     const draw = new Draw({ type: 'Circle', geometryFunction: createBox(), stopClick: true, style: () => mapStyles.current.selection });
     draw.setActive(false);
@@ -330,6 +331,7 @@ export function WorkspaceMap({fileId,compact=false}={}) {
   useEffect(() => {
     const instance = map.current;
     if (!instance) return;
+    setRasterZoomLimit(instance.getView(), entries.filter(entry => entry.visible).map(entry => entry.metadata), crs === 'EPSG:4326' ? 0.00001 : 0.25);
     for (const [id, layer] of imageLayers.current) {
       if (!entries.some(entry => entry.job.id === id)) { instance.removeLayer(layer); layer.setSource(null); imageLayers.current.delete(id); }
     }

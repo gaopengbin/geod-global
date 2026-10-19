@@ -13,7 +13,7 @@ export function projectExploreSearch(project, current) {
   const last = new Date(`${dates.at(-1).slice(0, 7)}-01T00:00:00Z`);
   last.setUTCMonth(last.getUTCMonth() + 1);
   last.setUTCDate(0);
-  return { ...current, provider: providerForAssets(project.scenes[0]?.assets), bbox: project.bounds.join(', '), start: `${dates[0].slice(0, 7)}-01`, end: last.toISOString().slice(0, 10), cloudMin: 0, cloud: 100 };
+  return { ...current, ...(current.dateMode ? {dateMode:'range'} : {}), provider: providerForAssets(project.scenes[0]?.assets), bbox: project.bounds.join(', '), start: `${dates[0].slice(0, 7)}-01`, end: last.toISOString().slice(0, 10), cloudMin: 0, cloud: 100 };
 }
 
 export function projectCatalogScenes(project) {

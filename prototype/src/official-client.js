@@ -1,3 +1,4 @@
+import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 
 export const officialErrors={
@@ -27,7 +28,10 @@ export const officialErrors={
  service_unavailable:'Official service is unavailable.',
 };
 const operations=new Set(['capabilities','account','monitors','quoteMonitor','acceptMonitor','controlMonitor','runMonitor','notifications','readNotifications','checkout','orders','restorePurchases','refundRequest','quotes']);
-export async function officialRequest(operation,payload={}){
+export async function officialRequest(operation,payload={}) {
+  return usageRequest('official', operation, payload, () => performOfficialRequest(operation, payload));
+}
+async function performOfficialRequest(operation,payload={}) {
  if(!operations.has(operation))throw Error('Invalid official service request.');
  if(!desktopAvailable())throw Error('Open the desktop app to use official services.');
  let value;

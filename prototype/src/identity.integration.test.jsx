@@ -3,6 +3,7 @@ import {beforeEach,expect,it,vi} from 'vitest';
 import {render,screen,waitFor,fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {IdentityEntry,IdentityProvider,SignInPage} from './identity-ui.jsx';
+import {AccountPage} from './account-ui.jsx';
 import {I18nProvider} from './i18n.jsx';
 import {desktopAvailable} from './runtime-client.js';
 import {signedOutIdentity} from './identity-client.js';
@@ -94,7 +95,26 @@ it('renders Chinese copy and disables native OAuth in the browser preview',async
 });
 it('the signed-in avatar opens the account page instead of the sign-in screen',async()=>{
  invoke.mockResolvedValue(account());const onOpen=vi.fn();
- render(<I18nProvider><IdentityProvider><IdentityEntry onOpen={onOpen}/></IdentityProvider></I18nProvider>);
+ render(<I18nProvider><IdentityProvider><IdentityEntry onOpen={onOpen}/><SignInPage onContinue={onContinue}/></IdentityProvider></I18nProvider>);
  await userEvent.click(await screen.findByRole('button',{name:'Your account'}));
  expect(onOpen).toHaveBeenCalledWith('Account');
+});
+
+it('does not check the account service or show a sign-in entry during local use',async()=>{
+ invoke.mockRejectedValue(Error('Account service offline'));
+ const local=<><IdentityEntry onOpen={vi.fn()}/><p>Local workspace</p></>;
+ const page=render(<I18nProvider><IdentityProvider>{local}</IdentityProvider></I18nProvider>);
+ await screen.findByText('Local workspace');
+ expect(screen.queryByRole('button',{name:'Sign in'})).toBeNull();
+ expect(invoke).not.toHaveBeenCalled();
+ // Opening account management explicitly still permits existing users to restore and sign out.
+ invoke.mockResolvedValue(account());
+ page.rerender(<I18nProvider><IdentityProvider>{local}<AccountPage/></IdentityProvider></I18nProvider>);
+ await screen.findByText('tester@example.invalid');
+ expect(invoke.mock.calls.filter(([command])=>command==='identity_snapshot')).toHaveLength(1);
+ invoke.mockResolvedValue(ready());
+ await userEvent.click(screen.getByRole('button',{name:'Sign out of this device'}));
+ await waitFor(()=>expect(screen.queryByRole('button',{name:'Your account'})).toBeNull());
+ expect(screen.queryByRole('link',{name:'Sign in'})).toBeNull();
+ expect(screen.getByRole('link',{name:'Continue to workspace'}).getAttribute('href')).toBe('#Home');
 });
