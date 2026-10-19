@@ -1,9 +1,9 @@
 <div align="center">
 
-<img src="docs/images/release-0.2.0-cover.jpg" width="100%" alt="GeoD Global 0.2.0 品牌插画">
+<img src="docs/images/release-0.2.0-cover.jpg" width="480" alt="GeoD Global 0.2.0 品牌插画">
 
 # GeoD Global
-**找到地理数据，确认完整任务，把成果留在本地。**
+**多类型地理数据聚合：影像、地形、专题、矢量与地图服务。**
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
@@ -12,13 +12,39 @@
 [English](README.md) · 简体中文
 </div>
 
-面向 Windows 的地理数据工作台，把数据源选择、地图探索、下载确认和本地成果组织在一起。
-可以手动探索，也可以连接自己的模型，让 Agent 准备待确认的任务。
-**本地使用和自接模型无需注册 Global 账号。**
+在一个 Windows 工作台里，按类型选数据、按区域检索、多选预览、下载并查看本地成果。
+支持手动探索，也可以连接自己的模型，通过 Agent 准备检索和下载任务。**本地使用无需注册 Global 账号。**
 
-<img src="docs/images/release-0.2.0-explore.png" width="100%" alt="GeoD Global 0.2.0 安装版：多选结果与 Sentinel-2 真实地图预览">
+**17 个分类 · 110 个可用入口 · 2 个需授权入口**
 
-<sub>2026 年 10 月 19 日，实际安装的 0.2.0 版本。Copernicus Sentinel 影像由 Earth Search 提供；远程预览与已下载原件分别展示。[图片来源](docs/images/README.md) · [版本验收](docs/releases/0.2.0-acceptance.md)。</sub>
+Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA 公开产品 · INPE / Brazil Data Cube · OpenTopography · 地理空间数据云
+
+## 可以找哪些数据
+
+| 数据类型 | 已接入的代表产品或渠道 |
+| :--- | :--- |
+| 光学与航空影像 | Sentinel-2、Landsat、NAIP、MODIS、VIIRS、HLS；CBERS 与 EnMAP 公开产品 |
+| SAR 雷达 | Sentinel-1 RTC |
+| 地形高程与海底地形 | Copernicus DEM、SRTM、NASADEM、ALOS AW3D30、USGS 3DEP、ETOPO、SRTM15+ |
+| 土地覆盖 | ESA WorldCover、Esri / Impact Observatory、GLAD、GLC_FCS、CLCD 2004、SinoLC-1 上海产品 |
+| 植被与森林 | MODIS NDVI / EVI、Hansen 森林变化、GEDI 冠层高度、Global Mangrove Watch、JAXA 森林产品 |
+| 水体与水文 | JRC 地表水、HydroSHEDS 流向与汇水量、DE Africa 年度水体观测 |
+| 海洋 | 海表温度、海面风速、叶绿素、海洋热含量；JAXA、NOAA 产品 |
+| 人口与聚居地 | WorldPop、GHSL、World Settlement Footprint、HREA |
+| 土壤 | JAXA 土壤湿度、SoilGrids WRB 2017 |
+| 气候与降水 | CHIRPS、CHELSA、NOAA NClimGrid；JAXA 地表温度、降水、辐射、蒸散和气溶胶产品 |
+| 夜间灯光 | OpenLandMap 年度夜光 DN 产品 |
+| 矢量数据与服务 | geoBoundaries、OpenStreetMap / Overpass、WFS、OGC API Features、ArcGIS Feature Service；Microsoft 建筑与 Geofabrik 公开文件 |
+| 地图影像服务 | NASA GIBS、WMS、WMTS、XYZ、TMS、ArcGIS MapServer / ImageServer |
+| 离线地图 | Protomaps / PMTiles 公共瓦片档案 |
+| 栅格目录与覆盖服务 | STAC API、静态 STAC、单个 STAC Item、COG / GeoTIFF URL、WCS；接收自己 Earth Engine 项目的导出链接 |
+| 本地文件 | GeoTIFF / COG、GeoJSON、GeoPackage、Shapefile、OSM XML / PBF、PMTiles、MBTiles |
+| 数据门户 | 地理空间数据云：连接自己的账号，检索并下载已支持产品 |
+
+目录共 **133 项**，包含具体产品、连接协议和本地格式；其中 **21 项为计划中入口**。
+表中产品按已支持版本、地区或文件提供，账号要求和产品范围见[完整数据目录](docs/data-catalog.md)。
+
+<img src="docs/images/release-0.2.0-sources.png" width="100%" alt="实际安装版的数据源选择器：按产品分类，显示渠道与访问条件">
 
 ## 从选数据到看成果，一条流程
 
@@ -26,10 +52,13 @@
 | :--- | :--- | :--- | :--- | :--- |
 | 分类产品与访问条件 | 紧凑列表、多选、地图预览 | 核对来源、区域、文件和保存位置 | 持久任务与明确的完成状态 | 本地文件、来源、校验和原始像元 |
 
-- **133 项目录，17 个分类。** 涵盖影像、高程、专题栅格、矢量、服务和本地格式。**110 Ready、2 Auth、21 Planned** 表示连接器状态，不等于卫星数量或所有产品均已实测。
 - **先显示最新 100 条。** 更多结果按需加载；NAIP 优先最近拍摄年份，切换区域不会自动拉完整历史目录。
 - **自己的模型，自己的任务。** Agent 使用受限原生工具、任务确认和持久作业。首页会话与探索侧栏保留各自场景。
 - **地图与成果对应真实数据。** 多图层预览、原始像元读取，以及已支持的兼容网格裁剪和拼接；地图服务导出与原始科学波段保留各自含义。
+
+<img src="docs/images/release-0.2.0-explore.png" width="100%" alt="GeoD Global 0.2.0 安装版：多选结果与 Sentinel-2 真实地图预览">
+
+<sub>实际安装版截图，2026 年 10 月 19 日。Copernicus Sentinel 影像由 Earth Search 提供。[图片来源](docs/images/README.md) · [版本验收](docs/releases/0.2.0-acceptance.md)。</sub>
 
 ## 开始使用
 
