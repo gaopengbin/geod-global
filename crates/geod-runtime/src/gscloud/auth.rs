@@ -4,6 +4,7 @@ use crate::{JobManager, Result};
 use futures_util::StreamExt;
 use reqwest::header::COOKIE;
 use serde_json::{json, Value};
+#[cfg(windows)]
 use sha2::{Digest, Sha256};
 use std::time::Duration;
 use zeroize::Zeroizing;
