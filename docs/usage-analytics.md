@@ -142,3 +142,19 @@ or a new installer. The existing frozen installer is not rebuilt by this change.
 Before release, rebuild the desktop application and verify one event from that
 package reaches the receiver. Development and production environments remain
 separate report filters.
+
+## Packaged 0.2.0 acceptance, October 19
+
+The Windows 0.2.0 installer and portable archive now passed actual first-launch
+verification using separate fresh WebView profiles. Both default switches were
+already enabled; no Settings toggle was changed. Production receiver readback
+verified first-run, start and navigation events. A live installed-app search,
+multi-selection, preview, download review, two fresh completed downloads, two
+file validations and a local artifact open were also persisted.
+
+See [the exact acceptance scope](releases/0.2.0-acceptance.md). The two test
+installation IDs are recorded privately at
+`/srv/laogao/data/geod-global-usage/qa-0.2.0-20261019.json`; exclude them when
+querying real-user adoption. The raw receiver report intentionally retains QA
+evidence and **does not automatically apply this external operator registry**.
+Do not count these production-mode test installations as customers or people.

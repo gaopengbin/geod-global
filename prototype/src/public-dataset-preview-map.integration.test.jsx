@@ -36,7 +36,12 @@ const previews = () => createPreview.mock.results.map(result => result.value);
 const pixels = { tile: { getData: () => new Uint8Array([10, 255]), getSize: () => [1, 1] } };
 const renderMap = (layers, callback, props = {}) => <ExploreMap scenes={[]} area={area} productRasterLayers={layers}
   onProductRasterStatus={callback} {...props}/>;
-beforeEach(() => { createPreview.mockReset(); createPreview.mockImplementation(preview); maps.length = 0; rasterLayers.length = 0; });
+beforeEach(() => {
+  // New installs record by default. Each isolated readiness case owns its
+  // collector state; earlier map tests must not become this case's events.
+  usage.setPreferences({enabled:false});
+  createPreview.mockReset(); createPreview.mockImplementation(preview); maps.length = 0; rasterLayers.length = 0;
+});
 afterEach(() => { vi.restoreAllMocks(); });
 
 // These replace only the canvas surface and source factory. Real React effects,
