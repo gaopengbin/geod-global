@@ -202,7 +202,7 @@ fn sdk_app() -> tauri::App<tauri::test::MockRuntime> {
     let mut context = tauri::test::mock_context(tauri::test::noop_assets());
     context.config_mut().plugins.0.insert(
         "updater".into(),
-        json!({"pubkey":"","requireSignedVersion":true,"dangerousInsecureTransportProtocol":true}),
+        json!({"pubkey":"","requireSignedVersion":true,"dangerousInsecureTransportProtocol":true,"windows":{"installMode":"quiet"}}),
     );
     tauri::test::mock_builder()
         .plugin(tauri_plugin_updater::Builder::new().build())
