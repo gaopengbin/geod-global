@@ -55,7 +55,7 @@ jobs:
           name: geod-global-windows-x64-unsigned
           path: ${{ steps.artifacts.outputs.directory }}/*
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 7
           compression-level: 0
       - name: Build summary
         shell: pwsh
