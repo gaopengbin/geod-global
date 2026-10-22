@@ -2,9 +2,11 @@
 
 The patch is not an executable. Clients still require the reconstructed complete
 installer's version-bound Minisign signature before any installation.
-Requires the publisher-only python-zstandard package, never installed by the app.
+Requires publisher-only python-zstandard. Reuses an existing zstd CLI when
+available: its prefix dictionary indexes large installers better than CDict.
+Neither tool is installed or bundled by this script or the application.
 """
-import argparse, hashlib, json, re
+import argparse, hashlib, json, re, shutil, subprocess, tempfile
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -14,8 +16,18 @@ def digest(data):
 def build(base, target):
     import zstandard as zstd
     dictionary = zstd.ZstdCompressionDict(base, dict_type=zstd.DICT_TYPE_RAWCONTENT)
-    parameters = zstd.ZstdCompressionParameters.from_level(12, window_log=29, enable_ldm=True)
-    patch = zstd.ZstdCompressor(dict_data=dictionary, compression_params=parameters).compress(target)
+    cli = shutil.which('zstd')
+    if cli:
+        with tempfile.TemporaryDirectory(prefix='geod-delta-') as directory:
+            folder=Path(directory).resolve()
+            assert folder.parent==Path(tempfile.gettempdir()).resolve()
+            old=folder/'base.exe';new=folder/'target.exe';output=folder/'patch.zst'
+            old.write_bytes(base);new.write_bytes(target)
+            subprocess.run([cli,'-12','--long=29','--patch-from='+str(old),str(new),'-o',str(output)],check=True,capture_output=True,timeout=600)
+            patch=output.read_bytes()
+    else:
+        parameters = zstd.ZstdCompressionParameters.from_level(12, window_log=29, enable_ldm=True)
+        patch = zstd.ZstdCompressor(dict_data=dictionary, compression_params=parameters).compress(target)
     restored = zstd.ZstdDecompressor(dict_data=dictionary, max_window_size=512*1024).decompress(patch, max_output_size=len(target))
     if restored != target:
         raise ValueError('Delta reconstruction did not match the installer')
@@ -43,7 +55,7 @@ def main():
         manifest.setdefault('deltas',{})[args.from_version]=metadata
         args.manifest.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     receipt={**metadata,'fromVersion':args.from_version,'toVersion':manifest['version'],'offered':worthwhile,
-             'restoredSha256':digest(target),'savedPercent':round((1-len(patch)/len(target))*100,2)}
+             'restoredSha256':digest(target),'savedPercent':round((1-len(patch)/len(target))*100,2),'encoder':'zstd-cli-prefix' if shutil.which('zstd') else 'python-zstandard-dictionary'}
     args.output.with_suffix('.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(receipt))
 
