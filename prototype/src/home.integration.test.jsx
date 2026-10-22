@@ -305,20 +305,21 @@ it('keeps source exploration available without model setup, and model configurat
   expect(location.hash).toBe('#Explore');expect(search).not.toHaveBeenCalled();
 });
 
-it('opens each service card inside the shared Explore sidebar and performs only local registry reads',async()=>{
-  mount();const input=await screen.findByRole('textbox',{name:'Message GeoD Agent'});
-  await waitFor(()=>expect(input.disabled).toBe(false));fireEvent.change(input,{target:{value:'Keep this draft'}});
-  const cases=[
+// Keep each adapter's navigation isolated. One timed-out multi-adapter loop can
+// otherwise continue changing routes after cleanup and corrupt the next case.
+it.each([
     ['STAC API','Source type','STAC API'],
-    ['STAC API','Source type','STAC API'], // Reopen the same adapter after leaving Explore.
     ['Static STAC catalog','Source type','Static STAC catalog'],
     ['STAC item','Source type','STAC item'],
     ['COG / GeoTIFF URL','Source type','COG / GeoTIFF URL'],
     ['WCS 2.0.1'],['NASA GIBS'],['WMS'],['WMTS'],['XYZ'],['TMS'],
     ['ArcGIS MapServer / ImageServer'],['OpenStreetMap / Overpass'],
     ['OGC API Features'],['WFS 2.0'],['ArcGIS Feature Service'],['Protomaps / PMTiles'],
-  ];
-  for(const[name,field,value]of cases){
+])('opens the %s service card inside the shared Explore sidebar and performs only local registry reads',async(name,field,value)=>{
+  mount();const input=await screen.findByRole('textbox',{name:'Message GeoD Agent'});
+  await waitFor(()=>expect(input.disabled).toBe(false));fireEvent.change(input,{target:{value:'Keep this draft'}});
+  // Preserve coverage of reopening the same adapter after leaving Explore.
+  for(let attempt=0;attempt<(name==='STAC API'?2:1);attempt++){
     await chooseHomeSource(SOURCE_DIRECTORY.find(source=>source.name===name).id);
     await screen.findByRole('main',{name:'Data source exploration'});
     const controls=screen.getByRole('region',{name:'Source search and results'});
@@ -338,7 +339,7 @@ it('opens each service card inside the shared Explore sidebar and performs only 
   expect(commands.every(command=>command.startsWith('list_')||['identity_snapshot','distribution_snapshot','activate_desktop_frame','set_desktop_appearance'].includes(command))).toBe(true);
   expect(screen.getByRole('textbox',{name:'Message GeoD Agent'}).value).toBe('Keep this draft');expect(search).not.toHaveBeenCalled();
   expect(agentRequest.mock.calls.some(([operation])=>operation==='send')).toBe(false);
-},20000);
+});
 
 it.each([
   ['Local PMTiles','Offline tiles','tiles'],['Local MBTiles','Offline tiles','tiles'],
