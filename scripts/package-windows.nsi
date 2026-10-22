@@ -12,7 +12,8 @@ OutFile "${OUTPUT}"
 InstallDir "$LOCALAPPDATA\Programs\GeoD Global"
 InstallDirRegKey HKCU "${UNINSTALL_KEY}" "InstallLocation"
 RequestExecutionLevel user
-SetCompressor /SOLID lzma
+; Separate compression blocks preserve unchanged runtime bytes for delta updates.
+SetCompressor lzma
 VIProductVersion "${APP_NUMERIC_VERSION}"
 VIAddVersionKey "ProductName" "GeoD Global"
 VIAddVersionKey "FileDescription" "GeoD Global Windows installer"
@@ -44,6 +45,21 @@ Function .onInit
   ${IfNot} ${Errors}
     StrCpy $RestartAfterUpdate "yes"
   ${EndIf}
+  ; The updater starts this process before exiting. Wait for that exact parent
+  ; before touching application files, without killing unrelated app instances.
+  ClearErrors
+  ${GetOptions} $0 "/GEODPID=" $1
+  ${IfNot} ${Errors}
+    System::Call 'kernel32::OpenProcess(i 0x100000, i 0, i r1) p.r2'
+    ${If} $2 != 0
+      System::Call 'kernel32::WaitForSingleObject(p r2, i 60000) i.r3'
+      System::Call 'kernel32::CloseHandle(p r2)'
+      ${If} $3 != 0
+        SetErrorLevel 2
+        Abort
+      ${EndIf}
+    ${EndIf}
+  ${EndIf}
   ${IfNot} ${RunningX64}
     MessageBox MB_ICONSTOP "GeoD Global requires Windows x64."
     Abort
@@ -69,6 +85,15 @@ Section "GeoD Global"
   SetShellVarContext current
   SetOutPath "$INSTDIR"
   File /r "${PAYLOAD}\*"
+  ; Cache the installer, not live application data, as a future delta dictionary.
+  ; A missing/partial cache only causes a full download, never a partial install.
+  CreateDirectory "$LOCALAPPDATA\${APP_ID}\distribution"
+  ClearErrors
+  CopyFiles /SILENT "$EXEPATH" "$LOCALAPPDATA\${APP_ID}\distribution\installer-base.next"
+  IfErrors cache_done
+  Delete "$LOCALAPPDATA\${APP_ID}\distribution\installer-base.exe"
+  Rename "$LOCALAPPDATA\${APP_ID}\distribution\installer-base.next" "$LOCALAPPDATA\${APP_ID}\distribution\installer-base.exe"
+  cache_done:
   WriteUninstaller "$INSTDIR\Uninstall GeoD Global.exe"
   CreateShortcut "$SMPROGRAMS\GeoD Global.lnk" "$INSTDIR\geod-global-desktop.exe"
   WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayName" "GeoD Global"

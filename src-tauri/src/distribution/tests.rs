@@ -108,7 +108,8 @@ fn actual_notice_signature_accepts_original_and_rejects_tampered_content() {
 }
 
 // Actual updater SDK over an owned loopback HTTP server. No installer is ever
-// called; signatures were generated with the official pinned Tauri CLI.
+// called by ordinary tests; the ignored release probe below requires explicit
+// isolated-install configuration. Fixture signatures use the pinned Tauri CLI.
 struct Server {
     endpoint: String,
     stop: std::sync::Arc<AtomicBool>,
@@ -201,12 +202,90 @@ fn sdk_app() -> tauri::App<tauri::test::MockRuntime> {
     let mut context = tauri::test::mock_context(tauri::test::noop_assets());
     context.config_mut().plugins.0.insert(
         "updater".into(),
-        json!({"pubkey":"","requireSignedVersion":true,"dangerousInsecureTransportProtocol":true}),
+        json!({"pubkey":"","requireSignedVersion":true,"dangerousInsecureTransportProtocol":true,"windows":{"installMode":"quiet"}}),
     );
     tauri::test::mock_builder()
         .plugin(tauri_plugin_updater::Builder::new().build())
         .build(context)
         .unwrap()
+}
+
+/// Run only in a separate test-runner process: the Windows SDK exits after
+/// launching NSIS. It can only target this repository's isolated acceptance dir.
+#[tokio::test]
+#[ignore = "requires explicit release manifest, real installer and isolated directory"]
+async fn release_update_acceptance_probe() {
+    let config_path = std::env::var("GEOD_GLOBAL_UPDATE_ACCEPTANCE")
+        .expect("Explicit probe configuration required");
+    let config: Value = serde_json::from_slice(&fs::read(config_path).unwrap()).unwrap();
+    let repo = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .to_owned();
+    let directory = PathBuf::from(config["directory"].as_str().unwrap())
+        .canonicalize()
+        .unwrap();
+    assert!(directory.starts_with(
+        repo.join(".verification/release-021")
+            .canonicalize()
+            .unwrap()
+    ));
+    assert_eq!(directory.file_name().unwrap(), "installed");
+    assert!(directory.join("geod-global-desktop.exe").is_file());
+    let channel: Channel =
+        serde_json::from_str(include_str!("../../distribution/channel.json")).unwrap();
+    let current = config["currentVersion"].as_str().unwrap();
+    let current_comparison = semver::Version::parse(current).unwrap();
+    let endpoint = config["endpoint"].as_str().unwrap();
+    assert!(trusted_url(endpoint));
+    let app = sdk_app();
+    let mut update = app
+        .updater_builder()
+        .pubkey(channel.pubkey.clone())
+        .endpoints(vec![endpoint.parse().unwrap()])
+        .unwrap()
+        .no_proxy()
+        .executable_path(directory.join("geod-global-desktop.exe"))
+        .installer_args([
+            format!("/GEODPID={}", std::process::id()),
+            format!("/D={}", directory.display()),
+        ])
+        .version_comparator(move |_, release| release.version > current_comparison)
+        .build()
+        .unwrap()
+        .check()
+        .await
+        .unwrap()
+        .expect("A newer release must be offered");
+    assert_eq!(update.raw_json["product"], PRODUCT);
+    update.current_version = current.to_owned();
+    let cache = PathBuf::from(config["cache"].as_str().unwrap());
+    let received = std::sync::Arc::new(std::sync::atomic::AtomicU64::new(0));
+    let counter = received.clone();
+    let result = delta::package(
+        &update,
+        cache,
+        channel.pubkey.clone(),
+        move |chunk, _, _, _| {
+            counter.fetch_add(chunk as u64, Ordering::Relaxed);
+        },
+        || {},
+    )
+    .await
+    .unwrap();
+    let (bytes, mode, fallback) = result;
+    delta::verify_installer(&bytes, &update.signature, &channel.pubkey, &update.version).unwrap();
+    assert_eq!(mode, config["expectedMode"].as_str().unwrap());
+    let receipt = json!({"sdk":"tauri-plugin-updater 2.13.1","fromVersion":current,"toVersion":update.version,"mode":mode,"fallback":fallback,"installerBytes":bytes.len(),"installerSha256":format!("{:x}",Sha256::digest(&bytes)),"receivedBytes":received.load(Ordering::Relaxed),"signatureVerified":true,"directory":directory,"installRequested":config["install"]==true});
+    fs::write(
+        config["receipt"].as_str().unwrap(),
+        serde_json::to_vec_pretty(&receipt).unwrap(),
+    )
+    .unwrap();
+    if config["install"] == true {
+        assert!(cfg!(windows), "Installation probe only runs on Windows");
+        update.restart_after_install(false).install(bytes).unwrap();
+    }
 }
 #[tokio::test]
 async fn actual_sdk_downloads_valid_bytes_and_rejects_tampering_and_version_substitution() {

@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 const validQueryBounds=b=>Array.isArray(b)&&b.length===4&&b.every(Number.isFinite)&&b[0]>=-180&&b[2]<=180&&b[1]>=-90&&b[3]<=90&&b[0]<b[2]&&b[1]<b[3];
@@ -71,7 +72,7 @@ async function performOvertureRequest(operation,payload={},signal) {
     const mutation=['search','download'].includes(operation);
     const response=await fetch('http://127.0.0.1:4318'+path,{method:mutation?'POST':'GET',signal,
       headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,body:mutation?JSON.stringify(payload):undefined});
-    value=await response.json();if(!response.ok)throw new Error(value.error||`Overture service returned HTTP ${response.status}`);
+    value=await response.json();if(!response.ok)throw diagnosticError(new Error(value.error||`Overture service returned HTTP ${response.status}`),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   }
   if(signal?.aborted)throw new DOMException('Overture request aborted','AbortError');
   if(operation==='search') {
@@ -99,7 +100,7 @@ export async function exportOvertureOriginal(asset) {
   validateOvertureProvenance(asset.geoParquet,asset);
   if(desktopAvailable())return window.__TAURI__.core.invoke('export_vector',{id:asset.id,original:true});
   const response=await fetch(`http://127.0.0.1:4318/vectors/${asset.id}/parquet/original`,{signal:AbortSignal.timeout(300000)});
-  if(!response.ok)throw new Error((await response.json()).error||'Original GeoParquet export failed.');
+  if(!response.ok)throw diagnosticError(new Error((await response.json()).error||'Original GeoParquet export failed.'),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   if(response.headers.get('content-type')!=='application/vnd.apache.parquet')throw new Error('Original GeoParquet file format changed.');
   const bytes=new Uint8Array(await response.arrayBuffer());
   const sha=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');

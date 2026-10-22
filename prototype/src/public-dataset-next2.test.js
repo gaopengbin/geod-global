@@ -24,7 +24,11 @@ test('selected native-tested fixtures preserve complete original preview bytes a
   for (const receipt of next2PublicReceipts) {
     assert.match(receipt.source, /^docs\/next2-(ghsl|glad|maxar)-native-acceptance-20261012\.json$/);
     const bytes = readFileSync(new URL(`../../${receipt.source}`, import.meta.url));
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), receipt.sha256, 'Frozen selected fixture must retain the actual acceptance report version');
+    // These original Windows report receipts were frozen as UTF-8 CRLF.
+    // Git stores text as LF; reconstruct only that serialization before hashing.
+    // Original raster/preview byte checks below remain strictly byte-for-byte.
+    const originalReportBytes = Buffer.from(bytes.toString('utf8').replace(/\r?\n/g, '\r\n'));
+    assert.equal(createHash('sha256').update(originalReportBytes).digest('hex'), receipt.sha256, 'Frozen selected fixture must retain the actual acceptance report version');
     reports.set(receipt.source, JSON.parse(bytes));
   }
   for (const value of next2PublicCases) {

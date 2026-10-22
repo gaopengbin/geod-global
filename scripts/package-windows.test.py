@@ -413,8 +413,11 @@ class PackagingTests(unittest.TestCase):
         self.assertIn('RequestExecutionLevel user',script)
         self.assertNotIn('RequestExecutionLevel admin',script)
         self.assertIn('xyz.laogao.geod.global',script)
-        self.assertNotIn('Delete "$LOCALAPPDATA',script)
+        uninstall = script.split('Section "Uninstall"',1)[1]
+        self.assertNotIn('Delete "$LOCALAPPDATA',uninstall)
         self.assertNotIn('Delete "$APPDATA',script)
+        cache_deletes = [line.strip() for line in script.splitlines() if line.strip().startswith('Delete "$LOCALAPPDATA')]
+        self.assertEqual(cache_deletes,['Delete "$LOCALAPPDATA\\${APP_ID}\\distribution\\installer-base.exe"'])
         self.assertIn('ReadRegStr $0 HKCU "${UNINSTALL_KEY}" "InstallLocation"',script)
         self.assertIn('${If} $0 == "$INSTDIR"\n    Delete "$SMPROGRAMS\\GeoD Global.lnk"\n    DeleteRegKey HKCU "${UNINSTALL_KEY}"\n  ${EndIf}',script)
 

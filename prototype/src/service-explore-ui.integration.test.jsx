@@ -7,11 +7,14 @@ async function acquire(user,{wait=true}={}){
     await waitFor(()=>expect(screen.getAllByRole('button',{name:'Close'})[0].disabled).toBe(false));
     await user.click(screen.getAllByRole('button',{name:'Close'})[0]);
     await waitFor(()=>expect(screen.queryByRole('dialog',{name:'Confirm download'})).toBeNull());
+    // Radix removes accessible content before Modal notifies its parent after
+    // the 180 ms exit transition. Settle that close before a subsequent click.
+    await act(async()=>{await new Promise(resolve=>setTimeout(resolve,200));});
   }
 }
 import React from 'react';
 import {beforeEach,expect,it,vi} from 'vitest';
-import {render,screen,waitFor} from '@testing-library/react';
+import {act,render,screen,waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {MapServiceExplorer,FeatureServiceExplorer,TileSourceExplorer,exploreMapImageRequest} from './service-explore-ui.jsx';
 import {mapRequest} from './wms-client.js';

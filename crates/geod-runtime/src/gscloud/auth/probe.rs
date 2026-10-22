@@ -1,6 +1,7 @@
 //! Opt-in local account diagnostics. Never print cookies, account names, query
 //! strings or authenticated page bodies; only public routes and asset paths.
 use super::*;
+use sha2::{Digest, Sha256};
 
 #[tokio::test]
 #[ignore = "uses the verified GSCloud account to inspect six public original products"]

@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validateVectorAsset,validateArcgisLayer,arcgisServiceRoot,validArcgisLayerId,validPublicFeatureUrl,validOverpassBounds,validOverpassEndpoint,validOsmCopyright,validateWfsLayer,validWfsQName,validWfsText,OVERPASS_PRESETS,OVERPASS_DESCRIPTION,OSM_LICENSE_URL} from './vector-client.js';
@@ -86,7 +87,7 @@ async function performFeatureRequest(operation,payload={},signal) {
     const path=operation==='forget'?`/feature-services/${payload.id}/forget`:operation==='query'?'/feature-services/query':'/feature-services';
     const mutation=operation!=='list';
     const response=await fetch('http://127.0.0.1:4318'+path,{method:mutation?'POST':'GET',signal,headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,body:mutation?JSON.stringify(payload):undefined});
-    value=await response.json();if(!response.ok)throw new Error(value.error||`Data service returned HTTP ${response.status}`);
+    value=await response.json();if(!response.ok)throw diagnosticError(new Error(value.error||`Data service returned HTTP ${response.status}`),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   }
   check();
   if(operation==='list'){if(!Array.isArray(value)||value.length>24)throw new Error('Invalid data service registry.');value.forEach(validateFeatureService);}

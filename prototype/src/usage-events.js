@@ -1,9 +1,11 @@
 import schema from '../../schemas/usage-events.json' with {type:'json'};
+import {failureDiagnostics,actionStage} from './usage-diagnostics.js';
 import {usage,usageFields,usageJobSource,classifyUsageError,countBucket,durationBucket} from './usage-client.js';
 
 const actions={
+  distribution:{update_check:'update_check',update_download:'update_download',update_install:'update_install'},
   runtime:{create:'download_submit',downloadProject:'download_submit',createProject:'save_project',addProjectScenes:'save_project',
-    cancel:'cancel',retry:'retry',raster:'inspect',composite:'inspect',rgb:'inspect',mosaicProject:'process',prepareProject:'process',runRgb:'process',package:'export',connectAccount:'source_connect',verifyAccount:'source_connect'},
+    cancel:'cancel',retry:'retry',raster:'inspect',composite:'inspect',rgb:'inspect',mosaicProject:'process',prepareProject:'process',runRgb:'process',runRecipe:'process',planRecipe:'process',saveRecipe:'save_project',reveal:'inspect',revealPackage:'inspect',package:'export',connectAccount:'source_connect',verifyAccount:'source_connect'},
   agent:{send:'agent_send',approvePlan:'agent_confirm',revisePlan:'agent_revise',interrupt:'agent_stop',saveModel:'model_connect',testModel:'model_test',attachImage:'import',attachDocument:'import'},
   'public-dataset':{resolve:'search',connect:'source_connect'},
   stac:{connect:'source_connect',search:'search',project:'save_project',downloads:'download_submit',inspect:'inspect'},
@@ -45,7 +47,7 @@ export function beginUsage(action,fields={},client=usage) {
     finished=true;
     const count=resultCount(value),kind=error?(usageError(error)==='cancelled'?'cancelled':'failed'):'completed';
     client.record(`${prefix}_${kind}`,{...context,result:error?kind==='cancelled'?'cancelled':'error':count===0?'empty':'success',
-      duration:durationBucket(Date.now()-start),...(count===null?{}:{count:countBucket(count)}),...(error?{error:usageError(error)}:{})},operationId);
+      duration:durationBucket(Date.now()-start),...(count===null?{}:{count:countBucket(count)}),...(error?{error:usageError(error),...failureDiagnostics(error,actionStage(action))}:{})},operationId);
     if(!error&&['download_submit','retry','process'].includes(action))client.watchJobs(jobsIn(value),context,operationId);
     const artifact=value?.record||value;
     if(!error&&action==='download_submit'&&/^[a-f0-9]{64}$/i.test(artifact?.sha256||'')){
@@ -82,7 +84,7 @@ export async function usageRequest(scope,operation,payload,run) {
     if(turn)usage.watchJobs((value?.plans||[]).filter(plan=>plan.kind==='download'&&plan.status==='submitted').flatMap(plan=>plan.jobs||[]),turn.fields,turn.operationId);
     if(turn&&['completed','failed','interrupted'].includes(session.status)){
       usage.record(session.status==='completed'?'agent_turn_completed':session.status==='failed'?'agent_turn_failed':'agent_turn_cancelled',
-        {...turn.fields,duration:durationBucket(Date.now()-turn.at)},turn.operationId);turns.delete(session.id);
+        {...turn.fields,duration:durationBucket(Date.now()-turn.at),...(session.status==='completed'?{}:{error:session.status==='interrupted'?'cancelled':usageError(session.error),...failureDiagnostics(session.status==='interrupted'?new DOMException('Interrupted','AbortError'):session.error,'agent_turn')})},turn.operationId);turns.delete(session.id);
     }
   }
   return value;

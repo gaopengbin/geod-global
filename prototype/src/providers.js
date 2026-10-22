@@ -4,6 +4,7 @@ import { MODIS_SCIENCE, MODIS_SCIENCE_KEYS } from './modis-science-layers.js';
 import { VIIRS_PRODUCTS, viirsIdentity, viirsAssetIdentity } from './viirs.js';
 import { RADAR_HOST, radarAssetIdentity } from './radar.js';
 import { retryPreviewRequest } from './preview-network.js';
+import { diagnosticError, failureDiagnostics } from './usage-diagnostics.js';
 // Product families are independent of hosting platforms and imagery/elevation types.
 // HLS remains its own derived product series rather than raw Landsat imagery.
 export const SOURCE_SERIES = Object.freeze([
@@ -201,16 +202,17 @@ let access, pendingAccess;
 let landsatAccess, pendingLandsatAccess;
 let naipAccess, pendingNaipAccess;
 async function requestPublicAccess(url,fetcher) {
-  const signal=AbortSignal.timeout(30_000);
+  const signal=AbortSignal.timeout(30_000);let attempts=0;
   try {
     return await retryPreviewRequest(async()=>{
-      const response=await fetcher(url,{credentials:'omit',signal});
-      if(response.status>=500)throw new Error('Planetary Computer data access is unavailable. Retry loading imagery.');
+      attempts++;const response=await fetcher(url,{credentials:'omit',signal});
+      if(!response.ok){const error=diagnosticError(new Error('Planetary Computer data access is unavailable. Retry loading imagery.'),{stage:'authorization',httpStatus:String(response.status),diagnosticOrigin:'explicit'});error.retryable=response.status>=500||[408,429].includes(response.status);throw error;}
       return response;
     },signal);
   } catch(error) {
     if(['AbortError','TimeoutError'].includes(error.name))throw error;
-    throw new Error('Planetary Computer data access is unavailable. Retry loading imagery.');
+    const diagnostic=failureDiagnostics(error,'authorization');
+    throw diagnosticError(new Error(diagnostic.httpStatus==='429'?'Planetary Computer is rate limiting data access. Wait a moment before retrying.':'Planetary Computer data access is unavailable. Retry loading imagery.'),{...diagnostic,stage:'authorization',retries:Math.max(0,attempts-1),diagnosticOrigin:'explicit'});
   }
 }
 async function prepareNaipAccess(hrefs, { fetcher, force, now }) {

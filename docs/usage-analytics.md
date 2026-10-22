@@ -1,5 +1,43 @@
 # GeoD Global usage statistics
 
+## Failure diagnostics (October 22, 2026)
+
+New clients add fixed allowlisted `stage`, `reason`, `httpStatus`, `retries` and
+`diagnosticOrigin` fields to failures. `operationId` links request start and
+failure/terminal outcome. The receiver remains compatible with older clients;
+historical events without these fields are shown as unavailable, never backfilled
+with invented causes. `diagnosticOrigin=explicit` describes a stage captured at
+the failing boundary; `classified` describes a coarse operation/error mapping;
+`unavailable` means the provider/native task supplied no usable failure detail.
+Reasons are safe categories, not raw messages or definitive root-cause diagnoses.
+
+Catalog request, JSON decode and catalog validation have separate stages. COG
+metadata, tile reads and public-product preview failures preserve their stage;
+temporary preview retries preserve attempt counts. Public signature failures
+retain authorization HTTP status. Runtime HTTP responses retain status even
+when the response body is malformed; response validation is distinct from service
+request failure. Source/map/vector/import/export clients preserve available HTTP
+status. Queue submission, project save, inspection, processing and model/Agent
+actions are observed through their shared operation boundaries. Background native
+task outcomes retain source and originating surface; checksum failures are
+classified as artifact validation. Agent terminal failures retain the available
+session error category without uploading session content.
+
+Native tasks and model providers that expose only an untyped message cannot
+provide an exact internal substage or a retry count. These values remain
+classified/unknown instead of assuming all failures are transport failures.
+Full URLs, coordinates, original stack traces/messages and account/model secrets
+are not added. Receiver reports expose aggregated `diagnostics` by source, event,
+stage, reason, HTTP status, retry count and evidence origin.
+
+The receiver was updated in place via immutable release `20261022T021912Z`, with
+SQLite backup and prior release retained at
+`/srv/laogao/backups/geod-global-usage/20261022T021912Z`. No database migration or
+Nginx permission change was needed. Actual HTTPS upload plus independent read-only
+database readback verified 15 development events, including seven failures with
+all diagnostic fields. This does not update already distributed installers.
+See [the verification record](operations/usage-diagnostics-20261022.md).
+
 This implementation is independent of domestic GeoD, Agent hosted-model billing,
 the public website, and WeChat Toolbox. The product key is always `geod-global`.
 It introduces no third-party analytics SDK and requires no account.
@@ -142,3 +180,19 @@ or a new installer. The existing frozen installer is not rebuilt by this change.
 Before release, rebuild the desktop application and verify one event from that
 package reaches the receiver. Development and production environments remain
 separate report filters.
+
+## Packaged 0.2.0 acceptance, October 19
+
+The Windows 0.2.0 installer and portable archive now passed actual first-launch
+verification using separate fresh WebView profiles. Both default switches were
+already enabled; no Settings toggle was changed. Production receiver readback
+verified first-run, start and navigation events. A live installed-app search,
+multi-selection, preview, download review, two fresh completed downloads, two
+file validations and a local artifact open were also persisted.
+
+See [the exact acceptance scope](releases/0.2.0-acceptance.md). The two test
+installation IDs are recorded privately at
+`/srv/laogao/data/geod-global-usage/qa-0.2.0-20261019.json`; exclude them when
+querying real-user adoption. The raw receiver report intentionally retains QA
+evidence and **does not automatically apply this external operator registry**.
+Do not count these production-mode test installations as customers or people.

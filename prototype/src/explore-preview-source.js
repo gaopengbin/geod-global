@@ -1,16 +1,13 @@
-import GeoTIFF from 'ol/source/GeoTIFF.js';
+import { CogPreviewSource } from './cog-preview-source.js';
 import { transformExtent } from 'ol/proj.js';
 import { catalogItemPreview, catalogPreviewKind } from './catalog-preview.js';
 import { createItemPreviewSource } from './item-preview-source.js';
 import { elevationPreview, elevationPreviewURL, elevationColorStyle, validateElevationImages } from './elevation-preview.js';
 
-class ElevationSource extends GeoTIFF {
+class ElevationSource extends CogPreviewSource {
   constructor(scene,href) {
     super({sources:[{url:href,bands:[1]}],normalize:false,interpolate:false});
     this.scene = scene;
-    this.on('change',() => {
-      if (this.getState() === 'error') this.viewRejector(new Error('Elevation COG metadata does not match the selected original height grid.'));
-    });
   }
   async configure_(sources) {
     try { this.pointTransform = validateElevationImages(sources,this.scene); await super.configure_(sources); }

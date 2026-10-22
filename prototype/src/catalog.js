@@ -1,3 +1,4 @@
+import {diagnosticError,diagnosticStep} from './usage-diagnostics.js';
 import { providerById, providerForSearch, demProduct, srtmCell, srtmHref, numCell, numHref, isSupportedAsset, naipMatchesItem } from './providers.js';
 import { MODIS_CRS, modisIdentity, modisAssetIdentity } from './modis.js';
 import { vegetationIdentity, vegetationAssetIdentity, VEGETATION_KEYS } from './vegetation.js';
@@ -254,11 +255,11 @@ export async function fetchCatalogPage(url, { signal, fetcher = fetch } = {}) {
   const requestURL = new URL(safeURL), polarization = requestURL.searchParams.get('geod-polarization');
   if (polarization && (provider.domain !== 'radar' || !RADAR_KEYS.includes(polarization))) throw new Error('Choose a supported orbit and polarization.');
   requestURL.searchParams.delete('geod-polarization');
-  const response = await fetcher(requestURL.href, { signal: requestSignal, credentials: "omit", headers: { Accept: "application/geo+json, application/json" } });
-  if (!response.ok) throw new Error(`${provider.name} returned HTTP ${response.status}. Try again later.`);
-  const data = await response.json();
-  if (data.type !== "FeatureCollection" || !Array.isArray(data.features)) throw new Error('The source returned an invalid catalog response.');
-  let scenes = data.features.map(item => normalizeScene(item, provider.id));
+  const response = await diagnosticStep('catalog_request',()=>fetcher(requestURL.href, { signal: requestSignal, credentials: "omit", headers: { Accept: "application/geo+json, application/json" } }));
+  if (!response.ok) throw diagnosticError(new Error(`${provider.name} returned HTTP ${response.status}. Try again later.`),{stage:'catalog_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
+  const data = await diagnosticStep('catalog_decode',()=>response.json());
+  if (data.type !== "FeatureCollection" || !Array.isArray(data.features)) throw diagnosticError(new Error('The source returned an invalid catalog response.'),{stage:'catalog_validation',diagnosticOrigin:'explicit'});
+  let scenes;try{scenes=data.features.map(item=>normalizeScene(item,provider.id));}catch(error){throw diagnosticError(error,{stage:'catalog_validation',diagnosticOrigin:'explicit'});}
   let next = nextPageURL(data, provider.id);
   if (polarization) {
     scenes = scenes.filter(scene => scene.assets[polarization]);

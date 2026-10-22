@@ -122,7 +122,7 @@ def relative(path, base):
 def is_build_input(name):
     if name in ['README.md','prototype/README.md','src-tauri/README.md'] or (name.startswith('crates/') and name.endswith('/README.md')) or name.startswith(('docs/', 'examples/', 'prototype/qa/')):
         return False
-    return name in ['Cargo.toml','Cargo.lock','package.json','package-lock.json','rust-toolchain','rust-toolchain.toml','scripts/prepare-agent-runtime.mjs'] or name.startswith(('agent/','licenses/agent-runtime/','prototype/','crates/','src-tauri/','.cargo/','schemas/'))
+    return name in ['Cargo.toml','Cargo.lock','package.json','package-lock.json','rust-toolchain','rust-toolchain.toml','scripts/prepare-agent-runtime.mjs'] or name.startswith(('agent/','licenses/agent-runtime/','prototype/','crates/','src-tauri/','distribution/','.cargo/','schemas/'))
 
 
 def source_identity(build_only=False):

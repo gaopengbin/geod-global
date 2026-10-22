@@ -1,3 +1,4 @@
+import {diagnosticStep} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import {GSCloudOriginalProducts,originalTile} from './gscloud-client.js';
 import { validUsageLedger } from './agent-usage.js';
@@ -337,9 +338,12 @@ async function performAgentRequest(operation, args = {}) {
   methods.planMapPreview='agent_plan_map_preview';
   const method = methods[operation]; if (!method) throw new Error('Unknown Agent operation.');
   const request=operation==='revisionDraft'?{...args,action:'draft'}:operation==='revisePlan'?{...args,action:'revise'}:args;
-  const result=await window.__TAURI__.core.invoke(method, request);
+  const result=await diagnosticStep('agent_dispatch',()=>window.__TAURI__.core.invoke(method, request));
+  return diagnosticStep('response_validation',()=>validateResult());
+  function validateResult(){
   if(operation==='planMapPreview')return validatePlanMapPreview(result);
   return operation==='testModel'?validateConnectionTest(result):operation==='attachImage'?validateAgentImage(result):operation==='imagePreview'?validateAgentImagePreview(result):operation==='imageStorage'?validateAgentImageStorage(result):operation==='attachDocument'?validateAgentDocument(result):operation==='documentPreview'?validateAgentDocumentPreview(result):operation==='attachmentStorage'?validateAgentAttachmentStorage(result):operation==='revisionDraft'?validatePlanRevisionDraft(result):validateAgentSnapshot(result);
+  }
 }
 export function validateAgentImageStorage(value) {
   const keys=['limitBytes','usedBytes','imageCount','unusedBytes','unusedCount','removedBytes','removedCount'];

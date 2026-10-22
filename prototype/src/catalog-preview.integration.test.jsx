@@ -11,7 +11,7 @@ import {elevationPreviewURL} from './elevation-preview.js';
 import {CatalogPreviewControls,CatalogPreviewLegend} from './catalog-preview-ui.jsx';
 
 const loader=vi.hoisted(()=>vi.fn());
-vi.mock('geotiff',async importOriginal=>({...await importOriginal(),fromUrl:loader}));
+vi.mock('geotiff',async importOriginal=>({...await importOriginal(),fromCustomClient:loader}));
 afterEach(()=>{vi.restoreAllMocks();loader.mockReset();});
 
 it('radar polarization changes by keyboard and keeps source identity and scientific units in the legend',async()=>{
@@ -39,7 +39,7 @@ it.each(['copernicus-dem','copernicus-dem-90'])('real OpenLayers applies the hal
  try {
   const view=await preview.source.getView();
   expect(view.extent).toEqual(scene.bbox);expect(preview.source.bandCount).toBe(1);expect(preview.source.hasAlpha).toBe(false);
-  expect(preview.source.normalize_).toBe(false);expect(loader).toHaveBeenCalledWith(elevationPreviewURL(scene),undefined);
+  expect(preview.source.normalize_).toBe(false);expect(loader.mock.calls[0][0].url).toBe(elevationPreviewURL(scene));
  } finally {preview.dispose();}
 });
 
@@ -48,6 +48,6 @@ it('an original elevation transport failure rejects metadata promptly and leaves
  loader.mockRejectedValue(new Error('transport failure'));
  const scene=normalizeScene(fixture.catalogs['copernicus-dem'][0],'copernicus-dem');
  const preview=createCatalogPreviewSource(scene,'height');
- try {await expect(preview.source.getView()).rejects.toThrow('Elevation COG metadata does not match');expect(preview.source.getState()).toBe('error');}
+ try {await expect(preview.source.getView()).rejects.toThrow('Preview network request failed');expect(preview.source.getState()).toBe('error');}
  finally {preview.dispose();}
 });

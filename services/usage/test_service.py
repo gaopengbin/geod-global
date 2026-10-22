@@ -21,6 +21,17 @@ def event(name='search_completed'):
 
 
 class ReceiverTests(unittest.TestCase):
+    def test_diagnostics_survive_http_and_report_without_free_text(self):
+        value=event('preview_failed')
+        value['fields'].update(stage='preview_tile',reason='upstream_unavailable',httpStatus='503',retries='2',diagnosticOrigin='explicit',error='network')
+        self.assertEqual(self.request('POST','/v1/events',self.batch([value]))[0],200)
+        report=self.request('GET','/v1/report',headers={'Authorization':'Bearer test-only-admin'})[1]
+        self.assertEqual(report['diagnostics'][0]['stage'],'preview_tile')
+        self.assertEqual(report['diagnostics'][0]['httpStatus'],'503')
+        for field in ['stage','reason','httpStatus','retries','diagnosticOrigin']:
+            bad=copy.deepcopy(value);bad['id']=str(uuid.uuid4());bad['fields'][field]='https://private.test/?token=secret'
+            self.assertEqual(self.request('POST','/v1/events',self.batch([bad]))[0],400)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.store = EventStore(Path(self.temp.name) / 'global.sqlite')

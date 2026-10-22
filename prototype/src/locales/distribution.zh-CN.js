@@ -1,4 +1,10 @@
 export default {
+  'Complete installer restored and verified from a delta.':'已通过差分包还原并验证完整安装包。',
+  'Could not complete the update. Check your network and retry.':'更新未完成，请检查网络后重试。',
+  'You choose when to download and install. Your projects, model settings and downloaded files are retained.':'由你选择下载和安装时间，工程、模型配置与已下载文件都会保留。',
+  'Confirm upgrade and restart':'确认升级并重启',
+  'Downloading only the changes. The restored installer will be verified before installation.':'正在下载差分包，还原完整安装包并验证签名后才可安装。',
+  'Using the complete installer because a matching delta was unavailable.':'未能使用匹配的差分包，已改为下载完整安装包。',
   'Release candidate. Check the included release notes for supported products and limits. Software updates and notifications are in Settings.':'当前为发布候选版。支持的产品与限制见随附发行说明；软件更新与通知在设置中管理。',
   'Notification preferences were reset. The damaged file was preserved for recovery.':'通知设置已恢复默认，原损坏文件已保留，可供恢复。',
   'Software updates':'软件更新', 'Development build':'开发版', 'Installed version':'安装版',

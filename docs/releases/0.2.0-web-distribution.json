@@ -1,0 +1,174 @@
+{
+  "version": "0.2.0",
+  "publishedAt": "2026-10-20",
+  "binarySourceCommit": "a6f49e31545ca6f91c4097b8eebc85940e84f43d",
+  "website": {
+    "origin": "https://geod-global.laogao.xyz",
+    "status": "activated",
+    "release": "/srv/laogao/releases/geod-global/20261019T222715Z-global020-web",
+    "previous": "/srv/laogao/releases/geod-global/20261009Tspace",
+    "backup": "/srv/laogao/backups/geod-global/20261019T222715Z-global020-web",
+    "overlayFiles": 80,
+    "databaseChecks": "ok",
+    "nginxChanged": false,
+    "verifiedPublicPaths": [
+      "/index.html",
+      "/zh/index.html",
+      "/es/index.html",
+      "/fr/index.html",
+      "/de/index.html",
+      "/pt-br/index.html",
+      "/ja/index.html",
+      "/ko/index.html",
+      "/downloads.json",
+      "/source-atlas-data.js",
+      "/release.js",
+      "/release.css",
+      "/assets/geod-global-020-features-20261020.jpg",
+      "/assets/geod-global-020-features-20261020.mp4"
+    ],
+    "overlayManifestSha256": "640fc7f2d706ddceb3b25c2e7d0182c7bf1067ed19814c31dff741c9544a6546"
+  },
+  "video": {
+    "repository": "docs/media/geod-global-0.2.0-features.mp4",
+    "url": "https://geod-global.laogao.xyz/assets/geod-global-020-features-20261020.mp4",
+    "sha256": "538b72506fc7bd5c766b5f05f63a200c7456be54175b049b8b4e23d7723ed2ab",
+    "bytes": 3678417,
+    "duration": "approximately 62 seconds",
+    "description": "Real installed 0.2.0 feature recording with shortened waits, Chinese narration and subtitles; final Agent card is a feature description, not a new live model test."
+  },
+  "distribution": {
+    "cdn": "https://download.laogao.xyz/",
+    "prefix": "global-updates/windows-x86_64/0.2.0/",
+    "assets": [
+      {
+        "name": "SHA256SUMS.txt",
+        "bytes": 280,
+        "sha256": "67b4d0f3e8df12eeaeb51e2b8321dbb09499f64ca2415c7d9db93c975a6970ad",
+        "action": "uploaded",
+        "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/SHA256SUMS.txt",
+        "evidence": "local SHA-256 + SDK MD5 transfer check + COS HEAD with caller-supplied SHA metadata"
+      },
+      {
+        "name": "artifacts.json",
+        "bytes": 899,
+        "sha256": "9742143689eb9708b24332c0a3428326ffac35b945eb716bbae5aa5f5580565a",
+        "action": "uploaded",
+        "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/artifacts.json",
+        "evidence": "local SHA-256 + SDK MD5 transfer check + COS HEAD with caller-supplied SHA metadata"
+      },
+      {
+        "name": "GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z-setup.exe",
+        "bytes": 305060236,
+        "sha256": "d42c54da4886541080732ce0ac44dcedd008a9cbea4cb609d772e9af441bcaba",
+        "action": "uploaded",
+        "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z-setup.exe",
+        "evidence": "local SHA-256 + SDK MD5 transfer check + COS HEAD with caller-supplied SHA metadata"
+      },
+      {
+        "name": "GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z.zip",
+        "bytes": 368714395,
+        "sha256": "cda622c093759c99635f70cd8be4f5d7e8938734320f2c3639aa1d0a658bf789",
+        "action": "uploaded",
+        "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z.zip",
+        "evidence": "local SHA-256 + SDK MD5 transfer check + COS HEAD with caller-supplied SHA metadata"
+      }
+    ],
+    "verification": {
+      "status": "passed",
+      "checks": [
+        {
+          "name": "SHA256SUMS.txt",
+          "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/SHA256SUMS.txt",
+          "bytes": 280,
+          "headers": {
+            "Content-Type": "text/plain",
+            "Cache-Control": "public, immutable, max-age=31536000",
+            "Accept-Ranges": "bytes",
+            "ETag": "\"edc3565ef9e5ffa709b7568a4f0ff2bc\"",
+            "X-Cache-Lookup": "Cache Miss"
+          },
+          "ranges": [],
+          "smallFileShaVerified": true
+        },
+        {
+          "name": "artifacts.json",
+          "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/artifacts.json",
+          "bytes": 899,
+          "headers": {
+            "Content-Type": "application/json",
+            "Cache-Control": "public, immutable, max-age=31536000",
+            "Accept-Ranges": "bytes",
+            "ETag": "\"abc08b2dfd179c4d3703bea99f13ebaf\"",
+            "X-Cache-Lookup": "Cache Miss"
+          },
+          "ranges": [],
+          "smallFileShaVerified": true
+        },
+        {
+          "name": "GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z-setup.exe",
+          "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z-setup.exe",
+          "bytes": 305060236,
+          "headers": {
+            "Content-Type": "application/octet-stream",
+            "Cache-Control": "public, immutable, max-age=31536000",
+            "Accept-Ranges": "bytes",
+            "ETag": "\"64a94b5064834eca40bb746b53702f16-19\"",
+            "X-Cache-Lookup": "Cache Miss"
+          },
+          "ranges": [
+            {
+              "start": 0,
+              "bytes": 65536,
+              "matchesLocal": true
+            },
+            {
+              "start": 304994700,
+              "bytes": 65536,
+              "matchesLocal": true
+            }
+          ],
+          "smallFileShaVerified": false
+        },
+        {
+          "name": "GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z.zip",
+          "url": "https://download.laogao.xyz/global-updates/windows-x86_64/0.2.0/GeoD-Global_0.2.0_windows-x64_release_a6f49e3154_20261019T105240Z.zip",
+          "bytes": 368714395,
+          "headers": {
+            "Content-Type": "application/octet-stream",
+            "Cache-Control": "public, immutable, max-age=31536000",
+            "Accept-Ranges": "bytes",
+            "ETag": "\"994e9b53aa7a7a1e175143c5886b0ed4-22\"",
+            "X-Cache-Lookup": "Cache Miss"
+          },
+          "ranges": [
+            {
+              "start": 0,
+              "bytes": 65536,
+              "matchesLocal": true
+            },
+            {
+              "start": 368648859,
+              "bytes": 65536,
+              "matchesLocal": true
+            }
+          ],
+          "smallFileShaVerified": false
+        }
+      ],
+      "largeFullDownloads": 0,
+      "largeRangeBytes": 262144
+    },
+    "bucketPrivate": true,
+    "publisherPolicy": "GeoDGlobalReleasePublisher",
+    "cdnOriginReadScope": "global-updates/windows-x86_64/0.2.0/*",
+    "githubReleaseAssetsUnchanged": 4
+  },
+  "sourceDirectory": {
+    "entries": 133,
+    "groups": 17,
+    "ready": 110,
+    "auth": 2,
+    "planned": 21
+  }
+}

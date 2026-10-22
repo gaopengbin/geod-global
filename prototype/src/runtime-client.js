@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import { isSupportedAsset, SOURCE_ASSET_KEYS } from './providers.js';
 import { validRadarMetadata } from './radar.js';
@@ -121,11 +122,13 @@ async function performRuntimeRequest(operation, payload, signal) {
   const recipeOperation = ['planRecipe', 'saveRecipe', 'runRecipe'].includes(operation);
   const abort = requestAbort(signal, ['planRgb', 'runRgb', 'rgb', 'rgbPixel', 'composite', 'compositePixel', 'raster', 'thumbnail', 'pixel', 'package', 'revealPackage', 'downloadProject', 'mosaicProject', 'prepareProject', 'resolveProducts'].includes(operation) || recipeOperation || accountMutation ? 60000 : operation === 'testProxy' ? 30000 : 10000);
   const requestSignal = abort.signal;
+  let diagnosticStage='service_request';
   try {
   if (requestSignal.aborted) throw requestSignal.reason;
   if (desktopAvailable()) {
     try {
       const result = await waitForNative(window.__TAURI__.core.invoke(commands[operation], operation === 'addProjectScenes' ? { id: payload.id, request: { scenes: payload.scenes } } : ['planRgb', 'runRgb', 'composite', 'compositePixel', 'create', 'createProject', 'connectAccount', 'resolveProducts'].includes(operation) ? { request: payload } : ['saveProxy', 'testProxy'].includes(operation) ? { settings: payload } : recipeOperation ? { recipe: payload } : payload || {}), requestSignal);
+      diagnosticStage='response_validation';
       return operation === 'thumbnail' ? validateFileThumbnail(result, payload.id) : operation === 'raster' ? rasterResponse(result, payload) : ['composite','rgb'].includes(operation) ? validateCompositeInspection(result) : accountResult(operation, result);
     } catch (error) {
       if (error?.name === 'AbortError' || error?.name === 'TimeoutError') throw error;
@@ -142,10 +145,12 @@ async function performRuntimeRequest(operation, payload, signal) {
     body: ['planRgb', 'runRgb', 'composite', 'compositePixel', 'create', 'createProject', 'saveProxy', 'testProxy', 'resolveProducts'].includes(operation) || recipeOperation ? JSON.stringify(payload) : operation === 'renameProject' ? JSON.stringify({ name: payload.name }) : operation === 'addProjectScenes' ? JSON.stringify({ scenes: payload.scenes }) : ['downloadProject', 'mosaicProject', 'prepareProject'].includes(operation) ? JSON.stringify({ assetKey: payload.assetKey, ...(operation === 'downloadProject' && payload.itemIds ? { itemIds: payload.itemIds } : {}), ...(operation === 'mosaicProject' && payload.viQuality ? { viQuality: payload.viQuality } : {}) }) : mutation ? '{}' : undefined,
     signal: requestSignal,
   });
-  const body = await response.json();
-  if (!response.ok) throw new Error(typeof body.error === 'string' ? body.error : body.message || `Task service returned ${response.status}`);
+  diagnosticStage='response_decode';
+  const body = await response.json().catch(error=>{throw diagnosticError(error,{stage:'response_decode',httpStatus:String(response.status),diagnosticOrigin:'explicit'});});
+  if (!response.ok) throw diagnosticError(new Error(typeof body.error === 'string' ? body.error : body.message || `Task service returned ${response.status}`),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
+  diagnosticStage='response_validation';
   return operation === 'thumbnail' ? validateFileThumbnail(body, payload.id) : operation === 'raster' ? rasterResponse(body, payload) : ['composite','rgb'].includes(operation) ? validateCompositeInspection(body) : accountResult(operation, body);
-  } finally { abort.dispose(); }
+  } catch(error){throw diagnosticError(error,{stage:diagnosticStage,diagnosticOrigin:'explicit'});} finally { abort.dispose(); }
 }
 
 export function downloadableAssets(scene) {

@@ -1,0 +1,33 @@
+{
+  "version": "2.0",
+  "statement": [
+    {
+      "effect": "allow",
+      "action": [
+        "name/cos:HeadObject",
+        "name/cos:ListMultipartUploads",
+        "name/cos:ListParts",
+        "name/cos:UploadPart"
+      ],
+      "resource": [
+        "qcs::cos:ap-guangzhou:uid/1301384002:geod-downloads-1301384002/global-updates/windows-x86_64/*.*.*/*"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": [
+        "name/cos:PutObject",
+        "name/cos:InitiateMultipartUpload",
+        "name/cos:CompleteMultipartUpload"
+      ],
+      "resource": [
+        "qcs::cos:ap-guangzhou:uid/1301384002:geod-downloads-1301384002/global-updates/windows-x86_64/*.*.*/*"
+      ],
+      "condition": {
+        "string_equal": {
+          "cos:x-cos-forbid-overwrite": "true"
+        }
+      }
+    }
+  ]
+}

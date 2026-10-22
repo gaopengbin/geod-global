@@ -1,5 +1,6 @@
 import schema from '../../schemas/usage-events.json' with {type:'json'};
 import {RELEASE_VERSION} from './release-policy.js';
+import {failureDiagnostics} from './usage-diagnostics.js';
 
 export const USAGE_STORAGE_KEY='geod-global-usage-v1';
 export const DEFAULT_USAGE_ENDPOINT='https://geod-global.laogao.xyz/api/usage/v1/events';
@@ -137,7 +138,7 @@ export function createUsageClient({storage=storageDefault(),now=()=>Date.now(),u
           ...(Number.isFinite(job.bytesDownloaded)&&job.bytesDownloaded>=0?{bytes:bytesBucket(job.bytesDownloaded)}:{}),
           status:job.status,
           result:job.status==='succeeded'?'success':job.status==='failed'?'error':'cancelled',
-          ...(job.status==='failed'?{error:classifyUsageError(new Error(job.error||''))}:{})};
+          ...(job.status==='failed'?{error:classifyUsageError(new Error(job.error||'')),...failureDiagnostics(new Error(job.error||''),pending.fields.action==='process'?'processing':'transfer')}:job.status==='interrupted'?{...failureDiagnostics(null,pending.fields.action==='process'?'processing':'transfer'),reason:'task_interrupted'}:{})};
         const prefix=pending.fields.action==='process'?'operation':'download';
         record(job.status==='succeeded'?`${prefix}_completed`:job.status==='failed'?`${prefix}_failed`:`${prefix}_cancelled`,fields,pending.operationId);
         if(job.status==='succeeded'&&/^[a-f0-9]{64}$/i.test(job.sha256||''))record('artifact_validated',fields,pending.operationId);
