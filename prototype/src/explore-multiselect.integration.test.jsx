@@ -149,6 +149,9 @@ async function switchToRgb(user, oldScenes) {
   for (const scene of oldScenes) expect(screen.queryByRole('button', { name: new RegExp(`^Select scene .*${escape(scene.id)}$`) })).toBeNull();
 }
 
+// This full journey includes both source pickers, selection, preview visibility,
+// clearing and switching providers. Hosted Windows needs more than the default
+// five seconds for the combined DOM work; keep each awaited assertion bounded.
 it.each(themeCases)('$name multi-selection uses the thematic preview path and keeps downloads independent of visibility and clearing', async ({ provider, channel, scenes }) => {
   const user = userEvent.setup();
   await explore(user, provider, scenes);
@@ -189,7 +192,7 @@ it.each(themeCases)('$name multi-selection uses the thematic preview path and ke
   await switchToRgb(user, scenes);
   expect(start).toHaveBeenCalledTimes(2);
   expectNoJobsOrModelTurn();
-});
+}, 15_000);
 
 it('opens a two-scene download review directly from selection, without creating a project or starting a transfer before confirmation',async()=>{
   const user=userEvent.setup();await explore(user,'earth-search',rgbScenes);
