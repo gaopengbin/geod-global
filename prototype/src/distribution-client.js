@@ -1,5 +1,7 @@
 import { desktopAvailable } from './runtime-client.js';
 import { RELEASE_VERSION } from './release-policy.js';
+import {usageRequest} from './usage-events.js';
+import {diagnosticError} from './usage-diagnostics.js';
 
 export const emptyDistribution = () => ({schemaVersion:1,product:'xyz.laogao.geod.global',version:RELEASE_VERSION,development:true,updateConfigured:false,messagesConfigured:false,automaticChecks:true,notificationsEnabled:true,lastUpdateCheck:null,lastMessagesCheck:null,update:{state:'idle'},updateRead:false,busy:false,items:[],unreadCount:0});
 const phases=['idle','checking','unconfigured','upToDate','available','downloading','verifying','ready','installing','error'];
@@ -21,6 +23,12 @@ export async function distributionRequest(command, args={}) {
     if(command==='distribution_snapshot')return emptyDistribution();
     throw new Error('Updates and notifications are available in the desktop app.');
   }
-  const value=await window.__TAURI__.core.invoke(command,args);
+  const value=await usageRequest('distribution',command,{},async()=>{
+    try{return await window.__TAURI__.core.invoke(command,args);}catch(cause){
+      const text=String(cause?.message||cause),match=text.match(/^\[(update_check|update_download|update_verify|update_install)\|(signature_invalid|network|timeout|storage_io|invalid_response|unknown)\|(unknown|[1-5]\d\d)\] (.*)$/);
+      if(match)throw diagnosticError(new Error(match[4]),{stage:match[1],reason:match[2],httpStatus:match[3],diagnosticOrigin:'explicit'});
+      throw cause;
+    }
+  });
   return ['distribution_snapshot','distribution_preferences','notifications_refresh','notifications_read'].includes(command)?validateDistribution(value):value;
 }

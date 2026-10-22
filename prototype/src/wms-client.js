@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validQueryBounds,validServiceUrl} from './features-client.js';
@@ -40,7 +41,7 @@ async function performMapRequest(operation,payload={},signal) {
   if(operation==='get'&&(!uuid.test(payload.serviceId)||!validQueryBounds(payload.bounds)))throw new Error('Choose a valid map service and region.');
   if(signal?.aborted)throw new DOMException('Aborted','AbortError');let value;
   if(desktopAvailable()) {try{value=await window.__TAURI__.core.invoke(commands[operation],['connect','get'].includes(operation)?{request:payload}:payload);}catch(e){throw e instanceof Error?e:new Error(typeof e==='string'?e:'Map request failed.');}}
-  else {const path=operation==='services'||operation==='connect'?'/map-services':operation==='forget'?`/map-services/${payload.id}/forget`:operation==='inspect'?`/map-images/${payload.id}`:'/map-images';const mutation=['connect','forget','get'].includes(operation);const r=await fetch('http://127.0.0.1:4318'+path,{method:mutation?'POST':'GET',signal,headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,body:mutation?JSON.stringify(payload):undefined});value=await r.json();if(!r.ok)throw new Error(value.error||`Map service returned HTTP ${r.status}`);}
+  else {const path=operation==='services'||operation==='connect'?'/map-services':operation==='forget'?`/map-services/${payload.id}/forget`:operation==='inspect'?`/map-images/${payload.id}`:'/map-images';const mutation=['connect','forget','get'].includes(operation);const r=await fetch('http://127.0.0.1:4318'+path,{method:mutation?'POST':'GET',signal,headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,body:mutation?JSON.stringify(payload):undefined});value=await r.json();if(!r.ok)throw diagnosticError(new Error(value.error||`Map service returned HTTP ${r.status}`),{stage:'service_request',httpStatus:String(r.status),diagnosticOrigin:'explicit'});}
   if(signal?.aborted)throw new DOMException('Aborted','AbortError');
   if(operation==='services'){if(!Array.isArray(value)||value.length>24)throw new Error('Invalid map service registry.');value.forEach(validateMapService);}
   if(operation==='connect')validateMapService(value);

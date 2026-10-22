@@ -1,56 +1,15 @@
-# GeoD Global 0.2.0 — Windows desktop
+# GeoD Global 0.2.1
 
-GeoD Global brings source selection, map exploration, reviewed downloads and
-local results into one Windows workspace. Local use and your own model
-connection require no Global sign-in.
+This release improves map preview recovery and failure diagnostics, and opens the independent signed Windows update channel.
 
-## What's included
+- Map previews retry temporary connection and upstream errors within a bounded deadline. A failed metadata request no longer leaves the map waiting indefinitely. Retry after restoring the local service is supported.
+- Anonymous failure events now identify the operation stage, a fixed reason code, HTTP status when known and retry count. Raw errors, coordinates, credentials, local paths and source URLs are excluded. Historical events cannot be reconstructed retroactively.
+- The desktop checks for new releases automatically and shows a compact update dialog. Download requires confirmation, and installation requires a separate restart confirmation. Active downloads, processing and Agent work must finish before installation.
+- Updates require a Global-only, version-bound Minisign signature. A matching, sufficiently smaller zstd delta can reconstruct the complete installer; missing/stale base files, failed transfers or invalid reconstruction fall back to the full signed installer. The complete installer is verified again before installation.
+- Custom installation locations are upgraded in place. Installer startup waits for the updating process to exit. Projects, model connections, downloaded files and preferences remain outside the installer payload.
 
-- A classified picker with **133 directory entries across 17 groups**. These
-  include products, protocols and local formats: **110 Ready, 2 Auth, 21 Planned**.
-  Connector status is not a claim that every collection or file was tested.
-- Compact result lists, multiple selection, map preview and a shared final
-  download review. Source information and technical details use information
-  windows. Downloads, validation and saved results retain their actual status.
-- Catalog searches load the latest **100** results first. Additional pages load
-  on demand; NAIP prefers the most recent acquisition year. Changing the area
-  does not automatically enumerate the full historical catalog.
-- A conversational Agent with your own model connection, task confirmation,
-  persistent jobs and result inspection. Home conversations and Explore sidebar
-  tasks retain their originating scene when manual exploration changes.
-- Source-resolution-aware map zoom limits and compact download progress in chat.
-- Anonymous usage statistics **on by default**, without account sign-in. Settings
-  provides off controls and preserves saved opt-outs. Statistics exclude messages,
-  credentials, exact locations, scene IDs, file paths and account identities.
-  Development and production observations are separate. See
-  [the data boundary](../usage-analytics.md).
+## Upgrading from 0.2.0
 
-## Download and install
+**Install 0.2.1 manually once.** The public 0.2.0 installer did not embed a production update endpoint or trusted Global public key and therefore cannot receive this release's prompt. After installing this release, future versions can use the built-in updater. The installer caches one complete installation package to support future delta downloads. If that cache is unavailable, the full update remains supported.
 
-Use the **Windows x64 setup EXE**, or extract the complete **portable ZIP**.
-Microsoft Edge WebView2 Evergreen is required. Separate Node, Rust, Python or
-system GDAL installations are unnecessary. Closing the window keeps the tray
-process running; quit from the tray before upgrading.
-
-The release includes exact first-party source and dependency notices. Verify
-`SHA256SUMS.txt` and `artifacts.json`. Executables are **unsigned**; checksums do
-not establish a Windows publisher signature. Automatic signed updates are not
-enabled, so upgrades use a new downloaded installer.
-
-## Supported scope
-
-NASA, GSCloud and other protected sources retain their own account and product
-requirements. Google Earth Engine uses your own project and may consume its
-quota. Planned entries are not complete integrations. Source-specific limits,
-licenses and numerical meanings stay visible in the product and documentation.
-Previewed imagery, rendered service exports and original scientific bands remain
-distinct delivery types.
-
-Local data and supported processing remain on your computer. Data requests
-contact their providers; model requests contact your configured model provider.
-Hosted models, live paid services, cloud synchronization and general cross-grid
-processing are not included in this release. Windows ARM64, macOS and Linux
-installers are not provided.
-
-First-party code is GPL-3.0-only. Dataset and component licenses remain separate.
-Please report reproducible issues without keys, private project data or passwords.
+Updater signatures authenticate release bytes; they are separate from Windows Authenticode. Windows may still show the existing unsigned-publisher warning. This release does not add or change data-provider entitlements, hosted-model login requirements or telemetry opt-out choices.

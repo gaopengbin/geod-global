@@ -52,7 +52,35 @@ export function DistributionProvider({children}) {
     void request('notifications_read',{ids:[urgent.id],seenOnly:true}).then(()=>setToast(urgent)).catch(()=>{}).finally(()=>{urgentPending.current=false;});
   },[data.items,data.notificationsEnabled,request,toast]);
   const {locale}=useI18n();
-  return <Context.Provider value={{data,loading,error,refresh,request}}>{children}{toast&&<Toast message={toast.title[locale]||toast.title.en} onDismiss={()=>setToast(null)} duration={10000}/>}</Context.Provider>;
+  return <Context.Provider value={{data,loading,error,refresh,request}}>{children}<UpdatePrompt/>{toast&&<Toast message={toast.title[locale]||toast.title.en} onDismiss={()=>setToast(null)} duration={10000}/>}</Context.Provider>;
+}
+
+function UpdatePrompt() {
+  const {t,number}=useI18n();const {data,request}=useDistribution();
+  const dismissed=useRef(new Set());
+  const [version,setVersion]=useState(null),[working,setWorking]=useState(false),[failure,setFailure]=useState(''),[confirm,setConfirm]=useState(false);
+  const update=data.update,phase=update.state;
+  useEffect(()=>{
+    if(data.automaticChecks&&!data.updateRead&&!data.development&&['available','ready'].includes(phase)&&update.version&&!dismissed.current.has(update.version))setVersion(update.version);
+  },[data.automaticChecks,data.updateRead,data.development,phase,update.version]);
+  if(!version||version!==update.version||!['available','downloading','verifying','ready','installing'].includes(phase))return null;
+  const busy=working||data.busy;
+  const close=()=>{dismissed.current.add(version);setVersion(null);setConfirm(false);setFailure('');};
+  const act=async command=>{setWorking(true);setFailure('');try{await request(command,{version});}catch(error){setFailure(String(error?.message||error));}finally{setWorking(false);}};
+  const progress=update.total>0?Math.min(100,(update.downloaded||0)/update.total*100):undefined;
+  return <Modal title={t(confirm?'Install this update?':'GeoD Global {version} is available',{version})} closeLabel={t('Close')} closeDisabled={busy} onClose={close}
+    description={t(confirm?'The app will close and restart. Downloads, processing and Agent replies must finish first. Your projects and files are retained.':'You choose when to download and install. Your projects, model settings and downloaded files are retained.')}
+    footer={<><Button disabled={busy} onClick={close}>{t('Later')}</Button>{phase==='available'?<Button variant="primary" icon={Download} disabled={busy} onClick={()=>act('update_download')}>{t('Download update')}</Button>:phase==='ready'?<Button variant="primary" icon={ArrowUpCircle} disabled={busy} onClick={()=>confirm?act('update_install'):setConfirm(true)}>{t(confirm?'Confirm upgrade and restart':'Install and restart')}</Button>:phase==='downloading'?<Button icon={X} onClick={()=>distributionRequest('update_cancel').catch(()=>{})}>{t('Cancel download')}</Button>:null}</>}>
+    <div className="update-prompt-status" role="status" aria-live="polite">
+      {['downloading','verifying','installing'].includes(phase)&&<Spinner/>}
+      <span>{t(phase==='ready'?'Update verified and ready to install.':phase==='verifying'?'Verifying update signature…':phase==='installing'?'Installing update…':phase==='downloading'?'Downloading update…':'A new version is available.')}</span>
+    </div>
+    {update.notes&&<InfoDetails closeLabel={t('Close')} summary={t('Release notes')}><p className="release-notes">{update.notes}</p></InfoDetails>}
+    {phase==='downloading'&&<div className="update-progress"><Progress value={progress}/><small>{progress===undefined?t('Receiving update files…'):t('{percent}% downloaded',{percent:number(Math.floor(progress))})}</small></div>}
+    {update.mode==='delta'&&<p className="distribution-help">{t(phase==='ready'?'Complete installer restored and verified from a delta.':'Downloading only the changes. The restored installer will be verified before installation.')}</p>}
+    {update.fallback&&<p className="distribution-help">{t('Using the complete installer because a matching delta was unavailable.')}</p>}
+    {failure&&<p className="distribution-error" role="alert">{t(failure)}</p>}
+  </Modal>;
 }
 
 export function UpdatesPanel() {

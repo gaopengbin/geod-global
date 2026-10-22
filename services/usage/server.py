@@ -106,6 +106,7 @@ class EventStore:
             rows = [row for row in rows if row['environment'] == environment]
         count = Counter(event['name'] for event in rows)
         by_source, by_surface, by_day, failures, outcomes, durations, environments, statuses = (Counter() for _ in range(8))
+        diagnostics = Counter()
         for event in rows:
             fields = event['fields']
             by_source[(fields.get('source', 'other'), event['name'])] += 1
@@ -120,6 +121,8 @@ class EventStore:
                 statuses[(fields.get('source', 'other'), fields.get('surface', 'other'), fields['status'])] += 1
             if fields.get('error'):
                 failures[(fields.get('source', 'other'), fields.get('action', 'other'), fields['error'])] += 1
+            if fields.get('reason') or fields.get('error'):
+                diagnostics[(fields.get('source', 'other'), event['name'], fields.get('stage','unavailable'), fields.get('reason','unavailable'), fields.get('httpStatus','unknown'), fields.get('retries','unknown'), fields.get('diagnosticOrigin','unavailable'))] += 1
         def grouped(counter, names):
             return [dict(zip(names, key), count=value) for key, value in sorted(counter.items())]
         return {'product': SCHEMA['product'], 'schemaVersion': 1, 'environment': environment or 'all', 'receivedEvents': len(rows),
@@ -130,6 +133,7 @@ class EventStore:
                 'byEnvironment': grouped(environments, ['environment']), 'outcomes': grouped(outcomes, ['source', 'action', 'result']),
                 'durations': grouped(durations, ['source', 'action', 'duration']),
                 'terminalOutcomes': grouped(statuses, ['source', 'surface', 'status']),
+                'diagnostics': grouped(diagnostics, ['source','event','stage','reason','httpStatus','retries','diagnosticOrigin']),
                 'coverage': 'enabled-observed-events-only',
                 'note': 'Installation IDs are not people. Review, request, file and task counts have different units. Missing instrumentation is not zero. No automatic cross-product identity joins.'}
 

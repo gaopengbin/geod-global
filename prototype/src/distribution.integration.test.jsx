@@ -20,6 +20,24 @@ beforeEach(()=>{
 });
 afterEach(()=>{cleanup();delete window.__TAURI__;vi.restoreAllMocks();});
 const mount=()=>render(<I18nProvider><DistributionProvider><UpdatesPanel/><NotificationCenter/></DistributionProvider></I18nProvider>);
+it('announces an automatic update once per session and never downloads or installs without confirmation',async()=>{
+  backend.automaticChecks=true;backend.update={state:'available',version:'0.2.1',notes:'Verified release'};
+  mount();const prompt=await screen.findByRole('dialog');
+  expect(invoke).not.toHaveBeenCalledWith('update_download',expect.anything());
+  await userEvent.click(within(prompt).getByRole('button',{name:'Later'}));
+  await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
+  expect(invoke).not.toHaveBeenCalledWith('update_install',expect.anything());
+});
+it('downloads from the update prompt, then requires a separate explicit restart confirmation',async()=>{
+  backend.automaticChecks=true;backend.update={state:'available',version:'0.2.1'};
+  mount();let prompt=await screen.findByRole('dialog');
+  await userEvent.click(within(prompt).getByRole('button',{name:'Download update'}));
+  await waitFor(()=>expect(within(screen.getByRole('dialog')).getByText('Update verified and ready to install.')).toBeTruthy());
+  await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Install and restart'}));
+  expect(invoke).not.toHaveBeenCalledWith('update_install',expect.anything());
+  await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Confirm upgrade and restart'}));
+  await waitFor(()=>expect(invoke).toHaveBeenCalledWith('update_install',{version:'0.2.1'}));
+});
 const notice=(id='notice-1')=>({id,revision:1,title:{en:'Product news','zh-CN':'产品公告'},body:{en:'Public release notice.','zh-CN':'公开发行通知。'},priority:'normal',publishedAt:'2026-01-01T00:00:00Z',expiresAt:null,minVersion:null,maxVersion:null,action:null,read:false,seen:false});
 it('does not silently download or install; inspection, verified download and install confirmation are separate',async()=>{
   mount();await waitFor(()=>expect(screen.getByText('Installed version')).toBeTruthy());

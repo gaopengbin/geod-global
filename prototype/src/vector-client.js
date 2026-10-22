@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validateGeoPackage} from './geopackage-client.js';
@@ -297,7 +298,7 @@ async function performVectorRequest(operation,payload={},signal) {
     const response=await fetch('http://127.0.0.1:4318'+resource,{method:mutation?'POST':'GET',signal,
       headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,
       body:mutation?JSON.stringify(operation==='import'?payload:{}):undefined});
-    value=await response.json();if(!response.ok)throw new Error(value.error||`Vector service returned HTTP ${response.status}`);
+    value=await response.json();if(!response.ok)throw diagnosticError(new Error(value.error||`Vector service returned HTTP ${response.status}`),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   }
   checkAbort();
   if(operation==='list') {if(!Array.isArray(value)||value.length>1024)throw new Error('Invalid vector registry.');value.forEach(validateVectorAsset);}
@@ -309,7 +310,7 @@ export async function importVectorFile(file) {
   if(!file||file.size<1||file.size>VECTOR_MAX_BYTES)throw new Error('Vector file must contain at most 20 MiB.');
   if(/\.(gpkg|zip|osm|xml|pbf)$/i.test(file.name)) {
     const response=await fetch('http://127.0.0.1:4318/vectors/import-file?name='+encodeURIComponent(file.name),{method:'POST',headers:{'Content-Type':'application/octet-stream','X-GeoD-Client':'geod-global'},body:file,signal:AbortSignal.timeout(190000)});
-    const value=await response.json();if(!response.ok)throw new Error(value.error||'Vector file import failed.');validateVectorAsset(value);const ext=file.name.toLowerCase().split('.').pop();const expected={gpkg:'geopackage',zip:'shapefile',osm:'osm-xml',xml:'osm-xml',pbf:'osm-pbf'}[ext];if(value.format!==expected)throw new Error('The selected file returned a different vector format.');return value;
+    const value=await response.json();if(!response.ok)throw diagnosticError(new Error(value.error||'Vector file import failed.'),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});validateVectorAsset(value);const ext=file.name.toLowerCase().split('.').pop();const expected={gpkg:'geopackage',zip:'shapefile',osm:'osm-xml',xml:'osm-xml',pbf:'osm-pbf'}[ext];if(value.format!==expected)throw new Error('The selected file returned a different vector format.');return value;
   }
   const text=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(await file.arrayBuffer());
   return vectorRequest('import',{name:file.name,text});
@@ -320,7 +321,7 @@ export async function exportVector(id,original=false) {
   if(original&&data.asset.geoParquet)return exportOvertureOriginal(data.asset);
   let blob,suffix='geojson';
   if(original) {
-    const r=await fetch(`http://127.0.0.1:4318/vectors/${id}/source`,{signal:AbortSignal.timeout(190000)});if(!r.ok)throw new Error((await r.json()).error||'Original vector export failed.');
+    const r=await fetch(`http://127.0.0.1:4318/vectors/${id}/source`,{signal:AbortSignal.timeout(190000)});if(!r.ok)throw diagnosticError(new Error((await r.json()).error||'Original vector export failed.'),{stage:'service_request',httpStatus:String(r.status),diagnosticOrigin:'explicit'});
     const expected=data.asset.format==='geojsonl-gzip'?'application/gzip':data.asset.format==='geopackage'?'application/geopackage+sqlite3':data.asset.format==='shapefile'?'application/zip':data.asset.format==='osm-xml'?'application/xml':data.asset.format==='osm-pbf'?'application/vnd.openstreetmap.data+pbf':'application/json';if(r.headers.get('content-type')!==expected)throw new Error('Original vector file format changed.');
     const bytes=new Uint8Array(await r.arrayBuffer()),hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');
     if(bytes.length!==data.asset.bytes||hash!==data.asset.sourceSha256)throw new Error('Original vector file checksum changed.');

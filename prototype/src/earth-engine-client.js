@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import { desktopAvailable } from './runtime-client.js';
 import { validateStacInspection } from './stac-client.js';
@@ -53,7 +54,7 @@ async function performEarthEngineRequest(operation, payload = {}) {
     const url = 'http://127.0.0.1:4318/earth-engine/exports' + (operation === 'inspect' ? `/${payload.id}/inspect` : '');
     const response = await fetch(url, operation === 'download' ? {method:'POST',headers:{'Content-Type':'application/json','X-GeoD-Client':'geod-global'},body:JSON.stringify(payload)} : {});
     value = await response.json();
-    if (!response.ok) throw new Error(value.error || 'GEE request failed.');
+    if(!response.ok)throw diagnosticError(new Error(value.error || 'GEE request failed.'),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   }
   if (operation === 'list') { if (!Array.isArray(value)) throw new Error('Invalid GEE export record.'); value.forEach(validateRecord); }
   if (operation === 'download') { validateRecord(value.export); validateStacInspection(value.raster, value.export.id); if(value.raster.sha256 !== value.export.sha256) throw new Error('Invalid GEE export record.'); }
@@ -64,7 +65,7 @@ export async function saveEarthEngineFile(id) {
   if (!uuid.test(id)) throw new Error('Invalid GEE export identifier.');
   if (desktopAvailable()) return window.__TAURI__.core.invoke('export_earth_engine_file', {id});
   const response = await fetch(`http://127.0.0.1:4318/earth-engine/exports/${id}/file`);
-  if (!response.ok) throw new Error('Could not read the saved GEE export.');
+  if(!response.ok)throw diagnosticError(new Error('Could not read the saved GEE export.'),{stage:'service_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   const url = URL.createObjectURL(await response.blob());
   const a = document.createElement('a'); a.href=url; a.download='gee-export.tif'; a.click();
   setTimeout(()=>URL.revokeObjectURL(url), 60000);

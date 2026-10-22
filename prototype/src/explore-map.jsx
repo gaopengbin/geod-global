@@ -20,6 +20,7 @@ import { focusRasterExtent, intersectBounds, utmDefinition } from './workspace-m
 import { setRasterZoomLimit } from './raster-view-resolution.js';
 import {usage,durationBucket} from './usage-client.js';
 import {usageContext,usageSource,usageError} from './usage-events.js';
+import {failureDiagnostics} from './usage-diagnostics.js';
 import { Button, Progress, Spinner, Surface } from './ui/index.jsx';
 import { useI18n } from './i18n.jsx';
 import { prepareAssetAccess } from './providers.js';
@@ -189,17 +190,17 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
       setLoading({ metadataReady, requested: requestedTiles, completed: completedTiles, active: pendingTiles,
         elapsed: Math.floor((now - startedAt) / 1000), stalled: now - lastActivityAt >= 12000 });
     };
-    const fail = message => {
+    const fail = (message, cause, stage='preview_metadata') => {
       if (cancelled || failed) return;
       failed = true;
-      if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(new Error(message)),duration:durationBucket(Date.now()-startedAt)},usageId);
+      if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(cause || new Error(message)),...failureDiagnostics(cause || new Error(message),stage),duration:durationBucket(Date.now()-startedAt)},usageId);
       clearInterval(loadingClock);
       setError(message);
     };
     if (shouldRender) loadingClock = setInterval(() => {
       if (failed || (initialReady && pendingTiles === 0)) return;
       publishLoading();
-      if (Date.now() - lastActivityAt >= 45000) fail('The imagery source stopped responding. Try another scene or retry.');
+      if (Date.now() - lastActivityAt >= 45000) fail('The imagery source stopped responding. Try another scene or retry.',new DOMException('Preview timed out','TimeoutError'),metadataReady?'preview_tile':'preview_metadata');
     }, 1000);
     try {
       const projected = transformExtent(area, 'EPSG:4326', OVERVIEW_PROJECTION, 8);
@@ -254,12 +255,12 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
         publishLoading();
         if (!cancelled && !failed && !initialReady) { initialReady = true; setReady(true); }
       });
-      source?.on('tileloaderror', () => { pendingTiles = Math.max(0, pendingTiles - 1); fail(indexPreview ? 'The index preview tiles could not load. Check your connection or retry.' : onlinePreview ? 'The map preview tiles could not load. Check your connection or retry.' : 'The true-color COG tiles could not load. Check your connection or retry.'); });
+      source?.on('tileloaderror', event => { pendingTiles = Math.max(0, pendingTiles - 1); fail(indexPreview ? 'The index preview tiles could not load. Check your connection or retry.' : onlinePreview ? 'The map preview tiles could not load. Check your connection or retry.' : 'The true-color COG tiles could not load. Check your connection or retry.',event.tile?.previewFailure||event.tile?.getError?.(),'preview_tile'); });
       const metadataFailure = onlinePreview ? 'The map preview metadata could not load. Check your connection or retry.' : 'The true-color COG metadata could not load. Check your connection or retry.';
-      source?.on('error', () => fail(metadataFailure));
+      source?.on('error', () => fail(metadataFailure, source.getError?.()));
       if (preview?.imageTiles) { metadataReady = true; publishLoading(); }
       else source?.getView().then(() => { if (cancelled) return; if (preview?.getStyle) base.setStyle(preview.getStyle()); metadataReady = true; lastActivityAt = Date.now(); publishLoading(); })
-        .catch(() => fail(metadataFailure));
+        .catch(cause => fail(metadataFailure, cause));
       if (!source) { metadataReady = true; initialReady = true; setReady(true); }
       // Focus on the part of the searched area covered by this scene, including when the search spans multiple UTM zones.
       areaExtentRef.current = intersectBounds(projected, mapExtent) ? projected : null;
@@ -274,7 +275,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
         fitted = true;
       });
     } catch (cause) {
-      fail(cause.message);
+      fail(cause.message,cause,'preview_render');
     }
     return () => {
       cancelled = true; clearInterval(loadingClock); resize?.disconnect();
@@ -464,10 +465,10 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
           onProductRasterStatusRef.current?.(entry.id, payload);
           union();
         };
-        const fail = error => {
+        const fail = (error,cause,stage='preview_metadata') => {
           if (!current() || entry.status === 'error') return;
           clearInterval(entry.clock);
-          if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(new Error(error||'')),duration:durationBucket(Date.now()-usageStarted)},usageId);
+          if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(cause||new Error(error||'')),...failureDiagnostics(cause||new Error(error||''),stage),duration:durationBucket(Date.now()-usageStarted)},usageId);
           publish('error', error || 'The original raster preview could not be read. Retry this layer or download the original.');
           // Stop the failed source's outstanding ranges. Retrying creates only
           // this descriptor's new source; other product layers remain intact.
@@ -490,9 +491,9 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
           if (hasProductRasterTilePixels(event, { hasAlpha: preview.source.hasAlpha, bandCount: preview.source.bandCount })) entry.pixels = true;
           maybeReady();
         });
-        preview.source.on('tileloaderror', () => fail());
-        preview.source.on('error', () => fail(preview.source.getError()?.message));
-        preview.source.on('change', () => { if (preview.source.getState() === 'error') fail(preview.source.getError()?.message); });
+        preview.source.on('tileloaderror', event => fail(undefined,event?.tile?.previewFailure||event?.tile?.getError?.(),'preview_tile'));
+        preview.source.on('error', () => fail(preview.source.getError()?.message,preview.source.getError()));
+        preview.source.on('change', () => { if (preview.source.getState() === 'error') fail(preview.source.getError()?.message,preview.source.getError()); });
         entry.clock = setInterval(() => {
           if (current() && entry.visible && entry.status === 'loading' && Date.now() - entry.lastActivity >= 45000)
             fail('The original raster preview stopped responding. Retry this layer.');

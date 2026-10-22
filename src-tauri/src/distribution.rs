@@ -24,6 +24,42 @@ use tokio::sync::Notify;
 const PRODUCT: &str = "xyz.laogao.geod.global";
 const MAX_FEED: usize = 512 * 1024;
 const MAX_UPDATE: usize = 1024 * 1024 * 1024;
+mod delta;
+fn sdk_failure(error: tauri_plugin_updater::Error, stage: &str) -> String {
+    use tauri_plugin_updater::Error;
+    let (stage, reason, status) = match &error {
+        Error::Minisign(_)
+        | Error::Base64(_)
+        | Error::SignatureUtf8(_)
+        | Error::SignedVersionMismatch { .. }
+        | Error::MissingSignedVersion => ("update_verify", "signature_invalid", None),
+        Error::Reqwest(error) => (
+            stage,
+            if error.is_timeout() {
+                "timeout"
+            } else {
+                "network"
+            },
+            error.status().map(|s| s.as_u16()),
+        ),
+        Error::Io(_) => (stage, "storage_io", None),
+        Error::Serialization(_) | Error::TargetNotFound(_) | Error::TargetsNotFound(_) => {
+            (stage, "invalid_response", None)
+        }
+        _ => (stage, "unknown", None),
+    };
+    format!(
+        "[{stage}|{reason}|{}] {}",
+        status
+            .map(|s| s.to_string())
+            .unwrap_or_else(|| "unknown".into()),
+        if stage == "update_verify" {
+            "Update signature is invalid."
+        } else {
+            "Could not complete the update. Check your network and retry."
+        }
+    )
+}
 
 #[derive(Clone, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -39,10 +75,10 @@ fn channel() -> Result<Option<Channel>, String> {
     let raw = if cfg!(debug_assertions) {
         match std::env::var_os("GEOD_GLOBAL_DEV_DISTRIBUTION") {
             Some(file) => Some(fs::read_to_string(file).map_err(|_| "Update channel is invalid.")?),
-            None => option_env!("GEOD_GLOBAL_DISTRIBUTION").map(str::to_owned),
+            None => Some(include_str!("../distribution/channel.json").to_owned()),
         }
     } else {
-        option_env!("GEOD_GLOBAL_DISTRIBUTION").map(str::to_owned)
+        Some(include_str!("../distribution/channel.json").to_owned())
     };
     raw.map(|raw| {
         let value: Channel =
@@ -432,11 +468,19 @@ pub async fn update_check(
     state.phase(&app, json!({"state":"checking"}));
     let result = async {
         let mut builder = app.updater_builder().pubkey(channel.pubkey).endpoints(vec![channel.endpoint.parse().unwrap()]).map_err(|_| "Update channel is invalid.")?.timeout(Duration::from_secs(30));
+        // /D must be the last NSIS argument, unquoted (NSIS consumes the rest).
+        // This also upgrades a portable/custom-location installation in place.
+        #[cfg(windows)]
+        {
+            let executable = std::env::current_exe().map_err(|_| "Could not find the installation directory.")?;
+            let directory = executable.parent().and_then(|p| p.to_str()).filter(|p| !p.contains(['\"', '\r', '\n'])).ok_or("Invalid installation directory.")?;
+            builder = builder.installer_args([format!("/GEODPID={}",std::process::id()),format!("/D={directory}")]);
+        }
         let proxy = manager.proxy_settings().await;
         builder = match proxy.mode { ProxyMode::Direct => builder.no_proxy(), ProxyMode::Custom => builder.proxy(proxy.url.as_deref().ok_or("Update proxy is invalid.")?.parse().map_err(|_| "Update proxy is invalid.")?), ProxyMode::System => builder };
-        let update = builder.build().map_err(|_| "Update channel is invalid.")?.check().await.map_err(|_| "Could not check for updates. Check your network and retry.")?;
-        if update.as_ref().is_some_and(|u| !trusted_url(u.download_url.as_str())) {return Err("Update download address is invalid.");}
-        if update.as_ref().is_some_and(|u| u.raw_json["product"] != PRODUCT || u.signature.len()>8192 || u.body.as_ref().is_some_and(|notes|notes.len()>12000)) {return Err("Update channel is invalid.");}
+        let update = builder.build().map_err(|_| "Update channel is invalid.")?.check().await.map_err(|error|sdk_failure(error,"update_check"))?;
+        if update.as_ref().is_some_and(|u| !trusted_url(u.download_url.as_str())) {return Err("Update download address is invalid.".to_owned());}
+        if update.as_ref().is_some_and(|u| u.raw_json["product"] != PRODUCT || u.signature.len()>8192 || u.body.as_ref().is_some_and(|notes|notes.len()>12000)) {return Err("Update channel is invalid.".to_owned());}
         let cached=state.saved.lock().unwrap().cached_update.clone();
         if let (Some(update),Some(cached))=(&update,cached) {
             if update.version==cached.version && update.signature==cached.signature && cached.sha256.len()==64 && cached.sha256.bytes().all(|b|b.is_ascii_hexdigit()) && cached.bytes>0 && cached.bytes<=MAX_UPDATE as u64 {
@@ -462,7 +506,7 @@ pub async fn update_check(
         }
         Err(error) => {
             state.phase(&app, json!({"state":"error","message":error}));
-            Err(error.into())
+            Err(error)
         }
     }
 }
@@ -492,27 +536,48 @@ pub async fn update_download(
     );
     let mut received = 0usize;
     let mut tick = std::time::Instant::now();
-    let transfer=update.download(|chunk,total| {
-        received=received.saturating_add(chunk);
-        if received>MAX_UPDATE || total.is_some_and(|t|t>MAX_UPDATE as u64) {state.cancel.notify_one();}
-        if tick.elapsed()>Duration::from_millis(150) {state.phase(&app,json!({"state":"downloading","version":version,"downloaded":received,"total":total}));tick=std::time::Instant::now();}
-    },||state.phase(&app,json!({"state":"verifying","version":version})));
+    let key = channel()?.ok_or("Update channel is invalid.")?.pubkey;
+    let transfer = delta::package(
+        &update,
+        state.root.clone(),
+        key,
+        |chunk, total, mode, fallback| {
+            if chunk == 0 {
+                received = 0;
+            } else {
+                received = received.saturating_add(chunk);
+            }
+            if received > MAX_UPDATE || total.is_some_and(|t| t > MAX_UPDATE as u64) {
+                state.cancel.notify_one();
+            }
+            if chunk == 0 || tick.elapsed() > Duration::from_millis(150) {
+                state.phase(&app,json!({"state":"downloading","version":version,"downloaded":received,"total":total,"mode":mode,"fallback":fallback}));
+                tick = std::time::Instant::now();
+            }
+        },
+        || state.phase(&app, json!({"state":"verifying","version":version})),
+    );
     let result = tokio::select! {
-        value=transfer => value.map_err(|_| "Update download or signature verification failed."),
-        _=state.cancel.notified() => Err("Update download cancelled."),
-        _=tokio::time::sleep(Duration::from_secs(3600)) => Err("Update download timed out."),
+        value=transfer => value,
+        _=state.cancel.notified() => Err("Update download cancelled.".to_owned()),
+        _=tokio::time::sleep(Duration::from_secs(3600)) => Err("Update download timed out.".to_owned()),
     };
-    let result=result.and_then(|bytes| {
-        if bytes.is_empty() || bytes.len()>MAX_UPDATE {return Err("Update package is too large.");}
+    let result=result.and_then(|(bytes,mode,fallback)| {
+        if bytes.is_empty() || bytes.len()>MAX_UPDATE {return Err("Update package is too large.".to_owned());}
         let sha256=format!("{:x}",Sha256::digest(&bytes));
         let path=state.root.join(format!("{sha256}.update"));
         let mut file=tempfile::NamedTempFile::new_in(&state.root).map_err(|_| "Could not save update file.")?;
         std::io::Write::write_all(file.as_file_mut(),&bytes).map_err(|_| "Could not save update file.")?;
         file.as_file().sync_all().map_err(|_| "Could not save update file.")?;
         file.persist(&path).map_err(|_| "Could not save update file.")?;
+        let previous=state.saved.lock().unwrap().cached_update.clone();
         state.change(|s|s.cached_update=Some(CachedUpdate{version:version.clone(),signature:update.signature.clone(),sha256:sha256.clone(),bytes:bytes.len() as u64})).map_err(|_| "Could not save update settings.")?;
+        // Keep one verified pending package; never traverse or remove user data.
+        if let Some(old)=previous.filter(|old|old.sha256!=sha256 && old.sha256.len()==64 && old.sha256.bytes().all(|b|b.is_ascii_hexdigit())) {
+            let _=fs::remove_file(state.root.join(format!("{}.update",old.sha256)));
+        }
         *state.downloaded.lock().unwrap()=Some(Downloaded { update:update.clone(),path,sha256 });
-        Ok(json!({"state":"ready","version":version,"bytes":bytes.len(),"verified":true,"notes":update.body}))
+        Ok(json!({"state":"ready","version":version,"bytes":bytes.len(),"verified":true,"notes":update.body,"mode":mode,"fallback":fallback}))
     });
     match result {
         Ok(value) => {
@@ -524,7 +589,7 @@ pub async fn update_download(
                 &app,
                 json!({"state":"available","version":version,"notes":update.body,"message":error}),
             );
-            Err(error.into())
+            Err(error)
         }
     }
 }
@@ -572,15 +637,8 @@ pub async fn update_install(
     // Download checked the signed version; recheck the original Minisign content
     // too, immediately before handing the bytes to the installer.
     let channel = channel()?.ok_or("Update channel is invalid.")?;
-    let signature = STANDARD
-        .decode(&update.signature)
-        .map_err(|_| "Update signature is invalid.")?;
-    let signature = std::str::from_utf8(&signature).map_err(|_| "Update signature is invalid.")?;
-    let signature = minisign_verify::Signature::decode(signature)
-        .map_err(|_| "Update signature is invalid.")?;
-    public_key(&channel.pubkey)?
-        .verify(&bytes, &signature, true)
-        .map_err(|_| "Update signature is invalid.")?;
+    delta::verify_installer(&bytes, &update.signature, &channel.pubkey, &version)
+        .map_err(|_| "[update_verify|signature_invalid|unknown] Update signature is invalid.")?;
     if lifecycle.exiting() {
         return Err("Application maintenance is already running.".into());
     }

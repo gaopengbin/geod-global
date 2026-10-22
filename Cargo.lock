@@ -1661,7 +1661,7 @@ dependencies = [
 
 [[package]]
 name = "geod-global-desktop"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -1691,11 +1691,12 @@ dependencies = [
  "windows-sys 0.61.2",
  "zeroize",
  "zip 8.6.0",
+ "zstd 0.13.3",
 ]
 
 [[package]]
 name = "geod-runtime"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "axum",
  "base64 0.22.1",

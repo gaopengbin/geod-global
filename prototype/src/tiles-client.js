@@ -1,3 +1,4 @@
+import {diagnosticError} from './usage-diagnostics.js';
 import {usageRequest} from './usage-events.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validQueryBounds,validServiceUrl} from './features-client.js';
@@ -80,7 +81,7 @@ async function performTileRequest(operation,payload={},signal) {
   else{
     const path=operation==='connect'||operation==='sources'?'/tile-sources':operation==='forget'?`/tile-sources/${payload.id}/forget`:operation==='inspect'?`/tile-packages/${payload.id}`:operation==='tile'?`/tile-packages/${payload.id}/tiles/${payload.z}/${payload.x}/${payload.y}`:'/tile-packages';
     const mutation=['connect','forget','extract'].includes(operation),timeout=AbortSignal.timeout(operation==='extract'?190000:65000),requestSignal=signal?AbortSignal.any([signal,timeout]):timeout;
-    const r=await fetch('http://127.0.0.1:4318'+path,{method:mutation?'POST':'GET',signal:requestSignal,headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,body:mutation?JSON.stringify(payload):undefined});value=await r.json();if(!r.ok)throw new Error(value.error||'Tile request failed');
+    const r=await fetch('http://127.0.0.1:4318'+path,{method:mutation?'POST':'GET',signal:requestSignal,headers:mutation?{'Content-Type':'application/json','X-GeoD-Client':'geod-global'}:undefined,body:mutation?JSON.stringify(payload):undefined});value=await r.json();if(!r.ok)throw diagnosticError(new Error(value.error||'Tile request failed'),{stage:'service_request',httpStatus:String(r.status),diagnosticOrigin:'explicit'});
   }
   if(signal?.aborted)throw new DOMException('Aborted','AbortError');
   if(['sources','list'].includes(operation)){if(!Array.isArray(value)||value.length>(operation==='sources'?24:128))throw new Error('Invalid tile registry');value.forEach(operation==='sources'?validateTileSource:validateTilePackage);if(operation==='sources'&&value.some(s=>s.local))throw new Error('Invalid tile registry');}
@@ -100,11 +101,11 @@ export async function openTilePackage(file) {
   const mbtiles=file.name.toLowerCase().endsWith('.mbtiles');
   if(!integer(file.size,128*1024*1024)||file.size<(mbtiles?100:127))throw new Error(file.size>128*1024*1024?'Local tile file exceeds 128 MiB':mbtiles?'Choose a valid MBTiles SQLite database, up to 128 MiB':'Choose a PMTiles version 3 archive');
   const r=await fetch(`http://127.0.0.1:4318/tile-packages/import?name=${encodeURIComponent(file.name)}`,{method:'POST',headers:{'Content-Type':'application/octet-stream','X-GeoD-Client':'geod-global'},body:file,signal:AbortSignal.timeout(190000)});
-  const p=await r.json().catch(()=>({error:'Tile import failed'}));if(!r.ok)throw new Error(p.error||'Tile import failed');return validateTilePackage(p);
+  const p=await r.json().catch(()=>({error:'Tile import failed'}));if(!r.ok)throw diagnosticError(new Error(p.error||'Tile import failed'),{stage:'service_request',httpStatus:String(r.status),diagnosticOrigin:'explicit'});return validateTilePackage(p);
 }
 export async function exportTilePackage(id) {
   if(!uuid.test(id))throw new Error('Invalid tile package identifier');
   if(desktopAvailable()){try{return await window.__TAURI__.core.invoke('export_tile_package',{id});}catch(e){throw new Error(String(e));}}
-  const r=await fetch(`http://127.0.0.1:4318/tile-packages/${id}/export`);if(!r.ok)throw new Error((await r.json()).error||'Tile export failed');if(r.headers.get('content-type')!=='application/zip')throw new Error('Tile export did not return a ZIP package');
+  const r=await fetch(`http://127.0.0.1:4318/tile-packages/${id}/export`);if(!r.ok)throw diagnosticError(new Error((await r.json()).error||'Tile export failed'),{stage:'service_request',httpStatus:String(r.status),diagnosticOrigin:'explicit'});if(r.headers.get('content-type')!=='application/zip')throw new Error('Tile export did not return a ZIP package');
   const b=await r.blob(),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download=`geod-tiles-${id}.zip`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return true;
 }

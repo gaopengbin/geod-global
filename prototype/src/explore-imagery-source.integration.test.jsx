@@ -1,5 +1,7 @@
 import { beforeEach, afterEach, expect, it, vi } from 'vitest';
 import fixture from '../public/samples/landsat-response.json';
+import sentinel from '../public/samples/earth-search-response.json';
+import pc from '../public/samples/planetary-computer-response.json';
 import Projection from 'ol/proj/Projection.js';
 import { addProjection } from 'ol/proj.js';
 import { normalizeScene } from './catalog.js';
@@ -8,7 +10,7 @@ import { imageryHrefs } from './explore-imagery.js';
 import { createImagerySource } from './explore-imagery-source.js';
 
 const loader = vi.hoisted(() => vi.fn());
-vi.mock('geotiff', async importOriginal => ({ ...await importOriginal(), fromUrl: loader }));
+vi.mock('geotiff', async importOriginal => ({ ...await importOriginal(), fromCustomClient: loader }));
 let scene;
 beforeEach(async () => {
   loader.mockReset();
@@ -56,6 +58,16 @@ it('an initial COG transport failure rejects the view with a message free of sig
   vi.spyOn(console, 'error').mockImplementation(() => {});
   loader.mockRejectedValue(new Error('HTTP failure ?sig=test-only'));
   const { source } = createImagerySource(scene);
-  try { await expect(source.getView()).rejects.toThrow('Landsat COG metadata does not match'); expect(source.getState()).toBe('error'); expect(source.getError().message).not.toContain('sig='); }
+  try { await expect(source.getView()).rejects.toThrow('Preview network request failed'); expect(source.getState()).toBe('error'); expect(source.getError().message).not.toContain('sig='); }
   finally { source.dispose(); }
+});
+
+it.each([['earth-search',sentinel],['planetary-computer',pc]])('%s rejects failed metadata immediately instead of hanging until the map timer',async(provider,fixture)=>{
+  vi.spyOn(console,'error').mockImplementation(()=>{});
+  loader.mockRejectedValue(new TypeError('Failed to fetch https://source.test/cog?sig=private'));
+  const item=normalizeScene(fixture.features[0],provider);
+  if(provider==='planetary-computer')await prepareAssetAccess(imageryHrefs(item),{force:true,fetcher:async()=>({ok:true,json:async()=>({token:'sp=r&sr=c&sig=test-only','msft:expiry':new Date(Date.now()+3_600_000).toISOString()})})});
+  const {source}=createImagerySource(item);
+  try {await expect(source.getView()).rejects.toThrow('Preview network request failed');expect(source.getError().message).not.toContain('private');}
+  finally {source.dispose();}
 });

@@ -7,7 +7,7 @@
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
-**[Download 0.2.0 · CDN](https://geod-global.laogao.xyz/index.html#download)** · **[Website](https://geod-global.laogao.xyz)** · **[Feedback](https://github.com/gaopengbin/geod-global/issues)**
+**[Download 0.2.1 · CDN](https://geod-global.laogao.xyz/index.html#download)** · **[Website](https://geod-global.laogao.xyz)** · **[Feedback](https://github.com/gaopengbin/geod-global/issues)**
 
 English · [简体中文](README.zh-CN.md)
 </div>
@@ -89,7 +89,7 @@ Model requests contact your configured provider; data requests contact the sourc
 
 This release focuses on **2D data**, including elevation rasters. Hosted AI, live paid services, cloud sync,
 general cross-grid processing and non-Windows installers are not included.
-[Source scope](docs/releases/source-scope.json) · [Provider status](docs/provider-integration-status.md) · [0.2.0 notes](docs/releases/0.2.0.md)
+[Source scope](docs/releases/source-scope.json) · [Provider status](docs/provider-integration-status.md) · [0.2.1 notes](docs/releases/0.2.1.md)
 
 ## Develop and contribute
 

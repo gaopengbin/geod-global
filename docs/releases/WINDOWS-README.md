@@ -1,6 +1,6 @@
 # GeoD Global for Windows
 
-Windows 10 / 11 x64 桌面版。此包为 **0.2.0 正式版**。文件未签名，Windows 可能显示未知发布者提示。
+Windows 10 / 11 x64 桌面版。此包为 **0.2.1 正式版**。文件未签名，Windows 可能显示未知发布者提示。
 本包的功能范围和限制见 [RELEASE-NOTES.md](RELEASE-NOTES.md)。
 
 ## 安装与启动
@@ -60,7 +60,7 @@ GSCloud 请通过软件中的官网登录窗口连接并验证。Copernicus 及�
 
 ## English quick start
 
-GeoD Global 0.2.0 is a Windows x64 release. Its executable files are unsigned.
+GeoD Global 0.2.1 is a Windows x64 release. Its executable files are unsigned.
 Install the WebView2 Evergreen Runtime, then use the per-user installer or extract
 the entire portable ZIP. Run `geod-global-desktop.exe`; development tools and a
 companion server are unnecessary. Closing the window keeps tasks running in the
