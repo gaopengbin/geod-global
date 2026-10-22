@@ -1,1 +1,6 @@
-{"repository":"gaopengbin/geod-global"}
+{
+  "repository": "gaopengbin/geod-global",
+  "defaultBranch": "main",
+  "cacheBudgetBytes": 4294967296,
+  "artifactBudgetBytes": 268435456
+}
