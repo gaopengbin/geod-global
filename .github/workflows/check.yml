@@ -10,6 +10,90 @@ permissions:
   contents: read
 
 jobs:
+  artifact-transport:
+    name: Artifact transport (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/geod-actions-smoke-cache
+          key: actions-transport-${{ runner.os }}-${{ github.run_id }}
+      - name: Prepare transport-only fixtures
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP'])
+          payload = root / 'geod-actions-smoke-payload'
+          (payload / 'nested').mkdir(parents=True)
+          (payload / 'nested/sample.bin').write_bytes(bytes(range(256)) * 4)
+          (payload / 'metadata.json').write_bytes('{"fixture":"GeoD artifact transport"}\n'.encode())
+          cache = root / 'geod-actions-smoke-cache'
+          cache.mkdir(exist_ok=True)
+          (cache / 'receipt.json').write_text(json.dumps({key: os.environ[key] for key in ['GITHUB_SHA', 'GITHUB_RUN_ID']}), encoding='utf-8')
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: transport-smoke-${{ runner.os }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/geod-actions-smoke-payload/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: transport-smoke-${{ runner.os }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/geod-actions-smoke-received
+      - name: Verify names and every downloaded byte
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP'])
+          def inventory(directory):
+              return {file.relative_to(directory).as_posix(): hashlib.sha256(file.read_bytes()).hexdigest() for file in directory.rglob('*') if file.is_file()}
+          original = inventory(root / 'geod-actions-smoke-payload')
+          received = inventory(root / 'geod-actions-smoke-received')
+          assert set(original) == {'metadata.json', 'nested/sample.bin'}
+          assert received == original, 'Artifact transport changed file names or bytes'
+          PY
+
+  cache-restore:
+    name: Cache restore (${{ matrix.os }})
+    needs: artifact-transport
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: restored
+        with:
+          path: ${{ runner.temp }}/geod-actions-smoke-cache
+          key: actions-transport-${{ runner.os }}-${{ github.run_id }}
+          fail-on-cache-miss: true
+      - name: Verify cache restored across runners
+        shell: bash
+        env:
+          CACHE_HIT: ${{ steps.restored.outputs.cache-hit }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          assert os.environ['CACHE_HIT'] == 'true', 'Expected an exact cache hit'
+          path = Path(os.environ['RUNNER_TEMP']) / 'geod-actions-smoke-cache/receipt.json'
+          expected = {key: os.environ[key] for key in ['GITHUB_SHA', 'GITHUB_RUN_ID']}
+          assert json.loads(path.read_text(encoding='utf-8')) == expected, 'Cache restored another run or source revision'
+          PY
+
   workflows:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
