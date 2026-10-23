@@ -56,6 +56,15 @@ def validate_event(event, now=None):
     fields = event['fields']
     if not isinstance(fields, dict) or any(key not in SCHEMA['fields'] or not isinstance(value, str) or value not in SCHEMA['fields'][key] for key, value in fields.items()):
         raise ValueError('Invalid event fields.')
+    acquisition = {'acquisitionSource', 'acquisitionCampaign', 'acquisitionKind'}
+    if acquisition.intersection(fields):
+        if not acquisition.issubset(fields):
+            raise ValueError('Incomplete acquisition label.')
+        website = fields['acquisitionKind'] == 'website'
+        if website != event['name'].startswith('tutorial_') or event['platform'] != ('browser' if website else 'desktop'):
+            raise ValueError('Acquisition surface does not match.')
+    elif event['name'].startswith('tutorial_'):
+        raise ValueError('Missing tutorial label.')
     return event
 
 

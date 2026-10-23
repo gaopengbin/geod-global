@@ -1,6 +1,7 @@
 import schema from '../../schemas/usage-events.json' with {type:'json'};
 import {RELEASE_VERSION} from './release-policy.js';
 import {failureDiagnostics} from './usage-diagnostics.js';
+import {acquisitionLabel} from './acquisition.js';
 
 export const USAGE_STORAGE_KEY='geod-global-usage-v1';
 export const DEFAULT_USAGE_ENDPOINT='https://geod-global.laogao.xyz/api/usage/v1/events';
@@ -67,8 +68,13 @@ export function createUsageClient({storage=storageDefault(),now=()=>Date.now(),u
         events:Array.isArray(saved.events)?saved.events.filter(row=>row&&validEvent(row.event)).map(row=>({event:row.event,sent:row.sent===true})):[],
         jobs:saved.jobs&&typeof saved.jobs==='object'&&!Array.isArray(saved.jobs)?Object.fromEntries(Object.entries(saved.jobs).slice(-MAX_JOBS).filter(([_id,value])=>value&&uuidPattern.test(value.operationId||'')&&Number.isFinite(value.at)&&value.at>=now()-30*DAY).map(([id,value])=>[id,{operationId:value.operationId,at:value.at,fields:usageFields(value.fields)}])):{}};
       prune();
+      if(acquisitionLabel(saved.acquisition)&&['new_installation','existing_installation'].includes(saved.acquisitionKind)){
+        state.acquisition={schemaVersion:1,source:saved.acquisition.source,campaign:saved.acquisition.campaign};state.acquisitionKind=saved.acquisitionKind;
+      }
     }
   }catch{/* An unreadable saved preference must not override a possible opt-out. */}
+  const savedAcquisition=acquisitionLabel(state.acquisition);
+  if(!savedAcquisition)delete state.acquisition;
   const enabled=()=>state.enabled&&!privacy();
   const snapshot=()=>({enabled:enabled(),preference:state.enabled,blocked:Boolean(privacy()),sharing:enabled()&&state.share&&Boolean(address),
     configured:Boolean(address),recorded:state.events.length,pending:state.events.filter(row=>!row.sent).length,
@@ -78,13 +84,19 @@ export function createUsageClient({storage=storageDefault(),now=()=>Date.now(),u
     if(!enabled()||!schema.events.includes(name)||operationId&&!uuidPattern.test(operationId)||!validVersion(version))return null;
     if(!state.installationId){state.installationId=uuid();if(name!=='app_first_run')record('app_first_run');}
     const event={schemaVersion:1,product:schema.product,id:uuid(),installationId:state.installationId,sessionId,
-      version,platform,environment,name,at:new Date(now()).toISOString(),fields:usageFields(fields),...(operationId?{operationId}:{})};
+      version,platform,environment,name,at:new Date(now()).toISOString(),fields:usageFields({...fields,...(acquisitionLabel(state.acquisition)||{}),...(state.acquisition?{acquisitionKind:state.acquisitionKind}:{})}),...(operationId?{operationId}:{})};
     state.events.push({event,sent:false});prune();saveSoon();notify();return event.id;
   };
   const openSession=()=>{if(enabled()&&!started){started=true;record('app_started');}};
   const stopSending=()=>{revision++;inFlight?.abort();inFlight=null;retryAt=0;failures=0;};
   const api={
     enabled,snapshot,record,generation:()=>collectionRevision,
+    setAcquisition(value){
+      if(!enabled()||state.acquisition||!acquisitionLabel(value))return false;
+      state.acquisition={schemaVersion:1,source:value.source,campaign:value.campaign};
+      state.acquisitionKind=state.installationId?'existing_installation':'new_installation';
+      if(state.installationId)save();return true;
+    },
     subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},
     setPreferences(preferences={}){
       const {enabled:allow=state.enabled,share=state.share}=preferences;

@@ -38,7 +38,9 @@
     "operation_cancelled",
     "agent_turn_completed",
     "agent_turn_failed",
-    "agent_turn_cancelled"
+    "agent_turn_cancelled",
+    "tutorial_viewed",
+    "tutorial_download_clicked"
   ],
   "fields": {
     "status": [
@@ -869,6 +871,18 @@
       "explicit",
       "classified",
       "unavailable"
+    ],
+    "acquisitionSource": [
+      "zhihu",
+      "bilibili"
+    ],
+    "acquisitionCampaign": [
+      "landsat_batch_20261023"
+    ],
+    "acquisitionKind": [
+      "website",
+      "new_installation",
+      "existing_installation"
     ]
   }
 }

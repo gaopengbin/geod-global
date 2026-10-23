@@ -31,6 +31,7 @@ export function UsageSettings({client=usage}) {
       <InfoDetails closeLabel={t('Close')} summary={t('About usage statistics')}>
         <p>{t('Anonymous usage statistics are on by default for new installations. You can turn them off here at any time. Statistics record feature categories, source identifiers, outcomes and coarse duration and size ranges to help improve searches, downloads and workflows.')}</p>
         <p>{t('Messages, model keys, account details, precise locations, scene identifiers, project names, file paths and source URLs are excluded. Random installation identifiers are independent of your account.')}</p>
+        <p>{t('Tutorial distribution packages may include a public channel and campaign label. When statistics are enabled, the first valid label is retained with anonymous feature events. Website visits and installations use separate identifiers; a download click is not an installation.')}</p>
         <p>{t('Records stay on this device for up to 30 days. Anonymous sharing automatically sends unsent records while enabled; disabling collection removes local records and stops pending uploads. Previously saved off preferences remain off. Already received anonymous records expire on the collection service within 90 days.')}</p>
         <p>{t(state.configured?'An anonymous collection service is configured. Sharing is optional and works without signing in.':'No collection service is configured in this build. Records and exports stay on this device.')}</p>
       </InfoDetails>

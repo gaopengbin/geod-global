@@ -4,7 +4,7 @@ import { PROVIDERS } from './providers.js';
 import { originalsReleased, RELEASE_VERSION, protectedOriginalsDeferred } from './release-policy.js';
 
 test('accepted NASA original workflows retain account requirements while unverified Copernicus stays deferred', () => {
-  assert.equal(RELEASE_VERSION, '0.2.1');
+  assert.equal(RELEASE_VERSION, '0.2.2');
   for (const source of PROVIDERS) {
     assert.equal(originalsReleased(source), Boolean(source.download && source.id!=='copernicus'), source.id);
     assert.equal(originalsReleased(source.id), originalsReleased(source));
