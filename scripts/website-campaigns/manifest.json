@@ -3,7 +3,7 @@
   "campaign": "landsat_batch_20261023",
   "product": "geod-global",
   "files": {
-    "tutorial-tracker.mjs": "9fa37288809dfd04566912781f69bc560f6b7431d2c86c59d817163633b589b4",
-    "tutorial-tracker.test.mjs": "fa660c61b0068817a0f657705c31f15d0d8fde0c5a2a47ca40c6df87ffefa135"
+    "tutorial-tracker.mjs": "1fb41b03068b015a3b1b70c2f49dff054b39aa4a34130cb9b7436fe2c132de7e",
+    "tutorial-tracker.test.mjs": "c7ffffb5ad323afebf8d00fdb1b3a8b684417610cb8cf7dba5b9c7dad462054d"
   }
 }

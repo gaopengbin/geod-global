@@ -1,4 +1,5 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {createTracker,channelFrom,CAMPAIGN} from './tutorial-tracker.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {createTracker,channelFrom,CAMPAIGN,wireDownloads} from './tutorial-tracker.mjs';
+import {JSDOM} from 'jsdom';
 function fixture(options={}){
  const map=new Map(),requests=[],storage={getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,v)};
  const tracker=createTracker({source:'zhihu',storage,fetcher:async(url,init)=>{requests.push({url,init});return {ok:true,json:async()=>({acceptedIds:JSON.parse(init.body).events.map(e=>e.id)})};},...options});
@@ -27,4 +28,17 @@ test('failed collection does not throw or break downloads, late receipts cannot 
  const {tracker}=fixture({fetcher:async()=>{throw new Error('offline');}});tracker.record('tutorial_download_clicked');await tracker.flush();
  const {tracker:t,storage}=fixture({fetcher:async(_url,init)=>{t.setEnabled(false);return {ok:true,json:async()=>({acceptedIds:JSON.parse(init.body).events.map(e=>e.id)})};}});
  t.record('tutorial_viewed');await t.flush();assert.equal(t.enabled(),false);assert.equal([...JSON.parse(storage.getItem('geod-global-tutorial-v1')).queue].length,0);
+});
+test('the sticky header and main download button keep the same channel and identify the ZIP honestly',()=>{
+ const make=()=>new JSDOM('<a data-release-link="setup" href="https://example.test/setup.exe">下载 Windows 版</a><a data-tutorial-download data-package-zhihu="/zhihu.zip" data-package-bilibili="/bilibili.zip" href="https://example.test/portable.zip">下载 Windows 便携版</a>',{url:'https://example.test/case'});
+ const dom=make(),events=[],tracker={record:n=>events.push(n),flush:async()=>{}};
+ wireDownloads(dom.window.document,'zhihu',tracker);
+ const links=[...dom.window.document.querySelectorAll('a')];
+ assert.ok(links.every(a=>a.href==='https://example.test/zhihu.zip'));
+ assert.equal(links[0].textContent,'下载 Windows 便携版');assert.equal(links[0].hasAttribute('data-release-link'),false);
+ for(const a of links){a.addEventListener('click',e=>e.preventDefault());a.click();}
+ assert.deepEqual(events,['tutorial_download_clicked','tutorial_download_clicked']);
+ const direct=make();wireDownloads(direct.window.document,null,tracker);
+ assert.equal(direct.window.document.querySelector('a').href,'https://example.test/setup.exe');
+ dom.window.close();direct.window.close();
 });

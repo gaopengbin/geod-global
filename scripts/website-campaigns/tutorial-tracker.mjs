@@ -51,6 +51,23 @@ export function createTracker({source,storage,uuid=()=>crypto.randomUUID(),now=(
   return api;
 }
 
+export function wireDownloads(document,source,tracker){
+  const primary=document.querySelector('[data-tutorial-download]');
+  const url=source&&primary?.getAttribute('data-package-'+source);
+  for(const a of document.querySelectorAll('[data-tutorial-download],[data-release-link="setup"],[data-release-link="portable"]')){
+    if(url){
+      a.href=url;
+      if(!a.hasAttribute('data-tutorial-download')){
+        // The campaign offers a portable ZIP. Keep every case-page download
+        // entry in the same cohort, and prevent the generic release script
+        // from restoring an unlabelled installer URL later.
+        a.removeAttribute('data-release-link');a.setAttribute('data-tutorial-download','');a.textContent='下载 Windows 便携版';
+      }
+    }
+    a.addEventListener('click',()=>{tracker.record('tutorial_download_clicked');void tracker.flush();});
+  }
+}
+
 if(typeof document!=='undefined'){
   const source=channelFrom(location.search),privacy=()=>Boolean(navigator.globalPrivacyControl||navigator.doNotTrack==='1'||window.doNotTrack==='1');
   let storage;try{storage=localStorage;}catch{}
@@ -59,10 +76,7 @@ if(typeof document!=='undefined'){
   const button=document.querySelector('[data-tutorial-stats]');
   function status(){if(button){button.textContent=privacy()?'统计已按隐私偏好关闭':!source?'此入口未启用渠道统计':tracker.enabled()?'匿名统计已开启 · 关闭':'匿名统计已关闭 · 开启';button.disabled=privacy()||!source;button.setAttribute('aria-pressed',String(tracker.enabled()));}}
   status();button?.addEventListener('click',()=>{tracker.setEnabled(!tracker.enabled());status();});
-  for(const a of document.querySelectorAll('[data-tutorial-download]')){
-    const url=source&&a.getAttribute('data-package-'+source);if(url)a.href=url;
-    a.addEventListener('click',()=>{tracker.record('tutorial_download_clicked');void tracker.flush();});
-  }
+  wireDownloads(document,source,tracker);
   tracker.record('tutorial_viewed');void tracker.flush();
   const timer=setInterval(()=>void tracker.flush(),15000);
   window.addEventListener('online',()=>void tracker.flush());
