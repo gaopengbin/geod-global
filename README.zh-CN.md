@@ -3,11 +3,11 @@
 <img src="docs/images/release-0.2.0-cover.jpg" width="480" alt="GeoD Global 0.2.0 品牌插画">
 
 # GeoD Global
-**多类型地理数据聚合：影像、地形、专题、矢量与地图服务。**
+**遥感影像与地理空间数据下载工具：卫星影像、DEM 高程、专题、矢量与地图服务。**
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
-**[下载 0.2.1 · CDN 加速](https://geod-global.laogao.xyz/zh/index.html#download)** · **[官网](https://geod-global.laogao.xyz)** · **[问题反馈](https://github.com/gaopengbin/geod-global/issues)**
+**[下载 0.2.1 · CDN 加速](https://geod-global.laogao.xyz/zh/index.html#download)** · **[中文官网](https://geod-global.laogao.xyz/zh/index.html)** · **[问题反馈](https://github.com/gaopengbin/geod-global/issues)**
 
 [English](README.md) · 简体中文
 </div>

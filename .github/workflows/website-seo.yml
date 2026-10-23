@@ -1,0 +1,18 @@
+name: Website SEO release policy
+on:
+  workflow_dispatch:
+  push:
+    paths: ['scripts/website-seo/**', '.github/workflows/website-seo.yml']
+  pull_request:
+    paths: ['scripts/website-seo/**', '.github/workflows/website-seo.yml']
+permissions:
+  contents: read
+jobs:
+  policy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - run: python3 scripts/website-seo/test_policy.py

@@ -5,6 +5,10 @@
 # GeoD Global
 **Imagery, terrain, thematic data, vectors and map services in one workspace.**
 
+**遥感影像与地理空间数据下载工具**：聚合卫星影像、DEM 高程、土地覆盖、气候海洋、人口、矢量与地图服务；支持区域检索、多选地图预览、下载与本地成果管理。
+
+**[中文介绍](README.zh-CN.md) · [中文官网与 CDN 下载](https://geod-global.laogao.xyz/zh/index.html#download)**
+
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
 **[Download 0.2.1 · CDN](https://geod-global.laogao.xyz/index.html#download)** · **[Website](https://geod-global.laogao.xyz)** · **[Feedback](https://github.com/gaopengbin/geod-global/issues)**
@@ -19,6 +23,8 @@ Explore manually or connect your own model to prepare searches and download task
 **17 categories · 110 available entries · 2 authorization entries**
 
 Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA public products · INPE / Brazil Data Cube · OpenTopography · Geospatial Data Cloud
+
+常用渠道：Sentinel、Landsat、NAIP、Copernicus DEM、NASA、JAXA、地理空间数据云。产品覆盖范围与账号要求请查看[中文数据介绍](README.zh-CN.md#可以找哪些数据)。
 
 ## Watch the features
 
