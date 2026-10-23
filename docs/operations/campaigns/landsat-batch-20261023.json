@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "campaign": "landsat_batch_20261023",
+  "recordedAtUtc": "2026-10-23T10:21:16+00:00",
+  "product": "GeoD Global",
+  "tutorialCase": {
+    "appVersion": "0.2.1",
+    "scenes": 3,
+    "bandsPerScene": [
+      "B4",
+      "B3",
+      "B2"
+    ],
+    "files": 9,
+    "bytes": 798438650,
+    "verification": "every-file SHA-256 and complete GeoTIFF block decode; local RGB pixel values independently verified",
+    "bounds": [
+      116.05,
+      40.1,
+      116.35,
+      40.35
+    ],
+    "notClaimed": [
+      "AOI crop",
+      "QA mask application",
+      "all-band product package",
+      "QGIS acceptance",
+      "scientific accuracy validation"
+    ]
+  },
+  "website": {
+    "url": "https://geod-global.laogao.xyz/zh/workflows/landsat.html",
+    "status": "live_verified",
+    "release": "20261023T095416Z-landsat-case",
+    "startupSeoGateRetained": true,
+    "generalDownloadVersion": "0.2.1"
+  },
+  "video": {
+    "duration": 123.648,
+    "bytes": 6588147,
+    "sha256": "90c9c416dce4b4f6dff5fab69ada6068f8e334eaa04b58074300087c5bedae17",
+    "voice": "zh-CN-YunxiNeural"
+  },
+  "publicVideo": "https://geod-global.laogao.xyz/assets/cases/landsat-20261023/GeoD-Global-Landsat-Batch-20261023.mp4",
+  "publicEvidence": "https://geod-global.laogao.xyz/assets/cases/landsat-20261023/file-verification.json",
+  "channels": {
+    "zhihu": {
+      "status": "publication_succeeded_author_readback",
+      "url": "https://zhuanlan.zhihu.com/p/2097024244936859725",
+      "trackingUrl": "https://geod-global.laogao.xyz/zh/workflows/landsat.html?utm_source=zhihu&utm_medium=tutorial&utm_campaign=landsat_batch_20261023",
+      "aiAssistedDeclaration": true,
+      "bodyImagesVerified": 4
+    },
+    "bilibili": {
+      "status": "awaiting_upload_terms_confirmation",
+      "url": null,
+      "trackingUrl": "https://geod-global.laogao.xyz/zh/workflows/landsat.html?utm_source=bilibili&utm_medium=video&utm_campaign=landsat_batch_20261023",
+      "uploadStarted": false
+    }
+  },
+  "channelPackages": {
+    "zhihu": {
+      "version": "0.2.2",
+      "bytes": 373582265,
+      "sha256": "f4dd6c5879e5a89658480f738498021e3394d3e5e0c03e7012984fb961d84d05",
+      "commit": "e4bd4960534ad8ef778ddefafc3d9ca495e92950"
+    },
+    "bilibili": {
+      "version": "0.2.2",
+      "bytes": 373582250,
+      "sha256": "d39cf9db620c2d7aac170a18a0968c279b49abe57f379acc3aa05fa8113ce406",
+      "commit": "e4bd4960534ad8ef778ddefafc3d9ca495e92950"
+    }
+  },
+  "cdn": {
+    "status": "objects_uploaded_origin_403_awaiting_console_login",
+    "prefix": "global-updates/windows-x86_64/0.2.2/",
+    "automaticUpdateFeedChanged": false,
+    "scopeToReview": "Only the two public tutorial packages and their checksum file; preserve all existing statements."
+  },
+  "attributionAcceptance": {
+    "desktop": {
+      "zhihu": "fresh startup, search, preview, three real QA_PIXEL downloads and validation, existing local RGB open; independent receiver readback passed",
+      "bilibili": "fresh startup, search, preview, three real QA_RADSAT downloads and validation, existing local RGB open; independent receiver readback passed"
+    },
+    "website": "Two real browser package downloads hashed; default enabled; opt-out survives reload; development-mode website view/click events independently persisted. Production page media, links and byte ranges verified.",
+    "internalQaRegistriesAdded": 3,
+    "internalCampaignEventsExcluded": 44,
+    "browserAndInstallationIdsJoined": false
+  },
+  "externalBaseline": {
+    "zhihu": {
+      "tutorialViews": 0,
+      "observedBrowserIdentifiers": 0,
+      "downloadClicks": 0,
+      "observedDesktopInstallations": 0,
+      "newInstallationFirstRuns": 0,
+      "existingInstallations": 0,
+      "installationsWithSuccessfulSearch": 0,
+      "completedDownloadFiles": 0,
+      "validatedFiles": 0,
+      "installationsWithValidatedFiles": 0,
+      "installationsOpeningResults": 0,
+      "failureEvents": 0
+    },
+    "bilibili": {
+      "tutorialViews": 0,
+      "observedBrowserIdentifiers": 0,
+      "downloadClicks": 0,
+      "observedDesktopInstallations": 0,
+      "newInstallationFirstRuns": 0,
+      "existingInstallations": 0,
+      "installationsWithSuccessfulSearch": 0,
+      "completedDownloadFiles": 0,
+      "validatedFiles": 0,
+      "installationsWithValidatedFiles": 0,
+      "installationsOpeningResults": 0,
+      "failureEvents": 0
+    }
+  },
+  "baselineMeaning": "Launch baseline only, not evidence that the campaign has or has not worked. Installation IDs are not people; missing telemetry remains unknown."
+}
