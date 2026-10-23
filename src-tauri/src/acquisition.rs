@@ -28,8 +28,12 @@ mod tests {
     use super::*;
     #[test]
     fn campaign_labels_are_bounded_and_cannot_add_configuration() {
-        let nonce = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos();
-        let directory = std::env::temp_dir().join(format!("geod-acquisition-{}-{nonce}", std::process::id()));
+        let nonce = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let directory =
+            std::env::temp_dir().join(format!("geod-acquisition-{}-{nonce}", std::process::id()));
         std::fs::create_dir(&directory).unwrap();
         assert!(read_from(&directory).is_none());
         for source in ["zhihu", "bilibili"] {
