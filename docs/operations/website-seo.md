@@ -14,4 +14,11 @@ The Global website is maintained independently in the `geod-global-launch` works
 
 ## 2026-10-23 correction
 
+### Search engine submissions
+
+- Bing: 48 sitemap URLs were submitted to `https://www.bing.com/indexnow` on 2026-10-23. The initial HTTP 202 was followed by HTTP 200 after the public ownership key had been validated. This confirms receipt, not indexing. The public root `.txt` proof must remain in the website source and subsequent static releases. `scripts/website-seo/submit_indexnow.py` reads a specified public key file, verifies it through HTTPS, and submits only the 48 public sitemap URLs; it writes a receipt and fails on errors.
+- Baidu: the Global HTTPS subdomain was added and ownership verified using the console-provided public HTML verification tag. Public builds now reinsert that tag in `seo_policy.prepare`, and the regression suite checks it. The website attributes include the existing public parent-domain ICP filing and responsive/adaptive website type.
+- Baidu's console requires linking an existing Baijiahao subject before resources can enter search, and warns that linking cannot be undone for seven days. Do not silently link an unconfirmed subject. Record account eligibility, remaining quota, accepted submissions, crawl/index state separately; a verified site is not a successful URL submission. Never store the private Baidu push token in the repository or a public report.
+- Current submission evidence is stored in the website workspace under `.verification/seo-20261023/`. Re-check platform status when reporting progress; no live user counts or private credentials belong in this file.
+
 The production site had inherited preview `noindex, nofollow` metadata and lacked canonical tags. The static overlay fixes those settings while preserving current download links, videos, provider descriptions, account services and usage collection. Home title/description now explain satellite imagery and geospatial data downloads in English and Chinese. Search-engine recrawling and actual inclusion are separate from passing these technical checks; never report inclusion merely because HTTP and metadata checks passed.

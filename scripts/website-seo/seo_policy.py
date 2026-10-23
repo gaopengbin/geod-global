@@ -7,6 +7,8 @@ from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 
 ORIGIN='https://geod-global.laogao.xyz'
+# Public ownership proof supplied by the owner's signed-in Baidu console.
+BAIDU_VERIFICATION='codeva-pZDm4buRxV'
 HOMES={
  'en':('GeoD Global — Satellite imagery and geospatial data downloads','Discover and download satellite imagery, elevation, land cover and other geospatial data. Search by area, preview multiple layers and manage local results on Windows.'),
  'zh-CN':('GeoD Global — 遥感影像与地理空间数据下载工具','聚合 Sentinel、Landsat、DEM、土地覆盖、地理空间数据云等多类型数据渠道，支持区域检索、多选地图预览、数据下载与本地成果管理，可连接自己的 AI 模型。')}
@@ -44,6 +46,7 @@ def prepare(site,origin=ORIGIN):
    t=re.sub(r'(<title\b[^>]*>).*?(</title>)',lambda m:m[1]+escape(title)+m[2],t,flags=re.S)
    t=re.sub(r'(<meta name="description" content=")[^"]*',lambda m:m[1]+escape(desc,quote=True),t)
   t=re.sub(r'<meta\b(?=[^>]*name="robots")[^>]*>','',t)
+  t=re.sub(r'<meta\b(?=[^>]*name="baidu-site-verification")[^>]*>','',t)
   t=re.sub(r'<link\b(?=[^>]*rel="canonical")[^>]*>','',t)
   t=re.sub(r'<meta\b(?=[^>]*(?:property|name)="(?:og:[^"]+|twitter:[^"]+)")[^>]*>','',t)
   t=re.sub(r'<script type="application/ld\+json">.*?</script>','',t,flags=re.S)
@@ -56,6 +59,7 @@ def prepare(site,origin=ORIGIN):
   meta='<meta name="robots" content="'+('index, follow' if is_public else 'noindex, nofollow')+'">'
   meta+='<link rel="canonical" href="'+url+'">'
   if is_public:
+   meta+='<meta name="baidu-site-verification" content="'+BAIDU_VERIFICATION+'">'
    for key,value in [('og:type','website'),('og:site_name','GeoD Global'),('og:title',head.title),('og:description',unescape(desc[1]) if desc else head.title),('og:url',url),('og:image',origin+'/assets/sentinel2-workspace-en.jpg')]:meta+=f'<meta property="{key}" content="{escape(value,quote=True)}">'
    meta+='<meta name="twitter:card" content="summary_large_image">'
   t=t.replace('</head>',meta+'</head>');path.write_text(t,encoding='utf-8')

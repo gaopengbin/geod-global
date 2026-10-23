@@ -24,6 +24,9 @@ class ReleaseGate(unittest.TestCase):
  def test_noindex_rejected(self):
   self.change('zh/index.html','index, follow','noindex, nofollow')
   with self.assertRaises(ValueError):check(self.site)
+ def test_baidu_ownership_survives_rebuild(self):
+  prepare(self.site)
+  self.assertIn('name="baidu-site-verification" content="codeva-pZDm4buRxV"',(self.site/'index.html').read_text(encoding='utf-8'))
  def test_private_page_stays_private(self):
   self.change('zh/privacy.html','noindex, nofollow','index, follow')
   with self.assertRaises(ValueError):check(self.site)
