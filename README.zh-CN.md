@@ -19,6 +19,18 @@
 
 Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA 公开产品 · INPE / Brazil Data Cube · OpenTopography · 地理空间数据云
 
+## 先完成一个具体任务
+
+| 你想做什么 | 从这里开始 | 完成后核对什么 |
+| :--- | :--- | :--- |
+| 批量下载 Landsat | [实机教程与首次使用步骤](https://geod-global.laogao.xyz/zh/workflows/landsat.html#first-run) | 先选 1 景、B4/B3/B2，确认 3 个源文件完成，再打开本地真彩色 |
+| 查找 Sentinel-2 影像 | [区域检索与源文件指南](https://geod-global.laogao.xyz/zh/workflows/sentinel-2.html) | 下载前核对日期、云量和场景覆盖范围 |
+| 获取 GLO-30 高程 | [公共瓦片与高程说明](https://geod-global.laogao.xyz/zh/workflows/elevation.html) | 核对产品覆盖、原始数值和后续 GIS 使用所需的地理参考 |
+
+Landsat 案例实测于 2026-10-23：3 期、9 份完整源波段 GeoTIFF，共 798,438,650 字节，逐文件核对 SHA-256 并完整解码。未宣称按选区裁剪、质量掩膜或全波段产品包。[2.2 KB 入门参数包](https://geod-global.laogao.xyz/assets/cases/landsat-20261023/Landsat-first-task-parameters.zip)只有范围、日期、场景编号和手动步骤，没有软件或影像，不是可导入工程。
+
+卡住时请[按阶段反馈](https://github.com/gaopengbin/geod-global/issues/new?template=data-workflow.yml)：安装、启动、检索、预览、确认、传输或打开成果。附软件版本、数据源与界面错误即可，不要提供密码、密钥、授权链接或私人数据。
+
 ## 一分钟看功能
 
 [![GeoD Global 0.2.0 功能演示](docs/images/release-0.2.0-video.jpg)](https://geod-global.laogao.xyz/zh/index.html#demo)

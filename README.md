@@ -26,6 +26,18 @@ Earth Search · Microsoft Planetary Computer · NASA Earthdata / GIBS · JAXA pu
 
 常用渠道：Sentinel、Landsat、NAIP、Copernicus DEM、NASA、JAXA、地理空间数据云。产品覆盖范围与账号要求请查看[中文数据介绍](README.zh-CN.md#可以找哪些数据)。
 
+## Start with a concrete task
+
+| Task | Start here | What to check |
+| :--- | :--- | :--- |
+| Landsat batch download | [Worked case and first-run steps (Chinese)](https://geod-global.laogao.xyz/zh/workflows/landsat.html#first-run) | Start with one scene and B4/B3/B2; confirm three completed source files, then open the local RGB result |
+| Sentinel-2 imagery | [Search and source-file guide](https://geod-global.laogao.xyz/workflows/sentinel-2.html) | Area, date, cloud cover and scene coverage before download |
+| GLO-30 elevation | [Public-tile and elevation guide](https://geod-global.laogao.xyz/workflows/elevation.html) | Product coverage, source values and georeferencing for your GIS workflow |
+
+The Landsat case was run on October 23, 2026: three dates, nine complete source-band GeoTIFFs, 798,438,650 bytes, with SHA-256 and full block decoding checked. It does not claim an AOI crop, QA masking or an all-band package. The [2.2 KB parameter pack](https://geod-global.laogao.xyz/assets/cases/landsat-20261023/Landsat-first-task-parameters.zip) contains manual query settings and instructions, not imagery, software or an importable project.
+
+If a task gets stuck, [report its stage](https://github.com/gaopengbin/geod-global/issues/new?template=data-workflow.yml): installation, startup, search, preview, confirmation, transfer or opening results. Include the app version, provider and visible error; leave out credentials, signed URLs and private data.
+
 ## Watch the features
 
 [![GeoD Global 0.2.0 feature video](docs/images/release-0.2.0-video.jpg)](https://geod-global.laogao.xyz/index.html#demo)

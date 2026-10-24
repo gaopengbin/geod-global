@@ -1,0 +1,58 @@
+name: 数据任务反馈 / Data workflow
+description: Report where a real data task gets stuck / 说明数据任务卡在哪一步
+title: "[数据任务 / Data workflow] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先核对安装说明与任务教程。不需要提交密码、密钥、带授权参数的下载链接、私人区域或完整原始日志。
+        Include only public sample data and redacted errors. Do not share credentials, signed URLs or private AOIs.
+  - type: input
+    id: version
+    attributes:
+      label: 软件版本 / App version
+      placeholder: "例如 / e.g. 0.2.1"
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 数据源与产品 / Provider and product
+      placeholder: "例如 / e.g. Landsat · Planetary Computer"
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 卡住阶段 / Stage
+      options:
+        - 安装或解压 / Install or extract
+        - 启动 / Start the app
+        - 检索 / Search
+        - 地图预览 / Preview
+        - 确认下载 / Confirm download
+        - 下载传输 / Transfer
+        - 校验文件 / Validate files
+        - 打开成果 / Open results
+        - 其他 / Other
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: 实际结果与界面错误 / Result and error shown
+      description: 可附脱敏截图；不要粘贴完整凭据或私人数据。Redact screenshots and messages.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 最少复现步骤与期望 / Steps and expected result
+      description: 优先使用教程公共样例。Prefer the tutorial's public example.
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Windows 版本 / Windows version
+      placeholder: "Windows 10 / 11"
