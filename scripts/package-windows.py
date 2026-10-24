@@ -757,6 +757,7 @@ def main():
     parser.add_argument('--installer', choices=['nsis', 'none'], default='nsis')
     parser.add_argument('--output', type=Path, default=ROOT / '.verification/packages')
     parser.add_argument('--verify-zip', type=Path)
+    parser.add_argument('--acquisition-source', choices=['zhihu', 'bilibili'], help='Optional public Landsat tutorial distribution label')
     phase = parser.add_mutually_exclusive_group()
     phase.add_argument('--build-only', action='store_true')
     phase.add_argument('--package-only', action='store_true')
@@ -799,6 +800,8 @@ def main():
     shutil.copytree(ROOT / 'schemas', payload / 'schemas')
     shutil.copyfile(ROOT / 'crates/geod-runtime/README.md', payload / 'docs/runtime.md')
     shutil.copyfile(ROOT / 'docs/releases/WINDOWS-README.md', payload / 'README.md')
+    if args.acquisition_source:
+        write_json(payload / 'acquisition.json', {'schemaVersion':1, 'source':args.acquisition_source, 'campaign':'landsat_batch_20261023'})
     first_party_source = collect_first_party_source(payload, identity)
     release_notes = ROOT / 'docs/releases' / (config['version'] + '.md')
     if release_notes.is_file():

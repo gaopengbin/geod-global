@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "campaign": "landsat_batch_20261023",
+  "product": "geod-global",
+  "files": {
+    "tutorial-tracker.mjs": "1fb41b03068b015a3b1b70c2f49dff054b39aa4a34130cb9b7436fe2c132de7e",
+    "tutorial-tracker.test.mjs": "c7ffffb5ad323afebf8d00fdb1b3a8b684417610cb8cf7dba5b9c7dad462054d"
+  }
+}

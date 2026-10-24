@@ -1,5 +1,35 @@
 # GeoD Global usage statistics
 
+## Landsat tutorial acquisition (October 23, 2026)
+
+Tutorial distribution packages optionally contain `acquisition.json` beside the
+desktop executable. Its strict, size-bounded schema permits only the public
+sources `zhihu` / `bilibili` and campaign `landsat_batch_20261023`. It cannot
+configure endpoints, credentials or behavior. `scripts/package-windows.py
+--acquisition-source <source>` includes the label in the verified file manifest.
+
+When collection is enabled, startup retains the first valid label before
+mounting the UI. Subsequent events carry `acquisitionSource`,
+`acquisitionCampaign`, and `acquisitionKind`. A previously observed installation
+is labeled `existing_installation`; only a previously uninitialized anonymous
+installation is labeled `new_installation`. Clearing usage statistics rotates
+the anonymous identity, so these are installation observations, never people.
+Existing opt-outs and GPC/DNT prevent collection and label persistence.
+
+The website records `tutorial_viewed` and `tutorial_download_clicked` separately
+as browser events with `acquisitionKind=website`. It accepts only the same fixed
+campaign and source values, honors DNT/GPC and a page-level statistics opt-out,
+and sends no raw URL, referrer, IP or query contents in the event. Browser and
+desktop identifiers are independent: no cross-device join or person-level
+conversion rate is asserted. A download click is not an installation.
+
+Read campaign reports with `scripts/campaign-report.py` against the receiver's
+database in read-only mode. This requires all `qa-*.json` exclusion registries;
+development events and registered internal installations are excluded from
+external figures. Real use means observed `search_completed`, completed
+downloads with `artifact_validated`, and `artifact_opened`, with different units
+kept separate. Missing telemetry is unknown, not proof of failure or non-use.
+
 ## Failure diagnostics (October 22, 2026)
 
 New clients add fixed allowlisted `stage`, `reason`, `httpStatus`, `retries` and

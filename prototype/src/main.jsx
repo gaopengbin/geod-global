@@ -84,6 +84,7 @@ import { providerById, prepareAssetAccess, canDisplayImagery, scenePlatformLabel
 import { imageryHrefs } from './explore-imagery.js';
 import { RELEASE_VERSION, originalsReleased } from './release-policy.js';
 import { UsageLifecycle } from './usage-ui.jsx';
+import {initializeAcquisition} from './acquisition.js';
 import { usage,countBucket } from './usage-client.js';
 import { beginUsage,usageContext,usageSource } from './usage-events.js';
 import { AgentPanel } from './agent-panel.jsx';
@@ -1093,4 +1094,6 @@ function AppContent() {
     </div>
   );
 }
-if (document.getElementById("root")) createRoot(document.getElementById("root")).render(<I18nProvider><RuntimeProvider><App /></RuntimeProvider></I18nProvider>);
+if (document.getElementById("root")) {
+  initializeAcquisition(usage).finally(()=>createRoot(document.getElementById("root")).render(<I18nProvider><RuntimeProvider><App /></RuntimeProvider></I18nProvider>));
+}
