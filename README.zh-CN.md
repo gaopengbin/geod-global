@@ -7,7 +7,7 @@
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-2563eb?style=flat-square)](docs/releases/WINDOWS-README.md) [![Release](https://img.shields.io/github/v/release/gaopengbin/geod-global?style=flat-square)](https://github.com/gaopengbin/geod-global/releases/latest) [![GPL](https://img.shields.io/badge/license-GPL--3.0-0f766e?style=flat-square)](LICENSE) [![Checks](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml/badge.svg)](https://github.com/gaopengbin/geod-global/actions/workflows/check.yml)
 
-**[下载 0.2.1 · CDN 加速](https://geod-global.laogao.xyz/zh/index.html#download)** · **[中文官网](https://geod-global.laogao.xyz/zh/index.html)** · **[问题反馈](https://github.com/gaopengbin/geod-global/issues)**
+**[下载 0.2.3 · CDN 加速](https://geod-global.laogao.xyz/zh/index.html#download)** · **[中文官网](https://geod-global.laogao.xyz/zh/index.html)** · **[问题反馈](https://github.com/gaopengbin/geod-global/issues)**
 
 [English](README.md) · 简体中文
 </div>
@@ -99,7 +99,7 @@ Earth Engine 使用自己的项目，可能消耗该项目额度。Planned 表�
 模型请求访问你配置的提供方，数据请求访问相应数据源。
 
 当前聚焦 **2D 地理数据**，包含高程栅格。不包含托管模型、正式付费服务、云同步、任意跨网格处理或其他系统安装包。
-[数据源清单](docs/releases/source-scope.json) · [对接状态](docs/provider-integration-status.md) · [0.2.1 发行说明](docs/releases/0.2.1.md)
+[数据源清单](docs/releases/source-scope.json) · [对接状态](docs/provider-integration-status.md) · [0.2.3 发行说明](docs/releases/0.2.3.md) · [发布验收](docs/releases/0.2.3-acceptance.md)
 
 ## 开发与贡献
 
