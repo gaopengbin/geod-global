@@ -5,6 +5,7 @@ fn main() {
     println!("cargo:rerun-if-changed=icons/icon.png");
     tauri_build::try_build(tauri_build::Attributes::new().app_manifest(
         tauri_build::AppManifest::new().commands(&[
+            "acquisition_context",
             "list_earth_engine_exports",
             "download_earth_engine_export",
             "inspect_earth_engine_export",

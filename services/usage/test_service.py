@@ -21,6 +21,22 @@ def event(name='search_completed'):
 
 
 class ReceiverTests(unittest.TestCase):
+    def test_acquisition_is_separate_from_workflow_and_has_matching_surface(self):
+        value=event('artifact_validated')
+        value['fields'].update(acquisitionSource='zhihu',acquisitionCampaign='landsat_batch_20261023',acquisitionKind='new_installation')
+        self.assertEqual(self.request('POST','/v1/events',self.batch([value]))[0],200)
+        website=event('tutorial_download_clicked');website['platform']='browser'
+        website['fields']={'acquisitionSource':'bilibili','acquisitionCampaign':'landsat_batch_20261023','acquisitionKind':'website'}
+        self.assertEqual(self.request('POST','/v1/events',self.batch([website]))[0],200)
+        for change in [
+            lambda e:e['fields'].pop('acquisitionCampaign'),
+            lambda e:e['fields'].update(acquisitionSource='private-url'),
+            lambda e:e['fields'].update(acquisitionKind='website'),
+            lambda e:e.update(platform='browser'),
+        ]:
+            bad=copy.deepcopy(value);bad['id']=str(uuid.uuid4());change(bad)
+            self.assertEqual(self.request('POST','/v1/events',self.batch([bad]))[0],400)
+
     def test_diagnostics_survive_http_and_report_without_free_text(self):
         value=event('preview_failed')
         value['fields'].update(stage='preview_tile',reason='upstream_unavailable',httpStatus='503',retries='2',diagnosticOrigin='explicit',error='network')

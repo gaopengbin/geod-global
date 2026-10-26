@@ -25,3 +25,5 @@ GeoD-Global-Spec/contracts/verification-result.json
 design/brand/*
 !design/brand/geod-global-brand-kit-1.1/
 exa-results/
+# Keep campaign operations and usage snapshots local; public tutorials live in docs/marketing/.
+docs/operations/campaigns/*.json

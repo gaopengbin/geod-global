@@ -1,6 +1,7 @@
 // Both desktop build profiles are GUI apps; keep the test harness as a console executable.
 #![cfg_attr(all(windows, not(test)), windows_subsystem = "windows")]
 
+mod acquisition;
 mod agent;
 mod distribution;
 mod earth_engine;
@@ -70,6 +71,13 @@ use tauri_plugin_opener::OpenerExt;
 struct DesktopFrameReady(Arc<AtomicBool>);
 
 struct AgentAvailability(Result<DesktopAgent, String>);
+
+#[tauri::command]
+fn acquisition_context() -> Option<acquisition::Acquisition> {
+    let executable = std::env::current_exe().ok()?;
+    acquisition::read_from(executable.parent()?)
+}
+
 impl AgentAvailability {
     fn agent(&self) -> Result<&DesktopAgent, String> {
         self.0.as_ref().map_err(Clone::clone)
@@ -1880,6 +1888,7 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            acquisition_context,
             list_earth_engine_exports,
             gebco_grids,
             gscloud_products,

@@ -1,6 +1,6 @@
 {
   "name": "geod-global",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "private": true,
   "type": "module",
   "license": "GPL-3.0-only",
@@ -61,6 +61,7 @@
     "agent:prepare": "node scripts/prepare-agent-runtime.mjs",
     "test:agent": "node --test agent/*.test.mjs scripts/prepare-agent-runtime.test.mjs",
     "test:services": "python -X utf8 -m unittest services.official.test_service -v",
+    "test:campaign": "node --test scripts/website-campaigns/tutorial-tracker.test.mjs && python -X utf8 scripts/campaign-report.test.py && python -X utf8 -m unittest discover -s services/usage -p test_service.py",
     "dev": "vite prototype --config prototype/vite.config.mjs",
     "build": "vite build prototype --config prototype/vite.config.mjs",
     "preview": "vite preview prototype --config prototype/vite.config.mjs",
@@ -77,7 +78,7 @@
     "check:boundaries": "python scripts/build-agent-boundary-bundle.test.py && python scripts/build-agent-boundary-bundle.py --check",
     "check:sources": "node scripts/source-release-inventory.mjs --check",
     "check": "npm run check:isolation && npm run check:contracts && npm run check:recipes && npm run check:boundaries && npm run check:sources",
-    "verify": "npm run check && npm test && npm run test:agent && npm run test:ui && npm run build",
+    "verify": "npm run check && npm test && npm run test:agent && npm run test:campaign && npm run test:ui && npm run build",
     "verify:all": "npm run verify && npm run test:runtime && npm run test:desktop",
     "test:ui": "vitest run"
   }

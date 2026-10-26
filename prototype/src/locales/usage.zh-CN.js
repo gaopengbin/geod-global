@@ -1,4 +1,5 @@
 export default {
+  'Tutorial distribution packages may include a public channel and campaign label. When statistics are enabled, the first valid label is retained with anonymous feature events. Website visits and installations use separate identifiers; a download click is not an installation.':'教程分发包可能带有公开的渠道与活动标记。统计开启时，首次有效标记会随匿名功能事件保留。网站访问和软件安装使用相互独立的标识；点击下载不代表已安装。',
   'Usage statistics':'使用统计',
   'Record usage statistics':'记录使用统计',
   'Share anonymous usage':'分享匿名使用统计',
