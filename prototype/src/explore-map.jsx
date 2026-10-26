@@ -194,6 +194,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
       if (cancelled || failed) return;
       failed = true;
       if(usageId&&usageGeneration===usage.generation())usage.record('preview_failed',{...usageFields,error:usageError(cause || new Error(message)),...failureDiagnostics(cause || new Error(message),stage),duration:durationBucket(Date.now()-startedAt)},usageId);
+      source?.cancelPreviewRequests?.();
       clearInterval(loadingClock);
       setError(message);
     };

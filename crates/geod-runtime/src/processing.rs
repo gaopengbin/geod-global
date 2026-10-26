@@ -207,6 +207,7 @@ pub(crate) fn clip_job(recipe: RasterRecipe, source: Job) -> Job {
         source: source.source,
         validation: "Pending pinned source validation and exact pixel-window clip".into(),
         attempts: 1,
+        network_retries: 0,
     }
 }
 

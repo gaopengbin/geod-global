@@ -61,6 +61,10 @@ async fn server(behavior: &'static str) -> Server {
                     list.len()
                 };
                 let partial = request.contains("\r\nrange:");
+                if behavior == "unavailable" {
+                    let _ = socket.write_all(b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n").await;
+                    return;
+                }
                 let first = attempt == 1;
                 let weak = behavior == "weak";
                 let missing = behavior == "missing";
@@ -160,6 +164,117 @@ async fn create(manager: &JobManager, server: &Server) -> Job {
         })
         .await
         .unwrap()
+}
+
+#[tokio::test]
+async fn bounded_recovery_resumes_a_broken_body_without_user_retry() {
+    let server = server("valid").await;
+    let dir = tempfile::tempdir().unwrap();
+    let manager = manager(dir.path(), &server).await;
+    let job = crate::new_download_job(CreateJobRequest {
+        item_id: "S2_TRANSFER_TEST".into(),
+        asset_key: "thumbnail".into(),
+        href: format!("{}/image", server.origin),
+        media_type: "image/jpeg".into(),
+        title: None,
+    });
+    manager
+        .inner
+        .store
+        .lock()
+        .await
+        .jobs
+        .insert(job.id.clone(), job.clone());
+    manager
+        .download_with_retries(&job.id, &CancellationToken::new(), 2)
+        .await
+        .unwrap();
+    let job = assert_complete(&manager, &job.id, BODY, TransferMode::Resumed).await;
+    assert_eq!(job.network_retries, 1);
+    assert_eq!(job.attempts, 1);
+    let requests = server.requests.lock().unwrap();
+    assert_eq!(requests.len(), 2);
+    assert!(requests[1].contains("\r\nrange: bytes=16-\r\n"));
+    assert!(requests[1].contains("\r\nif-range: \"v1\"\r\n"));
+}
+
+#[tokio::test]
+async fn body_failure_keeps_a_safe_reason_and_permanent_errors_are_not_retryable() {
+    let server = server("valid").await;
+    let client = reqwest::Client::builder().no_proxy().build().unwrap();
+    let error = client
+        .get(format!("{}/image?sig=private", server.origin))
+        .send()
+        .await
+        .unwrap()
+        .bytes()
+        .await
+        .unwrap_err();
+    let reason = network_error(error);
+    assert_eq!(reason, "Asset network response was incomplete");
+    assert!(retryable(&reason));
+    assert!(!reason.contains("private"));
+    for reason in [
+        "Asset server returned HTTP 403 Forbidden",
+        "Asset server returned HTTP 404 Not Found",
+        "Unexpected partial HTTP response",
+        "Asset SHA-256 checksum mismatch",
+        "Transfer cancelled",
+    ] {
+        assert!(!retryable(reason));
+    }
+    assert!(retryable(
+        "Asset server returned HTTP 503 Service Unavailable; partial download was retained"
+    ));
+}
+
+#[tokio::test]
+async fn automatic_recovery_has_a_finite_budget_and_cancellation_stops_backoff() {
+    for cancelled in [false, true] {
+        let server = server("unavailable").await;
+        let dir = tempfile::tempdir().unwrap();
+        let manager = manager(dir.path(), &server).await;
+        let job = crate::new_download_job(CreateJobRequest {
+            item_id: "S2_TRANSFER_TEST".into(),
+            asset_key: "thumbnail".into(),
+            href: format!("{}/image", server.origin),
+            media_type: "image/jpeg".into(),
+            title: None,
+        });
+        manager
+            .inner
+            .store
+            .lock()
+            .await
+            .jobs
+            .insert(job.id.clone(), job.clone());
+        let token = CancellationToken::new();
+        if cancelled {
+            let stopping = token.clone();
+            tokio::spawn(async move {
+                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                stopping.cancel();
+            });
+        }
+        let error = manager
+            .download_with_retries(&job.id, &token, 2)
+            .await
+            .unwrap_err();
+        assert_eq!(
+            server.requests.lock().unwrap().len(),
+            if cancelled { 1 } else { 3 }
+        );
+        assert_eq!(
+            manager.get(&job.id).await.unwrap().network_retries,
+            if cancelled { 0 } else { 2 }
+        );
+        if cancelled {
+            assert_eq!(error, "Transfer cancelled");
+        } else {
+            assert!(error.contains("HTTP 503"));
+        }
+        assert!(manager.get(&job.id).await.unwrap().output_path.is_none());
+    }
 }
 
 async fn settled(manager: &JobManager, id: &str) -> Job {

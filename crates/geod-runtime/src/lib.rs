@@ -158,6 +158,8 @@ pub struct Job {
     pub source: String,
     pub validation: String,
     pub attempts: u32,
+    #[serde(default)]
+    pub network_retries: u8,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub transfer: Option<TransferInfo>,
 }
@@ -274,6 +276,7 @@ fn new_download_job(request: CreateJobRequest) -> Job {
         source,
         validation: "Pending file signature, byte count and SHA-256 checks".into(),
         attempts: 1,
+        network_retries: 0,
         transfer: None,
     }
 }
@@ -1183,11 +1186,71 @@ impl JobManager {
             transfer::request(request, checkpoint)
                 .send()
                 .await
-                .map_err(|error| error.without_url().to_string())
+                .map_err(transfer::network_error)
         }
     }
 
     async fn download(&self, id: &str, token: &CancellationToken) -> Result<()> {
+        let job = self.get(id).await.ok_or("Unknown job")?;
+        // Account, generated coverage and custom STAC adapters keep their own contracts.
+        let retries = if job.stac_source.is_none()
+            && job.wcs_source.is_none()
+            && matches!(
+                job.asset_key.as_str(),
+                "visual"
+                    | "red"
+                    | "green"
+                    | "blue"
+                    | "elevation"
+                    | "aerial"
+                    | "scl"
+                    | "qa_pixel"
+                    | "qa_radsat"
+            ) {
+            2
+        } else {
+            0
+        };
+        self.download_with_retries(id, token, retries).await
+    }
+
+    async fn download_with_retries(
+        &self,
+        id: &str,
+        token: &CancellationToken,
+        limit: u8,
+    ) -> Result<()> {
+        for retry in 0..=limit {
+            {
+                let mut store = self.inner.store.lock().await;
+                let job = store.jobs.get_mut(id).ok_or("Unknown job")?;
+                job.network_retries = retry;
+                self.persist(&store.jobs).await?;
+            }
+            match self.download_once(id, token).await {
+                Ok(()) => return Ok(()),
+                Err(error) if retry < limit && transfer::retryable(&error) => {
+                    let job = self.get(id).await.ok_or("Unknown job")?;
+                    // Do not automatically restart a large unvalidated prefix.
+                    // The next attempt rechecks ETag, range and saved bytes.
+                    if job.bytes_downloaded > 0
+                        && !source_transfer_limit_at(&self.inner.root, &job)
+                            .is_ok_and(|size| transfer::candidate(&self.inner.root, &job, size))
+                    {
+                        return Err(error);
+                    }
+                    tokio::select! {
+                        _ = token.cancelled() => return Err("Transfer cancelled".into()),
+                        _ = tokio::time::sleep(Duration::from_millis(if retry == 0 { 500 } else { 1500 })) => {},
+                    }
+                }
+                Err(error) => return Err(error),
+            }
+        }
+        unreachable!()
+    }
+
+    async fn download_once(&self, id: &str, token: &CancellationToken) -> Result<()> {
         let _permit = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
             permit = self.inner.permits.acquire() => permit.map_err(io_error)?,
@@ -1339,12 +1402,12 @@ impl JobManager {
         let transfer_result: Result<()> = async { loop {
             let chunk = tokio::select! {
                 _ = token.cancelled() => return Err("Transfer cancelled".into()),
-                chunk = tokio::time::timeout(Duration::from_secs(45), stream.next()) => chunk.map_err(|_| "Asset server stopped sending data for 45 seconds")?,
+                chunk = tokio::time::timeout(Duration::from_secs(45), stream.next()) => chunk.map_err(|_| "Asset transfer timed out: server stopped sending data for 45 seconds")?,
             };
             let Some(chunk) = chunk else {
                 break;
             };
-            let chunk = chunk.map_err(|error| error.without_url().to_string())?;
+            let chunk = chunk.map_err(transfer::network_error)?;
             bytes += chunk.len() as u64;
             if bytes > limit || total.is_some_and(|size| bytes > size) {
                 invalid_body = true;

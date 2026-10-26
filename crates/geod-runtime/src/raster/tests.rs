@@ -111,6 +111,7 @@ pub(crate) fn record(root: &Path, bytes: &[u8]) -> Job {
         source: "test fixture".into(),
         validation: "test".into(),
         attempts: 1,
+        network_retries: 0,
         kind: "download".into(),
         parent_id: None,
         recipe: None,

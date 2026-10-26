@@ -2196,6 +2196,7 @@ mod tests {
             source: "test".into(),
             validation: "test".into(),
             attempts: 1,
+            network_retries: 0,
         }
     }
 
