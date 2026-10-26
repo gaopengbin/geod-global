@@ -420,6 +420,7 @@ pub(crate) fn mosaic_job(
         source: "Project source rasters / pinned original products".into(),
         validation: "Pending source checksum validation and pixel-aligned mosaic/clip".into(),
         attempts: 1,
+        network_retries: 0,
     };
     Ok(job)
 }

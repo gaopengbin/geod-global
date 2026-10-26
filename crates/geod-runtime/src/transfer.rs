@@ -11,6 +11,34 @@ use tokio::io::AsyncWriteExt;
 use tokio_util::sync::CancellationToken;
 use uuid::Uuid;
 
+// Preserve actionable transport categories without URLs, SAS queries or OS paths.
+pub(crate) fn network_error(error: reqwest::Error) -> String {
+    if error.is_timeout() {
+        "Asset transfer timed out"
+    } else if error.is_connect() {
+        "Asset network connection failed"
+    } else if error.is_body() || error.is_decode() {
+        "Asset network response was incomplete"
+    } else {
+        "Asset network request failed"
+    }
+    .into()
+}
+
+pub(crate) fn retryable(error: &str) -> bool {
+    matches!(
+        error,
+        "Asset transfer timed out"
+            | "Asset network connection failed"
+            | "Asset network response was incomplete"
+            | "Asset network request failed"
+            | "Asset transfer timed out: server stopped sending data for 45 seconds"
+    ) || [408, 425, 429, 500, 502, 503, 504].iter().any(|status| {
+        error.starts_with(&format!("Asset server returned HTTP {status} "))
+            || error.starts_with(&format!("Asset server returned HTTP {status};"))
+    })
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum TransferMode {

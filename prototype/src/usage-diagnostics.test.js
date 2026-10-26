@@ -39,3 +39,12 @@ test('background downloads distinguish checksum validation from transfer failure
  assert.equal(event.fields.stage,'artifact_validation');assert.equal(event.fields.reason,'checksum_mismatch');
  assert.equal(event.fields.diagnosticOrigin,'classified');assert(!JSON.stringify(event).includes('PRIVATE'));
 });
+
+test('exhausted native transfer retries retain a concrete reason and retry count',()=>{
+ const client=createUsageClient({storage:null,endpoint:null});client.setPreferences({enabled:true});
+ const id=crypto.randomUUID();client.watchJobs([{id,status:'running'}],{source:'planetary-landsat'});
+ client.observeJobs([{id,status:'failed',error:'Asset network response was incomplete',networkRetries:2}]);
+ const event=client.report().events.find(e=>e.name==='download_failed');
+ assert.equal(event.fields.stage,'transfer');assert.equal(event.fields.reason,'incomplete_data');
+ assert.equal(event.fields.retries,'2');assert.equal(event.fields.httpStatus,'unknown');
+});

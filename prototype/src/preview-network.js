@@ -14,7 +14,7 @@ export async function retryPreviewRequest(operation,signal) {
     try {return await operation();}
     catch(error) {
       if(signal?.aborted)throw signal.reason || new DOMException('Preview request cancelled.','AbortError');
-      if(['AbortError','TimeoutError'].includes(error.name)||error.retryable===false||attempt===2)throw error;
+      if(error.name==='AbortError'||error.name==='TimeoutError'&&error.retryable!==true||error.retryable===false||attempt===2)throw error;
       await retryDelay(attempt===0?250:750,signal);
     }
   }
