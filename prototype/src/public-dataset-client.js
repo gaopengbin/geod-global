@@ -44,6 +44,11 @@ const batchJaxaDisplay = {
   'jaxa-gsmap-spi':['float32',1,0,-999,'-',2026,9,[-4,4]],
 };
 const pointTimeProducts = new Set(['maxar-open-legacy','pc-hrea','vantor-open']);
+// Mirrors the reviewed native WPM recipe's first supported acquisition month.
+// Do not silently change an out-of-archive selection to a different month.
+export function publicDatasetMonths(dataset,year) {
+  return (dataset?.months||[]).filter(month=>dataset.id!=='cbers-wpm'||Number(year)!==2019||month===12);
+}
 const reviewedArchiveProducts = new Set(['fabdem','glc-fcs10','glc-fcs30d','sinolc-1','enmap','gebco-tid']);
 const reviewedItemProducts = new Set(['worldcereal', 'cgls-landcover', 'wsf-settlements', 'gmw-mangroves', ...annualTileProducts, ...jaxaProducts, ...pointTimeProducts, ...Object.keys(NEXT_PC_PRODUCTS)]);
 function validCurrentElevationQuery(href, request) {

@@ -4,7 +4,7 @@ import { InfoDetails, Badge, Button, Dialog, DialogContent, DialogTitle, Disclos
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
 import { validQueryBounds } from './features-client.js';
-import { publicDatasetRequest, validatePublicDatasetItem, publicDatasetAssetLayer, publicDatasetPreviewRange, publicDatasetPreviewPolicy } from './public-dataset-client.js';
+import { publicDatasetRequest, publicDatasetMonths, validatePublicDatasetItem, publicDatasetAssetLayer, publicDatasetPreviewRange, publicDatasetPreviewPolicy } from './public-dataset-client.js';
 import { stacRequest, validateStacSearchPage } from './stac-client.js';
 import { PublicDatasetExploreMap } from './public-dataset-explore-map.jsx';
 import { ExploreSourceFrame } from './explore-source-workspace.jsx';
@@ -73,6 +73,7 @@ function PublicDatasetWorkflow({ datasetId, areaBounds, areaGeometry, currentPro
   const observationPeriod = dataset?.discovery === 'stac-api' || ['jaxa-amsr2-soil-moisture', 'jaxa-sgli-lst', 'jaxa-modis-ndvi', 'maxar-open-legacy','vantor-open'].includes(dataset?.id);
   const publishedItems = dataset?.discovery === 'stac-items';
   const selectedLayer = dataset?.layers.find(option => option.id === layer);
+  const availableMonths = publicDatasetMonths(dataset,year);
   const availableSeasons = (dataset?.seasons || []).filter(option => !selectedLayer?.seasons?.length || selectedLayer.seasons.includes(option.id));
   const bounds = boundsFromText(region);
   const selections = Object.values(selected);
@@ -88,7 +89,7 @@ function PublicDatasetWorkflow({ datasetId, areaBounds, areaGeometry, currentPro
   const choices = currentProject && !projects.some(project => project.id === currentProject.id) ? [currentProject, ...projects] : projects;
   const target = choices.find(project => project.id === destination);
   const valid = dataset && validQueryBounds(bounds) && (!dataset.years.length || dataset.years.includes(Number(year)))
-    && (!dataset.months?.length || dataset.months.includes(Number(month)))
+    && (!dataset.months?.length || availableMonths.includes(Number(month)))
     && (!selectedRegion || (dataset.regions || []).some(option => option.id === selectedRegion))
     && (!dataset.seasons?.length || availableSeasons.some(option => option.id === season))
     && dataset.layers.some(option => option.id === layer) && (!dataset.requiresCountry || /^[A-Z]{3}$/.test(country));
@@ -290,8 +291,8 @@ function PublicDatasetWorkflow({ datasetId, areaBounds, areaGeometry, currentPro
             const allowed = (dataset.seasons || []).filter(option => !next.seasons?.length || next.seasons.includes(option.id));
             setSeason(next.seasons?.length === 1 ? next.seasons[0] : allowed.some(option => option.id === season) ? season : allowed[0]?.id || '');
           })}>{dataset.layers.map(option => <option key={option.id} value={option.id}>{t(option.title)}</option>)}</Select></label>
-          {dataset.years.length > 0 && <label className="stac-field"><span>{t(observationPeriod && dataset.months?.length ? 'Observation year' : 'Reference year')}</span><Select aria-label={t(observationPeriod && dataset.months?.length ? 'Observation year' : 'Reference year')} value={year} disabled={Boolean(busy)} onChange={event => edit(() => setYear(event.target.value))}>{dataset.years.map(value => <option value={value} key={value}>{value}</option>)}</Select></label>}
-          {dataset.months?.length > 0 && <label className="stac-field"><span>{t(observationPeriod ? 'Observation month' : 'Reference month')}</span><Select aria-label={t(observationPeriod ? 'Observation month' : 'Reference month')} value={month} disabled={Boolean(busy)} onChange={event => edit(() => setMonth(event.target.value))}>{dataset.months.map(value => <option value={value} key={value}>{number(value)}</option>)}</Select></label>}
+          {dataset.years.length > 0 && <label className="stac-field"><span>{t(observationPeriod && dataset.months?.length ? 'Observation year' : 'Reference year')}</span><Select aria-label={t(observationPeriod && dataset.months?.length ? 'Observation year' : 'Reference year')} value={year} disabled={Boolean(busy)} onChange={event => edit(() => {setYear(event.target.value);if(dataset.months?.length&&!publicDatasetMonths(dataset,event.target.value).includes(Number(month)))setMonth('');})}>{dataset.years.map(value => <option value={value} key={value}>{value}</option>)}</Select></label>}
+          {dataset.months?.length > 0 && <label className="stac-field"><span>{t(observationPeriod ? 'Observation month' : 'Reference month')}</span><Select aria-label={t(observationPeriod ? 'Observation month' : 'Reference month')} value={month} disabled={Boolean(busy)} onChange={event => edit(() => setMonth(event.target.value))}>{!month&&<option value="">{t('Choose an observation month')}</option>}{dataset.months.map(value => <option value={value} key={value} disabled={!availableMonths.includes(value)}>{number(value)}</option>)}</Select></label>}
           {dataset.requiresCountry && <label className="stac-field public-dataset-wide-field"><span>{t('Country code · ISO 3166-1 alpha-3')}</span><Input aria-label={t('Dataset country code')} placeholder="CHN" maxLength={3} value={country} disabled={Boolean(busy)} onChange={event => edit(() => setCountry(event.target.value.toUpperCase()))}/></label>}
           {dataset.regions?.length > 0 && <label className="stac-field public-dataset-wide-field"><span>{t('Published region')}</span><Select aria-label={t('Published region')} value={selectedRegion} disabled={Boolean(busy)} onChange={event => edit(() => setSelectedRegion(event.target.value))}><option value="">{t('Match current map area automatically')}</option>{dataset.regions.map(option => <option key={option.id} value={option.id}>{t(option.title)}</option>)}</Select><small className="stac-help">{t('Region selection retains your map area. Only intersecting published items are used.')}</small></label>}
           {dataset.seasons?.length > 0 && <label className="stac-field"><span>{t('Published season')}</span><Select aria-label={t('Published season')} value={season} disabled={Boolean(busy)} onChange={event => edit(() => setSeason(event.target.value))}>{availableSeasons.map(option => <option key={option.id} value={option.id}>{t(option.title)}</option>)}</Select></label>}

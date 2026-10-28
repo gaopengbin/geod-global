@@ -20,6 +20,8 @@ Public-product client failures now distinguish service requests, JSON decoding a
 
 ## CBERS live investigation
 
+Further actual UI investigation reproduced a deterministic sub-second rejection: the form allowed October 2019, while the reviewed native WPM recipe supports December 2019 onward. The local service rejected that request with HTTP 400 in 263 ms. The form now disables unsupported first-year months and clears an incompatible selection without substituting a new date. The corrected UI guard was exercised against the real native service. Historical telemetry lacks requested dates, so this cannot be assigned as the cause of every historical failure.
+
 The original 0.2.1 runtime and the released 0.2.3 runtime each resolved and searched the official INPE WPM catalog successfully for the same independent test area and month, returning four scenes. The 26 historical sub-second failures were not reproduced. Current successful requests therefore do not establish their cause or prove that those users' failed requests are fixed.
 
 The modified development runtime then completed a real original-band delivery:

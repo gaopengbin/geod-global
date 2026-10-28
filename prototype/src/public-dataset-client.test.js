@@ -2,11 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {failureDiagnostics} from './usage-diagnostics.js';
 import { readFileSync } from 'node:fs';
-import { publicDatasetRequest, validatePublicDataset, validateDatasetRequest, validatePublicDatasetPlan, validatePublicDatasetConnection, validatePublicDatasetItem, publicDatasetAssetLayer, publicDatasetPreviewRange } from './public-dataset-client.js';
+import { publicDatasetRequest, publicDatasetMonths, validatePublicDataset, validateDatasetRequest, validatePublicDatasetPlan, validatePublicDatasetConnection, validatePublicDatasetItem, publicDatasetAssetLayer, publicDatasetPreviewRange } from './public-dataset-client.js';
 import { deafricaDatasets, deafricaCases } from './public-dataset-deafrica-fixtures.js';
 import { worldcerealDataset, worldcerealRequest, worldcerealPlan, worldcerealConnection, worldcerealSnapshot } from './public-dataset-worldcereal-fixtures.js';
 import { validateStacSearchPage, validateStacSnapshot, validateStacInspection, validateStacPixel } from './stac-client.js';
 import { publicDataset, datasetPayload, datasetPlan, datasetConnected, datasetStacConnection, catalogDataset, catalogPayload, catalogPlan, catalogConnected, catalogPage, catalogSnapshot } from './public-dataset-fixtures.js';
+
+test('WPM first-year month choices follow the native archive boundary without mutating the dataset or another product',()=>{
+ const dataset={id:'cbers-wpm',months:Array.from({length:12},(_,i)=>i+1)},original=structuredClone(dataset);
+ assert.deepEqual(publicDatasetMonths(dataset,2019),[12]);assert.deepEqual(publicDatasetMonths(dataset,2026),dataset.months);
+ assert.deepEqual(publicDatasetMonths({...dataset,id:'other'},2019),dataset.months);assert.deepEqual(dataset,original);
+});
 
 test('real request boundaries distinguish transport, JSON decoding and product validation without exposing upstream text',async()=>{
   const previousFetch=globalThis.fetch,previousWindow=globalThis.window;
