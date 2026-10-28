@@ -442,7 +442,7 @@ it('WPM keeps the oversize PAN visible but batch selection and saved pins contai
   const user=userEvent.setup(),openProject=vi.fn();
   render(<RuntimeContext.Provider value={{projects:[],refresh}}><PublicDatasetExplorer datasetId={dataset.id} areaBounds={request.bounds} autoSearch onOpenProject={openProject}/></RuntimeContext.Provider>);
   const pan=await screen.findByRole('checkbox',{name:`Select asset · ${item.itemId} · BAND0`});
-  expect(screen.getByText('One BAND1 original download and local pixel check passed. Online map preview remains unstable; download the original for inspection.')).not.toBeNull();
+  expect(screen.getByText('CBERS WPM preview uses the downloaded original band. Save and download first, then load its local preview.')).not.toBeNull();
   expect(pan.getAttribute('data-disabled')).not.toBeNull();
   await user.click(within(pan.closest('article')).getByRole('button',{name:'Asset source details'}));
   expect(screen.getByRole('dialog',{name:'Asset source details'}).textContent).toContain(sizeReason);
@@ -450,10 +450,9 @@ it('WPM keeps the oversize PAN visible but batch selection and saved pins contai
   await user.click(screen.getByRole('button',{name:'Select reviewed files'}));
   expect(pan.getAttribute('aria-checked')).toBe('false');
   for(const band of [1,2,3,4]) expect(screen.getByRole('checkbox',{name:`Select asset · ${item.itemId} · BAND${band}`}).getAttribute('aria-checked')).toBe('true');
-  await user.click(screen.getByRole('button',{name:'Load selected files to map'}));
-  const previewLayers=screen.getByRole('region',{name:'Product preview layers'});
-  for(const band of [1,2,3,4]) expect(previewLayers.textContent).toContain(`${item.title || item.itemId} · BAND${band} · 8 m multispectral DN`);
-  expect(previewLayers.textContent).not.toContain('BAND0');
+  expect(screen.getByRole('button',{name:'Load selected files to map'}).disabled).toBe(true);
+  expect(screen.queryByRole('region',{name:'Product preview layers'})).toBeNull();
+  expect(screen.getByText('Download originals before previewing.')).not.toBeNull();
   await user.click(within(screen.getByRole('region',{name:'Selected product actions'})).getByRole('button',{name:'Save and download'}));
   expect(stacRequest.mock.calls.some(([operation])=>['project','downloads'].includes(operation))).toBe(false);
   await user.click(screen.getByRole('button',{name:'Confirm and download'}));
