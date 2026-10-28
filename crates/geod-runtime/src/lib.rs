@@ -1193,20 +1193,7 @@ impl JobManager {
     async fn download(&self, id: &str, token: &CancellationToken) -> Result<()> {
         let job = self.get(id).await.ok_or("Unknown job")?;
         // Account, generated coverage and custom STAC adapters keep their own contracts.
-        let retries = if job.stac_source.is_none()
-            && job.wcs_source.is_none()
-            && matches!(
-                job.asset_key.as_str(),
-                "visual"
-                    | "red"
-                    | "green"
-                    | "blue"
-                    | "elevation"
-                    | "aerial"
-                    | "scl"
-                    | "qa_pixel"
-                    | "qa_radsat"
-            ) {
+        let retries = if transfer::bounded_public_transport(&job) {
             2
         } else {
             0
@@ -1251,6 +1238,32 @@ impl JobManager {
     }
 
     async fn download_once(&self, id: &str, token: &CancellationToken) -> Result<()> {
+        let job = self.get(id).await.ok_or("Unknown job")?;
+        let timeout = transfer::bounded_public_transport(&job).then_some(Duration::from_secs(45));
+        self.download_once_with_first_data_timeout(id, token, timeout)
+            .await
+    }
+
+    async fn download_once_with_first_data_timeout(
+        &self,
+        id: &str,
+        token: &CancellationToken,
+        first_data_timeout: Option<Duration>,
+    ) -> Result<()> {
+        {
+            let mut store = self.inner.store.lock().await;
+            let job = store.jobs.get_mut(id).ok_or("Unknown job")?;
+            if !active(&job.status) {
+                return Err("Transfer cancelled".into());
+            }
+            // A retry can wait behind other transfers too. Do not leave its
+            // previous "running" state on screen while no worker slot is held.
+            if job.status != JobStatus::Queued {
+                job.status = JobStatus::Queued;
+                job.updated_at = now();
+                self.persist(&store.jobs).await?;
+            }
+        }
         let _permit = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
             permit = self.inner.permits.acquire() => permit.map_err(io_error)?,
@@ -1273,8 +1286,21 @@ impl JobManager {
         {
             return self.finish_download(&job, token, completed).await;
         }
+        // Start after queue admission and finite/generated adapters. Bound time
+        // to the first source bytes across headers and range restarts, not
+        // the total lifetime of a healthy large-file download.
+        let first_data_deadline =
+            first_data_timeout.map(|duration| tokio::time::Instant::now() + duration);
+        let first_data_elapsed = async {
+            match first_data_deadline {
+                Some(deadline) => tokio::time::sleep_until(deadline).await,
+                None => std::future::pending::<()>().await,
+            }
+        };
+        tokio::pin!(first_data_elapsed);
         let mut response = tokio::select! {
             _ = token.cancelled() => return Err("Transfer cancelled".into()),
+            _ = &mut first_data_elapsed => return Err("Asset transfer timed out before receiving response data".into()),
             response = self.download_response(&client, &proxy_settings, &job, prepared.checkpoint.as_ref()) => response?,
         };
         if prepared
@@ -1303,6 +1329,7 @@ impl JobManager {
                 drop(response);
                 response = tokio::select! {
                     _ = token.cancelled() => return Err("Transfer cancelled".into()),
+                    _ = &mut first_data_elapsed => return Err("Asset transfer timed out before receiving response data".into()),
                     response = self.download_response(&client, &proxy_settings, &job, None) => response?,
                 };
             }
@@ -1399,15 +1426,18 @@ impl JobManager {
         let mut last_checkpoint = std::time::Instant::now();
         let mut saved_bytes = bytes;
         let mut invalid_body = false;
+        let mut received_source_data = false;
         let transfer_result: Result<()> = async { loop {
             let chunk = tokio::select! {
                 _ = token.cancelled() => return Err("Transfer cancelled".into()),
+                _ = &mut first_data_elapsed, if !received_source_data => return Err("Asset transfer timed out before receiving response data".into()),
                 chunk = tokio::time::timeout(Duration::from_secs(45), stream.next()) => chunk.map_err(|_| "Asset transfer timed out: server stopped sending data for 45 seconds")?,
             };
             let Some(chunk) = chunk else {
                 break;
             };
             let chunk = chunk.map_err(transfer::network_error)?;
+            received_source_data |= !chunk.is_empty();
             bytes += chunk.len() as u64;
             if bytes > limit || total.is_some_and(|size| bytes > size) {
                 invalid_body = true;

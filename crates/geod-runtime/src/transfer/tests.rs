@@ -66,6 +66,11 @@ async fn server(behavior: &'static str) -> Server {
                     return;
                 }
                 let first = attempt == 1;
+                if behavior == "stall-headers" {
+                    let _ = socket.write_all(b"HTTP/1.1 200 OK\r\n").await;
+                    tokio::select! { _ = token.cancelled() => {}, _ = tokio::time::sleep(std::time::Duration::from_secs(20)) => {} }
+                    return;
+                }
                 let weak = behavior == "weak";
                 let missing = behavior == "missing";
                 let changed = behavior == "changed"
@@ -115,6 +120,16 @@ async fn server(behavior: &'static str) -> Server {
                 }
                 headers.push_str(&format!("Content-Length: {}\r\n\r\n", body.len() - offset));
                 if socket.write_all(headers.as_bytes()).await.is_err() {
+                    return;
+                }
+                if behavior == "stall-first-data" {
+                    tokio::select! { _ = token.cancelled() => {}, _ = tokio::time::sleep(std::time::Duration::from_secs(20)) => {} }
+                    return;
+                }
+                if behavior == "healthy-slow" {
+                    let _ = socket.write_all(&body[..PREFIX]).await;
+                    tokio::time::sleep(std::time::Duration::from_millis(400)).await;
+                    let _ = socket.write_all(&body[PREFIX..]).await;
                     return;
                 }
                 if first && behavior != "unexpected" {
@@ -196,6 +211,101 @@ async fn bounded_recovery_resumes_a_broken_body_without_user_retry() {
     assert_eq!(requests.len(), 2);
     assert!(requests[1].contains("\r\nrange: bytes=16-\r\n"));
     assert!(requests[1].contains("\r\nif-range: \"v1\"\r\n"));
+}
+
+#[tokio::test]
+async fn first_data_deadline_covers_headers_and_body_and_preserves_cancellation() {
+    for behavior in ["stall-headers", "stall-first-data"] {
+        let server = server(behavior).await;
+        let dir = tempfile::tempdir().unwrap();
+        let manager = manager(dir.path(), &server).await;
+        let job = crate::new_download_job(CreateJobRequest {
+            item_id: "S2_TRANSFER_TEST".into(),
+            asset_key: "thumbnail".into(),
+            href: format!("{}/image", server.origin),
+            media_type: "image/jpeg".into(),
+            title: None,
+        });
+        manager
+            .inner
+            .store
+            .lock()
+            .await
+            .jobs
+            .insert(job.id.clone(), job.clone());
+        let start = tokio::time::Instant::now();
+        let error = manager
+            .download_once_with_first_data_timeout(
+                &job.id,
+                &CancellationToken::new(),
+                Some(std::time::Duration::from_millis(250)),
+            )
+            .await
+            .unwrap_err();
+        assert_eq!(
+            error,
+            "Asset transfer timed out before receiving response data"
+        );
+        assert!(retryable(&error));
+        assert!(start.elapsed() < std::time::Duration::from_secs(5));
+        let record = manager.get(&job.id).await.unwrap();
+        assert_eq!(record.bytes_downloaded, 0);
+        assert!(record.output_path.is_none() && record.sha256.is_none());
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+        assert_eq!(
+            manager
+                .download_once_with_first_data_timeout(
+                    &job.id,
+                    &cancellation,
+                    Some(std::time::Duration::from_millis(250))
+                )
+                .await
+                .unwrap_err(),
+            "Transfer cancelled"
+        );
+    }
+}
+
+#[tokio::test]
+async fn first_data_deadline_excludes_queue_wait_and_does_not_limit_a_healthy_body() {
+    let server = server("healthy-slow").await;
+    let dir = tempfile::tempdir().unwrap();
+    let manager = manager(dir.path(), &server).await;
+    let mut job = crate::new_download_job(CreateJobRequest {
+        item_id: "S2_TRANSFER_TEST".into(),
+        asset_key: "thumbnail".into(),
+        href: format!("{}/image", server.origin),
+        media_type: "image/jpeg".into(),
+        title: None,
+    });
+    // Model a previous failed attempt waiting to reacquire a worker slot.
+    job.status = JobStatus::Running;
+    manager
+        .inner
+        .store
+        .lock()
+        .await
+        .jobs
+        .insert(job.id.clone(), job.clone());
+    let permits = manager.inner.permits.acquire_many(2).await.unwrap();
+    let token = CancellationToken::new();
+    let download = manager.download_once_with_first_data_timeout(
+        &job.id,
+        &token,
+        Some(std::time::Duration::from_millis(250)),
+    );
+    let release = async {
+        tokio::time::sleep(std::time::Duration::from_millis(400)).await;
+        assert_eq!(
+            manager.get(&job.id).await.unwrap().status,
+            JobStatus::Queued
+        );
+        drop(permits);
+    };
+    let (result, ()) = tokio::join!(download, release);
+    result.unwrap();
+    assert_complete(&manager, &job.id, BODY, TransferMode::Fresh).await;
 }
 
 #[tokio::test]

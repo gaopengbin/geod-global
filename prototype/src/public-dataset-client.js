@@ -1,4 +1,5 @@
 import {usageRequest} from './usage-events.js';
+import {diagnosticError} from './usage-diagnostics.js';
 import { desktopAvailable } from './runtime-client.js';
 import { validQueryBounds } from './features-client.js';
 import { validStacUrl, validateStacConnection, validateStacSearchPage, validateStacSnapshot } from './stac-client.js';
@@ -391,21 +392,25 @@ async function performPublicDatasetRequest(operation, payload = {}, signal) {
   let value;
   if (desktopAvailable()) {
     try { value = await window.__TAURI__.core.invoke(commands[operation], operation === 'list' ? {} : { request: payload }); }
-    catch (cause) { throw cause instanceof Error ? cause : new Error(String(cause)); }
+    catch (cause) { throw diagnosticError(cause instanceof Error ? cause : new Error(String(cause)), {stage:'service_request',diagnosticOrigin:'explicit'}); }
   } else {
-    const response = await fetch(`http://127.0.0.1:4318/datasets${operation === 'list' ? '' : `/${operation}`}`, {
+    let response;
+    try { response = await fetch(`http://127.0.0.1:4318/datasets${operation === 'list' ? '' : `/${operation}`}`, {
       method: operation === 'list' ? 'GET' : 'POST', signal,
       headers: operation === 'list' ? undefined : { 'Content-Type': 'application/json', 'X-GeoD-Client': 'geod-global' },
       body: operation === 'list' ? undefined : JSON.stringify(payload),
-    });
-    value = await response.json();
-    if (!response.ok) fail(value.error || `Dataset service returned HTTP ${response.status}`);
+    }); } catch(cause) { throw diagnosticError(cause,{stage:'service_request',reason:cause?.name==='AbortError'?'cancelled':cause?.name==='TimeoutError'?'timeout':'network',diagnosticOrigin:'explicit'}); }
+    try { value = await response.json(); }
+    catch(cause) { throw diagnosticError(cause,{stage:'response_decode',httpStatus:response.status,diagnosticOrigin:'explicit'}); }
+    if (!response.ok) throw diagnosticError(new Error(value?.error || `Dataset service returned HTTP ${response.status}`),{stage:'service_request',httpStatus:response.status,diagnosticOrigin:'explicit'});
   }
   check();
-  if (operation === 'list') {
-    if (!Array.isArray(value) || value.length > 128 || new Set(value.map(dataset => dataset.id)).size !== value.length) fail('Invalid public dataset catalog.');
-    value.forEach(validatePublicDataset);
-  } else if (operation === 'resolve') validatePublicDatasetPlan(value, payload);
-  else validatePublicDatasetConnection(value, payload);
+  try {
+    if (operation === 'list') {
+      if (!Array.isArray(value) || value.length > 128 || new Set(value.map(dataset => dataset.id)).size !== value.length) fail('Invalid public dataset catalog.');
+      value.forEach(validatePublicDataset);
+    } else if (operation === 'resolve') validatePublicDatasetPlan(value, payload);
+    else validatePublicDatasetConnection(value, payload);
+  } catch(cause) { throw diagnosticError(cause,{stage:'response_validation',reason:'validation',diagnosticOrigin:'explicit'}); }
   return value;
 }

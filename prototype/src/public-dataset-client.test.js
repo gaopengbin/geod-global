@@ -1,11 +1,34 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {failureDiagnostics} from './usage-diagnostics.js';
 import { readFileSync } from 'node:fs';
 import { publicDatasetRequest, validatePublicDataset, validateDatasetRequest, validatePublicDatasetPlan, validatePublicDatasetConnection, validatePublicDatasetItem, publicDatasetAssetLayer, publicDatasetPreviewRange } from './public-dataset-client.js';
 import { deafricaDatasets, deafricaCases } from './public-dataset-deafrica-fixtures.js';
 import { worldcerealDataset, worldcerealRequest, worldcerealPlan, worldcerealConnection, worldcerealSnapshot } from './public-dataset-worldcereal-fixtures.js';
 import { validateStacSearchPage, validateStacSnapshot, validateStacInspection, validateStacPixel } from './stac-client.js';
 import { publicDataset, datasetPayload, datasetPlan, datasetConnected, datasetStacConnection, catalogDataset, catalogPayload, catalogPlan, catalogConnected, catalogPage, catalogSnapshot } from './public-dataset-fixtures.js';
+
+test('real request boundaries distinguish transport, JSON decoding and product validation without exposing upstream text',async()=>{
+  const previousFetch=globalThis.fetch,previousWindow=globalThis.window;
+  try{
+    delete globalThis.window;
+    for(const [fetcher,stage,status,reason] of [
+      [async()=>{throw new TypeError('Failed to fetch https://private.invalid/path');},'service_request','unknown','network'],
+      [async()=>({status:503,ok:false,json:async()=>{throw new SyntaxError('private response');}}),'response_decode','503','upstream_unavailable'],
+      [async()=>({status:403,ok:false,json:async()=>({error:'Access denied for a private resource'})}),'service_request','403','permission_denied'],
+      [async()=>({status:200,ok:true,json:async()=>({...catalogConnected,searches:[]})}),'response_validation','unknown','validation'],
+    ]){
+      globalThis.fetch=fetcher;
+      await assert.rejects(publicDatasetRequest('connect',catalogPayload),error=>{
+        const details=failureDiagnostics(error);
+        assert.equal(details.stage,stage);assert.equal(details.httpStatus,status);assert.equal(details.reason,reason);assert.equal(details.diagnosticOrigin,'explicit');
+        assert.ok(!JSON.stringify(details).includes('private'));return true;
+      });
+    }
+    globalThis.window={__TAURI__:{core:{invoke:async()=>{throw 'Native connector rejected this request';}}}};
+    await assert.rejects(publicDatasetRequest('connect',catalogPayload),error=>failureDiagnostics(error).stage==='service_request');
+  }finally{globalThis.fetch=previousFetch;if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}
+});
 
 test('FNF display stretch binds the publisher category range without treating other UInt8 products as classes',()=>{
   const dataset={id:'jaxa-palsar-fnf'},asset={key:'FNF',metadata:{'je:rasters':{dn:{data_type:'uint8',min:1,max:4,nodata:0}}}};

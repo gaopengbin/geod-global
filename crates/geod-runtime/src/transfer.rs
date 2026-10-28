@@ -29,6 +29,7 @@ pub(crate) fn retryable(error: &str) -> bool {
     matches!(
         error,
         "Asset transfer timed out"
+            | "Asset transfer timed out before receiving response data"
             | "Asset network connection failed"
             | "Asset network response was incomplete"
             | "Asset network request failed"
@@ -37,6 +38,23 @@ pub(crate) fn retryable(error: &str) -> bool {
         error.starts_with(&format!("Asset server returned HTTP {status} "))
             || error.starts_with(&format!("Asset server returned HTTP {status};"))
     })
+}
+
+pub(crate) fn bounded_public_transport(job: &Job) -> bool {
+    job.stac_source.is_none()
+        && job.wcs_source.is_none()
+        && matches!(
+            job.asset_key.as_str(),
+            "visual"
+                | "red"
+                | "green"
+                | "blue"
+                | "elevation"
+                | "aerial"
+                | "scl"
+                | "qa_pixel"
+                | "qa_radsat"
+        )
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
