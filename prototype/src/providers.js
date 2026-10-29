@@ -248,8 +248,12 @@ async function prepareLandsatAccess(hrefs, { fetcher, force, now }) {
   })().finally(() => { pendingLandsatAccess = undefined; });
   await pendingLandsatAccess;
 }
+function supportedSinusoidalPreviewAsset(href) {
+  return ['red','green','blue'].some(key=>modisAssetIdentity(href,key))
+    || ['ndvi','evi'].some(key=>vegetationAssetIdentity(href,key));
+}
 async function prepareModisAccess(hrefs, {fetcher,force,now}) {
-  if(!hrefs.every(href=>['red','green','blue'].some(key=>modisAssetIdentity(href,key))))throw new Error('Unsupported MODIS data access.');
+  if(!hrefs.every(supportedSinusoidalPreviewAsset))throw new Error('Unsupported MODIS data access.');
   if(!force&&modisAccess?.expires>now+60_000)return;
   if(!pendingModisAccess)pendingModisAccess=(async()=>{
     const response=await requestPublicAccess('https://planetarycomputer.microsoft.com/api/sas/v1/token/modiseuwest/modis-061-cogs',fetcher);
@@ -288,7 +292,7 @@ export async function prepareAssetAccess(hrefs, { fetcher = fetch, signal, force
 export function assetReadURL(href, now = Date.now()) {
   const url = new URL(href);
   if(url.hostname===MODIS_HOST){
-    if(!['red','green','blue'].some(key=>modisAssetIdentity(href,key))||!modisAccess||modisAccess.expires<=now+15_000)throw new Error('Data access expired. Retry loading imagery.');
+    if(!supportedSinusoidalPreviewAsset(href)||!modisAccess||modisAccess.expires<=now+15_000)throw new Error('Data access expired. Retry loading imagery.');
     url.search=modisAccess.token;return url.href;
   }
   if (url.hostname === NAIP_HOST) {

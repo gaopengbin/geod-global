@@ -6,6 +6,7 @@ import {Badge,Button,Input,Modal,Spinner} from './ui/index.jsx';
 import {useI18n} from './i18n.jsx';
 import {RuntimeContext} from './runtime-context.js';
 import {deliveryState,taskHref} from './acquisition-flow.js';
+import {downloadQueueCounts} from './download-observation.js';
 import './acquisition.css';
 
 export function ExploreResultRow({title,meta,selected,focused,onSelect,selectionLabel,onFocus,focusLabel,thumbnail,actions,disabled,className='',children}) {
@@ -50,11 +51,12 @@ export function DeliveryReceipt({project,jobIds,jobs:providedJobs,submitted=fals
   const {t,number}=useI18n(),runtime=useContext(RuntimeContext);
   const jobs=providedJobs||runtime?.jobs||[];
   const state=deliveryState(jobs,jobIds);
+  const queue=downloadQueueCounts(state.rows);
   const labels={ready:'Files ready',active:'Downloading in background',partial:'Some files ready · needs attention',attention:'Download needs attention',pending:'Waiting for task status',saved:submitted?'Waiting for task status':'Selection saved · download not started'};
   const Icon=state.status==='ready'?CheckCircle2:['partial','attention'].includes(state.status)?AlertCircle:['active','pending'].includes(state.status)?LoaderCircle:FolderOpen;
   return <section className={`delivery-receipt${compact?' delivery-receipt-compact':''}`} aria-label={t('Download and results')} data-status={state.status}>
     <div className="delivery-receipt-heading"><Icon size={16}/><strong title={project?.name}>{project?.name||t('Selected downloads')}</strong><Badge tone={state.status==='ready'?'accent':'neutral'}>{t(labels[state.status])}</Badge></div>
-    {state.total>0&&<p role="status">{t('{done} of {total} files downloaded',{done:number(state.done),total:number(state.total)})}{state.attention>0&&<> · {t('{count} need attention',{count:number(state.attention)})}</>}</p>}
+    {state.total>0&&<p role="status">{t('{done} of {total} files downloaded',{done:number(state.done),total:number(state.total)})}{queue.running+queue.queued>0&&<> · {t('{running} downloading · {queued} queued',{running:number(queue.running),queued:number(queue.queued)})}</>}{state.attention>0&&<> · {t('{count} need attention',{count:number(state.attention)})}</>}</p>}
     <div className="delivery-receipt-actions">{(submitted||state.total>0)&&<Button asChild variant="secondary" size="sm"><a href={taskHref({projectId:project?.id,jobId:!project&&state.rows[0]?.id})}><ListTodo size={14}/>{t('View download tasks')}</a></Button>}{project?.id&&<Button asChild variant={state.done>0?'primary':'secondary'} size="sm"><a href={`#My%20Data?project=${encodeURIComponent(project.id)}`} onClick={event=>{if(trackResults&&state.done>0)usage.record('results_opened',usageContext());if(onOpenProject){event.preventDefault();onOpenProject(project.id);}}}><FolderOpen size={14}/>{t(state.done>0?'View results':'Open project')}</a></Button>}</div>
   </section>;
 }

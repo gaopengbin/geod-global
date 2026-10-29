@@ -9,26 +9,30 @@ export function modisPreviewOriginals(scene) {
   return ['red','green','blue'].map(key=>scene.assets[key].href);
 }
 export function modisPreviewGrid(scene) {
-  const identity=modisIdentity(scene.id);
-  const expected=identity&&[MODIS_PIXEL,0,(identity.h-18)*2400*MODIS_PIXEL,0,-MODIS_PIXEL,(9-identity.v)*2400*MODIS_PIXEL];
-  const t=scene.grid?.transform??expected,shape=scene.grid?.shape??[2400,2400];
-  if(!identity||shape?.join(',')!=='2400,2400'||t?.length!==6||!t.every(Number.isFinite)
-    ||t[1]!==0||t[3]!==0||Math.abs(t[0]-MODIS_PIXEL)>1e-6||Math.abs(t[4]+MODIS_PIXEL)>1e-6
-    ||Math.abs(t[2]-(identity.h-18)*2400*MODIS_PIXEL)>0.01||Math.abs(t[5]-(9-identity.v)*2400*MODIS_PIXEL)>0.01)
+  return sinusoidalPreviewGrid(scene,modisIdentity(scene.id),2400,MODIS_PIXEL);
+}
+export function sinusoidalPreviewGrid(scene,identity,width,pixelSize) {
+  const expected=identity&&[pixelSize,0,(identity.h-18)*width*pixelSize,0,-pixelSize,(9-identity.v)*width*pixelSize];
+  const t=scene.grid?.transform??expected,shape=scene.grid?.shape??[width,width];
+  if(!identity||shape?.join(',')!==`${width},${width}`||t?.length!==6||!t.every(Number.isFinite)
+    ||t[1]!==0||t[3]!==0||Math.abs(t[0]-pixelSize)>1e-6||Math.abs(t[4]+pixelSize)>1e-6
+    ||Math.abs(t[2]-expected[2])>0.01||Math.abs(t[5]-expected[5])>0.01)
     throw new Error('MODIS COG metadata does not match the selected original bands.');
   return t;
 }
 
 export function validateModisPreviewImages(sources,scene) {
   modisPreviewOriginals(scene);
-  if(sources.length!==3)throw new Error('MODIS COG metadata does not match the selected original bands.');
-  const t=modisPreviewGrid(scene);
+  validateSinusoidalPreviewImages(sources,modisPreviewGrid(scene),{count:3,width:2400,nodata:-28672});
+}
+export function validateSinusoidalPreviewImages(sources,t,{count,width,nodata}) {
+  if(sources.length!==count)throw new Error('MODIS COG metadata does not match the selected original bands.');
   for(const images of sources){
     const image=[...images].sort((a,b)=>b.getWidth()-a.getWidth())[0];
     const keys=image?.getGeoKeys(),tag=name=>image?.fileDirectory.getValue(name);
-    if(!image||image.getWidth()!==2400||image.getHeight()!==2400||image.getSamplesPerPixel()!==1
+    if(!image||image.getWidth()!==width||image.getHeight()!==width||image.getSamplesPerPixel()!==1
       ||Array.from(tag('BitsPerSample')||[]).join(',')!=='16'||Array.from(tag('SampleFormat')||[]).join(',')!=='2'
-      ||image.getGDALNoData()!==-28672||keys?.GTModelTypeGeoKey!==1||keys.GTRasterTypeGeoKey!==1
+      ||image.getGDALNoData()!==nodata||keys?.GTModelTypeGeoKey!==1||keys.GTRasterTypeGeoKey!==1
       ||keys.ProjCoordTransGeoKey!==24||keys.ProjLinearUnitsGeoKey!==9001||keys.GeogAngularUnitsGeoKey!==9102
       ||keys.GeogSemiMajorAxisGeoKey!==6371007.181||keys.GeogSemiMinorAxisGeoKey!==6371007.181
       ||keys.ProjCenterLongGeoKey!==0||keys.ProjFalseEastingGeoKey!==0||keys.ProjFalseNorthingGeoKey!==0

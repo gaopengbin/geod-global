@@ -39,6 +39,7 @@ test('NAIP source pins original four-band identity and omits cloud filters',()=>
  assert.equal(scene.cloud,null); assert.equal(scene.dataset,'USDA NAIP RGB + NIR'); assert.equal(scene.gsd,0.6);
  assert.equal(naipIdentity(new URL(job.href).pathname),scene.id); assert.equal(isSupportedAsset(job.href,'visual'),false);
  assert.deepEqual(imageryHrefs(scene),[job.href]); assert.equal(scene.grid.transform.length,6);
+  assert.equal(new URL(scene.thumbnail).searchParams.get('max_size'),'128');
  for(const href of [job.href+'?sig=secret',job.href.replace('naipeuwest','other'),job.href.replace('060cm','100cm'),job.href.replace('/2022/','/2021/'),job.href.replace('20220518.tif','20220230.tif')]) assert.equal(isSupportedAsset(href,'aerial'),false);
  for(const value of [{...item,id:item.id+'other'},{...item,assets:{...item.assets,image:{...item.assets.image,'eo:bands':[{common_name:'red'},{common_name:'green'},{common_name:'blue'},{common_name:'alpha'}]}}}]) assert.throws(()=>normalizeScene(value,'planetary-naip'),/unsupported NAIP/);
 });

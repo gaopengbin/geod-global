@@ -3,9 +3,8 @@ import { MODIS_CRS } from './modis.js';
 
 export const VEGETATION_PREVIEW_COLORS = ['#a50026', '#d73027', '#f46d43', '#fdae61', '#fee08b', '#ffffbf', '#d9ef8b', '#a6d96a', '#66bd63', '#1a9850', '#006837'];
 
-// This is an item-specific display service, separate from original COG access.
-// The tiler reprojects the sinusoidal grid and colors signed DN on a fixed
-// scientific range. It does not apply a VI quality/reliability mask.
+// Original COGs are read in bounded ranges and displayed on their verified
+// sinusoidal grid. Display colors never apply a VI quality/reliability mask.
 export function vegetationPreview(scene, index) {
   const asset = scene?.assets?.[index];
   const identity = vegetationAssetIdentity(asset?.href, index);
@@ -20,20 +19,14 @@ export function vegetationPreview(scene, index) {
     || scene.bbox[0] >= scene.bbox[2] || scene.bbox[1] >= scene.bbox[3]) {
     throw new Error('This scene has no verified NDVI/EVI preview source.');
   }
-  const parameters = new URLSearchParams({
-    collection: scene.collection, item: scene.id, assets: `250m_16_days_${index.toUpperCase()}`,
-    rescale: '-2000,10000', colormap_name: 'rdylgn', nodata: '-3000', unscale: 'false',
-    resampling: 'nearest', reproject: 'nearest', return_mask: 'true',
-  });
   return {
-    url: `https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/{z}/{x}/{y}.png?${parameters}`,
-    browseURL: `https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?${parameters}&max_size=128`,
+    hrefs:[asset.href],
     bounds: scene.bbox.slice(), index, itemId: scene.id,
   };
 }
 
 export function vegetationBrowsePreview(scene) {
-  try { return vegetationPreview(scene, 'ndvi').browseURL; }
+  try { vegetationPreview(scene,'ndvi'); return null; }
   catch { return null; }
 }
 

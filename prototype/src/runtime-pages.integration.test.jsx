@@ -17,6 +17,19 @@ beforeEach(() => {
 });
 
 describe('File and task flows', () => {
+  it('separates waiting slots, first-data waits and measured speed without marking final validation as a stalled transfer',()=>{
+    const rows=[{...rgb,id:'queued',status:'queued',bytesDownloaded:0},{...rgb,id:'connecting',status:'running',bytesDownloaded:0,totalBytes:null},{...rgb,id:'data',status:'running',bytesDownloaded:0,totalBytes:1000},{...rgb,id:'transfer',status:'running',bytesDownloaded:100,totalBytes:1000},{...rgb,id:'verify',status:'running',bytesDownloaded:1000,totalBytes:1000}];
+    wrap(<RuntimeJobRows jobs={rows}/>,{jobs:rows,downloadProgress:new Map([['transfer',{rate:10240,idleMs:0}],['verify',{idleMs:15000}]])});
+    expect(screen.getByText('Waiting for download slot')).toBeTruthy();expect(screen.getByText('Waiting for another download to finish')).toBeTruthy();
+    expect(screen.getByText('Connecting to source')).toBeTruthy();expect(screen.getByText('Waiting for source data')).toBeTruthy();
+    expect(screen.getByText('Verifying download')).toBeTruthy();expect(screen.getByText(/10\.0 KiB\/s/)).toBeTruthy();
+    expect(screen.queryByText(/No new source data/)).toBeNull();
+  });
+  it('keeps actively transferring files above queued zero-byte files',()=>{
+    const rows=[{...rgb,id:'queued',status:'queued',bytesDownloaded:0},{...scl,id:'active',status:'running',bytesDownloaded:1000}];
+    const {container}=wrap(<RuntimeTasks/>,{jobs:rows,projects:[]});
+    expect([...container.querySelectorAll('[data-slot="task-row"]')].map(row=>row.dataset.status)).toEqual(['running','queued']);
+  });
   it('a validated Agent job link opens its actual history tab and highlights the matching task', () => {
     window.history.replaceState(null, '', `#Tasks?job=${id}`);
     const { container } = wrap(<RuntimeTasks/>);

@@ -8,30 +8,16 @@ import { canDisplayImagery, providerById } from './providers.js';
 const fixture = JSON.parse(readFileSync(new URL('../public/samples/modis-vegetation-response.json', import.meta.url)));
 const scene = normalizeScene(fixture.features[0], 'planetary-vegetation');
 
-test('online index preview pins the item and independent science band without enabling the RGB loader', () => {
+test('index preview pins the original science band and avoids the rejected managed tiler without enabling RGB', () => {
   for (const index of ['ndvi', 'evi']) {
     const preview = vegetationPreview(scene, index);
-    const url = new URL(preview.url.replace('{z}/{x}/{y}', '9/81/197'));
-    assert.equal(url.origin, 'https://planetarycomputer.microsoft.com');
-    assert.equal(url.searchParams.get('item'), scene.id);
-    assert.equal(url.searchParams.get('collection'), 'modis-13Q1-061');
-    assert.equal(url.searchParams.get('assets'), `250m_16_days_${index.toUpperCase()}`);
-    assert.equal(url.searchParams.get('rescale'), '-2000,10000');
-    assert.equal(url.searchParams.get('unscale'), 'false');
-    assert.equal(url.searchParams.get('nodata'), '-3000');
-    assert.equal(url.searchParams.get('return_mask'), 'true');
-    assert.equal(url.searchParams.get('reproject'), 'nearest');
-    assert(!url.searchParams.has('expression'));
+    assert.equal(preview.itemId,scene.id);assert.equal(preview.index,index);
+    assert.deepEqual(preview.hrefs,[scene.assets[index].href]);
+    assert.equal(preview.url,undefined);assert.equal(preview.browseURL,undefined);
     assert.notEqual(preview.bounds, scene.bbox);
   }
   assert.equal(canDisplayImagery(providerById('planetary-vegetation')), false);
-  const browse = new URL(vegetationBrowsePreview(scene));
-  assert.equal(browse.pathname, '/api/data/v1/item/preview.png');
-  assert.equal(browse.searchParams.get('item'), scene.id);
-  assert.equal(browse.searchParams.get('assets'), '250m_16_days_NDVI');
-  assert.equal(browse.searchParams.get('colormap_name'), 'rdylgn');
-  assert.equal(browse.searchParams.get('rescale'), '-2000,10000');
-  assert.equal(browse.searchParams.get('max_size'), '128');
+  assert.equal(vegetationBrowsePreview(scene),null);
 });
 
 test('a substituted item, channel, host, calibration or geographic bound cannot become a preview', () => {

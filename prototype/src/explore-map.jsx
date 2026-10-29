@@ -30,6 +30,7 @@ import { createCatalogPreviewSource } from './explore-preview-source.js';
 import { createProductRasterPreviewSource, hasProductRasterTilePixels } from './public-dataset-preview-source.js';
 import { catalogPreviewKind, catalogPreviewChannel } from './catalog-preview.js';
 import {modisPreviewOriginals} from './modis-preview.js';
+import {vegetationPreviewOriginals} from './vegetation-original-preview.js';
 import { CatalogPreviewLegend } from './catalog-preview-ui.jsx';
 import 'ol/ol.css';
 import './explore-map.css';
@@ -149,7 +150,7 @@ export const ExploreMap = forwardRef(function ExploreMap({ scene, scenes, focusR
     || [...loadedScenes,...previewScenes].some(item => !activeDay || item.date.slice(0, 10) === activeDay);
   const retryMap = async () => {
     try {
-      const modisHrefs=[scene,...previewScenes].filter(item=>catalogPreviewKind(item?.provider)==='reflectance').flatMap(modisPreviewOriginals);
+      const modisHrefs=[scene,...previewScenes].flatMap(item=>catalogPreviewKind(item?.provider)==='reflectance'?modisPreviewOriginals(item):catalogPreviewKind(item?.provider)==='vegetation'?vegetationPreviewOriginals(item,catalogPreviewChannel(item,channel)):[]);
       await prepareAssetAccess([...loadedScenes, reference].flatMap(imageryHrefs).concat(modisHrefs), { force: true });
       setRetry(value => value + 1);
     } catch (failure) { setError(failure.message); }

@@ -7,10 +7,13 @@ import TileState from 'ol/TileState.js';
 import fixture from '../public/samples/modis-vegetation-response.json';
 import { normalizeScene } from './catalog.js';
 import { I18nProvider } from './i18n.jsx';
-import { createVegetationPreviewSource } from './vegetation-preview-source.js';
+import {createItemPreviewSource} from './item-preview-source.js';
+import {radarPreview} from './catalog-preview.js';
+import radarFixture from '../qa/sentinel-1d-rtc-catalog.json';
 import { VegetationPreviewControls, VegetationPreviewLegend } from './vegetation-preview-ui.jsx';
 
 const scene = normalizeScene(fixture.features[0], 'planetary-vegetation');
+const remotePreview=()=>createItemPreviewSource(radarPreview(normalizeScene(radarFixture.features[0],'planetary-radar'),'vv'));
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 it('the shared index switch works by keyboard and keeps the legend tied to that index and composite period', async () => {
@@ -29,14 +32,14 @@ it('the shared index switch works by keyboard and keeps the legend tied to that 
   expect(screen.getByRole('region', { name: '指数预览图例' }).textContent).toContain('06');
 });
 
-it('real OpenLayers XYZ coordinates retain the global Mercator grid, not a scene-local tile origin', () => {
-  const preview = createVegetationPreviewSource(scene, 'evi');
+it('the shared remote radar tile source retains global Mercator coordinates, not a scene-local origin', () => {
+  const preview = remotePreview();
   try {
     const grid = preview.source.getTileGrid();
     const extent = grid.getTileCoordExtent([9, 81, 197]);
     expect(extent[0]).toBeCloseTo(-13697515.4687, 3);
     expect(preview.source.getTileUrlFunction()([9, 81, 197], 1, getProjection('EPSG:3857'))).toContain('/9/81/197.png?');
-    expect(preview.source.getTileUrlFunction()([9, 81, 197], 1, getProjection('EPSG:3857'))).toContain('assets=250m_16_days_EVI');
+    expect(preview.source.getTileUrlFunction()([9, 81, 197], 1, getProjection('EPSG:3857'))).toContain('assets=vv');
     expect(preview.source.getWrapX()).toBe(false);
   } finally { preview.dispose(); }
 });
@@ -44,7 +47,7 @@ it('real OpenLayers XYZ coordinates retain the global Mercator grid, not a scene
 it('switching away aborts in-flight tiles and cannot commit a stale decoded image', async () => {
   let resolveRequest, signal;
   vi.stubGlobal('fetch', vi.fn((_url, options) => { signal = options.signal; return new Promise(resolve => resolveRequest = resolve); }));
-  const preview = createVegetationPreviewSource(scene, 'ndvi');
+  const preview = remotePreview();
   const tile = preview.source.getTile(9, 81, 197, 1, getProjection('EPSG:3857'));
   tile.load();
   expect(signal.aborted).toBe(false);
@@ -58,7 +61,7 @@ it('switching away aborts in-flight tiles and cannot commit a stale decoded imag
 
 it('network errors become tile errors instead of silently displaying an empty raster', async () => {
   vi.stubGlobal('fetch', vi.fn(async () => new Response('temporarily unavailable', { status: 503 })));
-  const preview = createVegetationPreviewSource(scene, 'ndvi');
+  const preview = remotePreview();
   try {
     const tile = preview.source.getTile(9, 81, 197, 1, getProjection('EPSG:3857'));
     tile.load();

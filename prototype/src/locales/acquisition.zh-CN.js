@@ -1,4 +1,5 @@
 export default {
+  '{running} downloading · {queued} queued':'{running} 项正在下载 · {queued} 项排队',
   'Data product':'数据产品','Data channel':'获取渠道','Product directory':'产品目录','Recent products':'最近使用','Favorite products':'我的收藏','All products':'全部产品',
   'Favorite {source}':'收藏 {source}','Unfavorite {source}':'取消收藏 {source}','No favorite products yet.':'还没有收藏，点击产品旁的星标即可添加。','No recent products yet.':'选择过的产品会显示在这里。',
   '10 m true color · 20 m scene classification':'10 米真彩色 · 20 米场景分类','{count} products':'{count} 个产品','{count} channels':'{count} 个渠道',

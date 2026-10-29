@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CheckCircle2, RefreshCw } from 'lucide-react';
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
-import { runtimeRequest } from './runtime-client.js';
+import { runtimeRequest,formatBytes } from './runtime-client.js';
 import { Badge, InfoDetails, Button, Input, Select, Spinner, Surface } from './ui/index.jsx';
 import './proxy.css';
 
@@ -41,7 +41,7 @@ export function ProxySettingsPanel() {
         setSaved(next); setDraft(next);
         setMessage({ type: 'success', text: t('Proxy settings saved. New downloads use this route.') });
       } else {
-        setMessage({ type: 'success', text: t('Connection succeeded in {ms} ms.', { ms: number(result.elapsedMs) }) });
+        setMessage({ type: 'success', text: Number.isFinite(result.receivedBytes)&&result.receivedBytes>0?t('Read {size} of source data in {ms} ms.',{size:formatBytes(result.receivedBytes),ms:number(result.elapsedMs)}):t('Connection succeeded in {ms} ms.', { ms: number(result.elapsedMs) }) });
       }
     } catch (error) {
       setMessage({ type: 'error', text: operation === 'testProxy' ? t('Connection test failed. Check your network or proxy settings.') : error.message });
@@ -51,7 +51,7 @@ export function ProxySettingsPanel() {
   };
 
   return <Surface as="section" className="proxy-settings" aria-label={t('Source download proxy')}>
-    <div className="proxy-heading"><div className="proxy-title"><h2>{t('Source download proxy')}</h2>{connected && !loading && <Badge>{t(saved.mode === 'system' ? 'Follow system' : saved.mode === 'direct' ? 'Direct' : 'Custom proxy')}</Badge>}</div><InfoDetails closeLabel={t('Close')} summary={t('Source download proxy')}><p>{t('Choose how GeoD connects to original files and account services.')}</p><p className="proxy-note">{t('This setting applies to new source-file downloads. Active transfers keep their current connection; catalog and map requests follow the browser network settings.')}</p></InfoDetails></div>
+    <div className="proxy-heading"><div className="proxy-title"><h2>{t('Source download proxy')}</h2>{connected && !loading && <Badge>{t(saved.mode === 'system' ? 'Follow system' : saved.mode === 'direct' ? 'Direct' : 'Custom proxy')}</Badge>}</div><InfoDetails closeLabel={t('Close')} summary={t('Source download proxy')}><p>{t('Choose how GeoD connects to original files and account services.')}</p><p>{t('The connection test reads a small part of one public Sentinel file. It checks actual data arrival, not the speed or availability of every source.')}</p><p className="proxy-note">{t('This setting applies to new source-file downloads. Active transfers keep their current connection; catalog and map requests follow the browser network settings.')}</p></InfoDetails></div>
     {!connected ? <p className="proxy-note">{t('Connect the local task service to change proxy settings.')}</p> : loading ? <p className="proxy-note" role="status"><Spinner size={15}/>{t('Loading proxy settings…')}</p> : <>
       <div className="proxy-fields">
         <label>{t('Connection mode')}<Select aria-label={t('Connection mode')} value={draft.mode} onChange={event => { setDraft(previous => ({ ...previous, mode: event.target.value })); setMessage(null); }}>

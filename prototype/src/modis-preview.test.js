@@ -6,6 +6,7 @@ import {prepareAssetAccess,assetReadURL} from './providers.js';
 import {modisPreviewOriginals,modisPreviewGrid,validateModisPreviewImages} from './modis-preview.js';
 import {MODIS_PROJECTION} from './modis.js';
 import proj4 from 'proj4';
+import {vegetationPreviewOriginals,vegetationPreviewGrid,validateVegetationPreviewImages} from './vegetation-original-preview.js';
 const captured=JSON.parse(readFileSync(new URL('../qa/public-preview-catalog.json',import.meta.url)));
 const scene=normalizeScene(captured.catalogs['planetary-modis'][0],'planetary-modis');
 
@@ -40,4 +41,20 @@ test('MODIS preview accepts only matching signed-DN sinusoidal originals and rej
   for(const changed of [{...image,getGDALNoData:()=>0},{...image,getOrigin:()=>[t[2]+t[0],t[5],0]},{...image,getGeoKeys:()=>({...keys,GeogSemiMajorAxisGeoKey:6378137})},{...image,getSamplesPerPixel:()=>3}])
     assert.throws(()=>validateModisPreviewImages([[image],[changed],[image]],scene),/metadata does not match/);
   assert.throws(()=>modisPreviewOriginals({...scene,grid:{...scene.grid,transform:t.map((v,i)=>i===2?v+1:v)}}),/metadata does not match/);
+});
+
+test('NDVI and EVI keep independent exact sources and validate their 250 m grid and -3000 mask',async()=>{
+ const catalog=JSON.parse(readFileSync(new URL('../public/samples/modis-vegetation-response.json',import.meta.url))),item=normalizeScene(catalog.features[0],'planetary-vegetation');
+ const t=vegetationPreviewGrid(item),now=Date.now();let calls=0;
+ const keys={GTModelTypeGeoKey:1,GTRasterTypeGeoKey:1,ProjCoordTransGeoKey:24,ProjLinearUnitsGeoKey:9001,GeogAngularUnitsGeoKey:9102,GeogSemiMajorAxisGeoKey:6371007.181,GeogSemiMinorAxisGeoKey:6371007.181,ProjCenterLongGeoKey:0,ProjFalseEastingGeoKey:0,ProjFalseNorthingGeoKey:0};
+ const image={getWidth:()=>4800,getHeight:()=>4800,getSamplesPerPixel:()=>1,getGDALNoData:()=>-3000,getGeoKeys:()=>keys,getOrigin:()=>[t[2],t[5],0],getResolution:()=>[t[0],t[4],0],fileDirectory:{getValue:key=>({BitsPerSample:[16],SampleFormat:[2],PhotometricInterpretation:1})[key]}};
+ for(const index of ['ndvi','evi']){
+   validateVegetationPreviewImages([[image]],item,index);
+   const hrefs=vegetationPreviewOriginals(item,index);assert.deepEqual(hrefs,[item.assets[index].href]);
+   await prepareAssetAccess(hrefs,{force:true,now,fetcher:async()=>{calls++;return new Response(JSON.stringify({token:'sp=r&sr=c&sig=only-read&se='+encodeURIComponent(new Date(now+3600000).toISOString()),'msft:expiry':new Date(now+3600000).toISOString()}));}});
+   assert.ok(new URL(assetReadURL(hrefs[0])).searchParams.get('sig'));
+   assert.throws(()=>validateVegetationPreviewImages([[{...image,getGDALNoData:()=>-28672}]],item,index),/metadata does not match/);
+   assert.throws(()=>validateVegetationPreviewImages([[{...image,getWidth:()=>2400}]],item,index),/metadata does not match/);
+ }
+ assert.equal(calls,2);
 });

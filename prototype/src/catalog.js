@@ -202,7 +202,7 @@ export function normalizeScene(item, providerId = 'earth-search') {
     // Azure .200.jpg previews also need SAS. Use the reviewed public PC render,
     // explicitly requesting RGB; neither preview is an original-file download.
     const preview = new URL('https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png');
-    preview.search = new URLSearchParams({ collection: 'naip', item: item.id, assets: 'image', asset_bidx: 'image|1,2,3', format: 'png' });
+    preview.search = new URLSearchParams({ collection: 'naip', item: item.id, assets: 'image', asset_bidx: 'image|1,2,3', format: 'png', max_size: '128' });
     assets.thumbnail = { href: preview.href, type: 'image/png' };
   }
   if (providerId === 'nasa-earthdata') {

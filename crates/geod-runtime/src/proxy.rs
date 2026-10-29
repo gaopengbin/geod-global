@@ -1,5 +1,6 @@
 //! Per-workspace source-download proxy policy. Loopback API clients remain direct.
 use crate::{io_error, JobManager, Result};
+use futures_util::StreamExt;
 use serde::{Deserialize, Serialize};
 use std::{io::ErrorKind, time::Duration};
 use tokio::io::AsyncWriteExt;
@@ -30,6 +31,44 @@ pub struct ProxyTest {
     pub status: &'static str,
     pub status_code: u16,
     pub elapsed_ms: u64,
+    pub received_bytes: u64,
+}
+
+// A successful HEAD is insufficient: require a bounded part of the actual
+// original TIFF to arrive, with the requested interval and signature intact.
+async fn test_source_bytes(
+    client: &reqwest::Client,
+    href: &str,
+    deadline: Duration,
+) -> Result<ProxyTest> {
+    let started = std::time::Instant::now();
+    tokio::time::timeout(deadline, async {
+        let response = client.get(href)
+            .header(reqwest::header::RANGE, "bytes=0-65535")
+            .send().await.map_err(crate::transfer::network_error)?;
+        if response.status() != reqwest::StatusCode::PARTIAL_CONTENT {
+            return Err(format!("The Sentinel sample request returned HTTP {}; a partial original response is required", response.status()));
+        }
+        let headers=response.headers();
+        let invalid="The Sentinel sample has an invalid byte range";
+        if headers.get_all(reqwest::header::CONTENT_RANGE).iter().count()!=1{return Err(invalid.into());}
+        let (end,total)=headers.get(reqwest::header::CONTENT_RANGE).and_then(|v|v.to_str().ok())
+            .and_then(|v|v.strip_prefix("bytes 0-")).and_then(|v|v.split_once('/')).ok_or(invalid)?;
+        let end=end.parse::<u64>().map_err(|_|invalid)?;
+        let total=total.parse::<u64>().map_err(|_|invalid)?;
+        if total==0||end!=65535.min(total-1){return Err(invalid.into());}
+        let expected=end+1;
+        if response.content_length().is_some_and(|length|length!=expected){return Err(invalid.into());}
+        let mut stream=response.bytes_stream();let mut bytes=Vec::with_capacity(expected as usize);
+        while let Some(chunk)=stream.next().await {
+            let chunk=chunk.map_err(crate::transfer::network_error)?;
+            if bytes.len()+chunk.len()>expected as usize{return Err("The Sentinel sample exceeded its requested byte range".into());}
+            bytes.extend_from_slice(&chunk);
+        }
+        if bytes.len()!=expected as usize{return Err("The Sentinel sample response was incomplete".into());}
+        crate::verify_signature(&bytes,"image/tiff")?;
+        Ok(ProxyTest {status:"connected",status_code:206,elapsed_ms:started.elapsed().as_millis().min(u64::MAX as u128) as u64,received_bytes:bytes.len() as u64})
+    }).await.map_err(|_|"The Sentinel sample timed out before its requested data arrived".to_owned())?
 }
 
 impl ProxySettings {
@@ -142,30 +181,78 @@ impl JobManager {
     pub async fn test_proxy_settings(&self, request: ProxySettings) -> Result<ProxyTest> {
         let settings = request.normalized()?;
         let client = download_client(&settings)?;
-        let started = std::time::Instant::now();
-        let response = client
-            .head(TEST_ASSET)
-            .timeout(Duration::from_secs(15))
-            .send()
-            .await
-            .map_err(|error| format!("Proxy connection test failed: {error}"))?;
-        if !response.status().is_success() {
-            return Err(format!(
-                "The Sentinel test asset returned HTTP {}",
-                response.status()
-            ));
-        }
-        Ok(ProxyTest {
-            status: "connected",
-            status_code: response.status().as_u16(),
-            elapsed_ms: started.elapsed().as_millis().min(u64::MAX as u128) as u64,
-        })
+        test_source_bytes(&client, TEST_ASSET, Duration::from_secs(15)).await
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[tokio::test]
+    async fn connection_test_requires_the_requested_original_body_not_only_successful_headers() {
+        use tokio::io::AsyncReadExt;
+        let client = download_client(&ProxySettings {
+            mode: ProxyMode::Direct,
+            url: None,
+        })
+        .unwrap();
+        let valid = [b"II*\0".as_slice(), &[0; 12]].concat();
+        let cases = [
+            (206, "bytes 0-15/16", valid.clone(), false, true),
+            (200, "bytes 0-15/16", valid.clone(), false, false),
+            (206, "bytes 0-16/16", valid.clone(), false, false),
+            (
+                206,
+                "bytes 0-15/16",
+                b"<html>error</html>".to_vec(),
+                false,
+                false,
+            ),
+            (206, "bytes 0-15/16", valid[..4].to_vec(), false, false),
+            (206, "bytes 0-15/16", valid[..4].to_vec(), true, false),
+        ];
+        for (status, range, body, stall, success) in cases {
+            let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+            let address = listener.local_addr().unwrap();
+            let server = tokio::spawn(async move {
+                let (mut socket, _) = listener.accept().await.unwrap();
+                let mut request = Vec::new();
+                let mut buffer = [0; 4096];
+                while !request.ends_with(b"\r\n\r\n") {
+                    let count = socket.read(&mut buffer).await.unwrap();
+                    assert!(count > 0);
+                    request.extend_from_slice(&buffer[..count]);
+                    assert!(request.len() < 8192);
+                }
+                assert!(String::from_utf8_lossy(&request)
+                    .to_ascii_lowercase()
+                    .contains("\r\nrange: bytes=0-65535\r\n"));
+                let header=format!("HTTP/1.1 {status} Test\r\nContent-Type: image/tiff\r\nContent-Length: 16\r\nContent-Range: {range}\r\nConnection: close\r\n\r\n");
+                socket.write_all(header.as_bytes()).await.unwrap();
+                let _ = socket.write_all(&body).await;
+                if stall {
+                    tokio::time::sleep(Duration::from_secs(2)).await;
+                }
+            });
+            let result = test_source_bytes(
+                &client,
+                &format!("http://{address}/sample"),
+                Duration::from_millis(500),
+            )
+            .await;
+            assert_eq!(result.is_ok(), success, "{result:?}");
+            if let Ok(result) = result {
+                assert_eq!(result.received_bytes, 16);
+                assert_eq!(result.status_code, 206);
+            }
+            if stall {
+                server.abort();
+            } else {
+                server.await.unwrap();
+            }
+        }
+    }
 
     #[tokio::test]
     async fn streaming_read_deadline_resets_when_data_arrives_and_rejects_a_stall() {

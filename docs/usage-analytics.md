@@ -49,6 +49,14 @@ from zero bytes or from the last UI poll. Duration still includes queue time;
 these fields do not establish throughput, the user's reason for cancelling, or
 whether an active zero-byte request was waiting for headers or body data.
 
+Task UI progress observations remain local and in memory. The UI separates queue
+admission, connecting, waiting for first data, transferring and full-byte
+verification. Rates compare byte counts between successful polls; queue age is
+never converted into a network rate. These UI observations are not additional
+telemetry fields and cannot reconstruct historical stalls. The connection test
+now requires a bounded original TIFF range body, rather than accepting a HEAD
+response as evidence that file data arrived.
+
 Catalog request, JSON decode and catalog validation have separate stages. COG
 metadata, tile reads and public-product preview failures preserve their stage;
 temporary preview retries preserve attempt counts. Public signature failures

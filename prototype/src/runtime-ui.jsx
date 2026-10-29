@@ -8,6 +8,7 @@ import { Crop, Download, FolderOpen, Info, Layers, RefreshCw, Search, X, CheckCi
 import { desktopAvailable, downloadableAssets, formatBytes, formatClassShare, runtimeRequest } from './runtime-client.js';
 import { useI18n } from './i18n.jsx';
 import { RuntimeContext } from './runtime-context.js';
+import {observeDownloadProgress,downloadStatusLabel} from './download-observation.js';
 import { ClipRasterButton, DerivedArtifactDetails } from './processing-ui.jsx';
 import { ArtifactPackageButton } from './artifact-ui.jsx';
 import { addProjectScenesAndQueue, createProjectAndQueue, jobsForProject, MAX_PROJECT_SCENES, projectRequest, queueProjectDownloads } from './projects-client.js';
@@ -47,6 +48,8 @@ export function RuntimeProvider({ children }) {
   const [checking, setChecking] = useState(true);
   const [busyJobs, setBusyJobs] = useState({});
   const [batchRetry, setBatchRetry] = useState(null);
+  const [downloadProgress,setDownloadProgress]=useState(new Map());
+  const downloadObservations=useRef(new Map());
   const mounted = useRef(true);
   const sequence = useRef(0);
   const pendingActions = useRef(new Set());
@@ -61,6 +64,8 @@ export function RuntimeProvider({ children }) {
       if (mounted.current && request === sequence.current) {
         currentHealth.current = info;
         currentJobs.current = snapshot;
+        downloadObservations.current=observeDownloadProgress(downloadObservations.current,snapshot);
+        setDownloadProgress(downloadObservations.current);
         setHealth(info); setJobs(currentJobs.current); setError('');
         setProjects(savedProjects);
       }
@@ -128,7 +133,7 @@ export function RuntimeProvider({ children }) {
       publish();
     }
   }, [act, refresh]);
-  return <RuntimeContext.Provider value={{ jobs, projects, health, error, checking, refresh, act, busyJobs, batchRetry, retryAll }}>{children}</RuntimeContext.Provider>;
+  return <RuntimeContext.Provider value={{ jobs, projects, health, error, checking, refresh, act, busyJobs, batchRetry, retryAll, downloadProgress }}>{children}</RuntimeContext.Provider>;
 }
 
 export function RuntimeError({ message, summary, notice = false }) {
@@ -383,7 +388,7 @@ function RasterDialog({ job, onClose }) {
 }
 
 export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon, projectName, projectId, focusedJobId }) {
-  const { act, health, projects = [], jobs: allJobs = jobs, busyJobs = {}, batchRetry } = useContext(RuntimeContext);
+  const { act, health, projects = [], jobs: allJobs = jobs, busyJobs = {}, batchRetry, downloadProgress } = useContext(RuntimeContext);
   const { t, locale, number, date } = useI18n();
   const [busy, setBusy] = useState({});
   const [errors, setErrors] = useState({});
@@ -405,6 +410,9 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
     const customRaster = coverage || job.assetKey === 'stac_asset' && Boolean(job.stacSource);
     const rgbGroup = rgbGroups.find(group => group.sourceJobs.some(source => source.id === job.id));
     const active = ['queued', 'running'].includes(job.status);
+    const observation=downloadProgress?.get(job.id);
+    const transferStatus=downloadStatusLabel(job);
+    const slow=health&&job.kind==='download'&&job.status==='running'&&transferStatus!=='Verifying download'&&observation?.idleMs>=12000;
     const derived = job.kind !== 'download';
     const scientificRgb = job.kind === 'raster_rgb';
     const mosaic = job.kind === 'raster_mosaic';
@@ -461,11 +469,11 @@ export function RuntimeJobRows({ jobs, library = false, areaBounds, areaPolygon,
       preview: library && (customRaster || localRasterKeys.includes(job.assetKey)) ? <FileThumbnail key={`${job.id}:${job.sha256}`} job={job}/> : null,
       status: job.status,
       statusTone: library ? 'neutral' : undefined,
-      statusLabel: t(library ? scientificRgb ? 'Scientific RGB' : prepared ? 'Prepared source' : mosaic && !projectClip ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : STATUS[job.status] || job.status),
+       statusLabel: t(library ? scientificRgb ? 'Scientific RGB' : prepared ? 'Prepared source' : mosaic && !projectClip ? 'Mosaic output' : derived ? 'Clipped output' : 'Source file' : derived && job.status === 'succeeded' ? 'Generated' : derived && job.status === 'running' ? 'Processing' : transferStatus||STATUS[job.status] || job.status),
       progress: mosaic || prepared || scientificRgb ? progress : derived ? null : progress,
       progressLabel: t(derived ? 'Processing progress' : 'Download progress'),
-      notice: errors[job.id] ? t('The task action failed. Check the service connection and try again.') : !library && (job.error || notice) ? t(failureSummary) : null,
-       meta: library ? bytes(job.bytesDownloaded) : mosaic && job.status === 'running' ? t('{progress}% completed', { progress: number(Math.round(progress || 0)) }) : derived ? null : <>{bytes(job.bytesDownloaded)}{active && job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{resumed ? ` · ${t('Resumed')}` : ''}</>,
+       notice: errors[job.id] ? t('The task action failed. Check the service connection and try again.') : !library && (job.error || notice) ? t(failureSummary) : !library&&slow?t('No new source data for {seconds} s. You can keep waiting or check the download connection in Settings.',{seconds:number(Math.floor(observation.idleMs/1000))}):null,
+        meta: library ? bytes(job.bytesDownloaded) : mosaic && job.status === 'running' ? t('{progress}% completed', { progress: number(Math.round(progress || 0)) }) : derived ? null : <>{job.status==='queued'?t('Waiting for another download to finish'):bytes(job.bytesDownloaded)}{job.status==='running' && job.totalBytes ? ` / ${bytes(job.totalBytes)}` : ''}{job.status==='running'&&Number.isFinite(observation?.rate)&&observation.rate>0?` · ${bytes(observation.rate)}/s`:''}{active&&job.networkRetries>0?` · ${t('Retry {count}',{count:number(job.networkRetries)})}`:''}{resumed ? ` · ${t('Resumed')}` : ''}</>,
       details: library ? <InfoDetails closeLabel={t('Close')} className="runtime-file-details" icon={Info} summary={t('File details and provenance')}>
         <div className="runtime-file-inspect-actions">
           {customRaster && job.status === 'succeeded' && <Button size="sm" disabled={!health} onClick={() => setStacInspect(job)}><Scan size={16}/>{t(coverage ? 'Inspect coverage subset' : 'Inspect original raster')}</Button>}
@@ -530,7 +538,7 @@ export function RuntimeTasks({ areaBounds, areaPolygon }) {
     if (focusedJobId) document.querySelector(`.tasks-page [data-item-id="${focusedJobId}"]`)?.scrollIntoView({ block:'nearest' });
   }, [focusedJobId, focusedJob?.status, view]);
   const groups = {
-    active: scopedJobs.filter(job => ['queued', 'running'].includes(job.status)),
+    active: scopedJobs.filter(job => ['queued', 'running'].includes(job.status)).sort((a,b)=>Number(b.status==='running')-Number(a.status==='running')),
     attention: scopedJobs.filter(job => ['failed', 'interrupted'].includes(job.status)),
     history: scopedJobs.filter(job => ['succeeded', 'cancelled'].includes(job.status)),
   };

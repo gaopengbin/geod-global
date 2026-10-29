@@ -1,4 +1,10 @@
 export default {
+  'Waiting for download slot':'等待下载名额','Waiting for another download to finish':'等待其他文件下载完成',
+  'Connecting to source':'正在连接数据源','Waiting for source data':'等待数据源返回数据','Verifying download':'正在校验文件',
+  'Retry {count}':'第 {count} 次重试',
+  'Read {size} of source data in {ms} ms.':'已实际读取 {size} 数据，用时 {ms} 毫秒。',
+  'The connection test reads a small part of one public Sentinel file. It checks actual data arrival, not the speed or availability of every source.':'连接测试会实际读取一小段公开 Sentinel 影像数据，检查是否能收到文件内容；不代表所有图源的速度和可用性。',
+  'No new source data for {seconds} s. You can keep waiting or check the download connection in Settings.':'已 {seconds} 秒未收到新数据，可继续等待，或到设置检查下载连接。',
   'Local storage': '本地存储',
   'Downloads the complete original SAFE archive, including JP2 bands and metadata. Prepare the original TCI or SCL rasters in the project to view and process them locally.': '下载完整原始 SAFE 压缩包，包含 JP2 波段和元数据。可在工程中准备原始 TCI 或 SCL 栅格，进行本地显示与处理。',
   'HLS source bands keep their original Int16 values and reflectance scale. Open them in Workspace to inspect DN and reflectance. Clip or mosaic each original band in the project.': 'HLS 原始波段保留 Int16 值和反射率参数，可在工作空间检查 DN 与反射率，并在工程中分别裁剪或拼接原始波段。',
