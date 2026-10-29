@@ -1,4 +1,4 @@
-import { MODIS_CRS, MODIS_ASSET_NAMES, modisAssetIdentity } from './modis.js';
+import { MODIS_CRS, modisAssetIdentity } from './modis.js';
 import { RADAR_KEYS, radarAssetIdentity } from './radar.js';
 import { vegetationPreview } from './vegetation-preview.js';
 
@@ -37,11 +37,9 @@ export function modisReflectancePreview(scene) {
       return modisAssetIdentity(asset?.href,key)?.id !== scene.id || band?.dataType !== 'int16'
         || band.scale !== 0.0001 || band.offset !== 0 || band.nodata !== -28672 || band.spatialResolution !== 500;
     })) throw new Error('This scene has no verified MODIS reflectance preview source.');
-  // Signed DN 0..3000 corresponds to reflectance 0..0.3. Gamma is display only.
-  return itemPreview(scene,'rgb',[
-    ...['red','green','blue'].map(key => ['assets',MODIS_ASSET_NAMES[key]]),
-    ['rescale','0,3000'],['color_formula','Gamma RGB 2.2'],['nodata','-28672'],
-  ]);
+  // The managed tile API rejects these otherwise readable original COGs.
+  // Keep preview bound to the original files; rendering uses bounded COG reads.
+  return {hrefs:['red','green','blue'].map(key=>scene.assets[key].href),bounds:scene.bbox.slice(),channel:'rgb',itemId:scene.id};
 }
 export function radarPreview(scene, channel) {
   const asset = scene?.assets?.[channel], band = asset?.['raster:bands']?.[0];

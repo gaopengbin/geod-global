@@ -4,7 +4,7 @@ import {diagnosticError,failureDiagnostics} from './usage-diagnostics.js';
 
 function metadataError(cause,phase='metadata') {
   const text=String(cause?.message || '');
-  if (/^(Landsat|NAIP|Elevation) COG metadata does not match the selected (original bands|RGB \+ NIR source|original height grid)\.$/.test(text))return new Error(text);
+  if (/^(Landsat|MODIS|NAIP|Elevation) COG metadata does not match the selected (original bands|RGB \+ NIR source|original height grid)\.$/.test(text))return new Error(text);
   if (cause?.name==='TimeoutError')return new DOMException(`Preview ${phase} request timed out.`,'TimeoutError');
   if (/invalid|unsupported|mismatch|not match/i.test(text))return new Error('COG metadata validation failed.');
   const status=text.match(/HTTP (\d{3})\b/);
@@ -71,14 +71,15 @@ export async function loadPreviewRange(url, headers, external, fetchImpl = fetch
 
 export class CogPreviewSource extends GeoTIFF {
   constructor(options) {
+    const {resolveURL,...sourceOptions}=options;
     const lifetime = new AbortController();
     // geotiff replaces rejected blocks with 'Request failed' and undefined
     // entries. Keep the final transport cause within this source's lifetime.
     const failures={last:null};
-    super({...options,sourceOptions:{blockSize:65536,...options.sourceOptions},
+    super({...sourceOptions,sourceOptions:{blockSize:65536,...options.sourceOptions},
       sources:options.sources.map(source=>({...source,
         loader:async(url,headers,signal)=>{
-          try{return await loadPreviewRange(url,headers,signal,fetch,lifetime.signal);}
+           try{const href=resolveURL?await resolveURL(url,lifetime.signal):url;lifetime.signal.throwIfAborted();return await loadPreviewRange(href,headers,signal,fetch,lifetime.signal);}
           catch(error){if(error.name!=='AbortError')failures.last=error;throw error;}
         }}))});
     this.previewLifetime = lifetime;

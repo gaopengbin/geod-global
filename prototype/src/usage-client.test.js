@@ -101,6 +101,26 @@ test('job completion is observed after submission, persists through reopening, a
   reopened.observeJobs([{id:crypto.randomUUID(),status:'succeeded',sha256:'b'.repeat(64)}]);
   assert.equal(reopened.report().counts.download_completed,1);
 });
+test('cancelled batches retain native queue versus transfer stage through reopening without exposing job IDs',()=>{
+  const {client,storage}=fixture();client.setPreferences({enabled:true});
+  const queued={id:crypto.randomUUID(),kind:'download',status:'queued',bytesDownloaded:0};
+  const transferring={...queued,id:crypto.randomUUID()};
+  client.watchJobs([queued,transferring],{source:'earth-search',channel:'manual',action:'download_submit'});
+  client.observeJobs([{...transferring,status:'running',bytesDownloaded:1024}]);
+  const reopened=createUsageClient({storage,privacy:()=>false});
+  reopened.observeJobs([{...queued,status:'cancelled',networkRetries:0,error:'Cancelled while waiting for a download slot. Retry restarts the operation.'},{...transferring,status:'cancelled',bytesDownloaded:1024,networkRetries:1,error:'Cancelled during an active download. Retry restarts the operation.'}]);
+  const events=reopened.report().events.filter(e=>e.name==='download_cancelled');
+  assert.equal(events.length,2);
+  assert.equal(events[0].fields.stage,'download_queue');assert.equal(events[0].fields.retries,'0');
+  assert.equal(events[1].fields.stage,'transfer');assert.equal(events[1].fields.retries,'1');
+  assert.equal(events[0].fields.diagnosticOrigin,'explicit');
+  assert.equal(events[0].fields.reason,'cancelled');assert.equal(JSON.stringify(events).includes(queued.id),false);
+  const legacy={...queued,id:crypto.randomUUID()};reopened.watchJobs([legacy],{action:'download_submit'});
+  reopened.observeJobs([{...legacy,status:'cancelled',error:'Cancelled by user. Retry restarts the operation.'}]);
+  assert.equal(reopened.report().events.at(-1).fields.stage,'operation');
+  assert.equal(reopened.report().events.at(-1).fields.diagnosticOrigin,'classified');
+});
+
 test('operation outcomes are once-only and an old consent generation cannot reappear',()=>{
   const {client}=fixture();client.setPreferences({enabled:true});
   const request=beginUsage('search',{surface:'manual_explore',source:'earth-search'},client);request.finish({scenes:[]});request.finish({scenes:[{}]});

@@ -29,14 +29,12 @@ test('transient preview failures recover within bounded retries; authorization, 
  controller.abort();await assert.rejects(pending,{name:'AbortError'});assert.equal(cancelled,1);
 });
 
-test('MODIS RGB preview retains the full composite ID and maps signed source bands 1/4/3 without enabling the optical loader',()=>{
+test('MODIS RGB preview pins source bands 1/4/3 and avoids the rejected managed tile and browse APIs',()=>{
  for (const scene of modis) {
-  const preview=modisReflectancePreview(scene), url=new URL(preview.url.replace('{z}/{x}/{y}','11/327/791'));
-  assert.equal(url.searchParams.get('item'),scene.id);assert.equal(url.searchParams.get('collection'),'modis-09A1-061');
-  assert.deepEqual(url.searchParams.getAll('assets'),['sur_refl_b01','sur_refl_b04','sur_refl_b03']);
-  assert.equal(url.searchParams.get('rescale'),'0,3000');assert.equal(url.searchParams.get('nodata'),'-28672');
-  assert.equal(url.searchParams.get('unscale'),'false');assert.equal(url.searchParams.get('reproject'),'nearest');
-  assert.equal(url.searchParams.get('color_formula'),'Gamma RGB 2.2');
+   const preview=modisReflectancePreview(scene);
+   assert.equal(preview.itemId,scene.id);assert.equal(preview.channel,'rgb');
+   assert.deepEqual(preview.hrefs,['red','green','blue'].map(key=>scene.assets[key].href));
+   assert.equal(preview.url,undefined);assert.equal(preview.browseURL,undefined);
   assert.equal(catalogPreviewKind(scene.provider),'reflectance');assert.equal(catalogPreviewChannel(scene),'rgb');
  }
  assert.equal(canDisplayImagery(providerById('planetary-modis')),false);

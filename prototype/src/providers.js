@@ -201,6 +201,7 @@ export function providerForAssets(assets) {
 let access, pendingAccess;
 let landsatAccess, pendingLandsatAccess;
 let naipAccess, pendingNaipAccess;
+let modisAccess, pendingModisAccess;
 async function requestPublicAccess(url,fetcher) {
   const signal=AbortSignal.timeout(30_000);let attempts=0;
   try {
@@ -247,8 +248,24 @@ async function prepareLandsatAccess(hrefs, { fetcher, force, now }) {
   })().finally(() => { pendingLandsatAccess = undefined; });
   await pendingLandsatAccess;
 }
+async function prepareModisAccess(hrefs, {fetcher,force,now}) {
+  if(!hrefs.every(href=>['red','green','blue'].some(key=>modisAssetIdentity(href,key))))throw new Error('Unsupported MODIS data access.');
+  if(!force&&modisAccess?.expires>now+60_000)return;
+  if(!pendingModisAccess)pendingModisAccess=(async()=>{
+    const response=await requestPublicAccess('https://planetarycomputer.microsoft.com/api/sas/v1/token/modiseuwest/modis-061-cogs',fetcher);
+    const data=await response.json(),token=new URLSearchParams(data?.token),expiry=Math.min(Date.parse(data?.['msft:expiry']),Date.parse(token.get('se')));
+    const entries=[...token];
+    if(typeof data?.token!=='string'||data.token.length>8192||/[#?\u0000-\u001f]/.test(data.token)
+      ||entries.some(([k,v])=>!k||!v)||new Set(entries.map(([k])=>k)).size!==entries.length
+      ||!Number.isFinite(expiry)||expiry<=now+60_000||!token.get('sig')||!['r','rl'].includes(token.get('sp'))||token.get('sr')!=='c')throw new Error('Planetary Computer returned invalid data access.');
+    modisAccess={token:token.toString(),expires:expiry};
+  })().finally(()=>{pendingModisAccess=undefined;});
+  await pendingModisAccess;
+}
 export async function prepareAssetAccess(hrefs, { fetcher = fetch, signal, force = false, now = Date.now() } = {}) {
   if (signal?.aborted) throw signal.reason || new DOMException('Request cancelled', 'AbortError');
+  const modisHrefs=[...new Set(hrefs)].filter(href=>{try{return new URL(href).hostname===MODIS_HOST;}catch{return false;}});
+  if(modisHrefs.length)await prepareModisAccess(modisHrefs,{fetcher,force,now});
   const naipHrefs = [...new Set(hrefs)].filter(href => { try { return new URL(href).hostname === NAIP_HOST; } catch { return false; } });
   if (naipHrefs.length) await prepareNaipAccess(naipHrefs, { fetcher, force, now });
   const landsatHrefs = [...new Set(hrefs)].filter(href => { try { return new URL(href).hostname === LANDSAT_HOST; } catch { return false; } });
@@ -270,6 +287,10 @@ export async function prepareAssetAccess(hrefs, { fetcher = fetch, signal, force
 }
 export function assetReadURL(href, now = Date.now()) {
   const url = new URL(href);
+  if(url.hostname===MODIS_HOST){
+    if(!['red','green','blue'].some(key=>modisAssetIdentity(href,key))||!modisAccess||modisAccess.expires<=now+15_000)throw new Error('Data access expired. Retry loading imagery.');
+    url.search=modisAccess.token;return url.href;
+  }
   if (url.hostname === NAIP_HOST) {
     if (!isSupportedAsset(href, 'aerial') || !naipAccess || naipAccess.expires <= now + 15_000) throw new Error('Data access expired. Retry loading imagery.');
     url.search = naipAccess.token;

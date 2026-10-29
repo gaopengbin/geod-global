@@ -2,7 +2,9 @@
 export const MODIS_HOST = 'modiseuwest.blob.core.windows.net';
 export const MODIS_CRS = 'MODIS:Sinusoidal';
 export const MODIS_PIXEL = 463.312716527778;
-export const MODIS_PROJECTION = '+proj=sinu +lon_0=0 +R=6371007.181 +units=m +no_defs';
+// proj4js requires explicit zero false offsets for its sinusoidal inverse.
+// Native PROJ defaults these to zero; omitting them in JS yields NaN coordinates.
+export const MODIS_PROJECTION = '+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs';
 export const MODIS_QUALITY_KEYS = ['modis_qc', 'modis_state'];
 export const MODIS_ASSET_NAMES = Object.freeze({ red: 'sur_refl_b01', green: 'sur_refl_b04', blue: 'sur_refl_b03', modis_qc: 'sur_refl_qc_500m', modis_state: 'sur_refl_state_500m' });
 export function modisIdentity(id) {

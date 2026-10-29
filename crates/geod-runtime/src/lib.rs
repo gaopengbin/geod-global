@@ -869,7 +869,16 @@ impl JobManager {
         let mut job = old.clone();
         job.status = JobStatus::Cancelled;
         job.updated_at = now();
-        job.error = Some("Cancelled by user. Retry restarts the operation.".into());
+        job.error = Some(
+            if old.kind == "download" && old.status == JobStatus::Queued {
+                "Cancelled while waiting for a download slot. Retry restarts the operation."
+            } else if old.kind == "download" && old.status == JobStatus::Running {
+                "Cancelled during an active download. Retry restarts the operation."
+            } else {
+                "Cancelled by user. Retry restarts the operation."
+            }
+            .into(),
+        );
         store.jobs.insert(id.into(), job.clone());
         if let Err(error) = self.persist(&store.jobs).await {
             store.jobs.insert(id.into(), old);

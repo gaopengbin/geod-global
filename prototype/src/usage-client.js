@@ -66,7 +66,7 @@ export function createUsageClient({storage=storageDefault(),now=()=>Date.now(),u
       const share=Boolean(address)&&(saved.autoShare===true||saved.share===true&&saved.sharingTarget===address);
       state={enabled:true,share,autoShare:saved.autoShare===true,sharingTarget:share?address:null,installationId:saved.installationId,
         events:Array.isArray(saved.events)?saved.events.filter(row=>row&&validEvent(row.event)).map(row=>({event:row.event,sent:row.sent===true})):[],
-        jobs:saved.jobs&&typeof saved.jobs==='object'&&!Array.isArray(saved.jobs)?Object.fromEntries(Object.entries(saved.jobs).slice(-MAX_JOBS).filter(([_id,value])=>value&&uuidPattern.test(value.operationId||'')&&Number.isFinite(value.at)&&value.at>=now()-30*DAY).map(([id,value])=>[id,{operationId:value.operationId,at:value.at,fields:usageFields(value.fields)}])):{}};
+          jobs:saved.jobs&&typeof saved.jobs==='object'&&!Array.isArray(saved.jobs)?Object.fromEntries(Object.entries(saved.jobs).slice(-MAX_JOBS).filter(([_id,value])=>value&&uuidPattern.test(value.operationId||'')&&Number.isFinite(value.at)&&value.at>=now()-30*DAY).map(([id,value])=>[id,{operationId:value.operationId,at:value.at,fields:usageFields(value.fields)}])):{}};
       prune();
       if(acquisitionLabel(saved.acquisition)&&['new_installation','existing_installation'].includes(saved.acquisitionKind)){
         state.acquisition={schemaVersion:1,source:saved.acquisition.source,campaign:saved.acquisition.campaign};state.acquisitionKind=saved.acquisitionKind;
@@ -146,11 +146,14 @@ export function createUsageClient({storage=storageDefault(),now=()=>Date.now(),u
     observeJobs(jobs){
       if(!enabled())return;
       for(const job of Array.isArray(jobs)?jobs:[]){const pending=state.jobs[job?.id];if(!pending||!['succeeded','failed','cancelled','interrupted'].includes(job.status))continue;
+        const cancelStage=job.error==='Cancelled while waiting for a download slot. Retry restarts the operation.'?'download_queue':job.error==='Cancelled during an active download. Retry restarts the operation.'?'transfer':null;
         const fields={...pending.fields,duration:durationBucket(now()-pending.at),
           ...(Number.isFinite(job.bytesDownloaded)&&job.bytesDownloaded>=0?{bytes:bytesBucket(job.bytesDownloaded)}:{}),
           status:job.status,
           result:job.status==='succeeded'?'success':job.status==='failed'?'error':'cancelled',
-          ...(job.status==='failed'?{error:classifyUsageError(new Error(job.error||'')),...failureDiagnostics(diagnosticError(new Error(job.error||''),{retries:job.networkRetries}),pending.fields.action==='process'?'processing':'transfer')}:job.status==='interrupted'?{...failureDiagnostics(null,pending.fields.action==='process'?'processing':'transfer'),reason:'task_interrupted'}:{})};
+          ...(job.status==='failed'?{error:classifyUsageError(new Error(job.error||'')),...failureDiagnostics(diagnosticError(new Error(job.error||''),{retries:job.networkRetries}),pending.fields.action==='process'?'processing':'transfer')}:['cancelled','interrupted'].includes(job.status)?{
+            ...failureDiagnostics(diagnosticError(new Error('Transfer cancelled'),{retries:job.networkRetries,...(cancelStage?{stage:cancelStage,diagnosticOrigin:'explicit'}:{})}),pending.fields.action==='process'?'processing':'operation'),
+            reason:job.status==='interrupted'?'task_interrupted':'cancelled'}:{})};
         const prefix=pending.fields.action==='process'?'operation':'download';
         record(job.status==='succeeded'?`${prefix}_completed`:job.status==='failed'?`${prefix}_failed`:`${prefix}_cancelled`,fields,pending.operationId);
         if(job.status==='succeeded'&&/^[a-f0-9]{64}$/i.test(job.sha256||''))record('artifact_validated',fields,pending.operationId);

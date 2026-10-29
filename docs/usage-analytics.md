@@ -41,6 +41,14 @@ the failing boundary; `classified` describes a coarse operation/error mapping;
 `unavailable` means the provider/native task supplied no usable failure detail.
 Reasons are safe categories, not raw messages or definitive root-cause diagnoses.
 
+Download cancellation now retains the native task's status at the cancellation
+boundary: `download_queue` means a worker slot had not been acquired, while
+`transfer` means an active download. Both retain the native retry counter. Older
+generic cancellation records remain `operation`, rather than inferring a stage
+from zero bytes or from the last UI poll. Duration still includes queue time;
+these fields do not establish throughput, the user's reason for cancelling, or
+whether an active zero-byte request was waiting for headers or body data.
+
 Catalog request, JSON decode and catalog validation have separate stages. COG
 metadata, tile reads and public-product preview failures preserve their stage;
 temporary preview retries preserve attempt counts. Public signature failures

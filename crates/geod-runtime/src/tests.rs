@@ -284,6 +284,10 @@ async fn cancel_stops_transfer_and_retry_is_explicit_from_start() {
     );
     let cancelled = settled(&manager, &job.id).await;
     assert_eq!(cancelled.status, JobStatus::Cancelled);
+    assert_eq!(
+        cancelled.error.as_deref(),
+        Some("Cancelled during an active download. Retry restarts the operation.")
+    );
     assert!(cancelled.output_path.is_none());
     let retried = manager.retry(&job.id).await.unwrap();
     assert_eq!(retried.bytes_downloaded, 0);
@@ -304,6 +308,38 @@ async fn cancel_stops_transfer_and_retry_is_explicit_from_start() {
         successful_retry.error
     );
     assert!(manager.retry(&job.id).await.is_err());
+}
+
+#[tokio::test]
+async fn cancellation_retains_waiting_slot_state_after_reopening() {
+    let server = fixture().await;
+    let dir = tempfile::tempdir().unwrap();
+    let manager = JobManager::open_inner(dir.path(), Some(server.origin.clone()))
+        .await
+        .unwrap();
+    let slots = manager
+        .inner
+        .permits
+        .acquire_many(manager.inner.permits.available_permits() as u32)
+        .await
+        .unwrap();
+    let job = manager
+        .create(request(&server.origin, "/ok"))
+        .await
+        .unwrap();
+    let cancelled = manager.cancel(&job.id).await.unwrap();
+    assert_eq!(cancelled.bytes_downloaded, 0);
+    assert_eq!(
+        cancelled.error.as_deref(),
+        Some("Cancelled while waiting for a download slot. Retry restarts the operation.")
+    );
+    drop(slots);
+    manager.wait(&job.id).await.unwrap();
+    drop(manager);
+    let reopened = JobManager::open_inner(dir.path(), Some(server.origin.clone()))
+        .await
+        .unwrap();
+    assert_eq!(reopened.get(&job.id).await.unwrap().error, cancelled.error);
 }
 
 #[tokio::test]
