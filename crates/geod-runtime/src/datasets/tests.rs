@@ -537,7 +537,8 @@ fn hydrosheds_only_resolves_pinned_dir_tiles_and_never_quietly_drops_missing_til
     assert_eq!(proof.layer.nodata, Some(255.));
     assert!(proof.layer.value_interpretation.contains("0 sink"));
     validate_provenance(&proof, href(&plan)).unwrap();
-    assert!(resolve(request("hydrosheds", [116., 39., 117., 40.])).is_err());
+    let outside = resolve(request("hydrosheds", [116., 39., 117., 40.])).unwrap();
+    assert!(outside.sources.is_empty());
     // West tile is published, east tile absent: the entire selection must fail.
     assert!(resolve(request("hydrosheds", [-40.1, 1., -39.9, 2.])).is_err());
     let mut selected = request("hydrosheds", [-49.9, 0.1, -49.8, 0.2]);

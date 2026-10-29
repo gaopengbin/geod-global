@@ -1,6 +1,6 @@
 import React from 'react';
 import {beforeEach,afterEach,it,expect,vi} from 'vitest';
-import {cleanup,render,screen,waitFor,within} from '@testing-library/react';
+import {act,cleanup,render,screen,waitFor,within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {I18nProvider} from './i18n.jsx';
 import {DistributionProvider,UpdatesPanel,NotificationCenter} from './distribution-ui.jsx';
@@ -18,8 +18,19 @@ beforeEach(()=>{
     backend.unreadCount=backend.items.filter(i=>!i.read).length;return structuredClone(backend);
   });window.__TAURI__={core:{invoke},event:{listen:vi.fn(async()=>off)}};
 });
-afterEach(()=>{cleanup();delete window.__TAURI__;vi.restoreAllMocks();});
+afterEach(()=>{cleanup();delete window.__TAURI__;vi.restoreAllMocks();vi.useRealTimers();});
 const mount=()=>render(<I18nProvider><DistributionProvider><UpdatesPanel/><NotificationCenter/></DistributionProvider></I18nProvider>);
+it('a transient automatic check failure gets a bounded later retry and never starts downloading',async()=>{
+ vi.useFakeTimers();vi.spyOn(document,'hidden','get').mockReturnValue(false);backend.automaticChecks=true;backend.messagesConfigured=false;
+ const original=invoke.getMockImplementation();let attempts=0;
+ invoke.mockImplementation(async(command,args)=>{if(command==='update_check'){
+   attempts++;if(attempts===1)throw '[update_check|network|unknown] Temporary update network failure.';
+   backend.lastUpdateCheck=new Date().toISOString();backend.update={state:'upToDate'};return backend.update;
+ }return original(command,args);});
+ mount();await act(async()=>{await vi.advanceTimersByTimeAsync(0);});await act(async()=>{await vi.advanceTimersByTimeAsync(2500);});expect(attempts).toBe(1);
+ await act(async()=>{await vi.advanceTimersByTimeAsync(120000);});expect(attempts).toBe(2);
+ expect(invoke.mock.calls.some(([name])=>['update_download','update_install'].includes(name))).toBe(false);
+});
 it('announces an automatic update once per session and never downloads or installs without confirmation',async()=>{
   backend.automaticChecks=true;backend.update={state:'available',version:'0.2.1',notes:'Verified release'};
   mount();const prompt=await screen.findByRole('dialog');

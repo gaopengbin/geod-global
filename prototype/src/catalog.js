@@ -1,6 +1,7 @@
 import {diagnosticError,diagnosticStep} from './usage-diagnostics.js';
 import { providerById, providerForSearch, demProduct, srtmCell, srtmHref, numCell, numHref, isSupportedAsset, naipMatchesItem } from './providers.js';
-import { MODIS_CRS, modisIdentity, modisAssetIdentity } from './modis.js';
+import { MODIS_CRS, modisIdentity, modisAssetIdentity,matchesPublishedCompositePeriod } from './modis.js';
+import {retryPreviewRequest} from './preview-network.js';
 import { vegetationIdentity, vegetationAssetIdentity, VEGETATION_KEYS } from './vegetation.js';
 import { MODIS_SCIENCE } from './modis-science-layers.js';
 import { viirsIdentity, viirsAssetIdentity } from './viirs.js';
@@ -113,8 +114,7 @@ export function normalizeScene(item, providerId = 'earth-search') {
     else throw new Error('The VIIRS browse image does not match its original product.');
   }
   if (providerId === 'planetary-modis') {
-    if (!period || item.collection !== provider.collection || Date.parse(properties.start_datetime) !== Date.parse(period.date)
-      || Date.parse(properties.end_datetime) !== Date.parse(period.endDate) || properties.platform !== period.platform.toLowerCase()
+    if (!period || item.collection !== provider.collection || !matchesPublishedCompositePeriod(properties,period,8) || properties.platform !== period.platform.toLowerCase()
       || properties['modis:horizontal-tile'] !== period.h || properties['modis:vertical-tile'] !== period.v) throw new Error('The catalog returned an unsupported MODIS period or tile.');
     for (const [key, band] of [['red','01'],['green','04'],['blue','03']]) {
       const original = assets[`sur_refl_b${band}`] || assets[key];
@@ -135,8 +135,7 @@ export function normalizeScene(item, providerId = 'earth-search') {
     if (assets.rendered_preview) assets.thumbnail = assets.rendered_preview;
   }
   if (providerId === 'planetary-vegetation') {
-    if (!vegetation || item.collection !== provider.collection || Date.parse(properties.start_datetime) !== Date.parse(vegetation.date)
-      || Date.parse(properties.end_datetime) !== Date.parse(vegetation.endDate)
+    if (!vegetation || item.collection !== provider.collection || !matchesPublishedCompositePeriod(properties,vegetation,16)
       || properties.platform && properties.platform !== vegetation.platform.toLowerCase()
       || properties['modis:horizontal-tile'] !== vegetation.h || properties['modis:vertical-tile'] !== vegetation.v) throw new Error('The vegetation product, composite period or tile is unsupported.');
     for (const key of VEGETATION_KEYS) {
@@ -255,12 +254,19 @@ export async function fetchCatalogPage(url, { signal, fetcher = fetch } = {}) {
   const requestURL = new URL(safeURL), polarization = requestURL.searchParams.get('geod-polarization');
   if (polarization && (provider.domain !== 'radar' || !RADAR_KEYS.includes(polarization))) throw new Error('Choose a supported orbit and polarization.');
   requestURL.searchParams.delete('geod-polarization');
-  const response = await diagnosticStep('catalog_request',()=>fetcher(requestURL.href, { signal: requestSignal, credentials: "omit", headers: { Accept: "application/geo+json, application/json" } }));
-  if (!response.ok) throw diagnosticError(new Error(`${provider.name} returned HTTP ${response.status}. Try again later.`),{stage:'catalog_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
-  const data = await diagnosticStep('catalog_decode',()=>response.json());
-  if (data.type !== "FeatureCollection" || !Array.isArray(data.features)) throw diagnosticError(new Error('The source returned an invalid catalog response.'),{stage:'catalog_validation',diagnosticOrigin:'explicit'});
-  let scenes;try{scenes=data.features.map(item=>normalizeScene(item,provider.id));}catch(error){throw diagnosticError(error,{stage:'catalog_validation',diagnosticOrigin:'explicit'});}
-  let next = nextPageURL(data, provider.id);
+  let attempts=0,data;
+  try{data=await retryPreviewRequest(async()=>{
+    attempts++;requestSignal.throwIfAborted();
+    const response=await diagnosticStep('catalog_request',()=>fetcher(requestURL.href,{signal:requestSignal,credentials:'omit',headers:{Accept:'application/geo+json, application/json'}}));
+    if(!response.ok){const error=diagnosticError(new Error(`${provider.name} returned HTTP ${response.status}. Try again later.`),{stage:'catalog_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});error.retryable=[408,425,500,502,503,504].includes(response.status);throw error;}
+    try{return await diagnosticStep('catalog_decode',()=>response.json());}catch(error){if(error instanceof SyntaxError)error.retryable=false;throw error;}
+  },requestSignal);}catch(error){throw diagnosticError(error,{retries:Math.max(0,attempts-1),diagnosticOrigin:'explicit'});}
+  if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) throw diagnosticError(new Error('The source returned an invalid catalog response.'),{stage:'catalog_validation',diagnosticOrigin:'explicit'});
+  const scenesValidated=[];let rejectedCount=0,firstRejection;
+  for(const item of data.features){try{scenesValidated.push(normalizeScene(item,provider.id));}catch(error){rejectedCount++;firstRejection??=error;}}
+  if(rejectedCount&&scenesValidated.length===0)throw diagnosticError(firstRejection,{stage:'catalog_validation',diagnosticOrigin:'explicit'});
+  let scenes=scenesValidated;
+  let next;try{next=nextPageURL(data,provider.id);}catch(error){throw diagnosticError(error,{stage:'catalog_validation',diagnosticOrigin:'explicit'});}
   if (polarization) {
     scenes = scenes.filter(scene => scene.assets[polarization]);
     if (next) { const cursor = new URL(next); cursor.searchParams.set('geod-polarization',polarization); next = cursor.href; }
@@ -279,7 +285,7 @@ export async function fetchCatalogPage(url, { signal, fetcher = fetch } = {}) {
       next = url.href;
     }
   }
-  return { provider: provider.id, scenes, next, retrievedAt: new Date().toISOString(), query: safeURL, attribution: `Catalog by ${provider.name}.`, registry: provider.terms };
+  return { provider: provider.id, scenes, next,...(rejectedCount?{rejectedCount}:{}), retrievedAt: new Date().toISOString(), query: safeURL, attribution: `Catalog by ${provider.name}.`, registry: provider.terms };
 }
 
 // Abort the old HTTP request and also reject its result when a transport ignores abort.
@@ -291,6 +297,7 @@ export function createSearchRunner() {
     const scenes = new Map(state.result?.scenes.map(scene => [scene.id, scene]) || []);
     for (const scene of page.scenes) scenes.set(scene.id, scene);
     const result = {...page, scenes:[...scenes.values()], pages:(state.result?.pages || 0) + 1, complete:!page.next,
+      ...((state.result?.rejectedCount||page.rejectedCount)?{rejectedCount:(state.result?.rejectedCount||0)+(page.rejectedCount||0)}:{}),
       ...(state.dateRange ? {dateRange:state.dateRange} : {})};
     state.visited = visited; state.result = result;
     return result;

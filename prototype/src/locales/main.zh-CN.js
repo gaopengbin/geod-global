@@ -1,4 +1,8 @@
 export default {
+  'Composite period declaration':'合成时段声明',
+  'The publisher catalog declares an interval ending {declared} UTC. The product-year composite is shown through {end} UTC. The original catalog declaration, source identity and downloaded values are retained.':'上游目录标称区间结束于 {declared}（UTC），此处按产品年份将合成时段展示至 {end}（UTC）。原始目录声明、来源标识和下载数值均保留。',
+  'Excluded catalog records':'已排除的目录记录',
+  '{count} catalog records could not be verified and were excluded. The other results retain their original metadata and download sources.':'有 {count} 条目录记录未通过校验，已暂时排除；其余结果保留原始元数据和下载来源。',
   'Downloadable': '可下载',
   'Catalog only': '仅目录',
   'Downloads available · no account needed · {count}': '可下载 · 无需账号 · {count} 个数据源',

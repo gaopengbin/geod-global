@@ -730,6 +730,7 @@ function AppContent() {
                       <strong>{filtered.length}</strong><span className="results-count-label"> {t(isNum ? "source tiles" : isElevation ? "elevation tiles" : "scenes")}</span>
                     </span>
                     <div className="results-actions">
+                      {catalog?.rejectedCount>0&&<InfoDetails summary={t('Excluded catalog records')} closeLabel={t('Close')}><p>{t('{count} catalog records could not be verified and were excluded. The other results retain their original metadata and download sources.',{count:number(catalog.rejectedCount)})}</p></InfoDetails>}
                       <Button size="sm" icon={SlidersHorizontal} className="filter-toggle" aria-label={t("Filters")} aria-haspopup="dialog" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(true)}><span className="filter-toggle-label">{t("Filters")}</span></Button>
                       {!isElevation && <Select aria-label={t("Sort scenes")} value={sort} onChange={(e) => setSort(e.target.value)}>
                         <option value="date">{t("Newest")}</option>

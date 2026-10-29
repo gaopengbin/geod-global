@@ -26,7 +26,7 @@ export function usageJobSource(job) {
   }catch{return 'other';}
 }
 export function classifyUsageError(error) {
-  const name=error?.name,text=String(error?.message||'');
+  const name=error?.name,text=String(error?.message??error??'');
   return name==='AbortError'?'cancelled':name==='TimeoutError'||/timed? ?out|timeout/i.test(text)?'timeout'
     :/401|403|unauthori[sz]ed|forbidden|credential|login|sign.?in/i.test(text)?'authorization'
     :/disk|storage|no space|permission denied/i.test(text)?'storage'

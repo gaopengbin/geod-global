@@ -297,7 +297,14 @@ pub(crate) fn validate_catalogue(value: &serde_json::Value, id: &str) -> crate::
     if value["id"].as_str() != Some(id)
         || value["collection"].as_str() != Some(COLLECTION)
         || time(p["start_datetime"].as_str()) != time(Some(&period[0]))
-        || time(p["end_datetime"].as_str()) != time(Some(&period[1]))
+        || !(time(p["end_datetime"].as_str()) == time(Some(&period[1])) || {
+            let start = time(Some(&period[0]));
+            let end = time(Some(&period[1]));
+            start.zip(end).is_some_and(|(start, end)| {
+                let nominal = start + 16 * 86_400_000 - 1000;
+                end < nominal && time(p["end_datetime"].as_str()) == Some(nominal)
+            })
+        })
         || p["modis:horizontal-tile"].as_u64() != Some(h.into())
         || p["modis:vertical-tile"].as_u64() != Some(v.into())
         || !(p["platform"].is_null()
@@ -313,6 +320,19 @@ pub(crate) fn validate_catalogue(value: &serde_json::Value, id: &str) -> crate::
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn actual_publisher_year_end_interval_is_retained_without_changing_the_product_period() {
+        let fixture: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../../prototype/qa/composite-year-end-items.json"
+        ))
+        .unwrap();
+        let mut item = fixture["vegetation"].clone();
+        let id = item["id"].as_str().unwrap().to_owned();
+        validate_catalogue(&item, &id).unwrap();
+        assert_eq!(period(&id).unwrap()[1], "2019-12-31T23:59:59Z");
+        item["properties"]["end_datetime"] = serde_json::json!("2020-01-04T23:59:59Z");
+        assert!(validate_catalogue(&item, &id).is_err());
+    }
     #[test]
     fn vegetation_platform_shift_period_version_and_channel_are_pinned() {
         let terra = "MOD13Q1.A2025177.h08v05.061.2025195142416";

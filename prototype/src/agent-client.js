@@ -338,7 +338,8 @@ async function performAgentRequest(operation, args = {}) {
   methods.planMapPreview='agent_plan_map_preview';
   const method = methods[operation]; if (!method) throw new Error('Unknown Agent operation.');
   const request=operation==='revisionDraft'?{...args,action:'draft'}:operation==='revisePlan'?{...args,action:'revise'}:args;
-  const result=await diagnosticStep('agent_dispatch',()=>window.__TAURI__.core.invoke(method, request));
+  const stage=({testModel:'model_test',saveModel:'model_connect',attachImage:'import',attachDocument:'import',imagePreview:'artifact_inspect',documentPreview:'artifact_inspect',approvePlan:'agent_confirmation',revisePlan:'agent_confirmation',revisionDraft:'agent_confirmation'})[operation]||'agent_dispatch';
+  const result=await diagnosticStep(stage,()=>window.__TAURI__.core.invoke(method, request));
   return diagnosticStep('response_validation',()=>validateResult());
   function validateResult(){
   if(operation==='planMapPreview')return validatePlanMapPreview(result);

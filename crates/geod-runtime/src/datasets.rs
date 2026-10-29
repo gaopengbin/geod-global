@@ -242,6 +242,8 @@ pub struct DatasetPlan {
     pub request: ResolveRequest,
     pub sources: Vec<DatasetSource>,
     pub warnings: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub available_areas: Vec<DatasetRegion>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -796,7 +798,20 @@ pub fn resolve(mut request: ResolveRequest) -> Result<DatasetPlan> {
             }
         }
         "hydrosheds" => {
-            for tile in tiles(request.bounds, 10, -90, 90)? {
+            let requested_tiles = tiles(request.bounds, 10, -90, 90)?;
+            let known = |tile: &[i32; 4]| {
+                hydrosheds::FLOW_DIRECTION_TILES.contains(
+                    &format!(
+                        "{}{}",
+                        coordinate(tile[1], 'N', 'S', 2),
+                        coordinate(tile[0], 'E', 'W', 3)
+                    )
+                    .to_ascii_lowercase()
+                    .as_str(),
+                )
+            };
+            let has_published = requested_tiles.iter().any(known);
+            for tile in requested_tiles.into_iter().filter(|_| has_published) {
                 let id = format!(
                     "{}{}",
                     coordinate(tile[1], 'N', 'S', 2),
@@ -905,11 +920,39 @@ pub fn resolve(mut request: ResolveRequest) -> Result<DatasetPlan> {
     } else {
         warnings.push("Resolved filenames are candidates. Connecting checks public TIFF headers; successful transfer, raw pixel decoding and useful coverage are separate checks. No account, paid service or Earth Engine compute API is used.".into());
     }
+    let available_areas = if sources.is_empty() {
+        match dataset.id.as_str() {
+            "maxar-open-legacy" => maxar::available_areas(),
+            "vantor-open" => vantor_open::available_areas(),
+            "glc-fcs30d" => glc_fcs30d::available_areas(),
+            "deafrica-fractional-cover" | "deafrica-wofs-annual" => {
+                deafrica_annual::available_areas()
+            }
+            "hydrosheds" => hydrosheds::FLOW_DIRECTION_TILES
+                .iter()
+                .map(|id| {
+                    let lat =
+                        id[1..3].parse::<f64>().unwrap() * if &id[..1] == "s" { -1. } else { 1. };
+                    let lon =
+                        id[4..7].parse::<f64>().unwrap() * if &id[3..4] == "w" { -1. } else { 1. };
+                    DatasetRegion {
+                        id: (*id).into(),
+                        title: format!("HydroSHEDS v2r0 · {id}"),
+                        bounds: [lon, lat, lon + 10., lat + 10.],
+                    }
+                })
+                .collect(),
+            _ => Vec::new(),
+        }
+    } else {
+        Vec::new()
+    };
     Ok(DatasetPlan {
         dataset,
         request,
         sources,
         warnings,
+        available_areas,
     })
 }
 

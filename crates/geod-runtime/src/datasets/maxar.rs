@@ -164,10 +164,25 @@ pub(super) fn resolve(request: &ResolveRequest) -> Result<Vec<DatasetSource>> {
             selected.push(source(item)?);
         }
     }
-    if selected.is_empty() || selected.len() > MAX_TILES {
+    if selected.len() > MAX_TILES {
         return Err("The requested area has no reviewed Maui analytic item or exceeds the existing selection limit; no alternate tile or event is inserted".into());
     }
     Ok(selected)
+}
+
+pub(super) fn available_areas() -> Vec<DatasetRegion> {
+    ITEMS
+        .iter()
+        .filter(|item| item.dataset_id == ID)
+        .enumerate()
+        .filter_map(|(i, item)| {
+            bbox(&item.document).ok().map(|bounds| DatasetRegion {
+                id: format!("maui-{i}"),
+                title: "Maui · 2023-08-12 · reviewed original footprint".into(),
+                bounds,
+            })
+        })
+        .collect()
 }
 
 fn reviewed(proof: &SourceProvenance, url: &str) -> Result<&'static ReviewedItem> {
@@ -385,9 +400,12 @@ mod tests {
             [-74., 40., -73., 41.],
             [85., 28., 85.1, 28.1],
             [-156.642091971835, 20.963, -156.64, 20.968],
-            [0., 0., 0., 1.],
-            [f64::NAN, 0., 1., 1.],
         ] {
+            let mut changed = baseline.clone();
+            changed.bounds = bounds;
+            assert!(resolve(&changed).unwrap().is_empty());
+        }
+        for bounds in [[0., 0., 0., 1.], [f64::NAN, 0., 1., 1.]] {
             let mut changed = baseline.clone();
             changed.bounds = bounds;
             assert!(resolve(&changed).is_err());

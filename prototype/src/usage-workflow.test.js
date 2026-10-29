@@ -43,3 +43,18 @@ test('an Agent task keeps its Explore origin when polling from Home and separate
     assert.equal(JSON.stringify(usage.report()).includes('private question'),false);
   }finally{usage.setPreferences({enabled:false});globalThis.location=previousLocation;}
 });
+
+test('failed model and partial-source diagnostics remain failures, while no-coverage results stay empty',async()=>{
+ usage.setPreferences({enabled:true});
+ try{
+  const failed={status:'failed',text:true,functionCalls:false,message:'The model rejected tools (HTTP 400).'};
+  assert.equal(await usageRequest('agent','testModel',{},async()=>failed),failed);
+  const partial={complete:false,failures:[{error:'HTTP 503 unavailable'}],plan:{sources:[{}]}};
+  assert.equal(await usageRequest('public-dataset','connect',{datasetId:'maxar-open-legacy'},async()=>partial),partial);
+  await usageRequest('public-dataset','connect',{datasetId:'maxar-open-legacy'},async()=>({complete:true,plan:{sources:[]}}));
+  const events=usage.report().events;
+  assert.ok(events.some(e=>e.name==='operation_failed'&&e.fields.stage==='model_test'&&e.fields.httpStatus==='400'));
+  assert.ok(events.some(e=>e.name==='operation_failed'&&e.fields.stage==='source_connect'&&e.fields.httpStatus==='503'));
+  assert.ok(events.some(e=>e.name==='operation_completed'&&e.fields.result==='empty'));
+ }finally{usage.setPreferences({enabled:false});}
+});

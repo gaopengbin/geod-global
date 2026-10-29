@@ -258,6 +258,18 @@ async fn release_update_acceptance_probe() {
         .unwrap()
         .expect("A newer release must be offered");
     assert_eq!(update.raw_json["product"], PRODUCT);
+    if config["checkOnly"] == true {
+        assert_ne!(config["install"], true);
+        assert!(trusted_url(update.download_url.as_str()));
+        assert!(!update.signature.is_empty());
+        let receipt = json!({"status":"passed","offeredVersion":update.version,"product":update.raw_json["product"],"signaturePresent":true,"packageDownloaded":false,"installRequested":false,"scope":"Real updater SDK read the public HTTPS manifest only; package signature verification is a separate download check"});
+        fs::write(
+            config["receipt"].as_str().unwrap(),
+            serde_json::to_vec_pretty(&receipt).unwrap(),
+        )
+        .unwrap();
+        return;
+    }
     update.current_version = current.to_owned();
     let cache = PathBuf::from(config["cache"].as_str().unwrap());
     let received = std::sync::Arc::new(std::sync::atomic::AtomicU64::new(0));

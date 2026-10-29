@@ -41,6 +41,17 @@ beforeEach(() => {
   });
 });
 
+it('a no-coverage response preserves the area until a published footprint is explicitly chosen',async()=>{
+ const bounds=[116.1,39.1,116.2,39.2],available={id:'published-area',title:'Published footprint',bounds:[-157,20,-156,21]};
+ const request={...datasetPayload,bounds},plan={...datasetPlan,request,sources:[],availableAreas:[available]};
+ publicDatasetRequest.mockImplementation(async operation=>operation==='list'?[publicDataset]:{plan,complete:true,failures:[],stacConnections:[],wcsConnections:[]});
+ const onBoundsChange=vi.fn(),user=userEvent.setup();
+ render(<RuntimeContext.Provider value={{projects:[],refresh}}><PublicDatasetExplorer datasetId="worldcover" areaBounds={bounds} autoSearch onBoundsChange={onBoundsChange}/></RuntimeContext.Provider>);
+ await screen.findByText('No published files from this connector overlap the selected area.');expect(onBoundsChange).not.toHaveBeenCalled();expect(stacRequest).not.toHaveBeenCalled();
+ await user.click(screen.getByRole('combobox',{name:'View an available area'}));await user.click(screen.getByRole('option',{name:'Published footprint'}));
+ expect(onBoundsChange).toHaveBeenCalledExactlyOnceWith(available.bounds);
+});
+
 it.each(['en','zh-CN'])('only colliding selected SPI item/asset names gain their original longitude range in %s',async locale=>{
   // UI transport doubles reproduce the two author hemisphere titles; they
   // are not claimed publisher snapshots or original-download acceptance.

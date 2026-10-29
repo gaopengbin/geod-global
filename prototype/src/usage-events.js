@@ -1,5 +1,5 @@
 import schema from '../../schemas/usage-events.json' with {type:'json'};
-import {failureDiagnostics,actionStage} from './usage-diagnostics.js';
+import {failureDiagnostics,actionStage,diagnosticError} from './usage-diagnostics.js';
 import {usage,usageFields,usageJobSource,classifyUsageError,countBucket,durationBucket} from './usage-client.js';
 
 const actions={
@@ -34,7 +34,7 @@ export function usageSource(value,fallback='other') {
 }
 export const usageError=classifyUsageError;
 const resultCount=value=>Array.isArray(value)?value.length:Array.isArray(value?.scenes)?value.scenes.length:Array.isArray(value?.items)?value.items.length
-  :Array.isArray(value?.jobs)?value.jobs.length:Number.isSafeInteger(value?.featureCount)?value.featureCount:null;
+  :Array.isArray(value?.jobs)?value.jobs.length:Array.isArray(value?.plan?.sources)&&value.plan.sources.length===0?0:Number.isSafeInteger(value?.featureCount)?value.featureCount:null;
 const jobsIn=value=>Array.isArray(value?.jobs)?value.jobs:Array.isArray(value)?value:value?.job?[value.job]:value?.id&&value.status?[value]:[];
 export function beginUsage(action,fields={},client=usage) {
   const active=client.enabled(),generation=client.generation(),operationId=active?crypto.randomUUID():null,start=Date.now();
@@ -67,7 +67,11 @@ export async function usageRequest(scope,operation,payload,run) {
   let value;
   try{value=await run();}catch(error){observed?.finish(null,error);throw error;}
   if(!usage.enabled()||generation!==usage.generation())return value;
-  observed?.finish(value,action==='import'&&value===null?new DOMException('Import cancelled','AbortError'):null);
+  const sourceFailure=scope==='public-dataset'&&operation==='connect'&&value?.complete===false
+    ?diagnosticError(new Error(value.failures?.[0]?.error||'A published source could not be checked'),{stage:'source_connect',diagnosticOrigin:'classified'}):null;
+  const modelFailure=scope==='agent'&&operation==='testModel'&&value?.status==='failed'
+    ?diagnosticError(new Error(value.message||'Model connection test failed'),{stage:'model_test',diagnosticOrigin:'classified'}):null;
+  observed?.finish(value,sourceFailure||modelFailure||(action==='import'&&value===null?new DOMException('Import cancelled','AbortError'):null));
   if(scope==='runtime'&&operation==='list')usage.observeJobs(Array.isArray(value)?value:value?.jobs);
   if(scope==='agent'){
     if(operation==='send'&&value?.selected?.id){

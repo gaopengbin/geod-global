@@ -1,4 +1,5 @@
 import {usageRequest} from './usage-events.js';
+import {diagnosticError,diagnosticStep} from './usage-diagnostics.js';
 import {desktopAvailable} from './runtime-client.js';
 import {validateStacInspection,validateStacPixel} from './stac-client.js';
 export const LOCAL_RASTER_MAX_BYTES=32*1024*1024;
@@ -25,11 +26,11 @@ async function performLocalRasterRequest(operation,payload={},signal) {
   if(!commands[operation])fail('Unknown local raster operation.');
   if(['inspect','pixel','export'].includes(operation)&&!uuid.test(payload.id))fail('Invalid local raster identifier.');
   check(signal);let value;
-  if(desktopAvailable())value=await window.__TAURI__.core.invoke(commands[operation],payload);
+  if(desktopAvailable())value=await diagnosticStep(operation==='open'?'import':operation==='export'?'export':'artifact_inspect',()=>window.__TAURI__.core.invoke(commands[operation],payload));
   else {
     if(['open','export'].includes(operation))fail('Native file selection requires the desktop application.');
     const suffix=operation==='list'?'':`/${payload.id}/${operation==='pixel'?`pixel?${new URLSearchParams({column:payload.column,row:payload.row})}`:'inspect'}`;
-    const response=await fetch(`http://127.0.0.1:4318/local-rasters${suffix}`,{signal});value=await response.json();if(!response.ok)fail(value.error||'Local raster request failed.');
+    const response=await diagnosticStep('service_request',()=>fetch(`http://127.0.0.1:4318/local-rasters${suffix}`,{signal}));value=await diagnosticStep('response_decode',()=>response.json());if(!response.ok)throw diagnosticError(new Error(value.error||'Local raster request failed.'),{stage:'artifact_inspect',httpStatus:String(response.status),diagnosticOrigin:'explicit'});
   }
   check(signal);
   if(operation==='list'){if(!Array.isArray(value)||value.length>1000||new Set(value.map(v=>v.id)).size!==value.length)fail('Invalid local raster library.');value.forEach(validateLocalRaster);}
@@ -39,11 +40,14 @@ async function performLocalRasterRequest(operation,payload={},signal) {
   return value;
 }
 export async function importLocalRasterFile(file,signal) {
+  return usageRequest('local','open',{},()=>performLocalRasterFileImport(file,signal));
+}
+async function performLocalRasterFileImport(file,signal) {
   if(!file||! /\.tiff?$/i.test(file.name)||file.size<1||file.size>LOCAL_RASTER_MAX_BYTES)fail('Choose a local GeoTIFF or COG file up to 32 MiB.');
   const bytes=await file.arrayBuffer();check(signal);
   const sha=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');
-  const response=await fetch(`http://127.0.0.1:4318/local-rasters/import-file?name=${encodeURIComponent(file.name)}`,{method:'POST',signal,headers:{'Content-Type':'application/octet-stream','X-GeoD-Client':'geod-global'},body:bytes});
-  const value=await response.json();if(!response.ok)fail(value.error||'Local raster import failed.');check(signal);validateLocalRasterInspection(value.raster,value.asset);
+  const response=await diagnosticStep('import',()=>fetch(`http://127.0.0.1:4318/local-rasters/import-file?name=${encodeURIComponent(file.name)}`,{method:'POST',signal,headers:{'Content-Type':'application/octet-stream','X-GeoD-Client':'geod-global'},body:bytes}));
+  const value=await diagnosticStep('response_decode',()=>response.json());if(!response.ok)throw diagnosticError(new Error(value.error||'Local raster import failed.'),{stage:'import',httpStatus:String(response.status),diagnosticOrigin:'explicit'});check(signal);await diagnosticStep('response_validation',()=>validateLocalRasterInspection(value.raster,value.asset));
   if(value.asset.sha256!==sha||value.asset.bytes!==file.size)fail('The imported local raster original bytes changed.');return value;
 }
 export async function exportLocalRaster(asset,signal) {

@@ -149,7 +149,7 @@ export function validatePublicDatasetPlan(value, request) {
     || value.request.region != null && !(dataset.regions || []).some(region => region.id === value.request.region)
     || value.request.season != null && !(dataset.seasons || []).some(season => season.id === value.request.season)
     || dataset.layers.find(layer => layer.id === value.request.layer)?.seasons?.length && !dataset.layers.find(layer => layer.id === value.request.layer).seasons.includes(value.request.season)
-    || !strings(value.warnings) || !Array.isArray(value.sources) || value.sources.length > 32
+    || !strings(value.warnings) || !optional(value.availableAreas,areas=>options(areas,area=>validQueryBounds(area.bounds))) || !Array.isArray(value.sources) || value.sources.length > 64
     || value.sources.some(source => !object(source) || !text(source.id, 512) || !source.id || !text(source.title, 512)
       || !optional(source.bounds, validQueryBounds) || Boolean(source.stac) === Boolean(source.wcs)
       || dataset.discovery != null && !source.stac
@@ -166,7 +166,7 @@ export function validatePublicDatasetPlan(value, request) {
 export function validatePublicDatasetConnection(value, request) {
   if (!object(value)) fail('Invalid public dataset connection.');
   validatePublicDatasetPlan(value.plan, request);
-  if (!Array.isArray(value.failures) || value.failures.length > 32 || typeof value.complete !== 'boolean'
+  if (!Array.isArray(value.failures) || value.failures.length > 64 || typeof value.complete !== 'boolean'
     || value.complete !== (value.failures.length === 0)
     || value.failures.some(failure => !object(failure) || !text(failure.sourceId, 512) || !text(failure.error, 16384) || !failure.error.trim()
       || !value.plan.sources.some(source => source.id === failure.sourceId))

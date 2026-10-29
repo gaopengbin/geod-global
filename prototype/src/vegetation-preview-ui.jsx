@@ -3,6 +3,7 @@ import { SegmentedControl, Surface } from './ui/index.jsx';
 import { useI18n } from './i18n.jsx';
 import { compositePeriodLabel } from './composite-period.js';
 import { VEGETATION_PREVIEW_COLORS } from './vegetation-preview.js';
+import {CompositePeriodNote} from './composite-period-note.jsx';
 
 export function VegetationPreviewControls({ value, onValueChange }) {
   const { t } = useI18n();
@@ -20,5 +21,6 @@ export function VegetationPreviewLegend({ scene, index }) {
     <div className="vegetation-preview-ramp" aria-hidden="true" style={{ background: `linear-gradient(90deg, ${VEGETATION_PREVIEW_COLORS.join(', ')})` }} />
     <div className="vegetation-preview-ticks">{[-0.2, 0.4, 1].map(value => <span key={value}>{number(value, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</span>)}</div>
     <p>{t('Online preview · no quality mask applied')}</p>
+    <CompositePeriodNote scene={scene}/>
   </Surface>;
 }

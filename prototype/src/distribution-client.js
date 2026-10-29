@@ -18,7 +18,7 @@ export function validateDistribution(value) {
     || value.unreadCount!==value.items.filter(item=>!item.read).length) throw new Error('Notification response is invalid.');
   return value;
 }
-export async function distributionRequest(command, args={}) {
+export async function distributionRequest(command, args={}, {retryCount=0}={}) {
   if (!desktopAvailable()) {
     if(command==='distribution_snapshot')return emptyDistribution();
     throw new Error('Updates and notifications are available in the desktop app.');
@@ -26,7 +26,7 @@ export async function distributionRequest(command, args={}) {
   const value=await usageRequest('distribution',command,{},async()=>{
     try{return await window.__TAURI__.core.invoke(command,args);}catch(cause){
       const text=String(cause?.message||cause),match=text.match(/^\[(update_check|update_download|update_verify|update_install)\|(signature_invalid|network|timeout|storage_io|invalid_response|unknown)\|(unknown|[1-5]\d\d)\] (.*)$/);
-      if(match)throw diagnosticError(new Error(match[4]),{stage:match[1],reason:match[2],httpStatus:match[3],diagnosticOrigin:'explicit'});
+      if(match)throw diagnosticError(new Error(match[4]),{stage:match[1],reason:match[2],httpStatus:match[3],...(command==='update_check'?{retries:retryCount}:{}),diagnosticOrigin:'explicit'});
       throw cause;
     }
   });

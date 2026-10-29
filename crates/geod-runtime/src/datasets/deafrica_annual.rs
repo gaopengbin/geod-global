@@ -159,6 +159,9 @@ pub(super) fn resolve(request: &ResolveRequest) -> Result<Vec<DatasetSource>> {
         return Err("DE Africa annual recipes use year 2025 and the current geographic area, not month, country, region or season filters".into());
     }
     let b = request.bounds;
+    if b[2] <= AFRICA[0] || b[0] >= AFRICA[2] || b[3] <= AFRICA[1] || b[1] >= AFRICA[3] {
+        return Ok(vec![]);
+    }
     if b[0] < AFRICA[0] || b[1] < AFRICA[1] || b[2] > AFRICA[2] || b[3] > AFRICA[3] {
         return Err("The requested area is outside the African annual-product candidate envelope; no sample region or alternate source is substituted".into());
     }
@@ -202,6 +205,18 @@ pub(super) fn resolve(request: &ResolveRequest) -> Result<Vec<DatasetSource>> {
         }
     }
     Ok(result)
+}
+pub(super) fn available_areas() -> Vec<DatasetRegion> {
+    tile_bounds(218, 75)
+        .ok()
+        .map(|bounds| DatasetRegion {
+            id: "nairobi-published-grid".into(),
+            title: "Nairobi · example published African grid (other African areas can be searched)"
+                .into(),
+            bounds,
+        })
+        .into_iter()
+        .collect()
 }
 
 pub(crate) fn validate(proof: &SourceProvenance, url: &str, raw: Option<&Value>) -> Result<()> {
@@ -374,7 +389,7 @@ mod tests {
         request.bounds = tile_bounds(218, 75).unwrap();
         assert_eq!(resolve(&request).unwrap().len(), 1);
         request.bounds = [116., 39., 117., 40.];
-        assert!(resolve(&request).is_err());
+        assert!(resolve(&request).unwrap().is_empty());
         request.bounds = [0., -20., 40., 20.];
         assert!(resolve(&request).is_err());
         request.bounds = [36.84, -1.30, 36.86, -1.28];

@@ -129,10 +129,19 @@ pub(super) fn resolve(request: &ResolveRequest) -> Result<Vec<DatasetSource>> {
             result.push(s);
         }
     }
-    if result.is_empty() {
-        return Err("The selected area intersects no exact reviewed GLC_FCS30D historical original; no demonstration tile, other product or generated subset is selected".into());
-    }
     Ok(result)
+}
+pub(super) fn available_areas() -> Vec<DatasetRegion> {
+    INDEX
+        .tiles
+        .iter()
+        .enumerate()
+        .map(|(i, tile)| DatasetRegion {
+            id: format!("historical-{i}"),
+            title: tile.name.trim_end_matches(".tif").into(),
+            bounds: tile.bounds,
+        })
+        .collect()
 }
 pub(crate) fn archive_selection(
     proof: &SourceProvenance,
@@ -231,7 +240,11 @@ mod tests {
                 3 => r.month = Some(1),
                 _ => r.bounds = [116., 39., 117., 40.],
             };
-            assert!(resolve(&r).is_err());
+            if change == 4 {
+                assert!(resolve(&r).unwrap().is_empty());
+            } else {
+                assert!(resolve(&r).is_err());
+            }
         }
     }
     #[test]

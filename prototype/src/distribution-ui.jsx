@@ -6,6 +6,7 @@ import {desktopAvailable} from './runtime-client.js';
 import {distributionRequest,emptyDistribution} from './distribution-client.js';
 import './distribution.css';
 import {useOfficialServices} from './official-ui.jsx';
+import {createUpdateCheckSchedule} from './update-check-policy.js';
 
 const Context=createContext(null);
 const fallback={data:emptyDistribution(),loading:false,error:'',refresh:async()=>{},request:distributionRequest};
@@ -19,9 +20,9 @@ export function DistributionProvider({children}) {
     catch(cause){if(mounted.current)setError(String(cause?.message||cause));}
     finally{pending.current=false;if(mounted.current)setLoading(false);}
   },[]);
-  const request=useCallback(async(command,args={})=>{
+  const request=useCallback(async(command,args={},options)=>{
     setError('');
-    try{const result=await distributionRequest(command,args);if(mounted.current&&['distribution_preferences','notifications_refresh','notifications_read'].includes(command))setData(result);else await refresh();return result;}
+    try{const result=await distributionRequest(command,args,options);if(mounted.current&&['distribution_preferences','notifications_refresh','notifications_read'].includes(command))setData(result);else await refresh();return result;}
     catch(cause){if(mounted.current)setError(String(cause?.message||cause));await refresh();throw cause;}
   },[refresh]);
   useEffect(()=>{
@@ -32,11 +33,15 @@ export function DistributionProvider({children}) {
   },[refresh]);
   useEffect(()=>{
     if(!desktopAvailable())return;
-    let stopped=false,lastCheck=0,lastMessages=0;
+    let stopped=false,lastMessages=0;const checks=createUpdateCheckSchedule();
     const poll=async()=>{
       if(stopped||document.hidden||current.current.busy)return;
       const now=Date.now(),state=current.current;
-      if(state.updateConfigured&&state.automaticChecks&&now-Math.max(lastCheck,Date.parse(state.lastUpdateCheck)||0)>=6*60*60*1000){lastCheck=now;try{await request('update_check');}catch{/* Manual retry is available. */}}
+      if(state.updateConfigured&&state.automaticChecks&&checks.due(now,state.lastUpdateCheck)){
+        const retryCount=checks.retryCount;checks.started(now);
+        try{await request('update_check',{}, {retryCount});checks.succeeded(Date.now());}
+        catch(cause){checks.failed(cause,Date.now());}
+      }
       if(state.messagesConfigured&&state.notificationsEnabled&&now-Math.max(lastMessages,Date.parse(state.lastMessagesCheck)||0)>=5*60*1000){lastMessages=now;try{await request('notifications_refresh');}catch{/* Retain the cached inbox. */}}
     };
     // Give the first native snapshot time to arrive before checking channels.

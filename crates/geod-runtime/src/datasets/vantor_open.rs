@@ -58,7 +58,7 @@ pub(super) fn resolve(r: &ResolveRequest) -> Result<Vec<DatasetSource>> {
     let b: [f64; 4] =
         serde_json::from_value(INDEX["document"]["bbox"].clone()).map_err(crate::io_error)?;
     if r.bounds[0] >= b[2] || r.bounds[2] <= b[0] || r.bounds[1] >= b[3] || r.bounds[3] <= b[1] {
-        return Err("No reviewed Vantor visual original overlaps this area".into());
+        return Ok(vec![]);
     }
     let instant = INDEX["document"]["properties"]["datetime"]
         .as_str()
@@ -82,6 +82,17 @@ pub(super) fn resolve(r: &ResolveRequest) -> Result<Vec<DatasetSource>> {
         end_datetime: Some(instant.into()),
         catalog_raster: None,
     }])
+}
+pub(super) fn available_areas() -> Vec<DatasetRegion> {
+    serde_json::from_value(INDEX["document"]["bbox"].clone())
+        .ok()
+        .map(|bounds| DatasetRegion {
+            id: "nepal-2026-09".into(),
+            title: "Nepal · 2026-09-07 · reviewed original footprint".into(),
+            bounds,
+        })
+        .into_iter()
+        .collect()
 }
 pub(crate) fn validate(
     p: &SourceProvenance,
@@ -233,7 +244,11 @@ mod tests {
                 3 => r.bounds = [116., 39., 117., 40.],
                 _ => r.country = Some("NPL".into()),
             };
-            assert!(resolve(&r).is_err());
+            if n == 3 {
+                assert!(resolve(&r).unwrap().is_empty());
+            } else {
+                assert!(resolve(&r).is_err());
+            }
         }
     }
 }

@@ -109,6 +109,10 @@ use palette::RawPaletteReader;
 mod sinolc_acceptance_tests;
 
 const MAX_DECODED: usize = 128 * 1024 * 1024;
+// Local files are already capped at 32 MiB and 10,000 pixels per side. Full
+// validation may stream more than 128 MiB of samples across many small chunks;
+// keep each chunk's memory cap unchanged and bound cumulative work separately.
+const MAX_LOCAL_DECODE_WORK: usize = 1024 * 1024 * 1024;
 const MAX_TILED_AXIS: u32 = 131_072;
 const MAX_STRIPPED_AXIS: u32 = 65_536;
 const MAX_GRID_PIXELS: u64 = 8_000_000_000;
@@ -1489,10 +1493,15 @@ fn inspect_bounded(
     let count = columns * raster.metadata.height.div_ceil(ch);
     let mut decoded = 0usize;
     let deadline = Instant::now() + Duration::from_secs(30);
+    let work_limit = if context == "Local raster" {
+        MAX_LOCAL_DECODE_WORK
+    } else {
+        MAX_DECODED
+    };
     for index in 0..count {
         let (w, h) = raster.decoder.chunk_data_dimensions(index);
         decoded = decoded.saturating_add(w as usize * h as usize * bands * 8);
-        if decoded > MAX_DECODED || Instant::now() > deadline {
+        if decoded > work_limit || Instant::now() > deadline {
             return Err(if context == "GEE export" {
                 "GEE export exceeds the local decoding budget; export a smaller region".into()
             } else {
@@ -1687,6 +1696,50 @@ mod local_source_tests {
                 .unwrap_err()
                 .contains("32 MiB")
         );
+    }
+
+    #[test]
+    fn local_streamed_validation_can_exceed_old_cumulative_work_without_raising_chunk_or_service_limits(
+    ) {
+        fn large_source(rows: u32) -> Vec<u8> {
+            let mut output = Cursor::new(Vec::new());
+            {
+                let mut encoder = TiffEncoder::new(&mut output).unwrap();
+                let mut image = encoder.new_image::<colortype::Gray8>(5000, 4000).unwrap();
+                image.rows_per_strip(rows).unwrap();
+                image
+                    .encoder()
+                    .write_tag(
+                        Tag::GeoKeyDirectoryTag,
+                        &[
+                            1u16, 1, 0, 3, 1024, 0, 1, 2, 1025, 0, 1, 1, 2048, 0, 1, 4326,
+                        ][..],
+                    )
+                    .unwrap();
+                image
+                    .encoder()
+                    .write_tag(Tag::ModelPixelScaleTag, &[0.0001f64, 0.0001, 0.][..])
+                    .unwrap();
+                image
+                    .encoder()
+                    .write_tag(Tag::ModelTiepointTag, &[0f64, 0., 0., 116., 40., 0.][..])
+                    .unwrap();
+                image.write_data(&vec![17; 20_000_000]).unwrap();
+            }
+            output.into_inner()
+        }
+        let bytes = large_source(64);
+        let sha = format!("{:x}", Sha256::digest(&bytes));
+        let inspected = inspect_local(&bytes, "local", &sha).unwrap();
+        assert_eq!((inspected.width, inspected.height), (5000, 4000));
+        assert_eq!(
+            sample_local(&bytes, "local", &sha, 4999, 3999)
+                .unwrap()
+                .values,
+            vec![json!(17)]
+        );
+        assert!(inspect_service_export(&bytes, "service", &sha).is_err());
+        assert!(inspect_local(&large_source(4000), "local-strip", &sha).is_err());
     }
 }
 impl JobManager {

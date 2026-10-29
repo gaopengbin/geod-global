@@ -7,6 +7,7 @@ import { RADAR_KEYS } from './radar.js';
 import { catalogPreviewKind } from './catalog-preview.js';
 import { ELEVATION_PREVIEW_RANGE } from './elevation-preview.js';
 import { VegetationPreviewControls, VegetationPreviewLegend } from './vegetation-preview-ui.jsx';
+import {CompositePeriodNote} from './composite-period-note.jsx';
 
 export function CatalogPreviewControls({scene,kind,value,onValueChange}) {
   const { t } = useI18n();
@@ -30,5 +31,6 @@ export function CatalogPreviewLegend({scene,channel}) {
     {kind !== 'reflectance' && <div className="vegetation-preview-ramp" aria-hidden="true" style={{background:'linear-gradient(90deg, #000, #fff)'}}/>}
     <div className="vegetation-preview-ticks">{ticks.map(value=><span key={value}>{value}</span>)}</div>
     <p>{t(kind === 'radar' ? 'Online preview · no speckle filtering' : kind === 'elevation' ? 'EGM2008 · display stretch only' : 'Gamma 2.2 · no quality mask applied')}</p>
+    <CompositePeriodNote scene={scene}/>
   </Surface>;
 }

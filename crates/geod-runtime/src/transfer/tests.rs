@@ -361,8 +361,18 @@ async fn automatic_recovery_has_a_finite_budget_and_cancellation_stops_backoff()
         let token = CancellationToken::new();
         if cancelled {
             let stopping = token.clone();
+            let received = server.requests.clone();
             tokio::spawn(async move {
-                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                // Wait for the first request: under parallel Windows load the
+                // initial persistence/connect can legitimately take >100 ms.
+                tokio::time::timeout(std::time::Duration::from_secs(5), async {
+                    while received.lock().unwrap().is_empty() {
+                        tokio::task::yield_now().await;
+                    }
+                })
+                .await
+                .unwrap();
+                tokio::time::sleep(std::time::Duration::from_millis(50)).await;
                 stopping.cancel();
             });
         }

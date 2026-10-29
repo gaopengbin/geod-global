@@ -1,4 +1,6 @@
 export default {
+  'No published files from this connector overlap the selected area.':'当前区域没有此渠道已接入的发布文件。',
+  'View an available area':'查看可用区域','Choose an area to view':'选择要查看的区域',
   '8 m multispectral original DN · download before local preview':'8 米多光谱原始 DN · 下载后本地预览',
   'CBERS WPM preview uses the downloaded original band. Save and download first, then load its local preview.':'CBERS WPM 使用已下载的原始波段进行预览：请先保存并下载，再加载本地预览。',
   'Download the complete original band before loading its local preview.':'请先下载完整原始波段，再加载本地预览。',

@@ -32,7 +32,7 @@ it('merges submitted downloads across tool calls into one compact group and pres
   backend.plans=planIds.map((planId,index)=>({planId,planHash:'a'.repeat(64),kind:'download',status:'submitted',source:'Earth Search',project:{id:projectId,name:'NYC',mode:'existing'},bounds:[-74,40,-73,41],expectedBytes:null,files:Array.from({length:3},(_,i)=>({itemId:'Scene '+i,assetKey:index?'scl':'visual',bytes:null})),notes:[],jobs:Array.from({length:3},(_,i)=>({id:'file-'+index+'-'+i,title:'Scene '+i,status:index||i?'queued':'running',settled:false,bytesDownloaded:100,totalBytes:null}))}));
   const p=mount();const downloads=await screen.findByRole('region',{name:'Download tasks'});
   expect(screen.getAllByRole('region',{name:'Download tasks'})).toHaveLength(1);
-  expect(within(downloads).getByText('0/6 files ready')).toBeTruthy();
+  expect(within(downloads).getByText('0/6 files ready · 1 downloading · 5 queued')).toBeTruthy();
   expect(screen.queryByRole('region',{name:'Complete download task'})).toBeNull();
   expect(screen.queryByRole('region',{name:'Task progress list'})).toBeNull();
   await userEvent.click(within(downloads).getByRole('button',{name:'Download details · 2 plans'}));

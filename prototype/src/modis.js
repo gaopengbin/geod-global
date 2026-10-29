@@ -5,6 +5,14 @@ export const MODIS_PIXEL = 463.312716527778;
 // proj4js requires explicit zero false offsets for its sinusoidal inverse.
 // Native PROJ defaults these to zero; omitting them in JS yields NaN coordinates.
 export const MODIS_PROJECTION = '+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs';
+// PC sometimes publishes the nominal full interval across New Year. Keep that
+// original declaration in properties while the product period stays year-bound.
+export function matchesPublishedCompositePeriod(properties,period,days) {
+  if(!period||Date.parse(properties.start_datetime)!==Date.parse(period.date))return false;
+  const actual=Date.parse(properties.end_datetime),end=Date.parse(period.endDate);
+  const nominal=Date.parse(period.date)+days*86400000-1000;
+  return actual===end||(end<nominal&&actual===nominal);
+}
 export const MODIS_QUALITY_KEYS = ['modis_qc', 'modis_state'];
 export const MODIS_ASSET_NAMES = Object.freeze({ red: 'sur_refl_b01', green: 'sur_refl_b04', blue: 'sur_refl_b03', modis_qc: 'sur_refl_qc_500m', modis_state: 'sur_refl_state_500m' });
 export function modisIdentity(id) {

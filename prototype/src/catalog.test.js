@@ -75,7 +75,9 @@ test("late results and cancelled queries cannot replace current results", async 
 });
 test("an old request rejection is ignored while current transport errors remain visible", async () => {
   const runner = createSearchRunner(), pending = [];
-  const fetcher = () => new Promise((resolve, reject) => pending.push({ resolve, reject }));
+  const fetcher = () => pending.length >= 2
+    ? Promise.reject(new Error("current network error"))
+    : new Promise((resolve, reject) => pending.push({ resolve, reject }));
   const first = runner.run(searchURL(INITIAL_SEARCH), { fetcher });
   const second = runner.run(searchURL(INITIAL_SEARCH), { fetcher });
   pending[0].reject(new Error("old network error"));
