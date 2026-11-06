@@ -493,7 +493,8 @@ impl JobManager {
                 )
             })?;
             if let Some(existing) = store.jobs.values().find(|job| {
-                job.item_id == scene.item_id
+                job.kind == "download"
+                    && job.item_id == scene.item_id
                     && job.asset_key == asset_key
                     && job.href == asset.href
                     && (asset_key != "viirs"
@@ -976,6 +977,48 @@ mod tests {
         assert_eq!(result.jobs.len(), 1);
         assert_eq!(result.jobs[0].id, source.id);
         assert_eq!(manager.list().await.len(), 1);
+    }
+
+    #[tokio::test]
+    async fn downloading_an_original_never_reuses_a_derived_file_with_the_same_catalog_identity() {
+        let directory = tempfile::tempdir().unwrap();
+        let manager = JobManager::open(directory.path()).await.unwrap();
+        let project = manager.create_project(project_request()).await.unwrap();
+        let bytes = crate::raster::tests::fixture(2, 2, &[1, 2, 3, 4], 32610, false);
+        let mut source = crate::raster::tests::record(manager.storage_root(), &bytes);
+        let old = source.output_path.clone().unwrap();
+        source.id = "ffffffff-ffff-4fff-8fff-ffffffffffff".into();
+        let path = manager
+            .storage_root()
+            .join("assets")
+            .join(format!("{}.tif", source.id));
+        std::fs::rename(old, &path).unwrap();
+        source.output_path = Some(path.to_string_lossy().into());
+        source.item_id = project.scenes[0].item_id.clone();
+        source.asset_key = "scl".into();
+        source.href = project.scenes[0].assets["scl"].href.clone();
+        // A deliberately earlier cache entry models a completed derivative.
+        // Selection must reject its role before comparing its shared source URL.
+        let mut derived = source.clone();
+        derived.id = "00000000-0000-4000-8000-000000000001".into();
+        derived.kind = "raster_clip".into();
+        derived.parent_id = Some(source.id.clone());
+        {
+            let mut store = manager.inner.store.lock().await;
+            store.jobs.insert(derived.id.clone(), derived.clone());
+            store.jobs.insert(source.id.clone(), source.clone());
+        }
+        for _ in 0..2 {
+            let selected = manager
+                .enqueue_project_selection(&project.id, "scl", Some(vec![source.item_id.clone()]))
+                .await
+                .unwrap();
+            assert_eq!(selected.jobs.len(), 1);
+            assert_eq!(selected.jobs[0].id, source.id);
+            assert_eq!(selected.jobs[0].kind, "download");
+            assert_ne!(selected.jobs[0].id, derived.id);
+        }
+        assert_eq!(manager.list().await.len(), 2);
     }
 
     #[tokio::test]

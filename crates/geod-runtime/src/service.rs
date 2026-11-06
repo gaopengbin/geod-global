@@ -593,6 +593,38 @@ async fn prepare_artifact(
         .map_err(api_error)
 }
 
+async fn prepare_provenance(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Json<crate::provenance::ProvenanceFile>, ApiError> {
+    manager
+        .prepare_raster_provenance(&id)
+        .await
+        .map(Json)
+        .map_err(api_error)
+}
+async fn download_provenance(
+    State(manager): State<JobManager>,
+    Path(id): Path<String>,
+) -> std::result::Result<Response, ApiError> {
+    let (file, bytes) = manager
+        .raster_provenance_bytes(&id)
+        .await
+        .map_err(api_error)?;
+    Ok((
+        [
+            (header::CONTENT_TYPE, "application/json".to_owned()),
+            (
+                header::CONTENT_DISPOSITION,
+                format!("attachment; filename=\"{}\"", file.filename),
+            ),
+            (header::CACHE_CONTROL, "no-store".to_owned()),
+        ],
+        bytes,
+    )
+        .into_response())
+}
+
 async fn download_artifact(
     State(manager): State<JobManager>,
     Path(id): Path<String>,
@@ -721,6 +753,10 @@ pub fn router(manager: JobManager) -> Router {
         .route("/jobs/{id}/pixel", get(pixel))
         .route("/jobs/{id}/file", get(download_derived))
         .route("/jobs/{id}/metadata", get(download_mosaic_metadata))
+        .route(
+            "/jobs/{id}/provenance",
+            get(download_provenance).post(prepare_provenance),
+        )
         .route(
             "/jobs/{id}/package",
             get(download_artifact).post(prepare_artifact),

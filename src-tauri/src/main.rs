@@ -1716,6 +1716,50 @@ async fn prepare_artifact(
 }
 
 #[tauri::command]
+async fn prepare_raster_provenance(
+    lifecycle: State<'_, DesktopLifecycle>,
+    id: String,
+    manager: State<'_, JobManager>,
+) -> Result<geod_runtime::provenance::ProvenanceFile, String> {
+    let _command = lifecycle.enter()?;
+    manager.prepare_raster_provenance(&id).await
+}
+#[tauri::command]
+async fn export_raster_provenance(
+    lifecycle: State<'_, DesktopLifecycle>,
+    id: String,
+    manager: State<'_, JobManager>,
+    window: tauri::WebviewWindow,
+) -> Result<bool, String> {
+    let _command = lifecycle.enter()?;
+    #[cfg(windows)]
+    {
+        let name = format!("geod-{id}.tif");
+        let path = tauri::async_runtime::spawn_blocking(move || {
+            rfd::FileDialog::new()
+                .set_parent(&window)
+                .set_title("Save GeoTIFF and provenance JSON")
+                .add_filter("GeoTIFF", &["tif", "tiff"])
+                .set_file_name(name)
+                .save_file()
+        })
+        .await
+        .map_err(|e| e.to_string())?;
+        if let Some(path) = path {
+            manager.export_raster_with_provenance(&id, path).await?;
+            Ok(true)
+        } else {
+            Ok(false)
+        }
+    }
+    #[cfg(not(windows))]
+    {
+        let _ = (manager, window, id);
+        Err("Native raster provenance export is not available on this platform".into())
+    }
+}
+
+#[tauri::command]
 async fn reveal_artifact(
     lifecycle: State<'_, DesktopLifecycle>,
     id: String,
@@ -2048,6 +2092,8 @@ fn main() {
             file_thumbnail,
             sample_raster,
             prepare_artifact,
+            prepare_raster_provenance,
+            export_raster_provenance,
             reveal_artifact,
             list_recipes,
             plan_recipe,

@@ -18,6 +18,7 @@ mod prepared;
 pub mod preview;
 pub mod processing;
 pub mod projects;
+pub mod provenance;
 pub mod providers;
 pub mod proxy;
 pub mod raster;
@@ -209,6 +210,7 @@ struct Inner {
     proxy_settings: Mutex<ProxySettings>,
     accounts: Mutex<accounts::Accounts>,
     agent_commits: Mutex<()>,
+    provenance_commits: Mutex<()>,
     planetary_access: providers::AccessCache,
     permits: Semaphore,
     preview_permits: Semaphore,
@@ -617,6 +619,7 @@ impl JobManager {
                 proxy_settings: Mutex::new(proxy_settings),
                 permits: Semaphore::new(2),
                 agent_commits: Mutex::new(()),
+                provenance_commits: Mutex::new(()),
                 preview_permits: Semaphore::new(4),
                 raster_permits: Arc::new(Semaphore::new(1)),
                 thumbnail_permits: Arc::new(Semaphore::new(1)),

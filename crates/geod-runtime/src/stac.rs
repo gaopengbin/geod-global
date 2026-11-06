@@ -330,6 +330,29 @@ fn document(root: &Path, id: &str) -> Result<Vec<u8>> {
     }
     Ok(bytes)
 }
+
+pub(crate) fn portable_item_context(root: &Path, selection: &SourcePin) -> Result<Value> {
+    let asset = resolve(root, selection)?;
+    let (saved, snapshot) = record(root, &selection.snapshot_id)?;
+    let raw = json_document(&document(root, &saved.document_sha256)?)?;
+    let item = if let Some(index) = saved.item_index {
+        raw.get("features")
+            .and_then(Value::as_array)
+            .and_then(|a| a.get(index))
+            .cloned()
+            .ok_or("Saved STAC item is absent from its page")?
+    } else {
+        raw
+    };
+    if item["type"] != "Feature" || item["id"].as_str() != Some(snapshot.item_id.as_str()) {
+        return Ok(json!({"status":"unavailable","reason":"source_has_no_original_stac_item"}));
+    }
+    Ok(
+        json!({"status":"captured","captureStage":"saved_source_snapshot","retrievedAt":snapshot.retrieved_at,
+        "documentUrl":saved.document_url,"documentSha256":saved.document_sha256,"itemIndex":saved.item_index,
+        "assetKey":selection.asset_key,"downloadHref":asset.href,"item":item}),
+    )
+}
 fn persist(root: &Path, registry: &Registry) -> Result<()> {
     let bytes = serde_json::to_vec_pretty(registry).map_err(io_error)?;
     if bytes.len() > MAX_REGISTRY {

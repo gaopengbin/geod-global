@@ -169,6 +169,8 @@
     "allow-file-thumbnail",
     "allow-sample-raster",
     "allow-prepare-artifact",
+    "allow-prepare-raster-provenance",
+    "allow-export-raster-provenance",
     "allow-reveal-artifact",
     "allow-list-recipes",
     "allow-plan-recipe",

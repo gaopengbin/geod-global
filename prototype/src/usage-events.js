@@ -5,7 +5,7 @@ import {usage,usageFields,usageJobSource,classifyUsageError,countBucket,duration
 const actions={
   distribution:{update_check:'update_check',update_download:'update_download',update_install:'update_install'},
   runtime:{create:'download_submit',downloadProject:'download_submit',createProject:'save_project',addProjectScenes:'save_project',
-    cancel:'cancel',retry:'retry',raster:'inspect',composite:'inspect',rgb:'inspect',mosaicProject:'process',prepareProject:'process',runRgb:'process',runRecipe:'process',planRecipe:'process',saveRecipe:'save_project',reveal:'inspect',revealPackage:'inspect',package:'export',connectAccount:'source_connect',verifyAccount:'source_connect'},
+    cancel:'cancel',retry:'retry',raster:'inspect',composite:'inspect',rgb:'inspect',mosaicProject:'process',prepareProject:'process',runRgb:'process',runRecipe:'process',planRecipe:'process',saveRecipe:'save_project',reveal:'inspect',revealPackage:'inspect',package:'export',prepareProvenance:'export',exportProvenance:'export',connectAccount:'source_connect',verifyAccount:'source_connect'},
   agent:{send:'agent_send',approvePlan:'agent_confirm',revisePlan:'agent_revise',interrupt:'agent_stop',saveModel:'model_connect',testModel:'model_test',attachImage:'import',attachDocument:'import'},
   'public-dataset':{resolve:'search',connect:'source_connect'},
   stac:{connect:'source_connect',search:'search',project:'save_project',downloads:'download_submit',inspect:'inspect'},

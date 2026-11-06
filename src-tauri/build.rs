@@ -165,6 +165,8 @@ fn main() {
             "file_thumbnail",
             "sample_raster",
             "prepare_artifact",
+            "prepare_raster_provenance",
+            "export_raster_provenance",
             "reveal_artifact",
             "list_recipes",
             "plan_recipe",

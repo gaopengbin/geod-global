@@ -170,7 +170,8 @@ async fn run() -> Result<(), String> {
             "scientific-rgb inspect|package --id UUID (--data-dir DIR | --server http://127.0.0.1:4318)",
             "scientific-rgb pixel --id UUID --x X --y Y (--data-dir DIR | --server http://127.0.0.1:4318)",
             "serve-mcp (--data-dir DIR | --server http://127.0.0.1:4318) [--allow-write]",
-            "jobs list|status|cancel|retry|inspect [--id UUID] (--data-dir DIR | --server http://127.0.0.1:4318)",
+            "jobs list|status|cancel|retry|inspect|provenance [--id UUID] (--data-dir DIR | --server http://127.0.0.1:4318)",
+            "jobs export --id UUID --out FILE.tif --data-dir DIR (writes GeoTIFF and provenance JSON together)",
             "jobs download --request FILE (--data-dir DIR | --server http://127.0.0.1:4318)",
             "vectors list|inspect|forget [--id UUID] (--data-dir DIR | --server http://127.0.0.1:4318)",
             "vectors open --file FILE [--mode reference|managed] --data-dir DIR",
@@ -255,7 +256,8 @@ async fn run() -> Result<(), String> {
         ("three-d", "inspect") => allowed.push("--id"),
         ("three-d", "export") => allowed.extend(["--id", "--out"]),
         ("three-d", "open") => allowed.extend(["--file", "--request"]),
-        ("jobs", "status" | "cancel" | "retry" | "inspect") => allowed.push("--id"),
+        ("jobs", "status" | "cancel" | "retry" | "inspect" | "provenance") => allowed.push("--id"),
+        ("jobs", "export") => allowed.extend(["--id", "--out"]),
         ("jobs", "download") => allowed.push("--request"),
         ("recipes", "plan" | "save" | "run") => allowed.push("--recipe"),
         _ => return Err("Unknown command; use --help".into()),
@@ -647,7 +649,10 @@ async fn run() -> Result<(), String> {
         return print_json(&value);
     }
     if group == "jobs"
-        && matches!(command.as_str(), "status" | "cancel" | "retry" | "inspect")
+        && matches!(
+            command.as_str(),
+            "status" | "cancel" | "retry" | "inspect" | "export" | "provenance"
+        )
         && uuid::Uuid::parse_str(id).is_err()
     {
         return Err("--id must be a job UUID".into());
@@ -671,6 +676,15 @@ async fn run() -> Result<(), String> {
             ("jobs", "cancel") => serde_json::to_value(manager.cancel(id).await?),
             ("jobs", "retry") => serde_json::to_value(manager.retry(id).await?),
             ("jobs", "inspect") => serde_json::to_value(manager.inspect_raster(id).await?),
+            ("jobs", "provenance") => {
+                serde_json::to_value(manager.prepare_raster_provenance(id).await?)
+            }
+            ("jobs", "export") => {
+                manager
+                    .export_raster_with_provenance(id, required(&options, "--out")?.into())
+                    .await?;
+                Ok(json!({"exported":true,"provenanceIncluded":true}))
+            }
             ("jobs", "download") => serde_json::to_value(manager.create(request.unwrap()).await?),
             ("recipes", "list") => serde_json::to_value(manager.list_recipes().await),
             ("recipes", "plan") => {
@@ -688,6 +702,15 @@ async fn run() -> Result<(), String> {
                 ("jobs", "list") => (reqwest::Method::GET, "/jobs".into(), None),
                 ("jobs", "status") => (reqwest::Method::GET, format!("/jobs/{id}"), None),
                 ("jobs", "inspect") => (reqwest::Method::GET, format!("/jobs/{id}/raster"), None),
+                ("jobs", "provenance") => (
+                    reqwest::Method::POST,
+                    format!("/jobs/{id}/provenance"),
+                    None,
+                ),
+                ("jobs", "export") => return Err(
+                    "Saving a raster to a native path requires --data-dir with exclusive access"
+                        .into(),
+                ),
                 ("jobs", "cancel" | "retry") => {
                     (reqwest::Method::POST, format!("/jobs/{id}/{command}"), None)
                 }

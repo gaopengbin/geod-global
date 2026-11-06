@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:geod-global:raster-provenance:v1",
+  "title": "GeoD Global portable raster provenance",
+  "type": "object",
+  "required": ["schemaVersion", "createdAt", "generator", "graphSha256", "output", "sources", "processingSteps", "credentialFieldsRedacted", "limits"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {"const": "geod-raster-provenance/v1"},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "generator": {"type": "object", "required": ["product", "version"], "properties": {"product": {"const": "GeoD Global"}, "version": {"type": "string"}}, "additionalProperties": false},
+    "graphSha256": {"$ref": "#/$defs/sha256"},
+    "output": {"type": "object", "required": ["file", "format", "bytes", "sha256"], "additionalProperties": false, "properties": {"file": {"type": "string", "minLength": 1, "pattern": "^[^/\\\\]+\\.tiff?$"}, "format": {"const": "GeoTIFF"}, "bytes": {"type": "integer", "minimum": 1}, "sha256": {"$ref": "#/$defs/sha256"}}},
+    "sources": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/source"}},
+    "processingSteps": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/step"}},
+    "credentialFieldsRedacted": {"type": "integer", "minimum": 0},
+    "limits": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source": {"type": "object", "required": ["jobId", "itemId", "assetKey", "href", "sha256", "bytes", "attribution", "catalog"], "additionalProperties": false, "properties": {"jobId": {"type": "string", "format": "uuid"}, "itemId": {"type": "string"}, "assetKey": {"type": "string"}, "href": {"type": "string", "format": "uri"}, "sha256": {"$ref": "#/$defs/sha256"}, "bytes": {"type": "integer", "minimum": 1}, "attribution": {"type": "string"}, "catalog": {"$ref": "#/$defs/catalog"}}},
+    "catalog": {"oneOf": [
+      {"type": "object", "required": ["status", "captureStage", "retrievedAt", "documentUrl", "documentSha256", "assetKey", "item"], "properties": {"status": {"const": "captured"}, "captureStage": {"enum": ["export", "saved_source_snapshot"]}, "retrievedAt": {"type": "string", "format": "date-time"}, "documentUrl": {"type": "string", "format": "uri"}, "documentSha256": {"$ref": "#/$defs/sha256"}, "assetKey": {"type": "string"}, "item": {"type": "object", "required": ["type", "id", "properties", "assets"], "properties": {"type": {"const": "Feature"}, "id": {"type": "string"}, "properties": {"type": "object"}, "assets": {"type": "object"}}}}},
+      {"type": "object", "required": ["status", "reason"], "properties": {"status": {"const": "unavailable"}, "reason": {"type": "string"}, "documentUrl": {"type": "string", "format": "uri"}, "stage": {"const": "catalog_context_request"}, "retries": {"type": "integer", "minimum": 0, "maximum": 2}, "httpStatus": {"type": "integer", "minimum": 100, "maximum": 599}}, "additionalProperties": false}
+    ]},
+    "step": {"type": "object", "required": ["jobId", "operation", "createdAt", "completedAt", "outputSha256", "parameters", "localResampling"], "additionalProperties": false, "properties": {"jobId": {"type": "string", "format": "uuid"}, "operation": {"enum": ["download", "clip", "mosaic_clip", "combine_rgb", "decode_original"]}, "createdAt": {"type": "string", "format": "date-time"}, "completedAt": {"type": "string", "format": "date-time"}, "outputSha256": {"$ref": "#/$defs/sha256"}, "parameters": {"type": "object"}, "localResampling": {"type": "object", "required": ["applied", "method", "gridPolicy"], "properties": {"applied": {"const": false}, "method": {"type": "null"}, "gridPolicy": {"type": "string"}}, "additionalProperties": false}}}
+  }
+}
