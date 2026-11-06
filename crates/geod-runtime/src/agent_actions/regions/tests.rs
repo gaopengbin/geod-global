@@ -100,10 +100,14 @@ async fn disambiguates_country_and_state_and_preserves_region_presentation() {
         let r = search(&m, query(name, None, Some(0))).await.unwrap();
         assert_eq!(r["candidates"][0]["name"], expected);
     }
-    let absent = search(&m, query("not-a-real-region", Some("DEU"), Some(1)))
+    // This regression covers bundled disambiguation, not gbOpen transport.
+    // An explicit country/level miss intentionally falls back to the public
+    // service; keep the empty bundled lookup deterministic and offline here.
+    let absent = search(&m, query("not-a-real-region", None, None))
         .await
         .unwrap();
     assert_eq!(absent["matchCount"], 0);
+    assert_eq!(absent["provenance"]["offline"], true);
 }
 #[test]
 fn rejects_unbounded_queries_and_unknown_parameters_without_network() {
