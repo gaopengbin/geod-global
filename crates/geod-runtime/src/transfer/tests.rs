@@ -214,6 +214,57 @@ async fn bounded_recovery_resumes_a_broken_body_without_user_retry() {
 }
 
 #[tokio::test]
+async fn radar_download_policy_recovers_a_broken_body_without_restarting_unsafe_prefixes() {
+    // JPEG-signature fixture exercises transport selection for each radar key,
+    // not radar decoding. The live original/raster acceptance is separate.
+    for (key, behavior) in [
+        ("vv", "valid"),
+        ("vh", "valid"),
+        ("hh", "valid"),
+        ("hv", "valid"),
+        ("vv", "weak"),
+        ("vv", "missing"),
+        ("vv", "forbidden"),
+    ] {
+        let server = server(behavior).await;
+        let dir = tempfile::tempdir().unwrap();
+        let manager = manager(dir.path(), &server).await;
+        let job = crate::new_download_job(CreateJobRequest {
+            item_id: "RADAR_TRANSFER_TEST".into(),
+            asset_key: key.into(),
+            href: format!("{}/image", server.origin),
+            media_type: "image/jpeg".into(),
+            title: None,
+        });
+        manager
+            .inner
+            .store
+            .lock()
+            .await
+            .jobs
+            .insert(job.id.clone(), job.clone());
+        let result = manager.download(&job.id, &CancellationToken::new()).await;
+        if behavior == "valid" {
+            result.unwrap();
+            let done = assert_complete(&manager, &job.id, BODY, TransferMode::Resumed).await;
+            assert_eq!(done.network_retries, 1);
+            let requests = server.requests.lock().unwrap();
+            assert_eq!(requests.len(), 2);
+            assert!(requests[1].contains("\r\nrange: bytes=16-\r\n"));
+            assert!(requests[1].contains("\r\nif-range: \"v1\"\r\n"));
+        } else {
+            assert!(result.is_err());
+            assert_eq!(
+                server.requests.lock().unwrap().len(),
+                if behavior == "forbidden" { 2 } else { 1 }
+            );
+            let stopped = manager.get(&job.id).await.unwrap();
+            assert!(stopped.output_path.is_none() && stopped.sha256.is_none());
+        }
+    }
+}
+
+#[tokio::test]
 async fn first_data_deadline_covers_headers_and_body_and_preserves_cancellation() {
     for behavior in ["stall-headers", "stall-first-data"] {
         let server = server(behavior).await;

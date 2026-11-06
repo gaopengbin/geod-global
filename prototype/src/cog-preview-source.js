@@ -1,11 +1,12 @@
 import GeoTIFF from 'ol/source/GeoTIFF.js';
-import { retryPreviewRequest } from './preview-network.js';
+import { fetchSourceResponse, retryPreviewRequest } from './preview-network.js';
 import {diagnosticError,failureDiagnostics} from './usage-diagnostics.js';
 
 function metadataError(cause,phase='metadata') {
   const text=String(cause?.message || '');
   if (/^(Landsat|MODIS|NAIP|Elevation) COG metadata does not match the selected (original bands|RGB \+ NIR source|original height grid)\.$/.test(text))return new Error(text);
   if (cause?.name==='TimeoutError')return new DOMException(`Preview ${phase} request timed out.`,'TimeoutError');
+  if (/blocked by the desktop security policy/.test(text))return new Error('Preview request blocked by the desktop security policy.');
   if (/invalid|unsupported|mismatch|not match/i.test(text))return new Error('COG metadata validation failed.');
   const status=text.match(/HTTP (\d{3})\b/);
   return new Error(status ? `Preview ${phase} request returned HTTP ${status[1]}.` : 'Preview network request failed.');
@@ -32,7 +33,7 @@ export async function loadPreviewRange(url, headers, external, fetchImpl = fetch
       controller.signal.addEventListener('abort',cancel,{once:true});
       const attemptTimer=setTimeout(()=>attempt.abort(new DOMException('Preview range attempt timed out.','TimeoutError')),deadlines.attemptMs);
       try {
-      const response = await fetchImpl(url,{headers,signal:attempt.signal,credentials:'omit'});
+      const response = await fetchSourceResponse(url,{headers,signal:attempt.signal,credentials:'omit'},fetchImpl);
       if (!response.ok || (new Headers(headers).has('Range') && response.status !== 206)) {
         await response.body?.cancel();
         const error = new Error(`Preview range request returned HTTP ${response.status}.`);

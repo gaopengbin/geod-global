@@ -1,7 +1,7 @@
 import {diagnosticError,diagnosticStep} from './usage-diagnostics.js';
 import { providerById, providerForSearch, demProduct, srtmCell, srtmHref, numCell, numHref, isSupportedAsset, naipMatchesItem } from './providers.js';
 import { MODIS_CRS, modisIdentity, modisAssetIdentity,matchesPublishedCompositePeriod } from './modis.js';
-import {retryPreviewRequest} from './preview-network.js';
+import {fetchSourceResponse,retryPreviewRequest} from './preview-network.js';
 import { vegetationIdentity, vegetationAssetIdentity, VEGETATION_KEYS } from './vegetation.js';
 import { MODIS_SCIENCE } from './modis-science-layers.js';
 import { viirsIdentity, viirsAssetIdentity } from './viirs.js';
@@ -257,7 +257,7 @@ export async function fetchCatalogPage(url, { signal, fetcher = fetch } = {}) {
   let attempts=0,data;
   try{data=await retryPreviewRequest(async()=>{
     attempts++;requestSignal.throwIfAborted();
-    const response=await diagnosticStep('catalog_request',()=>fetcher(requestURL.href,{signal:requestSignal,credentials:'omit',headers:{Accept:'application/geo+json, application/json'}}));
+    const response=await diagnosticStep('catalog_request',()=>fetchSourceResponse(requestURL.href,{signal:requestSignal,credentials:'omit',headers:{Accept:'application/geo+json, application/json'}},fetcher));
     if(!response.ok){const error=diagnosticError(new Error(`${provider.name} returned HTTP ${response.status}. Try again later.`),{stage:'catalog_request',httpStatus:String(response.status),diagnosticOrigin:'explicit'});error.retryable=[408,425,500,502,503,504].includes(response.status);throw error;}
     try{return await diagnosticStep('catalog_decode',()=>response.json());}catch(error){if(error instanceof SyntaxError)error.retryable=false;throw error;}
   },requestSignal);}catch(error){throw diagnosticError(error,{retries:Math.max(0,attempts-1),diagnosticOrigin:'explicit'});}

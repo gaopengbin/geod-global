@@ -15,7 +15,7 @@ export function verifyDesktopCspConfig(config) {
     // localhost origin used by Windows convertFileSrc. It adds no remote host.
     const expected = ["'self'", 'blob:', 'ipc:', 'http://ipc.localhost', 'geod-elevation:', 'http://geod-elevation.localhost',
       'geod-stac-preview:', 'http://geod-stac-preview.localhost', catalog, imagery,
-      'https://planetarycomputer.microsoft.com', 'https://stac.dataspace.copernicus.eu', 'https://sentinel2l2a01.blob.core.windows.net', 'https://landsateuwest.blob.core.windows.net', 'https://sentinel1euwestrtc.blob.core.windows.net', 'https://naipeuwest.blob.core.windows.net', 'https://cmr.earthdata.nasa.gov',
+      'https://planetarycomputer.microsoft.com', 'https://stac.dataspace.copernicus.eu', 'https://sentinel2l2a01.blob.core.windows.net', 'https://landsateuwest.blob.core.windows.net', 'https://modiseuwest.blob.core.windows.net', 'https://sentinel1euwestrtc.blob.core.windows.net', 'https://naipeuwest.blob.core.windows.net', 'https://cmr.earthdata.nasa.gov',
       'https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com', 'https://copernicus-dem-90m.s3.eu-central-1.amazonaws.com',
       'https://geod-global.laogao.xyz',
       ...(development ? ['http://127.0.0.1:4317', 'http://127.0.0.1:4392', 'ws://127.0.0.1:4317'] : [])];

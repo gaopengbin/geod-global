@@ -2,8 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { verifyDesktopCspConfig } from '../../scripts/verify-desktop-csp.mjs';
+import { MODIS_HOST } from './modis.js';
 
 const config = JSON.parse(readFileSync(new URL('../../src-tauri/tauri.conf.json', import.meta.url), 'utf8'));
+
+test('desktop policy covers the original MODIS/NDVI/EVI range reader in both profiles', () => {
+  const origin = `https://${MODIS_HOST}`;
+  for (const profile of ['csp', 'devCsp']) {
+    const connect = config.app.security[profile].split(';').find(value => value.trim().startsWith('connect-src ')).trim().split(/\s+/).slice(1);
+    assert.ok(connect.includes(origin), `${profile}: MODIS originals must not be blocked before HTTP`);
+    const missing = structuredClone(config);
+    missing.app.security[profile] = missing.app.security[profile].replace(` ${origin}`, '');
+    assert.throws(() => verifyDesktopCspConfig(missing), /COG requests/);
+  }
+});
 test('desktop policy permits COG fetch and local decode without remote script execution', () => {
   assert.equal(verifyDesktopCspConfig(config).desktopCogPolicy, 'passed');
   for (const directive of ['csp', 'devCsp']) {

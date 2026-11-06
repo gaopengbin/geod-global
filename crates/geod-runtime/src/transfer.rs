@@ -41,6 +41,9 @@ pub(crate) fn retryable(error: &str) -> bool {
 }
 
 pub(crate) fn bounded_public_transport(job: &Job) -> bool {
+    // Reviewed Sentinel-1 polarizations share the same strong-validator Range
+    // contract as the other public originals, including the 4 GiB source cap.
+    // The retry caller still refuses to restart an unverified nonempty prefix.
     job.stac_source.is_none()
         && job.wcs_source.is_none()
         && matches!(
@@ -54,6 +57,10 @@ pub(crate) fn bounded_public_transport(job: &Job) -> bool {
                 | "scl"
                 | "qa_pixel"
                 | "qa_radsat"
+                | "vv"
+                | "vh"
+                | "hh"
+                | "hv"
         )
 }
 

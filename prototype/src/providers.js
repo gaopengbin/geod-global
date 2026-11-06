@@ -3,7 +3,7 @@ import { vegetationAssetIdentity, vegetationIdentity } from './vegetation.js';
 import { MODIS_SCIENCE, MODIS_SCIENCE_KEYS } from './modis-science-layers.js';
 import { VIIRS_PRODUCTS, viirsIdentity, viirsAssetIdentity } from './viirs.js';
 import { RADAR_HOST, radarAssetIdentity } from './radar.js';
-import { retryPreviewRequest } from './preview-network.js';
+import { fetchSourceResponse, retryPreviewRequest } from './preview-network.js';
 import { diagnosticError, failureDiagnostics } from './usage-diagnostics.js';
 // Product families are independent of hosting platforms and imagery/elevation types.
 // HLS remains its own derived product series rather than raw Landsat imagery.
@@ -206,7 +206,7 @@ async function requestPublicAccess(url,fetcher) {
   const signal=AbortSignal.timeout(30_000);let attempts=0;
   try {
     return await retryPreviewRequest(async()=>{
-      attempts++;const response=await fetcher(url,{credentials:'omit',signal});
+      attempts++;const response=await fetchSourceResponse(url,{credentials:'omit',signal},fetcher);
       if(!response.ok){const error=diagnosticError(new Error('Planetary Computer data access is unavailable. Retry loading imagery.'),{stage:'authorization',httpStatus:String(response.status),diagnosticOrigin:'explicit'});error.retryable=response.status>=500||[408,429].includes(response.status);throw error;}
       return response;
     },signal);

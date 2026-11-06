@@ -1,0 +1,33 @@
+# User workflow reliability repairs — 2026-11-06
+
+This records local fixes and fresh acceptance for the recent external-client failures. It does not announce a new installer, change the public update channel, or establish that each historical network incident has been reproduced.
+
+## Findings and changes
+
+| Recorded failure family | Finding and action |
+| --- | --- |
+| MODIS / vegetation metadata failures on 0.2.5 | The shipped production and development CSP omitted `https://modiseuwest.blob.core.windows.net`, although the new original-COG preview reader fetches that exact host. Under the original production CSP, live NDVI, EVI and RGB previews all fail before an HTTP response. This matches the short metadata failures with exhausted retries. Add only this reviewed origin to both profiles and the release-policy gate. Keep the existing restrictions on scripts, frames, wildcard hosts, and credentials. |
+| Policy rejection reported as a network failure | Fetch cannot expose an HTTP status when the browser blocks the request. Correlate an enforced `connect-src` violation with the requested origin, retain only an explicit `permission_denied` category, and stop retrying that permanent rejection. The shared range, catalog and anonymous-access readers use this wrapper. Report-only, unrelated-origin, image-policy, ordinary network and cancellation events keep their original meanings. No blocked URL, SAS query or raw policy text enters telemetry. |
+| Two Sentinel-1 transfer failures on 0.2.4 | Both records reported more than ten minutes of activity and substantial received bytes, with zero automatic network retries. Radar polarization keys were absent from the existing bounded public-transfer recovery policy. Include VV/VH/HH/HV. Recovery still has at most two retries and requires a valid saved prefix, strong ETag, matching Range response and whole-file hash; unsafe prefixes, permanent authorization failures and cancellation are not blindly restarted. The precise original network interruption cannot be recovered from the historical events. |
+| Twelve catalog failures | All came from one anonymous installation on 0.2.4 across four sources. Fresh equivalent source searches pass. The 0.2.5 bounded transport retry and validation protections remain intact, with explicit policy diagnostics now added. The original device, request parameters and network cause are unavailable; these records remain unconfirmed rather than being declared fixed. |
+| Other preview / source / update failures | Current WorldCover connection and the actual updater SDK manifest check pass. Older tile timeouts and unknown custom WMS/feature-service errors do not contain sufficient source/request evidence for exact reproduction. They remain distinct from the confirmed CSP and radar recovery defects. |
+
+## Fresh acceptance
+
+- Fetched live catalog records through the application catalog adapter for MODIS reflectance, MODIS vegetation, Sentinel-1 RTC and Earth Search. No unbounded catalog traversal or changed user search filters was introduced.
+- Reproduced three original preview failures under the exact original desktop CSP. The older development-page map check did not apply the production CSP and therefore missed this defect. The new regression gate explicitly binds the MODIS source host to both policy profiles.
+- After repair, actual NDVI, EVI, MODIS RGB, Sentinel-1 VV and Sentinel-2 previews render raster pixels under the exact repaired production CSP, with no policy violations. Original MODIS data reads remain bounded HTTP 206 ranges. The same blocked-policy controls now retain `preview_metadata / permission_denied / retries=0` rather than a generic network failure after retries.
+- Downloaded five fresh complete originals into an isolated native store: MODIS red (11,417,054 bytes), NDVI (38,631,423), EVI (37,382,400), Sentinel-2 SCL (2,864,039), and Sentinel-1 VH (934,640,509). Total: **1,024,935,425 bytes**. Independently hashed every output and checked native raster decoding, thumbnails and source samples.
+- Reopened all five native results in the built Workspace renderer under the exact desktop CSP. Each painted a map and returned a sample from an actual map click. Independent Rasterio reads matched all five initial native samples and all five clicked samples, including signed Int16 indices and Float32 radar values.
+- A controlled TCP regression fails with the original radar policy and passes with the repair for all four polarizations. It verifies automatic conditional-range recovery and whole-file integrity, plus refusal to restart weak/missing-validator prefixes or continue after HTTP 403. This is a transport fixture, not an assertion that a real upstream outage occurred during the fresh original downloads; the latter all completed without a retry.
+- The actual Tauri updater SDK read the current public HTTPS manifest and offered 0.2.5 when compared with 0.2.4. This was check-only: no package download, installation or upgrade of the user's client.
+
+The browser runs use a headless production renderer, real upstream data and a real isolated native runtime. They are separate from a fresh native WebView/window or installer acceptance. Production telemetry uploads were blocked; no customer workspace, account, model, usage database, updater feed or CDN package was modified.
+
+## Verification and receipts
+
+Detailed local receipts are in `.verification/reliability-20261106/`: `preview-before.json`, `preview-old-diagnostics.json`, `preview-fixed.json`, `native-flow.json`, `independent-pixels.json`, `workspace-results.json`, `workspace-independent-pixels.json`, and `update-check.json`. External telemetry triage is an aggregate in `.verification/adoption-check-20261106/failure-triage.json`; no installation identifiers are included in this document.
+
+Runtime regression passed with eight test threads: **933 passed, 46 explicitly ignored**. Desktop regression passed: **61 passed, 29 explicitly ignored**. Runtime Clippy with warnings denied passed. The first unrestricted runtime run encountered an existing five-second progress-wait timeout during concurrent frontend verification; the unchanged test passed separately and the complete bounded-concurrency runtime run passed.
+
+Final `npm run verify` passed after the source changes: dependency/contracts/source checks, **615 frontend unit tests**, **164 Agent tests**, campaign/service tests, **82 UI suites (844 passed, one explicitly skipped)** and the production build. Rust formatting and whitespace checks passed. Existing build chunk-size and dynamic-import advisories remain; they are not treated as failed runtime acceptance.
